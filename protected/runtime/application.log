@@ -1,0 +1,18 @@
+2011/11/16 11:41:31 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'green.items' doesn't exist. The SQL statement executed was: SHOW COLUMNS FROM `items`.
+in C:\xampp\htdocs\workspace\Green\protected\modules\srbac\models\AuthItem.php (40)
+in C:\xampp\htdocs\workspace\Green\protected\modules\srbac\SrbacModule.php (248)
+in C:\xampp\htdocs\workspace\Green\protected\modules\srbac\controllers\AuthitemController.php (43)
+2011/11/16 11:41:31 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'green.items' doesn't exist. The SQL statement executed was: SHOW COLUMNS FROM `items`.
+in C:\xampp\htdocs\workspace\Green\protected\modules\srbac\models\AuthItem.php (40)
+in C:\xampp\htdocs\workspace\Green\protected\modules\srbac\SrbacModule.php (248)
+in C:\xampp\htdocs\workspace\Green\protected\modules\srbac\controllers\AuthitemController.php (43)
+2011/11/16 11:42:00 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'green.items' doesn't exist. The SQL statement executed was: SHOW COLUMNS FROM `items`.
+in C:\xampp\htdocs\workspace\Green\protected\modules\srbac\models\AuthItem.php (40)
+in C:\xampp\htdocs\workspace\Green\protected\modules\srbac\SrbacModule.php (248)
+in C:\xampp\htdocs\workspace\Green\protected\modules\srbac\controllers\AuthitemController.php (43)
+2011/11/16 11:49:12 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "rsbac".' in C:\yii\framework\web\CWebApplication.php:280
+Stack trace:
+#0 C:\yii\framework\web\CWebApplication.php(135): CWebApplication->runController('rsbac')
+#1 C:\yii\framework\base\CApplication.php(162): CWebApplication->processRequest()
+#2 C:\xampp\htdocs\workspace\Green\index.php(13): CApplication->run()
+#3 {main} REQUEST_URI=/workspace/green/index.php?r=rsbac
