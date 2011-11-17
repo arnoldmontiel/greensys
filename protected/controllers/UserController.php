@@ -63,13 +63,20 @@ class UserController extends Controller
 		$model=new User;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
-			if($model->save())
+			try {
+				if($model->save())
 				$this->redirect(array('view','id'=>$model->username));
+				
+			} catch (CDbException $e) {
+				Yii::log($log,CLogger::LEVEL_ERROR,'Internal server error - saving new user');
+				throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+				
+			}
 		}
 
 		$this->render('create',array(
