@@ -16,6 +16,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'application.modules.srbac.controllers.SBaseController',		
 	),
 
 	'modules'=>array(
@@ -29,7 +30,7 @@ return array(
 
 		'srbac' => array(
 			'userclass'=>'User', //default: User
-			'userid'=>'id', //default: userid
+			'userid'=>'username', //default: userid
 			'username'=>'username', //default:username
 			'delimeter'=>'@', //default:-
 			'debug'=>true, //default :false
@@ -99,12 +100,6 @@ return array(
 					'itemChildTable'=>'itemchildren',
 		),
 			
-		
-		
-		
-				'import'=>array(
-					'application.modules.srbac.controllers.SBaseController',
-		),
 
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
