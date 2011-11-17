@@ -40,14 +40,15 @@
 			array('label'=>'Manage', 'visible'=>!Yii::app()->user->isGuest, 'items'=>array
 			(
 				//array('label'=>'User', 'url'=>array('/user', 'view'=>'manage')),
-				array('label'=>'User', 'url'=>array('/user', 'view'=>'manage'),'visible'=>Yii::app()->user->checkAccess('ManejarUsuarios')),
-				array('label'=>'Permissions', 'url'=>array('/srbac', 'view'=>'manage'))
+				array('label'=>'User', 'url'=>array('/user/index', 'view'=>'manage'),'visible'=>Yii::app()->user->checkAccess('ManejarUsuarios')),
+				array('label'=>'Permissions', 'url'=>array('/srbac/authitem/frontpage', 'view'=>'manage'))
 			)
 		))
 		
-		)); ?>		
+		)); 
+		 ?>		
 	
-	</div><!-- mainmenu -->
+</div> <!-- mainmenu -->
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
 			'links'=>$this->breadcrumbs,
