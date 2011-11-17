@@ -40,7 +40,7 @@
 			array('label'=>'Manage', 'visible'=>!Yii::app()->user->isGuest, 'items'=>array
 			(
 				array('label'=>'User', 'url'=>array('/user', 'view'=>'manage')),
-				array('label'=>'Permissions', 'url'=>array('/permission', 'view'=>'manage'))
+				array('label'=>'Permissions', 'url'=>array('/srbac', 'view'=>'manage'))
 			)
 		))
 		
