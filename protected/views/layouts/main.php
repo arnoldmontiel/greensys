@@ -39,7 +39,8 @@
 			array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
 			array('label'=>'Manage', 'visible'=>!Yii::app()->user->isGuest, 'items'=>array
 			(
-				array('label'=>'User', 'url'=>array('/user', 'view'=>'manage')),
+				//array('label'=>'User', 'url'=>array('/user', 'view'=>'manage')),
+				array('label'=>'User', 'url'=>array('/user', 'view'=>'manage'),'visible'=>Yii::app()->user->checkAccess('ManejarUsuarios')),
 				array('label'=>'Permissions', 'url'=>array('/srbac', 'view'=>'manage'))
 			)
 		))
