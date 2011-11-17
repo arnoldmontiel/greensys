@@ -7,7 +7,7 @@
  */
 class UserIdentity extends CUserIdentity
 {
-	private $_id;
+	private $_username;
 	/**
 	 * Authenticates a user.
 	 * The example implementation makes sure if the username and password
@@ -39,7 +39,7 @@ public function authenticate()
         }else if(md5($record->password)!==md5($this->password)){
             $this->errorCode=self::ERROR_PASSWORD_INVALID;
         }else{
-            $this->_id=$record->id;
+            $this->_username=$record->username;
             //$this->setState('title', $record->title);
             $this->errorCode=self::ERROR_NONE;
         }
