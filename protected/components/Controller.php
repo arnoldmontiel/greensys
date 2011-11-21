@@ -29,13 +29,10 @@ class Controller extends SBaseController
 		if (isset($_POST['lang']))
 		{
 			$app->lc->setLanguage($_POST['lang']);
-			//$app->language = ;
-			//$app->session['sel_lang'] = $app->language;
 		}
 		else if (isset($app->session['sel_lang']))
 		{
 			$app->lc->setLanguage($app->session['sel_lang']);
-			//$app->language = $app->session['sel_lang'];
 		}
 	}
 }
