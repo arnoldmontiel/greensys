@@ -20,17 +20,24 @@ class LocaleManager extends CApplicationComponent {
 		Yii::app()->setLanguage($this->getSelectedLanguage());
 	}
 
-		
+	
 	public function getSelectedLanguage() {
-		return Yii::app()->request->getPreferredLanguage();
+		if (isset(Yii::app()->session['sel_lang'])) {
+			return Yii::app()->session['sel_lang'];
+		}
+		else {
+			return Yii::app()->getLanguage();
+		}
 	}
 
 
 	public function setLanguage($language) {
 		$language =strtolower($language);
 		Yii::app()->setLanguage($language);
+		Yii::app()->session['sel_lang']=$language;
 	}
 
+	
 	public function t($message, $params=null, $source=null, $language=null) 
 	{
 		//self::initLanguage();
