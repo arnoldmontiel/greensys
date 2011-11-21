@@ -5,7 +5,8 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Contact Us</h1>
+<h1><?php echo Yii::app()->lc->t('Contact Us')?></h1>
+
 
 <?php if(Yii::app()->user->hasFlash('contact')): ?>
 

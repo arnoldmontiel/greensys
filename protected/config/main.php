@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'My Web Application',
+	'name'=>'G r E e N',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -37,8 +37,7 @@ return array(
 			'pageSize'=>10, // default : 15
 			'superUser' =>'Authority', //default: Authorizer
 			'css'=>'srbac.css', //default: srbac.css
-			'layout'=>
-			'application.views.layouts.main', //default: application.views.layouts.main,
+			'layout'=>'application.views.layouts.main', //default: application.views.layouts.main,
 //must be an existing alias
 			'notAuthorizedView'=> 'srbac.views.authitem.unauthorized', // default:
 //srbac.views.authitem.unauthorized, must be an existing alias
@@ -52,12 +51,14 @@ return array(
 			'alwaysAllowedPath'=>'srbac.components', // default: srbac.components
 // must be an existing alias
 			)
-
-		
 		),
 
 	// application components
 	'components'=>array(
+		'lc'=>array(
+			'class' => 'application.components.LocaleManager',
+		),
+
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
@@ -120,6 +121,7 @@ return array(
 				*/
 			),
 		),
+
 	),
 
 	// application-level parameters that can be accessed
@@ -129,3 +131,5 @@ return array(
 		'adminEmail'=>'webmaster@example.com',
 	),
 );
+
+
