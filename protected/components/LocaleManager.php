@@ -37,6 +37,9 @@ class LocaleManager extends CApplicationComponent {
 		Yii::app()->session['sel_lang']=$language;
 	}
 
+	public function getAvalaibleLanguages() {
+		return Language::model()->findAll();	
+	}
 	
 	public function t($message, $params=null, $source=null, $language=null) 
 	{

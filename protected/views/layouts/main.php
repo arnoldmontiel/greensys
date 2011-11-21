@@ -23,6 +23,33 @@
 
 	<div id="header">
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+		
+		<?php echo CHtml::form('','post'); ?>
+		Language: 
+		<div id="language" >
+		<?php
+		echo Yii::app()->lc->getSelectedLanguage();
+		Yii::app()->lc->setLanguage(isset($_POST['lang'])?$_POST['lang']:Yii::app()->lc->getSelectedLanguage());
+		$data = Yii::app()->lc->getAvalaibleLanguages();
+		$returnArr = array();
+		$reg;
+		
+		foreach($data as $t)
+		{
+		
+			$reg['id']=$t['lang'];
+			$reg['text']= Yii::app()->lc->t($t['language']).'/'.Yii::app()->lc->t($t['region']);
+			$returnArr[]= $reg;
+		
+		}
+		
+		echo CHtml::dropDownList('lang',isset($_POST['lang'])?$_POST['lang']:Yii::app()->lc->getSelectedLanguage(), CHtml::listData($returnArr, 'id', 'text'),array('submit'=>''));
+		Yii::app()->lc->setLanguage(isset($_POST['lang'])?$_POST['lang']:Yii::app()->lc->getSelectedLanguage());
+		
+	    echo $_POST['lang'];
+		?>
+		</div>
+	<?php CHtml::endForm(); ?>
 	</div><!-- header -->
 
 	<div id="mainmenu">
@@ -57,6 +84,12 @@
 		
 	<?php echo $content; ?>
 
+<?php
+
+
+//Yii::app()->setLanguage($lang);
+echo Yii::t('green','Active record class "{class}" does not have a scope named "{scope}".');
+?>
 	<div class="clear"></div>
 
 	<div id="footer">
