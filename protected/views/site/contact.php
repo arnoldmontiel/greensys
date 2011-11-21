@@ -7,6 +7,13 @@ $this->breadcrumbs=array(
 
 <h1><?php echo Yii::app()->lc->t('Contact Us')?></h1>
 
+<h1><?php
+Yii::app()->setLanguage('es_ar');
+echo Yii::app()->getLanguage();
+echo '</br>';
+echo Yii::app()->dateFormatter->formatDateTime(time(), 'short');
+?>
+</h1>
 
 <?php if(Yii::app()->user->hasFlash('contact')): ?>
 

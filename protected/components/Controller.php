@@ -21,4 +21,21 @@ class Controller extends SBaseController
 	 * for more details on how to specify this property.
 	 */
 	public $breadcrumbs=array();
+	
+	function init()
+	{
+		parent::init();
+		$app = Yii::app();
+		if (isset($_POST['lang']))
+		{
+			$app->lc->setLanguage($_POST['lang']);
+			//$app->language = ;
+			//$app->session['sel_lang'] = $app->language;
+		}
+		else if (isset($app->session['sel_lang']))
+		{
+			$app->lc->setLanguage($app->session['sel_lang']);
+			//$app->language = $app->session['sel_lang'];
+		}
+	}
 }

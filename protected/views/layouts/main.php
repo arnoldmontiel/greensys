@@ -28,8 +28,7 @@
 		Language: 
 		<div id="language" >
 		<?php
-		echo Yii::app()->lc->getSelectedLanguage();
-		Yii::app()->lc->setLanguage(isset($_POST['lang'])?$_POST['lang']:Yii::app()->lc->getSelectedLanguage());
+		//Yii::app()->lc->setLanguage(isset($_POST['lang'])?$_POST['lang']:Yii::app()->lc->getSelectedLanguage());
 		$data = Yii::app()->lc->getAvalaibleLanguages();
 		$returnArr = array();
 		$reg;
@@ -44,9 +43,8 @@
 		}
 		
 		echo CHtml::dropDownList('lang',isset($_POST['lang'])?$_POST['lang']:Yii::app()->lc->getSelectedLanguage(), CHtml::listData($returnArr, 'id', 'text'),array('submit'=>''));
-		Yii::app()->lc->setLanguage(isset($_POST['lang'])?$_POST['lang']:Yii::app()->lc->getSelectedLanguage());
+		//Yii::app()->lc->setLanguage(isset($_POST['lang'])?$_POST['lang']:Yii::app()->lc->getSelectedLanguage());
 		
-	    echo $_POST['lang'];
 		?>
 		</div>
 	<?php CHtml::endForm(); ?>
