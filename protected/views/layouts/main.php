@@ -24,9 +24,10 @@
 	<div id="header">
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
 		
-		Language: 
+		
 		<div id="language" >
 		<?php
+		echo Yii::app()->lc->t('Language: ');
 		$data = Yii::app()->lc->getAvalaibleLanguages();
 		$returnArr = array();
 		$reg = array();
