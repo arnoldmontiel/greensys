@@ -44,7 +44,7 @@ class LocaleManager extends CApplicationComponent {
 	public function t($message, $params=null, $source=null, $language=null) 
 	{
 		//self::initLanguage();
-		return Yii::t('Green', $message, $params, $source, $language);
+		return htmlentities(Yii::t('Green', $message, $params, $source, $language));
 	}
 	
 	public function getFormatByType($format_type, $format_id, $datetime_format=false) {

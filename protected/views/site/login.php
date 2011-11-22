@@ -19,8 +19,7 @@ $this->breadcrumbs=array(
 )); ?>
 
 	<p class="note"><?php 
-	echo Yii::app()->lc->t('Fields with {required} are required.', 
-	array('{required}'=>'<span class="required">*</span>'));
+	echo Yii::app()->lc->t('Fields with ').'<span class="required">*</span>'.Yii::app()->lc->t(' are required.');
 	?></p>
 
 	<div class="row">

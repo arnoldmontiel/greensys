@@ -27,9 +27,8 @@ $('.search-form form').submit(function(){
 
 <p>
 <?php 
-	echo Yii::app()->lc->t('You may optionally enter a comparison operator {operators} at the beginning of each of your search values to specify how the comparison should be done.', 
-	array('{operators}'=>'(<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>)'));
+	echo Yii::app()->lc->t('You may optionally enter a comparison operator ').'(<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
+or <b>=</b>)'. Yii::app()->lc->t(' at the beginning of each of your search values to specify how the comparison should be done.'); 
 	?>
 
 </p>

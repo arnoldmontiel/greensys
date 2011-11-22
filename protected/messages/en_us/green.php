@@ -15,8 +15,10 @@
  		'Manage'=>'Manage',
  		'User'=>'User',
  		'Permissions'=>'Permissions', 		
- 		'Language'=>'Language',
+ 		'Language: '=>'Language: ',
  		'Fields with {required} are required.'=>'Fields with {required} are required.',
+ 		'Fields with '=>'Fields with ',
+  		' are required.'=>' are required.',
  		'If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.'=>'If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.',
  		'Remember me next time'=>'Remember me next time',
  		'Verification Code'=>'Verification Code',
@@ -43,6 +45,8 @@
  		'Save'=>'Save',
  		'has already been taken.'=>'has already been taken.',
  		'You may optionally enter a comparison operator {operators} at the beginning of each of your search values to specify how the comparison should be done.'=>'You may optionally enter a comparison operator {operators} at the beginning of each of your search values to specify how the comparison should be done.',
+		'You may optionally enter a comparison operator '=>'You may optionally enter a comparison operator ',
+  		' at the beginning of each of your search values to specify how the comparison should be done.'=>' at the beginning of each of your search values to specify how the comparison should be done.',
  		'Advanced Search'=>'Advanced Search',
   );
  ?>
