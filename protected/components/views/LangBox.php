@@ -1,4 +1,4 @@
-<?php echo CHtml::form('','post'); ?>
+<?php echo CHtml::form('','post',array('accept-charset'=>'utf-8')); ?>
     <div id="langdrop">
         <?php 
         echo CHtml::dropDownList('_lang'
