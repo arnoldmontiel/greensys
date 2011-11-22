@@ -37,9 +37,9 @@
 			$returnArr[]= $reg;
 		}
 		$this->widget('LangBox',
-			array(
-				'languages'=>$returnArr,
-				'selectedLanguage'=>isset($_POST['lang'])?$_POST['lang']:Yii::app()->lc->getSelectedLanguage())
+		array(
+						'languages'=>$returnArr,
+						'selectedLanguage'=>isset($_POST['lang'])?$_POST['lang']:Yii::app()->lc->getSelectedLanguage())
 		);
 		?>
 		</div>
@@ -52,16 +52,16 @@
 		(
 		'items'=>array
 		(
-			array('label'=>'Home', 'url'=>array('/site/index')),
-			array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-			array('label'=>'Contact', 'url'=>array('/site/contact')),
-			array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-			array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
-			array('label'=>'Manage', 'visible'=>!Yii::app()->user->isGuest, 'items'=>array
+			array('label'=>Yii::app()->lc->t('Home'), 'url'=>array('/site/index')),
+			array('label'=>Yii::app()->lc->t('About'), 'url'=>array('/site/page', 'view'=>'about')),
+			array('label'=>Yii::app()->lc->t('Contact'), 'url'=>array('/site/contact')),
+			array('label'=>Yii::app()->lc->t('Login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+			array('label'=>Yii::app()->lc->t('Logout').' ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
+			array('label'=>Yii::app()->lc->t('Manage'), 'visible'=>!Yii::app()->user->isGuest, 'items'=>array
 			(
 				//array('label'=>'User', 'url'=>array('/user', 'view'=>'manage')),
-				array('label'=>'User', 'url'=>array('/user/index', 'view'=>'manage'),'visible'=>Yii::app()->user->checkAccess('ManejarUsuarios')),
-				array('label'=>'Permissions', 'url'=>array('/srbac/authitem/frontpage', 'view'=>'manage'))
+				array('label'=>Yii::app()->lc->t('User'), 'url'=>array('/user/index', 'view'=>'manage'),'visible'=>Yii::app()->user->checkAccess('ManejarUsuarios')),
+				array('label'=>Yii::app()->lc->t('Permissions'), 'url'=>array('/srbac/authitem/frontpage', 'view'=>'manage'))
 			)
 		))
 		
@@ -77,12 +77,6 @@
 		
 	<?php echo $content; ?>
 
-<?php
-
-
-//Yii::app()->setLanguage($lang);
-echo Yii::t('green','Active record class "{class}" does not have a scope named "{scope}".');
-?>
 	<div class="clear"></div>
 
 	<div id="footer">

@@ -197,3 +197,11 @@ div.search-form
 {
 	background: #80CFFF;
 }
+
+#language {
+	margin: 2px 2px 0 0;
+	float: right;
+	font-size: 10px;
+	color: #FFFFFF;
+	text-decoration: none;
+}

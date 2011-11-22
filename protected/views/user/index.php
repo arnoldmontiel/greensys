@@ -1,15 +1,15 @@
 <?php
 $this->breadcrumbs=array(
-	'Users',
+	Yii::app()->lc->t('Users'),
 );
 
 $this->menu=array(
-	array('label'=>'Create User', 'url'=>array('create')),
-	array('label'=>'Manage User', 'url'=>array('admin')),
+	array('label'=>Yii::app()->lc->t('Create User'), 'url'=>array('create')),
+	array('label'=>Yii::app()->lc->t('Manage User'), 'url'=>array('admin')),
 );
 ?>
 
-<h1>Users</h1>
+<h1><?php echo Yii::app()->lc->t('Users')?></h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

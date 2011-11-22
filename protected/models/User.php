@@ -35,9 +35,10 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, email', 'required'),
+			array('username, password, email', 'required', 'message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('username, password, email', 'length', 'max'=>128),
-			array('username, email', 'unique'),		
+			array('email', 'email', 'message'=> '{attribute} '. Yii::app()->lc->t('is not a valid email address.')),
+			array('username, email', 'unique', 'message'=>'{attribute} "{value}" '.Yii::app()->lc->t('has already been taken.')),		
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('username, password, email', 'safe', 'on'=>'search'),
@@ -61,9 +62,9 @@ class User extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'username' => 'Username',
-			'password' => 'Password',
-			'email' => 'Email',
+			'username' => Yii::app()->lc->t('Username'),
+			'password' => Yii::app()->lc->t('Password'),
+			'email' => Yii::app()->lc->t('Email'),
 		);
 	}
 

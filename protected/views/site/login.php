@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 
 <h1>Login</h1>
 
-<p>Please fill out the following form with your login credentials:</p>
+<p><?php echo Yii::app()->lc->t('Please fill out the following form with your login credentials:')?></p>
 
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -18,7 +18,10 @@ $this->breadcrumbs=array(
 	),
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+	<p class="note"><?php 
+	echo Yii::app()->lc->t('Fields with {required} are required.', 
+	array('{required}'=>'<span class="required">*</span>'));
+	?></p>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'username'); ?>
@@ -42,7 +45,7 @@ $this->breadcrumbs=array(
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton('Login'); ?>
+		<?php echo CHtml::submitButton(Yii::app()->lc->t('Login')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

@@ -16,7 +16,8 @@ $this->breadcrumbs=array(
 <?php else: ?>
 
 <p>
-If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.
+
+<?php echo Yii::app()->lc->t('If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.') ?>
 </p>
 
 <div class="form">
@@ -29,12 +30,16 @@ If you have business inquiries or other questions, please fill out the following
 	),
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
+	<p class="note">
+	<?php 
+	echo Yii::app()->lc->t('Fields with {required} are required.', 
+	array('{required}'=>'<span class="required">*</span>'));
+	?>
+	</p>
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'name'); ?>
+		<?php echo $form->labelEx($model, name); ?>
 		<?php echo $form->textField($model,'name'); ?>
 		<?php echo $form->error($model,'name'); ?>
 	</div>
@@ -64,14 +69,14 @@ If you have business inquiries or other questions, please fill out the following
 		<?php $this->widget('CCaptcha'); ?>
 		<?php echo $form->textField($model,'verifyCode'); ?>
 		</div>
-		<div class="hint">Please enter the letters as they are shown in the image above.
-		<br/>Letters are not case-sensitive.</div>
+		<div class="hint"><?php echo Yii::app()->lc->t('Please enter the letters as they are shown in the image above.');?>
+		<br/><?php echo Yii::app()->lc->t('Letters are not case-sensitive.');?></div>
 		<?php echo $form->error($model,'verifyCode'); ?>
 	</div>
 	<?php endif; ?>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton('Submit'); ?>
+		<?php echo CHtml::submitButton(Yii::app()->lc->t('Submit')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

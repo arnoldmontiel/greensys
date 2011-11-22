@@ -1,15 +1,15 @@
 <?php
 $this->breadcrumbs=array(
 	'Users'=>array('index'),
-	'Create',
+	Yii::app()->lc->t('Create'),
 );
 
 $this->menu=array(
-	array('label'=>'List User', 'url'=>array('index')),
-	array('label'=>'Manage User', 'url'=>array('admin')),
+	array('label'=>Yii::app()->lc->t('List User'), 'url'=>array('index')),
+	array('label'=>Yii::app()->lc->t('Manage User'), 'url'=>array('admin')),
 );
 ?>
 
-<h1>Create User</h1>
+<h1><?php echo Yii::app()->lc->t('Create User')?></h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

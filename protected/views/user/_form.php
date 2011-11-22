@@ -5,7 +5,10 @@
 	'enableAjaxValidation'=>true,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+	<p class="note"><?php 
+	echo Yii::app()->lc->t('Fields with {required} are required.', 
+	array('{required}'=>'<span class="required">*</span>'));
+	?></p>
 
 	<?php echo $form->errorSummary($model); ?>
 
@@ -28,7 +31,7 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::app()->lc->t('Create') : Yii::app()->lc->t('Save')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
