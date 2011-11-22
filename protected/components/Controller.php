@@ -26,9 +26,9 @@ class Controller extends SBaseController
 	{
 		parent::init();
 		$app = Yii::app();
-		if (isset($_POST['lang']))
+		if (isset($_POST['_lang']))
 		{
-			$app->lc->setLanguage($_POST['lang']);
+			$app->lc->setLanguage($_POST['_lang']);
 		}
 		else if (isset($app->session['sel_lang']))
 		{
