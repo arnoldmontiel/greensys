@@ -19,13 +19,17 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'Id_category'); ?>
-		<?php echo $form->textField($model,'Id_category'); ?>
+		<?php echo $form->dropDownList($model, 'Id_category', CHtml::listData(
+    			Category::model()->findAll(), 'Id', 'description')); 
+		?>
 		<?php echo $form->error($model,'Id_category'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'Id_nomenclator'); ?>
-		<?php echo $form->textField($model,'Id_nomenclator'); ?>
+		<?php echo $form->dropDownList($model, 'Id_nomenclator', CHtml::listData(
+    			Nomenclator::model()->findAll(), 'Id', 'description')); 
+		?>
 		<?php echo $form->error($model,'Id_nomenclator'); ?>
 	</div>
 
@@ -55,7 +59,8 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'discontinued'); ?>
-		<?php echo $form->textField($model,'discontinued'); ?>
+		
+		<?php echo $form->checkBox($model,'discontinued'); ?>
 		<?php echo $form->error($model,'discontinued'); ?>
 	</div>
 

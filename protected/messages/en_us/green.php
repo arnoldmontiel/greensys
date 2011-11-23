@@ -48,5 +48,7 @@
 		'You may optionally enter a comparison operator '=>'You may optionally enter a comparison operator ',
   		' at the beginning of each of your search values to specify how the comparison should be done.'=>' at the beginning of each of your search values to specify how the comparison should be done.',
  		'Advanced Search'=>'Advanced Search',
+ 		'This is the main page.'=>'This is the main page.',
+ 
   );
  ?>

@@ -48,5 +48,6 @@
  		'You may optionally enter a comparison operator '=>'Tiene la opción de ingresar un operador de comparación ',
  		' at the beginning of each of your search values to specify how the comparison should be done.'=>' al principio de cada uno de los valores de su búsqueda para especificar como se debe hacer la comparación.',
  		'Advanced Search'=>'Búsqueda Avanzada',
+ 		'This is the main page.'=>'Esta es la página principal.',
   );
  ?>
