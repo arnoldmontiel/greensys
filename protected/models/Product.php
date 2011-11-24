@@ -84,13 +84,13 @@ class Product extends CActiveRecord
 		return array(
 			'budgetItems' => array(self::HAS_MANY, 'BudgetItem', 'Id_product'),
 			'priceListItems' => array(self::HAS_MANY, 'PriceListItem', 'id_product'),
-			'idBrand' => array(self::BELONGS_TO, 'Brand', 'id_brand'),
-			'idCategory' => array(self::BELONGS_TO, 'Category', 'Id_category'),
-			'idNomenclator' => array(self::BELONGS_TO, 'Nomenclator', 'Id_nomenclator'),
+			'brand' => array(self::BELONGS_TO, 'Brand', 'id_brand'),
+			'category' => array(self::BELONGS_TO, 'Category', 'Id_category'),
+			'nomenclator' => array(self::BELONGS_TO, 'Nomenclator', 'Id_nomenclator'),
 			'areas' => array(self::MANY_MANY, 'Area', 'product_area(id_product, id_area)'),
 			'categories' => array(self::MANY_MANY, 'Category', 'product_category(id_product, id_category)'),
-			'productGroups' => array(self::HAS_MANY, 'ProductGroup', 'id_product_child'),
-			'productGroups1' => array(self::HAS_MANY, 'ProductGroup', 'id_product_parent'),
+			'productGroupsChild' => array(self::HAS_MANY, 'ProductGroup', 'id_product_child'),
+			'productGroupsParent' => array(self::HAS_MANY, 'ProductGroup', 'id_product_parent'),
 			'productItems' => array(self::HAS_MANY, 'ProductItem', 'Id_product'),
 			'productRequirements' => array(self::MANY_MANY, 'ProductRequirement', 'product_requirement_product(id_product, id_product_requirement)'),
 		);

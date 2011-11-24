@@ -5,15 +5,17 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id_brand')); ?>:</b>
-	<?php echo CHtml::encode($data->id_brand); ?>
+	<?php
+		echo CHtml::encode($data->brand->description); 
+	?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_category')); ?>:</b>
-	<?php echo CHtml::encode($data->Id_category); ?>
+	<?php echo CHtml::encode($data->category->description); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_nomenclator')); ?>:</b>
-	<?php echo CHtml::encode($data->Id_nomenclator); ?>
+	<?php echo CHtml::encode($data->nomenclator->description); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('description_customer')); ?>:</b>
