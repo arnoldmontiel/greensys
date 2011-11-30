@@ -11,8 +11,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'data'); ?>
-		<?php echo $form->textField($model,'data'); ?>
+		<?php echo $form->label($model,'content'); ?>
+		<?php echo $form->textField($model,'content'); ?>
 	</div>
 
 	<div class="row">
@@ -27,12 +27,37 @@
 
 	<div class="row">
 		<?php echo $form->label($model,'size'); ?>
-		<?php echo $form->textField($model,'size',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->textField($model,'size'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->label($model,'description'); ?>
 		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'content_small'); ?>
+		<?php echo $form->textField($model,'content_small'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'type_small'); ?>
+		<?php echo $form->textField($model,'type_small',array('size'=>45,'maxlength'=>45)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'size_small'); ?>
+		<?php echo $form->textField($model,'size_small'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'id_entity_type'); ?>
+		<?php echo $form->textField($model,'id_entity_type'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'Id_product'); ?>
+		<?php echo $form->textField($model,'Id_product'); ?>
 	</div>
 
 	<div class="row buttons">
