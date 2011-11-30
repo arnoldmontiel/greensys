@@ -101,8 +101,9 @@
 	</div>
 
 	<div class="row">
+	
 		<?php echo $form->labelEx($model,'hide'); ?>
-		<?php echo $form->textField($model,'hide'); ?>
+		<?php echo $form->checkBox($model,'hide'); ?>
 		<?php echo $form->error($model,'hide'); ?>
 	</div>
 
