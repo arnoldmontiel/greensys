@@ -5,9 +5,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id_brand')); ?>:</b>
-	<?php
-		echo CHtml::encode($data->brand->description); 
-	?>
+	<?php echo CHtml::encode($data->brand->description); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_category')); ?>:</b>
