@@ -168,7 +168,7 @@ class MultimediaController extends Controller
 	{
 		$model=$this->loadModel($_GET['id']);
 		header("Content-type: ".$model->type);
-		echo $model->contet;
+		echo $model->content;
 	}
 	
 	/**
