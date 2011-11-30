@@ -26,7 +26,7 @@ class MultimediaController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',
+			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'users'=>array('*'),
 			),
 		);
@@ -168,6 +168,16 @@ class MultimediaController extends Controller
 	{
 		$model=$this->loadModel($_GET['id']);
 		header("Content-type: ".$model->type);
-		echo $model->data;
-	}	
+		echo $model->contet;
+	}
+	
+	/**
+	* Opens the dialog in browser to open/save the image.
+	*/
+	public function actionPreviewImageSmall($id)
+	{
+		$model=$this->loadModel($_GET['id']);
+		header("Content-type: ".$model->type);
+		echo $model->content_small;
+	}
 }
