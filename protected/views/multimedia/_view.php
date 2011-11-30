@@ -28,11 +28,12 @@
 	<?php echo CHtml::encode($data->content_small); ?>
 	<br />
 
-	<?php $this->widget('ext.highslide.highslide', array(
+	<b><?php $this->widget('ext.highslide.highslide', array(
 					'image'=>Yii::app()->urlManager->createUrl('multimedia/previewImage',array('id'=>$data->id)),
 					'smallImage'=>Yii::app()->urlManager->createUrl('multimedia/previewImageSmall',array('id'=>$data->id)),	
 					
 	)); ?>
+	<br />
 
 	
 <?php /*

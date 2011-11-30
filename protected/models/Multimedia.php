@@ -11,7 +11,6 @@
  * @property integer $size
  * @property string $description
  * @property string $content_small
- * @property string $type_small
  * @property integer $size_small
  * @property integer $id_entity_type
  * @property integer $Id_product
@@ -117,11 +116,11 @@ class Multimedia extends CActiveRecord
 		return array(
 			array('size, size_small, id_entity_type, Id_product', 'numerical', 'integerOnly'=>true),
 			array('uploadedFile', 'file', 'types'=>'jpg, gif, png, pdf'),
-			array('name, type, type_small', 'length', 'max'=>45),
+			array('name, type', 'length', 'max'=>45),
 			array('content, description, content_small', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, content, name, type, size, description, content_small, type_small, size_small, id_entity_type, Id_product', 'safe', 'on'=>'search'),
+			array('id, content, name, type, size, description, content_small, size_small, id_entity_type, Id_product', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -152,7 +151,6 @@ class Multimedia extends CActiveRecord
 			'description' => 'Description',
 			'uploadedFile' => 'Uploaded File',
 			'content_small' => 'Content Small',
-			'type_small' => 'Type Small',
 			'size_small' => 'Size Small',
 			'id_entity_type' => 'Id Entity Type',
 			'Id_product' => 'Id Product',
@@ -177,7 +175,6 @@ class Multimedia extends CActiveRecord
 		$criteria->compare('size',$this->size);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('content_small',$this->content_small,true);
-		$criteria->compare('type_small',$this->type_small,true);
 		$criteria->compare('size_small',$this->size_small);
 		$criteria->compare('id_entity_type',$this->id_entity_type);
 		$criteria->compare('Id_product',$this->Id_product);

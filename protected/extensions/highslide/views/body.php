@@ -1,7 +1,6 @@
-
-
 <script type="text/javascript">
-hs.graphicsDir = '<?php echo '../..'. $this->graphics ?>';
+hs.graphicsDir = '<?php echo '../..'. $this->graphics ?>/'
+//hs.graphicsDir = 'http://localhost/workspace/svngreen/assets/1ce51abe/'
 
 hs.align = 'center';
 hs.transitions = ['expand', 'crossfade'];
@@ -29,8 +28,8 @@ if (hs.addSlideshow) hs.addSlideshow({
 <div class="highslide-gallery">
 
 		
-		<a href="<?php echo  $image ?>" class="highslide" onclick="return hs.expand(this)">
-			<img src="<?php echo $smallImage ?>" alt="Highslide JS"
+		<a href="<?php echo  $image?>" class="highslide" onclick="return hs.expand(this)">
+			<img src="<?php echo $smallImage?>" alt="Highslide JS"
 				title="Click to enlarge" />
 		</a>
 
