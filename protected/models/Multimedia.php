@@ -5,11 +5,20 @@
  *
  * The followings are the available columns in table 'multimedia':
  * @property integer $id
- * @property string $data
+ * @property string $content
  * @property string $name
  * @property string $type
- * @property string $size
+ * @property integer $size
  * @property string $description
+ * @property string $content_small
+ * @property string $type_small
+ * @property integer $size_small
+ * @property integer $id_entity_type
+ * @property integer $Id_product
+ *
+ * The followings are the available model relations:
+ * @property EntityType $idEntityType
+ * @property Product $idProduct
  */
 class Multimedia extends CActiveRecord
 {
@@ -17,46 +26,70 @@ class Multimedia extends CActiveRecord
 	
 	public function beforeSave()
 	{
-		//$model->attributes=$_POST['Multimedia'];
-		
+	
 		if($file=CUploadedFile::getInstance($this,'uploadedFile'))
 		{
-			$this->name=$file->name;			
-			$this->type=$file->type;			
+			$this->name=$file->name;
+			$this->type=$file->type;
+			
+			// set the new size
 			// maximum dimension
-			$w=640;
-			$h=640;
-			$im = imagecreatefromstring(file_get_contents($file->tempName));
+			$newFile = $this->resizeFile(640,640,$file);
+			$this->content = $newFile['content'];				
+			$this->size = $newFile['size'];
 			
-			$size[0] = imagesx($im);
-			$size[1] = imagesy($im);
-			$newwidth = $size[0];
-			$newheight = $size[1];
-			//calculate the new dimensions respecting the original sizes
-			if( $newwidth > $w ){
-				$newheight = ($w / $newwidth) * $newheight;
-				$newwidth = $w;
-			}
-			if( $newheight > $h ){
-				$newwidth = ($h / $newheight) * $newwidth;
-				$newheight = $h;
-			}
-			// create the new image
-			$new = imagecreatetruecolor($newwidth, $newheight);
-			// copy the image with new sizes
-			imagecopyresampled($new, $im, 0, 0, 0, 0, $newwidth, $newheight, $size[0], $size[1]);
-			ob_start();
-			ob_implicit_flush(false);
+			//set the new small size
+			$newFile = $this->resizeFile(150,150,$file);
+			$this->content_small = $newFile['content'];
+			$this->size_small = $newFile['size'];
 			
-			if( $this->type == 'image/jpeg' ) imagejpeg($new, '', 100);
-			elseif ( $this->type == 'image/gif' ) imagegif($new);
-			elseif (  $this->type == 'image/png' ) imagepng($new);
-			$this->data = ob_get_clean();
-			$this->size = $newwidth*$newheight;
+			if($this->id_entity_type == null){
+				// by default id = 1 is type "NONE"
+				$this->id_entity_type = 1;
+			}	
+			
 		}
 	
 		return parent::beforeSave();
 	}
+	
+	/**
+	* Returns an array with the new content and new size
+	* @param integer $w new width of file
+	* @param integer $d new width of file
+	* @param file $file the file to be modified
+	*/
+	private function resizeFile($w,$h,$file)
+	{
+		$im = imagecreatefromstring(file_get_contents($file->tempName));
+		
+		$size[0] = imagesx($im);
+		$size[1] = imagesy($im);
+		$newwidth = $size[0];
+		$newheight = $size[1];
+		//calculate the new dimensions respecting the original sizes
+		if( $newwidth > $w ){
+			$newheight = ($w / $newwidth) * $newheight;
+			$newwidth = $w;
+		}
+		if( $newheight > $h ){
+			$newwidth = ($h / $newheight) * $newwidth;
+			$newheight = $h;
+		}
+		// create the new image
+		$new = imagecreatetruecolor($newwidth, $newheight);
+		// copy the image with new sizes
+		imagecopyresampled($new, $im, 0, 0, 0, 0, $newwidth, $newheight, $size[0], $size[1]);
+		ob_start();
+		ob_implicit_flush(false);
+		
+		if( $file->type == 'image/jpeg' || $file->type == 'image/pjpeg' ) imagejpeg($new, '', 100);
+		elseif ( $file->type == 'image/gif' ) imagegif($new);
+		elseif (  $file->type == 'image/png' ) imagepng($new);
+		
+		return array('size'=>$newwidth*$newheight, 'content'=> ob_get_clean());
+	}
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Multimedia the static model class
@@ -82,13 +115,13 @@ class Multimedia extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, type', 'length', 'max'=>45),
-			array('size', 'length', 'max'=>10),
+			array('size, size_small, id_entity_type, Id_product', 'numerical', 'integerOnly'=>true),
 			array('uploadedFile', 'file', 'types'=>'jpg, gif, png, pdf'),
-			array('description', 'safe'),
+			array('name, type, type_small', 'length', 'max'=>45),
+			array('content, description, content_small', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, data, name, type, size, description', 'safe', 'on'=>'search'),
+			array('id, content, name, type, size, description, content_small, type_small, size_small, id_entity_type, Id_product', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -100,6 +133,8 @@ class Multimedia extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'idEntityType' => array(self::BELONGS_TO, 'EntityType', 'id_entity_type'),
+			'idProduct' => array(self::BELONGS_TO, 'Product', 'Id_product'),
 		);
 	}
 
@@ -110,12 +145,17 @@ class Multimedia extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'data' => 'Data',
+			'content' => 'Content',
 			'name' => 'Name',
 			'type' => 'Type',
 			'size' => 'Size',
 			'description' => 'Description',
-			'uploadedFile' => 'Uploaded File'
+			'uploadedFile' => 'Uploaded File',
+			'content_small' => 'Content Small',
+			'type_small' => 'Type Small',
+			'size_small' => 'Size Small',
+			'id_entity_type' => 'Id Entity Type',
+			'Id_product' => 'Id Product',
 		);
 	}
 
@@ -131,11 +171,16 @@ class Multimedia extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('data',$this->data,true);
+		$criteria->compare('content',$this->content,true);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('type',$this->type,true);
-		$criteria->compare('size',$this->size,true);
+		$criteria->compare('size',$this->size);
 		$criteria->compare('description',$this->description,true);
+		$criteria->compare('content_small',$this->content_small,true);
+		$criteria->compare('type_small',$this->type_small,true);
+		$criteria->compare('size_small',$this->size_small);
+		$criteria->compare('id_entity_type',$this->id_entity_type);
+		$criteria->compare('Id_product',$this->Id_product);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
