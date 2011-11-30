@@ -220,6 +220,19 @@ class AreaController extends Controller
 		return $model;
 	}
 
+	public function actionAjaxFillProductArea()
+	{
+		$data=ProductArea::model()->findAll('id_area=:parent_id',
+		array(':parent_id'=>(int) $_POST['Area']['Id']));
+	
+	
+		foreach($data as $item)
+		{
+			echo CHtml::tag('items',
+			array('value'=>$item->id_product),CHtml::encode($item->product->description_customer),true);
+		}
+	}
+	
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated

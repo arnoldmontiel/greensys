@@ -21,10 +21,22 @@ $this->menu=array(
 		$items = CHtml::listData($dataProvider->getData(), 'Id', 'description');
 		?>
 	<div class="row">
-		<?php echo "Area: " ?>
-		<?php echo $form->dropDownList($model, 'description', $items); 
+		
+		<?php echo $form->labelEx($model,'Area'); ?>
+		<?php echo $form->dropDownList($model, 'Id', CHtml::listData($model->findAll(), 'Id', 'description'),		
+			array(
+				'ajax' => array(
+				'type'=>'POST', //request type
+				'url'=>AreaController::createUrl('AjaxFillProductArea'), //url to call.
+				//Style: CController::createUrl('currentController/methodToCall')
+				'update'=>'#ddlist', //selector to update
+				//'data'=>'js:javascript statement'
+				//leave out the data key to pass all form values through
+				),'prompt'=>'select an area'
+			)		
+		);
 		?>
-		<?php echo $form->error($model,'Id_nomenclator'); ?>
+		
 	</div>
 	<?php		
 		
@@ -32,7 +44,7 @@ $this->menu=array(
 		
 		$this->widget('ext.dragdroplist.dragdroplist', array(
 				'id'=>'ddlist',	// default is class="ui-sortable" id="yw0"
-				'items' => $itemsProduct,
+				'items' => array(),
 				//'connectWith' =>'ddlist1',
 				'options'=>array(
 					'connectWith' =>'#ddlist1',
