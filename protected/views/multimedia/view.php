@@ -25,7 +25,6 @@ $this->menu=array(
 		'size',
 		'description',
 		'content_small',
-		'type_small',
 		'size_small',
 		'id_entity_type',
 		'Id_product',
