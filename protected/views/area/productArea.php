@@ -53,12 +53,15 @@ $this->menu=array(
 					'receive'=>
 							'js:function(event, ui) 
 							{ 
+								var ddlArea = document.getElementById("Area_Id");
+								var ddlAreaId = ddlArea.options[ddlArea.selectedIndex].value;
 								$.post(
 									"'.AreaController::createUrl('AjaxSaveProductArea').'",
 									 {
-									 	$("#ddlist1").sortable( "serialize", {attribute: "id"}),
-									 	"'.$model->Id.'"
-									 }); 
+									 	item:$("#ddlist").sortable("serialize"), area:ddlAreaId
+									 }
+									 );
+									  
 							}' 				
 				),
 		));
@@ -73,10 +76,10 @@ $this->menu=array(
 					{ 
 						$.post(
 							"'.AreaController::createUrl('AjaxSaveProductArea').'",
-							 {
-							 	$("#ddlist1").sortable( "serialize", {attribute: "id"}),
-							 	"'.$model->Id.'"
-							 }); 
+							 
+							 	$("#ddlist1").sortable("serialize")
+							 	
+							); 
 					}' 
 					),				
 		));
