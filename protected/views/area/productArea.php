@@ -58,12 +58,24 @@ $this->menu=array(
 								$.post(
 									"'.AreaController::createUrl('AjaxSaveProductArea').'",
 									 {
-									 	item:$("#ddlist").sortable("serialize"), area:ddlAreaId
-									 }
-									 );
-									  
-							}' 				
-				),
+									 	productId:$("#ddlist").sortable( "serialize", {attribute: "id"}),
+									 	areaId:ddlAreaId
+									 }); 
+							}', 				
+					'remove'=>
+							'js:function(event, ui) 
+							{ 
+								var ddlArea = document.getElementById("Area_Id");
+								var ddlAreaId = ddlArea.options[ddlArea.selectedIndex].value;
+		
+								$.post(
+									"'.AreaController::createUrl('AjaxSaveProductArea').'",
+									 {
+									 	productId:$("#ddlist").sortable( "serialize"),
+									 	areaId:ddlAreaId
+									 }); 
+							}', 				
+		),
 		));
 		$this->widget('ext.dragdroplist.dragdroplist', array(
 				'id'=>'ddlist1',	// default is class="ui-sortable" id="yw0"
@@ -71,16 +83,6 @@ $this->menu=array(
 				'options'=>array(
 					'connectWith' =>'#ddlist',
 					'revert'=> true,
-					'receive'=> 
-					'js:function(event, ui) 
-					{ 
-						$.post(
-							"'.AreaController::createUrl('AjaxSaveProductArea').'",
-							 
-							 	$("#ddlist1").sortable("serialize")
-							 	
-							); 
-					}' 
 					),				
 		));
 		
