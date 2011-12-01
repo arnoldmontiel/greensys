@@ -10,8 +10,9 @@ $this->menu=array(
 );
 
 ?>
-<div class="form">
 
+<div class="form">
+<div id="showmsg"></div>
 	<?php $form=$this->beginWidget('CActiveForm', array(
 		'id'=>'productArea-form',
 		'enableAjaxValidation'=>true,
@@ -49,8 +50,10 @@ $this->menu=array(
 				'options'=>array(
 					'connectWith' =>'#ddlist1',
 					'revert'=> true,
-					'receive'=> 'js:function(event, ui) {alert("receive"); }'
-		)
+					'receive'=> 'js:function(event, ui) { var order = $("#ddlist").sortable("serialize"); $.post("'.AreaController::createUrl('AjaxFillProductArea1').'", $(this).sortable("serialize")); }' 
+					
+		),
+		
 				//'itemTemplate'=>'<li id="{id}" class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>{content}'.$delete.'</li>',
 		));
 		$this->widget('ext.dragdroplist.dragdroplist', array(
