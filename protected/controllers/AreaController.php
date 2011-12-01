@@ -159,53 +159,6 @@ class AreaController extends Controller
 	
 	}
 	
-	public function actionOrderAjax()
-	{
-		// Handle the POST request data submission
-		if (Yii::app()->request->isPostRequest && isset($_POST['Command']) && ($_POST['Command']=='add') )
-		{
-			$model=new Job;
-			$model->attributes['jdesc']=$_POST['jdesc'];
-			$model->jdesc=$_POST['jdesc'];
-			if ($model->validate())
-			{
-				$model->save();
-				$delete = '<a class="delete" title="Delete" href="/draggable/index.php?r=job/delete&amp;id={'. $model->jid .'}"><img src="images/editdelete.png" alt="Delete" /></a>';
-				echo '<li id="'.$model->jid.'" class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>'.$model->jdesc.$delete.'</li>';
-			}
-		}
-		elseif (Yii::app()->request->isPostRequest && isset($_POST['Order']))
-		{
-			// Since we converted the Javascript array to a string,
-			// convert the string back to a PHP array
-			$models = explode(',', $_POST['Order']);
-	
-			for ($i = 0; $i < sizeof($models); $i++)
-			{
-			if ($model = Job::model()->findbyPk($models[$i]))
-			{
-			$model->jseq = $i;
-	
-			$model->save();
-			}
-			}
-			print_r($_POST);
-	}
-			// Handle the regular model order view
-			else
-			{
-			$dataProvider = new CActiveDataProvider('Job', array(
-				'pagination' => false,
-				'criteria' => array(
-					'order' => 'jseq ASC, jdesc DESC',
-				),
-				));
-	
-			$this->render('order',array(
-				'dataProvider' => $dataProvider,
-			));
-			}
-		}
 	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
@@ -229,22 +182,33 @@ class AreaController extends Controller
 		foreach($data as $item)
 		{
 			echo CHtml::tag('li',
-			array('id'=>$item->id_product),CHtml::encode($item->product->description_customer),true);
+			array('id'=>"items_".$item->id_product),CHtml::encode($item->product->description_customer),true);
 		}
+		
 	}
 	public function actionAjaxSaveProductArea()
 	{
+
+		parse_str($_POST['productId']);
+		$areaId = $_POST['areaId'];
+
 		$data=ProductArea::model()->findAll('id_area=:parent_id',
-		array(':parent_id'=>(int) $_POST['Area']['Id']));		
-	
+		array(':parent_id'=>(int) $areaId));
+		
 	
 		foreach($data as $item)
 		{
-			echo CHtml::tag('li',
-			array('id'=>$item->id_product),CHtml::encode($item->product->description_customer),true);
+			$item->delete();
 		}
-	}
-	
+		
+		
+		foreach($items as $productId)
+		{
+			$productArea=new ProductArea;
+			$productArea->attributes = array('id_area'=>$areaId,'id_product'=>$productId);
+			$productArea->save();
+		}
+	}	
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated
