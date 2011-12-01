@@ -30,7 +30,7 @@ class dragdroplist extends CJuiWidget
 	 * while "{id}" be replaced with the item ID.
 	 */
 	//public $itemTemplate='<li>{content}</li>';
-	public $itemTemplate='<li id="item_{id}">{content}</li>';
+	public $itemTemplate='<li id="items_{id}">{content}</li>';
 	//public $itemTemplate='<div id="{id}">{content}</div>';
 
 	public function init()
