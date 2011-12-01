@@ -12,7 +12,6 @@ $this->menu=array(
 ?>
 
 <div class="form">
-<div id="showmsg"></div>
 	<?php $form=$this->beginWidget('CActiveForm', array(
 		'id'=>'productArea-form',
 		'enableAjaxValidation'=>true,
@@ -42,19 +41,26 @@ $this->menu=array(
 	<?php		
 		
 		$itemsProduct = CHtml::listData($dataProviderProduct->getData(), 'Id', 'description_customer');
+		//$itemsProduct = array('product_1'=>'primero','product_2'=>'segundo','product_3'=>'tercero');
 		
 		$this->widget('ext.dragdroplist.dragdroplist', array(
 				'id'=>'ddlist',	// default is class="ui-sortable" id="yw0"
 				'items' => array(),
-				//'connectWith' =>'ddlist1',
 				'options'=>array(
 					'connectWith' =>'#ddlist1',
 					'revert'=> true,
-					'receive'=> 'js:function(event, ui) { var order = $("#ddlist").sortable("serialize"); $.post("'.AreaController::createUrl('AjaxFillProductArea1').'", $(this).sortable("serialize")); }' 
-					
-		),
-		
-				//'itemTemplate'=>'<li id="{id}" class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>{content}'.$delete.'</li>',
+					//'receive'=> 'js:function(event, ui) { $.post("'.AreaController::createUrl('AjaxSaveProductArea').'", $("#ddlist").sortable("serialize", {attribute: "id"})); }' 
+					'receive'=>
+							'js:function(event, ui) 
+							{ 
+								$.post(
+									"'.AreaController::createUrl('AjaxSaveProductArea').'",
+									 {
+									 	$("#ddlist1").sortable( "serialize", {attribute: "id"}),
+									 	"'.$model->Id.'"
+									 }); 
+							}' 				
+				),
 		));
 		$this->widget('ext.dragdroplist.dragdroplist', array(
 				'id'=>'ddlist1',	// default is class="ui-sortable" id="yw0"
@@ -62,8 +68,17 @@ $this->menu=array(
 				'options'=>array(
 					'connectWith' =>'#ddlist',
 					'revert'=> true,
-					'receive'=> 'js:function(event, ui) {alert("receive"); }'
-				)
+					'receive'=> 
+					'js:function(event, ui) 
+					{ 
+						$.post(
+							"'.AreaController::createUrl('AjaxSaveProductArea').'",
+							 {
+							 	$("#ddlist1").sortable( "serialize", {attribute: "id"}),
+							 	"'.$model->Id.'"
+							 }); 
+					}' 
+					),				
 		));
 		
 		
