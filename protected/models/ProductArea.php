@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'product_area':
  * @property integer $id_area
  * @property integer $id_product
+ * @property integer $quantity
  */
 class ProductArea extends CActiveRecord
 {
@@ -35,10 +36,10 @@ class ProductArea extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('id_area, id_product', 'required'),
-			array('id_area, id_product', 'numerical', 'integerOnly'=>true),
+			array('id_area, id_product, quantity', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id_area, id_product', 'safe', 'on'=>'search'),
+			array('id_area, id_product, quantity', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,8 +51,8 @@ class ProductArea extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-		'area' => array(self::BELONGS_TO, 'Area', 'id_area'),
-		'product' => array(self::BELONGS_TO, 'Product', 'id_product'),
+			'area' => array(self::BELONGS_TO, 'Area', 'id_area'),
+			'product' => array(self::BELONGS_TO, 'Product', 'id_product'),		
 		);
 	}
 
@@ -63,6 +64,7 @@ class ProductArea extends CActiveRecord
 		return array(
 			'id_area' => 'Id Area',
 			'id_product' => 'Id Product',
+			'quantity' => 'Quantity',
 		);
 	}
 
@@ -79,6 +81,7 @@ class ProductArea extends CActiveRecord
 
 		$criteria->compare('id_area',$this->id_area);
 		$criteria->compare('id_product',$this->id_product);
+		$criteria->compare('quantity',$this->quantity);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
