@@ -49,7 +49,7 @@ $this->menu=array(
 				'options'=>array(
 					'connectWith' =>'#ddlist1',
 					'revert'=> true,
-					//'receive'=> 'js:function(event, ui) { $.post("'.AreaController::createUrl('AjaxSaveProductArea').'", $("#ddlist").sortable("serialize", {attribute: "id"})); }' 
+					'helper'=> 'clone',
 					'receive'=>
 							'js:function(event, ui) 
 							{ 
@@ -83,6 +83,11 @@ $this->menu=array(
 				'options'=>array(
 					'connectWith' =>'#ddlist',
 					'revert'=> true,
+					'helper'=> 'clone',
+					'start'=> 'jsfunction(event, ui){
+											console.log(event);
+											console.log(ui);
+					}',
 					),				
 		));
 		
