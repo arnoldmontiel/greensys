@@ -11,6 +11,20 @@ $this->menu=array(
 
 ?>
 
+<script>
+	$(function() {
+		$( "#ddlAssigment" ).sortable({
+			revert: true
+		});
+		$( "#ddlProduct li" ).draggable({
+			connectToSortable: "#ddlAssigment",
+			helper: "clone",
+			revert: "invalid"
+		});
+		$( "ul, li" ).disableSelection();
+	});
+	</script>
+
 <div class="form">
 	<?php $form=$this->beginWidget('CActiveForm', array(
 		'id'=>'productArea-form',
@@ -29,7 +43,7 @@ $this->menu=array(
 				'type'=>'POST', //request type
 				'url'=>AreaController::createUrl('AjaxFillProductArea'), //url to call.
 				//Style: CController::createUrl('currentController/methodToCall')
-				'update'=>'#ddlist', //selector to update
+				'update'=>'#ddlAssigment', //selector to update
 				//'data'=>'js:javascript statement'
 				//leave out the data key to pass all form values through
 				),'prompt'=>'select an area'
@@ -44,12 +58,12 @@ $this->menu=array(
 		//$itemsProduct = array('product_1'=>'primero','product_2'=>'segundo','product_3'=>'tercero');
 		
 		$this->widget('ext.dragdroplist.dragdroplist', array(
-				'id'=>'ddlist',	// default is class="ui-sortable" id="yw0"
+				'id'=>'ddlAssigment',	// default is class="ui-sortable" id="yw0"
 				'items' => array(),
 				'options'=>array(
-					'connectWith' =>'#ddlist1',
+					'connectWith' =>'#ddlProduct',
 					'revert'=> true,
-					'helper'=> 'clone',
+					//'receive'=> 'js:function(event, ui) { $.post("'.AreaController::createUrl('AjaxSaveProductArea').'", $("#ddlist").sortable("serialize", {attribute: "id"})); }' 
 					'receive'=>
 							'js:function(event, ui) 
 							{ 
@@ -58,7 +72,7 @@ $this->menu=array(
 								$.post(
 									"'.AreaController::createUrl('AjaxSaveProductArea').'",
 									 {
-									 	productId:$("#ddlist").sortable( "serialize", {attribute: "id"}),
+									 	productId:$("#ddlAssigment").sortable( "serialize", {attribute: "id"}),
 									 	areaId:ddlAreaId
 									 }); 
 							}', 				
@@ -71,24 +85,21 @@ $this->menu=array(
 								$.post(
 									"'.AreaController::createUrl('AjaxSaveProductArea').'",
 									 {
-									 	productId:$("#ddlist").sortable( "serialize"),
+									 	productId:$("#ddlAssigment").sortable( "serialize"),
 									 	areaId:ddlAreaId
 									 }); 
 							}', 				
 		),
 		));
 		$this->widget('ext.dragdroplist.dragdroplist', array(
-				'id'=>'ddlist1',	// default is class="ui-sortable" id="yw0"
+				'id'=>'ddlProduct',	// default is class="ui-sortable" id="yw0"
 				'items' => $itemsProduct,
 				'options'=>array(
-					'connectWith' =>'#ddlist',
-					'revert'=> true,
-					'helper'=> 'clone',
-					'start'=> 'jsfunction(event, ui){
-											console.log(event);
-											console.log(ui);
-					}',
-					),				
+					'connectWith' =>'#ddlAssigment',
+					'revert'=> true
+					),
+					
+				
 		));
 		
 		
