@@ -33,6 +33,7 @@ class dragdroplist extends CJuiWidget
 	public $itemTemplate='<li id="items_{id}">{content}</li>';
 	//public $itemTemplate='<div id="{id}">{content}</div>';
 
+	public $style;
 	public function init()
 	{
 		$assetsDir = dirname(__FILE__).'/assets';
@@ -64,9 +65,15 @@ class dragdroplist extends CJuiWidget
 	{
 		$id=$this->getId();
 		if (isset($this->htmlOptions['id']))
-		$id = $this->htmlOptions['id'];
+			$id = $this->htmlOptions['id'];
 		else
-		$this->htmlOptions['id']=$id;
+			$this->htmlOptions['id']=$id;
+		
+		if (isset($this->style))
+			$this->htmlOptions['class'] = $this->style;
+		else
+			$this->htmlOptions['class'] = 'ddlist';
+			
 		
 		$options=empty($this->options) ? '' : CJavaScript::encode($this->options);
 		Yii::app()->getClientScript()->registerScript(__CLASS__.'#'.$id,"jQuery('#{$id}').sortable({$options});");				
