@@ -181,8 +181,10 @@ class AreaController extends Controller
 	
 		foreach($data as $item)
 		{
-			echo CHtml::tag('li',
-			array('id'=>"items_".$item->id_product),CHtml::encode($item->product->description_customer),true);
+			for ($i = 0; $i < $item->quantity; $i++) {
+				echo CHtml::tag('li',
+				array('id'=>"items_".$item->id_product),CHtml::encode($item->product->description_customer),true);
+			}
 		}
 		
 	}
@@ -204,8 +206,42 @@ class AreaController extends Controller
 		
 		foreach($items as $productId)
 		{
+			$productAreaInDb = ProductArea::model()->findByPk(array('id_area'=>(int) $areaId,'id_product'=>(int)$productId));
+			if($productAreaInDb==null)
+			{
+				$productArea=new ProductArea;
+				$productArea->attributes = array('id_area'=>$areaId,'id_product'=>$productId,'quantity'=>1);
+				$productArea->save();
+			}
+			else
+			{
+				//$productAreaInDb->attributes = array('id_area'=>$areaId,'id_product'=>$productId,'quantity'=>'1');
+				$quantity = $productAreaInDb->quantity+1;				
+				$productAreaInDb->attributes = array('quantity'=>$quantity);
+				$productAreaInDb->save();
+			}
+		}		
+	}	
+	public function actionAjaxRemoveProductArea()
+	{
+
+		parse_str($_POST['productId']);
+		$areaId = $_POST['areaId'];
+
+		$data=ProductArea::model()->findAll('id_area=:parent_id',
+		array(':parent_id'=>(int) $areaId));
+		
+	
+		foreach($data as $item)
+		{
+			$item->delete();
+		}
+		
+		
+		foreach($items as $productId)
+		{
 			$productArea=new ProductArea;
-			$productArea->attributes = array('id_area'=>$areaId,'id_product'=>$productId);
+			$productArea->attributes = array('id_area'=>$areaId,'id_product'=>$productId,'quantity'=>1);
 			$productArea->save();
 		}
 	}	
