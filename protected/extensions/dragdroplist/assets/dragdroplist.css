@@ -3,19 +3,9 @@
 * @version: 1.0
 */
 
-#ddlist { list-style-type: none; margin: 3px 3px 20px 3px; padding: 2px; width: 60%; background-color:#FAF0B1;}
-#ddlist li { margin: 5px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
-#ddlist li span { position: absolute; margin-left: -1.3em; }
-#ddlist li img {float:right}
+ul.ddlist { list-style-type: none; margin: 3px 3px 20px 3px; padding: 2px; width: 60%; background-color:#FAF0B1;}
+ul.ddlist li { margin: 5px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+ul.ddlist li span { position: absolute; margin-left: -1.3em; }
+ul.ddlist li img {float:right}
 .edit_add {background: url(images/edit_add.png) no-repeat;width:22px; height:22px;text-indent: -9999px; padding: 2px;}
 
-
-#ddlist1 { list-style-type: none; margin: 3px 3px 20px 3px; padding: 2px; width: 60%; background-color:#AAF0B1;}
-#ddlist1 li { margin: 5px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
-#ddlist1 li span { position: absolute; margin-left: -1.3em; }
-#ddlist1 li img {float:right}
-
-#ddlist2 { list-style-type: none; margin: 3px 3px 20px 3px; padding: 2px; width: 60%; background-color:#FAF0B1;}
-#ddlist2 li { margin: 5px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
-#ddlist2 li span { position: absolute; margin-left: -1.3em; }
-#ddlist2 li img {float:right}
