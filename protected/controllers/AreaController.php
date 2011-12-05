@@ -286,7 +286,7 @@ class AreaController extends Controller
 	}	
 	public function actionAjaxFillCategoryArea()
 	{
-		$data=CategoryArea::model()->findAll('id_area=:parent_id',
+		$data=CategoryArea::model()->findAll('Id_area=:parent_id',
 		array(':parent_id'=>(int) $_POST['Area']['Id']));
 	
 	
@@ -294,7 +294,7 @@ class AreaController extends Controller
 		{
 			for ($i = 0; $i < $item->quantity; $i++) {
 				echo CHtml::tag('li',
-				array('id'=>"items_".$item->id_product),CHtml::encode($item->product->description),true);
+				array('id'=>"items_".$item->Id_category),CHtml::encode($item->category->description),true);
 			}
 		}
 	}
@@ -302,17 +302,17 @@ class AreaController extends Controller
 	public function actionAjaxAddCategoryArea()
 	{
 		$idArea = isset($_POST['areaId'])?$_POST['areaId']:'';
-		$new_IdProduct = isset($_POST['new_IdCategory'])?$_POST['new_IdCategory']:'';
+		$new_IdCategory= isset($_POST['new_IdCategory'])?$_POST['new_IdCategory']:'';
 		$new_IdCategory = explode("_",$new_IdCategory);
 		$idCategory = $new_IdCategory[1];
 
 		if(!empty($idCategory)&&!empty($idArea))
 		{
-			$categoryAreaInDb = CategoryArea::model()->findByPk(array('id_area'=>(int) $idArea,'id_category'=>(int)$idCategory));
+			$categoryAreaInDb = CategoryArea::model()->findByPk(array('Id_area'=>(int) $idArea,'Id_category'=>(int)$idCategory));
 			if($categoryAreaInDb==null)
 			{
 				$categoryArea=new CategoryArea;
-				$categoryArea->attributes = array('id_area'=>$idArea,'id_category'=>$idCategory,'quantity'=>1);
+				$categoryArea->attributes = array('Id_area'=>$idArea,'Id_category'=>$idCategory,'quantity'=>1);
 				$categoryArea->save();
 			}
 			else
