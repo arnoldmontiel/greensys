@@ -21,25 +21,35 @@ class draglist extends CJuiWidget
 	 */
 	public $items=array();
 	/**
-	 * @var string the name of the container element that contains all items. Defaults to 'ul'.
-	 */
-	public $tagName='ul';
-	/**
 	 * @var string the template that is used to generated every sortable item.
 	 * The token "{content}" in the template will be replaced with the item content,
 	 * while "{id}" be replaced with the item ID.
 	 */
 	//public $itemTemplate='<li>{content}</li>';
-	public $itemTemplate='<li id="items_{id}">{content}</li>';
+	public $itemTemplate='<li id="dlitems_{id}">{content}</li>';
 	//public $itemTemplate='<div id="{id}">{content}</div>';
 
-	public $style;
 	public function init()
 	{
 		$assetsDir = dirname(__FILE__).'/assets';
 		$cs = Yii::app()->getClientScript();
 		$cs->registerCoreScript("jquery");
 		// Publishing and registering JavaScript file
+// 		$cs->registerScriptFile(
+// 		Yii::app()->assetManager->publish(
+// 		$assetsDir.'/draglist.js'
+// 		),
+// 		CClientScript::POS_HEAD
+// 		);
+// 		// Publishing and registering CSS file
+// 		$cs->registerCssFile(
+// 		Yii::app()->assetManager->publish(
+// 		$assetsDir.'/draglist.css'
+// 		)
+// 		);
+// 		Yii::app()->assetManager->publish(
+// 		$assetsDir.'/graphics');
+		
 		parent::init();
 	}
 	
@@ -59,7 +69,8 @@ class draglist extends CJuiWidget
 		{
 			$this->beginWidget('zii.widgets.jui.CJuiDraggable', array(
 				// additional javascript options for the draggable plugin
-				'id'=>''.$id,
+				'id'=>$id,
+				//'tagName'=>'dlist',
 				'options'=>$this->options,
 			));
 			echo strtr($this->itemTemplate,array('{id}'=>$id,'{content}'=>$content))."\n";
