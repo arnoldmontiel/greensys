@@ -11,20 +11,6 @@ $this->menu=array(
 
 ?>
 
-<script>
-	$(function() {
-		$( "#ddlAssigment" ).sortable({
-			revert: true
-		});
-		$( "#ddlProduct li" ).draggable({
-			connectToSortable: "#ddlAssigment",
-			helper: "clone",
-			revert: "invalid"
-		});
-		$( "ul, li" ).disableSelection();
-	});
-	</script>
-
 <div class="form">
 	<?php $form=$this->beginWidget('CActiveForm', array(
 		'id'=>'productArea-form',
@@ -55,7 +41,6 @@ $this->menu=array(
 	<?php		
 		
 		$itemsProduct = CHtml::listData($dataProviderProduct->getData(), 'Id', 'description_customer');
-		//$itemsProduct = array('product_1'=>'primero','product_2'=>'segundo','product_3'=>'tercero');
 		
 		$this->widget('ext.dragdroplist.dragdroplist', array(
 				'id'=>'ddlAssigment',	// default is class="ui-sortable" id="yw0"
@@ -73,7 +58,8 @@ $this->menu=array(
 									"'.AreaController::createUrl('AjaxSaveProductArea').'",
 									 {
 									 	productId:$("#ddlAssigment").sortable( "serialize", {attribute: "id"}),
-									 	areaId:ddlAreaId
+										areaId:ddlAreaId,
+										newProduct:$(ui.item).attr("id"),
 									 }); 
 							}', 				
 					'remove'=>
@@ -91,15 +77,42 @@ $this->menu=array(
 							}', 				
 		),
 		));
-		$this->widget('ext.dragdroplist.dragdroplist', array(
-				'id'=>'ddlProduct',	// default is class="ui-sortable" id="yw0"
-				'items' => $itemsProduct,
-				'options'=>array(
-					'connectWith' =>'#ddlAssigment',
-					'revert'=> true
-					),
+// 		$this->widget('ext.dragdroplist.dragdroplist', array(
+// 				'id'=>'ddlProduct',	// default is class="ui-sortable" id="yw0"
+// 				'items' => $itemsProduct,
+// 				'options'=>array(
+// 				'helper'=> 'clone',
+// 				'connectWith' =>'#ddlAssigment',
+// 				//'remove'=>'js:function(event, ui){alert($(ui.item).attr("id"))}',
+// 				//'receive'=>'js:function(event, ui){alert($(ui.item).attr("id"))}',
+// 				//'stop'=>'js:function(event, ui){before.after(clone);}',
+//  				'start'=>'js:function(event, ui)
+//  					{$(ui.item).show();
+//  					indexOfItem = ui.item.index();
+// // 					clone = $(ui.item).clone();
+// // 					before = $(ui.item).prev();
+//  				}',
+// 				'remove'=>'js:function(event, ui)
+// 					{
+// 						//alert(indexOfItem);
+// 						ui.item.clone().appendTo(this);
+// 						//ui.item.clone().insertAfter(indexOfItem);
+// 					}',
+// 						),
 					
 				
+// 		));
+				
+
+		$this->widget('ext.draglist.draglist', array(
+						'id'=>'ddlProduct',	// default is class="ui-sortable" id="yw0"
+						'items' => $itemsProduct,
+						'options'=>array(
+						'helper'=> 'clone',
+						'connectToSortable'=>'#ddlAssigment',
+		),
+			
+		
 		));
 		
 		
@@ -108,6 +121,5 @@ $this->menu=array(
 	<?php $this->endWidget(); ?>
 	<div id="display"></div>
 </div><!-- form -->
-
 
 
