@@ -7,14 +7,14 @@ $this->menu=array(
 	array('label'=>'List Area', 'url'=>array('index')),
 	array('label'=>'Create Area', 'url'=>array('create')),
 	array('label'=>'Manage Area', 'url'=>array('admin')),
-	array('label'=>'Assign Categories', 'url'=>array('categoryArea')),
+	array('label'=>'Assign Products', 'url'=>array('productArea')),
 );
 
 ?>
 
 <div class="form">
 	<?php $form=$this->beginWidget('CActiveForm', array(
-		'id'=>'productArea-form',
+		'id'=>'categoryArea-form',
 		'enableAjaxValidation'=>true,
 	)); ?>
 
@@ -28,7 +28,7 @@ $this->menu=array(
 			array(
 				'ajax' => array(
 				'type'=>'POST', //request type
-				'url'=>AreaController::createUrl('AjaxFillProductArea'), //url to call.
+				'url'=>AreaController::createUrl('AjaxFillCategoryArea'), //url to call.
 				//Style: CController::createUrl('currentController/methodToCall')
 				'update'=>'#ddlAssigment', //selector to update
 				//'data'=>'js:javascript statement'
@@ -41,7 +41,7 @@ $this->menu=array(
 	</div>
 	<?php		
 		
-		$itemsProduct = CHtml::listData($dataProviderProduct->getData(), 'Id', 'description_customer');
+		$itemsCategory = CHtml::listData($dataProviderCategory->getData(), 'Id', 'description');
 		
 		$this->widget('ext.dragdroplist.dragdroplist', array(
 				'id'=>'ddlAssigment',	// default is class="ui-sortable" id="yw0"
@@ -54,10 +54,10 @@ $this->menu=array(
 								var ddlArea = document.getElementById("Area_Id");
 								var ddlAreaId = ddlArea.options[ddlArea.selectedIndex].value;
 								$.post(
-									"'.AreaController::createUrl('AjaxAddProductArea').'",
+									"'.AreaController::createUrl('AjaxAddCategoryArea').'",
 									 {
 									 	areaId:ddlAreaId,
-										new_IdProduct:$(ui.item).attr("id")
+										new_IdCategory:$(ui.item).attr("id")
 									 }); 
 							}', 				
 					'remove'=>
@@ -67,18 +67,18 @@ $this->menu=array(
 								var ddlAreaId = ddlArea.options[ddlArea.selectedIndex].value;
 		
 								$.post(
-									"'.AreaController::createUrl('AjaxRemoveProductArea').'",
+									"'.AreaController::createUrl('AjaxRemoveCategoryArea').'",
 									 {
 									 	areaId:ddlAreaId,
-										old_IdProduct:$(ui.item).attr("id")
+										old_IdCategory:$(ui.item).attr("id")
 									}); 
 							}', 				
 		),
 		));
 		
 		$this->widget('ext.draglist.draglist', array(
-		'id'=>'dlProduct',
-		'items' => $itemsProduct,
+		'id'=>'dlCategory',
+		'items' => $itemsCategory,
 		'options'=>array(
 				'helper'=> 'clone',
 				'connectToSortable'=>'#ddlAssigment',
