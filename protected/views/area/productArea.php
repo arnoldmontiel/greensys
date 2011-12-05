@@ -46,20 +46,18 @@ $this->menu=array(
 				'id'=>'ddlAssigment',	// default is class="ui-sortable" id="yw0"
 				'items' => array(),
 				'options'=>array(
-					'connectWith' =>'#ddlProduct',
+//					'connectWith' =>'#ddlProduct',
 					'revert'=> true,
-					//'receive'=> 'js:function(event, ui) { $.post("'.AreaController::createUrl('AjaxSaveProductArea').'", $("#ddlist").sortable("serialize", {attribute: "id"})); }' 
 					'receive'=>
 							'js:function(event, ui) 
 							{ 
 								var ddlArea = document.getElementById("Area_Id");
 								var ddlAreaId = ddlArea.options[ddlArea.selectedIndex].value;
 								$.post(
-									"'.AreaController::createUrl('AjaxSaveProductArea').'",
+									"'.AreaController::createUrl('AjaxAddProductArea').'",
 									 {
-									 	productId:$("#ddlAssigment").sortable( "serialize", {attribute: "id"}),
-										areaId:ddlAreaId,
-										newProduct:$(ui.item).attr("id"),
+									 	areaId:ddlAreaId,
+										new_IdProduct:$(ui.item).attr("id")
 									 }); 
 							}', 				
 					'remove'=>
@@ -71,9 +69,9 @@ $this->menu=array(
 								$.post(
 									"'.AreaController::createUrl('AjaxSaveProductArea').'",
 									 {
-									 	productId:$("#ddlAssigment").sortable( "serialize"),
-									 	areaId:ddlAreaId
-									 }); 
+									 	areaId:ddlAreaId,
+										old_IdProduct:$(ui.item).attr("id")
+									}); 
 							}', 				
 		),
 		));
@@ -105,7 +103,7 @@ $this->menu=array(
 				
 
 		$this->widget('ext.draglist.draglist', array(
-						'id'=>'ddlProduct',	// default is class="ui-sortable" id="yw0"
+						'id'=>'dlProduct',
 						'items' => $itemsProduct,
 						'options'=>array(
 						'helper'=> 'clone',
