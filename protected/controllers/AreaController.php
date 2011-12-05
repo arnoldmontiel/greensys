@@ -136,8 +136,6 @@ class AreaController extends Controller
 		));
 	}
 	/**
-	* Updates a particular model.
-	* If update is successful, the browser will be redirected to the 'view' page.
 	*/
 	public function actionProductArea()
 	{
@@ -159,6 +157,27 @@ class AreaController extends Controller
 	
 	}
 	
+	/**
+	*/
+	public function actionCategoryArea()
+	{
+	$cmodel=new Area;
+	$model=new Area('search');
+			if(isset($_GET['AreaCategory']))
+	$model->attributes=$_GET['AreaCategory'];
+		
+			// Uncomment the following line if AJAX validation is needed
+	$this->performAjaxValidation($model);
+	$dataProvider=new CActiveDataProvider('Area');
+	$dataProviderCategory=new CActiveDataProvider('Category');
+	
+			$this->render('categoryArea',array(
+					'dataProvider'=>$dataProvider,
+	'dataProviderCategory'=>$dataProviderCategory,
+	'model'=>$cmodel //model for creation
+	));
+	
+	}
 	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
@@ -265,23 +284,6 @@ class AreaController extends Controller
 			}
 		}
 	}	
-	public function actionAjaxTest()
-	{
-		$_POST;
-		$_GET;
-		
-		$data=ProductArea::model()->findAll('id_area=:parent_id',
-		array(':parent_id'=>1));
-		$this->widget('ext.draglist.draglist', array(
-																
-																'id'=>'dlTest',
-																'items'=>array('1'=>'hola','2'=>'groso','3'=>'sisi, lo sabes'),
-																'options'=>array(
-																	'helper'=> 'clone',
-																	'connectToSortable'=>'#ddlAssigment',
-		),
-		));
-	}
 	public function actionAjaxFillCategoryArea()
 	{
 		$data=CategoryArea::model()->findAll('id_area=:parent_id',
@@ -292,11 +294,51 @@ class AreaController extends Controller
 		{
 			for ($i = 0; $i < $item->quantity; $i++) {
 				echo CHtml::tag('li',
-				array('id'=>"items_".$item->id_product),CHtml::encode($item->product->description_customer),true);
+				array('id'=>"items_".$item->id_product),CHtml::encode($item->product->description),true);
 			}
 		}
 	}
 	
+	public function actionAjaxAddCategoryArea()
+	{
+		$idArea = isset($_POST['areaId'])?$_POST['areaId']:'';
+		$new_IdProduct = isset($_POST['new_IdCategory'])?$_POST['new_IdCategory']:'';
+		$new_IdCategory = explode("_",$new_IdCategory);
+		$idCategory = $new_IdCategory[1];
+
+		if(!empty($idCategory)&&!empty($idArea))
+		{
+			$categoryAreaInDb = CategoryArea::model()->findByPk(array('id_area'=>(int) $idArea,'id_category'=>(int)$idCategory));
+			if($categoryAreaInDb==null)
+			{
+				$categoryArea=new CategoryArea;
+				$categoryArea->attributes = array('id_area'=>$idArea,'id_category'=>$idCategory,'quantity'=>1);
+				$categoryArea->save();
+			}
+			else
+			{
+				$quantity = $categoryAreaInDb->quantity+1;				
+				$categoryAreaInDb->attributes = array('quantity'=>$quantity);
+				$categoryAreaInDb->save();
+			}
+		}		
+	}	
+	public function actionAjaxRemoveCategoryArea()
+	{
+		$idArea = isset($_POST['areaId'])?$_POST['areaId']:'';
+		$new_IdCategory = isset($_POST['new_IdCategory'])?$_POST['new_IdCategory']:'';
+		$new_IdCategory = explode("_",$new_IdCategory);
+		$idCategory = $new_IdCategory[1];
+				
+		if(!empty($idCategory)&&!empty($idArea))
+		{
+			$categoryAreaInDb = CategoryArea::model()->findByPk(array('id_area'=>(int) $idArea,'id_category'=>(int)$idCategory));
+			if($categoryAreaInDb!=null)
+			{
+				$categoryArea->remove();
+			}
+		}
+	}	
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated
