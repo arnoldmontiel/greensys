@@ -15,6 +15,9 @@ Yii::import('zii.widgets.jui.CJuiWidget');
  */
 class draglist extends CJuiWidget
 {
+	
+	public $qItems;
+	public $qItemsDef=100;
 	/**
 	 * @var array list of sortable items (id=>item content).
 	 * Note that the item contents will not be HTML-encoded.
@@ -64,17 +67,34 @@ class draglist extends CJuiWidget
 			$id = $this->htmlOptions['id'];
 		else
 			$this->htmlOptions['id']=$id;					
-				
-		foreach($this->items as $id=>$content)
+
+		if(!empty($this->items)&&!isset($this->qItems))
 		{
-			$this->beginWidget('zii.widgets.jui.CJuiDraggable', array(
-				// additional javascript options for the draggable plugin
-				'id'=>$id,
-				//'tagName'=>'dlist',
-				'options'=>$this->options,
-			));
-			echo strtr($this->itemTemplate,array('{id}'=>$id,'{content}'=>$content))."\n";
-			$this->endWidget();
+			foreach($this->items as $id=>$content)
+			{
+				$this->beginWidget('zii.widgets.jui.CJuiDraggable', array(
+					// additional javascript options for the draggable plugin
+					'id'=>$this->id."_".$id,
+					//'tagName'=>'dlist',
+					'options'=>$this->options,
+				));
+				echo strtr($this->itemTemplate,array('{id}'=>$id,'{content}'=>$content))."\n";
+				$this->endWidget();
+			}			
+		}
+		elseif (isset($this->qItems))
+		{
+			for($i=0;$i<$this->qItems;$i++)
+			{
+				$this->beginWidget('zii.widgets.jui.CJuiDraggable', array(
+					// additional javascript options for the draggable plugin
+					'id'=>$this->id."_".$i,
+					//'tagName'=>'dlist',
+					'options'=>$this->options,
+				));
+				$this->endWidget();
+			}			
+			
 		}
 	}
 }

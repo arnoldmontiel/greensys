@@ -186,7 +186,6 @@ class AreaController extends Controller
 				array('id'=>"items_".$item->id_product),CHtml::encode($item->product->description_customer),true);
 			}
 		}
-		
 	}
 	public function actionAjaxSaveProductArea()
 	{
@@ -250,13 +249,45 @@ class AreaController extends Controller
 		
 		if(!empty($idProduct)&&!empty($idArea))
 		{
-			$productAreaInDb = ProductArea::model()->findByPk(array('id_area'=>(int) $idArea,'id_product'=>(int)$$idProduct));
+			$productAreaInDb = ProductArea::model()->findByPk(array('id_area'=>(int) $idArea,'id_product'=>(int)$idProduct));
 			if($productAreaInDb!=null)
 			{
 				$productArea->remove();
 			}
 		}
 	}	
+	public function actionAjaxTest()
+	{
+		$_POST;
+		$_GET;
+		
+		$data=ProductArea::model()->findAll('id_area=:parent_id',
+		array(':parent_id'=>1));
+		$this->widget('ext.draglist.draglist', array(
+																
+																'id'=>'dlTest',
+																'items'=>array('1'=>'hola','2'=>'groso','3'=>'sisi, lo sabes'),
+																'options'=>array(
+																	'helper'=> 'clone',
+																	'connectToSortable'=>'#ddlAssigment',
+		),
+		));
+	}
+	public function actionAjaxFillCategoryArea()
+	{
+		$data=CategoryArea::model()->findAll('id_area=:parent_id',
+		array(':parent_id'=>(int) $_POST['Area']['Id']));
+	
+	
+		foreach($data as $item)
+		{
+			for ($i = 0; $i < $item->quantity; $i++) {
+				echo CHtml::tag('li',
+				array('id'=>"items_".$item->id_product),CHtml::encode($item->product->description_customer),true);
+			}
+		}
+	}
+	
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated

@@ -1,3 +1,14 @@
+<script>
+$(function() {
+	$("#AAAAAdlTest_0").draggable({
+'helper':'clone','connectToSortable':'#ddlAssigment'});
+}
+
+$(function() {
+	$( "#AAAAdraggable" ).draggable();
+});
+</script>
+
 <?php
 $this->breadcrumbs=array(
 	'Areas'=>array('index'),
@@ -67,7 +78,7 @@ $this->menu=array(
 								var ddlAreaId = ddlArea.options[ddlArea.selectedIndex].value;
 		
 								$.post(
-									"'.AreaController::createUrl('AjaxSaveProductArea').'",
+									"'.AreaController::createUrl('AjaxRemoveProductArea').'",
 									 {
 									 	areaId:ddlAreaId,
 										old_IdProduct:$(ui.item).attr("id")
@@ -75,49 +86,65 @@ $this->menu=array(
 							}', 				
 		),
 		));
-// 		$this->widget('ext.dragdroplist.dragdroplist', array(
-// 				'id'=>'ddlProduct',	// default is class="ui-sortable" id="yw0"
-// 				'items' => $itemsProduct,
-// 				'options'=>array(
-// 				'helper'=> 'clone',
-// 				'connectWith' =>'#ddlAssigment',
-// 				//'remove'=>'js:function(event, ui){alert($(ui.item).attr("id"))}',
-// 				//'receive'=>'js:function(event, ui){alert($(ui.item).attr("id"))}',
-// 				//'stop'=>'js:function(event, ui){before.after(clone);}',
-//  				'start'=>'js:function(event, ui)
-//  					{$(ui.item).show();
-//  					indexOfItem = ui.item.index();
-// // 					clone = $(ui.item).clone();
-// // 					before = $(ui.item).prev();
-//  				}',
-// 				'remove'=>'js:function(event, ui)
-// 					{
-// 						//alert(indexOfItem);
-// 						ui.item.clone().appendTo(this);
-// 						//ui.item.clone().insertAfter(indexOfItem);
-// 					}',
-// 						),
-					
-				
-// 		));
 				
 
 		$this->widget('ext.draglist.draglist', array(
 						'id'=>'dlProduct',
 						'items' => $itemsProduct,
 						'options'=>array(
-						'helper'=> 'clone',
-						'connectToSortable'=>'#ddlAssigment',
-		),
+							'helper'=> 'clone',
+							'connectToSortable'=>'#ddlAssigment',
+							'start'=>'js:function(event,ui)
+								{
+									$.ajax({
+										url:"'.AreaController::createUrl('AjaxTest').'",
+										success:function(html){
+											html.getEle
+											jQuery("#dlTest").html(html);
+											for(var i=0;i<10;i++)
+												jQuery("#dlTest_"+i).draggable({"helper":"clone","connectToSortable":"#ddlAssigment"});
+										},
+										type:"POST"
+										})
+							}'
+					),
 			
 		
 		));
 		
-		
 		?>
+		<br/>
+		<div id="dlTest">
+		<?php 
+		$this->widget('ext.draglist.draglist', array(
+										'id'=>'dlTest',
+										'qItems'=>10,
+										'items'=>array('1'=>'hola','2'=>'test jq'),
+										'options'=>array(
+											'helper'=> 'clone',
+											'connectToSortable'=>'#ddlAssigment',
+		),
 		
+		));
+		?>
+		</div>
+<!--		
+<div class="demo">
+
+<div id="draggable" class="ui-widget-content">
+	<p>Drag me around</p>
+</div>
+
+</div>
+		<div id="dlTest_0" class="ui-draggable">
+		<li id="items_2">Cust1</li>
+		</div>
+		
+		<div id="draggable1" class="ui-widget-content">
+		<p>Drag me around</p>
+		</div>
+-->
 	<?php $this->endWidget(); ?>
+
 	<div id="display"></div>
 </div><!-- form -->
-
-

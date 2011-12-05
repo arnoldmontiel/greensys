@@ -50,8 +50,13 @@ class CategoryArea extends CActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
+		// NOTE: you may need to adjust the relation name and the related
+		// class name for the relations automatically generated below.
 		return array(
+			'area' => array(self::BELONGS_TO, 'Area', 'Id_area'),
+			'category' => array(self::BELONGS_TO, 'Category', 'Id_category'),		
 		);
+		
 	}
 
 	/**
