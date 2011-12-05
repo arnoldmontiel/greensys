@@ -1,14 +1,3 @@
-<script>
-$(function() {
-	$("#AAAAAdlTest_0").draggable({
-'helper':'clone','connectToSortable':'#ddlAssigment'});
-}
-
-$(function() {
-	$( "#AAAAdraggable" ).draggable();
-});
-</script>
-
 <?php
 $this->breadcrumbs=array(
 	'Areas'=>array('index'),
@@ -57,7 +46,6 @@ $this->menu=array(
 				'id'=>'ddlAssigment',	// default is class="ui-sortable" id="yw0"
 				'items' => array(),
 				'options'=>array(
-//					'connectWith' =>'#ddlProduct',
 					'revert'=> true,
 					'receive'=>
 							'js:function(event, ui) 
@@ -86,64 +74,17 @@ $this->menu=array(
 							}', 				
 		),
 		));
-				
-
+		
 		$this->widget('ext.draglist.draglist', array(
-						'id'=>'dlProduct',
-						'items' => $itemsProduct,
-						'options'=>array(
-							'helper'=> 'clone',
-							'connectToSortable'=>'#ddlAssigment',
-							'start'=>'js:function(event,ui)
-								{
-									$.ajax({
-										url:"'.AreaController::createUrl('AjaxTest').'",
-										success:function(html){
-											html.getEle
-											jQuery("#dlTest").html(html);
-											for(var i=0;i<10;i++)
-												jQuery("#dlTest_"+i).draggable({"helper":"clone","connectToSortable":"#ddlAssigment"});
-										},
-										type:"POST"
-										})
-							}'
+		'id'=>'dlProduct',
+		'items' => $itemsProduct,
+		'options'=>array(
+				'helper'=> 'clone',
+				'connectToSortable'=>'#ddlAssigment',
 					),
-			
-		
-		));
-		
+			));
+				
 		?>
-		<br/>
-		<div id="dlTest">
-		<?php 
-		$this->widget('ext.draglist.draglist', array(
-										'id'=>'dlTest',
-										'qItems'=>10,
-										'items'=>array('1'=>'hola','2'=>'test jq'),
-										'options'=>array(
-											'helper'=> 'clone',
-											'connectToSortable'=>'#ddlAssigment',
-		),
-		
-		));
-		?>
-		</div>
-<!--		
-<div class="demo">
-
-<div id="draggable" class="ui-widget-content">
-	<p>Drag me around</p>
-</div>
-
-</div>
-		<div id="dlTest_0" class="ui-draggable">
-		<li id="items_2">Cust1</li>
-		</div>
-		
-		<div id="draggable1" class="ui-widget-content">
-		<p>Drag me around</p>
-		</div>
--->
 	<?php $this->endWidget(); ?>
 
 	<div id="display"></div>

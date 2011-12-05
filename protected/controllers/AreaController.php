@@ -219,11 +219,18 @@ class AreaController extends Controller
 			}
 		}		
 	}	
-
+	/**
+	* adds a new item into ProductArea table
+	* @param new_product, should be "tag_id", ei. product_1
+	* @param areaId, should be "id", ei. 2
+	*/
+	
 	public function actionAjaxAddProductArea()
 	{
 		$idArea = isset($_POST['areaId'])?$_POST['areaId']:'';
-		$idProduct =isset($_POST['new_IdProduct'])?$_POST['new_IdProduct']:''; 
+		$new_IdProduct = isset($_POST['new_IdProduct'])?$_POST['new_IdProduct']:'';
+		$new_IdProduct = explode("_",$new_IdProduct);
+		$idProduct = $new_IdProduct[1];
 
 		if(!empty($idProduct)&&!empty($idArea))
 		{
@@ -245,8 +252,10 @@ class AreaController extends Controller
 	public function actionAjaxRemoveProductArea()
 	{
 		$idArea = isset($_POST['areaId'])?$_POST['areaId']:'';
-		$idProduct =isset($_POST['old_IdProduct'])?$_POST['old_IdProduct']:'';
-		
+		$new_IdProduct = isset($_POST['new_IdProduct'])?$_POST['new_IdProduct']:'';
+		$new_IdProduct = explode("_",$new_IdProduct);
+		$idProduct = $new_IdProduct[1];
+				
 		if(!empty($idProduct)&&!empty($idArea))
 		{
 			$productAreaInDb = ProductArea::model()->findByPk(array('id_area'=>(int) $idArea,'id_product'=>(int)$idProduct));
