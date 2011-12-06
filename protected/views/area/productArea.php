@@ -27,18 +27,35 @@ $this->menu=array(
 		<?php echo $form->dropDownList($model, 'Id', CHtml::listData($model->findAll(), 'Id', 'description'),		
 			array(
 				'ajax' => array(
-				'type'=>'POST', //request type
-				'url'=>AreaController::createUrl('AjaxFillProductArea'), //url to call.
-				//Style: CController::createUrl('currentController/methodToCall')
+				'type'=>'POST',
+				'url'=>AreaController::createUrl('AjaxFillProductArea'),
 				'update'=>'#ddlAssigment', //selector to update
-				//'data'=>'js:javascript statement'
+				'success'=>'js:function(data)
+				{
+					if($("#Area_Id :selected").attr("value")=="")
+					{
+						$("#ddlAssigment").html(data);
+						$( "#product" ).animate({opacity: "hide"},"slow");
+						$( "#productArea" ).animate({opacity: "hide"},"slow");
+					}
+					else
+					{
+						$("#ddlAssigment").html(data);
+						$( "#product" ).animate({opacity: "show"},"slow");
+						$( "#productArea" ).animate({opacity: "show"},"slow");
+					}
+				}',
 				//leave out the data key to pass all form values through
-				),'prompt'=>'select an area'
+				),'prompt'=>'Select an Area'
 			)		
 		);
 		?>
 		
 	</div>
+				
+	</div>
+	<div id="productArea" style="display: none">
+		
 	<?php		
 		
 		$itemsProduct = CHtml::listData($dataProviderProduct->getData(), 'Id', 'description_customer');
@@ -51,40 +68,37 @@ $this->menu=array(
 					'receive'=>
 							'js:function(event, ui) 
 							{ 
-								var ddlArea = document.getElementById("Area_Id");
-								var ddlAreaId = ddlArea.options[ddlArea.selectedIndex].value;
 								$.post(
 									"'.AreaController::createUrl('AjaxAddProductArea').'",
 									 {
-									 	areaId:ddlAreaId,
+									 	areaId:ddlAreaId = $("#Area_Id :selected").attr("value"),
 										new_IdProduct:$(ui.item).attr("id")
 									 }); 
 							}', 				
 					'remove'=>
 							'js:function(event, ui) 
 							{ 
-								var ddlArea = document.getElementById("Area_Id");
-								var ddlAreaId = ddlArea.options[ddlArea.selectedIndex].value;
-		
 								$.post(
 									"'.AreaController::createUrl('AjaxRemoveProductArea').'",
 									 {
-									 	areaId:ddlAreaId,
+									 	areaId:ddlAreaId = $("#Area_Id :selected").attr("value"),
 										old_IdProduct:$(ui.item).attr("id")
 									}); 
 							}', 				
 		),
 		));
-		
-		$this->widget('ext.draglist.draglist', array(
-		'id'=>'dlProduct',
-		'items' => $itemsProduct,
-		'options'=>array(
-				'helper'=> 'clone',
-				'connectToSortable'=>'#ddlAssigment',
-					),
-			));
-				
+		?>
+		</div>
+		<div id="product" style="display: none">
+		<?php 				
+			$this->widget('ext.draglist.draglist', array(
+			'id'=>'dlProduct',
+			'items' => $itemsProduct,
+			'options'=>array(
+					'helper'=> 'clone',
+					'connectToSortable'=>'#ddlAssigment',
+						),
+			));				
 		?>
 	<?php $this->endWidget(); ?>
 
