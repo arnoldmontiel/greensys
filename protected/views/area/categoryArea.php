@@ -31,7 +31,13 @@ $this->menu=array(
 				'url'=>AreaController::createUrl('AjaxFillCategoryArea'), //url to call.
 				//Style: CController::createUrl('currentController/methodToCall')
 				'update'=>'#ddlAssigment', //selector to update
-				//'data'=>'js:javascript statement'
+				//'data'=>''
+				'success'=>'js:function(data)
+				{
+					$("#ddlAssigment").html(data);
+					$( "#category" ).animate({opacity: "show"},"slow");
+					$( "#categoryArea" ).animate({opacity: "show"},"slow");
+				}',
 				//leave out the data key to pass all form values through
 				),'prompt'=>'select an area'
 			)		
@@ -39,7 +45,8 @@ $this->menu=array(
 		?>
 		
 	</div>
-	<?php		
+	<div id="categoryArea" style="display: none">
+	<?php 
 		
 		$itemsCategory = CHtml::listData($dataProviderCategory->getData(), 'Id', 'description');
 		
@@ -75,7 +82,10 @@ $this->menu=array(
 							}', 				
 		),
 		));
-		
+		?>
+		</div>
+		<div id="category" style="display: none">
+		<?php 
 		$this->widget('ext.draglist.draglist', array(
 		'id'=>'dlCategory',
 		'items' => $itemsCategory,
@@ -86,6 +96,7 @@ $this->menu=array(
 			));
 				
 		?>
+		</div>
 	<?php $this->endWidget(); ?>
 
 	<div id="display"></div>
