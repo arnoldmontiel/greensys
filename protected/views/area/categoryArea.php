@@ -27,19 +27,26 @@ $this->menu=array(
 		<?php echo $form->dropDownList($model, 'Id', CHtml::listData($model->findAll(), 'Id', 'description'),		
 			array(
 				'ajax' => array(
-				'type'=>'POST', //request type
-				'url'=>AreaController::createUrl('AjaxFillCategoryArea'), //url to call.
-				//Style: CController::createUrl('currentController/methodToCall')
-				'update'=>'#ddlAssigment', //selector to update
-				//'data'=>''
+				'type'=>'POST',
+				'url'=>AreaController::createUrl('AjaxFillCategoryArea'),
+				'update'=>'#ddlAssigment', 
 				'success'=>'js:function(data)
 				{
-					$("#ddlAssigment").html(data);
-					$( "#category" ).animate({opacity: "show"},"slow");
-					$( "#categoryArea" ).animate({opacity: "show"},"slow");
+					if($("#Area_Id :selected").attr("value")=="")
+					{
+						$("#ddlAssigment").html(data);
+						$( "#category" ).animate({opacity: "hide"},"slow");
+						$( "#categoryArea" ).animate({opacity: "hide"},"slow");
+					}
+					else
+					{
+						$("#ddlAssigment").html(data);
+						$( "#category" ).animate({opacity: "show"},"slow");
+						$( "#categoryArea" ).animate({opacity: "show"},"slow");
+					}
 				}',
 				//leave out the data key to pass all form values through
-				),'prompt'=>'select an area'
+				),'prompt'=>'Select a Category'
 			)		
 		);
 		?>
@@ -58,25 +65,20 @@ $this->menu=array(
 					'receive'=>
 							'js:function(event, ui) 
 							{ 
-								var ddlArea = document.getElementById("Area_Id");
-								var ddlAreaId = ddlArea.options[ddlArea.selectedIndex].value;
 								$.post(
 									"'.AreaController::createUrl('AjaxAddCategoryArea').'",
 									 {
-									 	areaId:ddlAreaId,
+									 	areaId:ddlAreaId = $("#Area_Id :selected").attr("value"),
 										new_IdCategory:$(ui.item).attr("id")
 									 }); 
 							}', 				
 					'remove'=>
 							'js:function(event, ui) 
 							{ 
-								var ddlArea = document.getElementById("Area_Id");
-								var ddlAreaId = ddlArea.options[ddlArea.selectedIndex].value;
-		
 								$.post(
 									"'.AreaController::createUrl('AjaxRemoveCategoryArea').'",
 									 {
-									 	areaId:ddlAreaId,
+									 	areaId:ddlAreaId = $("#Area_Id :selected").attr("value"),
 										old_IdCategory:$(ui.item).attr("id")
 									}); 
 							}', 				
@@ -97,7 +99,7 @@ $this->menu=array(
 				
 		?>
 		</div>
-	<?php $this->endWidget(); ?>
+		<?php $this->endWidget(); ?>
 
 	<div id="display"></div>
 </div><!-- form -->
