@@ -1,14 +1,13 @@
 <script type="text/javascript">
 hs.graphicsDir = '<?php echo '../..'. $this->graphics ?>/'
-//hs.graphicsDir = 'http://localhost/workspace/svngreen/assets/1ce51abe/'
 
 hs.align = 'center';
 hs.transitions = ['expand', 'crossfade'];
 hs.outlineType = 'glossy-dark';
 hs.wrapperClassName = 'dark';
 hs.fadeInOut = true;
-//hs.dimmingOpacity = 0.75;
-
+hs.dimmingOpacity = 0.75;
+hs.showCredits = 0; 
 // Add the controlbar
 if (hs.addSlideshow) hs.addSlideshow({
 	//slideshowGroup: 'group1',
@@ -22,6 +21,7 @@ if (hs.addSlideshow) hs.addSlideshow({
 		hideOnMouseOut: true
 	}
 });
+
 
 </script>
 
