@@ -32,6 +32,11 @@ class droptrash extends CJuiWidget
         public $style;
         
         /**
+        * @var represents new style applied to div
+        */
+        public $styleFull;
+        
+        /**
          * Renders the open tag of the droppable element.
          * This method also registers the necessary javascript code.
          */
@@ -66,6 +71,9 @@ class droptrash extends CJuiWidget
         	else
         		$this->htmlOptions['class'] = 'trash';
         	
+        	if (!isset($this->styleFull))
+        		$this->styleFull = 'trashFull';
+        	
         	if (isset($this->draggableId)){
         		$condition = 'ui.draggable.parent().attr("id")=="'.$this->draggableId.'"';
         	}
@@ -76,7 +84,10 @@ class droptrash extends CJuiWidget
         	echo CHtml::openTag($this->tagName,$this->htmlOptions)."\n";
         	
         	
-        	$fun = array('drop'=>'js:function( event, ui ){if('.$condition.'){ui.draggable.remove();}}');
+        	$fun = array('drop'=>'js:function( event, ui ){if('.$condition.'){ui.draggable.remove();        	
+        	$(this).switchClass( "'.$this->style.'", "'.$this->styleFull.'", 500 );
+        	$(this).switchClass( "'.$this->styleFull.'", "'.$this->style.'", 1000 );
+        	}}');
         	
         	$options = CJavaScript::encode($fun);
         	
