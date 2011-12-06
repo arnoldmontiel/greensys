@@ -99,6 +99,17 @@ $this->menu=array(
 				
 		?>
 		</div>
+		
+		<?php
+		
+		$this->widget('ext.droptrash.droptrash', array(
+			'id'=>'dlTrash',	// default is class="ui-sortable" id="yw0"
+			'draggableId' => 'ddlAssigment'
+			
+		));
+		
+		?>
+		
 		<?php $this->endWidget(); ?>
 
 	<div id="display"></div>

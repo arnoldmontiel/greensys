@@ -53,7 +53,7 @@ $this->menu=array(
 		
 	</div>
 				
-	</div>
+
 	<div id="productArea" style="display: none">
 		
 	<?php		
@@ -89,6 +89,8 @@ $this->menu=array(
 		));
 		?>
 		</div>
+		
+		
 		<div id="product" style="display: none">
 		<?php 				
 			$this->widget('ext.draglist.draglist', array(
@@ -100,6 +102,18 @@ $this->menu=array(
 						),
 			));				
 		?>
+		</div>
+
+	<?php 
+	
+	$this->widget('ext.droptrash.droptrash', array(
+	'id'=>'dlTrash',	// default is class="ui-sortable" id="yw0"
+	'draggableId' => 'ddlAssigment'
+	
+			));
+	
+	?>
+	
 	<?php $this->endWidget(); ?>
 
 	<div id="display"></div>
