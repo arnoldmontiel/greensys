@@ -69,7 +69,7 @@ $this->menu=array(
 									"'.AreaController::createUrl('AjaxAddCategoryArea').'",
 									 {
 									 	areaId:ddlAreaId = $("#Area_Id :selected").attr("value"),
-										new_IdCategory:$(ui.item).attr("id")
+										IdCategory:$(ui.item).attr("id")
 									 }); 
 							}', 				
 					'remove'=>
@@ -79,7 +79,7 @@ $this->menu=array(
 									"'.AreaController::createUrl('AjaxRemoveCategoryArea').'",
 									 {
 									 	areaId:ddlAreaId = $("#Area_Id :selected").attr("value"),
-										old_IdCategory:$(ui.item).attr("id")
+										IdCategory:$(ui.item).attr("id")
 									}); 
 							}', 				
 		),
