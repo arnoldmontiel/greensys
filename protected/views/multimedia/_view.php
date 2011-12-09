@@ -33,6 +33,7 @@
 					'smallImage'=>Yii::app()->urlManager->createUrl('multimedia/previewImageSmall',array('id'=>$data->id)),	
 					
 	)); ?>
+	<b><?php $this->widget('ext.videojs.videojs',array('model'=>$data));?>
 	<br />
 
 	

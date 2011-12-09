@@ -9,6 +9,7 @@ $this->menu=array(
 	array('label'=>'Manage Area', 'url'=>array('admin')),
 	array('label'=>'Assign Products', 'url'=>array('productArea')),
 );
+$this->trashDraggableId = 'ddlAssigment';
 
 ?>
 
@@ -46,13 +47,13 @@ $this->menu=array(
 					}
 				}',
 				//leave out the data key to pass all form values through
-				),'prompt'=>'Select a Category'
+				),'prompt'=>'Select an Area'
 			)		
 		);
 		?>
 		
 	</div>
-	<div id="categoryArea" style="display: none">
+	<div id="categoryArea"class="assigned-items" style="display: none">
 	<?php 
 		
 		$itemsCategory = CHtml::listData($dataProviderCategory->getData(), 'Id', 'description');
@@ -62,9 +63,15 @@ $this->menu=array(
 				'items' => array(),
 				'options'=>array(
 					'revert'=> true,
+					'start'=>'var id=$(ui.item).attr("id");',		
+					'stop'=>'js:function(event, ui) 
+							{
+								$(ui.item).attr("id",id);
+							}', 				
 					'receive'=>
 							'js:function(event, ui) 
-							{ 
+							{
+								id = $(ui.item).attr("id");
 								$.post(
 									"'.AreaController::createUrl('AjaxAddCategoryArea').'",
 									 {
@@ -75,6 +82,7 @@ $this->menu=array(
 					'remove'=>
 							'js:function(event, ui) 
 							{ 
+								var IdCategory = $(ui.item).attr("id");
 								$.post(
 									"'.AreaController::createUrl('AjaxRemoveCategoryArea').'",
 									 {
@@ -86,7 +94,7 @@ $this->menu=array(
 		));
 		?>
 		</div>
-		<div id="category" style="display: none">
+		<div id="category" class="selectable-items" style="display: none">
 		<?php 
 		$this->widget('ext.draglist.draglist', array(
 		'id'=>'dlCategory',
@@ -99,17 +107,6 @@ $this->menu=array(
 				
 		?>
 		</div>
-		
-		<?php
-		
-		$this->widget('ext.droptrash.droptrash', array(
-			'id'=>'dlTrash',	// default is class="ui-sortable" id="yw0"
-			'draggableId' => 'ddlAssigment'
-			
-		));
-		
-		?>
-		
 		<?php $this->endWidget(); ?>
 
 	<div id="display"></div>

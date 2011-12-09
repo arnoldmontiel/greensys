@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Areas'=>array('index'),
-	'Assing',
+	'Assing Products',
 );
 $this->menu=array(
 	array('label'=>'List Area', 'url'=>array('index')),
@@ -9,9 +9,8 @@ $this->menu=array(
 	array('label'=>'Manage Area', 'url'=>array('admin')),
 	array('label'=>'Assign Categories', 'url'=>array('categoryArea')),
 );
-
+$this->trashDraggableId = 'ddlAssigment';
 ?>
-
 <div class="form">
 	<?php $form=$this->beginWidget('CActiveForm', array(
 		'id'=>'productArea-form',
@@ -21,7 +20,7 @@ $this->menu=array(
 	<?php 	// Organize the dataProvider data into a Zii-friendly array
 		$items = CHtml::listData($dataProvider->getData(), 'Id', 'description');
 		?>
-	<div class="row">
+	<div style="row">
 		
 		<?php echo $form->labelEx($model,'Area'); ?>
 		<?php echo $form->dropDownList($model, 'Id', CHtml::listData($model->findAll(), 'Id', 'description'),		
@@ -50,11 +49,10 @@ $this->menu=array(
 			)		
 		);
 		?>
-		
 	</div>
 				
 
-	<div id="productArea" style="display: none">
+	<div id="productArea" class="assigned-items"  style="display: none">
 		
 	<?php		
 		
@@ -65,9 +63,16 @@ $this->menu=array(
 				'items' => array(),
 				'options'=>array(
 					'revert'=> true,
+					'start'=>'var id=$(ui.item).attr("id");',
+							'stop'=>'js:function(event, ui) 
+									{
+										$(ui.item).attr("id",id);
+									}', 				
+		
 					'receive'=>
 							'js:function(event, ui) 
 							{ 
+								id = $(ui.item).attr("id");
 								$.post(
 									"'.AreaController::createUrl('AjaxAddProductArea').'",
 									 {
@@ -89,9 +94,7 @@ $this->menu=array(
 		));
 		?>
 		</div>
-		
-		
-		<div id="product" style="display: none">
+		<div id="product" class="selectable-items" style="display: none">
 		<?php 				
 			$this->widget('ext.draglist.draglist', array(
 			'id'=>'dlProduct',
@@ -103,16 +106,6 @@ $this->menu=array(
 			));				
 		?>
 		</div>
-
-	<?php 
-	
-	$this->widget('ext.droptrash.droptrash', array(
-	'id'=>'dlTrash',	// default is class="ui-sortable" id="yw0"
-	'draggableId' => 'ddlAssigment'
-	
-			));
-	
-	?>
 	
 	<?php $this->endWidget(); ?>
 

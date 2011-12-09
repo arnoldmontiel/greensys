@@ -17,5 +17,15 @@
 		$this->endWidget();
 	?>
 	</div><!-- sidebar -->
+	<?php if($this->trashDraggableId!=''):?>
+		<?php 
+		$this->widget('ext.droptrash.droptrash', array(
+		'id'=>'dlTrash',	// default is class="ui-sortable" id="yw0"
+		'draggableId' => $this->trashDraggableId));
+		?>
+	<?php endif?>
+		
+
+	
 </div>
 <?php $this->endContent(); ?>
