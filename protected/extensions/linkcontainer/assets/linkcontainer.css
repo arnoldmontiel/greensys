@@ -1,0 +1,72 @@
+/**	
+* @file: droptrash.css 
+* @version: 1.0
+*/
+
+#addLink
+{ 	 
+	width: 25px; 
+	height: 25px; 
+	background-image: url("./graphics/add.png");
+	background-repeat: no-repeat; 
+	cursor:pointer;
+	position:absolute;
+	left:0;
+ 	top:0;	
+}
+
+.links 
+{
+	width: 300px;
+	height: 100px;
+	top:0px;
+	overflow:auto;
+		overflow-x:hidden; 
+	border: 3px double #990000;
+}
+
+.addContainer 
+{
+	position:relative;
+	width: 100px;
+	height: 50px;
+	top:0px;
+}
+
+
+.linkContainer 
+{
+	position:relative;
+	width: 300px;
+	height: 50px;
+	top:0px;
+}
+
+#addText 
+{
+	position:absolute;
+	top:0;
+	right:0;
+	width:60px;
+}
+
+.deleteLink
+{
+	width: 25px; 
+	height: 25px; 
+	background-image: url("./graphics/delete.png");
+	background-repeat: no-repeat; 
+	cursor:pointer;
+	position:absolute;
+	top:0;
+	right:20px;
+	width:25px;
+}
+
+.linkAdded
+{
+	position:absolute;
+	left:0;
+ 	top:0;
+	width: 250px;
+}
