@@ -15,9 +15,6 @@ Yii::import('zii.widgets.jui.CJuiWidget');
  */
 class draglist extends CJuiWidget
 {
-	
-	public $qItems;
-	public $qItemsDef=100;
 	/**
 	 * @var array list of sortable items (id=>item content).
 	 * Note that the item contents will not be HTML-encoded.
@@ -28,30 +25,22 @@ class draglist extends CJuiWidget
 	 * The token "{content}" in the template will be replaced with the item content,
 	 * while "{id}" be replaced with the item ID.
 	 */
-	//public $itemTemplate='<li>{content}</li>';
-	public $itemTemplate='<li id="dlitems_{id}">{content}</li>';
-	//public $itemTemplate='<div id="{id}">{content}</div>';
+	public $itemTemplate='<li id="dlitems_{id}" class="dlist ui-state-highlight">{content}</li>';
 
+	/**
+	* @var string the name of the Draggable element. Defaults to 'div'.
+	*/
+	public $tagName='ul';
+	
 	public function init()
 	{
 		$assetsDir = dirname(__FILE__).'/assets';
 		$cs = Yii::app()->getClientScript();
 		$cs->registerCoreScript("jquery");
-		// Publishing and registering JavaScript file
-// 		$cs->registerScriptFile(
-// 		Yii::app()->assetManager->publish(
-// 		$assetsDir.'/draglist.js'
-// 		),
-// 		CClientScript::POS_HEAD
-// 		);
-// 		// Publishing and registering CSS file
-// 		$cs->registerCssFile(
-// 		Yii::app()->assetManager->publish(
-// 		$assetsDir.'/draglist.css'
-// 		)
-// 		);
-// 		Yii::app()->assetManager->publish(
-// 		$assetsDir.'/graphics');
+		
+		$var = Yii::app()->assetManager->publish($assetsDir,false,1,YII_DEBUG);
+		
+ 		$cs->registerCssFile($var.'/draglist.css');
 		
 		parent::init();
 	}
@@ -66,35 +55,29 @@ class draglist extends CJuiWidget
 		if (isset($this->htmlOptions['id']))
 			$id = $this->htmlOptions['id'];
 		else
-			$this->htmlOptions['id']=$id;					
+			$this->htmlOptions['id']=$id;
 
-		if(!empty($this->items)&&!isset($this->qItems))
+		if (isset($this->style))
+			$this->htmlOptions['class'] = $this->style;
+		else
+			$this->htmlOptions['class'] = 'dlist';
+		
+		
+		$tagId=$this->htmlOptions['id'];					
+
+		if(!empty($this->items))
 		{
+			echo CHtml::openTag($this->tagName,$this->htmlOptions)."\n";
 			foreach($this->items as $id=>$content)
 			{
-				$this->beginWidget('zii.widgets.jui.CJuiDraggable', array(
-					// additional javascript options for the draggable plugin
-					'id'=>$this->id."_".$id,
-					//'tagName'=>'dlist',
-					'options'=>$this->options,
-				));
+				$options=empty($this->options) ? '' : CJavaScript::encode($this->options);
+				$jqDraggableObjId="dlitems_".$id;				
+				Yii::app()->getClientScript()->registerScript(__CLASS__.'#'.$jqDraggableObjId,"jQuery('#{$jqDraggableObjId}').draggable($options);");
+				$this->htmlOptions['id']=$jqDraggableObjId;
+				
 				echo strtr($this->itemTemplate,array('{id}'=>$id,'{content}'=>$content))."\n";
-				$this->endWidget();
 			}			
-		}
-		elseif (isset($this->qItems))
-		{
-			for($i=0;$i<$this->qItems;$i++)
-			{
-				$this->beginWidget('zii.widgets.jui.CJuiDraggable', array(
-					// additional javascript options for the draggable plugin
-					'id'=>$this->id."_".$i,
-					//'tagName'=>'dlist',
-					'options'=>$this->options,
-				));
-				$this->endWidget();
-			}			
-			
+			echo CHtml::closeTag($this->tagName);
 		}
 	}
 }

@@ -3,9 +3,37 @@
 * @version: 1.0
 */
 
-ul.dlist { list-style-type: none; margin: 3px 3px 20px 3px; padding: 2px; width: 60%; background-color:#FAF0B1;}
-ul.dlist li { margin: 5px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
-ul.dlist li span { position: absolute; margin-left: -1.3em; }
-ul.dlist li img {float:right}
-.edit_add {background: url(images/edit_add.png) no-repeat;width:22px; height:22px;text-indent: -9999px; padding: 2px;}
+div.selectable-items
+{
+	width: 50%;
+	float:left;
+	display: block;
+	background: none repeat scroll 0 0 #EEEEEE	
+}
+ul.dlist {
+background: none repeat scroll 0 0 #EEEEEE;
+    float: left;
+    list-style-type: none;
+    margin: 0 10px 0 0;
+    padding: 5px;
+    width: 100%;
+    }
 
+div.dlist {
+background: none repeat scroll 0 0 #EEEEEE;
+    float: left;
+    list-style-type: none;
+    margin: 0 3px 3px;
+    padding: 5px;
+    width: 80%;
+    padding: 0.4em 0.4em 0.4em 1.5em;
+    height: 18px;
+	font-size: 1.2em;
+}
+
+ul.dlist li { 
+    margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.2em; height: 18px; 
+    width: 300px;
+    
+    
+}

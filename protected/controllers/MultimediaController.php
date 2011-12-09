@@ -174,6 +174,18 @@ class MultimediaController extends Controller
 	/**
 	* Opens the dialog in browser to open/save the image.
 	*/
+	public function actionViewContent($id)
+	{
+// 		$model=$this->loadModel($_GET['id']);
+// 		header("Content-type: ".$model->type);
+// 		header("Content-Transfer-Encoding: binary");
+// 		echo $model->content;
+		echo Yii::app()->urlManager->createUrl("Sax.flv");
+	}
+	
+	/**
+	* Opens the dialog in browser to open/save the image.
+	*/
 	public function actionPreviewImageSmall($id)
 	{
 		$model=$this->loadModel($_GET['id']);

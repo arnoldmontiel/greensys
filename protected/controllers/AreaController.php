@@ -202,7 +202,7 @@ class AreaController extends Controller
 		{
 			for ($i = 0; $i < $item->quantity; $i++) {
 				echo CHtml::tag('li',
-				array('id'=>"items_".$item->id_product),CHtml::encode($item->product->description_customer),true);
+				array('id'=>"items_".$item->id_product,'class'=>'ui-state-default'),CHtml::encode($item->product->description_customer),true);
 			}
 		}
 	}
@@ -271,7 +271,7 @@ class AreaController extends Controller
 		{
 			for ($i = 0; $i < $item->quantity; $i++) {
 				echo CHtml::tag('li',
-				array('id'=>"items_".$item->Id_category),CHtml::encode($item->category->description),true);
+				array('id'=>"items_".$item->Id_category,'class'=>'ui-state-default'),CHtml::encode($item->category->description),true);
 			}
 		}
 	}
@@ -303,13 +303,13 @@ class AreaController extends Controller
 	public function actionAjaxRemoveCategoryArea()
 	{
 		$idArea = isset($_POST['areaId'])?$_POST['areaId']:'';
-		$old_IdCategory = isset($_POST['old_IdCategory'])?$_POST['old_IdCategory']:'';
-		$old_IdCategory = explode("_",old_IdCategory);
-		$idCategory = $old_IdCategory[1];
+		$IdCategory = isset($_POST['IdCategory'])?$_POST['IdCategory']:'';
+		$IdCategory = explode("_",$IdCategory);
+		$idCategory = $IdCategory[1];
 				
 		if(!empty($idCategory)&&!empty($idArea))
 		{
-			$categoryAreaInDb = CategoryArea::model()->findByPk(array('id_area'=>(int) $idArea,'id_category'=>(int)$idCategory));
+			$categoryAreaInDb = CategoryArea::model()->findByPk(array('Id_area'=>(int) $idArea,'Id_category'=>(int)$idCategory));
 			if($categoryAreaInDb!=null)
 			{
 				if($categoryAreaInDb->quantity>1)

@@ -48,7 +48,7 @@ class droptrash extends CJuiWidget
                 
                 
                 // Publishing and registering CSS file
-                $var = Yii::app()->assetManager->publish($assetsDir);
+                $var = Yii::app()->assetManager->publish($assetsDir,false,1,YII_DEBUG);
                 //$cs->registerCssFile(Yii::app()->assetManager->publish($var.'/droptrash.css'));
                 $cs->registerCssFile($var.'/droptrash.css');
                 parent::init();

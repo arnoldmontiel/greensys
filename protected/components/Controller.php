@@ -22,6 +22,11 @@ class Controller extends SBaseController
 	 */
 	public $breadcrumbs=array();
 	
+	/**
+	 * @var string that define which items could be trashed.
+	 */
+	public $trashDraggableId='';
+	
 	function init()
 	{
 		parent::init();

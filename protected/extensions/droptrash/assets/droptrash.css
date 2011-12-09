@@ -1,26 +1,31 @@
-/**
+/**	
 * @file: droptrash.css 
 * @version: 1.0
 */
 
 div.trash
 { 	
+	position: relative;
+	left: 0%;
+	top: 0%;
 	width: 300px; 
 	height: 100px; 
 	padding: 0.5em; 
 	margin: 10px;
-	background-image: url("./graphics/trash.gif");
+	background-image: url("./graphics/trash-blue.png");
 	background-repeat: no-repeat; 
-
 }
 
 div.trashFull
 { 	
+	position: RELATIVE;
+	left: 0%;
+	top: 0%;
 	width: 300px; 
 	height: 100px; 
 	padding: 0.5em; 
 	margin: 10px;
-	background-image: url("./graphics/trashFull.gif");
+	background-image: url("./graphics/trash-blue-charge.png");
 	background-repeat: no-repeat; 
 
 }
