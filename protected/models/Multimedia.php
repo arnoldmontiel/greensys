@@ -30,23 +30,34 @@ class Multimedia extends CActiveRecord
 		{
 			$this->name=$file->name;
 			$this->type=$file->type;
-			
-			// set the new size
-			// maximum dimension
-			$newFile = $this->resizeFile(640,640,$file);
-			$this->content = $newFile['content'];				
-			$this->size = $newFile['size'];
-			
-			//set the new small size
-			$newFile = $this->resizeFile(150,150,$file);
-			$this->content_small = $newFile['content'];
-			$this->size_small = $newFile['size'];
-			
-			if($this->id_entity_type == null){
-				// by default id = 1 is type "NONE"
-				$this->id_entity_type = 1;
-			}	
-			
+			if(strstr($file->type,'image'))
+			{
+				// set the new size
+				// maximum dimension
+				$newFile = $this->resizeFile(640,640,$file);
+				$this->content = $newFile['content'];				
+				$this->size = $newFile['size'];
+				
+				//set the new small size
+				$newFile = $this->resizeFile(150,150,$file);
+				$this->content_small = $newFile['content'];
+				$this->size_small = $newFile['size'];
+				
+				if($this->id_entity_type == null){
+					// by default id = 1 is type "NONE"
+					$this->id_entity_type = 1;
+				}	
+			}
+			elseif(strstr($file->type,'video')||$file->type=="application/octet-stream")//flash
+			{
+				$this->content = file_get_contents($file->tempName);				
+				$this->size = $file->size;
+								
+				if($this->id_entity_type == null){
+					// by default id = 1 is type "NONE"
+					$this->id_entity_type = 1;
+				}	
+			}			
 		}
 	
 		return parent::beforeSave();
@@ -115,7 +126,7 @@ class Multimedia extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('size, size_small, id_entity_type, Id_product', 'numerical', 'integerOnly'=>true),
-			array('uploadedFile', 'file', 'types'=>'jpg, gif, png, pdf'),
+			array('uploadedFile', 'file', 'types'=>'jpg, gif, png, pdf, mp4, flv'),
 			array('name, type', 'length', 'max'=>45),
 			array('content, description, content_small', 'safe'),
 			// The following rule is used by search().
