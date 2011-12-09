@@ -112,7 +112,19 @@
 		<?php echo $form->textField($model,'weight',array('size'=>10,'maxlength'=>10)); ?>
 		<?php echo $form->error($model,'weight'); ?>
 	</div>
+<?php
 
+$items = array(
+array('id'=>1,'value'=>'www.hola.com'),
+array('id'=>2,'value'=>'www.hola2.com'),
+array('id'=>3,'value'=>'www.hola3.com'),
+);
+
+$this->widget('ext.linkcontainer.linkcontainer', array(
+	'id'=>'linkcont',	// default is class="ui-sortable" id="yw0"
+	//'items'=>$items,
+			));
+?>
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
