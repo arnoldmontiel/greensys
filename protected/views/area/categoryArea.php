@@ -22,7 +22,7 @@ $this->trashDraggableId = 'ddlAssigment';
 	<?php 	// Organize the dataProvider data into a Zii-friendly array
 		$items = CHtml::listData($dataProvider->getData(), 'Id', 'description');
 		?>
-	<div class="row">
+	<div style="row;width:300px;margin:2px;">
 		
 		<?php echo $form->labelEx($model,'Area'); ?>
 		<?php echo $form->dropDownList($model, 'Id', CHtml::listData($model->findAll(), 'Id', 'description'),		
@@ -52,7 +52,9 @@ $this->trashDraggableId = 'ddlAssigment';
 		);
 		?>
 		
-	</div>
+	<img id="saveok" src="images/save_ok.png" alt="" 
+	  style="position: relative;float:rigth; display: none;width:20px; height:20px;" />		
+	</div>				
 	<div id="categoryArea"class="assigned-items" style="display: none">
 	<?php 
 		
@@ -77,7 +79,12 @@ $this->trashDraggableId = 'ddlAssigment';
 									 {
 									 	areaId:ddlAreaId = $("#Area_Id :selected").attr("value"),
 										IdCategory:$(ui.item).attr("id")
-									 }); 
+									 }).success(
+									 	function() 
+									 		{ 
+									 			$( "#saveok" ).animate({opacity: "show"},2000);
+												$( "#saveok" ).animate({opacity: "hide"},4000); 
+											}); 
 							}', 				
 					'remove'=>
 							'js:function(event, ui) 
