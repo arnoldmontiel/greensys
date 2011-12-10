@@ -85,9 +85,11 @@ class droptrash extends CJuiWidget
         	
         	
         	$fun = array('drop'=>'js:function( event, ui ){if('.$condition.'){ui.draggable.remove();        	
-        	$(this).switchClass( "'.$this->style.'", "'.$this->styleFull.'", 500 );
+        	$(this).switchClass( "'.$this->style.'", "'.$this->styleFull.'", 0 );
         	$(this).switchClass( "'.$this->styleFull.'", "'.$this->style.'", 1000 );
-        	}}');
+        	}}',
+        	'hoverClass'=>$this->styleFull,
+        	);
         	
         	$options = CJavaScript::encode($fun);
         	
