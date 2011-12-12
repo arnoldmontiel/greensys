@@ -28,13 +28,7 @@
 	<?php echo CHtml::encode($data->content_small); ?>
 	<br />
 
-	<b><?php $this->widget('ext.highslide.highslide', array(
-					'image'=>Yii::app()->urlManager->createUrl('multimedia/previewImage',array('id'=>$data->id)),
-					'smallImage'=>Yii::app()->urlManager->createUrl('multimedia/previewImageSmall',array('id'=>$data->id)),	
-					
-	)); ?>
-	<b><?php $this->widget('ext.videojs.videojs',array('model'=>$data));?>
-	<br />
+	<b><?php $this->widget('ext.videojs.videojs',array('model'=>$data));?></b>
 
 	
 <?php /*

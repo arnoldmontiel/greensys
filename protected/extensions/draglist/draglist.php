@@ -25,7 +25,8 @@ class draglist extends CJuiWidget
 	 * The token "{content}" in the template will be replaced with the item content,
 	 * while "{id}" be replaced with the item ID.
 	 */
-	public $itemTemplate='<li id="dlitems_{id}" class="dlist ui-state-highlight">{content}</li>';
+	public $itemTemplate='<li id="dlitems_{id}" class="dlist ui-state-highlight">{content} <img id="saveok" src="images/save_ok.png" alt="" 
+	  style="position: relative;float:rigth;width:15px; height:15px; display:none;" /></li>';
 
 	/**
 	* @var string the name of the Draggable element. Defaults to 'div'.

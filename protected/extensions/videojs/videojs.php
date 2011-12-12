@@ -32,6 +32,8 @@ class VideoJS extends CJuiWidget
 		// Publishing and registering CSS file
 		$cs->registerCssFile($this->assets.'/video-js.css'
 		);
+		Yii::app()->getClientScript()->registerScript(__CLASS__.'#'.$id,"VideoJS.setupAllWhenReady();",CClientScript::POS_LOAD);
+		
 		parent::init();
 	}
 	
