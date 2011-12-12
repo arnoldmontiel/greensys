@@ -5,7 +5,7 @@
 
 #addLink
 { 	 
-	width: 25px; 
+	width: 20px; 
 	height: 25px; 
 	background-image: url("./graphics/add.png");
 	background-repeat: no-repeat; 
@@ -21,8 +21,7 @@
 	height: 100px;
 	top:0px;
 	overflow:auto;
-		overflow-x:hidden; 
-	border: 3px double #990000;
+	overflow-x:hidden; 
 }
 
 .addContainer 
@@ -38,7 +37,7 @@
 {
 	position:relative;
 	width: 300px;
-	height: 50px;
+	height: 25px;
 	top:0px;
 }
 
