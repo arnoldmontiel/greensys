@@ -114,17 +114,24 @@
 	</div>
 <?php
 
-$items = array(
-array('id'=>1,'value'=>'www.hola.com'),
-array('id'=>2,'value'=>'www.hola2.com'),
-array('id'=>3,'value'=>'www.hola3.com'),
-);
+$hyperLinks = CHtml::listData(Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id)), 'Id','description');
 
 $this->widget('ext.linkcontainer.linkcontainer', array(
 	'id'=>'linkcont',	// default is class="ui-sortable" id="yw0"
-	//'items'=>$items,
+	'items'=>$hyperLinks,
 			));
 ?>
+
+<?php
+
+
+//  $this->widget('ext.jwysiwyg.jwysiwyg', array(
+//  	'id'=>'saracatunga',	// default is class="ui-sortable" id="yw0"	
+//  'notes'=> '<p> <b>hola como te va </b></p>'
+//  			));
+
+?>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
