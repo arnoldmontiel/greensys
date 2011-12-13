@@ -69,8 +69,12 @@ class ProductController extends Controller
 		if(isset($_POST['Product']))
 		{
 			$model->attributes=$_POST['Product'];
-			if($model->save())
+			if($model->save()){
+				if(isset($_POST['links'])){
+					$this->saveLinks($_POST['links'], $model);
+				}
 				$this->redirect(array('view','id'=>$model->Id));
+			}
 		}
 
 		$this->render('create',array(
@@ -78,6 +82,27 @@ class ProductController extends Controller
 		));
 	}
 
+	private function saveLinks($links, $model)
+	{
+		$this->deleteLinks($model->Id);
+		
+		$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
+		foreach ($links as $link){
+			$hyperlink = new Hyperlink;
+			$hyperlink->attributes = array(
+							'description'=>$link,
+							'id_entity_type'=>$entity->id,
+							'Id_product'=>$model->Id);
+			
+			$hyperlink->save();
+		}
+	}
+	
+	private function deleteLinks($id)
+	{
+		Hyperlink::model()->deleteAllByAttributes(array('Id_product'=>$id));
+	}
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -93,8 +118,12 @@ class ProductController extends Controller
 		if(isset($_POST['Product']))
 		{
 			$model->attributes=$_POST['Product'];
-			if($model->save())
+			if($model->save()){
+				if(isset($_POST['links'])){
+					$this->saveLinks($_POST['links'], $model);
+				}
 				$this->redirect(array('view','id'=>$model->Id));
+			}
 		}
 
 		$this->render('update',array(
@@ -111,6 +140,9 @@ class ProductController extends Controller
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
+			//First delete links
+			$this->deleteLinks($id);
+			
 			// we only allow deletion via POST request
 			$this->loadModel($id)->delete();
 
