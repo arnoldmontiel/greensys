@@ -25,6 +25,7 @@
  * The followings are the available model relations:
  * @property Hyperlink[] $hyperlinks
  * @property Multimedia[] $multimedias
+ * @property Note[] $notes
  * @property BudgetItem[] $budgetItems
  * @property PriceListItem[] $priceListItems
  * @property Brand $idBrand
@@ -87,6 +88,7 @@ class Product extends CActiveRecord
 			'budgetItems' => array(self::HAS_MANY, 'BudgetItem', 'Id_product'),
 			'hyperlinks' => array(self::HAS_MANY, 'Hyperlink', 'Id_product'),
 			'multimedias' => array(self::HAS_MANY, 'Multimedia', 'Id_product'),
+			'notes' => array(self::HAS_MANY, 'Note', 'Id_product'),
 			'priceListItems' => array(self::HAS_MANY, 'PriceListItem', 'id_product'),
 			'brand' => array(self::BELONGS_TO, 'Brand', 'id_brand'),
 			'category' => array(self::BELONGS_TO, 'Category', 'Id_category'),
