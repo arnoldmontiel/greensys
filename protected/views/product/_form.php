@@ -117,18 +117,19 @@
 $hyperLinks = CHtml::listData(Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id)), 'Id','description');
 
 $this->widget('ext.linkcontainer.linkcontainer', array(
-	'id'=>'linkcont',	// default is class="ui-sortable" id="yw0"
+	'id'=>'linkContainer',	// default is class="ui-sortable" id="yw0"
 	'items'=>$hyperLinks,
 			));
 ?>
 
 <?php
 
+$note = Note::model()->findByAttributes(array('Id_product'=>$model->Id));
 
-//  $this->widget('ext.jwysiwyg.jwysiwyg', array(
-//  	'id'=>'saracatunga',	// default is class="ui-sortable" id="yw0"	
-//  'notes'=> '<p> <b>hola como te va </b></p>'
-//  			));
+ $this->widget('ext.richtext.jwysiwyg', array(
+ 	'id'=>'noteContainer',	// default is class="ui-sortable" id="yw0"	
+ 	'notes'=> $note->note
+ 			));
 
 ?>
 
