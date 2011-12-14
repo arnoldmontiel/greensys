@@ -221,16 +221,8 @@ class AreaController extends Controller
 							'connectToSortable'=>'#ddlAssigment',
 		),
 		));
-// 		echo CHtml::openTag('ul',array('id'=>"dlProduct",'class'=>'dlist'));
-		
-// 		foreach($data as $item)
-// 		{
-// 				echo CHtml::tag('li',
-// 				array('id'=>"dlitems_".$item->Id,'class'=>'dlist ui-state-highlight'),CHtml::encode($item->description_customer),true);
-// 		}
-// 		echo CHtml::closeTag('ul');
 	}
-		/**
+	/**
 	* adds a new item into ProductArea table
 	* @param new_product, should be "tag_id", ei. product_1
 	* @param areaId, should be "id", ei. 2

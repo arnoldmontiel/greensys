@@ -27,18 +27,7 @@ class ProductController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
+				'actions'=>array('@'),
 				'users'=>array('*'),
 			),
 		);
@@ -69,12 +58,8 @@ class ProductController extends Controller
 		if(isset($_POST['Product']))
 		{
 			$model->attributes=$_POST['Product'];
-			if($model->save()){
-				if(isset($_POST['links'])){
-					$this->saveLinks($_POST['links'], $model);
-				}
+			if($model->save())
 				$this->redirect(array('view','id'=>$model->Id));
-			}
 		}
 
 		$this->render('create',array(
@@ -82,27 +67,6 @@ class ProductController extends Controller
 		));
 	}
 
-	private function saveLinks($links, $model)
-	{
-		$this->deleteLinks($model->Id);
-		
-		$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
-		foreach ($links as $link){
-			$hyperlink = new Hyperlink;
-			$hyperlink->attributes = array(
-							'description'=>$link,
-							'id_entity_type'=>$entity->id,
-							'Id_product'=>$model->Id);
-			
-			$hyperlink->save();
-		}
-	}
-	
-	private function deleteLinks($id)
-	{
-		Hyperlink::model()->deleteAllByAttributes(array('Id_product'=>$id));
-	}
-	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -118,12 +82,8 @@ class ProductController extends Controller
 		if(isset($_POST['Product']))
 		{
 			$model->attributes=$_POST['Product'];
-			if($model->save()){
-				if(isset($_POST['links'])){
-					$this->saveLinks($_POST['links'], $model);
-				}
+			if($model->save())
 				$this->redirect(array('view','id'=>$model->Id));
-			}
 		}
 
 		$this->render('update',array(
@@ -140,9 +100,6 @@ class ProductController extends Controller
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
-			//First delete links
-			$this->deleteLinks($id);
-			
 			// we only allow deletion via POST request
 			$this->loadModel($id)->delete();
 
@@ -179,7 +136,25 @@ class ProductController extends Controller
 			'model'=>$model,
 		));
 	}
-
+	/**
+	 * Manages all models.
+	 */
+	public function actionProductGroup()
+	{
+		$model=new Product('search');
+		if(isset($_GET['ProductGroup']))
+		$model->attributes=$_GET['ProductGroup'];
+		
+		// Uncomment the following line if AJAX validation is needed
+		$dataProvider=new CActiveDataProvider('Product');
+		$dataProviderCategory=new CActiveDataProvider('Category');
+		
+		$this->render('productGroup',array(
+						'dataProvider'=>$dataProvider,
+						'model'=>$model //model for creation
+		));
+		
+	}
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
@@ -192,7 +167,91 @@ class ProductController extends Controller
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
-
+	public function actionAjaxFillProductGroup()
+	{
+		$data=ProductGroup::model()->findAll('id_product_parent=:parent_id',
+		array(':parent_id'=>(int) $_POST['Product']['Id']));
+	
+	
+		foreach($data as $item)
+		{
+			for ($i = 0; $i < $item->quantity; $i++) {
+				echo CHtml::tag('li',
+				array('id'=>"items_".$item->id_product_child,'class'=>'ui-state-default'),CHtml::encode($item->productChild->description_customer),true);
+			}
+		}
+	}
+	public function actionAjaxFillProducts()
+	{
+		$data=Product::model()->findAll('Id_category=:Id_category',
+		array(':Id_category'=>(int) $_POST['Category']['Id']));
+	
+		$itemsProduct = CHtml::listData($data, 'Id', 'description_customer');
+	
+		$this->widget('ext.draglist.draglist', array(
+						'id'=>'dlProduct',
+						'items' => $itemsProduct,
+						'options'=>array(
+								'helper'=> 'clone',
+								'connectToSortable'=>'#ddlAssigment',
+		),
+		));
+	}
+	/**
+	* adds a new item into ProductArea table
+	* @param new_product, should be "tag_id", ei. product_1
+	* @param areaId, should be "id", ei. 2
+	*/
+	
+	public function actionAjaxAddProductGroup()
+	{
+		$idProductParent = isset($_POST['IdProductParent'])?$_POST['IdProductParent']:'';
+		$idProductChild = isset($_POST['IdProductChild'])?$_POST['IdProductChild']:'';
+		$IdProductChildArray = explode("_",$idProductChild);
+		$idProductChild = $IdProductChildArray[1];
+			
+		if(!empty($idProductParent)&&!empty($idProductChild))
+		{
+			$productGroupInDb = ProductGroup::model()->findByPk(array('id_product_parent'=>(int) $idProductParent,'id_product_child'=>(int)$idProductChild));
+			if($productGroupInDb==null)
+			{
+				$productGroup=new ProductGroup;
+				$productGroup->attributes = array('id_product_parent'=>$idProductParent,'id_product_child'=>$idProductChild,'quantity'=>1);
+				$productGroup->save();
+			}
+			else
+			{
+				$quantity = $productGroupInDb->quantity+1;
+				$productGroupInDb->attributes = array('quantity'=>$quantity);
+				$productGroupInDb->save();
+			}
+		}
+	}
+	public function actionAjaxRemoveProductGroup()
+	{
+		$idProductParent = isset($_POST['IdProductParent'])?$_POST['IdProductParent']:'';
+		$idProductChild = isset($_POST['IdProductChild'])?$_POST['IdProductChild']:'';
+		$IdProductChildArray = explode("_",$idProductChild);
+		$idProductChild = $IdProductChildArray[1];
+			
+		if(!empty($idProductParent)&&!empty($idProductChild))
+		{
+			$productGroupInDb = ProductGroup::model()->findByPk(array('id_product_parent'=>(int) $idProductParent,'id_product_child'=>(int)$idProductChild));
+			if($productGroupInDb!=null)
+			{
+				if($productGroupInDb->quantity>1)
+				{
+					$productGroupInDb->attributes = array('quantity'=>$productGroupInDb->quantity-1);
+					$productGroupInDb->save();
+				}
+				else
+				{
+					$productGroupInDb->delete();
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated
