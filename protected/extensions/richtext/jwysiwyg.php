@@ -2,6 +2,7 @@
 class jwysiwyg extends CWidget
 {
 	public $notes;
+	public $mode;
 	public function init()
 	{
 		$assetsDir = dirname(__FILE__).'/assets';
@@ -20,6 +21,11 @@ class jwysiwyg extends CWidget
 	}
 	public function run()
 	{
-		$this->render("body", array('notes'=>$this->notes));
+		if (isset($this->mode))
+			$mode = $this->mode;
+		else
+			$mode = "edit";
+		
+		$this->render($mode, array('notes'=>$this->notes));
 	}
 }

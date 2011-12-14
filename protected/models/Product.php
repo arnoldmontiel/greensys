@@ -125,6 +125,9 @@ class Product extends CActiveRecord
 			'time_instalation' => 'Time Instalation',
 			'hide' => 'Hide',
 			'weight' => 'Weight',
+			'link'=>'Links',
+			'note'=>'Note',
+			'image'=>'Image',
 		);
 	}
 

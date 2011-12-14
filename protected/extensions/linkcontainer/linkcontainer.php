@@ -15,18 +15,16 @@ Yii::import('zii.widgets.jui.CJuiWidget');
  * The result of this widget is an array of values under Links[] array. You can check it on $_POST.
  */
 class linkcontainer extends CJuiWidget
-{
-        /**
-         * @var string the HTML tag name of the Droppable element. Defaults to 'div'.
-         */
-        public $tagName='div';
-        
-        
+{       
         /**
         * @var items is an array buid of (id, value), which will load all links already saved
         */
         public $items;
         
+        /**
+        * @var mode can be "show" or "edit". By default mode = "edit"
+        */
+        public $mode;
         
         /**
          * Renders the open tag of the droppable element.
@@ -57,11 +55,18 @@ class linkcontainer extends CJuiWidget
         		$id = $this->htmlOptions['id'];
         	else
         		$this->htmlOptions['id']=$id;
-        	 	
+
         	
-			$this->render("body", array(
+        	if (isset($this->mode))
+        		$mode = $this->mode;
+        	else
+        		$mode = "edit";
+        	
+        	
+			$this->render($mode, array(
 							'items'=>$this->items,
 			));
+        	
         }
 
 }
