@@ -54,12 +54,22 @@ class ProductController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
+		
 		if(isset($_POST['Product']))
 		{
 			$model->attributes=$_POST['Product'];
-			if($model->save())
+			if($model->save()){
+				//save links
+				if(isset($_POST['links'])){
+					$this->saveLinks($_POST['links'], $model);
+				}
+				
+				//save note
+				if(isset($_POST['notes']) && !empty($_POST['notes']))
+					$this->saveNote($_POST['notes'], $model);
+				
 				$this->redirect(array('view','id'=>$model->Id));
+			}
 		}
 
 		$this->render('create',array(
@@ -67,6 +77,48 @@ class ProductController extends Controller
 		));
 	}
 
+	
+	private function saveNote($noteProduct, $model)
+	{
+		$this->deleteNote($model->Id);
+		
+		$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
+		
+		$note = new Note;
+		$note->attributes = array(
+							'note'=>$noteProduct,							
+							'id_entity_type'=>$entity->id,
+							'Id_product'=>$model->Id);
+		$note->save();							
+	}
+	
+	private function deleteNote($id)
+	{
+		Note::model()->deleteAllByAttributes(array('Id_product'=>$id));
+	}
+	
+	
+	private function saveLinks($links, $model)
+	{
+		$this->deleteLinks($model->Id);
+		
+		$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
+		foreach ($links as $link){
+			$hyperlink = new Hyperlink;
+			$hyperlink->attributes = array(
+							'description'=>$link,
+							'id_entity_type'=>$entity->id,
+							'Id_product'=>$model->Id);
+			
+			$hyperlink->save();
+		}
+	}
+	
+	private function deleteLinks($id)
+	{
+		Hyperlink::model()->deleteAllByAttributes(array('Id_product'=>$id));
+	}
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -82,8 +134,19 @@ class ProductController extends Controller
 		if(isset($_POST['Product']))
 		{
 			$model->attributes=$_POST['Product'];
-			if($model->save())
+			if($model->save()){
+				
+				//update links
+				if(isset($_POST['links'])){
+					$this->saveLinks($_POST['links'], $model);
+				}
+				
+				//update note
+				if(isset($_POST['notes']) && !empty($_POST['notes']))
+					$this->saveNote($_POST['notes'], $model);
+				
 				$this->redirect(array('view','id'=>$model->Id));
+			}
 		}
 
 		$this->render('update',array(
@@ -100,6 +163,12 @@ class ProductController extends Controller
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
+			//First delete links
+			$this->deleteLinks($id);
+			
+			//First delete note
+			$this->deleteNote($id);
+			
 			// we only allow deletion via POST request
 			$this->loadModel($id)->delete();
 
@@ -137,23 +206,23 @@ class ProductController extends Controller
 		));
 	}
 	/**
-	 * Manages all models.
-	 */
+	* Manages all models.
+	*/
 	public function actionProductGroup()
 	{
 		$model=new Product('search');
 		if(isset($_GET['ProductGroup']))
 		$model->attributes=$_GET['ProductGroup'];
-		
+	
 		// Uncomment the following line if AJAX validation is needed
 		$dataProvider=new CActiveDataProvider('Product');
 		$dataProviderCategory=new CActiveDataProvider('Category');
-		
+	
 		$this->render('productGroup',array(
-						'dataProvider'=>$dataProvider,
-						'model'=>$model //model for creation
+							'dataProvider'=>$dataProvider,
+							'model'=>$model //model for creation
 		));
-		
+	
 	}
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
@@ -167,6 +236,7 @@ class ProductController extends Controller
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
+
 	public function actionAjaxFillProductGroup()
 	{
 		$data=ProductGroup::model()->findAll('id_product_parent=:parent_id',
@@ -189,19 +259,19 @@ class ProductController extends Controller
 		$itemsProduct = CHtml::listData($data, 'Id', 'description_customer');
 	
 		$this->widget('ext.draglist.draglist', array(
-						'id'=>'dlProduct',
-						'items' => $itemsProduct,
-						'options'=>array(
-								'helper'=> 'clone',
-								'connectToSortable'=>'#ddlAssigment',
+							'id'=>'dlProduct',
+							'items' => $itemsProduct,
+							'options'=>array(
+									'helper'=> 'clone',
+									'connectToSortable'=>'#ddlAssigment',
 		),
 		));
 	}
 	/**
-	* adds a new item into ProductArea table
-	* @param new_product, should be "tag_id", ei. product_1
-	* @param areaId, should be "id", ei. 2
-	*/
+	 * adds a new item into ProductArea table
+	 * @param new_product, should be "tag_id", ei. product_1
+	 * @param areaId, should be "id", ei. 2
+	 */
 	
 	public function actionAjaxAddProductGroup()
 	{
