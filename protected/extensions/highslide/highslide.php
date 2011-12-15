@@ -1,8 +1,7 @@
 <?php
 class Highslide extends CWidget
 {
-	public $image;
-	public $smallImage;
+	public $id;
 	protected $graphics;
 	public function init()
 	{
@@ -30,9 +29,11 @@ class Highslide extends CWidget
 	}
 	public function run()
 	{
-		$this->render("body", array(
-			'image'=>$this->image,
-			'smallImage'=>$this->smallImage,
-		));
+		if($this->id != null){
+			$this->render("body", array(
+						'id'=>$this->id,
+			));
+		}
+		
 	}
 }

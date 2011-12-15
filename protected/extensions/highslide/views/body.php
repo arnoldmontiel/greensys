@@ -28,8 +28,8 @@ if (hs.addSlideshow) hs.addSlideshow({
 <div class="highslide-gallery">
 
 		
-		<a href="<?php echo  $image?>" class="highslide" onclick="return hs.expand(this)">
-			<img src="<?php echo $smallImage?>" alt="Highslide JS"
+		<a href="<?php echo Yii::app()->urlManager->createUrl('multimedia/previewImage',array('id'=>$id))?>" class="highslide" onclick="return hs.expand(this)">
+			<img src="<?php echo Yii::app()->urlManager->createUrl('multimedia/previewImageSmall',array('id'=>$id))?>" alt="Highslide JS"
 				title="Click to enlarge" />
 		</a>
 
