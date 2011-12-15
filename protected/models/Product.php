@@ -109,9 +109,9 @@ class Product extends CActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
-			'id_brand' => 'Id Brand',
-			'Id_category' => 'Id Category',
-			'Id_nomenclator' => 'Id Nomenclator',
+			'id_brand' => 'Brand',
+			'Id_category' => 'Category',
+			'Id_nomenclator' => 'Nomenclator',
 			'description_customer' => 'Description Customer',
 			'description_supplier' => 'Description Supplier',
 			'code' => 'Code',
