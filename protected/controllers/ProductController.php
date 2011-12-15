@@ -68,6 +68,12 @@ class ProductController extends Controller
 				if(isset($_POST['notes']) && !empty($_POST['notes']))
 					$this->saveNote($_POST['notes'], $model);
 				
+				//save image
+				if(isset($_POST['Multimedia']))
+					$this->saveImage($model);
+				
+				
+				
 				$this->redirect(array('view','id'=>$model->Id));
 			}
 		}
@@ -77,6 +83,25 @@ class ProductController extends Controller
 		));
 	}
 
+	private function saveImage($model)
+	{			
+			$multimedia = Multimedia::model()->findByAttributes(array('Id_product'=>$model->Id));
+			
+			$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
+		
+			$multi = new Multimedia;
+			$multi->attributes = array(
+									'id_entity_type'=>$entity->id,
+									'Id_product'=>$model->Id);
+			if($multi->save() && $multimedia->Id != null)
+				Multimedia::model()->deleteByPk($multimedia->Id);
+			
+	}
+	
+	private function deleteImage($id)
+	{
+		Multimedia::model()->deleteAllByAttributes(array('Id_product'=>$id));
+	}
 	
 	private function saveNote($noteProduct, $model)
 	{
@@ -145,6 +170,10 @@ class ProductController extends Controller
 				if(isset($_POST['notes']) && !empty($_POST['notes']))
 					$this->saveNote($_POST['notes'], $model);
 				
+				//save image
+				if(isset($_POST['Multimedia']))
+					$this->saveImage($model);
+				
 				$this->redirect(array('view','id'=>$model->Id));
 			}
 		}
@@ -168,6 +197,9 @@ class ProductController extends Controller
 			
 			//First delete note
 			$this->deleteNote($id);
+			
+			//First delete image
+			$this->deleteImage($id);
 			
 			// we only allow deletion via POST request
 			$this->loadModel($id)->delete();
