@@ -58,13 +58,21 @@
 			array('label'=>Yii::app()->lc->t('Contact'), 'url'=>array('/site/contact')),
 			array('label'=>Yii::app()->lc->t('Login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 			array('label'=>Yii::app()->lc->t('Logout').' ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
+			array('label'=>Yii::app()->lc->t('Administration'), 'visible'=>!Yii::app()->user->isGuest, 'items'=>array
+				(
+					//array('label'=>'User', 'url'=>array('/user', 'view'=>'manage')),
+					array('label'=>Yii::app()->lc->t('User'), 'url'=>array('/user/index', 'view'=>'manage'),'visible'=>Yii::app()->user->checkAccess('ManejarUsuarios')),
+					array('label'=>Yii::app()->lc->t('Permissions'), 'url'=>array('/srbac/authitem/frontpage'))
+				)
+			),
 			array('label'=>Yii::app()->lc->t('Manage'), 'visible'=>!Yii::app()->user->isGuest, 'items'=>array
-			(
-				//array('label'=>'User', 'url'=>array('/user', 'view'=>'manage')),
-				array('label'=>Yii::app()->lc->t('User'), 'url'=>array('/user/index', 'view'=>'manage'),'visible'=>Yii::app()->user->checkAccess('ManejarUsuarios')),
-				array('label'=>Yii::app()->lc->t('Permissions'), 'url'=>array('/srbac/authitem/frontpage', 'view'=>'manage'))
+				(
+					array('label'=>Yii::app()->lc->t('Product'), 'url'=>array('/product/index')),
+					array('label'=>Yii::app()->lc->t('Area'), 'url'=>array('/area/index')),
+					array('label'=>Yii::app()->lc->t('Multimedia'), 'url'=>array('/multimedia/index')),
+				)
 			)
-		))
+		)
 		
 		)); 
 		 ?>		
