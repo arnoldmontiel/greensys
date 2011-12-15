@@ -3,6 +3,7 @@
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'product-form',
 	'enableAjaxValidation'=>false,
+	'htmlOptions'=>array('enctype'=>'multipart/form-data'),
 )); ?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
@@ -122,6 +123,37 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 			));
 ?>
 
+<div style="height:270px;" >
+<div class="left">
+<?php $multimedia = Multimedia::model(); ?>
+		<div class="row">
+			<?php echo $form->labelEx($multimedia,'uploadedFile'); ?>
+			<?php echo $form->fileField($multimedia,'uploadedFile'); ?>
+			<?php echo $form->error($multimedia,'uploadedFile'); ?>
+		</div>
+	
+		<div class="row">
+			<?php echo $form->labelEx($multimedia,'name'); ?>
+			<?php echo $form->textField($multimedia,'name',array('size'=>45,'maxlength'=>45)); ?>
+			<?php echo $form->error($multimedia,'name'); ?>
+		</div>
+	
+		<div class="row">
+			<?php echo $form->labelEx($multimedia,'description'); ?>
+			<?php echo $form->textArea($multimedia,'description',array('rows'=>6, 'cols'=>35)); ?>
+			<?php echo $form->error($multimedia,'description'); ?>
+		</div>
+	</div>
+	<div class="right">
+		<?php 
+		$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
+		$mult = Multimedia::model()->findByAttributes(array('Id_product'=>$model->Id,'id_entity_type'=>$entity->id));
+		$this->widget('ext.highslide.highslide', array(
+						'id'=>$mult->id,
+	)); ?>
+	</div>
+</div>
+
 <?php
 
 $note = Note::model()->findByAttributes(array('Id_product'=>$model->Id));
@@ -132,6 +164,7 @@ $note = Note::model()->findByAttributes(array('Id_product'=>$model->Id));
  			));
 
 ?>
+
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
