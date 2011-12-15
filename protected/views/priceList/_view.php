@@ -17,11 +17,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_supplier')); ?>:</b>
-	<?php echo CHtml::encode($data->Id_supplier); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id_price_list_type')); ?>:</b>
-	<?php echo CHtml::encode($data->id_price_list_type); ?>
+	<?php echo CHtml::encode($data->supplier->business_name); ?>
 	<br />
 
 

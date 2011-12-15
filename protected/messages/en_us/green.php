@@ -49,6 +49,15 @@
   		' at the beginning of each of your search values to specify how the comparison should be done.'=>' at the beginning of each of your search values to specify how the comparison should be done.',
  		'Advanced Search'=>'Advanced Search',
  		'This is the main page.'=>'This is the main page.',
+ 		'dateFormats' => array(
+ 			'small'=>'MM/dd/yyyy',          // format used for input
+ 			'calendar_small'=>'mm/dd/yy',   // format used for input with calendar widget
+ 			'database'=>Yii::app()->params['database_format']['date'],
+ ),
+ 		'timeFormats' => array(
+ 			'small'=>'HH:mm:ss',          // format used for input
+ 			'database'=>Yii::app()->params['database_format']['time'],
+ ),
  
   );
  ?>

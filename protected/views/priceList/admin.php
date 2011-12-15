@@ -7,6 +7,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List PriceList', 'url'=>array('index')),
 	array('label'=>'Create PriceList', 'url'=>array('create')),
+	array('label'=>'Assing Products', 'url'=>array('priceListItem')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -42,12 +43,10 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		'Id',
+		'supplier.business_name',
 		'date_creation',
 		'date_validity',
 		'validity',
-		'Id_supplier',
-		'id_price_list_type',
 		array(
 			'class'=>'CButtonColumn',
 		),

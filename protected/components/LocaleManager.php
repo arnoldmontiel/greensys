@@ -56,6 +56,7 @@ class LocaleManager extends CApplicationComponent {
 		switch ($format_type) {
 			case 'date': {
 				$res =Yii::app()->locale->getDateFormat($format_id);
+				Yii::app()->params['database_format']['date'];
 			} break;
 			case 'time': {
 				$res =Yii::app()->locale->getTimeFormat($format_id);

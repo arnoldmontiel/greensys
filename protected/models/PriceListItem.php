@@ -57,8 +57,8 @@ class PriceListItem extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idPriceList' => array(self::BELONGS_TO, 'PriceList', 'Id_price_list'),
-			'idProduct' => array(self::BELONGS_TO, 'Product', 'id_product'),
+			'priceList' => array(self::BELONGS_TO, 'PriceList', 'Id_price_list'),
+			'product' => array(self::BELONGS_TO, 'Product', 'id_product'),
 		);
 	}
 

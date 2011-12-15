@@ -18,6 +18,7 @@ return array(
 		'application.components.*',
 		'application.modules.srbac.controllers.SBaseController',		
 	),
+	'localeDataPath'=>'protected/i18n/data/',
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
@@ -129,6 +130,11 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
+		'database_format'=>array(
+					'date'=>'yyyy-MM-dd',
+					'time'=>'HH:mm:ss',
+					'dateTimeFormat'=>'{1} {0}',
+		),
 	),
 );
 
