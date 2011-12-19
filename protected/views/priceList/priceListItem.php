@@ -139,7 +139,7 @@ $('.search-form form').submit(function(){
 							       	value=value.replace(/\./, "");
 
 							        if (value!=""){
-							        	orignalValue=orignalValue.replace(/([^0-9].*)/g, "")
+							        	orignalValue=orignalValue.replace(value, "");
 							        	$(this).val(orignalValue);
 							        	alert(msg);
 							        }
