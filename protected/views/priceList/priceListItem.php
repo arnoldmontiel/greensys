@@ -124,16 +124,51 @@ $('.search-form form').submit(function(){
 					if($("#Product_Id :selected").attr("value")=="")
 					{
 						$("#PriceListItems").html(data);
-// 						$( "#category" ).animate({opacity: "hide"},"slow");
-// 						$( "#product" ).animate({opacity: "hide"},"slow");
-// 						$( "#productProduct" ).animate({opacity: "hide"},"slow");
 					}
 					else
 					{
-						$("#PriceListItems").html(data);
-// 						$( "#category" ).animate({opacity: "show"},"slow");
-// 						$( "#product" ).animate({opacity: "show"},"slow");
-// 						$( "#productProduct" ).animate({opacity: "show"},"slow");
+						$("#PriceListItems").html(data);						
+						$("#PriceListItems").find("input.txtCost").each(
+							function(index, item){
+						
+								$(item).keyup(function(){
+							        var value=$(this).val();
+							        var orignalValue=value;
+							        value=value.replace(/[0-9]*/g, "");			
+							       	var msg="Only Decimal Values allowed."; 						
+							       	value=value.replace(/\./, "");
+
+							        if (value!=""){
+							        	orignalValue=orignalValue.replace(/([^0-9].*)/g, "")
+							        	$(this).val(orignalValue);
+							        	alert(msg);
+							        }
+		
+								});
+								
+								
+								
+								$(item).change(function(){
+// 														debugger;
+														var target = $(this);
+														$.post(
+															"'.PriceListController::createUrl('AjaxUpdateCost').'",
+															 {
+															 	idPriceListItem:ddlProductId = $(this).attr("id"),
+																cost:$(this).val()
+															}).success(
+																 	function() 
+																 		{ 
+																 			$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000);
+																			$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000); 
+																		});
+															
+														});
+								
+								
+								
+							}
+						);
 					}
 				}',
 				//leave out the data key to pass all form values through

@@ -162,6 +162,20 @@ class PriceListController extends Controller
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
+	
+	public function actionAjaxUpdateCost()
+	{
+		$idPriceListItem = $_POST['idPriceListItem'];
+		$cost = $_POST['cost'];
+		$priceListItem= PriceListItem::model()->findByPk($idPriceListItem);
+		if($priceListItem!= null)
+		{
+			$priceListItem->attributes = array('cost'=>(int) $cost);
+			$priceListItem->save();
+		}
+		return $priceListItem;
+		
+	}
 	public function actionAjaxFillPriceListItemGrid()
 	{
 		$criteria=new CDbCriteria;
@@ -181,13 +195,35 @@ class PriceListController extends Controller
 			'columns'=>array(
 				'product.description_customer',
 				'priceList.supplier.business_name',
-				'cost',
+				array(
+					'name'=>'cost',
+					'value'=>
+                                    	'CHtml::textField("txtCost",
+												$data->cost,
+												array(
+														"id"=>$data->Id,
+														"class"=>"txtCost",
+													)
+											)',
+							
+					'type'=>'raw',
+			        'htmlOptions'=>array('width'=>5),
+				),
+				array(
+					'name'=>'',
+					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+					'type'=>'raw',
+					'htmlOptions'=>array('width'=>20),
+				),
 				array(
 					'class'=>'CButtonColumn',
 				),
 			),
 		)); 
+
 	}
+
+	
 	public function actionAjaxFillProducts()
 	{
 		$data=Product::model()->findAll('Id_category=:Id_category',
