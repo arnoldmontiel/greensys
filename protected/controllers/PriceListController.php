@@ -170,7 +170,7 @@ class PriceListController extends Controller
 		$priceListItem= PriceListItem::model()->findByPk($idPriceListItem);
 		if($priceListItem!= null)
 		{
-			$priceListItem->attributes = array('cost'=>(int) $cost);
+			$priceListItem->attributes = array('cost'=>(double) $cost);
 			$priceListItem->save();
 		}
 		return $priceListItem;
