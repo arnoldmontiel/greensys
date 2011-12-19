@@ -217,6 +217,7 @@ class PriceListController extends Controller
 				),
 				array(
 					'class'=>'CButtonColumn',
+					'template'=>'{delete}'
 				),
 			),
 		)); 
