@@ -179,9 +179,8 @@ class PriceListController extends Controller
 			'dataProvider'=>$dataProvider,
 			//'filter'=>$data,
 			'columns'=>array(
-				'Id',
-				'id_product',
-				'Id_price_list',
+				'product.description_customer',
+				'priceList.supplier.business_name',
 				'cost',
 				array(
 					'class'=>'CButtonColumn',
