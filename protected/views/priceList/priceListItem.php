@@ -23,6 +23,23 @@ $('.search-form form').submit(function(){
 ");
 
 ?>
+<script type="text/javascript">
+function validateNumber(obj)
+{
+	var value=$(obj).val();
+    var orignalValue=value;
+    value=value.replace(/[0-9]*/g, "");			
+   	var msg="Only Decimal Values allowed."; 						
+   	value=value.replace(/\./, "");
+
+    if (value!=""){
+    	orignalValue=orignalValue.replace(value, "");
+    	$(obj).val(orignalValue);
+    	alert(msg);
+    }
+}
+</script>
+
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
 		'id'=>'priceList-form',
@@ -132,17 +149,7 @@ $('.search-form form').submit(function(){
 							function(index, item){
 						
 								$(item).keyup(function(){
-							        var value=$(this).val();
-							        var orignalValue=value;
-							        value=value.replace(/[0-9]*/g, "");			
-							       	var msg="Only Decimal Values allowed."; 						
-							       	value=value.replace(/\./, "");
-
-							        if (value!=""){
-							        	orignalValue=orignalValue.replace(value, "");
-							        	$(this).val(orignalValue);
-							        	alert(msg);
-							        }
+							        validateNumber($(this));
 		
 								});
 								
@@ -211,18 +218,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array( // the dialog
 														function(index, item){
 													
 															$(item).keyup(function(){
-														        var value=$(this).val();
-														        var orignalValue=value;
-														        value=value.replace(/[0-9]*/g, "");			
-														       	var msg="Only Decimal Values allowed."; 						
-														       	value=value.replace(/\./, "");
-							
-														        if (value!=""){
-														        	orignalValue=orignalValue.replace(value, "");
-														        	$(this).val(orignalValue);
-														        	alert(msg);
-														        }
-									
+														        validateNumber($(this));
 															});
 															
 															$(item).change(function(){
