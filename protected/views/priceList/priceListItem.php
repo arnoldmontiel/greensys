@@ -149,7 +149,6 @@ $('.search-form form').submit(function(){
 								
 								
 								$(item).change(function(){
-// 														debugger;
 														var target = $(this);
 														$.post(
 															"'.PriceListController::createUrl('AjaxUpdateCost').'",
@@ -208,9 +207,49 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array( // the dialog
 									 			{IdPriceList: $("#PriceList_Id :selected").attr("value")},
 									 			function(data) {
   													$("#PriceListItems").html(data);
+  													$("#PriceListItems").find("input.txtCost").each(
+														function(index, item){
+													
+															$(item).keyup(function(){
+														        var value=$(this).val();
+														        var orignalValue=value;
+														        value=value.replace(/[0-9]*/g, "");			
+														       	var msg="Only Decimal Values allowed."; 						
+														       	value=value.replace(/\./, "");
+							
+														        if (value!=""){
+														        	orignalValue=orignalValue.replace(value, "");
+														        	$(this).val(orignalValue);
+														        	alert(msg);
+														        }
+									
+															});
+															
+															$(item).change(function(){
+															var target = $(this);
+															$.post(
+																"'.PriceListController::createUrl('AjaxUpdateCost').'",
+																 {
+																 	idPriceListItem:ddlProductId = $(this).attr("id"),
+																	cost:$(this).val()
+																}).success(
+																	 	function() 
+																	 		{ 
+																	 			$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000);
+																				$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000); 
+																			});
+																
+															});
+															
+															}// end function(index, item)
+															
+													);//end .each 
+								
 												}
 									 		);
-											});							
+											}
+											
+											);							
 							
 							$( this ).dialog( "close" );
 					}',
