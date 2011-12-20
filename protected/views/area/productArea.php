@@ -8,6 +8,7 @@ $this->menu=array(
 	array('label'=>'Create Area', 'url'=>array('create')),
 	array('label'=>'Manage Area', 'url'=>array('admin')),
 	array('label'=>'Assign Categories', 'url'=>array('categoryArea')),
+	array('label'=>'Assign Services', 'url'=>array('serviceArea')),
 );
 $this->trashDraggableId = 'ddlAssigment';
 ?>
