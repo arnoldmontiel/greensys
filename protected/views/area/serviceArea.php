@@ -69,7 +69,8 @@ $this->trashDraggableId = 'ddlAssigment';
 					'start'=>'var id=$(ui.item).attr("id");',		
 					'stop'=>'js:function(event, ui) 
 							{
-								$(ui.item).attr("id",id);
+								$(ui.item).children().animate({opacity: "show"},2000);
+								$(ui.item).children().animate({opacity: "hide"},4000);
 							}', 				
 					'receive'=>
 							'js:function(event, ui) 
@@ -83,8 +84,6 @@ $this->trashDraggableId = 'ddlAssigment';
 									 }).success(
 									 	function() 
 									 		{ 
-									 			$( "#saveok" ).animate({opacity: "show"},2000);
-												$( "#saveok" ).animate({opacity: "hide"},4000); 
 											}); 
 							}', 				
 					'remove'=>
