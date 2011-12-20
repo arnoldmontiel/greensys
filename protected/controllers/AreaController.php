@@ -179,6 +179,20 @@ class AreaController extends Controller
 	
 	}
 	
+	public function actionServiceArea()
+	{
+	$cmodel=new Area;
+		
+	$dataProvider=new CActiveDataProvider('Area');
+	$dataProviderService=new CActiveDataProvider('Service');
+	
+			$this->render('serviceArea',array(
+				'dataProvider'=>$dataProvider,
+				'dataProviderService'=>$dataProviderService,
+				'model'=>$cmodel //model for creation
+	));
+	
+	}
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
@@ -337,6 +351,53 @@ class AreaController extends Controller
 				{
 					$categoryAreaInDb->delete();						
 				}
+			}
+		}
+	}	
+	public function actionAjaxFillServiceArea()
+	{
+		$data=ServiceArea::model()->findAll('Id_area=:id_area',
+		array(':id_area'=>(int) $_POST['Area']['Id']));
+	
+	
+		foreach($data as $item)
+		{
+			echo CHtml::tag('li',
+			array('id'=>"items_".$item->Id_service,'class'=>'ui-state-default'),CHtml::encode($item->service->description),true);
+		}
+	}
+
+	public function actionAjaxAddServiceArea()
+	{
+		$idArea = isset($_POST['IdArea'])?$_POST['IdArea']:'';
+		$IdService= isset($_POST['IdService'])?$_POST['IdService']:'';
+		$IdService = explode("_",$IdService);
+		$idService = $IdService[1];
+
+		if(!empty($idService)&&!empty($idArea))
+		{
+			$serviceAreaInDb = ServiceArea::model()->findByPk(array('Id_area'=>(int) $idArea,'Id_service'=>(int)$idService));
+			if($serviceAreaInDb==null)
+			{
+				$serviceArea=new ServiceArea;
+				$serviceArea->attributes = array('Id_area'=>$idArea,'Id_service'=>$idService);
+				$serviceArea->save();
+			}
+		}		
+	}	
+	public function actionAjaxRemoveServiceArea()
+	{
+		$idArea = isset($_POST['IdArea'])?$_POST['IdArea']:'';
+		$IdService= isset($_POST['IdService'])?$_POST['IdService']:'';
+		$IdService = explode("_",$IdService);
+		$idService = $IdService[1];
+
+		if(!empty($idService)&&!empty($idArea))
+		{
+			$serviceAreaInDb = ServiceArea::model()->findByPk(array('Id_area'=>(int) $idArea,'Id_service'=>(int)$idService));
+			if($serviceAreaInDb!=null)
+			{
+					$serviceAreaInDb->delete();						
 			}
 		}
 	}	
