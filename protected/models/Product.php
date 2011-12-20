@@ -65,15 +65,15 @@ class Product extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_brand, Id_category, Id_nomenclator', 'required'),
-			array('id_brand, Id_category, Id_nomenclator, discontinued, hide', 'numerical', 'integerOnly'=>true),
+			array('id_brand, Id_category, Id_nomenclator, Id_supplier', 'required'),
+			array('id_brand, Id_category, Id_nomenclator, discontinued, hide, Id_supplier', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier', 'length', 'max'=>255),
 			array('code, code_supplier', 'length', 'max'=>45),
 			array('length, width, height, profit_rate, msrp, weight', 'length', 'max'=>10),
 			array('time_instalation', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight', 'safe', 'on'=>'search'),
+			array('Id, id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -99,6 +99,7 @@ class Product extends CActiveRecord
 			'productGroupsParent' => array(self::HAS_MANY, 'ProductGroup', 'id_product_parent'),
 			'productItems' => array(self::HAS_MANY, 'ProductItem', 'Id_product'),
 			'productRequirements' => array(self::MANY_MANY, 'ProductRequirement', 'product_requirement_product(id_product, id_product_requirement)'),
+			'supplier' => array(self::BELONGS_TO, 'Supplier', 'Id_supplier'),
 		);
 	}
 
@@ -128,6 +129,7 @@ class Product extends CActiveRecord
 			'link'=>'Links',
 			'note'=>'Note',
 			'image'=>'Image',
+			'Id_supplier' => 'Supplier',
 		);
 	}
 

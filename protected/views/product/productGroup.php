@@ -47,7 +47,7 @@ $this->trashDraggableId = 'ddlAssigment';
 					}
 				}',
 				//leave out the data key to pass all form values through
-				),'prompt'=>'Select an Product'
+				),'prompt'=>'Select a Product'
 			)		
 		);
 		?>

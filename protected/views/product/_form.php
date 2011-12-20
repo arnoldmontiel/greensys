@@ -19,6 +19,14 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'Id_supplier'); ?>
+		<?php echo $form->dropDownList($model, 'Id_supplier', CHtml::listData(
+    			Supplier::model()->findAll(), 'Id', 'business_name')); 
+		?>
+		<?php echo $form->error($model,'id_supplier'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'Id_category'); ?>
 		<?php echo $form->dropDownList($model, 'Id_category', CHtml::listData(
     			Category::model()->findAll(), 'Id', 'description')); 

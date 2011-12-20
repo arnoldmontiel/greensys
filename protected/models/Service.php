@@ -1,24 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "area".
+ * This is the model class for table "service".
  *
- * The followings are the available columns in table 'area':
+ * The followings are the available columns in table 'service':
  * @property integer $Id
  * @property string $description
- * @property integer $main
  *
  * The followings are the available model relations:
- * @property Project[] $projects
+ * @property Area[] $areas
  * @property Category[] $categories
- * @property Product[] $products
- * @property Service[] $services
  */
-class Area extends CActiveRecord
+class Service extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return Area the static model class
+	 * @return Service the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -30,7 +27,7 @@ class Area extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'area';
+		return 'service';
 	}
 
 	/**
@@ -41,11 +38,10 @@ class Area extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('main', 'numerical', 'integerOnly'=>true),
-			array('description', 'length', 'max'=>45),
+			array('description', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description, main', 'safe', 'on'=>'search'),
+			array('Id, description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,10 +53,8 @@ class Area extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'projects' => array(self::MANY_MANY, 'Project', 'area_project(id_area, id_project)'),
-			'categories' => array(self::MANY_MANY, 'Category', 'category_area(Id_area, Id_category)'),
-			'products' => array(self::MANY_MANY, 'Product', 'product_area(id_area, id_product)'),
-			'services' => array(self::MANY_MANY, 'Service', 'service_area(Id_area, Id_service)'),
+			'areas' => array(self::MANY_MANY, 'Area', 'service_area(Id_service, Id_area)'),
+			'categories' => array(self::MANY_MANY, 'Category', 'service_category(Id_service, Id_category)'),
 		);
 	}
 
@@ -72,7 +66,6 @@ class Area extends CActiveRecord
 		return array(
 			'Id' => 'ID',
 			'description' => 'Description',
-			'main' => 'Main',
 		);
 	}
 
@@ -89,7 +82,6 @@ class Area extends CActiveRecord
 
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('description',$this->description,true);
-		$criteria->compare('main',$this->main);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

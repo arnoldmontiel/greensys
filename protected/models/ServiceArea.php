@@ -1,24 +1,17 @@
 <?php
 
 /**
- * This is the model class for table "area".
+ * This is the model class for table "service_area".
  *
- * The followings are the available columns in table 'area':
- * @property integer $Id
- * @property string $description
- * @property integer $main
- *
- * The followings are the available model relations:
- * @property Project[] $projects
- * @property Category[] $categories
- * @property Product[] $products
- * @property Service[] $services
+ * The followings are the available columns in table 'service_area':
+ * @property integer $Id_service
+ * @property integer $Id_area
  */
-class Area extends CActiveRecord
+class ServiceArea extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return Area the static model class
+	 * @return ServiceArea the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -30,7 +23,7 @@ class Area extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'area';
+		return 'service_area';
 	}
 
 	/**
@@ -41,11 +34,11 @@ class Area extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('main', 'numerical', 'integerOnly'=>true),
-			array('description', 'length', 'max'=>45),
+			array('Id_service, Id_area', 'required'),
+			array('Id_service, Id_area', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description, main', 'safe', 'on'=>'search'),
+			array('Id_service, Id_area', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,10 +50,6 @@ class Area extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'projects' => array(self::MANY_MANY, 'Project', 'area_project(id_area, id_project)'),
-			'categories' => array(self::MANY_MANY, 'Category', 'category_area(Id_area, Id_category)'),
-			'products' => array(self::MANY_MANY, 'Product', 'product_area(id_area, id_product)'),
-			'services' => array(self::MANY_MANY, 'Service', 'service_area(Id_area, Id_service)'),
 		);
 	}
 
@@ -70,9 +59,8 @@ class Area extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'Id' => 'ID',
-			'description' => 'Description',
-			'main' => 'Main',
+			'Id_service' => 'Id Service',
+			'Id_area' => 'Id Area',
 		);
 	}
 
@@ -87,9 +75,8 @@ class Area extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('Id',$this->Id);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('main',$this->main);
+		$criteria->compare('Id_service',$this->Id_service);
+		$criteria->compare('Id_area',$this->Id_area);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
