@@ -15,13 +15,75 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
+
 	$.fn.yiiGridView.update('price-list-item-grid', {
 		data: $(this).serialize()
 	});
 	return false;
 });
+
+
+
+				
+jQuery('#price-list-item-grid a.delete').live('click',function() {
+        if(!confirm('Are you sure you want to pay for this item?')) return false;
+        
+        var url = $(this).attr('href');
+        
+        //  do your post request here
+        $.post(url,function(res){
+
+         }).success(function() {
+         	$.post(
+				'".PriceListController::createUrl('AjaxFillPriceListItemGrid')."',
+			{
+			IdPriceList: $('#PriceList_Id :selected').attr('value')},
+			function(data) {
+				$('#PriceListItems').html(data);
+				$('#PriceListItems').find('input.txtCost').each(
+							function(index, item){
+						
+								$(item).keyup(function(){
+							        validateNumber($(this));
+		
+								});
+								
+								
+								
+								$(item).change(function(){
+														var target = $(this);
+														$.post(
+															'".PriceListController::createUrl('AjaxUpdateCost')."',
+															 {
+															 	idPriceListItem:ddlProductId = $(this).attr('id'),
+																cost:$(this).val()
+															}).success(
+																 	function() 
+																 		{ 
+																 			$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000);
+																			$(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000); 
+																		});
+															
+														});
+								
+								
+								
+							}
+						);
+			}
+            )})
+
+        return false;
+});
+
 ");
 
+
+	
+	
+	
+	
+	
 ?>
 <script type="text/javascript">
 function validateNumber(obj)

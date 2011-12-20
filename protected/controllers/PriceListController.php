@@ -217,7 +217,16 @@ class PriceListController extends Controller
 				),
 				array(
 					'class'=>'CButtonColumn',
-					'template'=>'{delete}'
+					'template'=>'{delete}',
+					'buttons'=>array
+					(
+					        'delete' => array
+								(
+					            'label'=>'Delete',					            
+					            'url'=>'Yii::app()->createUrl("priceListItem/Delete", array("id"=>$data->Id))',
+								),
+					),
+					
 				),
 			),
 		)); 
@@ -227,6 +236,7 @@ class PriceListController extends Controller
 	
 	public function actionAjaxFillProducts()
 	{
+		
 		$data=Product::model()->findAll('Id_category=:Id_category',
 		array(':Id_category'=>(int) $_POST['Category']['Id']));
 	
