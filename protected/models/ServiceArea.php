@@ -50,6 +50,8 @@ class ServiceArea extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'service' => array(self::BELONGS_TO, 'Service', 'Id_service'),
+			'area' => array(self::BELONGS_TO, 'Area', 'Id_area'),
 		);
 	}
 
