@@ -8,6 +8,10 @@
 		<?php echo CHtml::encode($model->brand->description); ?>
 		<br />
 	
+		<b><?php echo CHtml::encode($model->getAttributeLabel('Id_supplier')); ?>:</b>
+		<?php echo CHtml::encode($model->supplier->business_name); ?>
+		<br />
+
 		<b><?php echo CHtml::encode($model->getAttributeLabel('Id_category')); ?>:</b>
 		<?php echo CHtml::encode($model->category->description); ?>
 		<br />

@@ -7,6 +7,10 @@
 		<b><?php echo CHtml::encode($data->getAttributeLabel('id_brand')); ?>:</b>
 		<?php echo CHtml::encode($data->brand->description); ?>
 		<br />
+
+		<b><?php echo CHtml::encode($data->getAttributeLabel('Id_supplier')); ?>:</b>
+		<?php echo CHtml::encode($data->supplier->business_name); ?>
+		<br />
 	
 		<b><?php echo CHtml::encode($data->getAttributeLabel('Id_category')); ?>:</b>
 		<?php echo CHtml::encode($data->category->description); ?>
