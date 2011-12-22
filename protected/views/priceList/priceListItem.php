@@ -16,77 +16,19 @@ $('#PriceList_Id').change(function(){
 
 	$.fn.yiiGridView.update('price-list-item-grid', {
 		data: $(this).serialize()
-	})
-	$('#price-list-item-grid').find('input.txtCost').each(
-						function(index, item){
-		
-							alert(index);
-							 $(item).live( 'keyup', function(){
-							 		alert(22);
-    								validateNumber($(this));
-  							});
-							
-							$(item).change(function(){
-														var target = $(this);
-														$.post(
-															'".PriceListController::createUrl('AjaxUpdateCost')."',
-															 {
-															 	idPriceListItem:ddlProductId = $(this).attr('id'),
-																cost:$(this).val()
-															}).success(
-																 	function() 
-																 		{ 
-																 			$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000);
-																			$(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000); 
-																		});
-															
-														});
-								
-								
-								
-							}
-						);
+	});
 	return false;
 });
 
 
 ");
-
-
-	
-	
-	
 	
 	
 ?>
 <script type="text/javascript">
 
 $(document).ready(function() {
-	$('#price-list-item-grid').find('input.txtCost').each(
-			function(index, item){
-				$(item).keyup(function(){
-			        validateNumber($(this));
-				});
-				$(item).change(function(){
-											var target = $(this);
-											$.post(
-												"<?php echo PriceListController::createUrl('AjaxUpdateCost')?>",
-												 {
-												 	idPriceListItem:ddlProductId = $(this).attr('id'),
-													cost:$(this).val()
-												}).success(
-													 	function() 
-													 		{ 
-													 			$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000);
-																$(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000); 
-															});
-												
-											});
-					
-					
-					
-				}
-			);
+	$('#price-list-item-grid').animate({opacity: "hide"},40);
 	});
 
 function validateNumber(obj)
@@ -210,13 +152,35 @@ function validateNumber(obj)
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'price-list-item-grid',
 	'dataProvider'=>$dataProvider->search(),
- 	'filter'=>$dataProvider, 	
+ 	'filter'=>$dataProvider, 
+ 	'afterAjaxUpdate'=>'function(id, data){
+ 										$("#price-list-item-grid").animate({opacity: "show"},400);
+ 										$("#price-list-item-grid").find("input.txtCost").each(
+												function(index, item){
+		
+																$(item).keyup(function(){
+			        												validateNumber($(this));
+																});
+												
+																$(item).change(function(){
+																	var target = $(this);
+																	$.post(
+																		"'.PriceListController::createUrl('AjaxUpdateCost').'",
+																		 {
+																		 	idPriceListItem:ddlProductId = $(this).attr("id"),
+																			cost:$(this).val()
+																		 }).success(
+																			 	function() 
+																			 		{ 
+																			 			$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000);
+																						$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000); 
+																					});
+																		
+																});
+													});	
+																								
+ 									}',	
 	'columns'=>array(
-				array(
-				 				            'name'=>'Id',
-								            'value'=>'$data->Id',
-				 
-				),
 				array(
  				            'name'=>'Id_price_list',
 				            'value'=>'$data->priceList->supplier->business_name',
