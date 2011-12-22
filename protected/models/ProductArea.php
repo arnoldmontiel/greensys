@@ -10,6 +10,11 @@
  */
 class ProductArea extends CActiveRecord
 {
+	public $brand_description;
+	public $category_description;
+	public $nomenclator_description;
+	public $supplier_description;
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return ProductArea the static model class
@@ -39,7 +44,7 @@ class ProductArea extends CActiveRecord
 			array('id_area, id_product, quantity', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id_area, id_product, quantity', 'safe', 'on'=>'search'),
+			array('id_area, id_product, quantity, brand_description, category_description, nomenclator_description, supplier_description', 'safe', 'on'=>'search'),
 		);
 	}
 
