@@ -40,6 +40,11 @@
  */
 class Product extends CActiveRecord
 {
+	
+	public $brand_description;
+	public $category_description;
+	public $nomenclator_description;
+	public $supplier_description;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Product the static model class
@@ -73,7 +78,9 @@ class Product extends CActiveRecord
 			array('time_instalation', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier', 'safe', 'on'=>'search'),
+			array('Id, id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description', 'safe', 'on'=>'search'),
+		
+			
 		);
 	}
 
@@ -165,5 +172,74 @@ class Product extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	
+	public function searchSummary()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('Id',$this->Id);
+		$criteria->compare('id_brand',$this->id_brand);
+		$criteria->compare('Id_category',$this->Id_category);
+		$criteria->compare('Id_nomenclator',$this->Id_nomenclator);
+		$criteria->compare('description_customer',$this->description_customer,true);
+		$criteria->compare('description_supplier',$this->description_supplier,true);
+		$criteria->compare('code',$this->code,true);
+		$criteria->compare('code_supplier',$this->code_supplier,true);
+		$criteria->compare('discontinued',$this->discontinued);
+		$criteria->compare('length',$this->length,true);
+		$criteria->compare('width',$this->width,true);
+		$criteria->compare('height',$this->height,true);
+		$criteria->compare('profit_rate',$this->profit_rate,true);
+		$criteria->compare('msrp',$this->msrp,true);
+		$criteria->compare('time_instalation',$this->time_instalation,true);
+		$criteria->compare('hide',$this->hide);
+		$criteria->compare('weight',$this->weight,true);
+	
+		
+		$criteria->with[]='brand';
+		$criteria->addSearchCondition("brand.description",$this->brand_description);
+		
+		$criteria->with[]='category';
+		$criteria->addSearchCondition("category.description",$this->category_description);
+		
+		$criteria->with[]='nomenclator';
+		$criteria->addSearchCondition("nomenclator.description",$this->nomenclator_description);
+		
+		$criteria->with[]='supplier';
+		$criteria->addSearchCondition("supplier.business_name",$this->supplier_description);
+	
+		
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+				      'code',
+				      'brand_description' => array(
+				        'asc' => 'brand.description',
+				        'desc' => 'brand.description DESC',
+		),
+				      'category_description' => array(
+				        'asc' => 'category.description',
+				        'desc' => 'category.description DESC',
+		),
+				      'nomenclator_description' => array(
+				        'asc' => 'nomenclator.description',
+				        'desc' => 'nomenclator.description DESC',
+		),
+					  'supplier_description' => array(
+						        'asc' => 'supplier.business_name',
+						        'desc' => 'supplier.business_name DESC',
+		),
+				      '*',
+		);
+		
+		return new CActiveDataProvider($this, array(
+						'criteria'=>$criteria,
+						'sort'=>$sort,
+		));
+		
 	}
 }
