@@ -10,6 +10,8 @@
  * @property integer $validity
  * @property integer $Id_supplier
  * @property integer $id_price_list_type
+ * @property string $description
+
  *
  * The followings are the available model relations:
  * @property Budget[] $budgets
@@ -53,6 +55,7 @@ class PriceList extends CActiveRecord
 			//array('id_price_list_type', 'required'),
 			array('validity, Id_supplier, id_price_list_type', 'numerical', 'integerOnly'=>true),
 			array('date_creation, date_validity', 'safe'),
+			array('description', 'length', 'max'=>45),
 			array('date_creation','default',
 		              'value'=>new CDbExpression('NOW()'),
 		              'setOnEmpty'=>false,'on'=>'insert'),
@@ -89,7 +92,8 @@ class PriceList extends CActiveRecord
 			'validity' => 'Validity',
 			'Id_supplier' => 'Id Supplier',
 			'id_price_list_type' => 'Id Price List Type',
-			//'supplier.business_name'=> 'business name',
+			'description' => 'Description',
+		
 		);
 	}
 
@@ -110,7 +114,7 @@ class PriceList extends CActiveRecord
 		$criteria->compare('validity',$this->validity);
 		$criteria->compare('Id_supplier',$this->Id_supplier);
 		$criteria->compare('id_price_list_type',$this->id_price_list_type);
-		//$criteria->compare('supplier.business_name',$this->supplier->business_name);
+		$criteria->compare('description',$this->description,true);
 		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
