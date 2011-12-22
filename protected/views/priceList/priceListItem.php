@@ -10,47 +10,23 @@ $this->menu=array(
 );
 
 Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
+
+
+$('#PriceList_Id').change(function(){
 
 	$.fn.yiiGridView.update('price-list-item-grid', {
 		data: $(this).serialize()
-	});
-	return false;
-});
-
-
-
-				
-jQuery('#price-list-item-grid a.delete').live('click',function() {
-        if(!confirm('Are you sure you want to pay for this item?')) return false;
-        
-        var url = $(this).attr('href');
-        
-        //  do your post request here
-        $.post(url,function(res){
-
-         }).success(function() {
-         	$.post(
-				'".PriceListController::createUrl('AjaxFillPriceListItemGrid')."',
-			{
-			IdPriceList: $('#PriceList_Id :selected').attr('value')},
-			function(data) {
-				$('#PriceListItems').html(data);
-				$('#PriceListItems').find('input.txtCost').each(
-							function(index, item){
-						
-								$(item).keyup(function(){
-							        validateNumber($(this));
+	})
+	$('#price-list-item-grid').find('input.txtCost').each(
+						function(index, item){
 		
-								});
-								
-								
-								
-								$(item).change(function(){
+							alert(index);
+							 $(item).live( 'keyup', function(){
+							 		alert(22);
+    								validateNumber($(this));
+  							});
+							
+							$(item).change(function(){
 														var target = $(this);
 														$.post(
 															'".PriceListController::createUrl('AjaxUpdateCost')."',
@@ -70,11 +46,9 @@ jQuery('#price-list-item-grid a.delete').live('click',function() {
 								
 							}
 						);
-			}
-            )})
-
-        return false;
+	return false;
 });
+
 
 ");
 
@@ -86,6 +60,35 @@ jQuery('#price-list-item-grid a.delete').live('click',function() {
 	
 ?>
 <script type="text/javascript">
+
+$(document).ready(function() {
+	$('#price-list-item-grid').find('input.txtCost').each(
+			function(index, item){
+				$(item).keyup(function(){
+			        validateNumber($(this));
+				});
+				$(item).change(function(){
+											var target = $(this);
+											$.post(
+												"<?php echo PriceListController::createUrl('AjaxUpdateCost')?>",
+												 {
+												 	idPriceListItem:ddlProductId = $(this).attr('id'),
+													cost:$(this).val()
+												}).success(
+													 	function() 
+													 		{ 
+													 			$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000);
+																$(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000); 
+															});
+												
+											});
+					
+					
+					
+				}
+			);
+	});
+
 function validateNumber(obj)
 {
 	var value=$(obj).val();
@@ -186,7 +189,7 @@ function validateNumber(obj)
 			echo 'Drop here to assign';			 	
 			$this->endWidget();
 			?>
-		</div>				
+		</div>	            
 		<div id="priceList" style="width:60%;float:left">
 		
 	<?php	$priceLists = CHtml::listData($priceListDB, 'Id', 'date_validity');?>
@@ -195,58 +198,62 @@ function validateNumber(obj)
 
 		<?php echo $form->dropDownList($model, 'Id', $priceLists,		
 			array(
-				'ajax' => array(
-				'type'=>'POST',
-				'url'=>PriceListController::createUrl('AjaxFillPriceListItemGrid'),
-				'success'=>'js:function(data)
-				{
-					if($("#Product_Id :selected").attr("value")=="")
-					{
-						$("#PriceListItems").html(data);
-					}
-					else
-					{
-						$("#PriceListItems").html(data);						
-						$("#PriceListItems").find("input.txtCost").each(
-							function(index, item){
-						
-								$(item).keyup(function(){
-							        validateNumber($(this));
-		
-								});
-								
-								
-								
-								$(item).change(function(){
-														var target = $(this);
-														$.post(
-															"'.PriceListController::createUrl('AjaxUpdateCost').'",
-															 {
-															 	idPriceListItem:ddlProductId = $(this).attr("id"),
-																cost:$(this).val()
-															}).success(
-																 	function() 
-																 		{ 
-																 			$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000);
-																			$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000); 
-																		});
-															
-														});
-								
-								
-								
-							}
-						);
-					}
-				}',
-				//leave out the data key to pass all form values through
-				),'prompt'=>'Select a Price List'
+				'prompt'=>'Select a Price List'
 			)		
 		);
 		?>
 		</div>
-<div id="PriceListItems"  style="width:100%;float:left">
-</div>
+	
+<?php 
+
+
+$this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'price-list-item-grid',
+	'dataProvider'=>$dataProvider->search(),
+ 	'filter'=>$dataProvider, 	
+	'columns'=>array(
+				array(
+				 				            'name'=>'Id',
+								            'value'=>'$data->Id',
+				 
+				),
+				array(
+ 				            'name'=>'Id_price_list',
+				            'value'=>'$data->priceList->supplier->business_name',
+				           
+				),
+				array(
+ 				            'name'=>'id_product',
+				            'value'=>'$data->product->description_customer',
+ 
+				),
+				array(
+					'name'=>'cost',
+					'value'=>
+                                    	'CHtml::textField("txtCost",
+												$data->cost,
+												array(
+														"id"=>$data->Id,
+														"class"=>"txtCost",
+													)
+											)',
+							
+					'type'=>'raw',
+					
+			        'htmlOptions'=>array('width'=>5),
+				),
+				array(
+					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+					'type'=>'raw',
+					'htmlOptions'=>array('width'=>20),
+				),
+				array(
+					'class'=>'CButtonColumn',
+					'template'=>'{delete}',
+					
+				),
+			),
+)); ?>
 	<?php $this->endWidget(); ?>
 
 </div><!-- form -->

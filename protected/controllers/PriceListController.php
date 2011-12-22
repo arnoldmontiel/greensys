@@ -139,13 +139,17 @@ class PriceListController extends Controller
 	public function actionPriceListItem()
 	{
 		//$model= PriceList::model()->findAll();
-		$dataProvider=new CActiveDataProvider('PriceList');
-		
-		
+// 		$dataProvider=new CActiveDataProvider('PriceList');
+		$model=new PriceListItem('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['PriceListItem']))
+			$model->attributes=$_GET['PriceListItem'];
 		//$modelPriceListItem= PriceListItem::model()->findAll();
+		if(isset($_GET['PriceList']))
+			$model->Id_price_list=(int)$_GET['PriceList']['Id'];
 		
 		$this->render('priceListItem',array(
-					'dataProvider'=>$dataProvider,
+					'dataProvider'=>$model,
 			//		'modelPriceListItem'=>$modelPriceListItem
 		));
 		
@@ -175,62 +179,6 @@ class PriceListController extends Controller
 		}
 		return $priceListItem;
 		
-	}
-	public function actionAjaxFillPriceListItemGrid()
-	{
-		$criteria=new CDbCriteria;
-		
-		if(isset($_POST['PriceList']))
-			$criteria->compare('Id_price_list',(int) $_POST['PriceList']['Id']);
-		elseif (isset($_POST['IdPriceList'])) 
-			$criteria->compare('Id_price_list',(int) $_POST['IdPriceList']);
-		
-		$dataProvider =  new CActiveDataProvider('PriceListItem', array(
-					'criteria'=>$criteria,
-		));
-		$this->widget('zii.widgets.grid.CGridView', array(
-			'id'=>'price-list-item-grid',
-			'dataProvider'=>$dataProvider,
-			//'filter'=>$data,
-			'columns'=>array(
-				'product.description_customer',
-				'priceList.supplier.business_name',
-				array(
-					'name'=>'cost',
-					'value'=>
-                                    	'CHtml::textField("txtCost",
-												$data->cost,
-												array(
-														"id"=>$data->Id,
-														"class"=>"txtCost",
-													)
-											)',
-							
-					'type'=>'raw',
-			        'htmlOptions'=>array('width'=>5),
-				),
-				array(
-					'name'=>'',
-					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
-					'type'=>'raw',
-					'htmlOptions'=>array('width'=>20),
-				),
-				array(
-					'class'=>'CButtonColumn',
-					'template'=>'{delete}',
-					'buttons'=>array
-					(
-					        'delete' => array
-								(
-					            'label'=>'Delete',					            
-					            'url'=>'Yii::app()->createUrl("priceListItem/Delete", array("id"=>$data->Id))',
-								),
-					),
-					
-				),
-			),
-		)); 
-
 	}
 
 	

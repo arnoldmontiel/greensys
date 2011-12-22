@@ -87,10 +87,19 @@ class PriceListItem extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('Id',$this->Id);
-		$criteria->compare('id_product',$this->id_product);
-		$criteria->compare('Id_price_list',$this->Id_price_list);
+// 		$criteria->compare('id_product',$this->id_product);
+ 		$criteria->compare('Id_price_list',$this->Id_price_list);
 		$criteria->compare('cost',$this->cost,true);
+		
+		$criteria->with[]='product';
+		$criteria->addSearchCondition("product.description_customer",$this->id_product);
 
+// 		$criteria->with[]='priceList';
+// 		$criteria->addSearchCondition("priceList.id",$this->Id_price_list);
+		
+// 		$criteria->with[]='supplier';
+// 		$criteria->addSearchCondition("supplier.business_name",$this->Id_price_list);
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
