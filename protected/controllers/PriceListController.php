@@ -112,6 +112,26 @@ class PriceListController extends Controller
 	}
 
 	/**
+	* Deletes a particular model.
+	* If deletion is successful, the browser will be redirected to the 'admin' page.
+	* @param integer $id the ID of the model to be deleted
+	*/
+	public function actionDeletePriceListItem($id)
+	{
+		if(Yii::app()->request->isPostRequest)
+		{
+			// we only allow deletion via POST request
+			$this->loadPriceListItem($id)->delete();
+	
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('priceListItem'));
+		}
+		else
+		throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+	}
+	
+	/**
 	 * Lists all models.
 	 */
 	public function actionIndex()
@@ -162,6 +182,14 @@ class PriceListController extends Controller
 	public function loadModel($id)
 	{
 		$model=PriceList::model()->findByPk($id);
+		if($model===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
+	}
+	
+	public function loadPriceListItem($id)
+	{
+		$model=PriceListItem::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;

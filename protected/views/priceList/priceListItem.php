@@ -151,7 +151,7 @@ function validateNumber(obj)
 
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'price-list-item-grid',
-	'dataProvider'=>$dataProvider->search(),
+	'dataProvider'=>$dataProvider->searchPriceList(),
  	'filter'=>$dataProvider, 
  	'afterAjaxUpdate'=>'function(id, data){
  										$("#price-list-item-grid").animate({opacity: "show"},400);
@@ -181,13 +181,23 @@ $this->widget('zii.widgets.grid.CGridView', array(
 																								
  									}',	
 	'columns'=>array(
-				array(
- 				            'name'=>'Id_price_list',
-				            'value'=>'$data->priceList->supplier->business_name',
+// 				array(
+//  				            'name'=>'business_name',
+// 				            'value'=>'$data->priceList->supplier->business_name',
 				           
+// 				),
+				array(
+ 				            'name'=>'code_supplier',
+				            'value'=>'$data->product->code_supplier',
+ 
 				),
 				array(
- 				            'name'=>'id_product',
+ 				            'name'=>'code',
+				            'value'=>'$data->product->code',
+				 
+				),
+				array(
+ 				            'name'=>'description_customer',
 				            'value'=>'$data->product->description_customer',
  
 				),
@@ -214,7 +224,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				array(
 					'class'=>'CButtonColumn',
 					'template'=>'{delete}',
-					
+					'buttons'=>array
+					(
+					        'delete' => array
+							(
+					            'url'=>'Yii::app()->createUrl("pricelist/DeletePriceListItem", array("id"=>$data->Id))',
+							),
+					),
 				),
 			),
 )); ?>

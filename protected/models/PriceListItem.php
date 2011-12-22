@@ -15,6 +15,11 @@
  */
 class PriceListItem extends CActiveRecord
 {
+	
+	public $description_customer;
+	public $code;
+	public $code_supplier;
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return PriceListItem the static model class
@@ -45,7 +50,7 @@ class PriceListItem extends CActiveRecord
 			array('cost', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, id_product, Id_price_list, cost', 'safe', 'on'=>'search'),
+			array('Id, id_product, Id_price_list, cost, description_customer, code, code_supplier', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -87,21 +92,56 @@ class PriceListItem extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('Id',$this->Id);
-// 		$criteria->compare('id_product',$this->id_product);
+ 		$criteria->compare('id_product',$this->id_product);
  		$criteria->compare('Id_price_list',$this->Id_price_list);
 		$criteria->compare('cost',$this->cost,true);
 		
-		$criteria->with[]='product';
-		$criteria->addSearchCondition("product.description_customer",$this->id_product);
-
-// 		$criteria->with[]='priceList';
-// 		$criteria->addSearchCondition("priceList.id",$this->Id_price_list);
-		
-// 		$criteria->with[]='supplier';
-// 		$criteria->addSearchCondition("supplier.business_name",$this->Id_price_list);
 		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+		));
+	}
+	
+	public function searchPriceList()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('Id',$this->Id);
+		$criteria->compare('id_product',$this->id_product);
+		$criteria->compare('Id_price_list',$this->Id_price_list);
+		$criteria->compare('cost',$this->cost,true);
+	
+		$criteria->with[]='product';
+		$criteria->addSearchCondition("product.description_customer",$this->description_customer);
+		$criteria->addSearchCondition("product.code",$this->code);
+		$criteria->addSearchCondition("product.code_supplier",$this->code_supplier);
+		
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+		      'cost',
+		// For each relational attribute, create a 'virtual attribute' using the public variable name
+		      'description_customer' => array(
+		        'asc' => 'product.description_customer',
+		        'desc' => 'product.description_customer DESC',
+		),
+		      'code' => array(
+		        'asc' => 'product.code',
+		        'desc' => 'product.code DESC',
+		),
+		      'code_supplier' => array(
+		        'asc' => 'product.code_supplier',
+		        'desc' => 'product.code_supplier DESC',
+		),
+		      '*',
+		);
+		
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+				'sort'=>$sort,
 		));
 	}
 }
