@@ -134,7 +134,7 @@ function validateNumber(obj)
 		</div>	            
 		<div id="priceList" style="width:60%;float:left">
 		
-	<?php	$priceLists = CHtml::listData($priceListDB, 'Id', 'date_validity');?>
+	<?php	$priceLists = CHtml::listData($priceListDB, 'Id', 'description');?>
 
 	<?php echo $form->labelEx($model,'Price List'); ?>
 
