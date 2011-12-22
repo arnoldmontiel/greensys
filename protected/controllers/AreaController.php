@@ -141,18 +141,36 @@ class AreaController extends Controller
 	{
 		$cmodel=new Area;
 		$model=new Area('search');
+		$modelProduct=new Product('search');
+		$modelProduct->unsetAttributes();
+		
+		$modelProductArea=new ProductArea('search');
+		$modelProductArea->unsetAttributes();
+		
 		if(isset($_GET['AreaProduct']))
-		$model->attributes=$_GET['AreaProduct'];
-	
+			$model->attributes=$_GET['AreaProduct'];
+		if(isset($_GET['Product']))
+			$modelProduct->attributes=$_GET['Product'];
+		if(isset($_GET['ProductArea']))
+			$modelProductArea->attributes=$_GET['ProductArea'];
+		
+		
+		$_GET['ajax']='product-grid';
+		
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 		$dataProvider=new CActiveDataProvider('Area');
 		$dataProviderProduct=new CActiveDataProvider('Product');
-
+		$dataProviderProductArea=new CActiveDataProvider('ProductArea');
+		//$modelProduct->code = "CLMJGP";
+		
 		$this->render('productArea',array(
 				'dataProvider'=>$dataProvider,
 				'dataProviderProduct'=>$dataProviderProduct,
-				'model'=>$cmodel //model for creation
+				'dataProviderProductArea'=>$dataProviderProductArea,
+				'model'=>$cmodel, //model for creation,
+				'modelProduct'=>$modelProduct,
+				'modelProductArea'=>$modelProductArea,
 		));
 	
 	}
@@ -244,10 +262,10 @@ class AreaController extends Controller
 	
 	public function actionAjaxAddProductArea()
 	{
-		$idArea = isset($_POST['areaId'])?$_POST['areaId']:'';
-		$IdProduct = isset($_POST['IdProduct'])?$_POST['IdProduct']:'';
-		$IdProduct = explode("_",$IdProduct);
-		$idProduct = $IdProduct[1];
+		$idArea = isset($_GET['IdArea'])?$_GET['IdArea']:'';
+		$idProduct = isset($_GET['IdProduct'])?(int)$_GET['IdProduct'][0]:'';
+		//$IdProduct = explode("_",$IdProduct);
+		//$idProduct = $IdProduct[1];
 
 		if(!empty($idProduct)&&!empty($idArea))
 		{
