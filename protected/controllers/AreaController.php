@@ -141,22 +141,23 @@ class AreaController extends Controller
 	{
 		$cmodel=new Area;
 		$model=new Area('search');
+
 		$modelProduct=new Product('search');
 		$modelProduct->unsetAttributes();
 		
 		$modelProductArea=new ProductArea('search');
 		$modelProductArea->unsetAttributes();
 		
-		if(isset($_GET['AreaProduct']))
-			$model->attributes=$_GET['AreaProduct'];
+		if(isset($_GET['Area']))
+			$model->attributes=$_GET['Area'];
 		if(isset($_GET['Product']))
 			$modelProduct->attributes=$_GET['Product'];
 		if(isset($_GET['ProductArea']))
 			$modelProductArea->attributes=$_GET['ProductArea'];
+		if(isset($_GET['Area']['Id']))
+			$modelProductArea->id_area=$_GET['Area']['Id'];
 		
-		
-		$_GET['ajax']='product-grid';
-		
+
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 		$dataProvider=new CActiveDataProvider('Area');
@@ -264,8 +265,6 @@ class AreaController extends Controller
 	{
 		$idArea = isset($_GET['IdArea'])?$_GET['IdArea']:'';
 		$idProduct = isset($_GET['IdProduct'])?(int)$_GET['IdProduct'][0]:'';
-		//$IdProduct = explode("_",$IdProduct);
-		//$idProduct = $IdProduct[1];
 
 		if(!empty($idProduct)&&!empty($idArea))
 		{
@@ -286,11 +285,9 @@ class AreaController extends Controller
 	}	
 	public function actionAjaxRemoveProductArea()
 	{
-		$idArea = isset($_POST['areaId'])?$_POST['areaId']:'';
-		$IdProduct = isset($_POST['IdProduct'])?$_POST['IdProduct']:'';
-		$IdProduct = explode("_",$IdProduct);
-		$idProduct = $IdProduct[1];
-				
+		$idArea = isset($_GET['IdArea'])?$_GET['IdArea']:'';
+		$idProduct = isset($_GET['IdProduct'])?(int)$_GET['IdProduct']:'';
+						
 		if(!empty($idProduct)&&!empty($idArea))
 		{
 			$productAreaInDb = ProductArea::model()->findByPk(array('id_area'=>(int) $idArea,'id_product'=>(int)$idProduct));

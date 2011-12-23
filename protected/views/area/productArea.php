@@ -10,7 +10,6 @@ $this->menu=array(
 	array('label'=>'Assign Categories', 'url'=>array('categoryArea')),
 	array('label'=>'Assign Services', 'url'=>array('serviceArea')),
 );
-$this->trashDraggableId = 'ddlAssigment';
 ?>
 <div class="form">
 	<?php $form=$this->beginWidget('CActiveForm', array(
@@ -18,48 +17,44 @@ $this->trashDraggableId = 'ddlAssigment';
 		'enableAjaxValidation'=>true,
 	)); ?>
 
-	<?php 	// Organize the dataProvider data into a Zii-friendly array
-	
-	
-		$items = CHtml::listData($dataProvider->getData(), 'Id', 'description');
-		?>
 	<div style="row;width:100%;margin:2px;">
-		<div style="width:51%;float:left;">
-
 		<?php
 		Yii::app()->clientScript->registerScript('update', "
-				$('#ProductArea_id_area').change(function(){
+				$('#Area_Id').change(function(){
 					$.fn.yiiGridView.update('productArea-grid', {
 						data: $(this).serialize()
 					});
+					if($('#Area_Id :selected').attr('value')=='')
+					{
+						$( '#display' ).animate({opacity: 'hide'},'slow');
+					}
+					else
+					{
+						$( '#display' ).animate({opacity: 'show'},'slow');
+					}
 					return false;
 				});
 				");
 		 ?>
-		
-		
-		<?php echo $form->labelEx($modelProductArea,'Area'); ?>
-		<?php echo $form->dropDownList($modelProductArea, 
-			'id_area',
+		<?php echo $form->labelEx($model,'Area'); ?>
+		<?php echo $form->dropDownList($model, 
+			'Id',
 			CHtml::listData($model->findAll(), 'Id', 'description'),
 			array('prompt'=>'Select an Area')
 		);
-		?>
-		</div>
-				
+		?>				
 		</div>
 
-	<div id="products" class="selectablesItems" >
-		
+	<div id="display" class="selectablesItems" style="display:none;">
 	<?php		
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'product-grid',
-		'dataProvider'=>$modelProduct->search(),
+		'dataProvider'=>$modelProduct->searchSummary(),
 		'filter'=>$modelProduct,
 		'selectionChanged'=>'js:function(){
 			$.get(	"'.AreaController::createUrl('AjaxAddProductArea').'",
 					{
-						IdArea:$("#ProductArea_id_area :selected").attr("value"),
+						IdArea:$("#Area_Id :selected").attr("value"),
 						IdProduct:$.fn.yiiGridView.getSelection("product-grid")
 					}).success(
 						function() 
@@ -69,40 +64,67 @@ $this->trashDraggableId = 'ddlAssigment';
 							});
 						});
 		}',
-		'columns'=>array(	
+	'columns'=>array(
 			array('name'=>'Id',
-			'value'=>'$data->Id',
-			'visible'=>false,
+						'value'=>'$data->Id',
+						'visible'=>false,
 			),
-			'id_brand',
-			'Id_category',
-			'description_customer',
-			'description_supplier',
+			array(
+					 		'name'=>'supplier_description',
+							'value'=>'$data->supplier->business_name',
+			),
+			array(
+				 			'name'=>'brand_description',
+							'value'=>'$data->brand->description',
+			),
+			array(
+					 		'name'=>'category_description',
+							'value'=>'$data->category->description',
+			),
+						'description_customer',
+						'description_supplier',
 			),
 		));		
 		?>
-		</div>
-		<div id="product" class="selectable-items" style="display: yes">
 		<?php 				
 		$this->widget('zii.widgets.grid.CGridView', array(
 			'id'=>'productArea-grid',
-			'dataProvider'=>$modelProductArea->search(),
+			'dataProvider'=>$modelProductArea->searchProduct(),
 			'filter'=>$modelProductArea,
 			'columns'=>array(	
 				array('name'=>'Id',
 				'value'=>'$data->Id',
 				'visible'=>false,
 				),
-				array('name'=>'product.description_customer',
-				'value'=>'$data->product->description_customer',
-				),
-				'quantity'
+			array(
+					 		'name'=>'product_description_customer',
+							'value'=>'$data->product->description_customer',
 			),
+			array(
+				 			'name'=>'product_description_supplier',
+							'value'=>'$data->product->description_supplier',
+			),
+			array(
+				 			'name'=>'product_brand_description',
+							'value'=>'$data->product->brand->description',
+			),		
+						'quantity',
+				array(
+					'class'=>'CButtonColumn',
+					'template'=>'{delete}',
+					'buttons'=>array
+					(
+					        'delete' => array
+							(
+					            'url'=>'Yii::app()->createUrl("area/AjaxRemoveProductArea", array("IdArea"=>$data->id_area,"IdProduct"=>$data->id_product))',
+							),
+					),
+				),
+		
+			),			
 			));		
 		?>
 		</div>
 	
 	<?php $this->endWidget(); ?>
-
-	<div id="display"></div>
 </div><!-- form -->

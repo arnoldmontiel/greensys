@@ -10,10 +10,12 @@
  */
 class ProductArea extends CActiveRecord
 {
-	public $brand_description;
-	public $category_description;
-	public $nomenclator_description;
-	public $supplier_description;
+	public $product_brand_description;
+	public $product_category_description;
+	public $product_nomenclator_description;
+	public $product_supplier_description;
+	public $product_description_supplier;
+	public $product_description_customer;
 	
 	/**
 	 * Returns the static model of the specified AR class.
@@ -44,7 +46,7 @@ class ProductArea extends CActiveRecord
 			array('id_area, id_product, quantity', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id_area, id_product, quantity, brand_description, category_description, nomenclator_description, supplier_description', 'safe', 'on'=>'search'),
+			array('id_area, id_product, quantity, product_brand_description, product_category_description, product_nomenclator_description, product_supplier_description,product_description_supplier,product_description_customer', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,7 +59,7 @@ class ProductArea extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'area' => array(self::BELONGS_TO, 'Area', 'id_area'),
-			'product' => array(self::BELONGS_TO, 'Product', 'id_product'),		
+			'product' => array(self::BELONGS_TO, 'Product', 'id_product'),
 		);
 	}
 
@@ -90,6 +92,49 @@ class ProductArea extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+		));
+	}
+	
+	/**
+	 * Retrieves a list of models based on the current search/filter conditions.
+	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+	 */
+	public function searchProduct()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('id_area',$this->id_area);
+		$criteria->compare('id_product',$this->id_product);
+		$criteria->compare('quantity',$this->quantity);
+		
+		$criteria->with[]='product';
+		$criteria->addSearchCondition("product.description_customer",$this->product_description_customer);
+		$criteria->addSearchCondition("product.description_supplier",$this->product_description_supplier);
+		$criteria->join =	"LEFT OUTER JOIN Product p ON p.Id=t.id_product
+							 LEFT OUTER JOIN Brand b ON p.id_brand=b.Id";
+		$criteria->addSearchCondition("b.description",$this->product_brand_description);
+		
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+						      'quantity',
+						      'product_description_customer' => array(
+						        'asc' => 'product.description_customer',
+						        'desc' => 'product.description_customer DESC',
+		),
+						      'product_description_supplier' => array(
+						        'asc' => 'product.description_customer',
+						        'desc' => 'product.description_customer DESC',
+		),
+						      '*',
+		);
+		
+		return new CActiveDataProvider($this, array(
+								'criteria'=>$criteria,
+								'sort'=>$sort,
 		));
 	}
 }
