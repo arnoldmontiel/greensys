@@ -27,6 +27,11 @@ class Controller extends SBaseController
 	 */
 	public $trashDraggableId='';
 	
+	/**
+	* @var string that print html on the screen.
+	*/
+	public $container='';
+	
 	function init()
 	{
 		parent::init();

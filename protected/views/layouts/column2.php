@@ -25,7 +25,7 @@
 		?>
 	<?php endif?>
 		
-
+	<?php echo $this->container;?>
 	
 </div>
 <?php $this->endContent(); ?>

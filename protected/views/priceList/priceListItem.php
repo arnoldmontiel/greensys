@@ -9,6 +9,7 @@ $this->menu=array(
 	array('label'=>'Create PriceList', 'url'=>array('create')),
 );
 
+
 Yii::app()->clientScript->registerScript('search', "
 
 
@@ -20,10 +21,12 @@ $('#PriceList_Id').change(function(){
 		});
 		$('#price-list-item-grid').animate({opacity: 'show'},40);
 		$('#product-grid').animate({opacity: 'show'},40);
+		$('#addAll').animate({opacity: 'show'},40);		
 	}
 	else{
 		$('#price-list-item-grid').animate({opacity: 'hide'},40);
 		$('#product-grid').animate({opacity: 'hide'},40);
+		$('#addAll').animate({opacity: 'hide'},40);
 	}
 	return false;
 });
@@ -38,7 +41,7 @@ $('#PriceList_Id').change(function(){
 $(document).ready(function() {
 	$('#price-list-item-grid').animate({opacity: "hide"},40);
 	$('#product-grid').animate({opacity: "hide"},40);
-	});
+});
 
 	
 
@@ -130,22 +133,33 @@ function validateNumber(obj)
 			),
 		));		
 		?>
-		</div>           
-		<?php echo  CHtml::ajaxSubmitButton(
-                                'aaaa',
-                                PriceListController::createUrl('AjaxAddFilteredProducts'),
+		</div>   
+<?php
+		echo CHtml::imageButton(
+                                'images/add_all.png',
                                 array(
-                                    'beforeSend'=>'function(){
-//                                         $("#update_info").replaceWith("<p id=\"update_info\">sending...</p>");
-// 											alert("enviando")
-                                    }',
-                                    'success'=>'function(data){
-                                        $.fn.yiiGridView.update("price-list-item-grid", {
-											data: $(this).serialize()
-										});
-                                    }',
+                                'title'=>'Add current filtered products',
+                                'width'=>'100px',
+                                'style'=>'display:none',
+                                'id'=>'addAll',
+                                	'ajax'=> array(
+										'type'=>'POST',
+										'url'=>PriceListController::createUrl('AjaxAddFilteredProducts'),
+										'beforeSend'=>'function(){
+													if(!confirm("Are you sure you want to add all filtered products?")) 
+														return false;
+														}',
+										'success'=>'js:function(data)
+										{
+											$.fn.yiiGridView.update("price-list-item-grid", {
+												data: $(this).serialize()
+											});
+										}'
+                                	)
                                 )
-                            ); ?>
+                                                         
+                            ); 
+		?>
 		<p class="messageError"><?php
 		echo Yii::app()->lc->t('Product has already been added to selected Price List');
 		?></p>
