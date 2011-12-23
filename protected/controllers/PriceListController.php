@@ -158,18 +158,26 @@ class PriceListController extends Controller
 	}
 	public function actionPriceListItem()
 	{
-		//$model= PriceList::model()->findAll();
-// 		$dataProvider=new CActiveDataProvider('PriceList');
+		
 		$model=new PriceListItem('search');
 		$model->unsetAttributes();  // clear any default values
+		
+		$modelProduct=new Product('search');
+		$modelProduct->unsetAttributes();
+		
 		if(isset($_GET['PriceListItem']))
 			$model->attributes=$_GET['PriceListItem'];
-		//$modelPriceListItem= PriceListItem::model()->findAll();
+		
+		if(isset($_GET['Product']))
+			$modelProduct->attributes=$_GET['Product'];
+		
+		
 		if(isset($_GET['PriceList']))
 			$model->Id_price_list=(int)$_GET['PriceList']['Id'];
 		
 		$this->render('priceListItem',array(
 					'dataProvider'=>$model,
+					'modelProduct'=>$modelProduct,
 			//		'modelPriceListItem'=>$modelPriceListItem
 		));
 		
@@ -210,59 +218,52 @@ class PriceListController extends Controller
 	}
 
 	
-	public function actionAjaxFillProducts()
-	{
-		
-		$data=Product::model()->findAll('Id_category=:Id_category',
-		array(':Id_category'=>(int) $_POST['Category']['Id']));
-	
-		$itemsProduct = CHtml::listData($data, 'Id', 'description_customer');
-	
-		$this->widget('ext.draglist.draglist', array(
-							'id'=>'dlProduct',
-							'items' => $itemsProduct,
-							'options'=>array(
-									'helper'=> 'clone',
-									'connectToSortable'=>'#ddlAssigment',
-		),
-		));
-	}
-	public function actionAjaxCreateDialog()
-	{	
-		$idProduct = explode("_",$_POST['IdProduct']);
-		$product = Product::model()->findByPk($idProduct[1]);
-		$idPriceList = $_POST['IdPriceList'];
-		$modelPriceListItem = PriceListItem::model();
-		echo CHtml::activeLabelEx($modelPriceListItem,'product.description_customer');
-		echo CHtml::textField('product_description',$product->description_customer,array('disabled'=>'disabled'));
-	
-		echo CHtml::activeLabelEx($modelPriceListItem,'cost');
-		echo CHtml::textField('Cost','',array('size'=>10,'maxlength'=>10));
-		//echo CHtml::error($modelPriceListItem,'cost');
-		echo CHtml::hiddenField('IdProduct',$idProduct[1],array());
-		echo CHtml::hiddenField('IdPriceList',$idPriceList,array());
-	}
-	
 	public function actionAjaxAddPriceListItem()
 	{	
-		$idPriceList = $_POST['IdPriceList'];
-		$idProduct = $_POST['IdProduct'];
+		
+		$idPriceList = isset($_GET['IdPriceList'])?$_GET['IdPriceList']:'';
+		$idProduct = isset($_GET['IdProduct'])?(int)$_GET['IdProduct'][0]:'';
+		
 		$cost = $_POST['Cost'];
-		if(!empty($idPriceList)&&!empty($idProduct)&&!empty($cost))
+		if(!empty($idPriceList)&&!empty($idProduct))
 		{
 			$priceListItemInDb = PriceListItem::model()->findByAttributes(array('Id_price_list'=>(int) $idPriceList,'id_product'=>(int)$idProduct));
 			if($priceListItemInDb==null)
 			{
 				$priceListItem=new PriceListItem();
-				$priceListItem->attributes = array('Id_price_list'=>$idPriceList,'id_product'=>$idProduct,'cost'=>$cost);
+				$priceListItem->attributes = array('Id_price_list'=>$idPriceList,'id_product'=>$idProduct,'cost'=>0);
 				$priceListItem->save();
 			}
 			else
 			{
-				//error. already in DB
+				throw new CDbException('Item has already been added');
 			}
 		}
 		
+	}
+	
+	
+	public function actionAjaxAddFilteredProducts()
+	{
+	
+		$productFilter = isset($_POST['Product'])?$_POST['Product']:null;
+		$idPriceList = isset($_POST['PriceList'])?(int)$_POST['PriceList']['Id']:null;
+		
+		if($productFilter != null && $idPriceList != null){
+			$products = Product::model();
+			$products->attributes = $productFilter;
+			$prov = $products->searchSummary();
+			foreach($prov->getData() as $product){
+				$priceListItemInDb = PriceListItem::model()->findByAttributes(array('Id_price_list'=>(int) $idPriceList,'id_product'=>$product->Id));
+				if($priceListItemInDb==null)
+				{
+					$priceListItem=new PriceListItem();
+					$priceListItem->attributes = array('Id_price_list'=>$idPriceList,'id_product'=>$product->Id,'cost'=>0);
+					$priceListItem->save();
+				}
+			}
+		}
+	
 	}
 	
 	/**

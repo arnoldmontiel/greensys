@@ -229,6 +229,13 @@ div.search-form
 	background: #80CFFF;
 }
 
+.messageError
+{
+	color: red;
+	font-style: italic;
+	display: none;
+}
+
 #language {
 	
 	margin: 0 auto;
