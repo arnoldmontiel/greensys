@@ -21,6 +21,8 @@
  * @property string $time_instalation
  * @property integer $hide
  * @property string $weight
+ * @property integer $Id_supplier
+ * @property string $price_standard
  *
  * The followings are the available model relations:
  * @property Hyperlink[] $hyperlinks
@@ -37,7 +39,8 @@
  * @property ProductGroup[] $productGroups1
  * @property ProductItem[] $productItems
  * @property ProductRequirement[] $productRequirements
- */
+ * @property Supplier $idSupplier
+ *  */
 class Product extends CActiveRecord
 {
 	
@@ -47,6 +50,7 @@ class Product extends CActiveRecord
 	public $supplier_description;
 	/**
 	 * Returns the static model of the specified AR class.
+	 * @param string $className active record class name.
 	 * @return Product the static model class
 	 */
 	public static function model($className=__CLASS__)
@@ -74,11 +78,11 @@ class Product extends CActiveRecord
 			array('id_brand, Id_category, Id_nomenclator, discontinued, hide, Id_supplier', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier', 'length', 'max'=>255),
 			array('code, code_supplier', 'length', 'max'=>45),
-			array('length, width, height, profit_rate, msrp, weight', 'length', 'max'=>10),
-			array('time_instalation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description', 'safe'),
+			array('length, width, height, profit_rate, msrp, weight, price_standard', 'length', 'max'=>10),
+			array('time_instalation', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description', 'safe', 'on'=>'search'),
+			array('Id, id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, price_standard', 'safe', 'on'=>'search'),
 		
 			
 		);
@@ -137,6 +141,7 @@ class Product extends CActiveRecord
 			'note'=>'Note',
 			'image'=>'Image',
 			'Id_supplier' => 'Supplier',
+			'price_standard' => 'Standard Price',
 		);
 	}
 
@@ -168,6 +173,8 @@ class Product extends CActiveRecord
 		$criteria->compare('time_instalation',$this->time_instalation,true);
 		$criteria->compare('hide',$this->hide);
 		$criteria->compare('weight',$this->weight,true);
+		$criteria->compare('Id_supplier',$this->Id_supplier);
+		$criteria->compare('price_standard',$this->price_standard,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

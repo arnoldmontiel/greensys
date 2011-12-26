@@ -13,9 +13,10 @@ class ProductArea extends CActiveRecord
 	public $product_brand_description;
 	public $product_category_description;
 	public $product_nomenclator_description;
-	public $product_supplier_description;
+	public $product_supplier_business_name;
 	public $product_description_supplier;
 	public $product_description_customer;
+	public $product_code;
 	
 	/**
 	 * Returns the static model of the specified AR class.
@@ -46,7 +47,7 @@ class ProductArea extends CActiveRecord
 			array('id_area, id_product, quantity', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id_area, id_product, quantity, product_brand_description, product_category_description, product_nomenclator_description, product_supplier_description,product_description_supplier,product_description_customer', 'safe', 'on'=>'search'),
+			array('id_area, id_product, quantity, product_brand_description, product_category_description, product_nomenclator_description, product_supplier_description,product_description_supplier,product_description_customer, product_code, product_supplier_business_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -111,24 +112,35 @@ class ProductArea extends CActiveRecord
 		$criteria->compare('quantity',$this->quantity);
 		
 		$criteria->with[]='product';
+		$criteria->addSearchCondition("product.code",$this->product_code);
 		$criteria->addSearchCondition("product.description_customer",$this->product_description_customer);
 		$criteria->addSearchCondition("product.description_supplier",$this->product_description_supplier);
+
 		$criteria->join =	"LEFT OUTER JOIN Product p ON p.Id=t.id_product
-							 LEFT OUTER JOIN Brand b ON p.id_brand=b.Id";
+							 LEFT OUTER JOIN Brand b ON p.id_brand=b.Id
+							 LEFT OUTER JOIN Supplier s ON p.Id_supplier=s.Id";
 		$criteria->addSearchCondition("b.description",$this->product_brand_description);
-		
+		$criteria->addSearchCondition("s.description",$this->product_supplier_business_name);
 		// Create a custom sort
 		$sort=new CSort;
 		$sort->attributes=array(
 						      'quantity',
-						      'product_description_customer' => array(
+						      'product_code' => array(
+						        'asc' => 'product.code',
+						        'desc' => 'product.code DESC',
+								),
+								'product_description_customer' => array(
 						        'asc' => 'product.description_customer',
 						        'desc' => 'product.description_customer DESC',
-		),
+								),
 						      'product_description_supplier' => array(
-						        'asc' => 'product.description_customer',
-						        'desc' => 'product.description_customer DESC',
-		),
+						        'asc' => 'product.description_supplier',
+						        'desc' => 'product.description_supplier DESC',
+								),
+								'product_brand_description'=> array(
+								'asc'=>'b.description',
+								'desc'=>'b.description DESC'
+								),
 						      '*',
 		);
 		
