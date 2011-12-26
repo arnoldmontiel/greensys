@@ -25,13 +25,15 @@ $('#PriceList_Id').change(function(){
 		$('#price-list-item-grid').animate({opacity: 'show'},40);
 		$('#product-grid').animate({opacity: 'show'},40);
 		$('#addAll').animate({opacity: 'show'},40);
-		$('#deleteAll').animate({opacity: 'show'},40);		
+		$('#deleteAll').animate({opacity: 'show'},40);
+		$('.gridTitle').animate({opacity: 'show'},40);
 	}
 	else{
 		$('#price-list-item-grid').animate({opacity: 'hide'},40);
 		$('#product-grid').animate({opacity: 'hide'},40);
 		$('#addAll').animate({opacity: 'hide'},40);
-		$('#deleteAll').animate({opacity: 'show'},40);
+		$('#deleteAll').animate({opacity: 'hide'},40);
+		$('.gridTitle').animate({opacity: 'hide'},40);
 	}
 	return false;
 });
@@ -46,6 +48,7 @@ $('#PriceList_Id').change(function(){
 $(document).ready(function() {
 	$('#price-list-item-grid').animate({opacity: "hide"},40);
 	$('#product-grid').animate({opacity: "hide"},40);
+	$('.gridTitle').animate({opacity: "hide"},40);
 });
 
 	
@@ -90,8 +93,40 @@ function validateNumber(obj)
 		?>
 	</div>
 		
-	<div id="products" class="selectablesItems" >
-		
+
+	<div style="width:100%;height:70px;margin-bottom:30px;margin-top:20px">
+		<div style="width:20%;float:left;  clear: both;margin-top:30px;">
+			<p class="gridTitle"><b>Products</b></p>
+		</div>
+		<div style="float:right;right:0;margin-top:25px">
+		<?php
+		echo CHtml::imageButton(
+                                'images/add_all.png',
+                                array(
+                                'title'=>'Add current filtered products',
+                                'width'=>'30px',
+                                'style'=>'display:none',
+                                'id'=>'addAll',
+                                	'ajax'=> array(
+										'type'=>'POST',
+										'url'=>PriceListController::createUrl('AjaxAddFilteredProducts'),
+										'beforeSend'=>'function(){
+													if(!confirm("Are you sure you want to add all filtered products?")) 
+														return false;
+														}',
+										'success'=>'js:function(data)
+										{
+											$.fn.yiiGridView.update("price-list-item-grid", {
+												data: $(this).serialize()
+											});
+										}'
+                                	)
+                                )
+                                                         
+                            ); 
+		?>
+		</div>
+	</div>
 	<?php		
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'product-grid',
@@ -138,20 +173,33 @@ function validateNumber(obj)
 			),
 		));		
 		?>
-		</div>   
+
+
+
+		<p class="messageError"><?php
+		echo Yii::app()->lc->t('Product has already been added to selected Price List');
+		?></p>
+	
+
+		<div style="width:100%;height:30px;margin-bottom:30px;margin-top:20px">
+			<div style="width:40%;float:left;  clear: both;margin-top:30px;">
+				<p class="gridTitle"><b>Price List Items</b></p>
+			</div>
+		<div style="float:right;right:0;margin-top:25px">
+
 <?php
 		echo CHtml::imageButton(
-                                'images/add_all.png',
+                                'images/delete_all.png',
                                 array(
-                                'title'=>'Add current filtered products',
-                                'width'=>'100px',
+                                'title'=>'Delete current filtered products',
+                                'width'=>'30px',
                                 'style'=>'display:none',
-                                'id'=>'addAll',
+                                'id'=>'deleteAll',
                                 	'ajax'=> array(
 										'type'=>'POST',
-										'url'=>PriceListController::createUrl('AjaxAddFilteredProducts'),
+										'url'=>PriceListController::createUrl('AjaxDeleteFilteredProducts'),
 										'beforeSend'=>'function(){
-													if(!confirm("Are you sure you want to add all filtered products?")) 
+													if(!confirm("Are you sure you want to delete all filtered products?")) 
 														return false;
 														}',
 										'success'=>'js:function(data)
@@ -165,10 +213,9 @@ function validateNumber(obj)
                                                          
                             ); 
 		?>
-		<p class="messageError"><?php
-		echo Yii::app()->lc->t('Product has already been added to selected Price List');
-		?></p>
-<?php 
+		</div>
+		</div>
+		<?php 
 
 
 $this->widget('zii.widgets.grid.CGridView', array(
@@ -252,32 +299,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				),
 			),
 )); ?>
-<?php
-		echo CHtml::imageButton(
-                                'images/delete_all.png',
-                                array(
-                                'title'=>'Delete current filtered products',
-                                'width'=>'100px',
-                                'style'=>'display:none',
-                                'id'=>'deleteAll',
-                                	'ajax'=> array(
-										'type'=>'POST',
-										'url'=>PriceListController::createUrl('AjaxDeleteFilteredProducts'),
-										'beforeSend'=>'function(){
-													if(!confirm("Are you sure you want to delete all filtered products?")) 
-														return false;
-														}',
-										'success'=>'js:function(data)
-										{
-											$.fn.yiiGridView.update("price-list-item-grid", {
-												data: $(this).serialize()
-											});
-										}'
-                                	)
-                                )
-                                                         
-                            ); 
-		?>
+
+
 	<?php $this->endWidget(); ?>
 
 </div><!-- form -->

@@ -158,4 +158,10 @@ div.wide.form .buttons, div.wide.form .hint, div.wide.form .errorMessage
 	clear: left;
 	padding-left: 110px;
 }
+
+div.form .gridTitle
+{
+	margin: 0 0 20px 0;
+	font-size: 1.9em;
+}
  
