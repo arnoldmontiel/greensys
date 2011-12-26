@@ -172,8 +172,11 @@ class PriceListController extends Controller
 			$modelProduct->attributes=$_GET['Product'];
 		
 		
-		if(isset($_GET['PriceList']))
+		if(isset($_GET['PriceList'])){
 			$model->Id_price_list=(int)$_GET['PriceList']['Id'];
+			$pl = PriceList::model()->findByPk((int)$_GET['PriceList']['Id']);
+			$modelProduct->Id_supplier = $pl->Id_supplier;
+		}
 		
 		$this->render('priceListItem',array(
 					'dataProvider'=>$model,
@@ -249,9 +252,15 @@ class PriceListController extends Controller
 		$productFilter = isset($_POST['Product'])?$_POST['Product']:null;
 		$idPriceList = isset($_POST['PriceList'])?(int)$_POST['PriceList']['Id']:null;
 		
+		
+		
 		if($productFilter != null && $idPriceList != null){
 			$products = Product::model();
 			$products->attributes = $productFilter;
+			
+			$pl = PriceList::model()->findByPk($idPriceList);
+			$products->Id_supplier = $pl->Id_supplier;
+			
 			$prov = $products->searchSummary();
 			$prov->pagination = array('pageSize'=>100);
 			foreach($prov->getData(true) as $product){
