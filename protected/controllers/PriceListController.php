@@ -253,7 +253,8 @@ class PriceListController extends Controller
 			$products = Product::model();
 			$products->attributes = $productFilter;
 			$prov = $products->searchSummary();
-			foreach($prov->getData() as $product){
+			$prov->pagination = array('pageSize'=>100);
+			foreach($prov->getData(true) as $product){
 				$priceListItemInDb = PriceListItem::model()->findByAttributes(array('Id_price_list'=>(int) $idPriceList,'id_product'=>$product->Id));
 				if($priceListItemInDb==null)
 				{
@@ -261,6 +262,25 @@ class PriceListController extends Controller
 					$priceListItem->attributes = array('Id_price_list'=>$idPriceList,'id_product'=>$product->Id,'cost'=>0);
 					$priceListItem->save();
 				}
+			}
+		}
+	
+	}
+	
+	public function actionAjaxDeleteFilteredProducts()
+	{
+	
+		$plItemsFilter = isset($_POST['PriceListItem'])?$_POST['PriceListItem']:null;
+		$plItemId = isset($_POST['PriceList'])? (int)$_POST['PriceList']['Id']:null;
+		
+		if($plItemsFilter != null && $plItemId != null){
+			$plItems = PriceListItem::model();
+			$plItems->attributes = $plItemsFilter;
+			$plItems->Id_price_list = $plItemId;
+			$prov = $plItems->searchPriceList();
+			$prov->pagination = array('pageSize'=>100);
+			foreach($prov->getData() as $plItem){
+				$plItem->delete();
 			}
 		}
 	

@@ -75,7 +75,7 @@ class Product extends CActiveRecord
 			array('description_customer, description_supplier', 'length', 'max'=>255),
 			array('code, code_supplier', 'length', 'max'=>45),
 			array('length, width, height, profit_rate, msrp, weight', 'length', 'max'=>10),
-			array('time_instalation', 'safe'),
+			array('time_instalation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description', 'safe', 'on'=>'search'),

@@ -50,6 +50,7 @@ class PriceListItem extends CActiveRecord
 			array('cost', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
+			array('Id, id_product, Id_price_list, cost, description_customer, code, code_supplier', 'safe'),
 			array('Id, id_product, Id_price_list, cost, description_customer, code, code_supplier', 'safe', 'on'=>'search'),
 		);
 	}

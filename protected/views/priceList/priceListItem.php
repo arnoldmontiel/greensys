@@ -21,12 +21,14 @@ $('#PriceList_Id').change(function(){
 		});
 		$('#price-list-item-grid').animate({opacity: 'show'},40);
 		$('#product-grid').animate({opacity: 'show'},40);
-		$('#addAll').animate({opacity: 'show'},40);		
+		$('#addAll').animate({opacity: 'show'},40);
+		$('#deleteAll').animate({opacity: 'show'},40);		
 	}
 	else{
 		$('#price-list-item-grid').animate({opacity: 'hide'},40);
 		$('#product-grid').animate({opacity: 'hide'},40);
 		$('#addAll').animate({opacity: 'hide'},40);
+		$('#deleteAll').animate({opacity: 'show'},40);
 	}
 	return false;
 });
@@ -247,6 +249,32 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				),
 			),
 )); ?>
+<?php
+		echo CHtml::imageButton(
+                                'images/delete_all.png',
+                                array(
+                                'title'=>'Delete current filtered products',
+                                'width'=>'100px',
+                                'style'=>'display:none',
+                                'id'=>'deleteAll',
+                                	'ajax'=> array(
+										'type'=>'POST',
+										'url'=>PriceListController::createUrl('AjaxDeleteFilteredProducts'),
+										'beforeSend'=>'function(){
+													if(!confirm("Are you sure you want to delete all filtered products?")) 
+														return false;
+														}',
+										'success'=>'js:function(data)
+										{
+											$.fn.yiiGridView.update("price-list-item-grid", {
+												data: $(this).serialize()
+											});
+										}'
+                                	)
+                                )
+                                                         
+                            ); 
+		?>
 	<?php $this->endWidget(); ?>
 
 </div><!-- form -->
