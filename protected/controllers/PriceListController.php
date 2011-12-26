@@ -233,8 +233,9 @@ class PriceListController extends Controller
 			$priceListItemInDb = PriceListItem::model()->findByAttributes(array('Id_price_list'=>(int) $idPriceList,'id_product'=>(int)$idProduct));
 			if($priceListItemInDb==null)
 			{
+				$product = Product::model()->findByPk($idProduct);
 				$priceListItem=new PriceListItem();
-				$priceListItem->attributes = array('Id_price_list'=>$idPriceList,'id_product'=>$idProduct,'cost'=>0);
+				$priceListItem->attributes = array('Id_price_list'=>$idPriceList,'id_product'=>$idProduct,'cost'=>$product->price_standard);
 				$priceListItem->save();
 			}
 			else
