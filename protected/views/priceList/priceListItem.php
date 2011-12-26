@@ -19,6 +19,9 @@ $('#PriceList_Id').change(function(){
 		$.fn.yiiGridView.update('price-list-item-grid', {
 			data: $(this).serialize()
 		});
+		$.fn.yiiGridView.update('product-grid', {
+			data: $(this).serialize()
+		});
 		$('#price-list-item-grid').animate({opacity: 'show'},40);
 		$('#product-grid').animate({opacity: 'show'},40);
 		$('#addAll').animate({opacity: 'show'},40);
