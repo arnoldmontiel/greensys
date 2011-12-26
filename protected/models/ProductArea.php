@@ -47,7 +47,7 @@ class ProductArea extends CActiveRecord
 			array('id_area, id_product, quantity', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id_area, id_product, quantity, product_brand_description, product_category_description, product_nomenclator_description, product_supplier_description,product_description_supplier,product_description_customer, product_code, product_supplier_business_name', 'safe', 'on'=>'search'),
+			array('id_area, id_product, quantity, product_brand_description, product_category_description, product_nomenclator_description,product_description_supplier,product_description_customer, product_code, product_supplier_business_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -120,7 +120,7 @@ class ProductArea extends CActiveRecord
 							 LEFT OUTER JOIN Brand b ON p.id_brand=b.Id
 							 LEFT OUTER JOIN Supplier s ON p.Id_supplier=s.Id";
 		$criteria->addSearchCondition("b.description",$this->product_brand_description);
-		$criteria->addSearchCondition("s.description",$this->product_supplier_business_name);
+		$criteria->addSearchCondition("s.business_name",$this->product_supplier_business_name);
 		// Create a custom sort
 		$sort=new CSort;
 		$sort->attributes=array(
@@ -141,7 +141,11 @@ class ProductArea extends CActiveRecord
 								'asc'=>'b.description',
 								'desc'=>'b.description DESC'
 								),
-						      '*',
+								'product_supplier_business_name'=> array(
+								'asc'=>'s.business_name',
+								'desc'=>'s.business_name DESC'
+								),
+		'*',
 		);
 		
 		return new CActiveDataProvider($this, array(

@@ -65,10 +65,11 @@ $this->menu=array(
 						});
 		}',
 	'columns'=>array(
-			array('name'=>'Id',
-						'value'=>'$data->Id',
-						'visible'=>false,
+			array(
+					 		'name'=>'code',
+							'value'=>'$data->code',
 			),
+	
 			array(
 					 		'name'=>'supplier_description',
 							'value'=>'$data->supplier->business_name',
@@ -92,10 +93,19 @@ $this->menu=array(
 			'dataProvider'=>$modelProductArea->searchProduct(),
 			'filter'=>$modelProductArea,
 			'columns'=>array(	
-				array('name'=>'Id',
-				'value'=>'$data->Id',
-				'visible'=>false,
-				),
+			array(
+					 		'name'=>'product_code',
+							'value'=>'$data->product->code',
+			),
+			array(
+					 		'name'=>'product_supplier_business_name',
+							'value'=>'$data->product->supplier->business_name',
+			),
+		
+			array(
+				 			'name'=>'product_brand_description',
+							'value'=>'$data->product->brand->description',
+			),		
 			array(
 					 		'name'=>'product_description_customer',
 							'value'=>'$data->product->description_customer',
@@ -104,10 +114,6 @@ $this->menu=array(
 				 			'name'=>'product_description_supplier',
 							'value'=>'$data->product->description_supplier',
 			),
-			array(
-				 			'name'=>'product_brand_description',
-							'value'=>'$data->product->brand->description',
-			),		
 						'quantity',
 				array(
 					'class'=>'CButtonColumn',
