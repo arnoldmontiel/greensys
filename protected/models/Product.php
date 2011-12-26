@@ -40,7 +40,7 @@
  * @property ProductItem[] $productItems
  * @property ProductRequirement[] $productRequirements
  * @property Supplier $idSupplier
- *  */
+ */
 class Product extends CActiveRecord
 {
 	
@@ -79,7 +79,7 @@ class Product extends CActiveRecord
 			array('description_customer, description_supplier', 'length', 'max'=>255),
 			array('code, code_supplier', 'length', 'max'=>45),
 			array('length, width, height, profit_rate, msrp, weight, price_standard', 'length', 'max'=>10),
-			array('time_instalation', 'safe'),
+			array('time_instalation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, price_standard', 'safe', 'on'=>'search'),
@@ -192,6 +192,7 @@ class Product extends CActiveRecord
 		$criteria->compare('id_brand',$this->id_brand);
 		$criteria->compare('Id_category',$this->Id_category);
 		$criteria->compare('Id_nomenclator',$this->Id_nomenclator);
+		$criteria->compare('Id_supplier',$this->Id_supplier);
 		$criteria->compare('description_customer',$this->description_customer,true);
 		$criteria->compare('description_supplier',$this->description_supplier,true);
 		$criteria->compare('code',$this->code,true);
