@@ -51,7 +51,19 @@ $(document).ready(function() {
 	$('.gridTitle').animate({opacity: "hide"},40);
 });
 
-	
+function markAddedRow()
+{
+        var keys = $("#product-grid > div.keys > span");
+
+        $("#product-grid > table > tbody > tr").each(function(i)
+        {
+                if($(this).hasClass("selected"))
+                {
+					$.fn.yiiGridView.getRow("product-grid",i.toString()).find("#addok").animate({opacity: "show"},4000);
+					$.fn.yiiGridView.getRow("product-grid",i.toString()).find("#addok").animate({opacity: "hide"},4000);
+                }
+        });
+}	
 
 function validateNumber(obj)
 {
@@ -132,7 +144,8 @@ function validateNumber(obj)
 		'id'=>'product-grid',
 		'dataProvider'=>$modelProduct->searchSummary(),
 		'filter'=>$modelProduct,
-		'selectionChanged'=>'js:function(){
+		'selectionChanged'=>'js:function(id){
+			var target1 = $(this);
 			$.get(	"'.PriceListController::createUrl('AjaxAddPriceListItem').'",
 					{
 						IdPriceList:$("#PriceList_Id :selected").attr("value"),
@@ -140,9 +153,11 @@ function validateNumber(obj)
 					}).success(
 						function() 
 						{
+							markAddedRow();
+							
 							$.fn.yiiGridView.update("price-list-item-grid", {
 							data: $(this).serialize()
-							});
+							});							
 						})
 					.error(
 						function()
@@ -152,24 +167,29 @@ function validateNumber(obj)
 						});
 		}',
 		'columns'=>array(	
-			array('name'=>'Id',
-			'value'=>'$data->Id',
-			'visible'=>false,
-			),
-			array(
-		 		'name'=>'supplier_description',
-				'value'=>'$data->supplier->business_name',
-			),
-			array(
-	 			'name'=>'brand_description',
-				'value'=>'$data->brand->description',
-			),
-			array(
-		 		'name'=>'category_description',
-				'value'=>'$data->category->description',
-			),
-			'description_customer',
-			'description_supplier',
+				array('name'=>'Id',
+					'value'=>'$data->Id',
+					'visible'=>false,
+				),
+				array(
+			 		'name'=>'supplier_description',
+					'value'=>'$data->supplier->business_name',
+				),
+				array(
+		 			'name'=>'brand_description',
+					'value'=>'$data->brand->description',
+				),
+				array(
+			 		'name'=>'category_description',
+					'value'=>'$data->category->description',
+				),
+				'description_customer',
+				'description_supplier',
+				array(
+					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+					'type'=>'raw',
+					'htmlOptions'=>array('width'=>20),
+				),
 			),
 		));		
 		?>
