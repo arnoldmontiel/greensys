@@ -37,14 +37,12 @@ $this->trashDraggableId = 'ddlAssigment';
 					if($("#Area_Id :selected").attr("value")=="")
 					{
 						$("#ddlAssigment").html(data);
-						$( "#category" ).animate({opacity: "hide"},"slow");
-						$( "#categoryArea" ).animate({opacity: "hide"},"slow");
+						$( "#Display" ).animate({opacity: "hide"},"slow");
 					}
 					else
 					{
 						$("#ddlAssigment").html(data);
-						$( "#category" ).animate({opacity: "show"},"slow");
-						$( "#categoryArea" ).animate({opacity: "show"},"slow");
+						$( "#Display" ).animate({opacity: "show"},"slow");
 					}
 				}',
 				//leave out the data key to pass all form values through
@@ -53,10 +51,20 @@ $this->trashDraggableId = 'ddlAssigment';
 		);
 		?>
 		
-	<img id="saveok" src="images/save_ok.png" alt="" 
-	  style="position: relative;float:rigth; display: none;width:20px; height:20px;" />		
 	</div>				
-	<div id="categoryArea"class="assigned-items" style="display: none">
+	<div id="Display" style="display: none">	
+	<div class="gridTitle-decoration1" style="float: left; width: 50%;">
+		<div class="gridTitle1">
+			Assigned
+		</div>
+	</div>		
+	<div class="gridTitle-decoration1" >
+		<div class="gridTitle1" >
+			Categories
+		</div>
+	</div>
+	
+	<div id="categoryArea"class="assigned-items">
 	<?php 
 		
 		$itemsCategory = CHtml::listData($dataProviderCategory->getData(), 'Id', 'description');
@@ -70,6 +78,9 @@ $this->trashDraggableId = 'ddlAssigment';
 					'stop'=>'js:function(event, ui) 
 							{
 								$(ui.item).attr("id",id);
+								$(ui.item).children().animate({opacity: "show"},2000);
+								$(ui.item).children().animate({opacity: "hide"},4000);
+		
 							}', 				
 					'receive'=>
 							'js:function(event, ui) 
@@ -83,8 +94,6 @@ $this->trashDraggableId = 'ddlAssigment';
 									 }).success(
 									 	function() 
 									 		{ 
-									 			$( "#saveok" ).animate({opacity: "show"},2000);
-												$( "#saveok" ).animate({opacity: "hide"},4000); 
 											}); 
 							}', 				
 					'remove'=>
@@ -102,7 +111,7 @@ $this->trashDraggableId = 'ddlAssigment';
 		));
 		?>
 		</div>
-		<div id="category" class="selectable-items" style="display: none">
+		<div id="category" class="selectable-items">
 		<?php 
 		$this->widget('ext.draglist.draglist', array(
 		'id'=>'dlCategory',
@@ -117,5 +126,5 @@ $this->trashDraggableId = 'ddlAssigment';
 		</div>
 		<?php $this->endWidget(); ?>
 
-	<div id="display"></div>
+	</div>
 </div><!-- form -->

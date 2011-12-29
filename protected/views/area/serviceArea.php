@@ -37,14 +37,12 @@ $this->trashDraggableId = 'ddlAssigment';
 					if($("#Area_Id :selected").attr("value")=="")
 					{
 						$("#ddlAssigment").html(data);
-						$( "#Service" ).animate({opacity: "hide"},"slow");
-						$( "#ServiceArea" ).animate({opacity: "hide"},"slow");
+						$( "#Display" ).animate({opacity: "hide"},"slow");
 					}
 					else
 					{
 						$("#ddlAssigment").html(data);
-						$( "#Service" ).animate({opacity: "show"},"slow");
-						$( "#ServiceArea" ).animate({opacity: "show"},"slow");
+						$( "#Display" ).animate({opacity: "show"},"slow");
 					}
 				}',
 				//leave out the data key to pass all form values through
@@ -53,10 +51,19 @@ $this->trashDraggableId = 'ddlAssigment';
 		);
 		?>
 		
-	<img id="saveok" src="images/save_ok.png" alt="" 
-	  style="position: relative;float:rigth; display: none;width:20px; height:20px;" />		
 	</div>				
-	<div id="ServiceArea"class="assigned-items" style="display: none">
+	<div id="Display" style="display: none">	
+	<div class="gridTitle-decoration1" style="float: left; width: 50%;">
+		<div class="gridTitle1">
+			Assigned
+		</div>
+	</div>		
+	<div class="gridTitle-decoration1" >
+		<div class="gridTitle1" >
+			Services
+		</div>
+	</div>
+	<div id="ServiceArea"class="assigned-items">
 	<?php 
 		
 		$itemsService = CHtml::listData($dataProviderService->getData(), 'Id', 'description');
@@ -101,7 +108,7 @@ $this->trashDraggableId = 'ddlAssigment';
 		));
 		?>
 		</div>
-		<div id="Service" class="selectable-items" style="display: none">
+		<div id="Service" class="selectable-items">
 		<?php 
 		$this->widget('ext.draglist.draglist', array(
 		'id'=>'dlService',
@@ -114,6 +121,7 @@ $this->trashDraggableId = 'ddlAssigment';
 				
 		?>
 		</div>
+		</div>		
 		<?php $this->endWidget(); ?>
 
 	<div id="display"></div>

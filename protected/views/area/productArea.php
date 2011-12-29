@@ -10,16 +10,8 @@ $this->menu=array(
 	array('label'=>'Assign Categories', 'url'=>array('categoryArea')),
 	array('label'=>'Assign Services', 'url'=>array('serviceArea')),
 );
-?>
-<div class="form">
-	<?php $form=$this->beginWidget('CActiveForm', array(
-		'id'=>'productArea-form',
-		'enableAjaxValidation'=>true,
-	)); ?>
 
-	<div style="row;width:100%;margin:2px;">
-		<?php
-		Yii::app()->clientScript->registerScript('update', "
+Yii::app()->clientScript-> registerScript('update', "
 				$('#Area_Id').change(function(){
 					$.fn.yiiGridView.update('productArea-grid', {
 						data: $(this).serialize()
@@ -35,7 +27,14 @@ $this->menu=array(
 					return false;
 				});
 				");
-		 ?>
+?>
+<div class="form">
+	<?php $form=$this->beginWidget('CActiveForm', array(
+		'id'=>'productArea-form',
+		'enableAjaxValidation'=>true,
+	)); ?>
+
+	<div style="row;width:100%;margin:2px;">
 		<?php echo $form->labelEx($model,'Area'); ?>
 		<?php echo $form->dropDownList($model, 
 			'Id',
@@ -46,11 +45,18 @@ $this->menu=array(
 		</div>
 
 	<div id="display" class="selectablesItems" style="display:none;">
+	<div class="gridTitle-decoration1">
+	<div class="gridTitle1">
+	Products Selection
+	</div>
+	</div>
+	
 	<?php		
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'product-grid',
 		'dataProvider'=>$modelProduct->searchSummary(),
 		'filter'=>$modelProduct,
+		'summaryText'=>'',
 		'selectionChanged'=>'js:function(){
 			$.get(	"'.AreaController::createUrl('AjaxAddProductArea').'",
 					{
@@ -59,6 +65,7 @@ $this->menu=array(
 					}).success(
 						function() 
 						{
+							markAddedRow("product-grid");
 							$.fn.yiiGridView.update("productArea-grid", {
 							data: $(this).serialize()
 							});
@@ -84,14 +91,27 @@ $this->menu=array(
 			),
 						'description_customer',
 						'description_supplier',
+			array(
+					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok", "style"=>"display:none; float:left;", "width"=>"15px", "height"=>"15px"))',
+					'type'=>'raw',
+					'htmlOptions'=>array('width'=>20),
+			),
+	
 			),
 		));		
 		?>
+		<div class="gridTitle-decoration1">
+		<div class="gridTitle1">
+		Products Applied
+		</div>
+		</div>
+		
 		<?php 				
 		$this->widget('zii.widgets.grid.CGridView', array(
 			'id'=>'productArea-grid',
 			'dataProvider'=>$modelProductArea->searchProduct(),
 			'filter'=>$modelProductArea,
+			'summaryText'=>'',
 			'columns'=>array(	
 			array(
 					 		'name'=>'product_code',

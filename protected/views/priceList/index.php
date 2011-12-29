@@ -6,6 +6,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'Create PriceList', 'url'=>array('create')),
 	array('label'=>'Manage PriceList', 'url'=>array('admin')),
+	array('label'=>'Assing Products', 'url'=>array('priceListItem')),
 );
 ?>
 

@@ -243,16 +243,28 @@ class ProductController extends Controller
 	public function actionProductGroup()
 	{
 		$model=new Product('search');
+		$model->unsetAttributes();
+		if(isset($_GET['Product']))
+			$model->attributes=$_GET['Product'];
+
+		$modelGroup=new ProductGroup('search');
+		$modelGroup->unsetAttributes();
 		if(isset($_GET['ProductGroup']))
-		$model->attributes=$_GET['ProductGroup'];
-	
+			$modelGroup->attributes=$_GET['ProductGroup'];
+
+		if(isset($_GET['Product']['Id'])){
+			$modelGroup->id_product_parent=$_GET['Product']['Id'];
+			$model->unsetAttributes();
+		}
+		
 		// Uncomment the following line if AJAX validation is needed
 		$dataProvider=new CActiveDataProvider('Product');
-		$dataProviderCategory=new CActiveDataProvider('Category');
-	
+		$dataProviderProductGroup=new CActiveDataProvider('ProductGroup');
 		$this->render('productGroup',array(
 							'dataProvider'=>$dataProvider,
-							'model'=>$model //model for creation
+							'model'=>$model, //model for creation
+							'dataProviderGroup'=>$dataProviderProductGroup,
+							'modelProductGroup'=>$modelGroup //model for creation
 		));
 	
 	}
@@ -307,10 +319,8 @@ class ProductController extends Controller
 	
 	public function actionAjaxAddProductGroup()
 	{
-		$idProductParent = isset($_POST['IdProductParent'])?$_POST['IdProductParent']:'';
-		$idProductChild = isset($_POST['IdProductChild'])?$_POST['IdProductChild']:'';
-		$IdProductChildArray = explode("_",$idProductChild);
-		$idProductChild = $IdProductChildArray[1];
+		$idProductParent = isset($_GET['IdProductParent'][0])?$_GET['IdProductParent'][0]:'';
+		$idProductChild = isset($_GET['IdProductChild'][0])?$_GET['IdProductChild'][0]:'';
 			
 		if(!empty($idProductParent)&&!empty($idProductChild))
 		{
@@ -331,10 +341,8 @@ class ProductController extends Controller
 	}
 	public function actionAjaxRemoveProductGroup()
 	{
-		$idProductParent = isset($_POST['IdProductParent'])?$_POST['IdProductParent']:'';
-		$idProductChild = isset($_POST['IdProductChild'])?$_POST['IdProductChild']:'';
-		$IdProductChildArray = explode("_",$idProductChild);
-		$idProductChild = $IdProductChildArray[1];
+		$idProductParent = isset($_GET['IdProductParent'])?$_GET['IdProductParent']:'';
+		$idProductChild = isset($_GET['IdProductChild'])?$_GET['IdProductChild']:'';
 			
 		if(!empty($idProductParent)&&!empty($idProductChild))
 		{

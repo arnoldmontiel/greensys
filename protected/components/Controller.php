@@ -31,6 +31,10 @@ class Controller extends SBaseController
 	* @var string that print html on the screen.
 	*/
 	public $container='';
+	/**
+	* @var string that print html on the screen.
+	*/
+	public $showSideBar = false;
 	
 	function init()
 	{

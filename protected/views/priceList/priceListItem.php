@@ -9,6 +9,7 @@ $this->menu=array(
 	array('label'=>'Create PriceList', 'url'=>array('create')),
 );
 
+$this->showSideBar = true;
 
 Yii::app()->clientScript->registerScript('search', "
 
@@ -22,18 +23,10 @@ $('#PriceList_Id').change(function(){
 		$.fn.yiiGridView.update('product-grid', {
 			data: $(this).serialize()
 		});
-		$('#price-list-item-grid').animate({opacity: 'show'},40);
-		$('#product-grid').animate({opacity: 'show'},40);
-		$('#addAll').animate({opacity: 'show'},40);
-		$('#deleteAll').animate({opacity: 'show'},40);
-		$('.gridTitle').animate({opacity: 'show'},40);
+		$('#display').animate({opacity: 'show'},240);
 	}
 	else{
-		$('#price-list-item-grid').animate({opacity: 'hide'},40);
-		$('#product-grid').animate({opacity: 'hide'},40);
-		$('#addAll').animate({opacity: 'hide'},40);
-		$('#deleteAll').animate({opacity: 'hide'},40);
-		$('.gridTitle').animate({opacity: 'hide'},40);
+		$('#display').animate({opacity: 'hide'},240);
 	}
 	return false;
 });
@@ -43,43 +36,6 @@ $('#PriceList_Id').change(function(){
 	
 	
 ?>
-<script type="text/javascript">
-
-$(document).ready(function() {
-	$('#price-list-item-grid').animate({opacity: "hide"},40);
-	$('#product-grid').animate({opacity: "hide"},40);
-	$('.gridTitle').animate({opacity: "hide"},40);
-});
-
-function markAddedRow()
-{
-        var keys = $("#product-grid > div.keys > span");
-
-        $("#product-grid > table > tbody > tr").each(function(i)
-        {
-                if($(this).hasClass("selected"))
-                {
-					$.fn.yiiGridView.getRow("product-grid",i.toString()).find("#addok").animate({opacity: "show"},4000);
-					$.fn.yiiGridView.getRow("product-grid",i.toString()).find("#addok").animate({opacity: "hide"},4000);
-                }
-        });
-}	
-
-function validateNumber(obj)
-{
-	var value=$(obj).val();
-    var orignalValue=value;
-    value=value.replace(/[0-9]*/g, "");			
-   	var msg="Only Decimal Values allowed."; 						
-   	value=value.replace(/\./, "");
-
-    if (value!=""){
-    	orignalValue=orignalValue.replace(value, "");
-    	$(obj).val(orignalValue);
-    	alert(msg);
-    }
-}
-</script>
 
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -91,7 +47,7 @@ function validateNumber(obj)
 		$priceListDB= PriceList::model()->findAll();
 		?>
 	
-	<div id="priceList" style="width:60%;float:left">
+	<div id="priceList" style="margin-bottom: 5px">
 		
 		<?php	$priceLists = CHtml::listData($priceListDB, 'Id', 'PriceListDesc');?>
 
@@ -105,19 +61,19 @@ function validateNumber(obj)
 		?>
 	</div>
 		
+	<div id="display" style="display: none">
 
-	<div style="width:100%;height:70px;margin-bottom:30px;margin-top:20px">
-		<div style="width:20%;float:left;  clear: both;margin-top:30px;">
-			<p class="gridTitle"><b>Products</b></p>
+	<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
+		<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
+			Products
 		</div>
-		<div style="float:right;right:0;margin-top:25px">
-		<?php
+		<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
+					<?php
 		echo CHtml::imageButton(
-                                'images/add_all.png',
+                                'images/add_all_blue.png',
                                 array(
                                 'title'=>'Add current filtered products',
-                                'width'=>'30px',
-                                'style'=>'display:none',
+                                'style'=>'width:30px;',
                                 'id'=>'addAll',
                                 	'ajax'=> array(
 										'type'=>'POST',
@@ -137,15 +93,18 @@ function validateNumber(obj)
                                                          
                             ); 
 		?>
+
 		</div>
 	</div>
+	
+
 	<?php		
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'product-grid',
 		'dataProvider'=>$modelProduct->searchSummary(),
 		'filter'=>$modelProduct,
+		'summaryText'=>'',	
 		'selectionChanged'=>'js:function(id){
-			var target1 = $(this);
 			$.get(	"'.PriceListController::createUrl('AjaxAddPriceListItem').'",
 					{
 						IdPriceList:$("#PriceList_Id :selected").attr("value"),
@@ -153,11 +112,13 @@ function validateNumber(obj)
 					}).success(
 						function() 
 						{
-							markAddedRow();
+							markAddedRow("product-grid");
 							
 							$.fn.yiiGridView.update("price-list-item-grid", {
 							data: $(this).serialize()
-							});							
+							});
+							
+							unselectRow("product-grid");		
 						})
 					.error(
 						function()
@@ -186,7 +147,7 @@ function validateNumber(obj)
 				'description_customer',
 				'description_supplier',
 				array(
-					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok", "style"=>"display:none; float:left;", "width"=>"15px", "height"=>"15px"))',
 					'type'=>'raw',
 					'htmlOptions'=>array('width'=>20),
 				),
@@ -201,19 +162,17 @@ function validateNumber(obj)
 		?></p>
 	
 
-		<div style="width:100%;height:30px;margin-bottom:30px;margin-top:20px">
-			<div style="width:40%;float:left;  clear: both;margin-top:30px;">
-				<p class="gridTitle"><b>Price List Items</b></p>
-			</div>
-		<div style="float:right;right:0;margin-top:25px">
-
+	<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
+		<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
+			Price List Items
+		</div>
+		<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
 <?php
 		echo CHtml::imageButton(
-                                'images/delete_all.png',
+                                'images/delete_all_blue.png',
                                 array(
                                 'title'=>'Delete current filtered products',
                                 'width'=>'30px',
-                                'style'=>'display:none',
                                 'id'=>'deleteAll',
                                 	'ajax'=> array(
 										'type'=>'POST',
@@ -241,9 +200,9 @@ function validateNumber(obj)
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'price-list-item-grid',
 	'dataProvider'=>$dataProvider->searchPriceList(),
- 	'filter'=>$dataProvider, 
+ 	'filter'=>$dataProvider,
+	'summaryText'=>'',
  	'afterAjaxUpdate'=>'function(id, data){
- 										$("#price-list-item-grid").animate({opacity: "show"},400);
  										$("#price-list-item-grid").find("input.txtCost").each(
 												function(index, item){
 		
@@ -256,7 +215,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 																	$.post(
 																		"'.PriceListController::createUrl('AjaxUpdateCost').'",
 																		 {
-																		 	idPriceListItem:ddlProductId = $(this).attr("id"),
+																		 	idPriceListItem: $(this).attr("id"),
 																			cost:$(this).val()
 																		 }).success(
 																			 	function() 
@@ -320,7 +279,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			),
 )); ?>
 
-
+</div><!-- display-->
 	<?php $this->endWidget(); ?>
 
 </div><!-- form -->

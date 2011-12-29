@@ -8,147 +8,195 @@ $this->menu=array(
 	array('label'=>'Create Product', 'url'=>array('create')),
 	array('label'=>'Manage Product', 'url'=>array('admin')),
 );
-$this->trashDraggableId = 'ddlAssigment';
+$this->showSideBar = true;
+Yii::app()->clientScript->registerScript('update', "
+				$('#Area_Id').change(function(){
+					$.fn.yiiGridView.update('productArea-grid', {
+						data: $(this).serialize()
+					});
+					if($('#Area_Id :selected').attr('value')=='')
+					{
+						$( '#display' ).animate({opacity: 'hide'},'slow');
+					}
+					else
+					{
+						$( '#display' ).animate({opacity: 'show'},'slow');
+					}
+					return false;
+				});
+				");
+
 ?>
+
 <div class="form">
 	<?php $form=$this->beginWidget('CActiveForm', array(
 		'id'=>'productGroup-form',
 		'enableAjaxValidation'=>true,
 	)); ?>
 
-	<?php 	// Organize the dataProvider data into a Zii-friendly array
-		$items = CHtml::listData($dataProvider->getData(), 'Id', 'description_customer');
-		?>
-	<div style="row;width:100%;margin:2px;">
-		<div style="width:51%;float:left;">
-				
-		<?php echo $form->labelEx($model,'Product'); ?>
-		<?php echo $form->dropDownList($model, 'Id', $items,		
-			array(
-				'ajax' => array(
-				'type'=>'POST',
-				'url'=>ProductController::createUrl('AjaxFillProductGroup'),
-				'update'=>'#ddlAssigment', //selector to update
-				'success'=>'js:function(data)
-				{
-					if($("#Product_Id :selected").attr("value")=="")
-					{
-						$("#ddlAssigment").html(data);
-						$( "#category" ).animate({opacity: "hide"},"slow");
-						$( "#product" ).animate({opacity: "hide"},"slow");
-						$( "#productProduct" ).animate({opacity: "hide"},"slow");
-					}
-					else
-					{
-						$("#ddlAssigment").html(data);
-						$( "#category" ).animate({opacity: "show"},"slow");
-						$( "#product" ).animate({opacity: "show"},"slow");
-						$( "#productProduct" ).animate({opacity: "show"},"slow");
-					}
-				}',
-				//leave out the data key to pass all form values through
-				),'prompt'=>'Select a Product'
-			)		
-		);
-		?>
+	<div class="gridTitle-decoration1">
+		<div class="gridTitle1">
+		Products
 		</div>
-		<div id="category" style="width:49%;float:left; display:none">
-		<?php $modelCategory = Category::model(); ?>
-		<?php echo $form->labelEx($modelCategory,'Category'); ?>
-		<?php echo $form->dropDownList($modelCategory, 'Id', CHtml::listData($modelCategory->findAll(), 'Id', 'description'),		
-			array(
-				'ajax' => array(
-				'type'=>'POST',
-				'url'=>ProductController::createUrl('AjaxFillProducts'),
-				'update'=>'#product', //selector to update
-				'success'=>'js:function(data)
-				{
-					if($("#Category_Id :selected").attr("value")=="")
-					{
-						$("#product").html(data);
-						$( "#product" ).animate({opacity: "hide"},"slow");
-						//$( "#productProduct" ).animate({opacity: "hide"},"slow");
-					}
-					else
-					{
-						$("#product").html(data);
-						$( "#product" ).animate({opacity: "show"},"slow");
-						$( "#product" ).children().children().each(
-						function(index, item){
-							$(item).draggable({"helper":"clone","connectToSortable":"#ddlAssigment"});
-						}
-						);
-						//$( "#productProduct" ).animate({opacity: "show"},"slow");
-					}
-				}',
-				//leave out the data key to pass all form values through
-				),'prompt'=>'Select a Category'
-			)		
-		);
-		?>
-		</div>
-	<img id="saveok" src="images/save_ok.png" alt="" 
-	  style="position: relative;float:rigth; display: none;width:20px; height:20px;" />		
 	</div>
-				
-
-	<div id="productProduct" class="assigned-items"  style="display: none">
-		
-	<?php		
-		
-		
-		$this->widget('ext.dragdroplist.dragdroplist', array(
-				'id'=>'ddlAssigment',	// default is class="ui-sortable" id="yw0"
-				'items' => array(),
-				'options'=>array(
-					'revert'=> true,
-					'stop'=>'js:function(event, ui){
-							$(ui.item).children().animate({opacity: "show"},2000);
-							$(ui.item).children().animate({opacity: "hide"},4000);
+	
+	<?php
+	$this->widget('zii.widgets.grid.CGridView', array(
+					'id'=>'product-grid',
+					'dataProvider'=>$model->searchSummary(),
+					'filter'=>$model,
+					'summaryText'=>'',
+					'selectionChanged'=>'js:function(){
+						$.fn.yiiGridView.update("productGroup-grid", {
+							data: "Product[Id]="+$.fn.yiiGridView.getSelection("product-grid")
+						});
+	
+						fillSidebar("product-grid","Product Selected:");
+						var idProduct = $.fn.yiiGridView.getSelection("product-grid");
+						if(idProduct!="")
+						{
+							$( "#display" ).animate({opacity: "show"},"slow");
+							$( "#sidebar" ).show();	
+						}
+						else
+						{
+							$( "#display" ).animate({opacity: "hide"},"slow");
+							$( "#sidebar" ).hide();	
+						}
 					}',
-					'start'=>'var id=$(ui.item).attr("id");var wasSuccess = false;',
-					'receive'=>
-							'js:function(event, ui) 
-							{ 
-								id = $(ui.item).attr("id");
-								$.post(
-									"'.ProductController::createUrl('AjaxAddProductGroup').'",
-									 {
-									 	IdProductParent:ddlProductId = $("#Product_Id :selected").attr("value"),
-										IdProductChild:$(ui.item).attr("id")
-									 }).success(
-									 	function() 
-									 		{
-											}); 
-							}', 				
-					'remove'=>
-							'js:function(event, ui) 
-							{ 
-								$.post(
-									"'.ProductController::createUrl('AjaxRemoveProductGroup').'",
-									 {
-									 	IdProductParent:ddlProductId = $("#Product_Id :selected").attr("value"),
-										IdProductChild:$(ui.item).attr("id")
-									}); 
-							}', 				
+				'columns'=>array(
+	array(
+								 		'name'=>'code',
+										'value'=>'$data->code',
+	),
+	
+	array(
+								 		'name'=>'supplier_description',
+										'value'=>'$data->supplier->business_name',
+	),
+	array(
+							 			'name'=>'brand_description',
+										'value'=>'$data->brand->description',
+	),
+	array(
+								 		'name'=>'category_description',
+										'value'=>'$data->category->description',
+	),
+									'description_customer',
+									'description_supplier',
+	),
+	));
+	?>
+	<div id="display" style="display: none">
+	<div class="gridTitle-decoration1">
+		<div class="gridTitle1">
+		Products Selection
+		</div>
+	</div>
+	<?php 				
+		$this->widget('zii.widgets.grid.CGridView', array(
+			'id'=>'productChild-grid',
+			'dataProvider'=>$model->searchSummary(),
+			'filter'=>$model,
+			'summaryText'=>'',	
+			'selectionChanged'=>'js:function(){
+				$.get(	"'.ProductController::createUrl('AjaxAddProductGroup').'",
+						{
+							IdProductParent:$.fn.yiiGridView.getSelection("product-grid"),
+							IdProductChild:$.fn.yiiGridView.getSelection("productChild-grid")
+						}).success(
+							function() 
+							{
+								markAddedRow();		
+								$.fn.yiiGridView.update("productGroup-grid", {
+								data: $(this).serialize()
+								});
+								unselectRow("productChild-grid");		
+							}
+						);
+			}',
+			'columns'=>array(	
+			array(
+		 		'name'=>'code',
+				'value'=>'$data->code',
 		),
-		));
+			
+			array(
+		 		'name'=>'supplier_description',
+				'value'=>'$data->supplier->business_name',
+			),
+			array(
+	 			'name'=>'brand_description',
+				'value'=>'$data->brand->description',
+			),
+			array(
+		 		'name'=>'category_description',
+				'value'=>'$data->category->description',
+			),
+				'description_customer',
+				'description_supplier',
+			array(
+				'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok", "style"=>"display:none; float:left;", "width"=>"15px", "height"=>"15px"))',
+				'type'=>'raw',
+				'htmlOptions'=>array('width'=>20),
+			),
+			
+		),
+		));		
 		?>
+	<div class="gridTitle-decoration1">
+		<div class="gridTitle1">
+		Group
 		</div>
-		<div id="product" class="selectable-items" style="display: none">
+	</div>
 		<?php 				
-			$this->widget('ext.draglist.draglist', array(
-			'id'=>'dlProduct',
-			'items' => array(),
-			'options'=>array(
-					'helper'=> 'clone',
-					'connectToSortable'=>'#ddlAssigment',
-						),
-			));				
+		$this->widget('zii.widgets.grid.CGridView', array(
+			'id'=>'productGroup-grid',
+			'dataProvider'=>$modelProductGroup->searchProductChild(),
+			'filter'=>$modelProductGroup,
+			'summaryText'=>'',
+			'columns'=>array(	
+			array(
+					 		'name'=>'product_code',
+							'value'=>'$data->productChild->code',
+			),
+			array(
+					 		'name'=>'product_supplier_business_name',
+							'value'=>'$data->productChild->supplier->business_name',
+			),
+		
+			array(
+				 			'name'=>'product_brand_description',
+							'value'=>'$data->productChild->brand->description',
+			),		
+			array(
+					 		'name'=>'product_description_customer',
+							'value'=>'$data->productChild->description_customer',
+			),
+			array(
+				 			'name'=>'product_description_supplier',
+							'value'=>'$data->productChild->description_supplier',
+			),
+						'quantity',
+						array(
+					'class'=>'CButtonColumn',
+					'template'=>'{delete}',
+					'buttons'=>array
+					(
+					        'delete' => array
+							(
+					            'url'=>'Yii::app()->createUrl("product/AjaxRemoveProductGroup", array("IdProductParent"=>$data->id_product_parent,"IdProductChild"=>$data->id_product_child))',
+							),
+					),
+				),
+		
+			),			
+			));		
 		?>
-		</div>
+	
+	</div>
+		
 	
 	<?php $this->endWidget(); ?>
 
-	<div id="display"></div>
 </div><!-- form -->
