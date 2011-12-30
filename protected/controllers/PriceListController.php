@@ -269,7 +269,7 @@ class PriceListController extends Controller
 				if($priceListItemInDb==null)
 				{
 					$priceListItem=new PriceListItem();
-					$priceListItem->attributes = array('Id_price_list'=>$idPriceList,'id_product'=>$product->Id,'cost'=>0);
+					$priceListItem->attributes = array('Id_price_list'=>$idPriceList,'id_product'=>$product->Id,'cost'=>$product->price_standard);
 					$priceListItem->save();
 				}
 			}
@@ -295,6 +295,7 @@ class PriceListController extends Controller
 		}
 	
 	}
+
 	public function actionAjaxFillSidebar()
 	{
 		if(isset($_POST['PriceList']['Id']))
