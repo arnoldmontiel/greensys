@@ -11,9 +11,7 @@ $this->menu=array(
 
 $this->showSideBar = true;
 
-Yii::app()->clientScript->registerScript('search', "
-
-
+Yii::app()->clientScript->registerScript('priceListItem', "
 $('#PriceList_Id').change(function(){
 	
 	if($(this).val()!= ''){
@@ -24,17 +22,42 @@ $('#PriceList_Id').change(function(){
 			data: $(this).serialize()
 		});
 		$('#display').animate({opacity: 'show'},240);
+		$.post('".PriceListController::createUrl('AjaxFillSidebar')."',
+					$(this).serialize()
+				).success(
+					function(data) 
+					{
+						$('#sidebar').html(data);
+						$( '#sidebar' ).show();	
+					}
+				);
 	}
 	else{
 		$('#display').animate({opacity: 'hide'},240);
+		$( '#sidebar' ).hide();	
+
 	}
 	return false;
-});
-
+}
+);
+$('#addAll').hover(
+function () {
+	$(this).attr('src','images/add_all_blue_light.png');
+  },
+  function () {
+	$(this).attr('src','images/add_all_blue.png');
+  }
+);
+$('#deleteAll').hover(
+function () {
+	$(this).attr('src','images/delete_all_blue_light.png');
+  },
+  function () {
+	$(this).attr('src','images/delete_all_blue.png');
+  }
+);
 
 ");
-	
-	
 ?>
 
 <div class="form">
@@ -61,14 +84,15 @@ $('#PriceList_Id').change(function(){
 		?>
 	</div>
 		
-	<div id="display" style="display: none">
+	<div id="display"
+	 style="display: none">
 
 	<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
 		<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
 			Products
 		</div>
 		<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
-					<?php
+		<?php
 		echo CHtml::imageButton(
                                 'images/add_all_blue.png',
                                 array(

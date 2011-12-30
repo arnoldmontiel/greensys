@@ -295,7 +295,31 @@ class PriceListController extends Controller
 		}
 	
 	}
-	
+	public function actionAjaxFillSidebar()
+	{
+		if(isset($_POST['PriceList']['Id']))
+		{
+			$priceList = PriceList::model()->findByPk($_POST['PriceList']['Id']);
+			echo CHtml::openTag("ul");
+			echo "Selected List:";
+			echo CHtml::closeTag("ul");
+			echo CHtml::openTag("ul");
+
+			echo CHtml::openTag("li");
+			echo $priceList->description;
+			echo CHtml::closeTag("li");
+			echo CHtml::openTag("li");
+			echo $priceList->supplier->business_name;
+			echo CHtml::closeTag("li");
+							
+			echo CHtml::openTag("li");
+			echo $priceList->date_validity;
+			echo CHtml::closeTag("li");
+
+			echo CHtml::closeTag("ul");
+				
+		}
+	}	
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated

@@ -9,22 +9,7 @@ $this->menu=array(
 	array('label'=>'Manage Product', 'url'=>array('admin')),
 );
 $this->showSideBar = true;
-Yii::app()->clientScript->registerScript('update', "
-				$('#Area_Id').change(function(){
-					$.fn.yiiGridView.update('productArea-grid', {
-						data: $(this).serialize()
-					});
-					if($('#Area_Id :selected').attr('value')=='')
-					{
-						$( '#display' ).animate({opacity: 'hide'},'slow');
-					}
-					else
-					{
-						$( '#display' ).animate({opacity: 'show'},'slow');
-					}
-					return false;
-				});
-				");
+Yii::app()->clientScript->registerScript('productGroup', "");
 
 ?>
 
@@ -50,18 +35,30 @@ Yii::app()->clientScript->registerScript('update', "
 						$.fn.yiiGridView.update("productGroup-grid", {
 							data: "Product[Id]="+$.fn.yiiGridView.getSelection("product-grid")
 						});
-	
-						fillSidebar("product-grid","Product Selected:");
+						$.post("'.ProductController::createUrl('AjaxFillSidebar').'",
+								{"Product[Id]":$.fn.yiiGridView.getSelection("product-grid")}
+							).success(
+								function(data) 
+								{
+									$("#sidebar").html(data);
+									if(data!="")
+									{
+										$( "#sidebar" ).show();
+									}
+									else
+									{
+										$( "#sidebar" ).hide();	
+									}	
+								}
+							);
 						var idProduct = $.fn.yiiGridView.getSelection("product-grid");
 						if(idProduct!="")
 						{
 							$( "#display" ).animate({opacity: "show"},"slow");
-							$( "#sidebar" ).show();	
 						}
 						else
 						{
 							$( "#display" ).animate({opacity: "hide"},"slow");
-							$( "#sidebar" ).hide();	
 						}
 					}',
 				'columns'=>array(

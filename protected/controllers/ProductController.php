@@ -361,7 +361,44 @@ class ProductController extends Controller
 			}
 		}
 	}
+	public function actionAjaxFillSidebar()
+	{
+		if(isset($_POST['Product']['Id']))
+		{
+			$product = Product::model()->findByPk($_POST['Product']['Id']);
+			echo CHtml::openTag("ul");
+			echo "Selected Product:";
+			echo CHtml::closeTag("ul");
+			echo CHtml::openTag("ul");
 	
+			echo CHtml::openTag("li");
+			echo $product->code;
+			echo CHtml::closeTag("li");
+			
+			echo CHtml::openTag("li");
+			echo $product->supplier->business_name;
+			echo CHtml::closeTag("li");
+				
+			echo CHtml::openTag("li");
+			echo $product->brand->description;
+			echo CHtml::closeTag("li");
+	
+			echo CHtml::openTag("li");
+			echo $product->category->description;
+			echo CHtml::closeTag("li");
+			
+			echo CHtml::openTag("li");
+			echo $product->description_customer;
+			echo CHtml::closeTag("li");
+			
+			echo CHtml::openTag("li");
+			echo $product->description_supplier;
+			echo CHtml::closeTag("li");
+			
+			echo CHtml::closeTag("ul");
+	
+		}
+	}	
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated
