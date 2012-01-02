@@ -12,6 +12,7 @@ $this->menu=array(
 	array('label'=>'Manage Area', 'url'=>array('admin')),
 	array('label'=>'Assign Products', 'url'=>array('productArea')),
 	array('label'=>'Assign Categories', 'url'=>array('categoryArea')),
+	array('label'=>'Assign Services', 'url'=>array('serviceArea')),
 );
 ?>
 

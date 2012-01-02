@@ -52,7 +52,6 @@ $(window).scroll(function() {
 		
 		<div id="language" >
 		<?php
-		echo Yii::app()->lc->t('Language: ');
 		$data = Yii::app()->lc->getAvalaibleLanguages();
 		$returnArr = array();
 		$reg = array();
@@ -96,7 +95,8 @@ $(window).scroll(function() {
 					array('label'=>Yii::app()->lc->t('Area'), 'url'=>array('/area/index')),
 					array('label'=>Yii::app()->lc->t('Multimedia'), 'url'=>array('/multimedia/index')),
 					array('label'=>Yii::app()->lc->t('Price List'), 'url'=>array('/pricelist/index')),
-				)
+					array('label'=>Yii::app()->lc->t('Service'), 'url'=>array('/service/index')),
+		)
 			)
 		)
 		

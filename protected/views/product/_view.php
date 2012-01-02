@@ -51,6 +51,10 @@
 		<b><?php echo CHtml::encode($model->getAttributeLabel('height')); ?>:</b>
 		<?php echo CHtml::encode($model->height); ?>
 		<br />
+
+		<b><?php echo CHtml::encode($model->getAttributeLabel('weight')); ?>:</b>
+		<?php echo CHtml::encode($model->weight); ?>
+		<br />
 	
 		<b><?php echo CHtml::encode($model->getAttributeLabel('profit_rate')); ?>:</b>
 		<?php echo CHtml::encode($model->profit_rate); ?>
@@ -67,11 +71,6 @@
 		<b><?php echo CHtml::encode($model->getAttributeLabel('hide')); ?>:</b>
 		<?php echo CHtml::encode($model->hide); ?>
 		<br />
-	
-		<b><?php echo CHtml::encode($model->getAttributeLabel('weight')); ?>:</b>
-		<?php echo CHtml::encode($model->weight); ?>
-		<br />
-		
 		
 	</div>
 	<div class="right">

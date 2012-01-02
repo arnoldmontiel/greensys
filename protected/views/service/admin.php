@@ -7,6 +7,8 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List Service', 'url'=>array('index')),
 	array('label'=>'Create Service', 'url'=>array('create')),
+	array('label'=>'Assing Categories', 'url'=>array('serviceCategory')),
+
 );
 
 Yii::app()->clientScript->registerScript('search', "

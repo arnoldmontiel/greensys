@@ -10,6 +10,7 @@ $this->menu=array(
 	array('label'=>'Update Service', 'url'=>array('update', 'id'=>$model->Id)),
 	array('label'=>'Delete Service', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Service', 'url'=>array('admin')),
+	array('label'=>'Assing Categories', 'url'=>array('serviceCategory')),
 );
 ?>
 

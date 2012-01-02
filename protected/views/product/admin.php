@@ -41,27 +41,27 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'product-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$model->searchSummary(),
 	'filter'=>$model,
 	'columns'=>array(
-		'id_brand',
-		'Id_category',
-		'Id_nomenclator',
-		'description_customer',
-		'description_supplier',
-		/*
-		'code',
-		'code_supplier',
-		'discontinued',
-		'length',
-		'width',
-		'height',
-		'profit_rate',
-		'msrp',
-		'time_instalation',
-		'hide',
-		'weight',
-		*/
+			array(
+		 		'name'=>'code',
+				'value'=>'$data->code',
+			),			
+			array(
+		 		'name'=>'supplier_description',
+				'value'=>'$data->supplier->business_name',
+			),
+			array(
+	 			'name'=>'brand_description',
+				'value'=>'$data->brand->description',
+			),
+			array(
+		 		'name'=>'category_description',
+				'value'=>'$data->category->description',
+			),
+				'description_customer',
+				'description_supplier',
 		array(
 			'class'=>'CButtonColumn',
 		),

@@ -69,6 +69,7 @@ Yii::app()->clientScript-> registerScript('update', "
 							$.fn.yiiGridView.update("productArea-grid", {
 							data: $(this).serialize()
 							});
+							unselectRow("product-grid");		
 						});
 		}',
 	'columns'=>array(

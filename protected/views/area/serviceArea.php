@@ -1,14 +1,14 @@
 <?php
 $this->breadcrumbs=array(
 	'Areas'=>array('index'),
-	'Assing',
+	'Assing Service',
 );
 $this->menu=array(
 	array('label'=>'List Area', 'url'=>array('index')),
 	array('label'=>'Create Area', 'url'=>array('create')),
 	array('label'=>'Manage Area', 'url'=>array('admin')),
 	array('label'=>'Assign Products', 'url'=>array('productArea')),
-	array('label'=>'Assign Categories', 'url'=>array('ServiceArea')),
+	array('label'=>'Assign Categories', 'url'=>array('CategoryArea')),
 );
 $this->trashDraggableId = 'ddlAssigment';
 

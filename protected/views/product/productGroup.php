@@ -104,7 +104,7 @@ Yii::app()->clientScript->registerScript('productGroup', "");
 						}).success(
 							function() 
 							{
-								markAddedRow();		
+								markAddedRow("productChild-grid");		
 								$.fn.yiiGridView.update("productGroup-grid", {
 								data: $(this).serialize()
 								});

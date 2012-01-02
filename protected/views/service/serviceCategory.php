@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Services'=>array('index'),
-	'Assing Category',
+	'Assing Categories',
 );
 $this->menu=array(
 	array('label'=>'List Service', 'url'=>array('index')),
