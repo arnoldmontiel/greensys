@@ -4,8 +4,8 @@
  * This is the model class for table "product_area".
  *
  * The followings are the available columns in table 'product_area':
- * @property integer $id_area
- * @property integer $id_product
+ * @property integer $Id_area
+ * @property integer $Id_product
  * @property integer $quantity
  */
 class ProductArea extends CActiveRecord
@@ -43,11 +43,11 @@ class ProductArea extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_area, id_product', 'required'),
-			array('id_area, id_product, quantity', 'numerical', 'integerOnly'=>true),
+			array('Id_area, Id_product', 'required'),
+			array('Id_area, Id_product, quantity', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id_area, id_product, quantity, product_brand_description, product_category_description, product_nomenclator_description,product_description_supplier,product_description_customer, product_code, product_supplier_business_name', 'safe', 'on'=>'search'),
+			array('Id_area, Id_product, quantity, product_brand_description, product_category_description, product_nomenclator_description,product_description_supplier,product_description_customer, product_code, product_supplier_business_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,8 +59,8 @@ class ProductArea extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'area' => array(self::BELONGS_TO, 'Area', 'id_area'),
-			'product' => array(self::BELONGS_TO, 'Product', 'id_product'),
+			'area' => array(self::BELONGS_TO, 'Area', 'Id_area'),
+			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
 		);
 	}
 
@@ -70,8 +70,8 @@ class ProductArea extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_area' => 'Id Area',
-			'id_product' => 'Id Product',
+			'Id_area' => 'Id Area',
+			'Id_product' => 'Id Product',
 			'quantity' => 'Quantity',
 		);
 	}
@@ -87,8 +87,8 @@ class ProductArea extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_area',$this->id_area);
-		$criteria->compare('id_product',$this->id_product);
+		$criteria->compare('Id_area',$this->Id_area);
+		$criteria->compare('Id_product',$this->Id_product);
 		$criteria->compare('quantity',$this->quantity);
 
 		return new CActiveDataProvider($this, array(
@@ -107,8 +107,8 @@ class ProductArea extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_area',$this->id_area);
-		$criteria->compare('id_product',$this->id_product);
+		$criteria->compare('Id_area',$this->Id_area);
+		$criteria->compare('Id_product',$this->Id_product);
 		$criteria->compare('quantity',$this->quantity);
 		
 		$criteria->with[]='product';
@@ -116,8 +116,8 @@ class ProductArea extends CActiveRecord
 		$criteria->addSearchCondition("product.description_customer",$this->product_description_customer);
 		$criteria->addSearchCondition("product.description_supplier",$this->product_description_supplier);
 
-		$criteria->join =	"LEFT OUTER JOIN Product p ON p.Id=t.id_product
-							 LEFT OUTER JOIN Brand b ON p.id_brand=b.Id
+		$criteria->join =	"LEFT OUTER JOIN Product p ON p.Id=t.Id_product
+							 LEFT OUTER JOIN Brand b ON p.Id_brand=b.Id
 							 LEFT OUTER JOIN Supplier s ON p.Id_supplier=s.Id";
 		$criteria->addSearchCondition("b.description",$this->product_brand_description);
 		$criteria->addSearchCondition("s.business_name",$this->product_supplier_business_name);

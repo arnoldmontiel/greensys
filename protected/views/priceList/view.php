@@ -24,6 +24,6 @@ $this->menu=array(
 		'date_validity',
 		'validity',
 		'Id_supplier',
-		'id_price_list_type',
+		'Id_price_list_type',
 	),
 )); ?>

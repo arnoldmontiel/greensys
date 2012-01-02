@@ -4,8 +4,8 @@
  * This is the model class for table "product_group".
  *
  * The followings are the available columns in table 'product_group':
- * @property integer $id_product_parent
- * @property integer $id_product_child
+ * @property integer $Id_product_parent
+ * @property integer $Id_product_child
  * @property integer $quantity
  *
  * The followings are the available model relations:
@@ -47,11 +47,11 @@ class ProductGroup extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_product_parent, id_product_child', 'required'),
-			array('id_product_parent, id_product_child, quantity', 'numerical', 'integerOnly'=>true),
+			array('Id_product_parent, Id_product_child', 'required'),
+			array('Id_product_parent, Id_product_child, quantity', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id_product_parent, id_product_child, quantity, product_brand_description, product_category_description, product_nomenclator_description,product_description_supplier,product_description_customer, product_code, product_supplier_business_name', 'safe', 'on'=>'search'),
+			array('Id_product_parent, Id_product_child, quantity, product_brand_description, product_category_description, product_nomenclator_description,product_description_supplier,product_description_customer, product_code, product_supplier_business_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,8 +63,8 @@ class ProductGroup extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'productChild' => array(self::BELONGS_TO, 'Product', 'id_product_child'),
-			'productParent' => array(self::BELONGS_TO, 'Product', 'id_product_parent'),
+			'productChild' => array(self::BELONGS_TO, 'Product', 'Id_product_child'),
+			'productParent' => array(self::BELONGS_TO, 'Product', 'Id_product_parent'),
 		);
 	}
 
@@ -74,8 +74,8 @@ class ProductGroup extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_product_parent' => 'Id Product Parent',
-			'id_product_child' => 'Id Product Child',
+			'Id_product_parent' => 'Id Product Parent',
+			'Id_product_child' => 'Id Product Child',
 			'quantity' => 'Quantity',
 		);
 	}
@@ -91,8 +91,8 @@ class ProductGroup extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_product_parent',$this->id_product_parent);
-		$criteria->compare('id_product_child',$this->id_product_child);
+		$criteria->compare('Id_product_parent',$this->Id_product_parent);
+		$criteria->compare('Id_product_child',$this->Id_product_child);
 		$criteria->compare('quantity',$this->quantity);
 
 		return new CActiveDataProvider($this, array(
@@ -110,8 +110,8 @@ class ProductGroup extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_product_parent',$this->id_product_parent);
-		$criteria->compare('id_product_child',$this->id_product_child);
+		$criteria->compare('Id_product_parent',$this->Id_product_parent);
+		$criteria->compare('Id_product_child',$this->Id_product_child);
 		$criteria->compare('quantity',$this->quantity);
 
 		return new CActiveDataProvider($this, array(
@@ -129,8 +129,8 @@ class ProductGroup extends CActiveRecord
 	
 		$criteria=new CDbCriteria;
 	
-		$criteria->compare('id_product_parent',$this->id_product_parent);
-		$criteria->compare('id_product_child',$this->id_product_child);
+		$criteria->compare('Id_product_parent',$this->Id_product_parent);
+		$criteria->compare('Id_product_child',$this->Id_product_child);
 		$criteria->compare('quantity',$this->quantity);
 			
 		$criteria->with[]='productChild';
@@ -138,8 +138,8 @@ class ProductGroup extends CActiveRecord
 		$criteria->addSearchCondition("productChild.description_customer",$this->product_description_customer);
 		$criteria->addSearchCondition("productChild.description_supplier",$this->product_description_supplier);
 	
-		$criteria->join =	"LEFT OUTER JOIN Product p ON p.Id=t.id_product_child
-								 LEFT OUTER JOIN Brand b ON p.id_brand=b.Id
+		$criteria->join =	"LEFT OUTER JOIN Product p ON p.Id=t.Id_product_child
+								 LEFT OUTER JOIN Brand b ON p.Id_brand=b.Id
 								 LEFT OUTER JOIN Supplier s ON p.Id_supplier=s.Id";
 		$criteria->addSearchCondition("b.description",$this->product_brand_description);
 		$criteria->addSearchCondition("s.business_name",$this->product_supplier_business_name);

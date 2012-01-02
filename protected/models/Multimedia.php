@@ -12,7 +12,7 @@
  * @property string $description
  * @property string $content_small
  * @property integer $size_small
- * @property integer $id_entity_type
+ * @property integer $Id_entity_type
  * @property integer $Id_product
  *
  * The followings are the available model relations:
@@ -43,9 +43,9 @@ class Multimedia extends CActiveRecord
 				$this->content_small = $newFile['content'];
 				$this->size_small = $newFile['size'];
 				
-				if($this->id_entity_type == null){
+				if($this->Id_entity_type == null){
 					// by default id = 1 is type "NONE"
-					$this->id_entity_type = 1;
+					$this->Id_entity_type = 1;
 				}	
 			}
 			elseif(strstr($file->type,'video')||$file->type=="application/octet-stream")//flash
@@ -53,9 +53,9 @@ class Multimedia extends CActiveRecord
 				$this->content = file_get_contents($file->tempName);				
 				$this->size = $file->size;
 								
-				if($this->id_entity_type == null){
+				if($this->Id_entity_type == null){
 					// by default id = 1 is type "NONE"
-					$this->id_entity_type = 1;
+					$this->Id_entity_type = 1;
 				}	
 			}			
 		}
@@ -125,13 +125,13 @@ class Multimedia extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('size, size_small, id_entity_type, Id_product', 'numerical', 'integerOnly'=>true),
+			array('size, size_small, Id_entity_type, Id_product', 'numerical', 'integerOnly'=>true),
 			array('uploadedFile', 'file', 'types'=>'jpg, gif, png, pdf, mp4, flv'),
 			array('name, type', 'length', 'max'=>45),
 			array('content, description, content_small', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, content, name, type, size, description, content_small, size_small, id_entity_type, Id_product', 'safe', 'on'=>'search'),
+			array('id, content, name, type, size, description, content_small, size_small, Id_entity_type, Id_product', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -143,7 +143,7 @@ class Multimedia extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idEntityType' => array(self::BELONGS_TO, 'EntityType', 'id_entity_type'),
+			'idEntityType' => array(self::BELONGS_TO, 'EntityType', 'Id_entity_type'),
 			'idProduct' => array(self::BELONGS_TO, 'Product', 'Id_product'),
 		);
 	}
@@ -163,7 +163,7 @@ class Multimedia extends CActiveRecord
 			'uploadedFile' => 'Uploaded File',
 			'content_small' => 'Content Small',
 			'size_small' => 'Size Small',
-			'id_entity_type' => 'Id Entity Type',
+			'Id_entity_type' => 'Id Entity Type',
 			'Id_product' => 'Id Product',
 		);
 	}
@@ -179,7 +179,7 @@ class Multimedia extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
+		$criteria->compare('id',$this->Id);
 		$criteria->compare('content',$this->content,true);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('type',$this->type,true);
@@ -187,7 +187,7 @@ class Multimedia extends CActiveRecord
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('content_small',$this->content_small,true);
 		$criteria->compare('size_small',$this->size_small);
-		$criteria->compare('id_entity_type',$this->id_entity_type);
+		$criteria->compare('Id_entity_type',$this->Id_entity_type);
 		$criteria->compare('Id_product',$this->Id_product);
 
 		return new CActiveDataProvider($this, array(

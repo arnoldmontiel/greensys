@@ -230,12 +230,12 @@ class PriceListController extends Controller
 		$cost = $_POST['Cost'];
 		if(!empty($idPriceList)&&!empty($idProduct))
 		{
-			$priceListItemInDb = PriceListItem::model()->findByAttributes(array('Id_price_list'=>(int) $idPriceList,'id_product'=>(int)$idProduct));
+			$priceListItemInDb = PriceListItem::model()->findByAttributes(array('Id_price_list'=>(int) $idPriceList,'Id_product'=>(int)$idProduct));
 			if($priceListItemInDb==null)
 			{
 				$product = Product::model()->findByPk($idProduct);
 				$priceListItem=new PriceListItem();
-				$priceListItem->attributes = array('Id_price_list'=>$idPriceList,'id_product'=>$idProduct,'cost'=>$product->price_standard);
+				$priceListItem->attributes = array('Id_price_list'=>$idPriceList,'Id_product'=>$idProduct,'cost'=>$product->price_standard);
 				$priceListItem->save();
 			}
 			else
@@ -265,11 +265,11 @@ class PriceListController extends Controller
 			$prov = $products->searchSummary();
 			$prov->pagination = array('pageSize'=>100);
 			foreach($prov->getData(true) as $product){
-				$priceListItemInDb = PriceListItem::model()->findByAttributes(array('Id_price_list'=>(int) $idPriceList,'id_product'=>$product->Id));
+				$priceListItemInDb = PriceListItem::model()->findByAttributes(array('Id_price_list'=>(int) $idPriceList,'Id_product'=>$product->Id));
 				if($priceListItemInDb==null)
 				{
 					$priceListItem=new PriceListItem();
-					$priceListItem->attributes = array('Id_price_list'=>$idPriceList,'id_product'=>$product->Id,'cost'=>$product->price_standard);
+					$priceListItem->attributes = array('Id_price_list'=>$idPriceList,'Id_product'=>$product->Id,'cost'=>$product->price_standard);
 					$priceListItem->save();
 				}
 			}

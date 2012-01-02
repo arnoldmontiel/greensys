@@ -155,7 +155,7 @@ class AreaController extends Controller
 		if(isset($_GET['ProductArea']))
 			$modelProductArea->attributes=$_GET['ProductArea'];
 		if(isset($_GET['Area']['Id']))
-			$modelProductArea->id_area=$_GET['Area']['Id'];
+			$modelProductArea->Id_area=$_GET['Area']['Id'];
 		
 
 		// Uncomment the following line if AJAX validation is needed
@@ -227,7 +227,7 @@ class AreaController extends Controller
 
 	public function actionAjaxFillProductArea()
 	{
-		$data=ProductArea::model()->findAll('id_area=:parent_id',
+		$data=ProductArea::model()->findAll('Id_area=:parent_id',
 		array(':parent_id'=>(int) $_POST['Area']['Id']));
 	
 	
@@ -235,7 +235,7 @@ class AreaController extends Controller
 		{
 			for ($i = 0; $i < $item->quantity; $i++) {
 				echo CHtml::tag('li',
-				array('id'=>"items_".$item->id_product,'class'=>'ui-state-default'),CHtml::encode($item->product->description_customer),true);
+				array('id'=>"items_".$item->Id_product,'class'=>'ui-state-default'),CHtml::encode($item->product->description_customer),true);
 			}
 		}
 	}
@@ -268,11 +268,11 @@ class AreaController extends Controller
 
 		if(!empty($idProduct)&&!empty($idArea))
 		{
-			$productAreaInDb = ProductArea::model()->findByPk(array('id_area'=>(int) $idArea,'id_product'=>(int)$idProduct));
+			$productAreaInDb = ProductArea::model()->findByPk(array('Id_area'=>(int) $idArea,'Id_product'=>(int)$idProduct));
 			if($productAreaInDb==null)
 			{
 				$productArea=new ProductArea;
-				$productArea->attributes = array('id_area'=>$idArea,'id_product'=>$idProduct,'quantity'=>1);
+				$productArea->attributes = array('Id_area'=>$idArea,'Id_product'=>$idProduct,'quantity'=>1);
 				$productArea->save();
 			}
 			else
@@ -290,7 +290,7 @@ class AreaController extends Controller
 						
 		if(!empty($idProduct)&&!empty($idArea))
 		{
-			$productAreaInDb = ProductArea::model()->findByPk(array('id_area'=>(int) $idArea,'id_product'=>(int)$idProduct));
+			$productAreaInDb = ProductArea::model()->findByPk(array('Id_area'=>(int) $idArea,'Id_product'=>(int)$idProduct));
 			if($productAreaInDb!=null)
 			{
 				if($productAreaInDb->quantity>1)
@@ -371,8 +371,8 @@ class AreaController extends Controller
 	}	
 	public function actionAjaxFillServiceArea()
 	{
-		$data=ServiceArea::model()->findAll('Id_area=:id_area',
-		array(':id_area'=>(int) $_POST['Area']['Id']));
+		$data=ServiceArea::model()->findAll('Id_area=:Id_area',
+		array(':Id_area'=>(int) $_POST['Area']['Id']));
 	
 	
 		foreach($data as $item)

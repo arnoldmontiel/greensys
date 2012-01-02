@@ -11,11 +11,11 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'id_brand'); ?>
-		<?php echo $form->dropDownList($model, 'id_brand', CHtml::listData(
+		<?php echo $form->labelEx($model,'Id_brand'); ?>
+		<?php echo $form->dropDownList($model, 'Id_brand', CHtml::listData(
     			Brand::model()->findAll(), 'Id', 'description')); 
 		?>
-		<?php echo $form->error($model,'id_brand'); ?>
+		<?php echo $form->error($model,'Id_brand'); ?>
 	</div>
 
 	<div class="row">
@@ -23,7 +23,7 @@
 		<?php echo $form->dropDownList($model, 'Id_supplier', CHtml::listData(
     			Supplier::model()->findAll(), 'Id', 'business_name')); 
 		?>
-		<?php echo $form->error($model,'id_supplier'); ?>
+		<?php echo $form->error($model,'Id_supplier'); ?>
 	</div>
 
 	<div class="row">
@@ -92,6 +92,12 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'weight'); ?>
+		<?php echo $form->textField($model,'weight',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->error($model,'weight'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'profit_rate'); ?>
 		<?php echo $form->textField($model,'profit_rate',array('size'=>10,'maxlength'=>10)); ?>
 		<?php echo $form->error($model,'profit_rate'); ?>
@@ -115,12 +121,6 @@
 		<?php echo $form->checkBox($model,'hide'); ?>
 		<?php echo $form->error($model,'hide'); ?>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'weight'); ?>
-		<?php echo $form->textField($model,'weight',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'weight'); ?>
-	</div>
 <?php
 
 $hyperLinks = CHtml::listData(Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id)), 'Id','description');
@@ -133,7 +133,10 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 
 <div style="height:270px;" >
 <div class="left">
-<?php $multimedia = Multimedia::model(); ?>
+<?php 
+		$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
+		$multimedia = Multimedia::model()->findByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$entity->Id));
+?>
 		<div class="row">
 			<?php echo $form->labelEx($multimedia,'uploadedFile'); ?>
 			<?php echo $form->fileField($multimedia,'uploadedFile'); ?>
@@ -154,10 +157,8 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 	</div>
 	<div class="right">
 		<?php 
-		$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
-		$mult = Multimedia::model()->findByAttributes(array('Id_product'=>$model->Id,'id_entity_type'=>$entity->id));
 		$this->widget('ext.highslide.highslide', array(
-						'id'=>$mult->id,
+						'id'=>$multimedia->Id,
 	)); ?>
 	</div>
 </div>

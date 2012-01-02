@@ -9,7 +9,7 @@
  * @property string $date_validity
  * @property integer $validity
  * @property integer $Id_supplier
- * @property integer $id_price_list_type
+ * @property integer $Id_price_list_type
  * @property string $description
 
  *
@@ -24,7 +24,7 @@ class PriceList extends CActiveRecord
 	public function beforeSave()
 	{		
 		$this->date_validity = Yii::app()->lc->toDatabase($this->date_validity,'date','small','date',null);//date('Y-m-d',strtotime($this->date_validity));
-		$this->id_price_list_type = 1;//buy list
+		$this->Id_price_list_type = 1;//buy list
 		return parent::beforeSave();
 	}
 	/**
@@ -52,8 +52,8 @@ class PriceList extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			//array('id_price_list_type', 'required'),
-			array('validity, Id_supplier, id_price_list_type', 'numerical', 'integerOnly'=>true),
+			//array('Id_price_list_type', 'required'),
+			array('validity, Id_supplier, Id_price_list_type', 'numerical', 'integerOnly'=>true),
 			array('date_creation, date_validity', 'safe'),
 			array('description', 'length', 'max'=>45),
 			array('date_creation','default',
@@ -61,7 +61,7 @@ class PriceList extends CActiveRecord
 		              'setOnEmpty'=>false,'on'=>'insert'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, date_creation, date_validity, validity, Id_supplier, id_price_list_type', 'safe', 'on'=>'search'),
+			array('Id, date_creation, date_validity, validity, Id_supplier, Id_price_list_type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,7 +74,7 @@ class PriceList extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'budgets' => array(self::HAS_MANY, 'Budget', 'Id_price_list'),
-			'priceListType' => array(self::BELONGS_TO, 'PriceListType', 'id_price_list_type'),
+			'priceListType' => array(self::BELONGS_TO, 'PriceListType', 'Id_price_list_type'),
 			'supplier' => array(self::BELONGS_TO, 'Supplier', 'Id_supplier'),
 			'priceListItems' => array(self::HAS_MANY, 'PriceListItem', 'Id_price_list'),
 		);
@@ -91,7 +91,7 @@ class PriceList extends CActiveRecord
 			'date_validity' => 'Date Validity',
 			'validity' => 'Validity',
 			'Id_supplier' => 'Id Supplier',
-			'id_price_list_type' => 'Id Price List Type',
+			'Id_price_list_type' => 'Id Price List Type',
 			'description' => 'Description',
 		
 		);
@@ -119,7 +119,7 @@ class PriceList extends CActiveRecord
 		$criteria->compare('date_validity',$this->date_validity,true);
 		$criteria->compare('validity',$this->validity);
 		$criteria->compare('Id_supplier',$this->Id_supplier);
-		$criteria->compare('id_price_list_type',$this->id_price_list_type);
+		$criteria->compare('Id_price_list_type',$this->Id_price_list_type);
 		$criteria->compare('description',$this->description,true);
 		
 		return new CActiveDataProvider($this, array(

@@ -53,8 +53,8 @@ class EntityType extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'multimedias' => array(self::HAS_MANY, 'Multimedia', 'id_entity_type'),
-			'notes' => array(self::HAS_MANY, 'Note', 'id_entity_type'),
+			'multimedias' => array(self::HAS_MANY, 'Multimedia', 'Id_entity_type'),
+			'notes' => array(self::HAS_MANY, 'Note', 'Id_entity_type'),
 		);
 	}
 
@@ -80,7 +80,7 @@ class EntityType extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
+		$criteria->compare('id',$this->Id);
 		$criteria->compare('name',$this->name,true);
 
 		return new CActiveDataProvider($this, array(

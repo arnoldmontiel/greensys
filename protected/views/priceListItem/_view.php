@@ -4,8 +4,8 @@
 	<?php echo CHtml::link(CHtml::encode($data->Id), array('view', 'id'=>$data->Id)); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id_product')); ?>:</b>
-	<?php echo CHtml::encode($data->id_product); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_product')); ?>:</b>
+	<?php echo CHtml::encode($data->Id_product); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_price_list')); ?>:</b>

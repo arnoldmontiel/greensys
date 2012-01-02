@@ -5,7 +5,7 @@
  *
  * The followings are the available columns in table 'product':
  * @property integer $Id
- * @property integer $id_brand
+ * @property integer $Id_brand
  * @property integer $Id_category
  * @property integer $Id_nomenclator
  * @property string $description_customer
@@ -74,15 +74,15 @@ class Product extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_brand, Id_category, Id_nomenclator, Id_supplier', 'required'),
-			array('id_brand, Id_category, Id_nomenclator, discontinued, hide, Id_supplier', 'numerical', 'integerOnly'=>true),
+			array('Id_brand, Id_category, Id_nomenclator, Id_supplier', 'required'),
+			array('Id_brand, Id_category, Id_nomenclator, discontinued, hide, Id_supplier', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier', 'length', 'max'=>255),
 			array('code, code_supplier', 'length', 'max'=>45),
 			array('length, width, height, profit_rate, msrp, weight, price_standard', 'length', 'max'=>10),
 			array('time_instalation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, price_standard', 'safe', 'on'=>'search'),
+			array('Id, Id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, price_standard', 'safe', 'on'=>'search'),
 		
 			
 		);
@@ -100,16 +100,16 @@ class Product extends CActiveRecord
 			'hyperlinks' => array(self::HAS_MANY, 'Hyperlink', 'Id_product'),
 			'multimedias' => array(self::HAS_MANY, 'Multimedia', 'Id_product'),
 			'notes' => array(self::HAS_MANY, 'Note', 'Id_product'),
-			'priceListItems' => array(self::HAS_MANY, 'PriceListItem', 'id_product'),
-			'brand' => array(self::BELONGS_TO, 'Brand', 'id_brand'),
+			'priceListItems' => array(self::HAS_MANY, 'PriceListItem', 'Id_product'),
+			'brand' => array(self::BELONGS_TO, 'Brand', 'Id_brand'),
 			'category' => array(self::BELONGS_TO, 'Category', 'Id_category'),
 			'nomenclator' => array(self::BELONGS_TO, 'Nomenclator', 'Id_nomenclator'),
-			'areas' => array(self::MANY_MANY, 'Area', 'product_area(id_product, id_area)'),
-			'categories' => array(self::MANY_MANY, 'Category', 'product_category(id_product, id_category)'),
-			'productGroupsChild' => array(self::HAS_MANY, 'ProductGroup', 'id_product_child'),
-			'productGroupsParent' => array(self::HAS_MANY, 'ProductGroup', 'id_product_parent'),
+			'areas' => array(self::MANY_MANY, 'Area', 'product_area(Id_product, Id_area)'),
+			'categories' => array(self::MANY_MANY, 'Category', 'product_category(Id_product, Id_category)'),
+			'productGroupsChild' => array(self::HAS_MANY, 'ProductGroup', 'Id_product_child'),
+			'productGroupsParent' => array(self::HAS_MANY, 'ProductGroup', 'Id_product_parent'),
 			'productItems' => array(self::HAS_MANY, 'ProductItem', 'Id_product'),
-			'productRequirements' => array(self::MANY_MANY, 'ProductRequirement', 'product_requirement_product(id_product, id_product_requirement)'),
+			'productRequirements' => array(self::MANY_MANY, 'ProductRequirement', 'product_requirement_product(Id_product, Id_product_requirement)'),
 			'supplier' => array(self::BELONGS_TO, 'Supplier', 'Id_supplier'),
 		);
 	}
@@ -121,7 +121,7 @@ class Product extends CActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
-			'id_brand' => 'Brand',
+			'Id_brand' => 'Brand',
 			'Id_category' => 'Category',
 			'Id_nomenclator' => 'Nomenclator',
 			'description_customer' => 'Description Customer',
@@ -157,7 +157,7 @@ class Product extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('Id',$this->Id);
-		$criteria->compare('id_brand',$this->id_brand);
+		$criteria->compare('Id_brand',$this->Id_brand);
 		$criteria->compare('Id_category',$this->Id_category);
 		$criteria->compare('Id_nomenclator',$this->Id_nomenclator);
 		$criteria->compare('description_customer',$this->description_customer,true);
@@ -189,7 +189,7 @@ class Product extends CActiveRecord
 		$criteria=new CDbCriteria;
 	
 		$criteria->compare('Id',$this->Id);
-		$criteria->compare('id_brand',$this->id_brand);
+		$criteria->compare('Id_brand',$this->Id_brand);
 		$criteria->compare('Id_category',$this->Id_category);
 		$criteria->compare('Id_nomenclator',$this->Id_nomenclator);
 		$criteria->compare('Id_supplier',$this->Id_supplier);

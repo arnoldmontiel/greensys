@@ -56,7 +56,7 @@ class Supplier extends CActiveRecord
 		return array(
 			'priceLists' => array(self::HAS_MANY, 'PriceList', 'Id_supplier'),
 			'purchaseOrders' => array(self::HAS_MANY, 'PurchaseOrder', 'Id_supplier'),
-			'contacts' => array(self::MANY_MANY, 'Contact', 'supplier_contact(Id_supplier, id_contact)'),
+			'contacts' => array(self::MANY_MANY, 'Contact', 'supplier_contact(Id_supplier, Id_contact)'),
 		);
 	}
 

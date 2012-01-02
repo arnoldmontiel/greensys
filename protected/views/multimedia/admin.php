@@ -52,7 +52,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'content_small',
 		'type_small',
 		'size_small',
-		'id_entity_type',
+		'Id_entity_type',
 		'Id_product',
 		*/
 		array(

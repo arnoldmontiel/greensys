@@ -58,7 +58,7 @@ class MultimediaController extends Controller
 		{
 			$model->attributes=$_POST['Multimedia'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('view','id'=>$model->Id));
 		}
 
 		$this->render('create',array(
@@ -82,7 +82,7 @@ class MultimediaController extends Controller
 		{
 			$model->attributes=$_POST['Multimedia'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('view','id'=>$model->Id));
 		}
 
 		$this->render('update',array(

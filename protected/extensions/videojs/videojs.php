@@ -52,7 +52,7 @@ class VideoJS extends CJuiWidget
 		if($this->model!=null && $this->model->type=="application/octet-stream")
 		{
 			$extension = strstr($this->model->name,'.');
-			$outFile = $this->assets.'/tmpFile_'.md5($this->model->id).$extension;
+			$outFile = $this->assets.'/tmpFile_'.md5($this->model->Id).$extension;
 			if(file_put_contents( '../..'.$outFile, $this->model->content ))
 			{
 				$this->render("body", array('file'=>$outFile));				

@@ -4,7 +4,7 @@
 		<?php echo CHtml::link(CHtml::encode($model->Id), array('view', 'id'=>$model->Id)); ?>
 		<br />
 	
-		<b><?php echo CHtml::encode($model->getAttributeLabel('id_brand')); ?>:</b>
+		<b><?php echo CHtml::encode($model->getAttributeLabel('Id_brand')); ?>:</b>
 		<?php echo CHtml::encode($model->brand->description); ?>
 		<br />
 	
@@ -37,7 +37,7 @@
 		<br />
 	
 		<b><?php echo CHtml::encode($model->getAttributeLabel('discontinued')); ?>:</b>
-		<?php echo CHtml::encode($model->discontinued); ?>
+		<?php echo CHtml::checkBox('discontinued',$model->discontinued,array('disabled'=>'disabled')); ?>		
 		<br />
 	
 		<b><?php echo CHtml::encode($model->getAttributeLabel('length')); ?>:</b>
@@ -69,8 +69,8 @@
 		<br />
 	
 		<b><?php echo CHtml::encode($model->getAttributeLabel('hide')); ?>:</b>
-		<?php echo CHtml::encode($model->hide); ?>
-		<br />
+		<?php echo CHtml::checkBox('hide',$model->hide,array('disabled'=>'disabled')); ?>		
+				<br />
 		
 	</div>
 	<div class="right">
@@ -89,7 +89,7 @@
 	<?php 
 		$multimedia = Multimedia::model()->findByAttributes(array('Id_product'=>$model->Id));
 		$this->widget('ext.highslide.highslide', array(
-								'id'=>$multimedia->id,
+								'id'=>$multimedia->Id,
 		)); ?>
 		
 	</div>

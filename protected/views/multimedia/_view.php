@@ -1,7 +1,7 @@
 <div class="view">
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
+	<?php echo CHtml::link(CHtml::encode($data->Id), array('view', 'id'=>$data->Id)); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('content')); ?>:</b>
@@ -31,7 +31,7 @@
 	<b><?php $this->widget('ext.videojs.videojs',array('model'=>$data));?></b>
 
 	<?php $this->widget('ext.highslide.highslide', array(
-						'id'=>$data->id,
+						'id'=>$data->Id,
 	)); ?>
 	
 <?php /*
@@ -43,8 +43,8 @@
 	<?php echo CHtml::encode($data->size_small); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id_entity_type')); ?>:</b>
-	<?php echo CHtml::encode($data->id_entity_type); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_entity_type')); ?>:</b>
+	<?php echo CHtml::encode($data->Id_entity_type); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_product')); ?>:</b>

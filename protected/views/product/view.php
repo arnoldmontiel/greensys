@@ -24,7 +24,7 @@ $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'Id',
-		'id_brand',
+		'Id_brand',
 		'Id_category',
 		'Id_nomenclator',
 		'description_customer',

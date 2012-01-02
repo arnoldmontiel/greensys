@@ -7,12 +7,12 @@
  * @property integer $id
  * @property string $note
  * @property string $creation_date
- * @property integer $id_entity_type
- * @property integer $id_product_requirement_product_requirement_product_item
- * @property integer $id_product_item_product_requirement_product_item
+ * @property integer $Id_entity_type
+ * @property integer $Id_product_requirement_product_requirement_product_item
+ * @property integer $Id_product_item_product_requirement_product_item
  * @property integer $budget_Id
  * @property integer $budget_version_number
- * @property integer $id_tracking
+ * @property integer $Id_tracking
  * @property integer $Id_product
  *
  * The followings are the available model relations:
@@ -51,15 +51,15 @@ class Note extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_entity_type', 'required'),
-			array('id_entity_type, id_product_requirement_product_requirement_product_item, id_product_item_product_requirement_product_item, budget_Id, budget_version_number, id_tracking, Id_product', 'numerical', 'integerOnly'=>false),
+			array('Id_entity_type', 'required'),
+			array('Id_entity_type, Id_product_requirement_product_requirement_product_item, Id_product_item_product_requirement_product_item, budget_Id, budget_version_number, Id_tracking, Id_product', 'numerical', 'integerOnly'=>false),
 			array('creation_date','default',
 		              'value'=>new CDbExpression('NOW()'),
 		              'setOnEmpty'=>false,'on'=>'insert'),
 			array('note, creation_date', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, note, creation_date, id_entity_type, id_product_requirement_product_requirement_product_item, id_product_item_product_requirement_product_item, budget_Id, budget_version_number, id_tracking, Id_product', 'safe', 'on'=>'search'),
+			array('id, note, creation_date, Id_entity_type, Id_product_requirement_product_requirement_product_item, Id_product_item_product_requirement_product_item, budget_Id, budget_version_number, Id_tracking, Id_product', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,10 +74,10 @@ class Note extends CActiveRecord
 			'budget' => array(self::BELONGS_TO, 'Budget', 'budget_Id'),
 			'budgetVersionNumber' => array(self::BELONGS_TO, 'Budget', 'budget_version_number'),
 			'idProduct' => array(self::BELONGS_TO, 'Product', 'Id_product'),
-			'idEntityType' => array(self::BELONGS_TO, 'EntityType', 'id_entity_type'),
-			'idProductRequirementProductRequirementProductItem' => array(self::BELONGS_TO, 'ProductRequirementProductItem', 'id_product_requirement_product_requirement_product_item'),
-			'idProductItemProductRequirementProductItem' => array(self::BELONGS_TO, 'ProductRequirementProductItem', 'id_product_item_product_requirement_product_item'),
-			'idTracking' => array(self::BELONGS_TO, 'Tracking', 'id_tracking'),
+			'idEntityType' => array(self::BELONGS_TO, 'EntityType', 'Id_entity_type'),
+			'idProductRequirementProductRequirementProductItem' => array(self::BELONGS_TO, 'ProductRequirementProductItem', 'Id_product_requirement_product_requirement_product_item'),
+			'idProductItemProductRequirementProductItem' => array(self::BELONGS_TO, 'ProductRequirementProductItem', 'Id_product_item_product_requirement_product_item'),
+			'idTracking' => array(self::BELONGS_TO, 'Tracking', 'Id_tracking'),
 		);
 	}
 
@@ -90,12 +90,12 @@ class Note extends CActiveRecord
 			'id' => 'ID',
 			'note' => 'Note',
 			'creation_date' => 'Creation Date',
-			'id_entity_type' => 'Id Entity Type',
-			'id_product_requirement_product_requirement_product_item' => 'Id Product Requirement Product Requirement Product Item',
-			'id_product_item_product_requirement_product_item' => 'Id Product Item Product Requirement Product Item',
+			'Id_entity_type' => 'Id Entity Type',
+			'Id_product_requirement_product_requirement_product_item' => 'Id Product Requirement Product Requirement Product Item',
+			'Id_product_item_product_requirement_product_item' => 'Id Product Item Product Requirement Product Item',
 			'budget_Id' => 'Budget',
 			'budget_version_number' => 'Budget Version Number',
-			'id_tracking' => 'Id Tracking',
+			'Id_tracking' => 'Id Tracking',
 			'Id_product' => 'Id Product',
 		);
 	}
@@ -112,15 +112,15 @@ class Note extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
+		$criteria->compare('id',$this->Id);
 		$criteria->compare('note',$this->note,true);
 		$criteria->compare('creation_date',$this->creation_date,true);
-		$criteria->compare('id_entity_type',$this->id_entity_type);
-		$criteria->compare('id_product_requirement_product_requirement_product_item',$this->id_product_requirement_product_requirement_product_item);
-		$criteria->compare('id_product_item_product_requirement_product_item',$this->id_product_item_product_requirement_product_item);
+		$criteria->compare('Id_entity_type',$this->Id_entity_type);
+		$criteria->compare('Id_product_requirement_product_requirement_product_item',$this->Id_product_requirement_product_requirement_product_item);
+		$criteria->compare('Id_product_item_product_requirement_product_item',$this->Id_product_item_product_requirement_product_item);
 		$criteria->compare('budget_Id',$this->budget_Id);
 		$criteria->compare('budget_version_number',$this->budget_version_number);
-		$criteria->compare('id_tracking',$this->id_tracking);
+		$criteria->compare('Id_tracking',$this->Id_tracking);
 		$criteria->compare('Id_product',$this->Id_product);
 
 		return new CActiveDataProvider($this, array(

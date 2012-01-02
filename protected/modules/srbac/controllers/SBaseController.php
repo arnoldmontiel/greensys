@@ -32,18 +32,18 @@ class SBaseController extends CController {
     $del = Helper::findModule('srbac')->delimeter;
     
     //srbac access
-    $mod = $this->module !== null ? $this->module->id . $del : "";
+    $mod = $this->module !== null ? $this->module->Id . $del : "";
     
-    $contrArr = explode("/", $this->id);
+    $contrArr = explode("/", $this->Id);
     $contrArr[sizeof($contrArr) - 1] = ucfirst($contrArr[sizeof($contrArr) - 1]);
     $controller = implode(".", $contrArr);
 
-    $controller = str_replace("/", ".", $this->id);
+    $controller = str_replace("/", ".", $this->Id);
     // Static pages
     if(sizeof($contrArr)==1){
       $controller = ucfirst($controller);
     }
-    $access = $mod . $controller . ucfirst($this->action->id);
+    $access = $mod . $controller . ucfirst($this->action->Id);
    
  //   if (Yii::getVersion() >= "1.1.7") {
 //      if (count($this->actionParams) > 0) {
@@ -99,11 +99,11 @@ class SBaseController extends CController {
     if (Yii::app()->user->isGuest) {
       Yii::app()->user->loginRequired();
     } else {
-      $mod = $this->module !== null ? $this->module->id : "";
-      $access = $mod . ucfirst($this->id) . ucfirst($this->action->id);
+      $mod = $this->module !== null ? $this->module->Id : "";
+      $access = $mod . ucfirst($this->Id) . ucfirst($this->action->Id);
       $error["code"] = "403";
       $error["title"] = Helper::translate('srbac', 'You are not authorized for this action');
-      $error["message"] = Helper::translate('srbac', 'Error while trying to access') . ' ' . $mod . "/" . $this->id . "/" . $this->action->id . ".";
+      $error["message"] = Helper::translate('srbac', 'Error while trying to access') . ' ' . $mod . "/" . $this->Id . "/" . $this->action->Id . ".";
       //You may change the view for unauthorized access
       if (Yii::app()->request->isAjaxRequest) {
         $this->renderPartial(Yii::app()->getModule('srbac')->notAuthorizedView, array("error" => $error));

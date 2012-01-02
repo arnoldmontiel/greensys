@@ -31,8 +31,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'id_price_list_type'); ?>
-		<?php echo $form->textField($model,'id_price_list_type'); ?>
+		<?php echo $form->label($model,'Id_price_list_type'); ?>
+		<?php echo $form->textField($model,'Id_price_list_type'); ?>
 	</div>
 
 	<div class="row buttons">

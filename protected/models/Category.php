@@ -54,9 +54,9 @@ class Category extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'categoryGroups' => array(self::HAS_MANY, 'CategoryGroup', 'id_category_child'),
-			'categoryGroups1' => array(self::HAS_MANY, 'CategoryGroup', 'id_category_parent'),
-			'products' => array(self::MANY_MANY, 'Product', 'product_category(id_category, id_product)'),
+			'categoryGroups' => array(self::HAS_MANY, 'CategoryGroup', 'Id_category_child'),
+			'categoryGroups1' => array(self::HAS_MANY, 'CategoryGroup', 'Id_category_parent'),
+			'products' => array(self::MANY_MANY, 'Product', 'product_category(Id_category, Id_product)'),
 		);
 	}
 

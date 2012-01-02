@@ -5,7 +5,7 @@
  *
  * The followings are the available columns in table 'price_list_item':
  * @property integer $Id
- * @property integer $id_product
+ * @property integer $Id_product
  * @property integer $Id_price_list
  * @property string $cost
  *
@@ -45,13 +45,13 @@ class PriceListItem extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_product, Id_price_list', 'required'),
-			array('id_product, Id_price_list', 'numerical', 'integerOnly'=>true),
+			array('Id_product, Id_price_list', 'required'),
+			array('Id_product, Id_price_list', 'numerical', 'integerOnly'=>true),
 			array('cost', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, id_product, Id_price_list, cost, description_customer, code, code_supplier', 'safe'),
-			array('Id, id_product, Id_price_list, cost, description_customer, code, code_supplier', 'safe', 'on'=>'search'),
+			array('Id, Id_product, Id_price_list, cost, description_customer, code, code_supplier', 'safe'),
+			array('Id, Id_product, Id_price_list, cost, description_customer, code, code_supplier', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,7 +64,7 @@ class PriceListItem extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'priceList' => array(self::BELONGS_TO, 'PriceList', 'Id_price_list'),
-			'product' => array(self::BELONGS_TO, 'Product', 'id_product'),
+			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
 		);
 	}
 
@@ -75,7 +75,7 @@ class PriceListItem extends CActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
-			'id_product' => 'Id Product',
+			'Id_product' => 'Id Product',
 			'Id_price_list' => 'Id Price List',
 			'cost' => 'Cost',
 		);
@@ -93,7 +93,7 @@ class PriceListItem extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('Id',$this->Id);
- 		$criteria->compare('id_product',$this->id_product);
+ 		$criteria->compare('Id_product',$this->Id_product);
  		$criteria->compare('Id_price_list',$this->Id_price_list);
 		$criteria->compare('cost',$this->cost,true);
 		
@@ -111,7 +111,7 @@ class PriceListItem extends CActiveRecord
 		$criteria=new CDbCriteria;
 	
 		$criteria->compare('Id',$this->Id);
-		$criteria->compare('id_product',$this->id_product);
+		$criteria->compare('Id_product',$this->Id_product);
 		$criteria->compare('Id_price_list',$this->Id_price_list);
 		$criteria->compare('cost',$this->cost,true);
 	

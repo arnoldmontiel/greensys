@@ -57,9 +57,9 @@ class Area extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'projects' => array(self::MANY_MANY, 'Project', 'area_project(id_area, id_project)'),
+			'projects' => array(self::MANY_MANY, 'Project', 'area_project(Id_area, Id_project)'),
 			'categories' => array(self::MANY_MANY, 'Category', 'category_area(Id_area, Id_category)'),
-			'products' => array(self::MANY_MANY, 'Product', 'product_area(id_area, id_product)'),
+			'products' => array(self::MANY_MANY, 'Product', 'product_area(Id_area, Id_product)'),
 			'services' => array(self::MANY_MANY, 'Service', 'service_area(Id_area, Id_service)'),
 		);
 	}

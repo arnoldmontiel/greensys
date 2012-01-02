@@ -143,7 +143,7 @@ Yii::app()->clientScript-> registerScript('update', "
 					(
 					        'delete' => array
 							(
-					            'url'=>'Yii::app()->createUrl("area/AjaxRemoveProductArea", array("IdArea"=>$data->id_area,"IdProduct"=>$data->id_product))',
+					            'url'=>'Yii::app()->createUrl("area/AjaxRemoveProductArea", array("IdArea"=>$data->Id_area,"IdProduct"=>$data->Id_product))',
 							),
 					),
 				),

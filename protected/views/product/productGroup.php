@@ -182,7 +182,7 @@ Yii::app()->clientScript->registerScript('productGroup', "");
 					(
 					        'delete' => array
 							(
-					            'url'=>'Yii::app()->createUrl("product/AjaxRemoveProductGroup", array("IdProductParent"=>$data->id_product_parent,"IdProductChild"=>$data->id_product_child))',
+					            'url'=>'Yii::app()->createUrl("product/AjaxRemoveProductGroup", array("IdProductParent"=>$data->Id_product_parent,"IdProductChild"=>$data->Id_product_child))',
 							),
 					),
 				),

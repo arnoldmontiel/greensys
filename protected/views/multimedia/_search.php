@@ -46,8 +46,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'id_entity_type'); ?>
-		<?php echo $form->textField($model,'id_entity_type'); ?>
+		<?php echo $form->label($model,'Id_entity_type'); ?>
+		<?php echo $form->textField($model,'Id_entity_type'); ?>
 	</div>
 
 	<div class="row">

@@ -10,9 +10,9 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'id_product'); ?>
-		<?php echo $form->textField($model,'id_product'); ?>
-		<?php echo $form->error($model,'id_product'); ?>
+		<?php echo $form->labelEx($model,'Id_product'); ?>
+		<?php echo $form->textField($model,'Id_product'); ?>
+		<?php echo $form->error($model,'Id_product'); ?>
 	</div>
 
 	<div class="row">

@@ -40,7 +40,7 @@ class AuthitemController extends SBaseController {
    */
   protected function beforeAction($action) {
     
-    if (!$this->module->isInstalled() && $action->id != "install") {
+    if (!$this->module->isInstalled() && $action->Id != "install") {
       $this->redirect(array("install"));
       return false;
     }

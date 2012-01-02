@@ -91,7 +91,7 @@ class ProductController extends Controller
 		
 			$multi = new Multimedia;
 			$multi->attributes = array(
-									'id_entity_type'=>$entity->id,
+									'Id_entity_type'=>$entity->Id,
 									'Id_product'=>$model->Id);
 			if($multi->save() && $multimedia->Id != null)
 				Multimedia::model()->deleteByPk($multimedia->Id);
@@ -112,7 +112,7 @@ class ProductController extends Controller
 		$note = new Note;
 		$note->attributes = array(
 							'note'=>$noteProduct,							
-							'id_entity_type'=>$entity->id,
+							'Id_entity_type'=>$entity->Id,
 							'Id_product'=>$model->Id);
 		$note->save();							
 	}
@@ -132,7 +132,7 @@ class ProductController extends Controller
 			$hyperlink = new Hyperlink;
 			$hyperlink->attributes = array(
 							'description'=>$link,
-							'id_entity_type'=>$entity->id,
+							'Id_entity_type'=>$entity->Id,
 							'Id_product'=>$model->Id);
 			
 			$hyperlink->save();
@@ -253,7 +253,7 @@ class ProductController extends Controller
 			$modelGroup->attributes=$_GET['ProductGroup'];
 
 		if(isset($_GET['Product']['Id'])){
-			$modelGroup->id_product_parent=$_GET['Product']['Id'];
+			$modelGroup->Id_product_parent=$_GET['Product']['Id'];
 			$model->unsetAttributes();
 		}
 		
@@ -283,7 +283,7 @@ class ProductController extends Controller
 
 	public function actionAjaxFillProductGroup()
 	{
-		$data=ProductGroup::model()->findAll('id_product_parent=:parent_id',
+		$data=ProductGroup::model()->findAll('Id_product_parent=:parent_id',
 		array(':parent_id'=>(int) $_POST['Product']['Id']));
 	
 	
@@ -291,7 +291,7 @@ class ProductController extends Controller
 		{
 			for ($i = 0; $i < $item->quantity; $i++) {
 				echo CHtml::tag('li',
-				array('id'=>"items_".$item->id_product_child,'class'=>'ui-state-default'),CHtml::encode($item->productChild->description_customer),true);
+				array('id'=>"items_".$item->Id_product_child,'class'=>'ui-state-default'),CHtml::encode($item->productChild->description_customer),true);
 			}
 		}
 	}
@@ -324,11 +324,11 @@ class ProductController extends Controller
 			
 		if(!empty($idProductParent)&&!empty($idProductChild))
 		{
-			$productGroupInDb = ProductGroup::model()->findByPk(array('id_product_parent'=>(int) $idProductParent,'id_product_child'=>(int)$idProductChild));
+			$productGroupInDb = ProductGroup::model()->findByPk(array('Id_product_parent'=>(int) $idProductParent,'Id_product_child'=>(int)$idProductChild));
 			if($productGroupInDb==null)
 			{
 				$productGroup=new ProductGroup;
-				$productGroup->attributes = array('id_product_parent'=>$idProductParent,'id_product_child'=>$idProductChild,'quantity'=>1);
+				$productGroup->attributes = array('Id_product_parent'=>$idProductParent,'Id_product_child'=>$idProductChild,'quantity'=>1);
 				$productGroup->save();
 			}
 			else
@@ -346,7 +346,7 @@ class ProductController extends Controller
 			
 		if(!empty($idProductParent)&&!empty($idProductChild))
 		{
-			$productGroupInDb = ProductGroup::model()->findByPk(array('id_product_parent'=>(int) $idProductParent,'id_product_child'=>(int)$idProductChild));
+			$productGroupInDb = ProductGroup::model()->findByPk(array('Id_product_parent'=>(int) $idProductParent,'Id_product_child'=>(int)$idProductChild));
 			if($productGroupInDb!=null)
 			{
 				if($productGroupInDb->quantity>1)

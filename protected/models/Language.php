@@ -80,7 +80,7 @@ class Language extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
+		$criteria->compare('id',$this->Id,true);
 		$criteria->compare('lang',$this->lang,true);
 		$criteria->compare('language',$this->language,true);
 		$criteria->compare('region',$this->region,true);

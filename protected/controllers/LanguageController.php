@@ -70,7 +70,7 @@ class LanguageController extends Controller
 		{
 			$model->attributes=$_POST['Language'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('view','id'=>$model->Id));
 		}
 
 		$this->render('create',array(
@@ -94,7 +94,7 @@ class LanguageController extends Controller
 		{
 			$model->attributes=$_POST['Language'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('view','id'=>$model->Id));
 		}
 
 		$this->render('update',array(

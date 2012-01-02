@@ -6,7 +6,7 @@
  * The followings are the available columns in table 'hyperlink':
  * @property integer $Id
  * @property string $description
- * @property integer $id_entity_type
+ * @property integer $Id_entity_type
  * @property integer $Id_product
  *
  * The followings are the available model relations:
@@ -40,12 +40,12 @@ class Hyperlink extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_entity_type', 'required'),
-			array('id_entity_type, Id_product', 'numerical', 'integerOnly'=>true),
+			array('Id_entity_type', 'required'),
+			array('Id_entity_type, Id_product', 'numerical', 'integerOnly'=>true),
 			array('description', 'length', 'max'=>200),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description, id_entity_type, Id_product', 'safe', 'on'=>'search'),
+			array('Id, description, Id_entity_type, Id_product', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,7 +57,7 @@ class Hyperlink extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idEntityType' => array(self::BELONGS_TO, 'EntityType', 'id_entity_type'),
+			'idEntityType' => array(self::BELONGS_TO, 'EntityType', 'Id_entity_type'),
 			'idProduct' => array(self::BELONGS_TO, 'Product', 'Id_product'),
 		);
 	}
@@ -70,7 +70,7 @@ class Hyperlink extends CActiveRecord
 		return array(
 			'Id' => 'ID',
 			'description' => 'Description',
-			'id_entity_type' => 'Id Entity Type',
+			'Id_entity_type' => 'Id Entity Type',
 			'Id_product' => 'Id Product',
 		);
 	}
@@ -88,7 +88,7 @@ class Hyperlink extends CActiveRecord
 
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('description',$this->description,true);
-		$criteria->compare('id_entity_type',$this->id_entity_type);
+		$criteria->compare('Id_entity_type',$this->Id_entity_type);
 		$criteria->compare('Id_product',$this->Id_product);
 
 		return new CActiveDataProvider($this, array(
