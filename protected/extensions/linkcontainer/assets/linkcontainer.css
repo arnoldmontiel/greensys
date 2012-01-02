@@ -11,7 +11,7 @@
 	background-repeat: no-repeat; 
 	cursor:pointer;
 	position:absolute;
-	left:0;
+	right:0;
  	top:0;	
 }
 
@@ -27,7 +27,7 @@
 .addContainer 
 {
 	position:relative;
-	width: 100px;
+	width: 250px;
 	height: 50px;
 	top:0px;
 }
@@ -45,8 +45,8 @@
 {
 	position:absolute;
 	top:0;
-	right:0;
-	width:60px;
+	left:0;
+	width:200px;
 }
 
 .deleteLink

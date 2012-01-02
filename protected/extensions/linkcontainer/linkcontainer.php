@@ -41,6 +41,8 @@ class linkcontainer extends CJuiWidget
                 $var = Yii::app()->assetManager->publish($assetsDir);
                 //$cs->registerCssFile(Yii::app()->assetManager->publish($var.'/droptrash.css'));
                 $cs->registerCssFile($var.'/linkcontainer.css');
+                $cs->registerScriptFile($var.'/linkcontainer.js');
+                
                 parent::init();
                 
         }
