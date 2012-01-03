@@ -206,20 +206,47 @@ class PriceListController extends Controller
 		return $model;
 	}
 	
-	public function actionAjaxUpdateCost()
+	public function actionAjaxUpdateMsrp()
 	{
 		$idPriceListItem = $_POST['idPriceListItem'];
-		$cost = $_POST['cost'];
+		$msrp = $_POST['msrp'];
 		$priceListItem= PriceListItem::model()->findByPk($idPriceListItem);
 		if($priceListItem!= null)
 		{
-			$priceListItem->attributes = array('cost'=>(double) $cost);
+			$priceListItem->attributes = array('msrp'=>(double) $msrp);
 			$priceListItem->save();
 		}
 		return $priceListItem;
 		
 	}
 
+	public function actionAjaxUpdateDealerCost()
+	{
+		$idPriceListItem = $_POST['idPriceListItem'];
+		$dealerCost = $_POST['dealerCost'];
+		$priceListItem= PriceListItem::model()->findByPk($idPriceListItem);
+		if($priceListItem!= null)
+		{
+			$priceListItem->attributes = array('dealer_cost'=>(double) $dealerCost);
+			$priceListItem->save();
+		}
+		return $priceListItem;
+	
+	}
+
+	public function actionAjaxUpdateProfitRate()
+	{
+		$idPriceListItem = $_POST['idPriceListItem'];
+		$profitRate = $_POST['profitRate'];
+		$priceListItem= PriceListItem::model()->findByPk($idPriceListItem);
+		if($priceListItem!= null)
+		{
+			$priceListItem->attributes = array('profit_rate'=>(double) $profitRate);
+			$priceListItem->save();
+		}
+		return $priceListItem;
+	
+	}	
 	
 	public function actionAjaxAddPriceListItem()
 	{	
@@ -227,7 +254,6 @@ class PriceListController extends Controller
 		$idPriceList = isset($_GET['IdPriceList'])?$_GET['IdPriceList']:'';
 		$idProduct = isset($_GET['IdProduct'])?(int)$_GET['IdProduct'][0]:'';
 		
-		$cost = $_POST['Cost'];
 		if(!empty($idPriceList)&&!empty($idProduct))
 		{
 			$priceListItemInDb = PriceListItem::model()->findByAttributes(array('Id_price_list'=>(int) $idPriceList,'Id_product'=>(int)$idProduct));
@@ -235,7 +261,11 @@ class PriceListController extends Controller
 			{
 				$product = Product::model()->findByPk($idProduct);
 				$priceListItem=new PriceListItem();
-				$priceListItem->attributes = array('Id_price_list'=>$idPriceList,'Id_product'=>$idProduct,'cost'=>$product->price_standard);
+				$priceListItem->attributes =  array('Id_price_list'=>$idPriceList,
+													'Id_product'=>$idProduct,
+													'msrp'=>$product->msrp,
+													'dealer_cost'=>$product->dealer_cost,
+													'profit_rate'=>$product->profit_rate);
 				$priceListItem->save();
 			}
 			else
@@ -269,7 +299,12 @@ class PriceListController extends Controller
 				if($priceListItemInDb==null)
 				{
 					$priceListItem=new PriceListItem();
-					$priceListItem->attributes = array('Id_price_list'=>$idPriceList,'Id_product'=>$product->Id,'cost'=>$product->price_standard);
+					$priceListItem->attributes =  array('Id_price_list'=>$idPriceList,
+														'Id_product'=>$product->Id,
+														'msrp'=>$product->msrp,
+														'dealer_cost'=>$product->dealer_cost,
+														'profit_rate'=>$product->profit_rate);
+					
 					$priceListItem->save();
 				}
 			}

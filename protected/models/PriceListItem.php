@@ -7,7 +7,10 @@
  * @property integer $Id
  * @property integer $Id_product
  * @property integer $Id_price_list
- * @property string $cost
+ * @property string $msrp
+ * @property string $dealer_cost
+ * @property string $profit_rate
+
  *
  * The followings are the available model relations:
  * @property PriceList $idPriceList
@@ -47,11 +50,11 @@ class PriceListItem extends CActiveRecord
 		return array(
 			array('Id_product, Id_price_list', 'required'),
 			array('Id_product, Id_price_list', 'numerical', 'integerOnly'=>true),
-			array('cost', 'length', 'max'=>10),
+			array('msrp, dealer_cost, profit_rate', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, Id_product, Id_price_list, cost, description_customer, code, code_supplier', 'safe'),
-			array('Id, Id_product, Id_price_list, cost, description_customer, code, code_supplier', 'safe', 'on'=>'search'),
+			array('Id, Id_product, Id_price_list, description_customer, code, code_supplier, msrp, dealer_cost, profit_rate', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -77,7 +80,9 @@ class PriceListItem extends CActiveRecord
 			'Id' => 'ID',
 			'Id_product' => 'Id Product',
 			'Id_price_list' => 'Id Price List',
-			'cost' => 'Cost',
+			'msrp' => 'Msrp',
+			'dealer_cost' => 'Dealer Cost',
+			'profit_rate' => 'Profit Rate',
 		);
 	}
 
@@ -95,7 +100,9 @@ class PriceListItem extends CActiveRecord
 		$criteria->compare('Id',$this->Id);
  		$criteria->compare('Id_product',$this->Id_product);
  		$criteria->compare('Id_price_list',$this->Id_price_list);
-		$criteria->compare('cost',$this->cost,true);
+		$criteria->compare('msrp',$this->msrp,true);
+		$criteria->compare('dealer_cost',$this->dealer_cost,true);
+		$criteria->compare('profit_rate',$this->profit_rate,true);
 		
 		
 		return new CActiveDataProvider($this, array(
@@ -113,7 +120,9 @@ class PriceListItem extends CActiveRecord
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('Id_product',$this->Id_product);
 		$criteria->compare('Id_price_list',$this->Id_price_list);
-		$criteria->compare('cost',$this->cost,true);
+		$criteria->compare('msrp',$this->msrp,true);
+		$criteria->compare('dealer_cost',$this->dealer_cost,true);
+		$criteria->compare('profit_rate',$this->profit_rate,true);
 	
 		$criteria->with[]='product';
 		$criteria->addSearchCondition("product.description_customer",$this->description_customer);

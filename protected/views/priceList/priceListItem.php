@@ -227,7 +227,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
  	'filter'=>$dataProvider,
 	'summaryText'=>'',
  	'afterAjaxUpdate'=>'function(id, data){
- 										$("#price-list-item-grid").find("input.txtCost").each(
+ 										$("#price-list-item-grid").find("input.txtMsrp").each(
 												function(index, item){
 		
 																$(item).keyup(function(){
@@ -237,10 +237,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
 																$(item).change(function(){
 																	var target = $(this);
 																	$.post(
-																		"'.PriceListController::createUrl('AjaxUpdateCost').'",
+																		"'.PriceListController::createUrl('AjaxUpdateMsrp').'",
 																		 {
 																		 	idPriceListItem: $(this).attr("id"),
-																			cost:$(this).val()
+																			msrp:$(this).val()
 																		 }).success(
 																			 	function() 
 																			 		{ 
@@ -250,7 +250,52 @@ $this->widget('zii.widgets.grid.CGridView', array(
 																		
 																});
 													});	
-																								
+										$("#price-list-item-grid").find("input.txtDealerCost").each(
+												function(index, item){
+		
+																$(item).keyup(function(){
+			        												validateNumber($(this));
+																});
+												
+																$(item).change(function(){
+																	var target = $(this);
+																	$.post(
+																		"'.PriceListController::createUrl('AjaxUpdateDealerCost').'",
+																		 {
+																		 	idPriceListItem: $(this).attr("id"),
+																			dealerCost:$(this).val()
+																		 }).success(
+																			 	function() 
+																			 		{ 
+																			 			$(target).parent().parent().find("#saveok2").animate({opacity: "show"},4000);
+																						$(target).parent().parent().find("#saveok2").animate({opacity: "hide"},4000); 
+																					});
+																		
+																});
+													});	
+										$("#price-list-item-grid").find("input.txtProfitRate").each(
+												function(index, item){
+		
+																$(item).keyup(function(){
+			        												validateNumber($(this));
+																});
+												
+																$(item).change(function(){
+																	var target = $(this);
+																	$.post(
+																		"'.PriceListController::createUrl('AjaxUpdateProfitRate').'",
+																		 {
+																		 	idPriceListItem: $(this).attr("id"),
+																			profitRate:$(this).val()
+																		 }).success(
+																			 	function() 
+																			 		{ 
+																			 			$(target).parent().parent().find("#saveok3").animate({opacity: "show"},4000);
+																						$(target).parent().parent().find("#saveok3").animate({opacity: "hide"},4000); 
+																					});
+																		
+																});
+													});	
  									}',	
 	'columns'=>array(
 				array(
@@ -269,14 +314,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
  
 				),
 				array(
-					'name'=>'cost',
+					'name'=>'msrp',
 					'value'=>
-                                    	'CHtml::textField("txtCost",
-												$data->cost,
+                                    	'CHtml::textField("txtMsrp",
+												$data->msrp,
 												array(
 														"id"=>$data->Id,
-														"class"=>"txtCost",
-														"height"=>"10px"
+														"class"=>"txtMsrp",
+														"style"=>"width:50px",
 													)
 											)',
 							
@@ -287,7 +332,49 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				array(
 					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
 					'type'=>'raw',
-					'htmlOptions'=>array('width'=>20),
+					'htmlOptions'=>array('width'=>25),
+				),
+				array(
+					'name'=>'dealer_cost',
+					'value'=>
+                                    	'CHtml::textField("txtDealerCost",
+												$data->dealer_cost,
+												array(
+														"id"=>$data->Id,
+														"class"=>"txtDealerCost",
+														"style"=>"width:50px",
+													)
+											)',
+	
+					'type'=>'raw',
+	
+			        'htmlOptions'=>array('width'=>5),
+				),
+				array(
+					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok2", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+					'type'=>'raw',
+					'htmlOptions'=>array('width'=>25),
+				),
+				array(
+					'name'=>'profit_rate',
+					'value'=>
+                                    	'CHtml::textField("txtProfitRate",
+												$data->profit_rate,
+												array(
+														"id"=>$data->Id,
+														"class"=>"txtProfitRate",
+														"style"=>"width:50px",
+													)
+											)',
+
+					'type'=>'raw',
+
+			        'htmlOptions'=>array('width'=>5),
+				),
+				array(
+					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok3", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+					'type'=>'raw',
+					'htmlOptions'=>array('width'=>25),
 				),
 				array(
 					'class'=>'CButtonColumn',
