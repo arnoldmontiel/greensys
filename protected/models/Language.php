@@ -4,7 +4,7 @@
  * This is the model class for table "language".
  *
  * The followings are the available columns in table 'language':
- * @property string $id
+ * @property string $Id
  * @property string $lang
  * @property string $language
  * @property string $region
@@ -41,7 +41,7 @@ class Language extends CActiveRecord
 			array('language, region', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, lang, language, region', 'safe', 'on'=>'search'),
+			array('Id, lang, language, region', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,7 +62,7 @@ class Language extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+			'Id' => 'ID',
 			'lang' => 'Lang',
 			'language' => 'Language',
 			'region' => 'Region',
@@ -80,7 +80,7 @@ class Language extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->Id,true);
+		$criteria->compare('Id',$this->Id,true);
 		$criteria->compare('lang',$this->lang,true);
 		$criteria->compare('language',$this->language,true);
 		$criteria->compare('region',$this->region,true);
