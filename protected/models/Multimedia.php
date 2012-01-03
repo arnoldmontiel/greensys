@@ -4,7 +4,7 @@
  * This is the model class for table "multimedia".
  *
  * The followings are the available columns in table 'multimedia':
- * @property integer $id
+ * @property integer $Id
  * @property string $content
  * @property string $name
  * @property string $type
@@ -16,8 +16,8 @@
  * @property integer $Id_product
  *
  * The followings are the available model relations:
- * @property EntityType $idEntityType
- * @property Product $idProduct
+ * @property EntityType $entityType
+ * @property Product $product
  */
 class Multimedia extends CActiveRecord
 {
@@ -28,9 +28,7 @@ class Multimedia extends CActiveRecord
 	
 		if($file=CUploadedFile::getInstance($this,'uploadedFile'))
 		{
-			if($this->name == null)
- 				$this->name=$file->name;
-			
+			$this->name=$file->name;
 			$this->type=$file->type;
 			if(strstr($file->type,'image'))
 			{
