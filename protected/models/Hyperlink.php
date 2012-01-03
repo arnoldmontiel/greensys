@@ -57,8 +57,8 @@ class Hyperlink extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idEntityType' => array(self::BELONGS_TO, 'EntityType', 'Id_entity_type'),
-			'idProduct' => array(self::BELONGS_TO, 'Product', 'Id_product'),
+			'entityType' => array(self::BELONGS_TO, 'EntityType', 'Id_entity_type'),
+			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
 		);
 	}
 
