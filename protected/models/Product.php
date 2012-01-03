@@ -22,13 +22,13 @@
  * @property integer $hide
  * @property string $weight
  * @property integer $Id_supplier
- * @property string $price_standard
+ * @property string $dealer_cost
  *
  * The followings are the available model relations:
+ * @property BudgetItem[] $budgetItems
  * @property Hyperlink[] $hyperlinks
  * @property Multimedia[] $multimedias
  * @property Note[] $notes
- * @property BudgetItem[] $budgetItems
  * @property PriceListItem[] $priceListItems
  * @property Brand $idBrand
  * @property Category $idCategory
@@ -78,11 +78,11 @@ class Product extends CActiveRecord
 			array('Id_brand, Id_category, Id_nomenclator, discontinued, hide, Id_supplier', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier', 'length', 'max'=>255),
 			array('code, code_supplier', 'length', 'max'=>45),
-			array('length, width, height, profit_rate, msrp, weight, price_standard', 'length', 'max'=>10),
+			array('length, width, height, profit_rate, msrp, weight, dealer_cost', 'length', 'max'=>10),
 			array('time_instalation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, price_standard', 'safe', 'on'=>'search'),
+			array('Id, Id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost', 'safe', 'on'=>'search'),
 		
 			
 		);
@@ -133,7 +133,7 @@ class Product extends CActiveRecord
 			'width' => 'Width',
 			'height' => 'Height',
 			'profit_rate' => 'Profit Rate',
-			'msrp' => 'Msrp',
+			'msrp' => 'MSRP',
 			'time_instalation' => 'Time Instalation',
 			'hide' => 'Hide',
 			'weight' => 'Weight',
@@ -141,7 +141,7 @@ class Product extends CActiveRecord
 			'note'=>'Note',
 			'image'=>'Image',
 			'Id_supplier' => 'Supplier',
-			'price_standard' => 'Standard Price',
+			'dealer_cost' => 'Dealer Cost',
 		);
 	}
 
@@ -174,7 +174,7 @@ class Product extends CActiveRecord
 		$criteria->compare('hide',$this->hide);
 		$criteria->compare('weight',$this->weight,true);
 		$criteria->compare('Id_supplier',$this->Id_supplier);
-		$criteria->compare('price_standard',$this->price_standard,true);
+		$criteria->compare('dealer_cost',$this->dealer_cost,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
