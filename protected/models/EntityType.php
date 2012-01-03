@@ -4,7 +4,7 @@
  * This is the model class for table "entity_type".
  *
  * The followings are the available columns in table 'entity_type':
- * @property integer $id
+ * @property integer $Id
  * @property string $name
  *
  * The followings are the available model relations:
@@ -41,7 +41,7 @@ class EntityType extends CActiveRecord
 			array('name', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name', 'safe', 'on'=>'search'),
+			array('Id, name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,7 +64,7 @@ class EntityType extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+			'Id' => 'ID',
 			'name' => 'Name',
 		);
 	}
@@ -80,7 +80,7 @@ class EntityType extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->Id);
+		$criteria->compare('Id',$this->Id);
 		$criteria->compare('name',$this->name,true);
 
 		return new CActiveDataProvider($this, array(
