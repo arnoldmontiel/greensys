@@ -131,7 +131,7 @@ class Multimedia extends CActiveRecord
 			array('content, description, content_small', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, content, name, type, size, description, content_small, size_small, Id_entity_type, Id_product', 'safe', 'on'=>'search'),
+			array('Id, content, name, type, size, description, content_small, size_small, Id_entity_type, Id_product', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -143,8 +143,8 @@ class Multimedia extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idEntityType' => array(self::BELONGS_TO, 'EntityType', 'Id_entity_type'),
-			'idProduct' => array(self::BELONGS_TO, 'Product', 'Id_product'),
+			'entityType' => array(self::BELONGS_TO, 'EntityType', 'Id_entity_type'),
+			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
 		);
 	}
 
@@ -154,7 +154,7 @@ class Multimedia extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+			'Id' => 'ID',
 			'content' => 'Content',
 			'name' => 'Name',
 			'type' => 'Type',
@@ -179,7 +179,7 @@ class Multimedia extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->Id);
+		$criteria->compare('Id',$this->Id);
 		$criteria->compare('content',$this->content,true);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('type',$this->type,true);
