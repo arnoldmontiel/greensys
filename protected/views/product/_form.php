@@ -135,8 +135,9 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 <div class="left">
 <?php 
 		$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
-		$multimedia = Multimedia::model()->findByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$entity->Id));
-?>
+		$multimediaData = Multimedia::model()->findByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$entity->Id));
+		$multimedia = Multimedia::model();
+		?>
 		<div class="row">
 			<?php echo $form->labelEx($multimedia,'uploadedFile'); ?>
 			<?php echo $form->fileField($multimedia,'uploadedFile'); ?>
@@ -158,7 +159,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 	<div class="right">
 		<?php 
 		$this->widget('ext.highslide.highslide', array(
-						'id'=>$multimedia->Id,
+						'id'=>$multimediaData->Id,
 	)); ?>
 	</div>
 </div>
