@@ -6,8 +6,8 @@
 )); ?>
 
 	<div class="row">
-		<?php echo $form->label($model,'id'); ?>
-		<?php echo $form->textField($model,'id'); ?>
+		<?php echo $form->label($model,'Id'); ?>
+		<?php echo $form->textField($model,'Id'); ?>
 	</div>
 
 	<div class="row">
