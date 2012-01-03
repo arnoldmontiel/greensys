@@ -4,7 +4,7 @@
  * This is the model class for table "note".
  *
  * The followings are the available columns in table 'note':
- * @property integer $id
+ * @property integer $Id
  * @property string $note
  * @property string $creation_date
  * @property integer $Id_entity_type
@@ -59,7 +59,7 @@ class Note extends CActiveRecord
 			array('note, creation_date', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, note, creation_date, Id_entity_type, Id_product_requirement_product_requirement_product_item, Id_product_item_product_requirement_product_item, budget_Id, budget_version_number, Id_tracking, Id_product', 'safe', 'on'=>'search'),
+			array('Id, note, creation_date, Id_entity_type, Id_product_requirement_product_requirement_product_item, Id_product_item_product_requirement_product_item, budget_Id, budget_version_number, Id_tracking, Id_product', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -73,11 +73,11 @@ class Note extends CActiveRecord
 		return array(
 			'budget' => array(self::BELONGS_TO, 'Budget', 'budget_Id'),
 			'budgetVersionNumber' => array(self::BELONGS_TO, 'Budget', 'budget_version_number'),
-			'idProduct' => array(self::BELONGS_TO, 'Product', 'Id_product'),
-			'idEntityType' => array(self::BELONGS_TO, 'EntityType', 'Id_entity_type'),
-			'idProductRequirementProductRequirementProductItem' => array(self::BELONGS_TO, 'ProductRequirementProductItem', 'Id_product_requirement_product_requirement_product_item'),
-			'idProductItemProductRequirementProductItem' => array(self::BELONGS_TO, 'ProductRequirementProductItem', 'Id_product_item_product_requirement_product_item'),
-			'idTracking' => array(self::BELONGS_TO, 'Tracking', 'Id_tracking'),
+			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
+			'entityType' => array(self::BELONGS_TO, 'EntityType', 'Id_entity_type'),
+			'productRequirementProductRequirementProductItem' => array(self::BELONGS_TO, 'ProductRequirementProductItem', 'Id_product_requirement_product_requirement_product_item'),
+			'productItemProductRequirementProductItem' => array(self::BELONGS_TO, 'ProductRequirementProductItem', 'Id_product_item_product_requirement_product_item'),
+			'tracking' => array(self::BELONGS_TO, 'Tracking', 'Id_tracking'),
 		);
 	}
 
@@ -87,7 +87,7 @@ class Note extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+			'Id' => 'ID',
 			'note' => 'Note',
 			'creation_date' => 'Creation Date',
 			'Id_entity_type' => 'Id Entity Type',
@@ -112,7 +112,7 @@ class Note extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->Id);
+		$criteria->compare('Id',$this->Id);
 		$criteria->compare('note',$this->note,true);
 		$criteria->compare('creation_date',$this->creation_date,true);
 		$criteria->compare('Id_entity_type',$this->Id_entity_type);
