@@ -22,6 +22,7 @@
 	top:0px;
 	overflow:auto;
 	overflow-x:hidden; 
+	border: 1px solid;
 }
 
 .addContainer 
