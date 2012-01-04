@@ -14,11 +14,15 @@ $this->menu=array(
 ?>
 
 <h1>View Customer #<?php echo $model->Id; ?></h1>
-
-<?php $this->widget('zii.widgets.CDetailView', array(
+<?php echo $this->renderPartial('_view', array('model'=>$model)); ?>
+<?php 
+/*
+$this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'Id',
 		'Id_person',
 	),
-)); ?>
+));
+*/ 
+?>

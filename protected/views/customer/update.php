@@ -15,4 +15,6 @@ $this->menu=array(
 
 <h1>Update Customer <?php echo $model->Id; ?></h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model, 
+												'modelPerson'=>$modelPerson,
+												'modelContact'=>$modelContact)); ?>

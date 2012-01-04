@@ -44,6 +44,35 @@
 		<?php echo $form->error($modelPerson,'uid'); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->labelEx($modelContact,'telephone_1'); ?>
+		<?php echo $form->textField($modelContact,'telephone_1',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($modelContact,'telephone_1'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($modelContact,'telephone_2'); ?>
+		<?php echo $form->textField($modelContact,'telephone_2',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($modelContact,'telephone_2'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($modelContact,'telephone_3'); ?>
+		<?php echo $form->textField($modelContact,'telephone_3',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($modelContact,'telephone_3'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($modelContact,'email'); ?>
+		<?php echo $form->textField($modelContact,'email',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($modelContact,'email'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($modelContact,'address'); ?>
+		<?php echo $form->textField($modelContact,'address',array('size'=>60,'maxlength'=>100)); ?>
+		<?php echo $form->error($modelContact,'address'); ?>
+	</div>
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

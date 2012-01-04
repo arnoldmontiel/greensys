@@ -63,15 +63,18 @@ class CustomerController extends Controller
 	{
 		$model=new Customer;
 		$modelPerson = new Person;
+		$modelContact = new Contact;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Person']))
+		if(isset($_POST['Person']) && isset($_POST['Contact']))
 		{
 			$modelPerson->attributes=$_POST['Person'];
-			if($modelPerson->save()){
-				$model->Id_person = $modelPerson->Id; 
+			$modelContact->attributes=$_POST['Contact'];
+			if( $modelContact->save() && $modelPerson->save()){
+				$model->Id_person = $modelPerson->Id;
+				$model->Id_contact = $modelContact->Id;
 				if($model->save())
 					$this->redirect(array('view','id'=>$model->Id));
 			}
@@ -79,7 +82,8 @@ class CustomerController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
-			'modelPerson'=>$modelPerson
+			'modelPerson'=>$modelPerson,
+			'modelContact'=>$modelContact
 		));
 	}
 
@@ -91,7 +95,9 @@ class CustomerController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+		$modelPerson = Person::model()->findByPk($model->Id_person);
+		$modelContact = Contact::model()->findByPk($model->Id_contact);
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -104,6 +110,8 @@ class CustomerController extends Controller
 
 		$this->render('update',array(
 			'model'=>$model,
+			'modelPerson'=>$modelPerson,
+			'modelContact'=>$modelContact
 		));
 	}
 
