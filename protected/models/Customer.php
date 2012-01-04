@@ -1,23 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "hyperlink".
+ * This is the model class for table "customer".
  *
- * The followings are the available columns in table 'hyperlink':
+ * The followings are the available columns in table 'customer':
  * @property integer $Id
- * @property string $description
- * @property integer $Id_entity_type
- * @property integer $Id_product
+ * @property integer $Id_person
+ * @property integer $Id_contact
+ *
  *
  * The followings are the available model relations:
- * @property EntityType $idEntityType
- * @property Product $idProduct
+ * @property Contact $idContact
+ * @property Person $idPerson
+ * @property Contact[] $contacts
+ * @property Project[] $projects
  */
-class Hyperlink extends CActiveRecord
+class Customer extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return Hyperlink the static model class
+	 * @return Customer the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -29,7 +31,7 @@ class Hyperlink extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hyperlink';
+		return 'customer';
 	}
 
 	/**
@@ -40,12 +42,11 @@ class Hyperlink extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_entity_type', 'required'),
-			array('Id_entity_type, Id_product, Id_contact', 'numerical', 'integerOnly'=>true),
-			array('description', 'length', 'max'=>200),
+			array('Id_person, Id_contact', 'required'),
+			array('Id_person, Id_contact', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description, Id_entity_type, Id_product', 'safe', 'on'=>'search'),
+			array('Id, Id_person, Id_contact', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,9 +58,10 @@ class Hyperlink extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'entityType' => array(self::BELONGS_TO, 'EntityType', 'Id_entity_type'),
-			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
 			'contact' => array(self::BELONGS_TO, 'Contact', 'Id_contact'),
+			'person' => array(self::BELONGS_TO, 'Person', 'Id_person'),
+			'contacts' => array(self::MANY_MANY, 'Contact', 'customer_contact(Id_customer, Id_contact)'),
+			'projects' => array(self::HAS_MANY, 'Project', 'Id_customer'),
 		);
 	}
 
@@ -70,12 +72,16 @@ class Hyperlink extends CActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
-			'description' => 'Description',
-			'Id_entity_type' => 'Id Entity Type',
-			'Id_product' => 'Id Product',
+			'Id_person' => 'Id Person',
+			'Id_contact' => 'Id Contact',
 		);
 	}
 
+	public function getFullName()
+	{
+		return $this->person->last_name . ' - ' . $this->person->name;
+	}
+	
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -88,9 +94,8 @@ class Hyperlink extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('Id',$this->Id);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('Id_entity_type',$this->Id_entity_type);
-		$criteria->compare('Id_product',$this->Id_product);
+		$criteria->compare('Id_person',$this->Id_person);
+		$criteria->compare('Id_contact',$this->Id_contact);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

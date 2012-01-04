@@ -1,23 +1,29 @@
 <?php
 
 /**
- * This is the model class for table "hyperlink".
+ * This is the model class for table "person".
  *
- * The followings are the available columns in table 'hyperlink':
+ * The followings are the available columns in table 'person':
  * @property integer $Id
- * @property string $description
- * @property integer $Id_entity_type
- * @property integer $Id_product
+ * @property string $name
+ * @property string $last_name
+ * @property string $date_birth
+ * @property string $uid
  *
  * The followings are the available model relations:
- * @property EntityType $idEntityType
- * @property Product $idProduct
+ * @property Customer[] $customers
  */
-class Hyperlink extends CActiveRecord
+class Person extends CActiveRecord
 {
+	public function beforeSave()
+	{
+		$this->date_birth = Yii::app()->lc->toDatabase($this->date_birth,'date','small','date',null);//date('Y-m-d',strtotime($this->date_validity));
+		return parent::beforeSave();
+	}
+	
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return Hyperlink the static model class
+	 * @return Person the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -29,7 +35,7 @@ class Hyperlink extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hyperlink';
+		return 'person';
 	}
 
 	/**
@@ -40,12 +46,11 @@ class Hyperlink extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_entity_type', 'required'),
-			array('Id_entity_type, Id_product, Id_contact', 'numerical', 'integerOnly'=>true),
-			array('description', 'length', 'max'=>200),
+			array('name, last_name, uid', 'length', 'max'=>45),
+			array('date_birth', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description, Id_entity_type, Id_product', 'safe', 'on'=>'search'),
+			array('Id, name, last_name, date_birth, uid', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,9 +62,7 @@ class Hyperlink extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'entityType' => array(self::BELONGS_TO, 'EntityType', 'Id_entity_type'),
-			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
-			'contact' => array(self::BELONGS_TO, 'Contact', 'Id_contact'),
+			'customers' => array(self::HAS_MANY, 'Customer', 'Id_person'),
 		);
 	}
 
@@ -70,12 +73,14 @@ class Hyperlink extends CActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
-			'description' => 'Description',
-			'Id_entity_type' => 'Id Entity Type',
-			'Id_product' => 'Id Product',
+			'name' => 'Name',
+			'last_name' => 'Last Name',
+			'date_birth' => 'Date Birth',
+			'uid' => 'Uid',
 		);
 	}
 
+	
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -88,9 +93,10 @@ class Hyperlink extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('Id',$this->Id);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('Id_entity_type',$this->Id_entity_type);
-		$criteria->compare('Id_product',$this->Id_product);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('last_name',$this->last_name,true);
+		$criteria->compare('date_birth',$this->date_birth,true);
+		$criteria->compare('uid',$this->uid,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

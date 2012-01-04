@@ -1,23 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "hyperlink".
+ * This is the model class for table "area_project".
  *
- * The followings are the available columns in table 'hyperlink':
- * @property integer $Id
- * @property string $description
- * @property integer $Id_entity_type
- * @property integer $Id_product
- *
- * The followings are the available model relations:
- * @property EntityType $idEntityType
- * @property Product $idProduct
+ * The followings are the available columns in table 'area_project':
+ * @property integer $Id_area
+ * @property integer $Id_project
+ * @property integer $centralized
  */
-class Hyperlink extends CActiveRecord
+class AreaProject extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return Hyperlink the static model class
+	 * @return AreaProject the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -29,7 +24,7 @@ class Hyperlink extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hyperlink';
+		return 'area_project';
 	}
 
 	/**
@@ -40,26 +35,24 @@ class Hyperlink extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_entity_type', 'required'),
-			array('Id_entity_type, Id_product, Id_contact', 'numerical', 'integerOnly'=>true),
-			array('description', 'length', 'max'=>200),
+			array('Id_area, Id_project', 'required'),
+			array('Id_area, Id_project, centralized', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description, Id_entity_type, Id_product', 'safe', 'on'=>'search'),
+			array('Id_area, Id_project, centralized', 'safe', 'on'=>'search'),
 		);
 	}
 
 	/**
-	 * @return array relational rules.
-	 */
+	* @return array relational rules.
+	*/
 	public function relations()
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'entityType' => array(self::BELONGS_TO, 'EntityType', 'Id_entity_type'),
-			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
-			'contact' => array(self::BELONGS_TO, 'Contact', 'Id_contact'),
+				'project' => array(self::BELONGS_TO, 'Project', 'Id_project'),
+				'area' => array(self::BELONGS_TO, 'Area', 'Id_area'),
 		);
 	}
 
@@ -69,10 +62,9 @@ class Hyperlink extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'Id' => 'ID',
-			'description' => 'Description',
-			'Id_entity_type' => 'Id Entity Type',
-			'Id_product' => 'Id Product',
+			'Id_area' => 'Id Area',
+			'Id_project' => 'Id Project',
+			'centralized' => 'Centralized',
 		);
 	}
 
@@ -87,10 +79,9 @@ class Hyperlink extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('Id',$this->Id);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('Id_entity_type',$this->Id_entity_type);
-		$criteria->compare('Id_product',$this->Id_product);
+		$criteria->compare('Id_area',$this->Id_area);
+		$criteria->compare('Id_project',$this->Id_project);
+		$criteria->compare('centralized',$this->centralized);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

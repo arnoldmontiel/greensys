@@ -1,23 +1,27 @@
 <?php
 
 /**
- * This is the model class for table "hyperlink".
+ * This is the model class for table "project".
  *
- * The followings are the available columns in table 'hyperlink':
+ * The followings are the available columns in table 'project':
  * @property integer $Id
+ * @property integer $Id_customer
  * @property string $description
- * @property integer $Id_entity_type
- * @property integer $Id_product
+ * @property string $address
  *
  * The followings are the available model relations:
- * @property EntityType $idEntityType
- * @property Product $idProduct
+ * @property Area[] $areas
+ * @property Budget[] $budgets
+ * @property ProductItem[] $productItems
+ * @property Customer $idCustomer
+ * @property Contact[] $contacts
+ * @property Tracking[] $trackings
  */
-class Hyperlink extends CActiveRecord
+class Project extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return Hyperlink the static model class
+	 * @return Project the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -29,7 +33,7 @@ class Hyperlink extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hyperlink';
+		return 'project';
 	}
 
 	/**
@@ -40,12 +44,13 @@ class Hyperlink extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_entity_type', 'required'),
-			array('Id_entity_type, Id_product, Id_contact', 'numerical', 'integerOnly'=>true),
-			array('description', 'length', 'max'=>200),
+			array('Id_customer', 'required'),
+			array('Id_customer', 'numerical', 'integerOnly'=>true),
+			array('description', 'length', 'max'=>45),
+			array('address', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description, Id_entity_type, Id_product', 'safe', 'on'=>'search'),
+			array('Id, Id_customer, description, address', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,9 +62,12 @@ class Hyperlink extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'entityType' => array(self::BELONGS_TO, 'EntityType', 'Id_entity_type'),
-			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
-			'contact' => array(self::BELONGS_TO, 'Contact', 'Id_contact'),
+			'areas' => array(self::MANY_MANY, 'Area', 'area_project(Id_project, Id_area)'),
+			'budgets' => array(self::HAS_MANY, 'Budget', 'Id_project'),
+			'productItems' => array(self::HAS_MANY, 'ProductItem', 'Id_project'),
+			'idCustomer' => array(self::BELONGS_TO, 'Customer', 'Id_customer'),
+			'contacts' => array(self::MANY_MANY, 'Contact', 'project_contact(Id_project, Id_contact)'),
+			'trackings' => array(self::HAS_MANY, 'Tracking', 'Id_project'),
 		);
 	}
 
@@ -70,9 +78,9 @@ class Hyperlink extends CActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
+			'Id_customer' => 'Customer',
 			'description' => 'Description',
-			'Id_entity_type' => 'Id Entity Type',
-			'Id_product' => 'Id Product',
+			'address' => 'Address',
 		);
 	}
 
@@ -88,9 +96,9 @@ class Hyperlink extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('Id',$this->Id);
+		$criteria->compare('Id_customer',$this->Id_customer);
 		$criteria->compare('description',$this->description,true);
-		$criteria->compare('Id_entity_type',$this->Id_entity_type);
-		$criteria->compare('Id_product',$this->Id_product);
+		$criteria->compare('address',$this->address,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
