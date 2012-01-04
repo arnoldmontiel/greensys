@@ -210,10 +210,15 @@ class PriceListController extends Controller
 	{
 		$idPriceListItem = $_POST['idPriceListItem'];
 		$msrp = $_POST['msrp'];
+		$profitRate = $_POST['profitRate'];
 		$priceListItem= PriceListItem::model()->findByPk($idPriceListItem);
 		if($priceListItem!= null)
 		{
-			$priceListItem->attributes = array('msrp'=>(double) $msrp);
+			if($profitRate > 0)
+				$priceListItem->attributes = array('msrp'=>(double) $msrp, 'profit_rate'=>(double) $profitRate);
+			else
+				$priceListItem->attributes = array('msrp'=>(double) $msrp);
+			
 			$priceListItem->save();
 		}
 		return $priceListItem;
@@ -224,10 +229,15 @@ class PriceListController extends Controller
 	{
 		$idPriceListItem = $_POST['idPriceListItem'];
 		$dealerCost = $_POST['dealerCost'];
+		$profitRate = $_POST['profitRate'];
 		$priceListItem= PriceListItem::model()->findByPk($idPriceListItem);
 		if($priceListItem!= null)
 		{
-			$priceListItem->attributes = array('dealer_cost'=>(double) $dealerCost);
+			if($msrp > 0)
+				$priceListItem->attributes = array('dealer_cost'=>(double) $dealerCost, 'profit_rate'=>(double) $profitRate);
+			else
+				$priceListItem->attributes = array('dealer_cost'=>(double) $dealerCost);
+			
 			$priceListItem->save();
 		}
 		return $priceListItem;

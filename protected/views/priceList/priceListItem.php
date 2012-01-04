@@ -235,17 +235,30 @@ $this->widget('zii.widgets.grid.CGridView', array(
 																});
 												
 																$(item).change(function(){
+																	
 																	var target = $(this);
+																	var profitRate = 0;
+																	
+																	if($(this).parent().parent().find("input.txtDealerCost").val() > 0){
+																		profitRate = ($(this).val() / $(this).parent().parent().find("input.txtDealerCost").val()).toFixed(2);
+																	}
+																	
 																	$.post(
 																		"'.PriceListController::createUrl('AjaxUpdateMsrp').'",
 																		 {
 																		 	idPriceListItem: $(this).attr("id"),
-																			msrp:$(this).val()
+																			msrp:$(this).val(),
+																			profitRate: profitRate
 																		 }).success(
 																			 	function() 
 																			 		{ 
 																			 			$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000);
-																						$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000); 
+																						$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000);
+																						if(profitRate> 0){
+																							$(target).parent().parent().find("input.txtProfitRate").val(profitRate);
+																							$(target).parent().parent().find("#saveok3").animate({opacity: "show"},4000);
+ 																							$(target).parent().parent().find("#saveok3").animate({opacity: "hide"},4000);
+																						}
 																					});
 																		
 																});
@@ -259,16 +272,28 @@ $this->widget('zii.widgets.grid.CGridView', array(
 												
 																$(item).change(function(){
 																	var target = $(this);
+																	var profitRate = 0;
+																	
+																	if($(this).parent().parent().find("input.txtMsrp").val() > 0){
+																		profitRate = ($(this).val() / $(this).parent().parent().find("input.txtMsrp").val()).toFixed(2);
+																	}
+																	
 																	$.post(
 																		"'.PriceListController::createUrl('AjaxUpdateDealerCost').'",
 																		 {
 																		 	idPriceListItem: $(this).attr("id"),
-																			dealerCost:$(this).val()
+																			dealerCost:$(this).val(),
+																			profitRate: profitRate
 																		 }).success(
 																			 	function() 
 																			 		{ 
 																			 			$(target).parent().parent().find("#saveok2").animate({opacity: "show"},4000);
-																						$(target).parent().parent().find("#saveok2").animate({opacity: "hide"},4000); 
+																						$(target).parent().parent().find("#saveok2").animate({opacity: "hide"},4000);
+																						if(profitRate> 0){
+																							$(target).parent().parent().find("input.txtProfitRate").val(profitRate);
+																							$(target).parent().parent().find("#saveok3").animate({opacity: "show"},4000);
+ 																							$(target).parent().parent().find("#saveok3").animate({opacity: "hide"},4000);
+																						} 
 																					});
 																		
 																});
