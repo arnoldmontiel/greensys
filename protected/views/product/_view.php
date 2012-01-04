@@ -1,9 +1,6 @@
 <div class="view">
 	<div class="left">
-		<b><?php echo CHtml::encode($model->getAttributeLabel('Id')); ?>:</b>
-		<?php echo CHtml::link(CHtml::encode($model->Id), array('view', 'id'=>$model->Id)); ?>
-		<br />
-	
+
 		<b><?php echo CHtml::encode($model->getAttributeLabel('Id_brand')); ?>:</b>
 		<?php echo CHtml::encode($model->brand->description); ?>
 		<br />
@@ -62,6 +59,10 @@
 	
 		<b><?php echo CHtml::encode($model->getAttributeLabel('msrp')); ?>:</b>
 		<?php echo CHtml::encode($model->msrp); ?>
+		<br />
+
+		<b><?php echo CHtml::encode($model->getAttributeLabel('dealer_cost')); ?>:</b>
+		<?php echo CHtml::encode($model->dealer_cost); ?>
 		<br />
 	
 		<b><?php echo CHtml::encode($model->getAttributeLabel('time_instalation')); ?>:</b>

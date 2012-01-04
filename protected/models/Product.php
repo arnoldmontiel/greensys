@@ -23,6 +23,8 @@
  * @property string $weight
  * @property integer $Id_supplier
  * @property string $dealer_cost
+ * @property integer Id_measurement_unit_weight
+ * @property integer Id_measurement_unit_linear
  *
  * The followings are the available model relations:
  * @property BudgetItem[] $budgetItems
@@ -74,8 +76,8 @@ class Product extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_brand, Id_category, Id_nomenclator, Id_supplier', 'required'),
-			array('Id_brand, Id_category, Id_nomenclator, discontinued, hide, Id_supplier', 'numerical', 'integerOnly'=>true),
+			array('Id_brand, Id_category, Id_nomenclator, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear', 'required'),
+			array('Id_brand, Id_category, Id_nomenclator, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier', 'length', 'max'=>255),
 			array('code, code_supplier', 'length', 'max'=>45),
 			array('length, width, height, profit_rate, msrp, weight, dealer_cost', 'length', 'max'=>10),
@@ -111,6 +113,8 @@ class Product extends CActiveRecord
 			'productItems' => array(self::HAS_MANY, 'ProductItem', 'Id_product'),
 			'productRequirements' => array(self::MANY_MANY, 'ProductRequirement', 'product_requirement_product(Id_product, Id_product_requirement)'),
 			'supplier' => array(self::BELONGS_TO, 'Supplier', 'Id_supplier'),
+			'measurementUnitWeight' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_weight'),
+			'measurementUnitLinear' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_linear'),
 		);
 	}
 
@@ -142,6 +146,8 @@ class Product extends CActiveRecord
 			'image'=>'Image',
 			'Id_supplier' => 'Supplier',
 			'dealer_cost' => 'Dealer Cost',
+			'Id_measurement_unit_linear' => 'Measure Linear',		
+			'Id_measurement_unit_weight' => 'Measure Weight',		
 		);
 	}
 
@@ -175,6 +181,8 @@ class Product extends CActiveRecord
 		$criteria->compare('weight',$this->weight,true);
 		$criteria->compare('Id_supplier',$this->Id_supplier);
 		$criteria->compare('dealer_cost',$this->dealer_cost,true);
+		$criteria->compare('Id_measurement_unit_weight',$this->Id_measurement_unit_weight,true);
+		$criteria->compare('Id_measurement_unit_linear',$this->Id_measurement_unit_linear,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

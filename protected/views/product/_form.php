@@ -1,10 +1,75 @@
 <div class="form">
 
+<?php
+Yii::app()->clientScript->registerScript(__CLASS__.'#Product_msrp', "
+$('#Product_msrp').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+	if($('#Product_dealer_cost').val()!=0)
+	{
+		$('#Product_profit_rate').val(($('#Product_msrp').val()/$('#Product_dealer_cost').val()).toFixed(2));
+	}
+}).keyup(function(){
+	validateNumber($(this));
+});
+
+$('#Product_dealer_cost').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+	if($('#Product_dealer_cost').val()!=0)
+	{
+		$('#Product_profit_rate').val(($('#Product_msrp').val()/$('#Product_dealer_cost').val()).toFixed(2));
+	}
+}).keyup(function(){
+	validateNumber($(this));
+});
+
+$('#Product_profit_rate').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+}).keyup(function(){
+	validateNumber($(this));
+});
+
+$('#Product_length').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+	$.post('".ProductController::createUrl("AjaxFillVolume")."',
+			$(this).parent().parent().parent().serialize()
+		).success(
+			function(data) 
+			{
+				$('#txtVolume').val(data);
+			}
+		);
+}).keyup(function(){
+	validateNumber($(this));
+});
+
+$('#Product_width').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+}).keyup(function(){
+	validateNumber($(this));
+});
+
+$('#Product_height').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+}).keyup(function(){
+	validateNumber($(this));
+});
+
+$('#Product_weight').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+}).keyup(function(){
+	validateNumber($(this));
+});
+
+
+");
+?>
+
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'product-form',
 	'enableAjaxValidation'=>false,
 	'htmlOptions'=>array('enctype'=>'multipart/form-data'),
-)); ?>
+)); 
+?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
@@ -74,39 +139,74 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'length'); ?>
-		<?php echo $form->textField($model,'length',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'length'); ?>
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'length'); ?>
+			<?php echo $form->textField($model,'length',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'length'); ?>
+		</div>
+
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'width'); ?>
+			<?php echo $form->textField($model,'width',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'width'); ?>
+		</div>
+
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'height'); ?>
+			<?php echo $form->textField($model,'height',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'height'); ?>
+		</div>
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'Id_measurement_unit_linear'); ?>
+			<?php				
+				$measureType = MeasurementType::model()->findByAttributes(array('description'=>'linear'));
+				 
+				echo $form->dropDownList($model, 'Id_measurement_unit_linear', CHtml::listData(
+	    			MeasurementUnit::model()->findAllByAttributes(array('Id_measurement_type'=>$measureType->Id)), 'Id', 'short_description')); 
+			?>
+			<?php echo $form->error($model,'Id_supplier'); ?>
+		</div>
+		<div style="width: 120px; display: inline-block;">
+			<?php echo CHtml::label("Volume", "Product_volume"); ?>
+			<?php echo CHtml::textField("txtVolume","",array('style'=>'width:90px;')); ?>
+		</div>
+
+	</div>
+	<div class="row">
+
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'weight'); ?>
+			<?php echo $form->textField($model,'weight',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'weight'); ?>
+		</div>
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'Id_measurement_unit_weight'); ?>
+			<?php				
+				$measureType = MeasurementType::model()->findByAttributes(array('description'=>'weight'));
+				 
+				echo $form->dropDownList($model, 'Id_measurement_unit_weight', CHtml::listData(
+	    			MeasurementUnit::model()->findAllByAttributes(array('Id_measurement_type'=>$measureType->Id)), 'Id', 'short_description')); 
+			?>
+			<?php echo $form->error($model,'Id_supplier'); ?>
+		</div>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'width'); ?>
-		<?php echo $form->textField($model,'width',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'width'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'height'); ?>
-		<?php echo $form->textField($model,'height',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'height'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'weight'); ?>
-		<?php echo $form->textField($model,'weight',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'weight'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'profit_rate'); ?>
-		<?php echo $form->textField($model,'profit_rate',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'profit_rate'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'msrp'); ?>
-		<?php echo $form->textField($model,'msrp',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'msrp'); ?>
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'msrp'); ?>
+			<?php echo $form->textField($model,'msrp',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'msrp'); ?>
+		</div>
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'dealer_cost'); ?>
+			<?php echo $form->textField($model,'dealer_cost',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'dealer_cost'); ?>
+		</div>
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'profit_rate'); ?>
+			<?php echo $form->textField($model,'profit_rate',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'profit_rate'); ?>
+		</div>
 	</div>
 
 	<div class="row">
@@ -181,5 +281,4 @@ $note = Note::model()->findByAttributes(array('Id_product'=>$model->Id));
 	</div>
 
 <?php $this->endWidget(); ?>
-
 </div><!-- form -->

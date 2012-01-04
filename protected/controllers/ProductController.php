@@ -399,6 +399,25 @@ class ProductController extends Controller
 	
 		}
 	}	
+	public function actionAjaxFillVolume()
+	{
+		if(isset($_POST['Product']['width'])&&isset($_POST['Product']['height'])&&isset($_POST['Product']['length']))
+		{
+			$width = $_POST['Product']['width'];
+			$height = $_POST['Product']['height'];
+			$length = $_POST['Product']['length'];
+			$cubicMeter = MeasurementUnit::model()->findByAttributes(array('short_description'=>'m3'));
+			$cubicInch = MeasurementUnit::model()->findByAttributes(array('short_description'=>'in3'));
+			$converter = MeasurementUnitConverter::model()->findByAttributes(
+				array(
+					'Id_measurement_from'=>$cubicInch->Id,
+					'Id_measurement_to'=>$cubicMeter->Id,
+				)
+			);
+			echo $converter->factor * $width * $height * $length;	
+		}
+	}
+		
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated
