@@ -96,6 +96,8 @@ $(window).scroll(function() {
 					array('label'=>Yii::app()->lc->t('Multimedia'), 'url'=>array('/multimedia/index')),
 					array('label'=>Yii::app()->lc->t('Price List'), 'url'=>array('/pricelist/index')),
 					array('label'=>Yii::app()->lc->t('Service'), 'url'=>array('/service/index')),
+					array('label'=>Yii::app()->lc->t('Project'), 'url'=>array('/project/index')),
+					array('label'=>Yii::app()->lc->t('Customer'), 'url'=>array('/customer/index')),
 		)
 			)
 		)
