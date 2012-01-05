@@ -59,7 +59,7 @@ class ShippingParameterMaritime extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'shippingParameters' => array(self::HAS_MANY, 'ShippingParameter', 'Id_shipping_parameter_maritime'),
-			'idMeasurementUnitCost' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_cost'),
+			'measurementUnitCost' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_cost'),
 		);
 	}
 

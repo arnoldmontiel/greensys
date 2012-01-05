@@ -63,9 +63,9 @@ class ShippingParameter extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'purchaseOrders' => array(self::HAS_MANY, 'PurchaseOrder', 'Id_shipping_parameter'),
-			'idImporter' => array(self::BELONGS_TO, 'Importer', 'Id_importer'),
-			'idShippingParameterAir' => array(self::BELONGS_TO, 'ShippingParameterAir', 'Id_shipping_parameter_air'),
-			'idShippingParameterMaritime' => array(self::BELONGS_TO, 'ShippingParameterMaritime', 'Id_shipping_parameter_maritime'),
+			'importer' => array(self::BELONGS_TO, 'Importer', 'Id_importer'),
+			'shippingParameterAir' => array(self::BELONGS_TO, 'ShippingParameterAir', 'Id_shipping_parameter_air'),
+			'shippingParameterMaritime' => array(self::BELONGS_TO, 'ShippingParameterMaritime', 'Id_shipping_parameter_maritime'),
 		);
 	}
 

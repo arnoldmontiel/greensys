@@ -58,7 +58,7 @@ class Importer extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idContact' => array(self::BELONGS_TO, 'Contact', 'Id_contact'),
+			'contact' => array(self::BELONGS_TO, 'Contact', 'Id_contact'),
 			'purchaseOrders' => array(self::HAS_MANY, 'PurchaseOrder', 'Id_importer'),
 			'shippingParameters' => array(self::HAS_MANY, 'ShippingParameter', 'Id_importer'),
 		);

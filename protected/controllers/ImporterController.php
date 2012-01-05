@@ -62,17 +62,19 @@ class ImporterController extends Controller
 	public function actionCreate()
 	{
 		$model=new Importer;
-
+		$modelContact=new Contact;
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Importer']))
+		if(isset($_POST['Importer'])&&isset($_POST['Contact']))
 		{
 			$model->attributes=$_POST['Importer'];
-			if($model->save())
+			$modelContact->attributes=$_POST['Contact'];
+			if($model->save()&&$modelContact->save())
 				$this->redirect(array('view','id'=>$model->Id));
 		}
-
+		
 		$this->render('create',array(
 			'model'=>$model,
 		));
@@ -86,19 +88,22 @@ class ImporterController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+		$modelContact=$this->loadModelContact($model->Id_contact);
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Importer']))
-		{
+		if(isset($_POST['Importer'])&&isset($_POST['Contact']))
+				{
 			$model->attributes=$_POST['Importer'];
+			$modelContact->attributes=$_POST['Contact'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->Id));
 		}
 
 		$this->render('update',array(
 			'model'=>$model,
+			'modelContact'=>$modelContact,
 		));
 	}
 
@@ -160,7 +165,19 @@ class ImporterController extends Controller
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
-
+	/**
+	* Returns the data model based on the primary key given in the GET variable.
+	* If the data model is not found, an HTTP exception will be raised.
+	* @param integer the ID of the model to be loaded
+	*/
+	public function loadModelContact($id)
+	{
+		$model=Contact::model()->findByPk($id);
+		if($model===null)
+		throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
+	}
+	
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated

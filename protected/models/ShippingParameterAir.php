@@ -66,8 +66,8 @@ class ShippingParameterAir extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'shippingParameters' => array(self::HAS_MANY, 'ShippingParameter', 'Id_shipping_parameter_air'),
-			'idMeasurementUnitCost' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_cost'),
-			'idMeasurementUnitSizesMax' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_sizes_max'),
+			'measurementUnitCost' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_cost'),
+			'measurementUnitSizesMax' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_sizes_max'),
 		);
 	}
 
