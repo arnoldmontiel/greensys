@@ -9,7 +9,43 @@ $this->menu=array(
 );
 $this->trashDraggableId = 'ddlAssigment';
 
+
+Yii::app()->clientScript->registerScript('priceListItem', "
+$('input[type=checkbox]').click(function(){
+	debugger;
+	alert(1);
+// 	if($(this).val()!= ''){
+// 		$.fn.yiiGridView.update('price-list-item-grid', {
+// 			data: $(this).serialize()
+// 		});
+// 		$.fn.yiiGridView.update('product-grid', {
+// 			data: $(this).serialize()
+// 		});
+// 		$('#display').animate({opacity: 'show'},240);
+
+// 					$(this).serialize()
+// 				).success(
+// 					function(data) 
+// 					{
+// 						$('#sidebar').html(data);
+// 						$( '#sidebar' ).show();	
+// 					}
+// 				);
+// 	}
+// 	else{
+// 		$('#display').animate({opacity: 'hide'},240);
+// 		$( '#sidebar' ).hide();	
+
+// 	}
+	return false;
+}
+);
+
+");
+
 ?>
+
+
 
 <div class="form">
 	<?php $form=$this->beginWidget('CActiveForm', array(
@@ -40,6 +76,21 @@ $this->trashDraggableId = 'ddlAssigment';
 					{
 						$("#ddlAssigment").html(data);
 						$( "#Display" ).animate({opacity: "show"},"slow");
+						$("input[type=checkbox]").click(function(){
+							var target = $(this);
+							$.post(
+								"'.ProjectController::createUrl('AjaxSetCentralized').'",
+								 {
+								 	IdProject: $("#Project_Id :selected").attr("value"),
+									IdArea:$(this).parent().attr("id"),
+									centralized:($(this).is(":checked"))?1:0
+								 }).success(
+										 	function() 
+										 		{ 
+										 			$(target).parent().find("#centralizedok").animate({opacity: "show"},2000);
+													$(target).parent().find("#centralizedok").animate({opacity: "hide"},4000);
+												}); 
+						});
 					}
 				}',
 				//leave out the data key to pass all form values through
@@ -52,7 +103,7 @@ $this->trashDraggableId = 'ddlAssigment';
 	<div id="Display" style="display: none">
 	<div class="gridTitle-decoration1" style="float: left; width: 50%;">
 	<div class="gridTitle1">
-	Assigned
+	Assigned (check centralized area)
 	</div>
 	</div>
 	<div class="gridTitle-decoration1" >
@@ -70,15 +121,44 @@ $this->trashDraggableId = 'ddlAssigment';
 					'items' => array(),
 					'options'=>array(
 						'revert'=> true,
-						'start'=>'var id=$(ui.item).attr("id");',		
+						'start'=>'var id=$(ui.item).attr("id");
+								  var isDrag=0;',		
 						'stop'=>'js:function(event, ui) 
 								{
-									$(ui.item).children().animate({opacity: "show"},2000);
-									$(ui.item).children().animate({opacity: "hide"},4000);
+									try{
+										if(isDrag == 1){
+											isDrag=0;
+											$(ui.item).children().animate({opacity: "show"},2000);
+											$(ui.item).children().animate({opacity: "hide"},4000);
+											var input = document.createElement("input");
+											input.type = "checkbox";
+											input.name = "centralized";
+		  									$(ui.item).append(input);
+		  									$("input[type=checkbox]").click(function(){
+												var target = $(this);
+												$.post(
+													"'.ProjectController::createUrl('AjaxSetCentralized').'",
+													 {
+													 	IdProject: $("#Project_Id :selected").attr("value"),
+														IdArea:id,
+														centralized:($(this).is(":checked"))?1:0
+													 }).success(
+															 	function() 
+															 		{
+															 			$(target).parent().find("#saveok").animate({opacity: "show"},2000);
+																		$(target).parent().find("#saveok").animate({opacity: "hide"},4000);
+																	}); 
+											});
+										}
+									}catch(e){
+									
+									}	
+									
 								}', 				
 						'receive'=>
 								'js:function(event, ui) 
 								{
+									isDrag = 1;
 									id = $(ui.item).attr("id");
 									$.post(
 										"'.ProjectController::createUrl('AjaxAddProjectArea').'",
@@ -105,10 +185,10 @@ $this->trashDraggableId = 'ddlAssigment';
 	));
 	?>
 			</div>
-			<div id="Service" class="selectable-items">
+			<div id="Area" class="selectable-items">
 			<?php 
 			$this->widget('ext.draglist.draglist', array(
-			'id'=>'dlService',
+			'id'=>'dlArea',
 			'items' => $itemsArea,
 			'options'=>array(
 					'helper'=> 'clone',

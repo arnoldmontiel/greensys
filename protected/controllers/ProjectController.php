@@ -161,8 +161,35 @@ class ProjectController extends Controller
 	
 		foreach($data as $item)
 		{
+			$checked = '';
+			if($item->centralized > 0)
+				$checked = 'checked';
+				
 			echo CHtml::tag('li',
-			array('id'=>"items_".$item->Id_project,'class'=>'ui-state-default'),CHtml::encode($item->area->description),true);
+							array('id'=>"items_".$item->Id_area,
+				  				  'class'=>'ui-state-default'),
+						    CHtml::encode($item->area->description). "  ". CHtml::checkBox("centralized",$item->centralized). 
+						    "  <img id='centralizedok' src='images/save_ok.png' alt=''  style='position: relative;float:rigth;width:15px; height:15px; display:none;' />" ,
+							true);
+		}
+	}
+	
+	public function actionAjaxSetCentralized()
+	{
+		$idArea = isset($_POST['IdArea'])?$_POST['IdArea']:'';
+		$idProject= isset($_POST['IdProject'])?$_POST['IdProject']:'';
+		$centralized= isset($_POST['centralized'])?(int)$_POST['centralized']:null;
+		$idArea = explode("_",$idArea);
+		$idArea = $idArea[1];
+			
+		if(!empty($idProject)&&!empty($idArea))
+		{
+			$serviceAreaInDb = AreaProject::model()->findByPk(array('Id_area'=>(int) $idArea,'Id_project'=>(int)$idProject));
+			if($serviceAreaInDb!=null)
+			{
+				$serviceAreaInDb->centralized = $centralized;
+				$serviceAreaInDb->save();
+			}
 		}
 	}
 	
