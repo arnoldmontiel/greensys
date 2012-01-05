@@ -33,5 +33,20 @@
 		<b><?php echo CHtml::encode($model->getAttributeLabel('address')); ?>:</b>
 		<?php echo CHtml::encode($model->contact->address); ?>
 		<br />
+		<br />
+		<b><?php echo CHtml::encode($model->getAttributeLabel('link')); ?>:</b>
+		<?php
+		$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
+		$hyperLinks = CHtml::listData(Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$model->contact->Id,'Id_entity_type'=>$entity->Id)), 'Id','description');
+		
+		$this->widget('ext.linkcontainer.linkcontainer', array(
+			'id'=>'linkContainer',	// default is class="ui-sortable" id="yw0"
+			'items'=>$hyperLinks,
+			'mode'=>'show'
+		));
+		?>
 	</div>
+	<div class="footer">
+		
+	</div>		
 </div>
