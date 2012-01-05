@@ -57,3 +57,15 @@ function validateNumber(obj)
     }
 }
 
+function fillVolumeTextBox(url,textBoxId,formId)
+{
+	$.post(url,
+		$('#'+formId).serialize()
+	).success(
+		function(data) 
+		{
+			$('#'+textBoxId).val(data);
+		}
+	);
+}
+
