@@ -98,6 +98,7 @@ $(window).scroll(function() {
 					array('label'=>Yii::app()->lc->t('Service'), 'url'=>array('/service/index')),
 					array('label'=>Yii::app()->lc->t('Project'), 'url'=>array('/project/index')),
 					array('label'=>Yii::app()->lc->t('Customer'), 'url'=>array('/customer/index')),
+					array('label'=>Yii::app()->lc->t('Importer'), 'url'=>array('/importer/index')),
 		)
 			)
 		)
