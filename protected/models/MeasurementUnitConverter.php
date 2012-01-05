@@ -43,7 +43,7 @@ class MeasurementUnitConverter extends CActiveRecord
 		return array(
 			array('Id, Id_measurement_from, Id_measurement_to', 'required'),
 			array('Id, Id_measurement_from, Id_measurement_to', 'numerical', 'integerOnly'=>true),
-			array('factor', 'length', 'max'=>10),
+			array('factor', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, Id_measurement_from, Id_measurement_to, factor', 'safe', 'on'=>'search'),

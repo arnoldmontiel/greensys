@@ -406,15 +406,24 @@ class ProductController extends Controller
 			$width = $_POST['Product']['width'];
 			$height = $_POST['Product']['height'];
 			$length = $_POST['Product']['length'];
-			$cubicMeter = MeasurementUnit::model()->findByAttributes(array('short_description'=>'m3'));
-			$cubicInch = MeasurementUnit::model()->findByAttributes(array('short_description'=>'in3'));
+			$measureLinear = MeasurementUnit::model()->findByPk($_POST['Product']['Id_measurement_unit_linear']);
+			if($measureLinear->short_description=='ml')
+			{
+				$cubicFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'m3'));
+			}
+			else if($measureLinear->short_description=='in')
+			{
+				$cubicFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'in3'));				
+			}
+				
+			$cubicTo = MeasurementUnit::model()->findByAttributes(array('short_description'=>'m3'));
 			$converter = MeasurementUnitConverter::model()->findByAttributes(
 				array(
-					'Id_measurement_from'=>$cubicInch->Id,
-					'Id_measurement_to'=>$cubicMeter->Id,
+					'Id_measurement_from'=>$cubicFrom->Id,
+					'Id_measurement_to'=>$cubicTo->Id,
 				)
 			);
-			echo $converter->factor * $width * $height * $length;	
+			echo round($converter->factor * (double)$width * (double)$height * (double)$length, 6);	
 		}
 	}
 		

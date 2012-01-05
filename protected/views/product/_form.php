@@ -30,29 +30,27 @@ $('#Product_profit_rate').change(function(){
 
 $('#Product_length').change(function(){
 	$(this).val(Number($(this).val()).toFixed(2));
-	$.post('".ProductController::createUrl("AjaxFillVolume")."',
-			$(this).parent().parent().parent().serialize()
-		).success(
-			function(data) 
-			{
-				$('#txtVolume').val(data);
-			}
-		);
+	fillVolumeTextBox('".ProductController::createUrl("AjaxFillVolume")."','txtVolume','product-form');
 }).keyup(function(){
 	validateNumber($(this));
 });
 
 $('#Product_width').change(function(){
 	$(this).val(Number($(this).val()).toFixed(2));
+	fillVolumeTextBox('".ProductController::createUrl("AjaxFillVolume")."','txtVolume','product-form');
 }).keyup(function(){
 	validateNumber($(this));
 });
 
 $('#Product_height').change(function(){
 	$(this).val(Number($(this).val()).toFixed(2));
+	fillVolumeTextBox('".ProductController::createUrl("AjaxFillVolume")."','txtVolume','product-form');
 }).keyup(function(){
 	validateNumber($(this));
 });
+$('#Product_Id_measurement_unit_linear').change(function(){
+	fillVolumeTextBox('".ProductController::createUrl("AjaxFillVolume")."','txtVolume','product-form');
+})
 
 $('#Product_weight').change(function(){
 	$(this).val(Number($(this).val()).toFixed(2));
