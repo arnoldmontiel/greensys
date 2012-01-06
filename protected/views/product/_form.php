@@ -220,8 +220,8 @@ $('#Product_weight').change(function(){
 		<?php echo $form->error($model,'hide'); ?>
 	</div>
 <?php
-
-$hyperLinks = CHtml::listData(Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id)), 'Id','description');
+$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
+$hyperLinks = CHtml::listData(Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$entity->Id)), 'Id','description');
 
 $this->widget('ext.linkcontainer.linkcontainer', array(
 	'id'=>'linkContainer',	// default is class="ui-sortable" id="yw0"
@@ -232,7 +232,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 <div style="height:270px;" >
 <div class="left">
 <?php 
-		$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
+		
 		$multimediaData = Multimedia::model()->findByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$entity->Id));
 		$multimedia = Multimedia::model();
 		?>

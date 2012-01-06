@@ -58,24 +58,29 @@ class ProductController extends Controller
 		if(isset($_POST['Product']))
 		{
 			$model->attributes=$_POST['Product'];
-			if($model->save()){
-				//save links
-				if(isset($_POST['links'])){
-					$this->saveLinks($_POST['links'], $model);
-				}
+			
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				if($model->save()){
+					//save links
+					if(isset($_POST['links'])){
+						$this->saveLinks($_POST['links'], $model);
+					}
 				
-				//save note
-				if(isset($_POST['notes']) && !empty($_POST['notes']))
-					$this->saveNote($_POST['notes'], $model);
+					//save note
+					if(isset($_POST['notes']) && !empty($_POST['notes']))
+						$this->saveNote($_POST['notes'], $model);
 				
-				//save image
-				if(isset($_POST['Multimedia']))
-					$this->saveImage($model);
+					//save image
+					if(isset($_POST['Multimedia']))
+						$this->saveImage($model);
 				
-				
-				
-				$this->redirect(array('view','id'=>$model->Id));
-			}
+					$transaction->commit();		
+					$this->redirect(array('view','id'=>$model->Id));
+				}	
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}			
 		}
 
 		$this->render('create',array(
@@ -192,21 +197,32 @@ class ProductController extends Controller
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
-			//First delete links
-			$this->deleteLinks($id);
+			$model=$this->loadModel($id);
 			
-			//First delete note
-			$this->deleteNote($id);
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				//First delete links
+				$this->deleteLinks($id);
+					
+				//First delete note
+				$this->deleteNote($id);
+					
+				//First delete image
+				$this->deleteImage($id);
+					
+				// we only allow deletion via POST request
+				$model->delete();
+				
+				$transaction->commit();
+				
+				// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+				if(!isset($_GET['ajax']))
+					$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+				
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
 			
-			//First delete image
-			$this->deleteImage($id);
-			
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
-
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 		}
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');

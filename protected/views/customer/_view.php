@@ -36,7 +36,7 @@
 		<br />
 		<b><?php echo CHtml::encode($model->getAttributeLabel('link')); ?>:</b>
 		<?php
-		$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
+		$entity = EntityType::model()->findByAttributes(array('name'=>get_class(Contact::model())));
 		$hyperLinks = CHtml::listData(Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$model->contact->Id,'Id_entity_type'=>$entity->Id)), 'Id','description');
 		
 		$this->widget('ext.linkcontainer.linkcontainer', array(

@@ -73,6 +73,15 @@
 		<?php echo $form->textField($modelContact,'address',array('size'=>60,'maxlength'=>100)); ?>
 		<?php echo $form->error($modelContact,'address'); ?>
 	</div>
+	<?php
+	$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
+	$hyperLinks = CHtml::listData(Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$modelContact->Id,'Id_entity_type'=>$entity->Id)), 'Id','description');
+	
+	$this->widget('ext.linkcontainer.linkcontainer', array(
+		'id'=>'linkContainer',	// default is class="ui-sortable" id="yw0"
+		'items'=>$hyperLinks,
+				));
+	?>
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

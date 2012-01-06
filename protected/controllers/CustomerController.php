@@ -72,12 +72,27 @@ class CustomerController extends Controller
 		{
 			$modelPerson->attributes=$_POST['Person'];
 			$modelContact->attributes=$_POST['Contact'];
-			if( $modelContact->save() && $modelPerson->save()){
-				$model->Id_person = $modelPerson->Id;
-				$model->Id_contact = $modelContact->Id;
-				if($model->save())
-					$this->redirect(array('view','id'=>$model->Id));
-			}
+			
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				if( $modelPerson->save() && $modelContact->save()){
+					
+					$model->Id_person = $modelPerson->Id;
+					$model->Id_contact = $modelContact->Id;
+					
+					//save links
+					if(isset($_POST['links'])){
+						$this->saveLinks($_POST['links'], $modelContact);
+					}
+					
+					if($model->save()){
+						$transaction->commit();	
+						$this->redirect(array('view','id'=>$model->Id));
+					}
+				}	
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}			
 		}
 
 		$this->render('create',array(
@@ -108,6 +123,28 @@ class CustomerController extends Controller
 				$this->redirect(array('view','id'=>$model->Id));
 		}
 
+		if(isset($_POST['Person']) && isset($_POST['Contact']))
+		{
+			$modelPerson->attributes=$_POST['Person'];
+			$modelContact->attributes=$_POST['Contact'];
+				
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				if( $modelPerson->save() && $modelContact->save()){
+					
+					//save links
+					if(isset($_POST['links'])){
+						$this->saveLinks($_POST['links'], $modelContact);
+					}
+					$transaction->commit();
+					$this->redirect(array('view','id'=>$model->Id));
+				}
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
+		}
+		
+		
 		$this->render('update',array(
 			'model'=>$model,
 			'modelPerson'=>$modelPerson,
@@ -135,6 +172,27 @@ class CustomerController extends Controller
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
+	private function saveLinks($links, $model)
+	{
+		$this->deleteLinks($model->Id);
+	
+		$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
+		foreach ($links as $link){
+			$hyperlink = new Hyperlink;
+			$hyperlink->attributes = array(
+								'description'=>$link,
+								'Id_entity_type'=>$entity->Id,
+								'Id_contact'=>$model->Id);
+				
+			$hyperlink->save();
+		}
+	}
+	
+	private function deleteLinks($id)
+	{
+		Hyperlink::model()->deleteAllByAttributes(array('Id_contact'=>$id));
+	}
+	
 	/**
 	 * Lists all models.
 	 */
