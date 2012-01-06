@@ -178,7 +178,8 @@ $('input[type=checkbox]').click(function(){
 										"'.ProjectController::createUrl('AjaxRemoveProjectArea').'",
 										 {
 										 	IdProject: $("#Project_Id :selected").attr("value"),
-											IdArea:$(ui.item).attr("id")
+											IdArea:$(ui.item).attr("id"),
+											centralized:($(ui.item).find("input").is(":checked"))?1:0
 										}); 
 								}', 				
 	),

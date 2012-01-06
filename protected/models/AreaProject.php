@@ -4,9 +4,14 @@
  * This is the model class for table "area_project".
  *
  * The followings are the available columns in table 'area_project':
+ * @property integer $Id
  * @property integer $Id_area
  * @property integer $Id_project
  * @property integer $centralized
+ *
+ * The followings are the available model relations:
+ * @property Area $idArea
+ * @property Project $idProject
  */
 class AreaProject extends CActiveRecord
 {
@@ -39,7 +44,7 @@ class AreaProject extends CActiveRecord
 			array('Id_area, Id_project, centralized', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id_area, Id_project, centralized', 'safe', 'on'=>'search'),
+			array('Id, Id_area, Id_project, centralized', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,6 +67,7 @@ class AreaProject extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
+			'Id' => 'ID',		
 			'Id_area' => 'Id Area',
 			'Id_project' => 'Id Project',
 			'centralized' => 'Centralized',
@@ -78,7 +84,8 @@ class AreaProject extends CActiveRecord
 		// should not be searched.
 
 		$criteria=new CDbCriteria;
-
+		
+		$criteria->compare('Id',$this->Id);		
 		$criteria->compare('Id_area',$this->Id_area);
 		$criteria->compare('Id_project',$this->Id_project);
 		$criteria->compare('centralized',$this->centralized);
