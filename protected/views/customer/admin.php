@@ -39,11 +39,25 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'customer-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$model->searchCustomer(),
 	'filter'=>$model,
 	'columns'=>array(
-		'Id',
-		'Id_person',
+		array(
+ 			'name'=>'name',
+			'value'=>'$data->person->name',
+		),
+		array(
+ 			'name'=>'last_name',
+			'value'=>'$data->person->last_name',
+		),
+		array(
+ 			'name'=>'telephone_1',
+			'value'=>'$data->contact->telephone_1',
+		),
+		array(
+ 			'name'=>'email',
+			'value'=>'$data->contact->email',
+		),
 		array(
 			'class'=>'CButtonColumn',
 		),

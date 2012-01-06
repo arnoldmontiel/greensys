@@ -17,6 +17,11 @@
  */
 class Customer extends CActiveRecord
 {
+	public $name;
+	public $last_name;
+	public $telephone_1;
+	public $email;
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Customer the static model class
@@ -46,7 +51,7 @@ class Customer extends CActiveRecord
 			array('Id_person, Id_contact', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_person, Id_contact', 'safe', 'on'=>'search'),
+			array('Id, Id_person, Id_contact, name, last_name, telephone_1, email', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -99,6 +104,54 @@ class Customer extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+		));
+	}
+	
+	public function searchCustomer()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('Id',$this->Id);
+		$criteria->compare('Id_person',$this->Id_person);
+		$criteria->compare('Id_contact',$this->Id_contact);
+	
+		$criteria->with[]='person';
+		$criteria->addSearchCondition("person.name",$this->name);
+		$criteria->addSearchCondition("person.last_name",$this->last_name);
+	
+		$criteria->with[]='contact';
+		$criteria->addSearchCondition("contact.telephone_1",$this->telephone_1);
+		$criteria->addSearchCondition("contact.email",$this->email);
+	
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+		// For each relational attribute, create a 'virtual attribute' using the public variable name
+			'name' => array(
+									        'asc' => 'person.name',
+									        'desc' => 'person.name DESC',
+			),
+			'last_name' => array(
+						        'asc' => 'person.last_name',
+						        'desc' => 'person.last_name DESC',
+			),		
+			'telephone_1' => array(
+				        'asc' => 'contact.telephone_1',
+				        'desc' => 'contact.telephone_1 DESC',
+			),
+			'email' => array(
+				        'asc' => 'contact.email',
+				        'desc' => 'contact.email DESC',
+			),
+			'*',
+		);
+	
+		return new CActiveDataProvider($this, array(
+					'criteria'=>$criteria,
+					'sort'=>$sort,
 		));
 	}
 }
