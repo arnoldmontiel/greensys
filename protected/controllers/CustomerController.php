@@ -161,12 +161,30 @@ class CustomerController extends Controller
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
-
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$model = $this->loadModel($id);
+			$modelPerson = Person::model()->findByPk($model->Id_person);
+			$modelContact = Contact::model()->findByPk($model->Id_contact);
+			
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				
+				//delete links
+				$this->deleteLinks($modelContact->Id);
+				$modelPerson->delete();
+				$modelContact->delete();
+				
+				// we only allow deletion via POST request
+				$model->delete();
+				
+				$transaction->commit();
+				
+				// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+				if(!isset($_GET['ajax']))
+					$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+				
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}			
 		}
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
