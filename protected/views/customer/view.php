@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Customers'=>array('index'),
-	$model->Id,
+	$model->person->last_name,
 );
 
 $this->menu=array(
@@ -13,7 +13,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>View Customer #<?php echo $model->Id; ?></h1>
+<h1>View Customer</h1>
 <?php echo $this->renderPartial('_view', array('model'=>$model)); ?>
 <?php 
 /*

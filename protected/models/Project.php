@@ -65,7 +65,7 @@ class Project extends CActiveRecord
 			'areas' => array(self::MANY_MANY, 'Area', 'area_project(Id_project, Id_area)'),
 			'budgets' => array(self::HAS_MANY, 'Budget', 'Id_project'),
 			'productItems' => array(self::HAS_MANY, 'ProductItem', 'Id_project'),
-			'idCustomer' => array(self::BELONGS_TO, 'Customer', 'Id_customer'),
+			'customer' => array(self::BELONGS_TO, 'Customer', 'Id_customer'),
 			'contacts' => array(self::MANY_MANY, 'Contact', 'project_contact(Id_project, Id_contact)'),
 			'trackings' => array(self::HAS_MANY, 'Tracking', 'Id_project'),
 		);
