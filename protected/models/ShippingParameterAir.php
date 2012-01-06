@@ -48,7 +48,7 @@ class ShippingParameterAir extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id, Id_measurement_unit_cost, Id_measurement_unit_sizes_max', 'required'),
+			array('Id_measurement_unit_cost, Id_measurement_unit_sizes_max', 'required'),
 			array('Id, Id_measurement_unit_cost, Id_measurement_unit_sizes_max, days', 'numerical', 'integerOnly'=>true),
 			array('cost_measurement_unit, weight_max, lenght_max, width_max, height_max, volume_max', 'numerical'),
 			// The following rule is used by search().

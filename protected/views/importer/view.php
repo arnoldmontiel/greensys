@@ -13,13 +13,31 @@ $this->menu=array(
 );
 ?>
 
-<h1>View Importer #<?php echo $model->Id; ?></h1>
+<h1>View Importer </h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
-		'Id',
 		'description',
-		'Id_contact',
+		array('label'=>$model->contact->getAttributeLabel('telephone_1'),
+			'type'=>'raw',
+			'value'=>$model->contact->telephone_1
+		),
+		array('label'=>$model->contact->getAttributeLabel('telephone_2'),
+			'type'=>'raw',
+			'value'=>$model->contact->telephone_2
+		),
+		array('label'=>$model->contact->getAttributeLabel('telephone_3'),
+			'type'=>'raw',
+			'value'=>$model->contact->telephone_3
+		),
+		array('label'=>$model->contact->getAttributeLabel('email'),
+			'type'=>'raw',
+			'value'=>$model->contact->email
+		),
+		array('label'=>$model->contact->getAttributeLabel('address'),
+			'type'=>'raw',
+			'value'=>$model->contact->address
+		),
 	),
 )); ?>

@@ -27,18 +27,6 @@ class ImporterController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
 		);
@@ -50,8 +38,10 @@ class ImporterController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$model = $this->loadModel($id);
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$model,
+			'modelContact'=>$this->loadModelContact($model->Id_contact),
 		));
 	}
 
@@ -63,6 +53,9 @@ class ImporterController extends Controller
 	{
 		$model=new Importer;
 		$modelContact=new Contact;
+		$modelShippingParameter =  new ShippingParameter;
+		$modelShippingParameterAir = new ShippingParameterAir;
+		$modelShippingParameterMaritime = new ShippingParameterMaritime;
 		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -71,12 +64,28 @@ class ImporterController extends Controller
 		{
 			$model->attributes=$_POST['Importer'];
 			$modelContact->attributes=$_POST['Contact'];
-			if($model->save()&&$modelContact->save())
-				$this->redirect(array('view','id'=>$model->Id));
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				if($modelContact->save())
+				{
+					$model->Id_contact = $modelContact->Id; 
+					if($model->save())
+					{
+						$transaction->commit();
+						$this->redirect(array('view','id'=>$model->Id));
+					}
+				}				
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
 		}
 		
 		$this->render('create',array(
 			'model'=>$model,
+			'modelContact'=>$modelContact,
+			'modelShippingParameterMaritime'=>$modelShippingParameterMaritime,
+			'modelShippingParameterAir'=>$modelShippingParameterAir,
+			'modelShippingParameter'=>$modelShippingParameter,		
 		));
 	}
 
@@ -94,11 +103,21 @@ class ImporterController extends Controller
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Importer'])&&isset($_POST['Contact']))
-				{
+		{
 			$model->attributes=$_POST['Importer'];
 			$modelContact->attributes=$_POST['Contact'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->Id));
+			$transaction = $model->dbConnection->beginTransaction();
+			try 
+			{
+				if($model->save()&&$modelContact->save())
+				{
+					$transaction->commit();
+					$this->redirect(array('view','id'=>$model->Id));
+				}					
+					
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
 		}
 
 		$this->render('update',array(
@@ -116,12 +135,24 @@ class ImporterController extends Controller
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
+			$transaction = $model->dbConnection->beginTransaction();
 
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
+			try {
+				// we only allow deletion via POST request
+				$model = $this->loadModel($id);
+				$modelContact = $this->loadModelContact($model->Id_contact);
+
+				if($model->delete() && $modelContact->delete())
+				{
+					$transaction->commit();						
+				}				
+				// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+				if(!isset($_GET['ajax']))
 				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+				
+			} catch (Exception $e) {
+				$transaction->rollback();				
+			}
 		}
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');

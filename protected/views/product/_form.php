@@ -162,7 +162,7 @@ $('#Product_weight').change(function(){
 				echo $form->dropDownList($model, 'Id_measurement_unit_linear', CHtml::listData(
 	    			MeasurementUnit::model()->findAllByAttributes(array('Id_measurement_type'=>$measureType->Id)), 'Id', 'short_description')); 
 			?>
-			<?php echo $form->error($model,'Id_supplier'); ?>
+			<?php echo $form->error($model,'Id_measurement_unit_linear'); ?>
 		</div>
 		<div style="width: 120px; display: inline-block;">
 			<?php echo CHtml::label("Volume", "Product_volume"); ?>

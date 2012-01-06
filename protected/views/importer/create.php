@@ -12,4 +12,12 @@ $this->menu=array(
 
 <h1>Create Importer</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', 
+	array(
+		'model'=>$model,
+		'modelContact'=>$modelContact,
+		'modelShippingParameter'=>$modelShippingParameter,
+		'modelShippingParameterAir'=>$modelShippingParameterAir,
+		'modelShippingParameterMaritime'=>$modelShippingParameterMaritime,
+)
+); ?>

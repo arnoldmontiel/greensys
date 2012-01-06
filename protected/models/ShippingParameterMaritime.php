@@ -41,7 +41,7 @@ class ShippingParameterMaritime extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id, Id_measurement_unit_cost', 'required'),
+			array('Id_measurement_unit_cost', 'required'),
 			array('Id, Id_measurement_unit_cost, days', 'numerical', 'integerOnly'=>true),
 			array('cost_measurement_unit', 'length', 'max'=>10),
 			// The following rule is used by search().
