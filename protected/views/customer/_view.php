@@ -8,7 +8,7 @@
 		<?php echo CHtml::encode($model->person->last_name); ?>
 		<br />
 		<b><?php echo CHtml::encode($model->getAttributeLabel('date_birth')); ?>:</b>
-		<?php echo CHtml::encode($model->person->date_birth); ?>
+		<?php echo CHtml::encode($model->person->date_birth); ?>		
 		<br />
 		<b><?php echo CHtml::encode($model->getAttributeLabel('uid')); ?>:</b>
 		<?php echo CHtml::encode($model->person->uid); ?>

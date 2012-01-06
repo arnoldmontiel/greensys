@@ -26,10 +26,12 @@
  		<?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 	     // additional javascript options for the date picker plugin
  		'language'=>'es',
- 		'model'=>$modelPerson,
+ 		'model'=>$modelPerson, 		
  		'attribute'=>'date_birth',
  		'options'=>array(
 	         'showAnim'=>'fold',
+ 			 'yearRange'=>'1930',
+	         'changeYear'=>'true'
 	     ),
 	     'htmlOptions'=>array(
 	         'style'=>'height:20px;'
