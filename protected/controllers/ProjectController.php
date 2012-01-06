@@ -177,14 +177,19 @@ class ProjectController extends Controller
 	public function actionAjaxSetCentralized()
 	{
 		$idArea = isset($_POST['IdArea'])?$_POST['IdArea']:'';
-		$idProject= isset($_POST['IdProject'])?$_POST['IdProject']:'';
-		$centralized= isset($_POST['centralized'])?(int)$_POST['centralized']:null;
+		$idProject = isset($_POST['IdProject'])?$_POST['IdProject']:'';
+		$centralized = isset($_POST['centralized'])?(int)$_POST['centralized']:0;
 		$idArea = explode("_",$idArea);
 		$idArea = $idArea[1];
-			
+		
+		$oldCentralizedState = 0;
+		if($centralized==0)
+			$oldCentralizedState = 1;
+		
+		
 		if(!empty($idProject)&&!empty($idArea))
 		{
-			$serviceAreaInDb = AreaProject::model()->findByPk(array('Id_area'=>(int) $idArea,'Id_project'=>(int)$idProject));
+			$serviceAreaInDb = AreaProject::model()->findByAttributes(array('Id_area'=>(int) $idArea,'Id_project'=>(int)$idProject, 'centralized'=>$oldCentralizedState));
 			if($serviceAreaInDb!=null)
 			{
 				$serviceAreaInDb->centralized = $centralized;
@@ -201,14 +206,10 @@ class ProjectController extends Controller
 		$idArea = $idArea[1];
 	
 		if(!empty($idProject)&&!empty($idArea))
-		{
-			$serviceAreaInDb = AreaProject::model()->findByPk(array('Id_area'=>(int) $idArea,'Id_project'=>(int)$idProject));
-			if($serviceAreaInDb==null)
-			{
-				$projectArea=new AreaProject;
-				$projectArea->attributes = array('Id_area'=>$idArea,'Id_project'=>$idProject);
-				$projectArea->save();
-			}
+		{			
+			$projectArea=new AreaProject;
+			$projectArea->attributes = array('Id_area'=>$idArea,'Id_project'=>$idProject);
+			$projectArea->save();
 		}
 	}
 	
@@ -216,12 +217,13 @@ class ProjectController extends Controller
 	{
 		$idArea = isset($_POST['IdArea'])?$_POST['IdArea']:'';
 		$idProject= isset($_POST['IdProject'])?$_POST['IdProject']:'';
+		$centralized= isset($_POST['centralized'])?(int)$_POST['centralized']:0;
 		$idArea = explode("_",$idArea);
 		$idArea = $idArea[1];
 	
 		if(!empty($idProject)&&!empty($idArea))
 		{
-			$projectAreaInDb = AreaProject::model()->findByPk(array('Id_area'=>(int) $idArea,'Id_project'=>(int)$idProject));
+			$projectAreaInDb = AreaProject::model()->findByAttributes(array('Id_area'=>(int) $idArea,'Id_project'=>(int)$idProject, 'centralized'=>$centralized));
 			if($projectAreaInDb!=null)
 			{
 				$projectAreaInDb->delete();
