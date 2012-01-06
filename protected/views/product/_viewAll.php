@@ -37,7 +37,7 @@
 		<br />
 	
 		<b><?php echo CHtml::encode($data->getAttributeLabel('discontinued')); ?>:</b>
-		<?php echo CHtml::encode($data->discontinued); ?>
+		<?php echo CHtml::checkBox("discontinued",CHtml::encode($data->discontinued),array('disabled'=>'disabled')); ?>
 		<br />
 	
 		<b><?php echo CHtml::encode($data->getAttributeLabel('length')); ?>:</b>

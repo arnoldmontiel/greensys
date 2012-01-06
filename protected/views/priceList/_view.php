@@ -1,7 +1,7 @@
 <div class="view">
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('Id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->Id), array('view', 'id'=>$data->Id)); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('description')); ?>:</b>
+	<?php echo CHtml::link(CHtml::encode($data->description), array('view', 'id'=>$data->Id)); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('date_creation')); ?>:</b>
@@ -13,10 +13,10 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('validity')); ?>:</b>
-	<?php echo CHtml::encode($data->validity); ?>
+	<?php echo CHtml::checkBox("validity",CHtml::encode($data->validity),array('disabled'=>'disabled')); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_supplier')); ?>:</b>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('supplier')); ?>:</b>
 	<?php echo CHtml::encode($data->supplier->business_name); ?>
 	<br />
 
