@@ -14,11 +14,13 @@
  * @property integer $budget_version_number
  * @property integer $Id_tracking
  * @property integer $Id_product
+ * @property integer $Id_product_requirement
  *
  * The followings are the available model relations:
  * @property Budget $budget
  * @property Budget $budgetVersionNumber
  * @property Product $idProduct
+ * @property ProductRequirement $idProductRequirement
  * @property EntityType $idEntityType
  * @property ProductRequirementProductItem $idProductRequirementProductRequirementProductItem
  * @property ProductRequirementProductItem $idProductItemProductRequirementProductItem
@@ -78,6 +80,7 @@ class Note extends CActiveRecord
 			'productRequirementProductRequirementProductItem' => array(self::BELONGS_TO, 'ProductRequirementProductItem', 'Id_product_requirement_product_requirement_product_item'),
 			'productItemProductRequirementProductItem' => array(self::BELONGS_TO, 'ProductRequirementProductItem', 'Id_product_item_product_requirement_product_item'),
 			'tracking' => array(self::BELONGS_TO, 'Tracking', 'Id_tracking'),
+			'productRequirement' => array(self::BELONGS_TO, 'ProductRequirement', 'Id_product_requirement'),
 		);
 	}
 
@@ -97,6 +100,7 @@ class Note extends CActiveRecord
 			'budget_version_number' => 'Budget Version Number',
 			'Id_tracking' => 'Id Tracking',
 			'Id_product' => 'Id Product',
+			'Id_product_requirement' => 'Id Product Requirement',
 		);
 	}
 
@@ -122,6 +126,8 @@ class Note extends CActiveRecord
 		$criteria->compare('budget_version_number',$this->budget_version_number);
 		$criteria->compare('Id_tracking',$this->Id_tracking);
 		$criteria->compare('Id_product',$this->Id_product);
+		$criteria->compare('Id_product_requirement',$this->Id_product_requirement);
+		
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
