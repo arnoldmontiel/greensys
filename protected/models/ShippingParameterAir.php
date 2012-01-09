@@ -8,7 +8,7 @@
  * @property double $cost_measurement_unit
  * @property integer $Id_measurement_unit_cost
  * @property double $weight_max
- * @property double $lenght_max
+ * @property double $length_max
  * @property double $width_max
  * @property double $height_max
  * @property double $volume_max
@@ -50,10 +50,10 @@ class ShippingParameterAir extends CActiveRecord
 		return array(
 			array('Id_measurement_unit_cost, Id_measurement_unit_sizes_max', 'required'),
 			array('Id, Id_measurement_unit_cost, Id_measurement_unit_sizes_max, days', 'numerical', 'integerOnly'=>true),
-			array('cost_measurement_unit, weight_max, lenght_max, width_max, height_max, volume_max', 'numerical'),
+			array('cost_measurement_unit, weight_max, length_max, width_max, height_max, volume_max', 'numerical'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, cost_measurement_unit, Id_measurement_unit_cost, weight_max, lenght_max, width_max, height_max, volume_max, Id_measurement_unit_sizes_max, days', 'safe', 'on'=>'search'),
+			array('Id, cost_measurement_unit, Id_measurement_unit_cost, weight_max, length_max, width_max, height_max, volume_max, Id_measurement_unit_sizes_max, days', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -81,7 +81,7 @@ class ShippingParameterAir extends CActiveRecord
 			'cost_measurement_unit' => 'Cost Measurement Unit',
 			'Id_measurement_unit_cost' => 'Id Measurement Unit Cost',
 			'weight_max' => 'Weight Max',
-			'lenght_max' => 'Lenght Max',
+			'length_max' => 'Length Max',
 			'width_max' => 'Width Max',
 			'height_max' => 'Height Max',
 			'volume_max' => 'Volume Max',
@@ -105,7 +105,7 @@ class ShippingParameterAir extends CActiveRecord
 		$criteria->compare('cost_measurement_unit',$this->cost_measurement_unit);
 		$criteria->compare('Id_measurement_unit_cost',$this->Id_measurement_unit_cost);
 		$criteria->compare('weight_max',$this->weight_max);
-		$criteria->compare('lenght_max',$this->lenght_max);
+		$criteria->compare('length_max',$this->length_max);
 		$criteria->compare('width_max',$this->width_max);
 		$criteria->compare('height_max',$this->height_max);
 		$criteria->compare('volume_max',$this->volume_max);

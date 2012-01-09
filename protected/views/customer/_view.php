@@ -4,9 +4,6 @@
 		<b><?php echo CHtml::encode($model->getAttributeLabel('name')); ?>:</b>
 		<?php echo CHtml::encode($model->person->name); ?>
 		<br />
-		<b><?php echo CHtml::encode($model->getAttributeLabel('last_name')); ?>:</b>
-		<?php echo CHtml::encode($model->person->last_name); ?>
-		<br />
 		<b><?php echo CHtml::encode($model->getAttributeLabel('date_birth')); ?>:</b>
 		<?php echo CHtml::encode($model->person->date_birth); ?>		
 		<br />

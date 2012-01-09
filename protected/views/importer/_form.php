@@ -1,4 +1,53 @@
- 
+ <?php
+Yii::app()->clientScript->registerScript(__CLASS__.'#importer_create', "
+$('#ShippingParameterAir_cost_measurement_unit').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+}).keyup(function(){
+	validateNumber($(this));
+});
+$('#ShippingParameterAir_weight_max').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+}).keyup(function(){
+	validateNumber($(this));
+});
+$('#ShippingParameterAir_width_max').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+}).keyup(function(){
+	validateNumber($(this));
+});
+$('#ShippingParameterAir_length_max').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+}).keyup(function(){
+	validateNumber($(this));
+});
+$('#ShippingParameterAir_height_max').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+}).keyup(function(){
+	validateNumber($(this));
+});
+$('#ShippingParameterAir_volume_max').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+}).keyup(function(){
+	validateNumber($(this));
+});
+$('#ShippingParameterMaritime_cost_measurement_unit').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+}).keyup(function(){
+	validateNumber($(this));
+});
+$('#ShippingParameterAir_days').change(function(){
+	//$(this).val(Number($(this).val()).toFixed(2));
+}).keyup(function(){
+	validateNumber($(this));
+});
+$('#ShippingParameterMaritime_days').change(function(){
+	//$(this).val(Number($(this).val()).toFixed(2));
+}).keyup(function(){
+	validateNumber($(this));
+});
+
+");
+ ?>
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'importer-form',
@@ -98,6 +147,11 @@
 				<?php echo $form->labelEx($modelShippingParameterAir,'height_max'); ?>
 				<?php echo $form->textField($modelShippingParameterAir,'height_max',array('size'=>10,'maxlength'=>10)); ?>
 				<?php echo $form->error($modelShippingParameterAir,'height_max'); ?>
+			</div>
+			<div class="row">
+				<?php echo $form->labelEx($modelShippingParameterAir,'volume_max'); ?>
+				<?php echo $form->textField($modelShippingParameterAir,'volume_max',array('size'=>10,'maxlength'=>10)); ?>
+				<?php echo $form->error($modelShippingParameterAir,'volume_max'); ?>
 			</div>
 			<div class="row">
 				<?php echo $form->labelEx($modelShippingParameterAir,'Id_measurement_unit_sizes_max'); ?>

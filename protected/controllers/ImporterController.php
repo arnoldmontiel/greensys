@@ -39,9 +39,16 @@ class ImporterController extends Controller
 	public function actionView($id)
 	{
 		$model = $this->loadModel($id);
+		$modelShippingParameter =  $this->loadModelShippingParameter($model->Id);
+		$modelShippingParameterAir = $this->loadModelShippingParameterAir($modelShippingParameter->Id_shipping_parameter_air);
+		$modelShippingParameterMaritime = $this->loadModelShippingParameterMaritime($modelShippingParameter->Id_shipping_parameter_maritime);
+				
 		$this->render('view',array(
 			'model'=>$model,
 			'modelContact'=>$this->loadModelContact($model->Id_contact),
+			'modelShippingParameter'=>$modelShippingParameter,
+			'modelShippingParameterAir'=>$modelShippingParameterAir,
+			'modelShippingParameterMaritime'=>$modelShippingParameterMaritime,
 		));
 	}
 
@@ -57,13 +64,22 @@ class ImporterController extends Controller
 		$modelShippingParameterAir = new ShippingParameterAir;
 		$modelShippingParameterMaritime = new ShippingParameterMaritime;
 		
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Importer'])&&isset($_POST['Contact']))
-		{
+		if(
+			isset($_POST['Importer'])
+			&&isset($_POST['Contact'])
+			&&isset($_POST['ShippingParameter'])
+			&&isset($_POST['ShippingParameterAir'])
+			&&isset($_POST['ShippingParameterMaritime'])
+		){
 			$model->attributes=$_POST['Importer'];
 			$modelContact->attributes=$_POST['Contact'];
+			$modelShippingParameter->attributes=$_POST['ShippingParameter'];
+			$modelShippingParameterAir->attributes=$_POST['ShippingParameterAir'];
+			$modelShippingParameterMaritime->attributes=$_POST['ShippingParameterMaritime'];
+			// Uncomment the following line if AJAX validation is needed
+			$this->performAjaxValidation($model,$modelContact,$modelShippingParameter,$modelShippingParameterAir,$modelShippingParameterMaritime);
+				
 			$transaction = $model->dbConnection->beginTransaction();
 			try {
 				if($modelContact->save())
@@ -71,8 +87,18 @@ class ImporterController extends Controller
 					$model->Id_contact = $modelContact->Id; 
 					if($model->save())
 					{
-						$transaction->commit();
-						$this->redirect(array('view','id'=>$model->Id));
+						if($modelShippingParameterAir->save()&&$modelShippingParameterMaritime->save())
+						{
+							$modelShippingParameter->Id_importer = $model->Id;
+							$modelShippingParameter->Id_shipping_parameter_air = $modelShippingParameterAir->Id;
+							$modelShippingParameter->Id_shipping_parameter_maritime = $modelShippingParameterMaritime->Id;
+							if($modelShippingParameter->save())
+							{
+								$transaction->commit();
+								$this->redirect(array('view','id'=>$model->Id));								
+							}
+								
+						}						
 					}
 				}				
 			} catch (Exception $e) {
@@ -99,30 +125,58 @@ class ImporterController extends Controller
 		$model=$this->loadModel($id);
 		$modelContact=$this->loadModelContact($model->Id_contact);
 		
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$modelShippingParameter =  $this->loadModelShippingParameter($model->Id);
+		$modelShippingParameterAir = $this->loadModelShippingParameterAir($modelShippingParameter->Id_shipping_parameter_air);
+		$modelShippingParameterMaritime = $this->loadModelShippingParameterMaritime($modelShippingParameter->Id_shipping_parameter_maritime);
+		
+		if(
+			isset($_POST['Importer'])
+			&&isset($_POST['Contact'])
+			&&isset($_POST['ShippingParameter'])
+			&&isset($_POST['ShippingParameterAir'])
+			&&isset($_POST['ShippingParameterMaritime'])
+		){
 
-		if(isset($_POST['Importer'])&&isset($_POST['Contact']))
-		{
 			$model->attributes=$_POST['Importer'];
 			$modelContact->attributes=$_POST['Contact'];
+			$modelShippingParameter->attributes=$_POST['ShippingParameter'];
+			$modelShippingParameterAir->attributes=$_POST['ShippingParameterAir'];
+			$modelShippingParameterMaritime->attributes=$_POST['ShippingParameterMaritime'];
+			// Uncomment the following line if AJAX validation is needed
+			$this->performAjaxValidation($model,$modelContact,$modelShippingParameter,$modelShippingParameterAir,$modelShippingParameterMaritime);
+				
 			$transaction = $model->dbConnection->beginTransaction();
-			try 
-			{
-				if($model->save()&&$modelContact->save())
+			try {
+				if($modelContact->save())
 				{
-					$transaction->commit();
-					$this->redirect(array('view','id'=>$model->Id));
-				}					
-					
+					$model->Id_contact = $modelContact->Id; 
+					if($model->save())
+					{
+						if($modelShippingParameterAir->save()&&$modelShippingParameterMaritime->save())
+						{
+							$modelShippingParameter->Id_importer = $model->Id;
+							$modelShippingParameter->Id_shipping_parameter_air = $modelShippingParameterAir->Id;
+							$modelShippingParameter->Id_shipping_parameter_maritime = $modelShippingParameterMaritime->Id;
+							if($modelShippingParameter->save())
+							{
+								$transaction->commit();
+								$this->redirect(array('view','id'=>$model->Id));								
+							}
+								
+						}						
+					}
+				}				
 			} catch (Exception $e) {
 				$transaction->rollback();
 			}
 		}
-
-		$this->render('update',array(
+		
+		$this->render('create',array(
 			'model'=>$model,
 			'modelContact'=>$modelContact,
+			'modelShippingParameterMaritime'=>$modelShippingParameterMaritime,
+			'modelShippingParameterAir'=>$modelShippingParameterAir,
+			'modelShippingParameter'=>$modelShippingParameter,		
 		));
 	}
 
@@ -135,17 +189,24 @@ class ImporterController extends Controller
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
+			$model = $this->loadModel($id);
 			$transaction = $model->dbConnection->beginTransaction();
 
 			try {
 				// we only allow deletion via POST request
-				$model = $this->loadModel($id);
 				$modelContact = $this->loadModelContact($model->Id_contact);
+				
+				$modelShippingParameter =  $this->loadModelShippingParameter($model->Id);
+				$modelShippingParameterAir = $this->loadModelShippingParameterAir($modelShippingParameter->Id_shipping_parameter_air);
+				$modelShippingParameterMaritime = $this->loadModelShippingParameterMaritime($modelShippingParameter->Id_shipping_parameter_maritime);
+								
+				$modelContact->delete();
+				$modelShippingParameter->delete();
+				$modelShippingParameterAir->delete();
+				$modelShippingParameterMaritime->delete();
+				$model->delete(); 
 
-				if($model->delete() && $modelContact->delete())
-				{
-					$transaction->commit();						
-				}				
+				$transaction->commit();						
 				// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 				if(!isset($_GET['ajax']))
 				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
@@ -208,16 +269,56 @@ class ImporterController extends Controller
 		throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
+	/**
+	* Returns the data model based on the primary key given in the GET variable.
+	* If the data model is not found, an HTTP exception will be raised.
+	* @param integer the ID of the model to be loaded
+	*/
+	public function loadModelShippingParameter($id_importer)
+	{
+		$model=ShippingParameter::model()->findByAttributes(array('Id_importer'=>$id_importer,'current'=>true));
+		if($model===null)
+		throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
+	}
+	/**
+	* Returns the data model based on the primary key given in the GET variable.
+	* If the data model is not found, an HTTP exception will be raised.
+	* @param integer the ID of the model to be loaded
+	*/
+	public function loadModelShippingParameterAir($id)
+	{
+		$model=ShippingParameterAir::model()->findByPk($id);
+		if($model===null)
+		throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
+	}
+	/**
+	* Returns the data model based on the primary key given in the GET variable.
+	* If the data model is not found, an HTTP exception will be raised.
+	* @param integer the ID of the model to be loaded
+	*/
+	public function loadModelShippingParameterMaritime($id)
+	{
+		$model=ShippingParameterMaritime::model()->findByPk($id);
+		if($model===null)
+		throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
+	}
 	
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated
 	 */
-	protected function performAjaxValidation($model)
+	protected function performAjaxValidation($model,$modelContact,$modelShippingParameter,$modelShippingParameterAir,$modelShippingParameterMaritime)
 	{
 		if(isset($_POST['ajax']) && $_POST['ajax']==='importer-form')
 		{
 			echo CActiveForm::validate($model);
+			echo CActiveForm::validate($modelContact);
+			echo CActiveForm::validate($modelShippingParameter);
+			echo CActiveForm::validate($modelShippingParameterAir);
+			echo CActiveForm::validate($modelShippingParameterMaritime);
 			Yii::app()->end();
 		}
 	}

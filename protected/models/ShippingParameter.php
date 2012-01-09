@@ -46,7 +46,7 @@ class ShippingParameter extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('Id_importer, Id_shipping_parameter_air, Id_shipping_parameter_maritime', 'required'),
-			array('Id, Id_importer, Id_shipping_parameter_air, Id_shipping_parameter_maritime, current', 'numerical', 'integerOnly'=>true),
+			array('Id_importer, Id_shipping_parameter_air, Id_shipping_parameter_maritime, current', 'numerical', 'integerOnly'=>true),
 			array('description', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
