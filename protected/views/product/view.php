@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Products'=>array('index'),
-	$model->Id,
+	$model->code,
 );
 
 $this->menu=array(
@@ -14,33 +14,82 @@ $this->menu=array(
 );
 ?>
 
-<h1>View Product #<?php echo $model->Id; ?></h1>
+<h1>View Product</h1>
 
-<?php echo $this->renderPartial('_view', array('model'=>$model)); ?>
+<div class="left">
 
 <?php
-/* 
 $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
+	'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',
 	'attributes'=>array(
-		'Id',
-		'Id_brand',
-		'Id_category',
-		'Id_nomenclator',
-		'description_customer',
-		'description_supplier',
 		'code',
 		'code_supplier',
-		'discontinued',
+		array('label'=>$model->getAttributeLabel('Id_brand'),
+			'type'=>'raw',
+			'value'=>$model->brand->description
+		),
+		array('label'=>$model->getAttributeLabel('Id_category'),
+			'type'=>'raw',
+			'value'=>$model->category->description
+		),
+		array('label'=>$model->getAttributeLabel('Id_nomenclator'),
+			'type'=>'raw',
+			'value'=>$model->nomenclator->description
+		),
+		'description_customer',
+		'description_supplier',
+		array('label'=>$model->getAttributeLabel(discontinued),
+			'type'=>'boolean',
+			'value'=>$model->discontinued
+		),
 		'length',
 		'width',
 		'height',
 		'profit_rate',
 		'msrp',
 		'time_instalation',
-		'hide',
+		array('label'=>$model->getAttributeLabel('hide'),
+			'type'=>'boolean',
+			'value'=>$model->hide
+		),
 		'weight',
 	),
 )); 
-*/
 ?>
+</div>
+<div class="right" style="margin-left:1px; width: 48%; ">
+	<b><?php echo CHtml::encode($model->getAttributeLabel('link')); ?>:</b>
+	<?php
+	$hyperLinks = CHtml::listData(Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id)), 'Id','description');
+	
+	$this->widget('ext.linkcontainer.linkcontainer', array(
+		'id'=>'linkContainer',	// default is class="ui-sortable" id="yw0"
+		'items'=>$hyperLinks,
+		'mode'=>'show'
+	));
+	?>
+	<br />
+	<b><?php echo CHtml::encode($model->getAttributeLabel('image')); ?>:</b>
+<?php 
+	$multimedia = Multimedia::model()->findByAttributes(array('Id_product'=>$model->Id));
+	$this->widget('ext.highslide.highslide', array(
+							'id'=>$multimedia->Id,
+	)); ?>
+	
+</div>
+<div class="footer">
+	<div style="height:5%;background-color: #B7D6E7">
+	<b><?php echo CHtml::encode($model->getAttributeLabel('note')); ?>:</b>
+	</div>
+	<?php
+	$note = Note::model()->findByAttributes(array('Id_product'=>$model->Id));
+
+	 $this->widget('ext.richtext.jwysiwyg', array(
+ 		'id'=>'noteContainer',	// default is class="ui-sortable" id="yw0"	
+ 		'notes'=> $note->note,
+ 		'mode'=>'show'
+ 			));
+	?>
+</div>		
+
