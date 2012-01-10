@@ -15,6 +15,12 @@
  */
 class Importer extends CActiveRecord
 {
+	public $contact_telephone_1;
+	public $contact_telephone_2;
+	public $contact_telephone_3;
+	public $contact_description;
+	public $contact_email;
+	public $shippingParameter_description;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -46,7 +52,7 @@ class Importer extends CActiveRecord
 			array('description', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description, Id_contact', 'safe', 'on'=>'search'),
+			array('Id, description, Id_contact,contact_telephone_1,contact_telephone_2,contact_telephone3,contact_email,shippingParameter_description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -95,4 +101,66 @@ class Importer extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	/**
+	* Retrieves a list of models based on the current search/filter conditions.
+	* @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+	*/
+	public function searchSummary()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('Id',$this->Id);
+		$criteria->compare('description',$this->description,true);
+		$criteria->compare('Id_contact',$this->Id_contact);
+		
+		$criteria->with[]='contact';
+		$criteria->addSearchCondition("contact.description",$this->contact_description);
+		$criteria->addSearchCondition("contact.telephone_1",$this->contact_telephone_1);
+		$criteria->addSearchCondition("contact.telephone_2",$this->contact_telephone_2);
+		$criteria->addSearchCondition("contact.telephone_3",$this->contact_telephone_3);
+		$criteria->addSearchCondition("contact.email",$this->contact_email);
+
+// 		$criteria->with[]='shippingParameter';
+// 		$criteria->addSearchCondition("shippingParameter.description",$this->shippingParameter_description);
+
+		
+		$sort=new CSort;
+		$sort->attributes=array(
+			'description',
+			'contact_description' => array(
+				'asc' => 'contact.description',
+				'desc' => 'contact.description DESC',
+			),
+			'contact_telephone_1' => array(
+				'asc' => 'contact.telephone_1',
+				'desc' => 'contact.telephone_1 DESC',
+			),
+			'contact_telephone_2' => array(
+				'asc' => 'contact.telephone_2',
+				'desc' => 'contact.telephone_2 DESC',
+			),
+			'contact_description' => array(
+				'asc' => 'contact.telephone_3',
+				'desc' => 'contact.telephone_3 DESC',
+			),
+			'contact_email' => array(
+				'asc' => 'contact.email',
+				'desc' => 'contact.email DESC',
+			),
+// 		'shippingParameter_description' => array(
+// 				'asc' => 'shippingParameter_description',
+// 				'desc' => 'shippingParameter_description DESC',
+// 			),
+		'*',
+		);
+				
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+				'sort'=>$sort
+		));
+	}
+	
 }
