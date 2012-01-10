@@ -87,7 +87,7 @@ Yii::app()->clientScript->registerScript('productRequirement', "");
 	<div id="display" style="display: none">
 		<div class="gridTitle-decoration1">
 			<div class="gridTitle1">
-			Products Selection
+			Requirement Selection
 			</div>
 		</div>
 		<?php 				
@@ -140,7 +140,7 @@ Yii::app()->clientScript->registerScript('productRequirement', "");
 			?></p>
 			<div class="gridTitle-decoration1">
 				<div class="gridTitle1">
-					Group
+					Relation
 				</div>
 			</div>
 			<?php 				
