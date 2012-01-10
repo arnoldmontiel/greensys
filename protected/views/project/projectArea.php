@@ -10,39 +10,6 @@ $this->menu=array(
 $this->trashDraggableId = 'ddlAssigment';
 
 
-Yii::app()->clientScript->registerScript('priceListItem', "
-$('input[type=checkbox]').click(function(){
-	debugger;
-	alert(1);
-// 	if($(this).val()!= ''){
-// 		$.fn.yiiGridView.update('price-list-item-grid', {
-// 			data: $(this).serialize()
-// 		});
-// 		$.fn.yiiGridView.update('product-grid', {
-// 			data: $(this).serialize()
-// 		});
-// 		$('#display').animate({opacity: 'show'},240);
-
-// 					$(this).serialize()
-// 				).success(
-// 					function(data) 
-// 					{
-// 						$('#sidebar').html(data);
-// 						$( '#sidebar' ).show();	
-// 					}
-// 				);
-// 	}
-// 	else{
-// 		$('#display').animate({opacity: 'hide'},240);
-// 		$( '#sidebar' ).hide();	
-
-// 	}
-	return false;
-}
-);
-
-");
-
 ?>
 
 

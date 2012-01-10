@@ -7,6 +7,7 @@ $this->menu=array(
 	array('label'=>'Create Product', 'url'=>array('create')),
 	array('label'=>'Manage Product', 'url'=>array('admin')),
 	array('label'=>'Assign Groups', 'url'=>array('productGroup')),
+	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
 
 );
 ?>

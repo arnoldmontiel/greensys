@@ -442,7 +442,73 @@ class ProductController extends Controller
 			echo round($converter->factor * (double)$width * (double)$height * (double)$length, 6);	
 		}
 	}
+
+	public function actionProductRequirement()
+	{
+		$model=new Product('search');
+		$model->unsetAttributes();
+		if(isset($_GET['Product']))
+			$model->attributes=$_GET['Product'];
 		
+		$modelRequirement = new ProductRequirement('search');
+		$modelRequirement->unsetAttributes();
+		if(isset($_GET['ProductRequirement']))
+			$modelRequirement->attributes=$_GET['ProductRequirement'];
+		
+		$modelProductRequirement = new ProductRequirementProduct('search');
+		$modelProductRequirement->unsetAttributes();
+		if(isset($_GET['ProductRequirementProduct']))
+			$modelProductRequirement->attributes=$_GET['ProductRequirementProduct'];
+		
+		if(isset($_GET['Product']['Id'])){
+			$modelProductRequirement->Id_product=$_GET['Product']['Id'];
+			$model->unsetAttributes();
+		}
+		
+		$this->render('productRequirement',array(
+							'model'=>$model, //model for creation
+							'modelRequirement'=>$modelRequirement,
+							'modelProductRequirement'=>$modelProductRequirement
+		));
+		
+	}
+	
+	public function actionAjaxAddProductRequirement()
+	{
+		$idProduct = isset($_GET['IdProduct'][0])?$_GET['IdProduct'][0]:'';
+		$idRequirement = isset($_GET['IdRequirement'][0])?$_GET['IdRequirement'][0]:'';
+			
+		if(!empty($idProduct)&&!empty($idRequirement))
+		{
+			$productReqProdInDb = ProductRequirementProduct::model()->findByPk(array('Id_product'=>(int) $idProduct,'Id_product_requirement'=>(int)$idRequirement));
+			if($productReqProdInDb==null)
+			{
+				$productReqProd=new ProductRequirementProduct;
+				$productReqProd->attributes = array('Id_product'=>$idProduct,'Id_product_requirement'=>$idRequirement);
+				$productReqProd->save();
+			}
+			else
+			{
+				throw new CDbException('Item has already been added');
+			}
+		}
+	}
+	public function actionAjaxRemoveProductRequirement()
+	{
+		$idProduct = isset($_GET['IdProduct'])?$_GET['IdProduct']:'';
+		$idRequirement = isset($_GET['IdRequirement'])?$_GET['IdRequirement']:'';
+			
+		if(!empty($idProduct)&&!empty($idRequirement))
+		{
+			$productReqProdInDb = ProductRequirementProduct::model()->findByPk(array('Id_product'=>(int) $idProduct,'Id_product_requirement'=>(int)$idRequirement));
+			if($productReqProdInDb!=null)
+			{
+				$productReqProdInDb->delete();
+			}
+		}
+	}
+	
+	
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated

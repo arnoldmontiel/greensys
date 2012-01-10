@@ -11,6 +11,7 @@ $this->menu=array(
 	array('label'=>'View Product', 'url'=>array('view', 'id'=>$model->Id)),
 	array('label'=>'Manage Product', 'url'=>array('admin')),
 	array('label'=>'Assign Groups', 'url'=>array('productGroup')),
+	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
 );
 ?>
 

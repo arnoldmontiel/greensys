@@ -7,6 +7,7 @@ $this->menu=array(
 	array('label'=>'List Product', 'url'=>array('index')),
 	array('label'=>'Create Product', 'url'=>array('create')),
 	array('label'=>'Manage Product', 'url'=>array('admin')),
+	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
 );
 $this->showSideBar = true;
 Yii::app()->clientScript->registerScript('productGroup', "");
