@@ -187,13 +187,13 @@ class ImporterController extends Controller
 	 */
 	public function actionDelete($id)
 	{
+		// we only allow deletion via POST request
 		if(Yii::app()->request->isPostRequest)
 		{
 			$model = $this->loadModel($id);
 			$transaction = $model->dbConnection->beginTransaction();
 
 			try {
-				// we only allow deletion via POST request
 				$modelContact = $this->loadModelContact($model->Id_contact);
 				
 				$modelShippingParameter =  $this->loadModelShippingParameter($model->Id);
@@ -239,7 +239,7 @@ class ImporterController extends Controller
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Importer']))
 			$model->attributes=$_GET['Importer'];
-
+		
 		$this->render('admin',array(
 			'model'=>$model,
 		));
