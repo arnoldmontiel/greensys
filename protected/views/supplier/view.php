@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Suppliers'=>array('index'),
-	$model->Id,
+	$model->business_name,
 );
 
 $this->menu=array(
@@ -13,12 +13,54 @@ $this->menu=array(
 );
 ?>
 
-<h1>View Supplier #<?php echo $model->Id; ?></h1>
+<h1>View Supplier</h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'Id',
-		'business_name',
-	),
-)); ?>
+<div class="left">
+
+	<?php
+	$this->widget('zii.widgets.CDetailView', array(
+		'data'=>$model,
+		'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',
+		'attributes'=>array(
+			'business_name',
+			array('label'=>$model->getAttributeLabel('description'),
+				'type'=>'raw',
+				'value'=>$model->contact->description
+			),
+			array('label'=>$model->getAttributeLabel('email'),
+				'type'=>'raw',
+				'value'=>$model->contact->email
+			),
+			array('label'=>$model->getAttributeLabel('telephone_1'),
+				'type'=>'raw',
+				'value'=>$model->contact->telephone_1
+			),
+			array('label'=>$model->getAttributeLabel('telephone_2'),
+				'type'=>'raw',
+				'value'=>$model->contact->telephone_2
+			),
+			array('label'=>$model->getAttributeLabel('telephone_3'),
+				'type'=>'raw',
+				'value'=>$model->contact->telephone_3
+			),
+			array('label'=>$model->getAttributeLabel('address'),
+				'type'=>'raw',
+				'value'=>$model->contact->address
+			),
+		),
+	)); 
+	?>
+</div>
+
+<div class="right" style="margin-left:1px; width: 48%; ">
+	<b><?php echo CHtml::encode($model->getAttributeLabel('link')); ?>:</b>
+	<?php
+	$hyperLinks = CHtml::listData($modelHyperlink, 'Id','description');
+	
+	$this->widget('ext.linkcontainer.linkcontainer', array(
+		'id'=>'linkContainer',	// default is class="ui-sortable" id="yw0"
+		'items'=>$hyperLinks,
+		'mode'=>'show'
+	));
+	?>
+</div>

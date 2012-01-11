@@ -50,8 +50,11 @@ class SupplierController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$model = $this->loadModel($id);
+		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$model->Id_contact,'Id_entity_type'=>$this->getEntityType()));
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$model,
+			'modelHyperlink'=>$modelHyperlink
 		));
 	}
 
@@ -62,22 +65,70 @@ class SupplierController extends Controller
 	public function actionCreate()
 	{
 		$model=new Supplier;
-
+		$modelContact = new Contact;
+		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$modelContact->Id,'Id_entity_type'=>$this->getEntityType()));
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Supplier']))
+
+		if(isset($_POST['Supplier']) && isset($_POST['Contact']))
 		{
 			$model->attributes=$_POST['Supplier'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->Id));
+			$modelContact->attributes=$_POST['Contact'];
+				
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				if($modelContact->save()){
+						
+					$model->Id_contact = $modelContact->Id;
+						
+					//save links
+					if(isset($_POST['links'])){
+						$this->saveLinks($_POST['links'], $modelContact->Id);
+					}
+						
+					if($model->save()){
+						$transaction->commit();
+						$this->redirect(array('view','id'=>$model->Id));
+					}
+				}
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
 		}
-
+		
 		$this->render('create',array(
 			'model'=>$model,
+			'modelContact'=>$modelContact,
+			'modelHyperlink'=>$modelHyperlink
 		));
 	}
 
+	private function saveLinks($links, $id)
+	{
+		$this->deleteLinks($id);
+	
+		foreach ($links as $link){
+			$hyperlink = new Hyperlink;
+			$hyperlink->attributes = array(
+								'description'=>$link,
+								'Id_entity_type'=>$this->getEntityType(),
+								'Id_contact'=>$id);
+				
+			$hyperlink->save();
+		}
+	}
+	
+	private function deleteLinks($id)
+	{
+		Hyperlink::model()->deleteAllByAttributes(array('Id_contact'=>$id,'Id_entity_type'=>$this->getEntityType()));
+	}
+	
+	public function getEntityType()
+	{
+		return EntityType::model()->findByAttributes(array('name'=>get_class(Supplier::model())))->Id;
+	}
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -86,19 +137,34 @@ class SupplierController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+		$modelContact = Contact::model()->findByPk($model->Id_contact);
+		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$modelContact->Id,'Id_entity_type'=>$this->getEntityType()));
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Supplier']))
+		if(isset($_POST['Supplier']) && isset($_POST['Contact']))
 		{
 			$model->attributes=$_POST['Supplier'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->Id));
+			$modelContact->attributes=$_POST['Contact'];
+			
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				if( $model->save() && $modelContact->save()){
+						
+					//save links
+					if(isset($_POST['links'])){
+						$this->saveLinks($_POST['links'], $modelContact->Id);
+					}
+					$transaction->commit();
+					$this->redirect(array('view','id'=>$model->Id));
+				}
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
 		}
 
 		$this->render('update',array(
 			'model'=>$model,
+			'modelContact'=>$modelContact,
+			'modelHyperlink'=>$modelHyperlink
 		));
 	}
 
@@ -111,12 +177,29 @@ class SupplierController extends Controller
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
-
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$model = $this->loadModel($id);
+			$modelContact = Contact::model()->findByPk($model->Id_contact);
+			
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+			
+				//delete links
+				$this->deleteLinks($modelContact->Id);
+				$modelContact->delete();
+			
+				// we only allow deletion via POST request
+				$model->delete();
+			
+				$transaction->commit();
+			
+				// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+				if(!isset($_GET['ajax']))
+					$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
+			
 		}
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');

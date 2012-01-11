@@ -101,6 +101,7 @@ $(window).scroll(function() {
 					array('label'=>Yii::app()->lc->t('Importer'), 'url'=>array('/importer/index')),
 					array('label'=>Yii::app()->lc->t('Product Requirements'), 'url'=>array('/productRequirement/index')),
 					array('label'=>Yii::app()->lc->t('Guild'), 'url'=>array('/guild/index')),
+					array('label'=>Yii::app()->lc->t('Supplier'), 'url'=>array('/supplier/index')),
 				)
 			)
 		)

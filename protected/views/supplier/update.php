@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Suppliers'=>array('index'),
-	$model->Id=>array('view','id'=>$model->Id),
+	$model->business_name=>array('view','id'=>$model->Id),
 	'Update',
 );
 
@@ -15,4 +15,4 @@ $this->menu=array(
 
 <h1>Update Supplier <?php echo $model->Id; ?></h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model, 'modelContact'=>$modelContact,'modelHyperlink'=>$modelHyperlink)); ?>

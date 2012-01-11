@@ -116,13 +116,6 @@ class CustomerController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Customer']))
-		{
-			$model->attributes=$_POST['Customer'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->Id));
-		}
-
 		if(isset($_POST['Person']) && isset($_POST['Contact']))
 		{
 			$modelPerson->attributes=$_POST['Person'];
@@ -190,17 +183,16 @@ class CustomerController extends Controller
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
-	private function saveLinks($links, $model)
+	private function saveLinks($links, $id)
 	{
-		$this->deleteLinks($model->Id);
+		$this->deleteLinks($id);
 	
-		$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
 		foreach ($links as $link){
 			$hyperlink = new Hyperlink;
 			$hyperlink->attributes = array(
 								'description'=>$link,
-								'Id_entity_type'=>$entity->Id,
-								'Id_contact'=>$model->Id);
+								'Id_entity_type'=>$this->getEntityType(),
+								'Id_contact'=>$id);
 				
 			$hyperlink->save();
 		}
@@ -208,7 +200,12 @@ class CustomerController extends Controller
 	
 	private function deleteLinks($id)
 	{
-		Hyperlink::model()->deleteAllByAttributes(array('Id_contact'=>$id));
+		Hyperlink::model()->deleteAllByAttributes(array('Id_contact'=>$id,'Id_entity_type'=>$this->getEntityType()));
+	}
+	
+	public function getEntityType()
+	{
+		return EntityType::model()->findByAttributes(array('name'=>get_class(Customer::model())))->Id;
 	}
 	
 	/**
