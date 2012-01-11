@@ -26,7 +26,9 @@ $('.search-form form').submit(function(){
 
 <h1>Manage Price Lists</h1>
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php
+$names=$model->attributeNames();
+ $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'price-list-grid',
 	'dataProvider'=>$model->searchSummary(),
 	'filter'=>$model,
@@ -40,8 +42,15 @@ $('.search-form form').submit(function(){
 		'date_validity',
  		array(
  			'name'=>"validity",//$model->getAttributeLabel('validity'),
- 			'type'=>'boolean',
- 			'value'=>$model->validity,
+ 			'type'=>'raw',
+ 			'value'=>'CHtml::checkBox("validity",$data->validity,array("disabled"=>"disabled"))',
+ 			'filter'=>CHtml::listData(
+ 				array(
+ 					array('id'=>'0','value'=>'No'),
+ 					array('id'=>'1','value'=>'Yes')
+ 				)
+ 				,'id','value'
+ 			),
  		),		
 		array(
 			'class'=>'CButtonColumn',
