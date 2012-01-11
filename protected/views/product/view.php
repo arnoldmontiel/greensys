@@ -39,9 +39,9 @@ $this->widget('zii.widgets.CDetailView', array(
 		),
 		'description_customer',
 		'description_supplier',
-		array('label'=>$model->getAttributeLabel(discontinued),
-			'type'=>'boolean',
-			'value'=>$model->discontinued
+		array('label'=>$model->getAttributeLabel('discontinued'),
+			'type'=>'raw',
+			'value'=>CHtml::checkBox("discontinued",$model->discontinued,array("disabled"=>"disabled"))
 		),
 		'length',
 		'width',
@@ -50,8 +50,8 @@ $this->widget('zii.widgets.CDetailView', array(
 		'msrp',
 		'time_instalation',
 		array('label'=>$model->getAttributeLabel('hide'),
-			'type'=>'boolean',
-			'value'=>$model->hide
+			'type'=>'raw',
+			'value'=>CHtml::checkBox("hide",$model->hide,array("disabled"=>"disabled"))
 		),
 		'weight',
 	),
