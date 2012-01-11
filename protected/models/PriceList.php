@@ -21,6 +21,7 @@
  */
 class PriceList extends CActiveRecord
 {
+	public $supplier_business_name;
 	public function beforeSave()
 	{		
 		$this->date_validity = Yii::app()->lc->toDatabase($this->date_validity,'date','small','date',null);//date('Y-m-d',strtotime($this->date_validity));
@@ -61,7 +62,7 @@ class PriceList extends CActiveRecord
 		              'setOnEmpty'=>false,'on'=>'insert'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, date_creation, date_validity, validity, Id_supplier, Id_price_list_type', 'safe', 'on'=>'search'),
+			array('Id, date_creation, date_validity, validity, Id_supplier, Id_price_list_type, supplier_business_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -90,8 +91,8 @@ class PriceList extends CActiveRecord
 			'date_creation' => 'Date Creation',
 			'date_validity' => 'Date Validity',
 			'validity' => 'Validity',
-			'Id_supplier' => 'Id Supplier',
-			'Id_price_list_type' => 'Id Price List Type',
+			'Id_supplier' => 'Supplier',
+			'Id_price_list_type' => 'Price List Type',
 			'description' => 'Description',
 		
 		);
@@ -126,4 +127,45 @@ class PriceList extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	/**
+	 * Retrieves a list of models based on the current search/filter conditions.
+	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+	 */
+	public function searchSummary()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('Id',$this->Id);
+		$criteria->compare('date_creation',$this->date_creation,true);
+		$criteria->compare('date_validity',$this->date_validity,true);
+		$criteria->compare('validity',$this->validity);
+		$criteria->compare('Id_supplier',$this->Id_supplier);
+		$criteria->compare('Id_price_list_type',$this->Id_price_list_type);
+		$criteria->compare('description',$this->description,true);
+		
+		$criteria->with[]='supplier';
+		$criteria->addSearchCondition('supplier.business_name',$this->supplier_business_name);
+		
+		$sort=new CSort;
+		$sort->attributes=array(
+			'Id',
+			'date_creation',
+			'date_validity',
+			'validity',
+			'description',
+			'supplier_business_name' => array(
+				'asc' => 'supplier.business_name',
+				'desc' => 'supplier.business_name DESC',
+			),
+		);
+		
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+			'sort'=>$sort,
+		));
+	}
+	
 }

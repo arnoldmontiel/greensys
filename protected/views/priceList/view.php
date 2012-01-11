@@ -22,8 +22,13 @@ $this->menu=array(
 		'description',
 		'date_creation',
 		'date_validity',
-		'validity',
-		'Id_supplier',
-		'Id_price_list_type',
-	),
+		array('label'=>$model->getAttributeLabel('validity'),
+			'type'=>'raw',
+			'value'=>CHtml::checkBox("validity",$model->validity,array("disabled"=>"disabled"))
+		),
+		array('label'=>$model->getAttributeLabel('Id_supplier'),
+			'type'=>'raw',
+			'value'=>$model->supplier->business_name
+		),
+),
 )); ?>
