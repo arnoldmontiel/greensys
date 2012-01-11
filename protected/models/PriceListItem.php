@@ -117,17 +117,17 @@ class PriceListItem extends CActiveRecord
 	
 		$criteria=new CDbCriteria;
 	
-		$criteria->compare('Id',$this->Id);
-		$criteria->compare('Id_product',$this->Id_product);
-		$criteria->compare('Id_price_list',$this->Id_price_list);
-		$criteria->compare('msrp',$this->msrp,true);
-		$criteria->compare('dealer_cost',$this->dealer_cost,true);
-		$criteria->compare('profit_rate',$this->profit_rate,true);
-	
+		$criteria->compare('t.Id',$this->Id);
+		$criteria->compare('t.Id_product',$this->Id_product);
+		$criteria->compare('t.Id_price_list',$this->Id_price_list);
+		$criteria->compare('t.msrp',$this->msrp);
+		$criteria->compare('t.dealer_cost',$this->dealer_cost);
+		$criteria->compare('t.profit_rate',$this->profit_rate);
+		
 		$criteria->with[]='product';
-		$criteria->addSearchCondition("product.description_customer",$this->description_customer);
-		$criteria->addSearchCondition("product.code",$this->code);
-		$criteria->addSearchCondition("product.code_supplier",$this->code_supplier);
+		$criteria->addSearchCondition("description_customer",$this->description_customer);
+		$criteria->addSearchCondition("code",$this->code);
+		$criteria->addSearchCondition("code_supplier",$this->code_supplier);
 		
 		// Create a custom sort
 		$sort=new CSort;
@@ -137,7 +137,7 @@ class PriceListItem extends CActiveRecord
 		      'description_customer' => array(
 		        'asc' => 'product.description_customer',
 		        'desc' => 'product.description_customer DESC',
-		),
+				),
 		      'code' => array(
 		        'asc' => 'product.code',
 		        'desc' => 'product.code DESC',
@@ -146,7 +146,7 @@ class PriceListItem extends CActiveRecord
 		        'asc' => 'product.code_supplier',
 		        'desc' => 'product.code_supplier DESC',
 		),
-		      '*',
+		'*',
 		);
 		
 		return new CActiveDataProvider($this, array(

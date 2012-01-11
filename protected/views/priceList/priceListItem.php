@@ -152,13 +152,15 @@ function () {
 						});
 		}',
 		'columns'=>array(	
-				array('name'=>'Id',
-					'value'=>'$data->Id',
-					'visible'=>false,
+				array(
+					'name'=>'code',
+				    'value'=>'$data->code',
+				 
 				),
 				array(
-			 		'name'=>'supplier_description',
-					'value'=>'$data->supplier->business_name',
+ 				    'name'=>'code_supplier',
+				    'value'=>'$data->code_supplier',
+ 
 				),
 				array(
 		 			'name'=>'brand_description',
@@ -324,14 +326,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
  									}',	
 	'columns'=>array(
 				array(
- 				            'name'=>'code_supplier',
-				            'value'=>'$data->product->code_supplier',
- 
-				),
-				array(
  				            'name'=>'code',
 				            'value'=>'$data->product->code',
 				 
+				),
+				array(
+ 				            'name'=>'code_supplier',
+				            'value'=>'$data->product->code_supplier',
+ 
 				),
 				array(
  				            'name'=>'description_customer',
