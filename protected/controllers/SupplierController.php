@@ -67,9 +67,7 @@ class SupplierController extends Controller
 		$model=new Supplier;
 		$modelContact = new Contact;
 		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$modelContact->Id,'Id_entity_type'=>$this->getEntityType()));
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
+		
 
 		if(isset($_POST['Supplier']) && isset($_POST['Contact']))
 		{

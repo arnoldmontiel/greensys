@@ -82,8 +82,7 @@
 		<?php echo $form->error($modelContact,'address'); ?>
 	</div>
 	<?php
-	$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
-	$hyperLinks = CHtml::listData(Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$modelContact->Id,'Id_entity_type'=>$entity->Id)), 'Id','description');
+	$hyperLinks = CHtml::listData($modelHyperlink, 'Id','description');
 	
 	$this->widget('ext.linkcontainer.linkcontainer', array(
 		'id'=>'linkContainer',	// default is class="ui-sortable" id="yw0"

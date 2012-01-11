@@ -50,8 +50,11 @@ class CustomerController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$model = $this->loadModel($id);
+		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$model->Id_contact,'Id_entity_type'=>$this->getEntityType()));
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+					'model'=>$model,
+					'modelHyperlink'=>$modelHyperlink
 		));
 	}
 
@@ -64,9 +67,7 @@ class CustomerController extends Controller
 		$model=new Customer;
 		$modelPerson = new Person;
 		$modelContact = new Contact;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$modelContact->Id,'Id_entity_type'=>$this->getEntityType()));
 
 		if(isset($_POST['Person']) && isset($_POST['Contact']))
 		{
@@ -82,7 +83,7 @@ class CustomerController extends Controller
 					
 					//save links
 					if(isset($_POST['links'])){
-						$this->saveLinks($_POST['links'], $modelContact);
+						$this->saveLinks($_POST['links'], $modelContact->Id);
 					}
 					
 					if($model->save()){
@@ -98,7 +99,8 @@ class CustomerController extends Controller
 		$this->render('create',array(
 			'model'=>$model,
 			'modelPerson'=>$modelPerson,
-			'modelContact'=>$modelContact
+			'modelContact'=>$modelContact,
+			'modelHyperlink'=>$modelHyperlink
 		));
 	}
 
@@ -112,10 +114,8 @@ class CustomerController extends Controller
 		$model=$this->loadModel($id);
 		$modelPerson = Person::model()->findByPk($model->Id_person);
 		$modelContact = Contact::model()->findByPk($model->Id_contact);
+		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$modelContact->Id,'Id_entity_type'=>$this->getEntityType()));
 		
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['Person']) && isset($_POST['Contact']))
 		{
 			$modelPerson->attributes=$_POST['Person'];
@@ -127,7 +127,7 @@ class CustomerController extends Controller
 					
 					//save links
 					if(isset($_POST['links'])){
-						$this->saveLinks($_POST['links'], $modelContact);
+						$this->saveLinks($_POST['links'], $modelContact->Id);
 					}
 					$transaction->commit();
 					$this->redirect(array('view','id'=>$model->Id));
@@ -141,7 +141,8 @@ class CustomerController extends Controller
 		$this->render('update',array(
 			'model'=>$model,
 			'modelPerson'=>$modelPerson,
-			'modelContact'=>$modelContact
+			'modelContact'=>$modelContact,
+			'modelHyperlink'=>$modelHyperlink
 		));
 	}
 
