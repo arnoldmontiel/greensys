@@ -14,7 +14,33 @@ $this->menu=array(
 ?>
 
 <h1>View Customer</h1>
+<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
+	<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
+		View Supplier
+	</div>
+	<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
+		<?php
+		echo CHtml::link( CHtml::image('images/view_contact.png','view Contacts',array(
+												                                'title'=>'View contact',
+												                                'style'=>'width:30px;',
+												                                'id'=>'viewContact',
+                                												)
+                            ),CustomerController::createUrl('AjaxViewContact',array('id'=>$model->Id)));
+		?>
 
+	</div>
+	<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
+		<?php
+		echo CHtml::link( CHtml::image('images/add_contact.png','add Contact',array(
+												                                'title'=>'Add contact',
+												                                'style'=>'width:30px;',
+												                                'id'=>'addContact',
+                                												)
+                            ),CustomerController::createUrl('AjaxAddContact',array('id'=>$model->Id)));
+		?>
+
+	</div>
+</div>
 <div class="left">
 
 	<?php

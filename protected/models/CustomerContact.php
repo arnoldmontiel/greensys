@@ -1,13 +1,13 @@
 <?php
 
 /**
- * This is the model class for table "supplier_contact".
+ * This is the model class for table "customer_contact".
  *
- * The followings are the available columns in table 'supplier_contact':
- * @property integer $Id_supplier
+ * The followings are the available columns in table 'customer_contact':
+ * @property integer $Id_customer
  * @property integer $Id_contact
  */
-class SupplierContact extends CActiveRecord
+class CustomerContact extends CActiveRecord
 {
 	public $description;
 	public $telephone_1;
@@ -15,10 +15,11 @@ class SupplierContact extends CActiveRecord
 	public $telephone_3;
 	public $email;
 	public $address;
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return SupplierContact the static model class
+	 * @return CustomerContact the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -30,7 +31,7 @@ class SupplierContact extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'supplier_contact';
+		return 'customer_contact';
 	}
 
 	/**
@@ -41,24 +42,23 @@ class SupplierContact extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_supplier, Id_contact', 'required'),
-			array('Id_supplier, Id_contact', 'numerical', 'integerOnly'=>true),
+			array('Id_customer, Id_contact', 'required'),
+			array('Id_customer, Id_contact', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id_supplier, Id_contact, description, telephone_1, telephone_2, telephone_3, email, address', 'safe', 'on'=>'search'),
+			array('Id_customer, Id_contact, description, telephone_1, telephone_2, telephone_3, email, address', 'safe', 'on'=>'search'),
 		);
 	}
 
-	
 	/**
-	* @return array relational rules.
-	*/
-	public function relations()
+	 * @return array relational rules.
+	 */
+public function relations()
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-				'supplier' => array(self::BELONGS_TO, 'Supplier', 'Id_supplier'),
+				'customer' => array(self::BELONGS_TO, 'Customer', 'Id_customer'),
 				'contact' => array(self::BELONGS_TO, 'Contact', 'Id_contact'),
 		);
 	}
@@ -69,7 +69,7 @@ class SupplierContact extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'Id_supplier' => 'Id Supplier',
+			'Id_customer' => 'Id Customer',
 			'Id_contact' => 'Id Contact',
 		);
 	}
@@ -85,7 +85,7 @@ class SupplierContact extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('Id_supplier',$this->Id_supplier);
+		$criteria->compare('Id_customer',$this->Id_customer);
 		$criteria->compare('Id_contact',$this->Id_contact);
 
 		return new CActiveDataProvider($this, array(
@@ -100,7 +100,7 @@ class SupplierContact extends CActiveRecord
 	
 		$criteria=new CDbCriteria;
 	
-		$criteria->compare('Id_supplier',$this->Id_supplier);
+		$criteria->compare('Id_customer',$this->Id_customer);
 		$criteria->compare('Id_contact',$this->Id_contact);
 	
 		$criteria->with[]='contact';
@@ -110,41 +110,41 @@ class SupplierContact extends CActiveRecord
 		$criteria->addSearchCondition("contact.telephone_3",$this->telephone_3);
 		$criteria->addSearchCondition("contact.description",$this->description);
 		$criteria->addSearchCondition("contact.address",$this->address);
-		
+	
 		// Create a custom sort
 		$sort=new CSort;
 		$sort->attributes=array(
 		// For each relational attribute, create a 'virtual attribute' using the public variable name
-				'description' => array(
-						        'asc' => 'contact.description',
-						        'desc' => 'contact.description DESC',
+					'description' => array(
+							        'asc' => 'contact.description',
+							        'desc' => 'contact.description DESC',
 		),
-				'telephone_1' => array(
-						        'asc' => 'contact.telephone_1',
-						        'desc' => 'contact.telephone_1 DESC',
+					'telephone_1' => array(
+							        'asc' => 'contact.telephone_1',
+							        'desc' => 'contact.telephone_1 DESC',
 		),
-				'telephone_2' => array(
-								        'asc' => 'contact.telephone_2',
-								        'desc' => 'contact.telephone_2 DESC',
+					'telephone_2' => array(
+									        'asc' => 'contact.telephone_2',
+									        'desc' => 'contact.telephone_2 DESC',
 		),
-				'telephone_3' => array(
-								        'asc' => 'contact.telephone_3',
-								        'desc' => 'contact.telephone_3 DESC',
+					'telephone_3' => array(
+									        'asc' => 'contact.telephone_3',
+									        'desc' => 'contact.telephone_3 DESC',
 		),
-				'email' => array(
-						        'asc' => 'contact.email',
-						        'desc' => 'contact.email DESC',
+					'email' => array(
+							        'asc' => 'contact.email',
+							        'desc' => 'contact.email DESC',
 		),
-				'address' => array(
-								        'asc' => 'contact.address',
-								        'desc' => 'contact.address DESC',
+					'address' => array(
+									        'asc' => 'contact.address',
+									        'desc' => 'contact.address DESC',
 		),
-				'*',
+					'*',
 		);
 	
 		return new CActiveDataProvider($this, array(
-							'criteria'=>$criteria,
-							'sort'=>$sort,
+								'criteria'=>$criteria,
+								'sort'=>$sort,
 		));
 	}
 }

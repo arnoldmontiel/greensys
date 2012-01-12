@@ -34,7 +34,33 @@ function () {
 ?>
 
 <h1>View Supplier</h1>
+<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
+	<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
+		View Supplier
+	</div>
+	<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
+		<?php
+		echo CHtml::link( CHtml::image('images/view_contact.png','view Contacts',array(
+												                                'title'=>'View contact',
+												                                'style'=>'width:30px;',
+												                                'id'=>'viewContact',
+                                												)
+                            ),SupplierController::createUrl('AjaxViewContact',array('id'=>$model->Id)));
+		?>
 
+	</div>
+	<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
+		<?php
+		echo CHtml::link( CHtml::image('images/add_contact.png','add Contact',array(
+												                                'title'=>'Add contact',
+												                                'style'=>'width:30px;',
+												                                'id'=>'addContact',
+                                												)
+                            ),SupplierController::createUrl('AjaxAddContact',array('id'=>$model->Id)));
+		?>
+
+	</div>
+</div>
 <div class="left">
 
 	<?php
@@ -83,31 +109,4 @@ function () {
 		'mode'=>'show'
 	));
 	?>
-	<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;background-color: #B7D6E7">
-		<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
-			Products
-		</div>
-		<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
-		<?php
-		echo CHtml::link( CHtml::image('images/view_contact.png','view Contacts',array(
-												                                'title'=>'View contact',
-												                                'style'=>'width:30px;',
-												                                'id'=>'viewContact',
-                                												)
-                            ),SupplierController::createUrl('AjaxViewContact',array('id'=>$model->Id)));
-		?>
-
-		</div>
-		<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
-		<?php
-		echo CHtml::link( CHtml::image('images/add_contact.png','add Contact',array(
-												                                'title'=>'Add contact',
-												                                'style'=>'width:30px;',
-												                                'id'=>'addContact',
-                                												)
-                            ),SupplierController::createUrl('AjaxAddContact',array('id'=>$model->Id)));
-		?>
-
-		</div>
-	</div>
 </div>
