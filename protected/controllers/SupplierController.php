@@ -27,18 +27,6 @@ class SupplierController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
 		);
@@ -242,6 +230,16 @@ class SupplierController extends Controller
 		return $model;
 	}
 
+	
+	public function actionAjaxAddContact($id)
+	{
+  		$this->redirect(array('contact/createContact','modelRelName'=>get_class(Supplier::model()), 'id'=> $id, 'viewField'=>'business_name'));
+	}
+	
+	public function actionAjaxViewContact($id)
+	{
+		$this->redirect(array('contact/adminContact','modelRelName'=>get_class(Supplier::model()), 'id'=> $id, 'viewField'=>'business_name'));
+	}
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated

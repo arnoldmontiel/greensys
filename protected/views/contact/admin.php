@@ -1,13 +1,11 @@
 <?php
+$rel = strtolower($modelRelName);
 $this->breadcrumbs=array(
-	'Contacts'=>array('index'),
-	'Manage',
+	$modelRelName=>array($modelRelName.'/index'),
+	$model->$rel->$viewField=>array($modelRelName.'/view', 'id'=>$id),
+	'Manage Contacts',
 );
 
-$this->menu=array(
-	array('label'=>'List Contact', 'url'=>array('index')),
-	array('label'=>'Create Contact', 'url'=>array('create')),
-);
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -25,34 +23,61 @@ $('.search-form form').submit(function(){
 
 <h1>Manage Contacts</h1>
 
-<p>
-You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
-
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'contact-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$model->searchContact(),
 	'filter'=>$model,
 	'columns'=>array(
-		'Id',
-		'description',
-		'telephone_1',
-		'telephone_2',
-		'telephone_3',
-		'email',
-		/*
-		'address',
-		*/
+		array(
+ 			'name'=>'description',
+			'value'=>'$data->contact->description',
+		),
+		array(
+ 			'name'=>'telephone_1',
+			'value'=>'$data->contact->telephone_1',
+		),
+		array(
+ 			'name'=>'telephone_2',
+			'value'=>'$data->contact->telephone_2',
+		),
+		array(
+ 			'name'=>'address',
+			'value'=>'$data->contact->address',
+		),
+		array(
+ 			'name'=>'email',
+			'value'=>'$data->contact->email',
+		),
 		array(
 			'class'=>'CButtonColumn',
+			'template'=>'{view}{update}{delete}',
+			'buttons'=>array
+			(
+			        'delete' => array
+					(
+			            'url'=>'Yii::app()->createUrl("contact/RemoveContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "modelRelName"=>'.$modelRelName.'))',
+					),
+					'update' => array
+					(
+			            'url'=>'Yii::app()->createUrl("contact/UpdateContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "viewField"=>'.$viewField.', "modelRelName"=>'.$modelRelName.'))',
+					),
+					'view' => array
+					(
+			            'url'=>'Yii::app()->createUrl("contact/ViewContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "viewField"=>'.$viewField.', "modelRelName"=>'.$modelRelName.'))',
+					),
+			),
 		),
 	),
 )); ?>
+<br>
+<div class="row buttons">
+	<?php
+		echo CHtml::link( CHtml::image('images/back.png','Back to '. $relation ,array(
+																   'title'=>'Back to '. $relation,
+												                   'style'=>'width:30px;',
+												                   'id'=>'addBack',
+                                									)
+                            ),ContactController::createUrl('AjaxBackPrevious', array('modelRelName'=>$modelRelName, 'id'=>$id)));
+		?>
+</div>

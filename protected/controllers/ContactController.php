@@ -27,18 +27,6 @@ class ContactController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
 		);
@@ -78,6 +66,154 @@ class ContactController extends Controller
 		));
 	}
 
+	/**
+	* Creates a new model.
+	* If creation is successful, the browser will be redirected to the 'view' page.
+	*/
+	public function actionCreateContact($modelRelName, $id, $viewField)
+	{
+
+		if(isset($_POST['Cancel']))
+			$this->redirect(array(strtolower($modelRelName) .'/view','id'=>$id));
+		
+		$newModel = $modelRelName . get_class(Contact::model());
+  		$modelRelated=new $newModel;
+		
+		$model=new Contact;
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+	
+		if(isset($_POST['Contact']) && !isset($_POST['Cancel']))
+		{
+			$model->attributes=$_POST['Contact'];
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				if($model->save()){
+					$modelRelated->Id_contact = $model->Id;
+					$field = "Id_".strtolower($modelRelName);
+					$modelRelated->$field = $id;
+					$modelRelated->save();
+					
+					$transaction->commit();
+					$this->redirect(array(strtolower($modelRelName) .'/view','id'=>$id));
+				}	
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
+ 			
+		}
+		
+		$this->render('create',array(
+				'model'=>$model,
+				'modelRelName'=>$modelRelName,
+				'viewField'=>$viewField,
+				'id'=>$id
+		));
+	}
+	
+	public function actionAdminContact($modelRelName, $id, $viewField)
+	{
+		
+		$newModel = $modelRelName . get_class(Contact::model());
+ 		$field = "Id_".strtolower($modelRelName);
+
+ 		$model = new $newModel('search');
+
+ 		$model->$field = $id;
+
+ 		if(isset($_GET[$newModel]))
+ 			$model->attributes = $_GET[$newModel]; 
+		
+ 		
+		$this->render('admin',array(
+				'model'=>$model,
+				'modelRelName'=>$modelRelName,
+				'id'=>$id,
+				'viewField'=>$viewField
+		));
+	}
+	
+	public function actionAjaxBackPrevious($modelRelName, $id)
+	{
+		$this->redirect(array(strtolower($modelRelName) .'/view','id'=>$id));
+	}
+	
+	public function actionRemoveContact()
+	{
+		$id = isset($_GET['id'])?$_GET['id']:'';
+		$idContact = isset($_GET['idContact'])?$_GET['idContact']:'';
+		$modelRelName = isset($_GET['relation'])?$_GET['relation']:'';
+			
+		if(!empty($id)&&!empty($idContact))
+		{
+			$newModel = $modelRelName . get_class(Contact::model());
+			$field = "Id_".strtolower($modelRelName);
+			$model = new $newModel;
+			
+			$modelDb = $model->findByPk(array('Id_contact'=>(int)$idContact, $field=>(int)$id));
+			 
+			$contactInDb = Contact::model()->findByPk($idContact);
+			
+			if($contactInDb!=null && $modelDb!=null)
+			{
+				$transaction = $contactInDb->dbConnection->beginTransaction();
+				try {
+					$modelDb->delete();
+					$contactInDb->delete();
+					$transaction->commit();
+				} catch (Exception $e) {
+					$transaction->rollback();
+				}
+			}
+		}
+	}
+	
+	public function actionViewContact()
+	{
+		$id = isset($_GET['id'])?$_GET['id']:'';
+		$idContact = isset($_GET['idContact'])?$_GET['idContact']:'';
+		$modelRelName = isset($_GET['modelRelName'])?$_GET['modelRelName']:'';
+		$viewField = isset($_GET['viewField'])?$_GET['viewField']:'';
+
+		$this->render('view',array(
+				'model'=>$this->loadModel($idContact),
+				'modelRelName'=>$modelRelName,
+				'id'=>$id,
+				'viewField'=>$viewField
+		));
+	}
+	
+	public function actionUpdateContact()
+	{	
+		$id = isset($_GET['id'])?$_GET['id']:'';
+		$idContact = isset($_GET['idContact'])?$_GET['idContact']:'';
+		$modelRelName = isset($_GET['modelRelName'])?$_GET['modelRelName']:'';
+		$viewField = isset($_GET['viewField'])?$_GET['viewField']:'';
+		
+		if(isset($_POST['Cancel']))
+			$this->redirect(array('contact/adminContact','modelRelName'=>$modelRelName, 'id'=> $id, 'viewField'=>$viewField));
+		
+		$model=$this->loadModel($idContact);
+	
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+	
+		if(isset($_POST['Contact']))
+		{
+			$model->attributes=$_POST['Contact'];
+			if($model->save())
+				$this->redirect(array('contact/ViewContact', 'id'=>$id, 'idContact'=>$idContact, 'modelRelName'=>$modelRelName,'viewField'=>$viewField));
+		}
+	
+		$this->render('update',array(
+				'model'=>$model,
+				'modelRelName'=>$modelRelName,
+				'id'=>$id,
+				'idContact'=>$idContact,
+				'viewField'=>$viewField
+		));
+	}
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.

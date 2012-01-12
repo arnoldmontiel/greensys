@@ -11,6 +11,26 @@ $this->menu=array(
 	array('label'=>'Delete Supplier', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Supplier', 'url'=>array('admin')),
 );
+
+Yii::app()->clientScript->registerScript('priceListItem', "
+$('#addContact').hover(
+function () {
+	$(this).attr('src','images/add_contact_light.png');
+  },
+  function () {
+	$(this).attr('src','images/add_contact.png');
+  }
+);
+$('#viewContact').hover(
+function () {
+	$(this).attr('src','images/view_contact_light.png');
+  },
+  function () {
+	$(this).attr('src','images/view_contact.png');
+  }
+);
+
+");
 ?>
 
 <h1>View Supplier</h1>
@@ -63,4 +83,31 @@ $this->menu=array(
 		'mode'=>'show'
 	));
 	?>
+	<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;background-color: #B7D6E7">
+		<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
+			Products
+		</div>
+		<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
+		<?php
+		echo CHtml::link( CHtml::image('images/view_contact.png','view Contacts',array(
+												                                'title'=>'View contact',
+												                                'style'=>'width:30px;',
+												                                'id'=>'viewContact',
+                                												)
+                            ),SupplierController::createUrl('AjaxViewContact',array('id'=>$model->Id)));
+		?>
+
+		</div>
+		<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
+		<?php
+		echo CHtml::link( CHtml::image('images/add_contact.png','add Contact',array(
+												                                'title'=>'Add contact',
+												                                'style'=>'width:30px;',
+												                                'id'=>'addContact',
+                                												)
+                            ),SupplierController::createUrl('AjaxAddContact',array('id'=>$model->Id)));
+		?>
+
+		</div>
+	</div>
 </div>

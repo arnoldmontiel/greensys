@@ -10,12 +10,6 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'Id'); ?>
-		<?php echo $form->textField($model,'Id'); ?>
-		<?php echo $form->error($model,'Id'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'description'); ?>
 		<?php echo $form->textField($model,'description',array('size'=>60,'maxlength'=>100)); ?>
 		<?php echo $form->error($model,'description'); ?>
@@ -50,11 +44,16 @@
 		<?php echo $form->textField($model,'address',array('size'=>60,'maxlength'=>100)); ?>
 		<?php echo $form->error($model,'address'); ?>
 	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+	<div class="left">
+		<div class="row buttons">
+			<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		</div>
 	</div>
-
+	<div class="right" style="margin-left:1px; width: 48%; ">
+		<div class="row buttons">
+			<?php echo CHtml::submitButton('Cancel', array('value'=>'Cancel', 'name'=>'Cancel')); ?>
+		</div>
+	</div>		
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->

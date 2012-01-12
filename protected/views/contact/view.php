@@ -1,24 +1,21 @@
 <?php
+
+$modelRel = new $modelRelName;
+$modelRelDb = $modelRel->findByPk($id);
 $this->breadcrumbs=array(
-	'Contacts'=>array('index'),
-	$model->Id,
+	$modelRelName=>array($modelRelName.'/index'),
+ 	$modelRelDb->$viewField=>array($modelRelName.'/view', 'id'=>$id),
+	'Manage Contacts'=>array('contact/adminContact','modelRelName'=>$modelRelName, 'id'=> $id, 'viewField'=>$viewField),
+	$model->description
 );
 
-$this->menu=array(
-	array('label'=>'List Contact', 'url'=>array('index')),
-	array('label'=>'Create Contact', 'url'=>array('create')),
-	array('label'=>'Update Contact', 'url'=>array('update', 'id'=>$model->Id)),
-	array('label'=>'Delete Contact', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Contact', 'url'=>array('admin')),
-);
 ?>
 
-<h1>View Contact #<?php echo $model->Id; ?></h1>
+<h1>View Contact</h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
-		'Id',
 		'description',
 		'telephone_1',
 		'telephone_2',
@@ -27,3 +24,16 @@ $this->menu=array(
 		'address',
 	),
 )); ?>
+<br>
+
+<div class="row buttons">
+	<?php
+// 	Yii::app()->request->urlReferrer)
+		echo CHtml::link( CHtml::image('images/back.png','Back to Manage' ,array(
+																   'title'=>'Back to Manage',
+												                   'style'=>'width:30px;',
+												                   'id'=>'addBack',
+                                									)
+                            ),array('contact/adminContact','modelRelName'=>$modelRelName, 'id'=> $id, 'viewField'=>$viewField));
+		?>
+</div>

@@ -1,15 +1,17 @@
 <?php
+$rel = strtolower($modelRelName);
+$modelRel = new $modelRelName;
+$modelRelDb = $modelRel->findByPk($id);
 $this->breadcrumbs=array(
-	'Contacts'=>array('index'),
-	'Create',
+	$modelRelName=>array($modelRelName.'/index'),
+	$modelRelDb->$viewField=>array($modelRelName.'/view', 'id'=>$id),
+	'Create Contact',
 );
 
-$this->menu=array(
-	array('label'=>'List Contact', 'url'=>array('index')),
-	array('label'=>'Manage Contact', 'url'=>array('admin')),
-);
 ?>
 
 <h1>Create Contact</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array(
+												'model'=>$model
+											)); ?>

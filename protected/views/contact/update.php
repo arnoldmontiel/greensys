@@ -1,18 +1,16 @@
 <?php
+$modelRel = new $modelRelName;
+$modelRelDb = $modelRel->findByPk($id);
 $this->breadcrumbs=array(
-	'Contacts'=>array('index'),
-	$model->Id=>array('view','id'=>$model->Id),
+	'Suppliers'=>array($modelRelName.'/index'),
+	$modelRelDb->$viewField=>array($modelRelName.'/view', 'id'=>$id),
+	'Manage Contacts'=>array('contact/adminContact','modelRelName'=>$modelRelName, 'id'=> $id, 'viewField'=>$viewField),
+	$model->description=>array('contact/ViewContact','modelRelName'=>$modelRelName, 'id'=> $id, 'viewField'=>$viewField, 'idContact'=>$idContact),
 	'Update',
 );
 
-$this->menu=array(
-	array('label'=>'List Contact', 'url'=>array('index')),
-	array('label'=>'Create Contact', 'url'=>array('create')),
-	array('label'=>'View Contact', 'url'=>array('view', 'id'=>$model->Id)),
-	array('label'=>'Manage Contact', 'url'=>array('admin')),
-);
 ?>
 
-<h1>Update Contact <?php echo $model->Id; ?></h1>
+<h1>Update Contact</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
