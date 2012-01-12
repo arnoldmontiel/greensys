@@ -13,7 +13,6 @@ $this->menu=array(
 	array('label'=>'Assign Groups', 'url'=>array('productGroup')),
 );
 ?>
-
 <h1>View Product</h1>
 
 <div class="left">
@@ -46,6 +45,19 @@ $this->widget('zii.widgets.CDetailView', array(
 		'length',
 		'width',
 		'height',
+		array('label'=>$model->getAttributeLabel('Id_measurement_unit_linear'),
+			'type'=>'raw',
+			'value'=>$model->measurementUnitLinear->short_description
+		),
+		array('label'=>$model->getAttributeLabel('volume'),
+			'type'=>'raw',
+			'value'=>$model->getVolume()
+		),
+		'weight',
+		array('label'=>$model->getAttributeLabel('Id_measurement_unit_weight'),
+			'type'=>'raw',
+			'value'=>$model->measurementUnitWeight->short_description
+		),
 		'profit_rate',
 		'msrp',
 		'time_instalation',
@@ -53,7 +65,6 @@ $this->widget('zii.widgets.CDetailView', array(
 			'type'=>'raw',
 			'value'=>CHtml::checkBox("hide",$model->hide,array("disabled"=>"disabled"))
 		),
-		'weight',
 	),
 )); 
 ?>

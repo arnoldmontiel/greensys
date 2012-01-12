@@ -442,7 +442,27 @@ class ProductController extends Controller
 			echo round($converter->factor * (double)$width * (double)$height * (double)$length, 6);	
 		}
 	}
-
+	public function actionAjaxFillWeight()
+	{
+		if(isset($_POST['Id_measurement_unit_weight'])&&isset($_POST['weight']))
+		{
+			$id_measurement_unit_weight = $_POST['Product']['width'];
+			$weight = $_POST['weight'];
+			
+			$weghtTo = MeasurementUnit::model()->findByAttributes(array('short_description'=>'kg'));		
+			$weghtFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'lb'));
+			
+			$converter = MeasurementUnitConverter::model()->findByAttributes(
+			array(
+							'Id_measurement_from'=>$weghtFrom->Id,
+							'Id_measurement_to'=>$weghtTo->Id,
+			)
+			);
+			echo round($converter->factor * (double)$weight , 2);
+		}
+		
+	}
+	
 	public function actionProductRequirement()
 	{
 		$model=new Product('search');

@@ -1,7 +1,39 @@
 <div class="form">
 
 <?php
+$weightToShipping = MeasurementUnit::model()->findByAttributes(array('short_description'=>'kg'));
 Yii::app()->clientScript->registerScript(__CLASS__.'#Product_msrp', "
+fillVolumeTextBox('".ProductController::createUrl("AjaxFillVolume")."','txtVolume','product-form');
+
+$('#display-weight').hide();
+
+$('#weight').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+	if($('#Id_measurement_unit_weight').val()!='"
+		.$weightToShipping->Id.
+		"')
+	{
+		fillWieghtTextBox('".ProductController::createUrl("AjaxFillWeight")."','Product_weight','product-form');
+	}else{
+		$('#Product_weight').val($('#weight').val());
+	}
+}).keyup(function(){
+	validateNumber($(this));
+});
+
+$('#Id_measurement_unit_weight').change(function(){
+	if($('#Id_measurement_unit_weight').val()!='"
+		.$weightToShipping->Id.
+		"')
+	{
+ 		$('#display-weight').show();
+		fillWieghtTextBox('".ProductController::createUrl("AjaxFillWeight")."','Product_weight','product-form');
+	}else{
+		$('#Product_weight').val($('#weight').val());
+ 		$('#display-weight').hide();
+	}
+});
+
 $('#Product_msrp').change(function(){
 	$(this).val(Number($(this).val()).toFixed(2));
 	if($('#Product_dealer_cost').val()!=0)
@@ -74,6 +106,18 @@ $('#Product_weight').change(function(){
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'code'); ?>
+		<?php echo $form->textField($model,'code',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($model,'code'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'code_supplier'); ?>
+		<?php echo $form->textField($model,'code_supplier',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($model,'code_supplier'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'Id_brand'); ?>
 		<?php echo $form->dropDownList($model, 'Id_brand', CHtml::listData(
     			Brand::model()->findAll(), 'Id', 'description')); 
@@ -115,18 +159,6 @@ $('#Product_weight').change(function(){
 		<?php echo $form->labelEx($model,'description_supplier'); ?>
 		<?php echo $form->textField($model,'description_supplier',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'description_supplier'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'code'); ?>
-		<?php echo $form->textField($model,'code',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'code'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'code_supplier'); ?>
-		<?php echo $form->textField($model,'code_supplier',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'code_supplier'); ?>
 	</div>
 
 	<div class="row">
@@ -174,18 +206,32 @@ $('#Product_weight').change(function(){
 
 		<div style="width: 120px; display: inline-block;">
 			<?php echo $form->labelEx($model,'weight'); ?>
-			<?php echo $form->textField($model,'weight',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo CHtml::textField("weight",$model->weight,array('size'=>10,'maxlength'=>10)); ?>
 			<?php echo $form->error($model,'weight'); ?>
 		</div>
 		<div style="width: 120px; display: inline-block;">
 			<?php echo $form->labelEx($model,'Id_measurement_unit_weight'); ?>
 			<?php				
 				$measureType = MeasurementType::model()->findByAttributes(array('description'=>'weight'));
-				 
-				echo $form->dropDownList($model, 'Id_measurement_unit_weight', CHtml::listData(
-	    			MeasurementUnit::model()->findAllByAttributes(array('Id_measurement_type'=>$measureType->Id)), 'Id', 'short_description')); 
+				$measuremetUnit = MeasurementUnit::model()->findAllByAttributes(array('Id_measurement_type'=>$measureType->Id));
+				echo CHtml::dropDownList('Id_measurement_unit_weight', $measuremetUnit->short_description,CHtml::listData(
+	    			$measuremetUnit, 'Id', 'short_description')); 
 			?>
 			<?php echo $form->error($model,'Id_supplier'); ?>
+		</div>
+		<div id="display-weight" style="display: inline-block;">
+			<div style="width: 120px; display: inline-block;">
+				<?php echo $form->labelEx($model,'weight'); ?>
+				<?php echo $form->textField($model,'weight',array('size'=>10,'maxlength'=>10)); ?>
+				<?php echo $form->error($model,'weight'); ?>
+			</div>
+			<div style="width: 120px; display: inline-block;">
+				<?php echo $form->labelEx($model,'Id_measurement_unit_weight'); ?>
+				<?php echo $form->dropDownList($model,'Id_measurement_unit_weight', CHtml::listData(
+	    			$measuremetUnit, 'Id', 'short_description'),array("disabled"=>"disabled"));?> 
+				<?php //echo $form->textField($model,'Id_measurement_unit_weight',array('size'=>10,'maxlength'=>10,"disabled"=>"disabled")); ?>
+				<?php echo $form->error($model,'Id_measurement_unit_weight'); ?>
+			</div>
 		</div>
 	</div>
 

@@ -125,6 +125,13 @@ Yii::app()->clientScript->registerScript('productRequirement', "");
 				 			'name'=>'internal',
 							'value'=>'CHtml::checkBox("internal",$data->internal,array("disabled"=>"disabled"))',
 							'type'=>'raw',
+								'filter'=>CHtml::listData(
+									array(
+										array('id'=>'0','value'=>'No'),
+										array('id'=>'1','value'=>'Yes')
+									)
+									,'id','value'
+								),				
 					),
 					'description_short',
 					array(
@@ -154,6 +161,13 @@ Yii::app()->clientScript->registerScript('productRequirement', "");
 					 			'name'=>'internal',
 								'value'=>'CHtml::checkBox("internal",$data->productRequirement->internal,array("disabled"=>"disabled"))',
 								'type'=>'raw',
+								'filter'=>CHtml::listData(
+									array(
+										array('id'=>'0','value'=>'No'),
+										array('id'=>'1','value'=>'Yes')
+									)
+									,'id','value'
+								),				
 				),
 				array(
 						 		'name'=>'description_short',

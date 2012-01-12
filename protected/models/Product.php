@@ -148,12 +148,37 @@ class Product extends CActiveRecord
 			'dealer_cost' => 'Dealer Cost',
 			'Id_measurement_unit_linear' => 'Measure Linear',		
 			'Id_measurement_unit_weight' => 'Measure Weight',		
+			'volume' => 'Volume',		
 		);
 	}
 
 	public function getProductDesc()
 	{
 		return $this->description_customer . ' - ' . $this->code;
+	}
+	public function getVolume()
+	{
+		$width = $this->width;
+		$height = $this->height;
+		$length = $this->length;
+		$measureLinear = MeasurementUnit::model()->findByPk($this->Id_measurement_unit_linear);
+		if($measureLinear->short_description=='ml')
+		{
+			$cubicFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'m3'));
+		}
+		else if($measureLinear->short_description=='in')
+		{
+			$cubicFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'in3'));				
+		}
+			
+		$cubicTo = MeasurementUnit::model()->findByAttributes(array('short_description'=>'m3'));
+		$converter = MeasurementUnitConverter::model()->findByAttributes(
+			array(
+				'Id_measurement_from'=>$cubicFrom->Id,
+				'Id_measurement_to'=>$cubicTo->Id,
+			)
+		);
+		return round($converter->factor * (double)$width * (double)$height * (double)$length, 6);	
 	}
 	
 	/**
