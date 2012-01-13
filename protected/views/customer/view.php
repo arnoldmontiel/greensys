@@ -11,16 +11,36 @@ $this->menu=array(
 	array('label'=>'Delete Customer', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Customer', 'url'=>array('admin')),
 );
+
+Yii::app()->clientScript->registerScript('', "
+$('#viewContact').hover(
+function () {
+	$(this).attr('src','images/view_contact_blue_light.png');
+  },
+  function () {
+	$(this).attr('src','images/view_contact_blue.png');
+  }
+);
+$('#addContact').hover(
+function () {
+	$(this).attr('src','images/add_contact_blue_light.png');
+  },
+  function () {
+	$(this).attr('src','images/add_contact_blue.png');
+  }
+);
+
+");
 ?>
 
 <h1>View Customer</h1>
-<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
+<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;margin-bottom: 5px;">
 	<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
 		View Supplier
 	</div>
 	<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
 		<?php
-		echo CHtml::link( CHtml::image('images/view_contact.png','view Contacts',array(
+		echo CHtml::link( CHtml::image('images/view_contact_blue.png','view Contacts',array(
 												                                'title'=>'View contact',
 												                                'style'=>'width:30px;',
 												                                'id'=>'viewContact',
@@ -31,7 +51,7 @@ $this->menu=array(
 	</div>
 	<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
 		<?php
-		echo CHtml::link( CHtml::image('images/add_contact.png','add Contact',array(
+		echo CHtml::link( CHtml::image('images/add_contact_blue.png','add Contact',array(
 												                                'title'=>'Add contact',
 												                                'style'=>'width:30px;',
 												                                'id'=>'addContact',
