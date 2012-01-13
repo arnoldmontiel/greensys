@@ -1,10 +1,7 @@
 <?php
-$rel = strtolower($modelRelName);
-$modelRel = new $modelRelName;
-$modelRelDb = $modelRel->findByPk($id);
 $this->breadcrumbs=array(
 	$modelRelName=>array($modelRelName.'/index'),
-	$modelRelDb->$viewField=>array($modelRelName.'/view', 'id'=>$id),
+	$viewField=>array($modelRelName.'/view', 'id'=>$id),
 	'Create Contact',
 );
 

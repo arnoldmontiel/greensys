@@ -238,12 +238,12 @@ class CustomerController extends Controller
 
 	public function actionAjaxAddContact($id)
 	{
-		$this->redirect(array('contact/createContact','modelRelName'=>get_class(Customer::model()), 'id'=> $id, 'viewField'=>'last_name'));
+		$this->redirect(array('contact/createContact','modelRelName'=>get_class(Customer::model()), 'id'=> $id, 'viewField'=> $this->loadModel($id)->person->last_name));
 	}
 	
 	public function actionAjaxViewContact($id)
 	{
-		$this->redirect(array('contact/adminContact','modelRelName'=>get_class(Customer::model()), 'id'=> $id, 'viewField'=>'last_name'));
+		$this->redirect(array('contact/adminContact','modelRelName'=>get_class(Customer::model()), 'id'=> $id, 'viewField'=> $this->loadModel($id)->person->last_name));
 	}
 	
 	/**

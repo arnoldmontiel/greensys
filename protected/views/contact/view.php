@@ -1,10 +1,8 @@
 <?php
 
-$modelRel = new $modelRelName;
-$modelRelDb = $modelRel->findByPk($id);
 $this->breadcrumbs=array(
 	$modelRelName=>array($modelRelName.'/index'),
- 	$modelRelDb->$viewField=>array($modelRelName.'/view', 'id'=>$id),
+ 	$viewField=>array($modelRelName.'/view', 'id'=>$id),
 	'Manage Contacts'=>array('contact/adminContact','modelRelName'=>$modelRelName, 'id'=> $id, 'viewField'=>$viewField),
 	$model->description
 );

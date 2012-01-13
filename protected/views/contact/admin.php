@@ -1,8 +1,7 @@
 <?php
-$rel = strtolower($modelRelName);
 $this->breadcrumbs=array(
 	$modelRelName=>array($modelRelName.'/index'),
-	$model->$rel->$viewField=>array($modelRelName.'/view', 'id'=>$id),
+	$viewField=>array($modelRelName.'/view', 'id'=>$id),
 	'Manage Contacts',
 );
 
