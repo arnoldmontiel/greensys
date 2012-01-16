@@ -66,13 +66,11 @@ class ImporterController extends Controller
 		
 
 		if(
-			isset($_POST['Importer'])
-			&&isset($_POST['Contact'])
+			isset($_POST['Contact'])
 			&&isset($_POST['ShippingParameter'])
 			&&isset($_POST['ShippingParameterAir'])
 			&&isset($_POST['ShippingParameterMaritime'])
 		){
-			$model->attributes=$_POST['Importer'];
 			$modelContact->attributes=$_POST['Contact'];
 			$modelShippingParameter->attributes=$_POST['ShippingParameter'];
 			$modelShippingParameterAir->attributes=$_POST['ShippingParameterAir'];
