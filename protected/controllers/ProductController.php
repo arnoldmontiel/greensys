@@ -75,6 +75,7 @@ class ProductController extends Controller
 					if(isset($_POST['Multimedia']))
 						$this->saveImage($model);
 				
+					$this->createCode($model);
 					$transaction->commit();		
 					$this->redirect(array('view','id'=>$model->Id));
 				}	
@@ -88,6 +89,16 @@ class ProductController extends Controller
 		));
 	}
 
+	public function createCode($model)
+	{
+		$newId = str_pad($model->Id, 5, "0", STR_PAD_LEFT);
+		$newBrand = strtoupper(str_pad(substr($model->brand->description,0,3), 3, "0"));
+		$newCategory = strtoupper(str_pad(substr($model->category->description,0,3), 3, "0"));
+	
+		$model->code = $newCategory.$newBrand.$newId;
+		$model->save();
+	}
+	
 	private function saveImage($model)
 	{			
 			$multimedia = Multimedia::model()->findByAttributes(array('Id_product'=>$model->Id));

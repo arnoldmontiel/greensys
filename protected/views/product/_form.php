@@ -106,12 +106,6 @@ $('#Product_weight').change(function(){
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'code'); ?>
-		<?php echo $form->textField($model,'code',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'code'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'code_supplier'); ?>
 		<?php echo $form->textField($model,'code_supplier',array('size'=>45,'maxlength'=>45)); ?>
 		<?php echo $form->error($model,'code_supplier'); ?>
