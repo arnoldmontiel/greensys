@@ -217,7 +217,7 @@ $('#Product_weight').change(function(){
 				echo CHtml::dropDownList('Id_measurement_unit_weight', $measuremetUnit->short_description,CHtml::listData(
 	    			$measuremetUnit, 'Id', 'short_description')); 
 			?>
-			<?php echo $form->error($model,'Id_supplier'); ?>
+			<?php echo $form->error($model,'Id_measurement_unit_weight'); ?>
 		</div>
 		<div id="display-weight" style="display: inline-block;">
 			<div style="width: 120px; display: inline-block;">
@@ -228,7 +228,7 @@ $('#Product_weight').change(function(){
 			<div style="width: 120px; display: inline-block;">
 				<?php echo $form->labelEx($model,'Id_measurement_unit_weight'); ?>
 				<?php echo $form->dropDownList($model,'Id_measurement_unit_weight', CHtml::listData(
-	    			$measuremetUnit, 'Id', 'short_description'),array("disabled"=>"disabled"));?> 
+	    			$measuremetUnit, 'Id', 'short_description'));?> 
 				<?php //echo $form->textField($model,'Id_measurement_unit_weight',array('size'=>10,'maxlength'=>10,"disabled"=>"disabled")); ?>
 				<?php echo $form->error($model,'Id_measurement_unit_weight'); ?>
 			</div>
