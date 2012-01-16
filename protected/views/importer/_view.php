@@ -2,7 +2,7 @@
 
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('description')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->description), array('view', 'id'=>$data->Id)); ?>
+	<?php echo CHtml::link(CHtml::encode($data->contact->description), array('view', 'id'=>$data->Id)); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->contact->getAttributeLabel('telephone_1')); ?>:</b>

@@ -49,10 +49,9 @@ class Importer extends CActiveRecord
 		return array(
 			array('Id_contact', 'required'),
 			array('Id, Id_contact', 'numerical', 'integerOnly'=>true),
-			array('description', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description, Id_contact,contact_telephone_1,contact_telephone_2,contact_telephone3,contact_email,shippingParameter_description', 'safe', 'on'=>'search'),
+			array('Id, Id_contact,contact_telephone_1,contact_telephone_2,contact_telephone3,contact_email,shippingParameter_description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -77,7 +76,6 @@ class Importer extends CActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
-			'description' => 'Description',
 			'Id_contact' => 'Id Contact',
 		);
 	}
@@ -94,7 +92,6 @@ class Importer extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('Id',$this->Id);
-		$criteria->compare('description',$this->description,true);
 		$criteria->compare('Id_contact',$this->Id_contact);
 
 		return new CActiveDataProvider($this, array(
@@ -113,7 +110,6 @@ class Importer extends CActiveRecord
 		$criteria=new CDbCriteria;
 	
 		$criteria->compare('Id',$this->Id);
-		$criteria->compare('description',$this->description,true);
 		$criteria->compare('Id_contact',$this->Id_contact);
 		
 		$criteria->with[]='contact';
@@ -129,7 +125,6 @@ class Importer extends CActiveRecord
 		
 		$sort=new CSort;
 		$sort->attributes=array(
-			'description',
 			'contact_description' => array(
 				'asc' => 'contact.description',
 				'desc' => 'contact.description DESC',

@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Importers'=>array('index'),
-	$model->description,
+	$model->contact->description,
 );
 
 $this->menu=array(
@@ -20,7 +20,10 @@ $this->menu=array(
 	'data'=>$model,
 	'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',
 	'attributes'=>array(
-		'description',
+		array('label'=>$modelContact->getAttributeLabel('description'),
+			'type'=>'raw',
+			'value'=>$modelContact->description
+		),
  		array('label'=>$modelContact->getAttributeLabel('telephone_1'),
 			'type'=>'raw',
 			'value'=>$modelContact->telephone_1

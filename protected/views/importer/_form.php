@@ -51,7 +51,7 @@ $('#ShippingParameterMaritime_days').change(function(){
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'importer-form',
-	'enableAjaxValidation'=>true,
+	'enableAjaxValidation'=>false,
 )); ?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
@@ -60,9 +60,9 @@ $('#ShippingParameterMaritime_days').change(function(){
 	<?php echo $form->errorSummary($modelContact); ?>
 	
 	<div class="row">
-		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textField($model,'description',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'description'); ?>
+		<?php echo $form->labelEx($modelContact,'description'); ?>
+		<?php echo $form->textField($modelContact,'description',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($modelContact,'description'); ?>
 	</div>
 
 	<div class="row">
