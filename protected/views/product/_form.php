@@ -310,7 +310,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 
 <?php
 
-$note = Note::model()->findByAttributes(array('Id_product'=>$model->Id));
+$note = Note::model()->findByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$entity->Id));
 
  $this->widget('ext.richtext.jwysiwyg', array(
  	'id'=>'noteContainer',	// default is class="ui-sortable" id="yw0"	
