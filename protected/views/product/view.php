@@ -24,6 +24,10 @@ $this->widget('zii.widgets.CDetailView', array(
 	'attributes'=>array(
 		'code',
 		'code_supplier',
+		array('label'=>$model->getAttributeLabel('Id_supplier'),
+					'type'=>'raw',
+					'value'=>$model->supplier->business_name
+		),
 		array('label'=>$model->getAttributeLabel('Id_brand'),
 			'type'=>'raw',
 			'value'=>$model->brand->description

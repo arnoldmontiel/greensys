@@ -94,7 +94,7 @@ $(window).scroll(function() {
 				(
 					array('label'=>Yii::app()->lc->t('Product'), 'url'=>array('/product/index')),
 					array('label'=>Yii::app()->lc->t('Area'), 'url'=>array('/area/index')),
-					array('label'=>Yii::app()->lc->t('Multimedia'), 'url'=>array('/multimedia/index')),
+					array('label'=>Yii::app()->lc->t('Nomenclator'), 'url'=>array('/nomenclator/index')),
 					array('label'=>Yii::app()->lc->t('Price List'), 'url'=>array('/pricelist/index')),
 					array('label'=>Yii::app()->lc->t('Service'), 'url'=>array('/service/index')),
 					array('label'=>Yii::app()->lc->t('Project'), 'url'=>array('/project/index')),

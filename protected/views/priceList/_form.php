@@ -27,6 +27,12 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'description'); ?>
+		<?php echo $form->textField($model,'description',array('size'=>45,'maxlength'=>100)); ?>
+		<?php echo $form->error($model,'description'); ?>
+	</div>
+	
+	<div class="row">
 			<?php echo $form->labelEx($model,'validity'); ?>			
 			<?php echo $form->checkBox($model,'validity'); ?>
 			<?php echo $form->error($model,'validity'); ?>
