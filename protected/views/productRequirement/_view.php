@@ -5,7 +5,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('internal')); ?>:</b>
-	<?php echo CHtml::checkBox('internal',$model->internal,array('disabled'=>'disabled')); ?>	
+	<?php echo CHtml::checkBox('internal',$data->internal,array('disabled'=>'disabled')); ?>	
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_guild')); ?>:</b>
