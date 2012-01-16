@@ -22,6 +22,9 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'description',
-		'main',
+		array('label'=>$model->getAttributeLabel('main'),
+					'type'=>'raw',
+					'value'=>CHtml::checkBox("main",$model->main,array("disabled"=>"disabled"))
+		),
 	),
 )); ?>

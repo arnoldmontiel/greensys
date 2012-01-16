@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Importers'=>array('index'),
-	$model->Id,
+	$model->description,
 );
 
 $this->menu=array(
