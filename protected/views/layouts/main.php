@@ -104,7 +104,13 @@ $(window).scroll(function() {
 					array('label'=>Yii::app()->lc->t('Guild'), 'url'=>array('/guild/index')),
 					array('label'=>Yii::app()->lc->t('Supplier'), 'url'=>array('/supplier/index')),
 				)
-			)
+			),
+			array('label'=>Yii::app()->lc->t('Reports'), 'visible'=>!Yii::app()->user->isGuest, 'items'=>array
+				(
+					array('label'=>Yii::app()->lc->t('Costs'), 'url'=>array('/cost/index')),
+				)
+			),
+		
 		)
 		
 		)); 

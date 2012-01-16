@@ -179,7 +179,7 @@ class PriceListController extends Controller
 		}
 		
 		$this->render('priceListItem',array(
-					'dataProvider'=>$model,
+					'model'=>$model,
 					'modelProduct'=>$modelProduct,
 			//		'modelPriceListItem'=>$modelPriceListItem
 		));

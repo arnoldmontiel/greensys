@@ -66,7 +66,7 @@ function () {
 		'enableAjaxValidation'=>true,
 ));
 		
-		$model= PriceList::model();
+		$priceListmodel= PriceList::model();
 		$priceListDB= PriceList::model()->findAll();
 		?>
 	
@@ -74,9 +74,9 @@ function () {
 		
 		<?php	$priceLists = CHtml::listData($priceListDB, 'Id', 'PriceListDesc');?>
 
-		<?php echo $form->labelEx($model,'Price List'); ?>
+		<?php echo $form->labelEx($priceListmodel,'Price List'); ?>
 
-		<?php echo $form->dropDownList($model, 'Id', $priceLists,		
+		<?php echo $form->dropDownList($priceListmodel, 'Id', $priceLists,		
 			array(
 				'prompt'=>'Select a Price List'
 			)		
@@ -225,8 +225,8 @@ function () {
 
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'price-list-item-grid',
-	'dataProvider'=>$dataProvider->searchPriceList(),
- 	'filter'=>$dataProvider,
+	'dataProvider'=>$model->searchPriceList(),
+ 	'filter'=>$model,
 	'summaryText'=>'',
  	'afterAjaxUpdate'=>'function(id, data){
  										$("#price-list-item-grid").find("input.txtMsrp").each(

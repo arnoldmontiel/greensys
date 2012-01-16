@@ -13,7 +13,6 @@ $this->menu=array(
 
 <h1>Manage Customers</h1>
 
-
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'customer-grid',
 	'dataProvider'=>$model->searchCustomer(),
