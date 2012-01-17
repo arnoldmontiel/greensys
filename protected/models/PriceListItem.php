@@ -22,6 +22,7 @@ class PriceListItem extends CActiveRecord
 	public $description_customer;
 	public $code;
 	public $code_supplier;
+	public $Id_importer;
 	
 	/**
 	 * Returns the static model of the specified AR class.
@@ -93,10 +94,10 @@ class PriceListItem extends CActiveRecord
 	public function search()
 	{
 		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
-
+		// should not be searched.		
+		
 		$criteria=new CDbCriteria;
-
+		
 		$criteria->compare('Id',$this->Id);
  		$criteria->compare('Id_product',$this->Id_product);
  		$criteria->compare('Id_price_list',$this->Id_price_list);
@@ -114,7 +115,6 @@ class PriceListItem extends CActiveRecord
 	{
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
-	
 		$criteria=new CDbCriteria;
 	
 		$criteria->compare('t.Id',$this->Id);

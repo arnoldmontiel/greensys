@@ -21,6 +21,12 @@ class Importer extends CActiveRecord
 	public $contact_description;
 	public $contact_email;
 	public $shippingParameter_description;
+
+	public function getContactDescription()
+	{
+		return $this->contact->description;
+		
+	}
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -137,7 +143,7 @@ class Importer extends CActiveRecord
 				'asc' => 'contact.telephone_2',
 				'desc' => 'contact.telephone_2 DESC',
 			),
-			'contact_description' => array(
+			'contact_telefone_3' => array(
 				'asc' => 'contact.telephone_3',
 				'desc' => 'contact.telephone_3 DESC',
 			),

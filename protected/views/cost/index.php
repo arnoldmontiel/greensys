@@ -2,24 +2,51 @@
 $this->breadcrumbs=array(
 	'Cost',
 );
+
+$this->showSideBar = true;
+
+
 Yii::app()->clientScript->registerScript('priceListItem', "
 $('#PriceList_Id').change(function(){
-	
-	if($(this).val()!= ''){
+	if($(this).val()!=''&& $('#Importer_Id').val()!=''){
 		$.fn.yiiGridView.update('cost-item-grid', {
-			data: $(this).serialize()
+			data: $('#PriceList_Id').serialize()+'&'+$('#Importer_Id').serialize()
 		});
 		$('#display').animate({opacity: 'show'},240);
-// 		$.post('".PriceListController::createUrl('AjaxFillSidebar')."',
-// 					$(this).serialize()
-// 				).success(
-// 					function(data) 
-// 					{
-// 						$('#sidebar').html(data);
-// 						$( '#sidebar' ).show();	
-// 					}
-// 				);
+		$.post('".CostController::createUrl('AjaxFillSidebar')."',
+			$('#PriceList_Id').serialize()+'&'+$('#Importer_Id').serialize()
+		).success(
+			function(data) 
+			{
+				$('#sidebar').html(data);
+				$( '#sidebar' ).show();	
+			}
+		);
 	}
+	else{
+		$('#display').animate({opacity: 'hide'},240);
+		$( '#sidebar' ).hide();	
+	}
+	return false;
+}
+);
+$('#Importer_Id').change(function(){
+	
+	if($(this).val()!= '' && $('#PriceList_Id').val()!= ''){
+		$.fn.yiiGridView.update('cost-item-grid', {
+			data: $('#PriceList_Id').serialize()+'&'+$('#Importer_Id').serialize()
+		});
+		$('#display').animate({opacity: 'show'},240);
+		$.post('".CostController::createUrl('AjaxFillSidebar')."',
+			$('#PriceList_Id').serialize()+'&'+$('#Importer_Id').serialize()
+		).success(
+			function(data) 
+			{
+				$('#sidebar').html(data);
+				$( '#sidebar' ).show();	
+			}
+		);
+}
 	else{
 		$('#display').animate({opacity: 'hide'},240);
 		$( '#sidebar' ).hide();	
@@ -28,46 +55,83 @@ $('#PriceList_Id').change(function(){
 	return false;
 }
 );
+
 ");
 ?>
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
-		'id'=>'priceList-form',
+		'id'=>'cost-form',
 		'enableAjaxValidation'=>true,
 ));
 ?>
 
 <h1>Product Cost</h1>
-<div id="priceList" style="margin-bottom: 5px">
+<div id="priceList" style="margin-bottom: 5px; display: inline-block">
 	
-	<?php	$priceLists = CHtml::listData($modelPriceList->findAll(), 'Id', 'PriceListDesc');?>
+	<?php $priceLists = CHtml::listData($modelPriceList->findAll(), 'Id', 'PriceListDesc');?>
 
-	<?php echo $form->label($modelPriceList,'Price List', 'ddlPriceList');?>
+	<?php $form->labelEx($modelPriceList,'Price List');?>
 
-	<?php echo CHtml::dropDownList($modelPriceList,'PriceList_Id',"", $priceLists,		
-		array(
-			'prompt'=>'Select a Price List'
-		)		
-	);
-	?>
+		<?php echo $form->dropDownList($modelPriceList, 'Id', $priceLists,		
+			array(
+				'prompt'=>'Select a Price List'
+			)		
+		);
+		?>
 </div>
 
-<div id="display">
+<div id="importer" style="margin-bottom: 5px; display: inline-block">
+	
+	<?php $importerLists = CHtml::listData($modelImporter->findAll(), 'Id', 'ContactDescription');?>
+
+	<?php $form->labelEx($modelImporter,'Importer');?>
+
+		<?php echo $form->dropDownList($modelImporter, 'Id', $importerLists,		
+			array(
+				'prompt'=>'Select an Importer'
+			)		
+		);
+		?>
+</div>
+
+<div id="display" style="display:none;">
 	<?php $this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'cost-item-grid',
-		'dataProvider'=>$modelPriceListItem->search(),
-		'filter'=>$modelPriceListItem,
+		'dataProvider'=>$model->search(),
+		'filter'=>$model,
 		'columns'=>array(
-			array(
-	 			'name'=>'code',
-				'value'=>'$data->product->code',
+	 			'code',
+	 			array('name'=>'weight','type'=>'raw',
+	 				'value'=>'number_format(round($data->weight,4),2)',
+					'htmlOptions'=>array('style'=>'text-align: right;')
+	 			),
+				array('name'=>'cost_air','type'=>'raw',
+					'value'=>'number_format(round($data->cost_air,4),2)',
+					'htmlOptions'=>array('style'=>'text-align: right;')
+				),
+	 			array('name'=>'volume','type'=>'raw',
+	 				'value'=>'number_format(round($data->volume,4),2)',
+					'htmlOptions'=>array('style'=>'text-align: right;')
+				),
+	 			array('name'=>'cost_maritime','type'=>'raw',
+	 				'value'=>'number_format(round($data->cost_maritime,4),2)',
+					'htmlOptions'=>array('style'=>'text-align: right;')
+				),
+	 			array('name'=>'msrp','type'=>'raw',
+	 				'value'=>'number_format(round($data->msrp,4),2)',
+					'htmlOptions'=>array('style'=>'text-align: right;')
+				),
+				array('name'=>'dealer_cost','type'=>'raw',
+					'value'=>'number_format(round($data->dealer_cost,4),2)',
+					'htmlOptions'=>array('style'=>'text-align: right;')
+				),
+				array('name'=>'profit_rate','type'=>'raw',
+					'value'=>'number_format(round($data->profit_rate,4),2)',
+					'htmlOptions'=>array('style'=>'text-align: right;')
+				),
 			),
-			array(
-	 			'name'=>'code',
-				'value'=>'$data->product->code',
-			),
-	),
-	)); ?>
+	)
+	); ?>
 </div>
 
 	<?php $this->endWidget(); ?>

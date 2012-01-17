@@ -140,7 +140,7 @@ $('#ShippingParameterMaritime_days').change(function(){
 			<div class="row">
 				<?php echo $form->labelEx($modelShippingParameterAir,'width_max'); ?>
 				<?php echo $form->textField($modelShippingParameterAir,'width_max',array('size'=>10,'maxlength'=>10)); ?>
-				<?php echo $form->error($modelShippingParameterAir,'widthv'); ?>
+				<?php echo $form->error($modelShippingParameterAir,'width_max'); ?>
 			</div>
 	
 			<div class="row">
