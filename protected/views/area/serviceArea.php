@@ -97,11 +97,14 @@ $this->trashDraggableId = 'ddlAssigment';
 							'js:function(event, ui) 
 							{ 
 								var IdService = $(ui.item).attr("id");
+									
+								if(IdService== undefined)
+									IdService = id;
 								$.post(
 									"'.AreaController::createUrl('AjaxRemoveServiceArea').'",
 									 {
 									 	IdArea: $("#Area_Id :selected").attr("value"),
-										IdService:$(ui.item).attr("id")
+										IdService:IdService
 									}); 
 							}', 				
 		),

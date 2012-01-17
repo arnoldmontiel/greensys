@@ -140,14 +140,18 @@ $this->trashDraggableId = 'ddlAssigment';
 						'remove'=>
 								'js:function(event, ui) 
 								{ 
-									var IdService = $(ui.item).attr("id");
+									var IdArea = $(ui.item).attr("id");
+									
+									if(IdArea== undefined)
+										IdArea = id;
 									$.post(
 										"'.ProjectController::createUrl('AjaxRemoveProjectArea').'",
 										 {
 										 	IdProject: $("#Project_Id :selected").attr("value"),
-											IdArea:$(ui.item).attr("id"),
+											IdArea:IdArea,
 											centralized:($(ui.item).find("input").is(":checked"))?1:0
-										}); 
+										});
+										 
 								}', 				
 	),
 	));
