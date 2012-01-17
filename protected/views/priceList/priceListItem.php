@@ -149,6 +149,7 @@ function () {
 						{
 							$(".messageError").animate({opacity: "show"},2000);
 							$(".messageError").animate({opacity: "hide"},2000);
+							unselectRow("product-grid");
 						});
 		}',
 		'columns'=>array(	
