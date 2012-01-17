@@ -21,6 +21,11 @@
 		<?php echo $form->error($model,'Id_customer'); ?>
 	</div>
 
+	<div class="row buttons">
+		<?php
+			echo CHtml::link( 'Add new Customer', ProjectController::createUrl('CreateCustomer'));
+			?>
+	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'description'); ?>

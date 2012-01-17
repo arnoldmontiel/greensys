@@ -92,6 +92,47 @@ class CustomerController extends Controller
 		));
 	}
 
+	public function actionCreateNew($modelCaller)
+	{
+		$model=new Customer;
+		$modelPerson = new Person;
+		$modelContact = new Contact;
+		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$modelContact->Id,'Id_entity_type'=>$this->getEntityType()));
+	
+		if(isset($_POST['Person']) && isset($_POST['Contact']))
+		{
+			$modelPerson->attributes=$_POST['Person'];
+			$modelContact->attributes=$_POST['Contact'];
+				
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				if( $modelPerson->save() && $modelContact->save()){
+						
+					$model->Id_person = $modelPerson->Id;
+					$model->Id_contact = $modelContact->Id;
+						
+					//save links
+					if(isset($_POST['links'])){
+						$this->saveLinks($_POST['links'], $modelContact->Id);
+					}
+						
+					if($model->save()){
+						$transaction->commit();
+						$this->redirect(array($modelCaller.'/create'));
+					}
+				}
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
+		}
+	
+		$this->render('create',array(
+				'model'=>$model,
+				'modelPerson'=>$modelPerson,
+				'modelContact'=>$modelContact,
+				'modelHyperlink'=>$modelHyperlink
+		));
+	}
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.

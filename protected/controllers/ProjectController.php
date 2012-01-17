@@ -244,6 +244,12 @@ class ProjectController extends Controller
 		return $model;
 	}
 
+	
+	public function actionCreateCustomer()
+	{
+		$this->redirect(array('customer/createNew','modelCaller'=>get_class(Project::model())));
+	}
+	
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated
