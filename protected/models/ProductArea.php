@@ -73,6 +73,14 @@ class ProductArea extends CActiveRecord
 			'Id_area' => 'Id Area',
 			'Id_product' => 'Id Product',
 			'quantity' => 'Quantity',
+			'product_category_description'=>'Category',
+			'product_brand_description'=>'Brand',
+			'product_nomenclator_description'=>'Nomenclador',
+			'product_supplier_business_name'=>'Supplier Name',
+			'product_description_supplier'=>'Description Supplier',
+			'product_description_customer'=>'Description Customer',
+			'product_code'=>'Code'
+		
 		);
 	}
 
@@ -115,13 +123,15 @@ class ProductArea extends CActiveRecord
 		$criteria->addSearchCondition("product.code",$this->product_code);
 		$criteria->addSearchCondition("product.description_customer",$this->product_description_customer);
 		$criteria->addSearchCondition("product.description_supplier",$this->product_description_supplier);
-
-		$criteria->join =	"LEFT OUTER JOIN Product p ON p.Id=t.Id_product
-							 LEFT OUTER JOIN Brand b ON p.Id_brand=b.Id
-							 LEFT OUTER JOIN Supplier s ON p.Id_supplier=s.Id";
+		
+		$criteria->join =  	"LEFT OUTER JOIN Product p ON p.Id=t.Id_product
+							LEFT OUTER JOIN Brand b ON p.Id_brand=b.Id
+							LEFT OUTER JOIN Category c ON p.Id_category=c.Id
+							LEFT OUTER JOIN Supplier s ON p.Id_supplier=s.Id";
 		$criteria->addSearchCondition("b.description",$this->product_brand_description);
 		$criteria->addSearchCondition("s.business_name",$this->product_supplier_business_name);
-		// Create a custom sort
+		$criteria->addSearchCondition("c.description",$this->product_category_description);
+				// Create a custom sort
 		$sort=new CSort;
 		$sort->attributes=array(
 						      'quantity',
@@ -145,6 +155,10 @@ class ProductArea extends CActiveRecord
 								'asc'=>'s.business_name',
 								'desc'=>'s.business_name DESC'
 								),
+								'product_category_description'=> array(
+								'asc'=>'c.description',
+								'desc'=>'c.description DESC'
+								),		
 		'*',
 		);
 		

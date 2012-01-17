@@ -77,7 +77,7 @@ class Person extends CActiveRecord
 			'name' => 'Name',
 			'last_name' => 'Last Name',
 			'date_birth' => 'Date Birth',
-			'uid' => 'Uid',
+			'uid' => 'Id',
 		);
 	}
 

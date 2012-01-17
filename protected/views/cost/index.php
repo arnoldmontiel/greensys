@@ -110,7 +110,7 @@ $('#Importer_Id').change(function(){
 					'htmlOptions'=>array('style'=>'text-align: right;')
 				),
 	 			array('name'=>'volume','type'=>'raw',
-	 				'value'=>'number_format(round($data->volume,4),2)',
+	 				'value'=>'number_format(round($data->volume,4),4)',
 					'htmlOptions'=>array('style'=>'text-align: right;')
 				),
 	 			array('name'=>'cost_maritime','type'=>'raw',

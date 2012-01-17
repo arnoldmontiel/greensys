@@ -132,6 +132,10 @@ Yii::app()->clientScript-> registerScript('update', "
 							'value'=>'$data->product->description_customer',
 			),
 			array(
+					 		'name'=>'product_category_description',
+							'value'=>'$data->product->category->description',
+			),
+			array(
 				 			'name'=>'product_description_supplier',
 							'value'=>'$data->product->description_supplier',
 			),

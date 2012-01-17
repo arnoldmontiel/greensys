@@ -79,8 +79,6 @@ $(window).scroll(function() {
 		'items'=>array
 		(
 			array('label'=>Yii::app()->lc->t('Home'), 'url'=>array('/site/index')),
-			array('label'=>Yii::app()->lc->t('About'), 'url'=>array('/site/page', 'view'=>'about')),
-			array('label'=>Yii::app()->lc->t('Contact'), 'url'=>array('/site/contact')),
 			array('label'=>Yii::app()->lc->t('Login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 			array('label'=>Yii::app()->lc->t('Logout').' ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
 			array('label'=>Yii::app()->lc->t('Administration'), 'visible'=>!Yii::app()->user->isGuest, 'items'=>array
