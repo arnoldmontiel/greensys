@@ -14,4 +14,9 @@ $this->menu=array(
 
 <h1>Create Product</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array(
+											'model'=>$model,
+											'modelHyperlink'=>$modelHyperlink,
+											'modelMultimedia'=>$modelMultimedia,
+											'modelNote'=>$modelNote
+											)); ?>

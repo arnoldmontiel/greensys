@@ -260,8 +260,7 @@ $('#Product_weight').change(function(){
 		<?php echo $form->error($model,'hide'); ?>
 	</div>
 <?php
-$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
-$hyperLinks = CHtml::listData(Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$entity->Id)), 'Id','description');
+$hyperLinks = CHtml::listData($modelHyperlink, 'Id','description');
 
 $this->widget('ext.linkcontainer.linkcontainer', array(
 	'id'=>'linkContainer',	// default is class="ui-sortable" id="yw0"
@@ -271,44 +270,37 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 
 <div style="height:270px;" >
 <div class="left">
-<?php 
-		
-		$multimediaData = Multimedia::model()->findByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$entity->Id));
-		$multimedia = Multimedia::model();
-		?>
 		<div class="row">
-			<?php echo $form->labelEx($multimedia,'uploadedFile'); ?>
-			<?php echo $form->fileField($multimedia,'uploadedFile'); ?>
-			<?php echo $form->error($multimedia,'uploadedFile'); ?>
+			<?php echo $form->labelEx($modelMultimedia,'uploadedFile'); ?>
+			<?php echo $form->fileField($modelMultimedia,'uploadedFile'); ?>
+			<?php echo $form->error($modelMultimedia,'uploadedFile'); ?>
 		</div>
 	
 		<div class="row">
-			<?php echo $form->labelEx($multimedia,'name'); ?>
-			<?php echo $form->textField($multimedia,'name',array('size'=>45,'maxlength'=>45)); ?>
-			<?php echo $form->error($multimedia,'name'); ?>
+			<?php echo $form->labelEx($modelMultimedia,'name'); ?>
+			<?php echo $form->textField($modelMultimedia,'name',array('size'=>45,'maxlength'=>45)); ?>
+			<?php echo $form->error($modelMultimedia,'name'); ?>
 		</div>
 	
 		<div class="row">
-			<?php echo $form->labelEx($multimedia,'description'); ?>
-			<?php echo $form->textArea($multimedia,'description',array('rows'=>6, 'cols'=>35)); ?>
-			<?php echo $form->error($multimedia,'description'); ?>
+			<?php echo $form->labelEx($modelMultimedia,'description'); ?>
+			<?php echo $form->textArea($modelMultimedia,'description',array('rows'=>6, 'cols'=>35)); ?>
+			<?php echo $form->error($modelMultimedia,'description'); ?>
 		</div>
 	</div>
 	<div class="right">
 		<?php 
 		$this->widget('ext.highslide.highslide', array(
-						'id'=>$multimediaData->Id,
+						'id'=>$modelMultimedia->Id,
 	)); ?>
 	</div>
 </div>
 
 <?php
 
-$note = Note::model()->findByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$entity->Id));
-
  $this->widget('ext.richtext.jwysiwyg', array(
  	'id'=>'noteContainer',	// default is class="ui-sortable" id="yw0"	
- 	'notes'=> $note->note
+ 	'notes'=> $modelNote->note
  			));
 
 ?>

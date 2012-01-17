@@ -52,6 +52,10 @@ class ProductController extends Controller
 	{
 		$model=new Product;
 
+		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
+		$modelMultimedia = new Multimedia;
+		$modelNote = new Note;
+					
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 		
@@ -64,16 +68,16 @@ class ProductController extends Controller
 				if($model->save()){
 					//save links
 					if(isset($_POST['links'])){
-						$this->saveLinks($_POST['links'], $model);
+						$this->saveLinks($_POST['links'], $model->Id);
 					}
 				
 					//save note
 					if(isset($_POST['notes']) && !empty($_POST['notes']))
-						$this->saveNote($_POST['notes'], $model);
+						$this->saveNote($_POST['notes'], $model->Id);
 				
 					//save image
 					if(isset($_POST['Multimedia']))
-						$this->saveImage($model);
+						$this->saveImage($_POST['Multimedia'],$model->Id);
 				
 					$this->createCode($model);
 					$transaction->commit();		
@@ -86,9 +90,17 @@ class ProductController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
+			'modelHyperlink'=>$modelHyperlink,
+			'modelMultimedia'=>$modelMultimedia,
+			'modelNote'=>$modelNote
 		));
 	}
 
+	public function getEntityType()
+	{
+		return EntityType::model()->findByAttributes(array('name'=>get_class(Product::model())))->Id;
+	}
+	
 	public function createCode($model)
 	{
 		$newId = str_pad($model->Id, 5, "0", STR_PAD_LEFT);
@@ -99,16 +111,15 @@ class ProductController extends Controller
 		$model->save();
 	}
 	
-	private function saveImage($model)
+	private function saveImage($multimediaData, $id)
 	{			
-			$multimedia = Multimedia::model()->findByAttributes(array('Id_product'=>$model->Id));
+			$multimedia = Multimedia::model()->findByAttributes(array('Id_product'=>$id));
 			
-			$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
-		
 			$multi = new Multimedia;
+			$multi->attributes = $multimediaData;
 			$multi->attributes = array(
-									'Id_entity_type'=>$entity->Id,
-									'Id_product'=>$model->Id);
+									'Id_entity_type'=>$this->getEntityType(),
+									'Id_product'=>$id);
 			if($multi->save() && $multimedia->Id != null)
 				Multimedia::model()->deleteByPk($multimedia->Id);
 			
@@ -119,17 +130,15 @@ class ProductController extends Controller
 		Multimedia::model()->deleteAllByAttributes(array('Id_product'=>$id));
 	}
 	
-	private function saveNote($noteProduct, $model)
+	private function saveNote($noteProduct, $id)
 	{
-		$this->deleteNote($model->Id);
-		
-		$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
-		
+		$this->deleteNote($id);
+	
 		$note = new Note;
 		$note->attributes = array(
 							'note'=>$noteProduct,							
-							'Id_entity_type'=>$entity->Id,
-							'Id_product'=>$model->Id);
+							'Id_entity_type'=>$this->getEntityType(),
+							'Id_product'=>$id);
 		$note->save();							
 	}
 	
@@ -138,22 +147,21 @@ class ProductController extends Controller
 		Note::model()->deleteAllByAttributes(array('Id_product'=>$id));
 	}
 	
-	
-	private function saveLinks($links, $model)
+	private function saveLinks($links, $id)
 	{
-		$this->deleteLinks($model->Id);
-		
-		$entity = EntityType::model()->findByAttributes(array('name'=>get_class($model)));
+		$this->deleteLinks($id);
+	
 		foreach ($links as $link){
 			$hyperlink = new Hyperlink;
 			$hyperlink->attributes = array(
-							'description'=>$link,
-							'Id_entity_type'=>$entity->Id,
-							'Id_product'=>$model->Id);
-			
+									'description'=>$link,
+									'Id_entity_type'=>$this->getEntityType(),
+									'Id_product'=>$id);
+	
 			$hyperlink->save();
 		}
 	}
+	
 	
 	private function deleteLinks($id)
 	{
@@ -168,10 +176,10 @@ class ProductController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
+		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
+		$modelMultimedia = Multimedia::model()->findByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
+		$modelNote = Note::model()->findByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
+		
 		if(isset($_POST['Product']))
 		{
 			$model->attributes=$_POST['Product'];
@@ -179,16 +187,16 @@ class ProductController extends Controller
 				
 				//update links
 				if(isset($_POST['links'])){
-					$this->saveLinks($_POST['links'], $model);
+					$this->saveLinks($_POST['links'], $model->Id);
 				}
 				
 				//update note
 				if(isset($_POST['notes']) && !empty($_POST['notes']))
-					$this->saveNote($_POST['notes'], $model);
+					$this->saveNote($_POST['notes'], $model->Id);
 				
 				//save image
 				if(isset($_POST['Multimedia']))
-					$this->saveImage($model);
+					$this->saveImage($_POST['Multimedia'],$model->Id);
 				
 				$this->redirect(array('view','id'=>$model->Id));
 			}
@@ -196,6 +204,9 @@ class ProductController extends Controller
 
 		$this->render('update',array(
 			'model'=>$model,
+			'modelHyperlink'=>$modelHyperlink,
+			'modelMultimedia'=>$modelMultimedia,
+			'modelNote'=>$modelNote
 		));
 	}
 

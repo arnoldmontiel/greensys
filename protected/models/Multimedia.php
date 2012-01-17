@@ -28,7 +28,9 @@ class Multimedia extends CActiveRecord
 	
 		if($file=CUploadedFile::getInstance($this,'uploadedFile'))
 		{
-			$this->name=$file->name;
+			if($this->name == null)
+ 				$this->name=$file->name;
+			
 			$this->type=$file->type;
 			if(strstr($file->type,'image'))
 			{
