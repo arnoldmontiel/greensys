@@ -16,6 +16,8 @@
  * @property string $msrp
  * @property string $dealer_cost
  * @property string $profit_rate
+ * @property double $cost_maritime_final
+ * @property double $cost_air_final
  */
 class Cost extends CActiveRecord
 {
@@ -46,12 +48,12 @@ class Cost extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('Id_priceListItem, Id_priceList, Id_product, Id_importer', 'numerical', 'integerOnly'=>true),
-			array('weight, cost_air, volume, cost_maritime', 'numerical'),
+			array('weight, cost_air, volume, cost_maritime, cost_maritime_final, cost_air_final', 'numerical'),
 			array('code', 'length', 'max'=>45),
 			array('msrp, dealer_cost, profit_rate', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id_priceListItem, Id_priceList, Id_product, Id_importer, code, weight, cost_air, volume, cost_maritime, msrp, dealer_cost, profit_rate', 'safe', 'on'=>'search'),
+			array('Id_priceListItem, Id_priceList, Id_product, Id_importer, code, weight, cost_air, volume, cost_maritime, msrp, dealer_cost, profit_rate, cost_maritime_final, cost_air_final', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -84,6 +86,8 @@ class Cost extends CActiveRecord
 			'msrp' => 'Msrp',
 			'dealer_cost' => 'Dealer Cost',
 			'profit_rate' => 'Profit Rate',
+			'cost_maritime_final' => 'Cost Maritime Final',
+			'cost_air_final' => 'Cost Air Final',
 		);
 	}
 
@@ -110,6 +114,8 @@ class Cost extends CActiveRecord
 		$criteria->compare('msrp',$this->msrp,true);
 		$criteria->compare('dealer_cost',$this->dealer_cost,true);
 		$criteria->compare('profit_rate',$this->profit_rate,true);
+		$criteria->compare('cost_maritime_final',$this->cost_maritime_final);
+		$criteria->compare('cost_air_final',$this->cost_air_final);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

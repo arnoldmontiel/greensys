@@ -64,6 +64,7 @@ $this->widget('zii.widgets.CDetailView', array(
 			'value'=>$model->measurementUnitWeight->short_description
 		),
 		'profit_rate',
+		'dealer_cost',
 		'msrp',
 		'time_instalation',
 		array('label'=>$model->getAttributeLabel('hide'),
