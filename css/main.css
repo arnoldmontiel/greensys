@@ -242,3 +242,59 @@ div.search-form
 	padding: 3px 0;
 	text-align: right;
 }
+div.home-row
+{
+	display: inline-block;
+	width: 100%;
+}
+div.home-right-view
+{
+	margin: 10px 10px 10px 10px;
+	border: 1px solid white;
+	display: inline-block;
+	float:left;	
+	width: 45%;
+	float:left;
+	background-color:#F4F4F4;
+	background-image:url('home-view-bg.png');
+	background-repeat:repeat-x;
+	padding-bottom: 10px;
+}
+
+div.home-left-view
+{
+	margin: 10px 10px 10px 10px;
+	border: 1px solid white;
+	display: inline-block;
+	width: 45%;
+	float:left;
+	background-color:#F4F4F4;
+	background-image:url('home-view-bg.png');
+	background-repeat:repeat-x;
+	padding-bottom: 10px;
+}
+
+div.home-title-view
+{
+	font-size: 17px;
+	color: black;
+	display: inline-block;
+	float: left;
+	width: 90%;
+	margin-left: 5px;
+}
+div.home-item-view
+{
+	font-size: 18px;
+	color: white;
+	display: inline-block;
+	float: left;
+	margin-top: 5px;
+	width: 90%;
+	margin-left: 20px;
+}
+div a
+{
+	color: #357;
+	text-decoration: none;
+}
