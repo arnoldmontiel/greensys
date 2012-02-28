@@ -202,6 +202,9 @@ class ProductController extends Controller
 			}
 		}
 
+		if($modelMultimedia == null)
+			$modelMultimedia = new Multimedia;
+		
 		$this->render('update',array(
 			'model'=>$model,
 			'modelHyperlink'=>$modelHyperlink,
