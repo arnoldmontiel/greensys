@@ -57,7 +57,7 @@ class SrbacModule extends CWebModule {
   /* @var $_message A warning/error message displayed in the top of each page */
   private $_message ="";
   /* @var $prefixedAlwaysAllowed mixed The actions that are always allowed*/
-  private $_prefixedAlwaysAllowed = array();
+  private $_prefixAlwaysAllowed = array();
   
   /* @var $userid String The primary column of the users table*/
   public $userid = "userid";
@@ -175,17 +175,17 @@ class SrbacModule extends CWebModule {
     }
     return array_merge($guiAllowed, $paramAllowed);
   }
-  public function setPrefixedAlwaysAllowed($prefixedAlwaysAllowed) {
-    $this->_prefixedAlwaysAllowed = $prefixedAlwaysAllowed;
+  public function setPrefixAlwaysAllowed($prefixAlwaysAllowed) {
+    $this->_prefixAlwaysAllowed = $prefixAlwaysAllowed;
   }
-  public function getPrefixedAlwaysAllowed() {
+  public function getPrefixAlwaysAllowed() {
   	$paramAllowed = array();
-  	if(is_array($this->_alwaysAllowed)) {
-  		$paramAllowed = $this->_alwaysAllowed;
-  	}else if(is_file(Yii::getPathOfAlias($this->_alwaysAllowed).".php")) {
-  		$paramAllowed = include(Yii::getPathOfAlias($this->_alwaysAllowed).".php");
-  	} else if(is_string($this->_alwaysAllowed)) {
-  		$paramAllowed = split(",", $this->_alwaysAllowed);
+  	if(is_array($this->_prefixAlwaysAllowed)) {
+  		$paramAllowed = $this->_prefixAlwaysAllowed;
+  	}else if(is_file(Yii::getPathOfAlias($this->_prefixAlwaysAllowed).".php")) {
+  		$paramAllowed = include(Yii::getPathOfAlias($this->_prefixAlwaysAllowed).".php");
+  	} else if(is_string($this->_prefixAlwaysAllowed)) {
+  		$paramAllowed = split(",", $this->_prefixAlwaysAllowed);
   	}
   	return $paramAllowed;
   	 

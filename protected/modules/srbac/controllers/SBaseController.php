@@ -72,9 +72,9 @@ class SBaseController extends CController {
     if (Yii::app()->getModule('srbac')->debug) {
       return true;
     }
-    //Always allow access if $access is in the prefixedAllowedAccess array
-    $prefixed= $this->prefixedAllowedAccess();
-    foreach($prefixed as $prefix)
+    //Always allow access if $access is in the prefixAllowedAccess array
+    $prefixes= $this->prefixAllowedAccess();
+    foreach($prefixes as $prefix)
     {
     	$len = strlen($prefix); 
 	    if ( strncmp ( $actionName , $prefix , $len ) == 0) {
@@ -105,7 +105,7 @@ class SBaseController extends CController {
   * configuration
   * @return The prefix always allowed auth items
   */
-  protected function prefixedAllowedAccess() {
+  protected function prefixAllowedAccess() {
   	Yii::import("srbac.components.Helper");
   	return Helper::findModule('srbac')->getPrefixAlwaysAllowed();
   }
