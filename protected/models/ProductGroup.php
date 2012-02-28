@@ -138,9 +138,9 @@ class ProductGroup extends CActiveRecord
 		$criteria->addSearchCondition("productChild.description_customer",$this->product_description_customer);
 		$criteria->addSearchCondition("productChild.description_supplier",$this->product_description_supplier);
 	
-		$criteria->join =	"LEFT OUTER JOIN Product p ON p.Id=t.Id_product_child
-								 LEFT OUTER JOIN Brand b ON p.Id_brand=b.Id
-								 LEFT OUTER JOIN Supplier s ON p.Id_supplier=s.Id";
+		$criteria->join =	"LEFT OUTER JOIN product p ON p.Id=t.Id_product_child
+								 LEFT OUTER JOIN brand b ON p.Id_brand=b.Id
+								 LEFT OUTER JOIN supplier s ON p.Id_supplier=s.Id";
 		$criteria->addSearchCondition("b.description",$this->product_brand_description);
 		$criteria->addSearchCondition("s.business_name",$this->product_supplier_business_name);
 		// Create a custom sort

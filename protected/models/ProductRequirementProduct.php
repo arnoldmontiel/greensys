@@ -111,9 +111,9 @@ class ProductRequirementProduct extends CActiveRecord
 		$criteria->addSearchCondition("product.code",$this->code);
 		$criteria->addSearchCondition("product.description_supplier",$this->description_supplier);
 		$criteria->addSearchCondition("product.description_customer",$this->description_customer);
-		
-		$criteria->join =	"LEFT OUTER JOIN Product_requirement pr ON pr.Id=t.Id_product_requirement
-										 LEFT OUTER JOIN Guild g ON pr.Id_guild=g.Id";
+		 
+		$criteria->join =	"LEFT OUTER JOIN product_requirement pr ON pr.Id=t.Id_product_requirement
+										 LEFT OUTER JOIN guild g ON pr.Id_guild=g.Id";
 		$criteria->addSearchCondition("g.description",$this->guild);
 		
 		// Create a custom sort

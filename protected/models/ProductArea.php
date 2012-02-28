@@ -124,10 +124,10 @@ class ProductArea extends CActiveRecord
 		$criteria->addSearchCondition("product.description_customer",$this->product_description_customer);
 		$criteria->addSearchCondition("product.description_supplier",$this->product_description_supplier);
 		
-		$criteria->join =  	"LEFT OUTER JOIN Product p ON p.Id=t.Id_product
-							LEFT OUTER JOIN Brand b ON p.Id_brand=b.Id
-							LEFT OUTER JOIN Category c ON p.Id_category=c.Id
-							LEFT OUTER JOIN Supplier s ON p.Id_supplier=s.Id";
+		$criteria->join =  	"LEFT OUTER JOIN product p ON p.Id=t.Id_product
+							LEFT OUTER JOIN brand b ON p.Id_brand=b.Id
+							LEFT OUTER JOIN category c ON p.Id_category=c.Id
+							LEFT OUTER JOIN supplier s ON p.Id_supplier=s.Id";
 		$criteria->addSearchCondition("b.description",$this->product_brand_description);
 		$criteria->addSearchCondition("s.business_name",$this->product_supplier_business_name);
 		$criteria->addSearchCondition("c.description",$this->product_category_description);
