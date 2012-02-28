@@ -552,7 +552,7 @@ class ProductController extends Controller
 	
 	public function actionCreateDependency($dependency)
 	{
-		$this->redirect(array($dependency.'/createNew','modelCaller'=>get_class(Project::model())));
+		$this->redirect(array($dependency.'/createNew','modelCaller'=>get_class(Product::model())));
 	}
 	
 	/**
