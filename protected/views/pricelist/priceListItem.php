@@ -278,7 +278,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 																	var profitRate = 0;
 																	
 																	if($(this).parent().parent().find("input.txtMsrp").val() > 0){
-																		profitRate = ($(this).val() / $(this).parent().parent().find("input.txtMsrp").val()).toFixed(2);
+																		profitRate = ($(this).parent().parent().find("input.txtMsrp").val() / $(this).val()).toFixed(2);
 																	}
 																	
 																	$.post(
