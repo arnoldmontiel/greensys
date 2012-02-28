@@ -44,6 +44,7 @@ class SBaseController extends CController {
       $controller = ucfirst($controller);
     }
     $access = $mod . $controller . ucfirst($this->action->Id);
+    $actionName = ucfirst($this->action->Id);
    
  //   if (Yii::getVersion() >= "1.1.7") {
 //      if (count($this->actionParams) > 0) {
@@ -71,6 +72,16 @@ class SBaseController extends CController {
     if (Yii::app()->getModule('srbac')->debug) {
       return true;
     }
+    //Always allow access if $access is in the prefixedAllowedAccess array
+    $prefixed= $this->prefixedAllowedAccess();
+    foreach($prefixed as $prefix)
+    {
+    	$len = strlen($prefix); 
+	    if ( strncmp ( $actionName , $prefix , $len ) == 0) {
+    		return true;
+    	}
+    	
+    }
     
      // Check for srbac access
     if (!Yii::app()->user->checkAccess($access) || Yii::app()->user->isGuest) {
@@ -89,7 +100,16 @@ class SBaseController extends CController {
     Yii::import("srbac.components.Helper");
     return Helper::findModule('srbac')->getAlwaysAllowed();
   }
-
+  /**
+  * The auth prefix items that access is always  allowed. Configured in srbac module's
+  * configuration
+  * @return The prefix always allowed auth items
+  */
+  protected function prefixedAllowedAccess() {
+  	Yii::import("srbac.components.Helper");
+  	return Helper::findModule('srbac')->getPrefixAlwaysAllowed();
+  }
+  
   protected function onUnauthorizedAccess() {
     /**
      *  Check if the unautorizedacces is a result of the user no longer being logged in.
