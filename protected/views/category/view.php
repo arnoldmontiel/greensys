@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Categories'=>array('index'),
-	$model->Id,
+	$model->description,
 );
 
 $this->menu=array(
@@ -13,12 +13,11 @@ $this->menu=array(
 );
 ?>
 
-<h1>View Category #<?php echo $model->Id; ?></h1>
+<h1>View Category</h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
-		'Id',
 		'description',
 	),
 )); ?>

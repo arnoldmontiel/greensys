@@ -78,9 +78,8 @@ $(window).scroll(function() {
 		(
 		'items'=>array
 		(
-			array('label'=>Yii::app()->lc->t('Home'), 'url'=>array('/site/index')),
 			array('label'=>Yii::app()->lc->t('Login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-			array('label'=>Yii::app()->lc->t('Logout').' ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
+			array('label'=>Yii::app()->lc->t('Home'), 'url'=>array('/site/index'),'visible'=>!Yii::app()->user->isGuest),
 			array('label'=>Yii::app()->lc->t('Administration'), 'visible'=>!Yii::app()->user->isGuest, 'items'=>array
 				(
 					//array('label'=>'User', 'url'=>array('/user', 'view'=>'manage')),
@@ -101,6 +100,7 @@ $(window).scroll(function() {
 					array('label'=>Yii::app()->lc->t('Product Requirements'), 'url'=>array('/productRequirement/index')),
 					array('label'=>Yii::app()->lc->t('Guild'), 'url'=>array('/guild/index')),
 					array('label'=>Yii::app()->lc->t('Supplier'), 'url'=>array('/supplier/index')),
+					array('label'=>Yii::app()->lc->t('Brand'), 'url'=>array('/brand/index')),
 				)
 			),
 			array('label'=>Yii::app()->lc->t('Reports'), 'visible'=>!Yii::app()->user->isGuest, 'items'=>array
@@ -108,6 +108,7 @@ $(window).scroll(function() {
 					array('label'=>Yii::app()->lc->t('Costs'), 'url'=>array('/cost/index')),
 				)
 			),
+		array('label'=>Yii::app()->lc->t('Logout').' ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
 		
 		)
 		
