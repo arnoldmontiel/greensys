@@ -22,7 +22,7 @@
 			<?php echo CHtml::link(Yii::app()->lc->t('Guild'),array('/guild/index'));?>
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Product Requirements'),array('/productRequirement/index'));?>
+			<?php echo CHtml::link(Yii::app()->lc->t('Product Requirements'),array('/productrequirement/index'));?>
 			</div>
 			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Product'),array('/product/index'));?>
