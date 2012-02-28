@@ -78,6 +78,25 @@ class BrandController extends Controller
 		));
 	}
 
+	public function actionCreateNew($modelCaller)
+	{
+		$model=new Brand;
+	
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+	
+		if(isset($_POST['Brand']))
+		{
+			$model->attributes=$_POST['Brand'];
+			if($model->save())
+				$this->redirect(array($modelCaller.'/create'));
+		}
+	
+		$this->render('create',array(
+				'model'=>$model,
+		));
+	}
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.

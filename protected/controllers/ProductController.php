@@ -550,6 +550,10 @@ class ProductController extends Controller
 		}
 	}
 	
+	public function actionCreateDependency($dependency)
+	{
+		$this->redirect(array($dependency.'/createNew','modelCaller'=>get_class(Project::model())));
+	}
 	
 	/**
 	 * Performs the AJAX validation.

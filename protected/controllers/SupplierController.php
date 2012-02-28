@@ -90,6 +90,46 @@ class SupplierController extends Controller
 		));
 	}
 
+	public function actionCreateNew($modelCaller)
+	{
+		$model=new Supplier;
+		$modelContact = new Contact;
+		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$modelContact->Id,'Id_entity_type'=>$this->getEntityType()));
+	
+	
+		if(isset($_POST['Supplier']) && isset($_POST['Contact']))
+		{
+			$model->attributes=$_POST['Supplier'];
+			$modelContact->attributes=$_POST['Contact'];
+	
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				if($modelContact->save()){
+	
+					$model->Id_contact = $modelContact->Id;
+	
+					//save links
+					if(isset($_POST['links'])){
+						$this->saveLinks($_POST['links'], $modelContact->Id);
+					}
+	
+					if($model->save()){
+						$transaction->commit();
+						$this->redirect(array($modelCaller.'/create'));
+					}
+				}
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
+		}
+	
+		$this->render('create',array(
+				'model'=>$model,
+				'modelContact'=>$modelContact,
+				'modelHyperlink'=>$modelHyperlink
+		));
+	}
+	
 	private function saveLinks($links, $id)
 	{
 		$this->deleteLinks($id);

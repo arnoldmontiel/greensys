@@ -78,6 +78,26 @@ class CategoryController extends Controller
 		));
 	}
 
+	
+	public function actionCreateNew($modelCaller)
+	{
+		$model=new Category;
+	
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+	
+		if(isset($_POST['Category']))
+		{
+			$model->attributes=$_POST['Category'];
+			if($model->save())
+				$this->redirect(array($modelCaller.'/create'));
+		}
+	
+		$this->render('create',array(
+				'model'=>$model,
+		));
+	}
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.

@@ -119,12 +119,20 @@ $('#Product_weight').change(function(){
 		<?php echo $form->error($model,'Id_brand'); ?>
 	</div>
 
+	<div class="row buttons">
+		<?php echo CHtml::link( 'Add new Brand', ProductController::createUrl('CreateDependency', array('dependency'=>'brand')));?>
+	</div>
+	
 	<div class="row">
 		<?php echo $form->labelEx($model,'Id_supplier'); ?>
 		<?php echo $form->dropDownList($model, 'Id_supplier', CHtml::listData(
     			Supplier::model()->findAll(), 'Id', 'business_name')); 
 		?>
 		<?php echo $form->error($model,'Id_supplier'); ?>
+	</div>
+	
+	<div class="row buttons">
+		<?php echo CHtml::link( 'Add new Brand', ProductController::createUrl('CreateDependency', array('dependency'=>'supplier')));?>
 	</div>
 
 	<div class="row">
@@ -135,6 +143,10 @@ $('#Product_weight').change(function(){
 		<?php echo $form->error($model,'Id_category'); ?>
 	</div>
 
+	<div class="row buttons">
+		<?php echo CHtml::link( 'Add new Brand', ProductController::createUrl('CreateDependency', array('dependency'=>'category')));?>
+	</div>
+	
 	<div class="row">
 		<?php echo $form->labelEx($model,'Id_nomenclator'); ?>
 		<?php echo $form->dropDownList($model, 'Id_nomenclator', CHtml::listData(
@@ -143,6 +155,10 @@ $('#Product_weight').change(function(){
 		<?php echo $form->error($model,'Id_nomenclator'); ?>
 	</div>
 
+	<div class="row buttons">
+		<?php echo CHtml::link( 'Add new Brand', ProductController::createUrl('CreateDependency', array('dependency'=>'nomenclator')));?>
+	</div>
+	
 	<div class="row">
 		<?php echo $form->labelEx($model,'description_customer'); ?>
 		<?php echo $form->textField($model,'description_customer',array('size'=>60,'maxlength'=>255)); ?>
