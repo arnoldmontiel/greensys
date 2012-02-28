@@ -112,51 +112,55 @@ $('#Product_weight').change(function(){
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'Id_brand'); ?>
-		<?php echo $form->dropDownList($model, 'Id_brand', CHtml::listData(
-    			Brand::model()->findAll(), 'Id', 'description')); 
-		?>
-		<?php echo $form->error($model,'Id_brand'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::link( 'Add new Brand', ProductController::createUrl('CreateDependency', array('dependency'=>'brand')));?>
-	</div>
-	
-	<div class="row">
-		<?php echo $form->labelEx($model,'Id_supplier'); ?>
-		<?php echo $form->dropDownList($model, 'Id_supplier', CHtml::listData(
-    			Supplier::model()->findAll(), 'Id', 'business_name')); 
-		?>
-		<?php echo $form->error($model,'Id_supplier'); ?>
-	</div>
-	
-	<div class="row buttons">
-		<?php echo CHtml::link( 'Add new Brand', ProductController::createUrl('CreateDependency', array('dependency'=>'supplier')));?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'Id_category'); ?>
-		<?php echo $form->dropDownList($model, 'Id_category', CHtml::listData(
-    			Category::model()->findAll(), 'Id', 'description')); 
-		?>
-		<?php echo $form->error($model,'Id_category'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::link( 'Add new Brand', ProductController::createUrl('CreateDependency', array('dependency'=>'category')));?>
+		<div style="display: inline-block;">
+			<?php echo $form->labelEx($model,'Id_brand'); ?>
+			<?php echo $form->dropDownList($model, 'Id_brand', CHtml::listData(
+	    			Brand::model()->findAll(), 'Id', 'description')); 
+			?>
+			<?php echo $form->error($model,'Id_brand'); ?>
+		</div>
+		<div style="display: inline-block;">
+			<?php echo CHtml::link( 'Add new Brand', ProductController::createUrl('CreateDependency', array('dependency'=>'brand')));?>
+		</div>
 	</div>
 	
 	<div class="row">
-		<?php echo $form->labelEx($model,'Id_nomenclator'); ?>
-		<?php echo $form->dropDownList($model, 'Id_nomenclator', CHtml::listData(
-    			Nomenclator::model()->findAll(), 'Id', 'description')); 
-		?>
-		<?php echo $form->error($model,'Id_nomenclator'); ?>
+		<div style="display: inline-block;">
+			<?php echo $form->labelEx($model,'Id_supplier'); ?>
+			<?php echo $form->dropDownList($model, 'Id_supplier', CHtml::listData(
+	    			Supplier::model()->findAll(), 'Id', 'business_name')); 
+			?>
+			<?php echo $form->error($model,'Id_supplier'); ?>
+		</div>
+		<div style="display: inline-block;">
+			<?php echo CHtml::link( 'Add new Supplier', ProductController::createUrl('CreateDependency', array('dependency'=>'supplier')));?>
+		</div>
 	</div>
 
-	<div class="row buttons">
-		<?php echo CHtml::link( 'Add new Brand', ProductController::createUrl('CreateDependency', array('dependency'=>'nomenclator')));?>
+	<div class="row">
+		<div style="display: inline-block;">
+			<?php echo $form->labelEx($model,'Id_category'); ?>
+			<?php echo $form->dropDownList($model, 'Id_category', CHtml::listData(
+	    			Category::model()->findAll(), 'Id', 'description')); 
+			?>
+			<?php echo $form->error($model,'Id_category'); ?>
+		</div>
+		<div style="display: inline-block;">
+			<?php echo CHtml::link( 'Add new Category', ProductController::createUrl('CreateDependency', array('dependency'=>'category')));?>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div style="display: inline-block;">
+			<?php echo $form->labelEx($model,'Id_nomenclator'); ?>
+			<?php echo $form->dropDownList($model, 'Id_nomenclator', CHtml::listData(
+	    			Nomenclator::model()->findAll(), 'Id', 'description')); 
+			?>
+			<?php echo $form->error($model,'Id_nomenclator'); ?>
+		</div>
+		<div style="display: inline-block;">
+			<?php echo CHtml::link( 'Add new Nomenclator', ProductController::createUrl('CreateDependency', array('dependency'=>'nomenclator')));?>
+		</div>		
 	</div>
 	
 	<div class="row">
