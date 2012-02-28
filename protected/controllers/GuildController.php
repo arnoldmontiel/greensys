@@ -27,18 +27,6 @@ class GuildController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
 		);
@@ -78,6 +66,25 @@ class GuildController extends Controller
 		));
 	}
 
+	public function actionCreateNew($modelCaller)
+	{
+		$model=new Guild;
+	
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+	
+		if(isset($_POST['Guild']))
+		{
+			$model->attributes=$_POST['Guild'];
+			if($model->save())
+				$this->redirect(array($modelCaller.'/create'));
+		}
+	
+		$this->render('create',array(
+				'model'=>$model,
+		));
+	}
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.

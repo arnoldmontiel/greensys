@@ -228,6 +228,12 @@ class ProductRequirementController extends Controller
 	{
 		return EntityType::model()->findByAttributes(array('name'=>get_class(ProductRequirement::model())))->Id;
 	}
+	
+	public function actionCreateDependency($dependency)
+	{
+		$this->redirect(array($dependency.'/createNew','modelCaller'=>get_class(ProductRequirement::model())));
+	}
+	
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated

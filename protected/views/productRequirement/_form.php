@@ -10,14 +10,19 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'Id_guild'); ?>
-		<?php echo $form->dropDownList($model, 'Id_guild', CHtml::listData(
-    			Guild::model()->findAll(), 'Id', 'description'
-		),array(
-				'prompt'=>'Select a Guild'
-			)); 
-		?>
-		<?php echo $form->error($model,'Id_customer'); ?>
+		<div style="display: inline-block;">
+			<?php echo $form->labelEx($model,'Id_guild'); ?>
+			<?php echo $form->dropDownList($model, 'Id_guild', CHtml::listData(
+	    			Guild::model()->findAll(), 'Id', 'description'
+			),array(
+					'prompt'=>'Select a Guild'
+				)); 
+			?>
+			<?php echo $form->error($model,'Id_customer'); ?>
+		</div>
+		<div style="display: inline-block;">
+			<?php echo CHtml::link( 'Add new Guild', ProductRequirementController::createUrl('CreateDependency', array('dependency'=>'guild')));?>
+		</div>
 	</div>
 	
 	<div class="row">
