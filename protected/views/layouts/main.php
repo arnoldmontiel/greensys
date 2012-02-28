@@ -21,7 +21,7 @@
 
 <body>
 <div id="page-wrap" class="container" style="width: 1340px">
-<?php if($this->showSideBar==true):?>
+<?php if(isset($this->showSideBar)&&$this->showSideBar==true):?>
 
 <div id="sidebar" style="float:left;width: 150px;background:#ccc;padding:20px; position: absolute; display:none;opacity: 1">
 	<ul id='sidebarTitle'>	
