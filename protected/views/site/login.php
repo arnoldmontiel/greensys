@@ -1,13 +1,5 @@
-<?php
-$this->pageTitle=Yii::app()->name . ' - Login';
-$this->breadcrumbs=array(
-	'Login',
-);
-?>
-
-<h1>Login</h1>
-
-<p><?php echo Yii::app()->lc->t('Please fill out the following form with your login credentials:')?></p>
+<div class="login">
+<div class="login-left">
 
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -17,10 +9,6 @@ $this->breadcrumbs=array(
 		'validateOnSubmit'=>true,
 	),
 )); ?>
-
-	<p class="note"><?php 
-	echo Yii::app()->lc->t('Fields with ').'<span class="required">*</span>'.Yii::app()->lc->t(' are required.');
-	?></p>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'username'); ?>
@@ -32,9 +20,6 @@ $this->breadcrumbs=array(
 		<?php echo $form->labelEx($model,'password'); ?>
 		<?php echo $form->passwordField($model,'password'); ?>
 		<?php echo $form->error($model,'password'); ?>
-		<p class="hint">
-			Hint: You may login with <tt>demo/demo</tt> or <tt>admin/admin</tt>.
-		</p>
 	</div>
 
 	<div class="row rememberMe">
@@ -49,3 +34,10 @@ $this->breadcrumbs=array(
 
 <?php $this->endWidget(); ?>
 </div><!-- form -->
+</div><!-- left -->
+<div class="login-right">
+	<div class="login-text-logo">
+	Welcome to Green
+	</div>	
+</div><!-- right -->
+</div>

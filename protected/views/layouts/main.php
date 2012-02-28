@@ -48,27 +48,6 @@ $(window).scroll(function() {
 <div class="container" id="page">
 
 	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-		
-		
-		<div id="language" >
-		<?php
-		$data = Yii::app()->lc->getAvalaibleLanguages();
-		$returnArr = array();
-		$reg = array();
-		foreach($data as $t)
-		{
-			$reg['id']=$t['lang'];
-			$reg['text']= Yii::app()->lc->t($t['language']).'/'.Yii::app()->lc->t($t['region']);
-			$returnArr[]= $reg;
-		}
-		$this->widget('LangBox',
-		array(
-						'languages'=>$returnArr,
-						'selectedLanguage'=>isset($_POST['lang'])?$_POST['lang']:Yii::app()->lc->getSelectedLanguage())
-		);
-		?>
-		</div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
@@ -116,12 +95,33 @@ $(window).scroll(function() {
 		)); 
 		 ?>		
 	
-</div> <!-- mainmenu -->
+	</div> <!-- mainmenu -->
+	<div class="second-menu">
+	
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
 			'links'=>$this->breadcrumbs,
 		)); ?><!-- breadcrumbs -->
 	<?php endif?>
+		<div id="language" class="language">
+			<?php
+			$data = Yii::app()->lc->getAvalaibleLanguages();
+			$returnArr = array();
+			$reg = array();
+			foreach($data as $t)
+			{
+				$reg['id']=$t['lang'];
+				$reg['text']= Yii::app()->lc->t($t['language']).'/'.Yii::app()->lc->t($t['region']);
+				$returnArr[]= $reg;
+			}
+			$this->widget('LangBox',
+			array(
+									'languages'=>$returnArr,
+									'selectedLanguage'=>isset($_POST['lang'])?$_POST['lang']:Yii::app()->lc->getSelectedLanguage())
+			);
+			?>
+		</div>
+	</div>
 		
 	<?php echo $content; ?>
 
@@ -130,7 +130,7 @@ $(window).scroll(function() {
 	<div id="footer">
 		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
 		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
+		Powered by WestIdeas. 	
 	</div><!-- footer -->
 
 </div><!-- page -->
