@@ -139,8 +139,19 @@ div.breadcrumbs
 {
 	font-size: 0.9em;
 	padding: 5px 20px;
+	width: 70%;
+	float: left;
 }
-
+div.language
+{
+	float: right;
+	
+}
+div.second-menu
+{
+	display: inline-block;
+	width: 100%;
+}
 div.breadcrumbs span
 {
 	font-weight: bold;
