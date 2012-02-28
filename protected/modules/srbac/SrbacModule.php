@@ -179,7 +179,16 @@ class SrbacModule extends CWebModule {
     $this->_prefixedAlwaysAllowed = $prefixedAlwaysAllowed;
   }
   public function getPrefixedAlwaysAllowed() {
-  	return $this->_prefixedAlwaysAllowed;
+  	$paramAllowed = array();
+  	if(is_array($this->_alwaysAllowed)) {
+  		$paramAllowed = $this->_alwaysAllowed;
+  	}else if(is_file(Yii::getPathOfAlias($this->_alwaysAllowed).".php")) {
+  		$paramAllowed = include(Yii::getPathOfAlias($this->_alwaysAllowed).".php");
+  	} else if(is_string($this->_alwaysAllowed)) {
+  		$paramAllowed = split(",", $this->_alwaysAllowed);
+  	}
+  	return $paramAllowed;
+  	 
   }
   
   public function getAlwaysAllowedFile() {
