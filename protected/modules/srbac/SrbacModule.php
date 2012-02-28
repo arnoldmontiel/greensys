@@ -56,7 +56,9 @@ class SrbacModule extends CWebModule {
   public $useAlwaysAllowedGui;
   /* @var $_message A warning/error message displayed in the top of each page */
   private $_message ="";
-
+  /* @var $prefixedAlwaysAllowed mixed The actions that are always allowed*/
+  private $_prefixedAlwaysAllowed = array();
+  
   /* @var $userid String The primary column of the users table*/
   public $userid = "userid";
   /* @var $username String The username column of the users table*/
@@ -173,7 +175,13 @@ class SrbacModule extends CWebModule {
     }
     return array_merge($guiAllowed, $paramAllowed);
   }
-
+  public function setPrefixedAlwaysAllowed($prefixedAlwaysAllowed) {
+    $this->_prefixedAlwaysAllowed = $prefixedAlwaysAllowed;
+  }
+  public function getPrefixedAlwaysAllowed() {
+  	return $this->_prefixedAlwaysAllowed;
+  }
+  
   public function getAlwaysAllowedFile() {
     return Yii::getPathOfAlias($this->alwaysAllowedPath).DIRECTORY_SEPARATOR."allowed.php";
   }
