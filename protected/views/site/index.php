@@ -72,6 +72,14 @@
 			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Assign Products'),array('/pricelist/priceListItem'));?>
 			</div>
-		</div>
-	</div>	
+		</div><!-- end  home-left-view -->
+		<div class="home-right-view" >
+			<div class="home-title-view" >
+				<?php echo Yii::app()->lc->t('Reports');?>
+			</div>
+			<div class="home-item-view" >
+			<?php echo CHtml::link(Yii::app()->lc->t('Cost'),array('/cost/index'));?>
+			</div>
+		</div> <!-- end  home-right-view -->
+	</div>	<!-- end  home-row -->
 </div>
