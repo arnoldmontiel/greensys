@@ -219,7 +219,7 @@ class ProductRequirementController extends Controller
 	
 	public function actionCreateDependency($dependency)
 	{
-		$this->redirect(array($dependency.'/createNew','modelCaller'=>get_class(ProductRequirement::model())));
+		$this->redirect(array($dependency.'/createNew','modelCaller'=>ucfirst(strtolower(get_class(ProductRequirement::model())))));
 	}
 	
 	/**
