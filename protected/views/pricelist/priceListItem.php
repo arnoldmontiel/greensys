@@ -223,7 +223,6 @@ function () {
 		</div>
 		<?php 
 
-
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'price-list-item-grid',
 	'dataProvider'=>$model->searchPriceList(),
@@ -277,7 +276,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 																	var target = $(this);
 																	var profitRate = 0;
 																	
-																	if($(this).parent().parent().find("input.txtMsrp").val() > 0){
+																	if($(this).val() > 0){
 																		profitRate = ($(this).parent().parent().find("input.txtMsrp").val() / $(this).val()).toFixed(2);
 																	}
 																	
@@ -301,29 +300,29 @@ $this->widget('zii.widgets.grid.CGridView', array(
 																		
 																});
 													});	
-										$("#price-list-item-grid").find("input.txtProfitRate").each(
-												function(index, item){
+// 										$("#price-list-item-grid").find("input.txtProfitRate").each(
+// 												function(index, item){
 		
-																$(item).keyup(function(){
-			        												validateNumber($(this));
-																});
+// 																$(item).keyup(function(){
+// 			        												validateNumber($(this));
+// 																});
 												
-																$(item).change(function(){
-																	var target = $(this);
-																	$.post(
-																		"'.PriceListController::createUrl('AjaxUpdateProfitRate').'",
-																		 {
-																		 	idPriceListItem: $(this).attr("id"),
-																			profitRate:$(this).val()
-																		 }).success(
-																			 	function() 
-																			 		{ 
-																			 			$(target).parent().parent().find("#saveok3").animate({opacity: "show"},4000);
-																						$(target).parent().parent().find("#saveok3").animate({opacity: "hide"},4000); 
-																					});
+// 																$(item).change(function(){
+// 																	var target = $(this);
+// 																	$.post(
+// 																		"'.PriceListController::createUrl('AjaxUpdateProfitRate').'",
+// 																		 {
+// 																		 	idPriceListItem: $(this).attr("id"),
+// 																			profitRate:$(this).val()
+// 																		 }).success(
+// 																			 	function() 
+// 																			 		{ 
+// 																			 			$(target).parent().parent().find("#saveok3").animate({opacity: "show"},4000);
+// 																						$(target).parent().parent().find("#saveok3").animate({opacity: "hide"},4000); 
+// 																					});
 																		
-																});
-													});	
+// 																});
+// 													});	
  									}',	
 	'columns'=>array(
 				array(
@@ -391,6 +390,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 												array(
 														"id"=>$data->Id,
 														"class"=>"txtProfitRate",
+														"disabled"=>"disabled",
 														"style"=>"width:50px",
 													)
 											)',

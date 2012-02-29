@@ -233,7 +233,7 @@ class PriceListController extends Controller
 		$priceListItem= PriceListItem::model()->findByPk($idPriceListItem);
 		if($priceListItem!= null)
 		{
-			if($msrp > 0)
+			if($profitRate > 0)
 				$priceListItem->attributes = array('dealer_cost'=>(double) $dealerCost, 'profit_rate'=>(double) $profitRate);
 			else
 				$priceListItem->attributes = array('dealer_cost'=>(double) $dealerCost);

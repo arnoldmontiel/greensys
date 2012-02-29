@@ -211,7 +211,7 @@ $('#Product_weight').change(function(){
 			<?php echo $form->error($model,'Id_measurement_unit_linear'); ?>
 		</div>
 		<div style="width: 120px; display: inline-block;">
-			<?php echo CHtml::label("Volume", "Product_volume"); ?>
+			<?php echo CHtml::label("Volume (m<SUP>3</SUP>)", "Product_volume"); ?>
 			<?php echo CHtml::textField("txtVolume","",array('style'=>'width:90px;')); ?>
 		</div>
 
