@@ -13,13 +13,11 @@
 		<?php echo $form->labelEx($model,'date_validity'); ?>
  		<?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 	     // additional javascript options for the date picker plugin
- 		'language'=>'es',
+ 		'language'=>'en',
  		'model'=>$model,
  		'attribute'=>'date_validity',
  		'options'=>array(
 	         'showAnim'=>'fold',
- 			 'altFormat'=>Yii::app()->params['database_format']['date'],
- 			 'dateFormat'=>'yy-mm-dd',
 	     ),
 	     'htmlOptions'=>array(
 	         'style'=>'height:20px;'
