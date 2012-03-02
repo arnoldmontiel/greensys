@@ -28,6 +28,18 @@ class PriceList extends CActiveRecord
 		$this->Id_price_list_type = 1;//buy list
 		return parent::beforeSave();
 	}
+	
+	protected function afterFind(){
+		$this->date_validity = Yii::app()->dateFormatter->formatDateTime(
+		CDateTimeParser::parse($this->date_validity, Yii::app()->params['database_format']['date']),'small',null);
+		
+		$this->date_creation = Yii::app()->dateFormatter->formatDateTime(
+		CDateTimeParser::parse($this->date_creation, Yii::app()->params['database_format']['dateTimeFormat']),'small','medium');
+		
+		return true;
+	}
+
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return PriceList the static model class
@@ -56,6 +68,7 @@ class PriceList extends CActiveRecord
 			//array('Id_price_list_type', 'required'),
 			array('validity, Id_supplier, Id_price_list_type', 'numerical', 'integerOnly'=>true),
 			array('date_creation, date_validity', 'safe'),
+			
 			array('description', 'length', 'max'=>45),
 			array('date_creation','default',
 		              'value'=>new CDbExpression('NOW()'),
