@@ -33,8 +33,7 @@ class PriceList extends CActiveRecord
 		$this->date_validity = Yii::app()->dateFormatter->formatDateTime(
 		CDateTimeParser::parse($this->date_validity, Yii::app()->params['database_format']['date']),'small',null);
 		
-		$this->date_creation = Yii::app()->dateFormatter->formatDateTime(
-		CDateTimeParser::parse($this->date_creation, Yii::app()->params['database_format']['dateTimeFormat']),'small','medium');
+		$this->date_creation = Yii::app()->dateFormatter->formatDateTime($this->date_creation,'small','small');
 		
 		return true;
 	}
@@ -68,11 +67,10 @@ class PriceList extends CActiveRecord
 			//array('Id_price_list_type', 'required'),
 			array('validity, Id_supplier, Id_price_list_type', 'numerical', 'integerOnly'=>true),
 			array('date_creation, date_validity', 'safe'),
-			
 			array('description', 'length', 'max'=>45),
 			array('date_creation','default',
 		              'value'=>new CDbExpression('NOW()'),
-		              'setOnEmpty'=>false,'on'=>'insert'),
+		              'setOnEmpty'=>true,'on'=>'insert'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, date_creation, date_validity, validity, Id_supplier, Id_price_list_type, supplier_business_name', 'safe', 'on'=>'search'),
