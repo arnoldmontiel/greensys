@@ -7,6 +7,8 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List PriceList', 'url'=>array('index')),
 	array('label'=>'Create PriceList', 'url'=>array('create')),
+	array('label'=>'Manage PriceList', 'url'=>array('admin')),
+	array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
 );
 
 $this->showSideBar = true;

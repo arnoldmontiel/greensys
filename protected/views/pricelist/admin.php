@@ -8,6 +8,7 @@ $this->menu=array(
 	array('label'=>'List PriceList', 'url'=>array('index')),
 	array('label'=>'Create PriceList', 'url'=>array('create')),
 	array('label'=>'Assing Products', 'url'=>array('priceListItem')),
+	array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
 );
 
 Yii::app()->clientScript->registerScript('search', "

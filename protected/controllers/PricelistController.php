@@ -67,6 +67,78 @@ class PriceListController extends Controller
 		));
 	}
 
+	public function actionClonePriceList()
+	{
+		$model=new PriceList;
+	
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+	
+		$modelToClone=new PriceList('search');
+		$modelToClone->unsetAttributes();  // clear any default values
+		
+		
+		$modelPriceListItem=new PriceListItem('search');
+		$modelPriceListItem->unsetAttributes();  // clear any default values
+		
+		
+		if(isset($_GET['PriceListItem']))
+			$modelPriceListItem->attributes=$_GET['PriceListItem'];
+	
+		
+		if(isset($_GET['PriceList'])){
+			$modelToClone->attributes=$_GET['PriceList'];
+		}
+		
+		
+		if(isset($_GET['PriceList']['id']))
+			$modelPriceListItem->Id_price_list = $_GET['PriceList']['id'];
+		
+		if(isset($_POST['PriceList']) && isset($_POST['hiddenPriceListId']))
+		{
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+
+				$modelDB = PriceList::model()->findByPk($_POST['hiddenPriceListId']);
+				
+				$model->attributes = array('Id_price_list_type'=>$modelDB->Id_price_list_type,
+											'Id_supplier'=>$modelDB->Id_supplier);
+				
+				
+				$modelDB->validity = 0;
+				$modelDB->save();
+				
+				$model->attributes = $_POST['PriceList'];
+				$model->validity = 1;
+				
+				if($model->save())
+				{
+					
+					$items = PriceListItem::model()->findAllByAttributes(array('Id_price_list'=>(int)$_POST['hiddenPriceListId']));
+					foreach ($items as $item)
+					{
+						$priceListItem = new PriceListItem;
+						$priceListItem->attributes = $item->attributes;
+						$priceListItem->Id = null;
+						$priceListItem->Id_price_list = $model->Id;
+						$priceListItem->save();
+					}
+				}
+				$transaction->commit();
+				$this->redirect(array('view','id'=>$model->Id));
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
+	
+		}
+	
+		$this->render('clonePriceList',array(
+				'model'=>$model,
+				'modelToClone'=>$modelToClone,
+				'modelPriceListItem'=>$modelPriceListItem,
+		));
+	}
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.

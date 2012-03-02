@@ -18,6 +18,8 @@
  		'attribute'=>'date_validity',
  		'options'=>array(
 	         'showAnim'=>'fold',
+ 			 'altFormat'=>Yii::app()->params['database_format']['date'],
+ 			 'dateFormat'=>'yy-mm-dd',
 	     ),
 	     'htmlOptions'=>array(
 	         'style'=>'height:20px;'
