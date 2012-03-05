@@ -59,11 +59,11 @@ $('.search-form form').submit(function(){
 					),
 					'update' => array
 					(
-			            'url'=>'Yii::app()->createUrl("contact/AjaxUpdateContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "viewField"=>'.$viewField.', "modelRelName"=>'.$modelRelName.'))',
+						'url'=>'Yii::app()->createUrl("contact/AjaxUpdateContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "viewField"=>"'.$viewField.'", "modelRelName"=>'.$modelRelName.'))',
 					),
 					'view' => array
 					(
-			            'url'=>'Yii::app()->createUrl("contact/AjaxViewContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "viewField"=>'.$viewField.', "modelRelName"=>'.$modelRelName.'))',
+			            'url'=>'Yii::app()->createUrl("contact/AjaxViewContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "viewField"=>"'.$viewField.'", "modelRelName"=>'.$modelRelName.'))',
 					),
 			),
 		),
