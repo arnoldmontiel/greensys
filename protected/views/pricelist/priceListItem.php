@@ -413,7 +413,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					(
 					        'delete' => array
 							(
-					            'url'=>'Yii::app()->createUrl("pricelist/DeletePriceListItem", array("id"=>$data->Id))',
+					            'url'=>'Yii::app()->createUrl("pricelist/AjaxDeletePriceListItem", array("id"=>$data->Id))',
 							),
 					),
 				),
