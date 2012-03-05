@@ -2,8 +2,8 @@
 $this->breadcrumbs=array(
 	'Suppliers'=>array($modelRelName.'/index'),
 	$viewField=>array($modelRelName.'/view', 'id'=>$id),
-	'Manage Contacts'=>array('contact/adminContact','modelRelName'=>$modelRelName, 'id'=> $id, 'viewField'=>$viewField),
-	$model->description=>array('contact/ViewContact','modelRelName'=>$modelRelName, 'id'=> $id, 'viewField'=>$viewField, 'idContact'=>$idContact),
+	'Manage Contacts'=>array('contact/AjaxAdminContact','modelRelName'=>$modelRelName, 'id'=> $id, 'viewField'=>$viewField),
+	$model->description=>array('contact/AjaxViewContact','modelRelName'=>$modelRelName, 'id'=> $id, 'viewField'=>$viewField, 'idContact'=>$idContact),
 	'Update',
 );
 

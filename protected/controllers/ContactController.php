@@ -70,7 +70,7 @@ class ContactController extends Controller
 	* Creates a new model.
 	* If creation is successful, the browser will be redirected to the 'view' page.
 	*/
-	public function actionCreateContact($modelRelName, $id, $viewField)
+	public function actionAjaxCreateContact($modelRelName, $id, $viewField)
 	{
 
 		if(isset($_POST['Cancel']))
@@ -111,7 +111,7 @@ class ContactController extends Controller
 		));
 	}
 	
-	public function actionAdminContact($modelRelName, $id, $viewField)
+	public function actionAjaxAdminContact($modelRelName, $id, $viewField)
 	{
 		
 		$newModel = $modelRelName . get_class(Contact::model());
@@ -138,7 +138,7 @@ class ContactController extends Controller
 		$this->redirect(array(strtolower($modelRelName) .'/view','id'=>$id));
 	}
 	
-	public function actionRemoveContact()
+	public function actionAjaxRemoveContact()
 	{
 		$id = isset($_GET['id'])?$_GET['id']:'';
 		$idContact = isset($_GET['idContact'])?$_GET['idContact']:'';
@@ -168,7 +168,7 @@ class ContactController extends Controller
 		}
 	}
 	
-	public function actionViewContact()
+	public function actionAjaxViewContact()
 	{
 		$id = isset($_GET['id'])?$_GET['id']:'';
 		$idContact = isset($_GET['idContact'])?$_GET['idContact']:'';
@@ -183,7 +183,7 @@ class ContactController extends Controller
 		));
 	}
 	
-	public function actionUpdateContact()
+	public function actionAjaxUpdateContact()
 	{	
 		$id = isset($_GET['id'])?$_GET['id']:'';
 		$idContact = isset($_GET['idContact'])?$_GET['idContact']:'';
@@ -191,7 +191,7 @@ class ContactController extends Controller
 		$viewField = isset($_GET['viewField'])?$_GET['viewField']:'';
 		
 		if(isset($_POST['Cancel']))
-			$this->redirect(array('contact/adminContact','modelRelName'=>$modelRelName, 'id'=> $id, 'viewField'=>$viewField));
+			$this->redirect(array('contact/AjaxAdminContact','modelRelName'=>$modelRelName, 'id'=> $id, 'viewField'=>$viewField));
 		
 		$model=$this->loadModel($idContact);
 	
@@ -202,7 +202,7 @@ class ContactController extends Controller
 		{
 			$model->attributes=$_POST['Contact'];
 			if($model->save())
-				$this->redirect(array('contact/ViewContact', 'id'=>$id, 'idContact'=>$idContact, 'modelRelName'=>$modelRelName,'viewField'=>$viewField));
+				$this->redirect(array('contact/AjaxViewContact', 'id'=>$id, 'idContact'=>$idContact, 'modelRelName'=>$modelRelName,'viewField'=>$viewField));
 		}
 	
 		$this->render('update',array(

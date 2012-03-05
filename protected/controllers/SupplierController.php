@@ -273,12 +273,12 @@ class SupplierController extends Controller
 	
 	public function actionAjaxAddContact($id)
 	{
-  		$this->redirect(array('contact/createContact','modelRelName'=>get_class(Supplier::model()), 'id'=> $id, 'viewField'=> $this->loadModel($id)->business_name));
+  		$this->redirect(array('contact/AjaxCreateContact','modelRelName'=>get_class(Supplier::model()), 'id'=> $id, 'viewField'=> $this->loadModel($id)->business_name));
 	}
 	
 	public function actionAjaxViewContact($id)
 	{
-		$this->redirect(array('contact/adminContact','modelRelName'=>get_class(Supplier::model()), 'id'=> $id, 'viewField'=> $this->loadModel($id)->business_name));
+		$this->redirect(array('contact/AjaxAdminContact','modelRelName'=>get_class(Supplier::model()), 'id'=> $id, 'viewField'=> $this->loadModel($id)->business_name));
 	}
 	/**
 	 * Performs the AJAX validation.

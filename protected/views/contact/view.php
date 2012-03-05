@@ -3,7 +3,7 @@
 $this->breadcrumbs=array(
 	$modelRelName=>array($modelRelName.'/index'),
  	$viewField=>array($modelRelName.'/view', 'id'=>$id),
-	'Manage Contacts'=>array('contact/adminContact','modelRelName'=>$modelRelName, 'id'=> $id, 'viewField'=>$viewField),
+	'Manage Contacts'=>array('contact/AjaxAdminContact','modelRelName'=>$modelRelName, 'id'=> $id, 'viewField'=>$viewField),
 	$model->description
 );
 
@@ -32,6 +32,6 @@ $this->breadcrumbs=array(
 												                   'style'=>'width:30px;',
 												                   'id'=>'addBack',
                                 									)
-                            ),array('contact/adminContact','modelRelName'=>$modelRelName, 'id'=> $id, 'viewField'=>$viewField));
+                            ),array('contact/AjaxAdminContact','modelRelName'=>$modelRelName, 'id'=> $id, 'viewField'=>$viewField));
 		?>
 </div>

@@ -55,15 +55,15 @@ $('.search-form form').submit(function(){
 			(
 			        'delete' => array
 					(
-			            'url'=>'Yii::app()->createUrl("contact/RemoveContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "modelRelName"=>'.$modelRelName.'))',
+			            'url'=>'Yii::app()->createUrl("contact/AjaxRemoveContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "modelRelName"=>'.$modelRelName.'))',
 					),
 					'update' => array
 					(
-			            'url'=>'Yii::app()->createUrl("contact/UpdateContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "viewField"=>'.$viewField.', "modelRelName"=>'.$modelRelName.'))',
+			            'url'=>'Yii::app()->createUrl("contact/AjaxUpdateContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "viewField"=>'.$viewField.', "modelRelName"=>'.$modelRelName.'))',
 					),
 					'view' => array
 					(
-			            'url'=>'Yii::app()->createUrl("contact/ViewContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "viewField"=>'.$viewField.', "modelRelName"=>'.$modelRelName.'))',
+			            'url'=>'Yii::app()->createUrl("contact/AjaxViewContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "viewField"=>'.$viewField.', "modelRelName"=>'.$modelRelName.'))',
 					),
 			),
 		),
