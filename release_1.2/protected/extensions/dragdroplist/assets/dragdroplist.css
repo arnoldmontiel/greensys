@@ -1,0 +1,32 @@
+/**
+* @file: dragdroplist.css 
+* @version: 1.0
+*/
+
+ul.ddlist {
+background: none repeat scroll 0 0 #EEEEEE;
+    float: left;
+    list-style-type: none;
+    margin: 0 10px 0 0;
+    padding: 5px;
+    width: 95%;
+    }
+ul.ddlist li { 
+    margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1em; height: 14px; 
+    width: 80%;
+    
+}
+ul.ddlist li span {
+	position: absolute;
+	 margin-left: -1.3em; 
+	 }
+ul.ddlist li img {
+	float:right
+	}
+div.assigned-items
+{
+	width: 50%;
+	float:left;
+	display: block;
+	background: none repeat scroll 0 0 #EEEEEE	
+}

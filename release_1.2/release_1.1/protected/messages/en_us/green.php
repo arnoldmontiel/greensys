@@ -1,0 +1,63 @@
+<?php
+ return 
+ 	array (
+ 		'Contact Us'=>'Contact Us',
+ 		'United State'=>'United State',
+ 		'English'=>'English',
+ 		'Spanish'=>'Spanish',
+ 		'Argentine'=>'Argentine',
+ 		'Active record class "{class}" does not have a scope named "{scope}".' => 'Active record class « {class} n\'a pas de scope nommé « {scope} ».',
+ 		'Home'=>'Home',
+ 		'About'=>'About',
+ 		'Contact'=>'Contact',
+ 		'Login'=>'Login',
+ 		'Logout'=>'Logout',
+ 		'Manage'=>'Manage',
+ 		'User'=>'User',
+ 		'Permissions'=>'Permissions', 		
+ 		'Language: '=>'Language: ',
+ 		'Fields with {required} are required.'=>'Fields with {required} are required.',
+ 		'Fields with '=>'Fields with ',
+  		' are required.'=>' are required.',
+ 		'If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.'=>'If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.',
+ 		'Remember me next time'=>'Remember me next time',
+ 		'Verification Code'=>'Verification Code',
+ 		'Please enter the letters as they are shown in the image above.'=>'Please enter the letters as they are shown in the image above.',
+ 		'Letters are not case-sensitive.'=>'Letters are not case-sensitive.',
+ 		'Name'=>'Name',
+ 		'Email'=>'Email',
+ 		'Subject'=>'Subject',
+ 		'Body'=>'Body',
+ 		'cannot be blank.'=>'cannot be blank.',
+ 		'is not a valid email address.'=>'is not a valid email address.',
+ 		'The verification code is incorrect.'=>'The verification code is incorrect.',
+ 		'Submit'=>'Submit',
+ 		'Please fill out the following form with your login credentials:'=>'Please fill out the following form with your login credentials:',
+ 		'Username'=>'Username',
+ 		'Password'=>'Password',
+ 		'Incorrect username or password.'=>'Incorrect username or password.',
+ 		'Users'=>'Users',
+ 		'Create User'=>'Create User',
+ 		'Manage User'=>'Manage User',
+ 		'Manage Users'=>'Manage Users',
+ 		'Create'=>'Create',
+ 		'List User'=>'List User',
+ 		'Save'=>'Save',
+ 		'has already been taken.'=>'has already been taken.',
+ 		'You may optionally enter a comparison operator {operators} at the beginning of each of your search values to specify how the comparison should be done.'=>'You may optionally enter a comparison operator {operators} at the beginning of each of your search values to specify how the comparison should be done.',
+		'You may optionally enter a comparison operator '=>'You may optionally enter a comparison operator ',
+  		' at the beginning of each of your search values to specify how the comparison should be done.'=>' at the beginning of each of your search values to specify how the comparison should be done.',
+ 		'Advanced Search'=>'Advanced Search',
+ 		'This is the main page.'=>'This is the main page.',
+ 		'dateFormats' => array(
+ 			'small'=>'MM/dd/yyyy',          // format used for input
+ 			'calendar_small'=>'mm/dd/yy',   // format used for input with calendar widget
+ 			'database'=>Yii::app()->params['database_format']['date'],
+ ),
+ 		'timeFormats' => array(
+ 			'small'=>'HH:mm:ss',          // format used for input
+ 			'database'=>Yii::app()->params['database_format']['time'],
+ ),
+ 
+  );
+ ?>
