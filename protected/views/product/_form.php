@@ -288,7 +288,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 			));
 ?>
 
-<div style="height:270px;" >
+<div style="height:170px;" >
 <div class="left">
 		<div class="row">
 			<?php echo $form->labelEx($modelMultimedia,'uploadedFile'); ?>
@@ -302,11 +302,6 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 			<?php echo $form->error($modelMultimedia,'name'); ?>
 		</div>
 	
-		<div class="row">
-			<?php echo $form->labelEx($modelMultimedia,'description'); ?>
-			<?php echo $form->textArea($modelMultimedia,'description',array('rows'=>6, 'cols'=>35)); ?>
-			<?php echo $form->error($modelMultimedia,'description'); ?>
-		</div>
 	</div>
 	<div class="right">
 		<?php 
