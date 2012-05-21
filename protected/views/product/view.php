@@ -89,10 +89,14 @@ $this->widget('zii.widgets.CDetailView', array(
 	<br />
 	<b><?php echo CHtml::encode($model->getAttributeLabel('image')); ?>:</b>
 <?php 
-	$multimedia = Multimedia::model()->findByAttributes(array('Id_product'=>$model->Id));
-	$this->widget('ext.highslide.highslide', array(
-							'id'=>$multimedia->Id,
-	)); ?>
+	if(isset($multimedia))
+	{
+		$multimedia = Multimedia::model()->findByAttributes(array('Id_product'=>$model->Id));
+		$this->widget('ext.highslide.highslide', array(
+				'id'=>$multimedia->Id,
+		));		
+	}
+ ?>
 	
 </div>
 <div class="footer">
@@ -101,12 +105,17 @@ $this->widget('zii.widgets.CDetailView', array(
 	</div>
 	<?php
 	$note = Note::model()->findByAttributes(array('Id_product'=>$model->Id));
-
-	 $this->widget('ext.richtext.jwysiwyg', array(
- 		'id'=>'noteContainer',	// default is class="ui-sortable" id="yw0"	
- 		'notes'=> $note->note,
- 		'mode'=>'show'
- 			));
+	$noteTxt = '';
+	if(isset($note))
+	{		
+		$noteTxt = $note->note;
+	}
+	$this->widget('ext.richtext.jwysiwyg', array(
+			'id'=>'noteContainer',	// default is class="ui-sortable" id="yw0"
+			'notes'=> $noteTxt,
+			'mode'=>'show'
+	));
+	
 	?>
 </div>		
 

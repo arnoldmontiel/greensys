@@ -228,7 +228,7 @@ $('#Product_weight').change(function(){
 			<?php				
 				$measureType = MeasurementType::model()->findByAttributes(array('description'=>'weight'));
 				$measuremetUnit = MeasurementUnit::model()->findAllByAttributes(array('Id_measurement_type'=>$measureType->Id));
-				echo CHtml::dropDownList('Id_measurement_unit_weight', $measuremetUnit->short_description,CHtml::listData(
+				echo CHtml::dropDownList('Id_measurement_unit_weight', '',CHtml::listData(
 	    			$measuremetUnit, 'Id', 'short_description')); 
 			?>
 			<?php echo $form->error($model,'Id_measurement_unit_weight'); ?>
