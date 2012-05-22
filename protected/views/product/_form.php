@@ -288,28 +288,6 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 			));
 ?>
 
-<div style="height:170px;" >
-<div class="left">
-		<div class="row">
-			<?php echo $form->labelEx($modelMultimedia,'uploadedFile'); ?>
-			<?php echo $form->fileField($modelMultimedia,'uploadedFile'); ?>
-			<?php echo $form->error($modelMultimedia,'uploadedFile'); ?>
-		</div>
-	
-		<div class="row">
-			<?php echo $form->labelEx($modelMultimedia,'name'); ?>
-			<?php echo $form->textField($modelMultimedia,'name',array('size'=>45,'maxlength'=>45)); ?>
-			<?php echo $form->error($modelMultimedia,'name'); ?>
-		</div>
-	
-	</div>
-	<div class="right">
-		<?php 
-		$this->widget('ext.highslide.highslide', array(
-						'id'=>$modelMultimedia->Id,
-	)); ?>
-	</div>
-</div>
 
 <?php
 

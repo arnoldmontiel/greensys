@@ -55,7 +55,6 @@ class ProductController extends Controller
 		$model=new Product;
 
 		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
-		$modelMultimedia = new Multimedia;
 		$modelNote = new Note;
 					
 		// Uncomment the following line if AJAX validation is needed
@@ -93,7 +92,6 @@ class ProductController extends Controller
 		$this->render('create',array(
 			'model'=>$model,
 			'modelHyperlink'=>$modelHyperlink,
-			'modelMultimedia'=>$modelMultimedia,
 			'modelNote'=>$modelNote
 		));
 	}
@@ -179,7 +177,6 @@ class ProductController extends Controller
 	{
 		$model=$this->loadModel($id);
 		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
-		$modelMultimedia = Multimedia::model()->findByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
 		$modelNote = Note::model()->findByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
 		
 		if(isset($_POST['Product']))
@@ -205,13 +202,10 @@ class ProductController extends Controller
 			}
 		}
 
-		if($modelMultimedia == null)
-			$modelMultimedia = new Multimedia;
 		
 		$this->render('update',array(
 			'model'=>$model,
 			'modelHyperlink'=>$modelHyperlink,
-			'modelMultimedia'=>$modelMultimedia,
 			'modelNote'=>$modelNote
 		));
 	}
