@@ -118,10 +118,15 @@ echo CHtml::openTag('div',array('class'=>'multimedia-container-documents'));
 		<b><?php echo CHtml::encode($model->getAttributeLabel('note')); ?>:</b>
 		</div>
 		<?php
-	
-		 $this->widget('ext.richtext.jwysiwyg', array(
+		$note ='';
+		if(isset($modelNote))
+		{
+			$note = $modelNote->note;
+			
+		}					
+		$this->widget('ext.richtext.jwysiwyg', array(
 	 		'id'=>'noteContainer',	// default is class="ui-sortable" id="yw0"	
-	 		'notes'=> $modelNote->note,
+	 		'notes'=> $note,
 	 		'mode'=>'show'
 	 			));
 		?>
