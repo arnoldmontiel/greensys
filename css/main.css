@@ -312,3 +312,132 @@ div a
 	color: #357;
 	text-decoration: none;
 }
+div.multimedia-area-data
+{
+	position: relative;
+	display: inline-block;	
+}
+div.multimedia-area-view-data
+{
+	font-size: 13px;
+	line-height: 18px;
+	padding:18px 10px 10px 10px;
+	border-top: 1px solid white;
+	border-bottom: 1px solid white;
+	background-color: #f4f6fb;
+	position: relative;
+	width: 940px;	
+	margin-left: 15px;
+	margin-bottom: 10px;
+	float: left;
+}
+div.view-attach-data
+{
+	position: relative;
+	background-color: #FCFDFF;
+	padding: 5px 5px 5px 5px ;
+	margin: 2px 2px 2px 2px;
+	display: inline-block;
+	float: left;
+}
+input.multimedia-action-remove
+{	
+	position:absolute;
+	top:0px;
+	right:0px;
+	width:25px;
+	cursor: pointer;
+}
+div.multimedia-update-data
+{
+	margin-bottom: 3px;
+}
+textarea.multimedia-update-action-descr
+{
+	position: relative;
+	padding: 5px 10px 5px;
+	outline: none;
+	background-color: #f4f6fb;
+	border: 1px solid #f4f6fb;
+	font-size: 13px;
+	line-height: 18px;
+	resize: none;
+	width: 218px;
+	margin-top: 8px;
+}
+textarea.multimedia-update-action-descr:hover
+{
+	background-color: white;	
+}
+textarea.multimedia-update-action-descr:focus
+{
+	background-color: white;	
+	border: 1px solid blue;
+}
+div.multimedia-text-docs
+{
+	font-size: 13px;
+	line-height: 18px;
+	position: relative;
+	width: 90%;
+	float:left;
+	margin-left: 20px;
+	margin-bottom: 5px;
+	margin-top: 15px;
+	text-decoration: none;
+}
+a.multimedia-text-docs
+{
+	text-decoration: none;
+}
+a.multimedia-text-docs:HOVER
+{
+	text-decoration: underline;
+}
+input.input-action-submit-btn
+{
+	background-color: #afbad7;
+    border: 0 solid #AFBAD7;
+    font-size: 15px;
+    outline: medium none;
+    padding: 5px;
+	width: 100px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+input.input-action-submit-btn:HOVER
+{
+	background-color: white;
+}
+a.input-action-submit-btn
+{
+	background-color: #afbad7;
+    border: 0 solid #AFBAD7;
+    font-size: 15px;
+    padding: 5px 30px 5px 30px;
+	width: 100px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	text-decoration: none;
+	color: black;
+	cursor: pointer;	
+}
+a.input-action-submit-btn:HOVER
+{
+	background-color: white;
+}
+div.multimedia-container-documents
+{
+	width: 39%;
+	float: left;
+	position: relative;
+}
+div.multimedia-container-images
+{
+	width: 45%;
+	float: left;
+	position: relative;
+}
