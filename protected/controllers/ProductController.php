@@ -39,8 +39,10 @@ class ProductController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$modelProductMultimedias = ProductMultimedia::model()->findAllByAttributes(array('Id_product'=>$id));
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
+			'modelProductMultimedias'=>$modelProductMultimedias,
 		));
 	}
 
@@ -81,7 +83,7 @@ class ProductController extends Controller
 				
 					$this->createCode($model);
 					$transaction->commit();		
-					$this->redirect(array('view','id'=>$model->Id));
+					$this->redirect(array('updateMultimedia','id'=>$model->Id));
 				}	
 			} catch (Exception $e) {
 				$transaction->rollback();
@@ -557,6 +559,98 @@ class ProductController extends Controller
 	public function actionCreateDependency($dependency)
 	{
 		$this->redirect(array($dependency.'/createNew','modelCaller'=>get_class(Product::model())));
+	}
+	
+	public function actionUpdateMultimedia($id)
+	{
+		$model = $this->loadModel($id);
+		$productMultimedias = ProductMultimedia::model()->findAllByAttributes(array('Id_product'=>$id));
+	
+		$this->render('updateMultimedia',array(
+				'model'=>$model,
+				'productMultimedias'=>$productMultimedias,
+			
+		));
+	}
+	
+	public function actionAjaxRemoveMultimedia()
+	{
+			
+		$idMultimedia = isset($_GET['IdMultimedia'])?$_GET['IdMultimedia']:null;
+		$id = isset($_GET['id'])?$_GET['id']:null;
+		$model = Multimedia::model()->findByPk($idMultimedia);
+		ProductRequirementMultimedia::model()->deleteByPk(array('Id_multimedia'=>$idMultimedia, 'Id_product_requirement'=>$id));
+		$this->unlinkFile($model);
+		$model->delete();
+	
+	}
+	
+	private function unlinkFile($model)
+	{
+		$imagePath = 'images/';
+		$docPath = 'docs/';
+		if($model->Id_multimedia_type == 1)
+		{
+			unlink($imagePath.$model->file_name);
+			unlink($imagePath.$model->file_name_small);
+		}
+		else
+		unlink($docPath.$model->file_name);
+	
+	
+	}
+	
+	public function actionAjaxAddMultimediaDescription()
+	{
+			
+		$idMultimedia = isset($_GET['IdMultimedia'])?$_GET['IdMultimedia']:null;
+		$description = isset($_GET['description'])?$_GET['description']:'';
+		$model = Multimedia::model()->findByPk($idMultimedia);
+		$model->description = $description;
+		$model->save();
+	
+	}
+	
+	public function actionAjaxUpload($id)
+	{
+		$file = $_FILES['file'];
+	
+	
+		$modelMultimedia = new Multimedia;
+			
+		$modelMultimedia->uploadedFile = $file;
+		if($modelMultimedia->save())
+		{
+			$modelProductMultimedia = new ProductMultimedia;
+			$modelProductMultimedia->Id_multimedia = $modelMultimedia->Id;
+			$modelProductMultimedia->Id_product = $id;
+			$modelProductMultimedia->save();
+		}
+	
+		switch ( $modelMultimedia->Id_multimedia_type) {
+			case 1:
+				$img = "<img alt='Click to follow' src='" ."images/" . $modelMultimedia->file_name_small . "'" ;
+				break;
+			case 2:
+				$img = "<img alt='Click to follow' src='images/image_resource.png'" ;
+				break;
+			case 3:
+				$img = "<img alt='Click to follow' src='images/pdf_resource.png'" ;
+				break;
+			case 4:
+				$img = "<img alt='Click to follow' src='images/autocad_resource.png'" ;
+				break;
+			case 5:
+				$img = "<img alt='Click to follow' src='images/word_resource.png'" ;
+				break;
+			case 6:
+				$img = "<img alt='Click to follow' src='images/excel_resource.png'" ;
+				break;
+		}
+	
+		$size = round($modelMultimedia->size/1024,2);
+			
+		echo json_encode(array("name" => $img,"type" => '',"size"=> $size, "id"=>$modelMultimedia->Id));
 	}
 	
 	/**
