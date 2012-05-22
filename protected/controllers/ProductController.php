@@ -183,6 +183,7 @@ class ProductController extends Controller
 		if(isset($_POST['Product']))
 		{
 			$model->attributes=$_POST['Product'];
+			$this->createCode($model);
 			if($model->save()){
 				
 				//update links
