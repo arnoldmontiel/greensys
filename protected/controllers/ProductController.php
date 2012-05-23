@@ -573,7 +573,7 @@ class ProductController extends Controller
 		$idMultimedia = isset($_GET['IdMultimedia'])?$_GET['IdMultimedia']:null;
 		$id = isset($_GET['id'])?$_GET['id']:null;
 		$model = Multimedia::model()->findByPk($idMultimedia);
-		ProductRequirementMultimedia::model()->deleteByPk(array('Id_multimedia'=>$idMultimedia, 'Id_product_requirement'=>$id));
+		ProductMultimedia::model()->deleteByPk(array('Id_multimedia'=>$idMultimedia, 'Id_product'=>$id));
 		$this->unlinkFile($model);
 		$model->delete();
 	
