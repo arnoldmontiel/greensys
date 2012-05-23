@@ -25,7 +25,8 @@
  * @property string $dealer_cost
  * @property integer Id_measurement_unit_weight
  * @property integer Id_measurement_unit_linear
- *
+ * @property string $color
+ * 
  * The followings are the available model relations:
  * @property BudgetItem[] $budgetItems
  * @property Hyperlink[] $hyperlinks
@@ -79,12 +80,12 @@ class Product extends CActiveRecord
 			array('Id_brand, Id_category, Id_nomenclator, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear', 'required'),
 			array('Id_brand, Id_category, Id_nomenclator, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier', 'length', 'max'=>255),
-			array('code, code_supplier', 'length', 'max'=>45),
+			array('code, code_supplier, color', 'length', 'max'=>45),
 			array('length, width, height, profit_rate, msrp, weight, dealer_cost', 'length', 'max'=>10),
 			array('time_instalation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost', 'safe', 'on'=>'search'),
+			array('Id, Id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color', 'safe', 'on'=>'search'),
 		
 			
 		);
@@ -148,7 +149,8 @@ class Product extends CActiveRecord
 			'dealer_cost' => 'Dealer Cost',
 			'Id_measurement_unit_linear' => 'Measure Linear',		
 			'Id_measurement_unit_weight' => 'Measure Weight',		
-			'volume' => 'Volume',		
+			'volume' => 'Volume',
+			'color'=>'Color',		
 		);
 	}
 
@@ -213,7 +215,8 @@ class Product extends CActiveRecord
 		$criteria->compare('dealer_cost',$this->dealer_cost,true);
 		$criteria->compare('Id_measurement_unit_weight',$this->Id_measurement_unit_weight,true);
 		$criteria->compare('Id_measurement_unit_linear',$this->Id_measurement_unit_linear,true);
-
+		$criteria->compare('color',$this->color,true);
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
@@ -244,7 +247,7 @@ class Product extends CActiveRecord
 		$criteria->compare('time_instalation',$this->time_instalation,true);
 		$criteria->compare('hide',$this->hide);
 		$criteria->compare('weight',$this->weight,true);
-	
+		$criteria->compare('color',$this->color,true);
 		
 		$criteria->with[]='brand';
 		$criteria->addSearchCondition("brand.description",$this->brand_description);
