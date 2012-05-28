@@ -10,6 +10,7 @@ $this->menu=array(
 	array('label'=>'Update Category', 'url'=>array('update', 'id'=>$model->Id)),
 	array('label'=>'Delete Category', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Category', 'url'=>array('admin')),
+	array('label'=>'Assign Sub Category', 'url'=>array('assignSubCategory')),
 );
 ?>
 
