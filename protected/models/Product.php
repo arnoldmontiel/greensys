@@ -26,6 +26,8 @@
  * @property integer Id_measurement_unit_weight
  * @property integer Id_measurement_unit_linear
  * @property string $color
+ * @property integer $Id_sub_category
+ * @property string $other
  * 
  * The followings are the available model relations:
  * @property BudgetItem[] $budgetItems
@@ -77,15 +79,15 @@ class Product extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_brand, Id_category, Id_nomenclator, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear', 'required'),
+			array('Id_brand, Id_category, Id_nomenclator, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, Id_category, Id_sub_category', 'required'),
 			array('Id_brand, Id_category, Id_nomenclator, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier', 'length', 'max'=>255),
-			array('code, code_supplier, color', 'length', 'max'=>45),
+			array('code, code_supplier, color, other', 'length', 'max'=>45),
 			array('length, width, height, profit_rate, msrp, weight, dealer_cost', 'length', 'max'=>10),
-			array('time_instalation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description', 'safe'),
+			array('time_instalation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, Id_sub_category', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color', 'safe', 'on'=>'search'),
+			array('Id, Id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color, other, Id_category', 'safe', 'on'=>'search'),
 		
 			
 		);
@@ -106,6 +108,7 @@ class Product extends CActiveRecord
 			'priceListItems' => array(self::HAS_MANY, 'PriceListItem', 'Id_product'),
 			'brand' => array(self::BELONGS_TO, 'Brand', 'Id_brand'),
 			'category' => array(self::BELONGS_TO, 'Category', 'Id_category'),
+			'subCategory' => array(self::BELONGS_TO, 'SubCategory', 'Id_sub_category'),
 			'nomenclator' => array(self::BELONGS_TO, 'Nomenclator', 'Id_nomenclator'),
 			'areas' => array(self::MANY_MANY, 'Area', 'product_area(Id_product, Id_area)'),
 			'categories' => array(self::MANY_MANY, 'Category', 'product_category(Id_product, Id_category)'),
@@ -151,6 +154,8 @@ class Product extends CActiveRecord
 			'Id_measurement_unit_weight' => 'Measure Weight',		
 			'volume' => 'Volume',
 			'color'=>'Color',		
+			'other'=>'Other',
+			'Id_sub_category'=>'Sub Category',
 		);
 	}
 
@@ -216,6 +221,8 @@ class Product extends CActiveRecord
 		$criteria->compare('Id_measurement_unit_weight',$this->Id_measurement_unit_weight,true);
 		$criteria->compare('Id_measurement_unit_linear',$this->Id_measurement_unit_linear,true);
 		$criteria->compare('color',$this->color,true);
+		$criteria->compare('color',$this->other,true);
+		$criteria->compare('Id_sub_category',$this->Id_sub_category);
 		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -248,6 +255,8 @@ class Product extends CActiveRecord
 		$criteria->compare('hide',$this->hide);
 		$criteria->compare('weight',$this->weight,true);
 		$criteria->compare('color',$this->color,true);
+		$criteria->compare('color',$this->other,true);
+		$criteria->compare('Id_sub_category',$this->Id_sub_category);
 		
 		$criteria->with[]='brand';
 		$criteria->addSearchCondition("brand.description",$this->brand_description);

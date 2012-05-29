@@ -89,10 +89,29 @@ class ProductController extends Controller
 			}			
 		}
 
+		if(isset($_POST['Product']))
+		{
+			$ddlCategory = Category::model()->findByPk($_POST['Product']['Id_category']);
+		}
+		else
+		{
+			$ddlCategory = Category::model()->findAll();
+			$ddlCategory = $ddlCategory[0];
+		}
+		 
+		$ddlSubCategory = array();
+		foreach($ddlCategory->subCategorys as $itemSubCat)
+		{			
+			$item['Id'] = $itemSubCat->Id;
+			$item['description'] = $itemSubCat->description;
+			$ddlSubCategory[$itemSubCat->Id] = $itemSubCat;
+		}
+		
 		$this->render('create',array(
 			'model'=>$model,
 			'modelHyperlink'=>$modelHyperlink,
-			'modelNote'=>$modelNote
+			'modelNote'=>$modelNote,
+			'ddlSubCategory'=>$ddlSubCategory,
 		));
 	}
 
@@ -200,13 +219,27 @@ class ProductController extends Controller
 				
 				$this->redirect(array('view','id'=>$model->Id));
 			}
+			$ddlCategory = Category::model()->findByPk($_POST['Product']['Id_category']);
 		}
-
+		else
+		{
+			$ddlCategory = Category::model()->findByPk($model->Id_category);
+		}
+		
+		
+		$ddlSubCategory = array();
+		foreach($ddlCategory->subCategorys as $itemSubCat)
+		{
+			$item['Id'] = $itemSubCat->Id;
+			$item['description'] = $itemSubCat->description;
+			$ddlSubCategory[$itemSubCat->Id] = $itemSubCat;
+		}
 		
 		$this->render('update',array(
 			'model'=>$model,
 			'modelHyperlink'=>$modelHyperlink,
-			'modelNote'=>$modelNote
+			'modelNote'=>$modelNote,
+			'ddlSubCategory'=>$ddlSubCategory,
 		));
 	}
 
@@ -645,6 +678,18 @@ class ProductController extends Controller
 		$size = round($modelMultimedia->size/1024,2);
 			
 		echo json_encode(array("name" => $img,"type" => '',"size"=> $size, "id"=>$modelMultimedia->Id));
+	}
+	
+	public function actionAjaxFillSubCategory()
+	{
+		//please enter current controller name because yii send multi dim array
+		$idCategory = $_POST['Product']['Id_category'];
+		$data = CategorySubCategory::model()->findAllByAttributes(array('Id_category'=>$idCategory));
+		foreach($data as $item)
+		{
+			echo CHtml::tag('option',
+			array('value'=>$item->Id_sub_category),CHtml::encode($item->subCategory->description),true);
+		}
 	}
 	
 	/**

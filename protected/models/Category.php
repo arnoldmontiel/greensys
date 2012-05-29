@@ -57,6 +57,7 @@ class Category extends CActiveRecord
 			'categoryGroups' => array(self::HAS_MANY, 'CategoryGroup', 'Id_category_child'),
 			'categoryGroups1' => array(self::HAS_MANY, 'CategoryGroup', 'Id_category_parent'),
 			'products' => array(self::MANY_MANY, 'Product', 'product_category(Id_category, Id_product)'),
+			'subCategorys'=>array(self::MANY_MANY, 'SubCategory', 'category_sub_category(Id_category, Id_sub_category)'),
 		);
 	}
 

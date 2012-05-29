@@ -44,6 +44,10 @@ $this->widget('zii.widgets.CDetailView', array(
 			'type'=>'raw',
 			'value'=>$model->category->description
 		),
+		array('label'=>$model->getAttributeLabel('Id_sub_category'),
+			'type'=>'raw',
+			'value'=>$model->subCategory->description
+		),
 		array('label'=>$model->getAttributeLabel('Id_nomenclator'),
 			'type'=>'raw',
 			'value'=>$model->nomenclator->description

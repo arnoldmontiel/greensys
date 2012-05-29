@@ -141,7 +141,13 @@ $('#Product_weight').change(function(){
 		<div style="display: inline-block;">
 			<?php echo $form->labelEx($model,'Id_category'); ?>
 			<?php echo $form->dropDownList($model, 'Id_category', CHtml::listData(
-	    			Category::model()->findAll(), 'Id', 'description')); 
+	    			Category::model()->findAll(), 'Id', 'description'),
+				array(
+					'ajax' => array(
+					'type'=>'POST', 
+					'url'=>CController::createUrl('AjaxFillSubCategory'), 
+					'update'=>'#Product_Id_sub_category',
+		))); 
 			?>
 			<?php echo $form->error($model,'Id_category'); ?>
 		</div>
@@ -149,6 +155,19 @@ $('#Product_weight').change(function(){
 			<?php echo CHtml::link( 'Add new Category', ProductController::createUrl('CreateDependency', array('dependency'=>'category')));?>
 		</div>
 	</div>
+	
+	<div class="row">
+		<div style="display: inline-block;">
+			<?php echo $form->labelEx($model,'Id_sub_category'); ?>
+			<?php $subCategory = CHtml::listData($ddlSubCategory, 'Id', 'description');?>
+			<?php echo $form->dropDownList($model, 'Id_sub_category', $subCategory,array(
+				'prompt'=>'Select a Sub Category'
+			)	); ?>
+			<?php echo $form->error($model,'Id_sub_category'); ?>
+		</div>
+	</div>
+	
+	
 	
 	<div class="row">
 		<div style="display: inline-block;">
