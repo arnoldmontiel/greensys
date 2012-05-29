@@ -122,11 +122,16 @@ class ProductController extends Controller
 	
 	public function createCode($model)
 	{
-		$newId = str_pad($model->Id, 5, "0", STR_PAD_LEFT);
-		$newBrand = strtoupper(str_pad(substr($model->brand->description,0,3), 3, "0"));
-		$newCategory = strtoupper(str_pad(substr($model->category->description,0,3), 3, "0"));
-	
-		$model->code = $newCategory.$newBrand.$newId;
+		$newId = str_pad($model->Id, 2, "0", STR_PAD_LEFT);
+		$category = strtoupper(str_pad(substr($model->category->description,0,2), 2, "0"));
+		$subCategory = strtoupper(str_pad(substr($model->subCategory->description,0,2), 2, "0"));
+		$brand = strtoupper(str_pad(substr($model->brand->description,0,2), 2, "0"));
+		$productDesc = strtoupper(str_pad(substr($model->description_supplier,0,1), 1, "0"));
+		$color = strtoupper(str_pad(substr($model->color,0,1), 1, "0"));
+		$other = strtoupper(str_pad(substr($model->other,0,1), 1, "0"));
+		
+		
+		$model->code = $category . $subCategory . $brand . $productDesc . $newId .  $color . $other;
 		$model->save();
 	}
 	
@@ -201,7 +206,7 @@ class ProductController extends Controller
 		if(isset($_POST['Product']))
 		{
 			$model->attributes=$_POST['Product'];
-			$this->createCode($model);
+			//$this->createCode($model);
 			if($model->save()){
 				
 				//update links
@@ -581,6 +586,24 @@ class ProductController extends Controller
 				$productReqProdInDb->delete();
 			}
 		}
+	}
+	
+	public function actionAjaxCheckCode()
+	{
+		$code = isset($_POST['code'])?$_POST['code']:null;
+		$id = isset($_POST['id'])?$_POST['id']:null;
+		
+		if($code)
+		{
+			$criteria=new CDbCriteria;
+			$criteria->condition='Id <> '.$id;
+		
+			$codeDB = Product::model()->findByAttributes(array('code'=>$code),$criteria);
+			if($codeDB)
+				echo "Code already exists";
+		}
+		else
+			echo "Empty value";
 	}
 	
 	public function actionCreateDependency($dependency)

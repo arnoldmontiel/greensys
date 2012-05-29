@@ -90,6 +90,24 @@ $('#Product_weight').change(function(){
 	validateNumber($(this));
 });
 
+$('#Product_code').change(function(){
+	$.post(
+			'".ProductController::createUrl('AjaxCheckCode')."',
+			{
+			 	code: $(this).val(),
+			 	id: " . $model->Id."
+			 }).success(
+					function(data) 
+					{ 
+						if(data != '')
+						{
+							$('#errorMsg').text(data);
+							$('#errorMsg').animate({opacity: 'show'},2000);
+							$('#errorMsg').animate({opacity: 'hide'},2000);
+						}
+					}
+			);
+});
 
 ");
 ?>
@@ -105,6 +123,15 @@ $('#Product_weight').change(function(){
 
 	<?php echo $form->errorSummary($model); ?>
 
+	<?php if (!$model->isNewRecord):?>
+		<div class="row">
+			<?php echo $form->labelEx($model,'code'); ?>
+			<?php echo $form->textField($model,'code',array('size'=>45,'maxlength'=>45)); ?>
+			<?php echo $form->error($model,'code'); ?>
+			<p id="errorMsg" class="messageError"></p>
+		</div>
+	<?php endif; ?>
+	
 	<div class="row">
 		<?php echo $form->labelEx($model,'code_supplier'); ?>
 		<?php echo $form->textField($model,'code_supplier',array('size'=>45,'maxlength'=>45)); ?>
