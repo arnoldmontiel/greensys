@@ -16,6 +16,9 @@
 			<?php echo CHtml::link(Yii::app()->lc->t('Category'),array('/category/index'));?>
 			</div>
 			<div class="home-item-view" >
+			<?php echo CHtml::link(Yii::app()->lc->t('Sub Category'),array('/subCategory/index'));?>
+			</div>
+			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Nomenclator'),array('/nomenclator/index'));?>
 			</div>
 			<div class="home-item-view" >

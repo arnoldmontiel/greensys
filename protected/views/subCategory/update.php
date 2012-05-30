@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Sub Categories'=>array('index'),
-	$model->Id=>array('view','id'=>$model->Id),
+	$model->description=>array('view','id'=>$model->Id),
 	'Update',
 );
 
@@ -13,6 +13,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Update SubCategory <?php echo $model->Id; ?></h1>
+<h1>Update SubCategory</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
