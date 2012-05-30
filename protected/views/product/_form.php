@@ -339,7 +339,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 
  $this->widget('ext.richtext.jwysiwyg', array(
  	'id'=>'noteContainer',	// default is class="ui-sortable" id="yw0"	
- 	'notes'=> $modelNote->note
+ 	'notes'=> isset($modelNote)?$modelNote->note:""
  			));
 
 ?>

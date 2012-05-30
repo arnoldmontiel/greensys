@@ -243,7 +243,6 @@ class ProductController extends Controller
 		
 		
 		$ddlSubCategory = array();
-		$item = array();
 		foreach($ddlCategory->subCategorys as $itemSubCat)
 		{
 			$item['Id'] = $itemSubCat->Id;
