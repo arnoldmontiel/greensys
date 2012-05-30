@@ -71,6 +71,7 @@ $(window).scroll(function() {
 					array('label'=>Yii::app()->lc->t('Product'), 'url'=>array('/product/index'),'visible'=>Yii::app()->user->checkAccess('ProductIndex')),
 					array('label'=>Yii::app()->lc->t('Area'), 'url'=>array('/area/index'),'visible'=>Yii::app()->user->checkAccess('AreaIndex')),
 					array('label'=>Yii::app()->lc->t('Category'), 'url'=>array('/category/index'),'visible'=>Yii::app()->user->checkAccess('CategoryIndex')),
+					array('label'=>Yii::app()->lc->t('Sub Category'), 'url'=>array('/subCategory/index'),'visible'=>Yii::app()->user->checkAccess('SubCategoryIndex')),
 					array('label'=>Yii::app()->lc->t('Nomenclator'), 'url'=>array('/nomenclator/index'),'visible'=>Yii::app()->user->checkAccess('NomenclatorIndex')),
 					array('label'=>Yii::app()->lc->t('Price List'), 'url'=>array('/pricelist/index'),'visible'=>Yii::app()->user->checkAccess('PriceListIndex')),
 					array('label'=>Yii::app()->lc->t('Service'), 'url'=>array('/service/index'),'visible'=>Yii::app()->user->checkAccess('ServiceIndex')),
