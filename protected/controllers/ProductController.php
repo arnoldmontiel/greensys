@@ -100,13 +100,15 @@ class ProductController extends Controller
 		}
 		 
 		$ddlSubCategory = array();
-		foreach($ddlCategory->subCategorys as $itemSubCat)
-		{			
-			$item['Id'] = $itemSubCat->Id;
-			$item['description'] = $itemSubCat->description;
-			$ddlSubCategory[$itemSubCat->Id] = $itemSubCat;
+		if($ddlCategory)
+		{
+			foreach($ddlCategory->subCategorys as $itemSubCat)
+			{			
+				$item['Id'] = $itemSubCat->Id;
+				$item['description'] = $itemSubCat->description;
+				$ddlSubCategory[$itemSubCat->Id] = $itemSubCat;
+			}
 		}
-		
 		$this->render('create',array(
 			'model'=>$model,
 			'modelHyperlink'=>$modelHyperlink,
