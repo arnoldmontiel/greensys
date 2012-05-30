@@ -11,12 +11,12 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List ProductRequirement', 'url'=>array('index')),
-	array('label'=>'Create ProductRequirement', 'url'=>array('create')),
-	array('label'=>'Update ProductRequirement', 'url'=>array('update', 'id'=>$model->Id)),
+	array('label'=>'List', 'url'=>array('index')),
+	array('label'=>'Create ', 'url'=>array('create')),
+	array('label'=>'Update', 'url'=>array('update', 'id'=>$model->Id)),
 	array('label'=>'Update Resources', 'url'=>array('updateMultimedia', 'id'=>$model->Id)),
-	array('label'=>'Delete ProductRequirement', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage ProductRequirement', 'url'=>array('admin')),
+	array('label'=>'Delete', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>'Manage', 'url'=>array('admin')),
 );
 ?>
 

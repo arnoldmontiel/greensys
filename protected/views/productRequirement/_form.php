@@ -5,7 +5,6 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
 
@@ -41,7 +40,7 @@
 	
 	 $this->widget('ext.richtext.jwysiwyg', array(
 	 	'id'=>'noteContainer',	// default is class="ui-sortable" id="yw0"	
-	 	'notes'=> $modelNote->note
+	 	'notes'=> isset($modelNote)?$modelNote->note:""
 	 			));
 	
 	?>
@@ -51,53 +50,5 @@
 
 <?php $this->endWidget(); ?>
 
-<?php
-if(!$model->isNewRecord)
-{
-$this->widget('ext.xupload.XUploadWidget', array(
-                    'url' => ProductRequirementController::createUrl('AjaxUpload',array('id'=>$model->Id)),
-					'multiple'=>true,
-					'name'=>'file',
-					'options' => array(
-						'acceptFileTypes' => '/(\.|\/)(gif|jpeg|png)$/i',
-						'onComplete' => 'js:function (event, files, index, xhr, handler, callBack) {
 
-							id = jQuery.parseJSON(xhr.response).id;
-							$tr = $(document).find("#"+id);
-							$tr.find(".file_upload_cancel button").click(function(){
-								var target = $(this);
-											
-								$.get("'.ProductRequirementController::createUrl('album/AjaxRemoveImage').'",
- 									{
-										IdMultimedia:$(target).parent().parent().attr("id")
- 								}).success(
- 									function(data) 
- 									{
- 										
- 										$(target).parent().parent().attr("style","display:none");	
- 									}
- 								);
-                         		
- 							});
- 							
- 							$tr.find("#photo_description").change(function(){
-								var target = $(this);
-								
-								$.get("'.ProductRequirementController::createUrl('album/AjaxAddImageDescription').'",
- 									{
-										IdMultimedia:$(target).parent().parent().attr("id"),
-										description:$(this).val()
- 								}).success(
- 									function(data) 
- 									{
- 										
- 									}
- 								);
-                         		
- 							});
-                         }'
-					),
-	));
-}
-?>
 </div><!-- form -->

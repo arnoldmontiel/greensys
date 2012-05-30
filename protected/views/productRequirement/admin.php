@@ -5,8 +5,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List ProductRequirement', 'url'=>array('index')),
-	array('label'=>'Create ProductRequirement', 'url'=>array('create')),
+	array('label'=>'List', 'url'=>array('index')),
+	array('label'=>'Create', 'url'=>array('create')),
 );
 
 ?>

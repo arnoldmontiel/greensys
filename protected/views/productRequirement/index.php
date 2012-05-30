@@ -4,8 +4,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create ProductRequirement', 'url'=>array('create')),
-	array('label'=>'Manage ProductRequirement', 'url'=>array('admin')),
+	array('label'=>'Create', 'url'=>array('create')),
+	array('label'=>'Manage', 'url'=>array('admin')),
 );
 ?>
 
