@@ -91,7 +91,8 @@ class ProductController extends Controller
 
 		if(isset($_POST['Product']))
 		{
-			$ddlCategory = Category::model()->findByPk($_POST['Product']['Id_category']);
+			if($_POST['Product']['Id_category'])
+				$ddlCategory = Category::model()->findByPk($_POST['Product']['Id_category']);
 		}
 		else
 		{
