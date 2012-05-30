@@ -96,7 +96,8 @@ class ProductController extends Controller
 		else
 		{
 			$ddlCategory = Category::model()->findAll();
-			$ddlCategory = $ddlCategory[0];
+			if($ddlCategory)
+				$ddlCategory = $ddlCategory[0];
 		}
 		 
 		$ddlSubCategory = array();
