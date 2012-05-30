@@ -95,7 +95,7 @@ $('#Product_code').change(function(){
 			'".ProductController::createUrl('AjaxCheckCode')."',
 			{
 			 	code: $(this).val(),
-			 	id: " . $model->Id."
+			 	id: '" . $model->Id."'
 			 }).success(
 					function(data) 
 					{ 
