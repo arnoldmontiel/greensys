@@ -26,7 +26,7 @@ USE `green`;
 
 LOCK TABLES `measurement_unit` WRITE;
 /*!40000 ALTER TABLE `measurement_unit` DISABLE KEYS */;
-INSERT INTO `measurement_unit` VALUES (1,'kilograms','kg',2),(2,'pounds','lb',2),(3,'cubic meter','m3',1),(4,'linear meter','ml',3),(5,'inches','in',3),(7,'cubic inch','in3',1),(8,'feet','ft',3);
+INSERT INTO `measurement_unit` VALUES (1,'kilograms','kg',2),(2,'pounds','lb',2),(3,'cubic meter','m3',1),(4,'linear meter','ml',3),(5,'inches','in',3),(7,'cubic inch','in3',1),(8,'feet','ft',3),(9,'cubic feet','ft3',1);
 /*!40000 ALTER TABLE `measurement_unit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -34,7 +34,7 @@ USE `green`;
 
 LOCK TABLES `measurement_unit_converter` WRITE;
 /*!40000 ALTER TABLE `measurement_unit_converter` DISABLE KEYS */;
-INSERT INTO `measurement_unit_converter` VALUES (1,7,3,1.6387064e-005),(2,3,3,1),(3,2,1,0.45359237),(4,1,1,1);
+INSERT INTO `measurement_unit_converter` VALUES (1,7,3,1.6387064e-005),(2,3,3,1),(3,2,1,0.45359237),(4,1,1,1),(5,9,3,0.0283);
 /*!40000 ALTER TABLE `measurement_unit_converter` ENABLE KEYS */;
 UNLOCK TABLES;
 
