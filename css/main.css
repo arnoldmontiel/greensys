@@ -315,7 +315,8 @@ div a
 div.multimedia-area-data
 {
 	position: relative;
-	display: inline-block;	
+	display: inline-block;
+	width: 100%;	
 }
 div.multimedia-area-view-data
 {
@@ -329,6 +330,7 @@ div.multimedia-area-view-data
 	margin-left: 0px;
 	margin-bottom: 10px;
 	float: left;
+	width: 100%;
 }
 div.view-attach-data
 {
