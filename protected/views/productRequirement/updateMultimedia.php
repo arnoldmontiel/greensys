@@ -9,6 +9,12 @@ $this->breadcrumbs=array(
 		'Update Resources'
 );
 
+$this->menu=array(
+		array('label'=>'List', 'url'=>array('index')),
+		array('label'=>'Create ', 'url'=>array('create')),
+		array('label'=>'Update', 'url'=>array('update', 'id'=>$model->Id)),
+		array('label'=>'Manage', 'url'=>array('admin')),
+);
 
 Yii::app()->clientScript->registerScript('updateMultimedia-view', "
 

@@ -3,6 +3,17 @@ $cs = Yii::app()->getClientScript();
 $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/highslide-with-gallery.js',CClientScript::POS_HEAD);
 $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/highslide-exe.js',CClientScript::POS_HEAD);
 $cs->registerCssFile(Yii::app()->request->baseUrl.'/js/highslide.css');
+$this->breadcrumbs=array(
+		'Product'=>array('index'),
+		$model->code=>array('view', 'id'=>$model->Id),
+		'Update Resources'
+);
+$this->menu=array(
+		array('label'=>'List', 'url'=>array('index')),
+		array('label'=>'Create ', 'url'=>array('create')),
+		array('label'=>'Update', 'url'=>array('update', 'id'=>$model->Id)),
+		array('label'=>'Manage', 'url'=>array('admin')),
+);
 
 Yii::app()->clientScript->registerScript('updateMultimedia-view', "
 
@@ -39,7 +50,7 @@ $('#images_container').find('textarea').each(
 )); ?>
 
 
-	<div class="multimedia-area-data" style="padding-left:70px;margin-top:40px;" id="images_container">
+	<div class="multimedia-area-data"  id="images_container">
 	<?php 
 
 	foreach ($productMultimedias as $item)
