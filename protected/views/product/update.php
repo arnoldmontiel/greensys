@@ -22,4 +22,5 @@ $this->menu=array(
 											'modelHyperlink'=>$modelHyperlink,
 											'modelNote'=>$modelNote,
 											'ddlSubCategory'=>$ddlSubCategory,
+											'ddlRacks'=>$ddlRacks,
 											)); ?>

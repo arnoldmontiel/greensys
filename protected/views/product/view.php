@@ -78,6 +78,11 @@ $this->widget('zii.widgets.CDetailView', array(
 		'dealer_cost',
 		'msrp',
 		'time_instalation',
+		array('label'=>$model->getAttributeLabel('need_rack'),
+			'type'=>'raw',
+			'value'=>CHtml::checkBox("need_rack",$model->need_rack,array("disabled"=>"disabled"))
+		),
+		'unit_rack',
 		array('label'=>$model->getAttributeLabel('hide'),
 			'type'=>'raw',
 			'value'=>CHtml::checkBox("hide",$model->hide,array("disabled"=>"disabled"))

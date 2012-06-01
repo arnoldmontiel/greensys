@@ -64,6 +64,9 @@ class ProductController extends Controller
 		{
 			$model->attributes=$_POST['Product'];
 			
+			if(!$model->need_rack)
+				$model->unit_rack = 0;
+			
 			$transaction = $model->dbConnection->beginTransaction();
 			try {
 				if($model->save()){
@@ -114,14 +117,24 @@ class ProductController extends Controller
 			{			
 				$item['Id'] = $itemSubCat->Id;
 				$item['description'] = $itemSubCat->description;
-				$ddlSubCategory[$itemSubCat->Id] = $itemSubCat;
+				$ddlSubCategory[$itemSubCat->Id] = $item;
 			}
 		}
+		
+		$ddlRacks = array();
+		for($index = 1; $index <= 10; $index++ )
+		{
+			$item['Id'] = $index;
+			$item['description'] = $index;
+			$ddlRacks[$index] = $item;
+		}
+		
 		$this->render('create',array(
 			'model'=>$model,
 			'modelHyperlink'=>$modelHyperlink,
 			'modelNote'=>$modelNote,
 			'ddlSubCategory'=>$ddlSubCategory,
+			'ddlRacks'=>$ddlRacks,
 		));
 	}
 
@@ -216,6 +229,10 @@ class ProductController extends Controller
 		if(isset($_POST['Product']))
 		{
 			$model->attributes=$_POST['Product'];
+			
+			if(!$model->need_rack)
+				$model->unit_rack = 0;
+			
 			//$this->createCode($model);
 			if($model->save()){
 				
@@ -250,11 +267,20 @@ class ProductController extends Controller
 			$ddlSubCategory[$itemSubCat->Id] = $item;
 		}
 		
+		$ddlRacks = array();
+		for($index = 1; $index <= 10; $index++ )
+		{
+			$item['Id'] = $index;
+			$item['description'] = $index;
+			$ddlRacks[$index] = $item;
+		}
+		
 		$this->render('update',array(
 			'model'=>$model,
 			'modelHyperlink'=>$modelHyperlink,
 			'modelNote'=>$modelNote,
 			'ddlSubCategory'=>$ddlSubCategory,
+			'ddlRacks'=>$ddlRacks,
 		));
 	}
 
