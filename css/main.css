@@ -442,3 +442,12 @@ div.multimedia-container-images
 	float: left;
 	position: relative;
 }
+div.resources-title
+{
+	width: 95%;
+	height: 40px;
+	background-color: #F4F6FB;
+	margin-bottom: 30px;
+	padding: 18px 5px 0px 20px;
+	font-size: 18px;
+}
