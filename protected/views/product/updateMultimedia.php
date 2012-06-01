@@ -40,6 +40,11 @@ $('#images_container').find('textarea').each(
 	
 ");
 ?>
+<div class="resources-title">
+Resources
+</div>
+
+
 <div class="multimedia-area-view-data">
 
 <div class="wide form" >
