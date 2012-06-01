@@ -58,9 +58,9 @@ class Setting extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idMeasurement' => array(self::BELONGS_TO, 'Measurement', 'Id_measurement'),
-			'idCurrency' => array(self::BELONGS_TO, 'Currency', 'Id_currency'),
-			'idVolts' => array(self::BELONGS_TO, 'Volts', 'Id_volts'),
+			'measurement' => array(self::BELONGS_TO, 'Measurement', 'Id_measurement'),
+			'currency' => array(self::BELONGS_TO, 'Currency', 'Id_currency'),
+			'volts' => array(self::BELONGS_TO, 'Volts', 'Id_volts'),
 		);
 	}
 
@@ -71,9 +71,9 @@ class Setting extends CActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
-			'Id_volts' => 'Id Volts',
-			'Id_currency' => 'Id Currency',
-			'Id_measurement' => 'Id Measurement',
+			'Id_volts' => 'Volts',
+			'Id_currency' => 'Currency',
+			'Id_measurement' => 'Measurement',
 		);
 	}
 
