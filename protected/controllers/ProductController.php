@@ -69,6 +69,12 @@ class ProductController extends Controller
 			
 			$transaction = $model->dbConnection->beginTransaction();
 			try {
+				//save image
+				
+				if($_FILES['upfile']['size'] > 0)
+					$model->Id_multimedia = $this->saveImage($_FILES['upfile']);
+				
+				$model->Id_volts = 1;
 				if($model->save()){
 					//save links
 					if(isset($_POST['links'])){
@@ -78,10 +84,6 @@ class ProductController extends Controller
 					//save note
 					if(isset($_POST['notes']) && !empty($_POST['notes']))
 						$this->saveNote($_POST['notes'], $model->Id);
-				
-					//save image
-					if(isset($_POST['Multimedia']))
-						$this->saveImage($_POST['Multimedia'],$model->Id);
 				
 					$this->createCode($model);
 					$transaction->commit();		
@@ -158,17 +160,14 @@ class ProductController extends Controller
 		$model->save();
 	}
 	
-	private function saveImage($multimediaData, $id)
+	private function saveImage($multimediaData)
 	{			
-			$multimedia = Multimedia::model()->findByAttributes(array('Id_product'=>$id));
-			
-			$multi = new Multimedia;
-			$multi->attributes = $multimediaData;
-			$multi->attributes = array(
-									'Id_entity_type'=>$this->getEntityType(),
-									'Id_product'=>$id);
-			if($multi->save() && $multimedia->Id != null)
-				Multimedia::model()->deleteByPk($multimedia->Id);
+		
+		$multi = new Multimedia;
+		$multi->uploadedFile = $multimediaData;
+		if($multi->save())
+			return $multi->Id;
+		return null; 
 			
 	}
 	
@@ -225,13 +224,15 @@ class ProductController extends Controller
 		$model=$this->loadModel($id);
 		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
 		$modelNote = Note::model()->findByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
-		
 		if(isset($_POST['Product']))
 		{
 			$model->attributes=$_POST['Product'];
 			
 			if(!$model->need_rack)
 				$model->unit_rack = 0;
+			
+			if($_FILES['upfile']['size'] > 0)
+				$model->Id_multimedia = $this->saveImage($_FILES['upfile']);
 			
 			//$this->createCode($model);
 			if($model->save()){
@@ -245,9 +246,6 @@ class ProductController extends Controller
 				if(isset($_POST['notes']) && !empty($_POST['notes']))
 					$this->saveNote($_POST['notes'], $model->Id);
 				
-				//save image
-				if(isset($_POST['Multimedia']))
-					$this->saveImage($_POST['Multimedia'],$model->Id);
 				
 				$this->redirect(array('view','id'=>$model->Id));
 			}
@@ -625,6 +623,18 @@ class ProductController extends Controller
 				$productReqProdInDb->delete();
 			}
 		}
+	}
+	
+	public function actionAjaxDeleteIcon()
+	{
+		$id = isset($_POST['id'])?$_POST['id']:null;
+		
+		$model = $this->loadModel($id);
+		
+		$modelMultimedia = Multimedia::model()->findByPk($model->Id_multimedia);
+		$this->unlinkFile($modelMultimedia);
+		$model->Id_multimedia = null;
+		$model->save();
 	}
 	
 	public function actionAjaxCheckCode()
