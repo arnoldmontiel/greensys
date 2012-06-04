@@ -122,6 +122,20 @@ $('#Product_need_rack').change(function(){
 		$('#Product_unit_rack').attr('disabled','disabled');
 	}
 });
+
+$('#deleteIcon').click(function(){
+	$.post(
+			'".ProductController::createUrl('AjaxDeleteIcon')."',
+			{
+			 	id: '" . $model->Id."'
+			 }).success(
+					function(data) 
+					{ 
+						$('#iconArea').animate({opacity: 'hide'},2000);						
+					}
+			);
+	return false;
+});
 ");
 ?>
 
@@ -344,6 +358,33 @@ $('#Product_need_rack').change(function(){
 		<?php echo $form->error($model,'unit_rack'); ?>
 	</div>
 	
+<div >
+<div class="left">
+		<div class="row">
+			<?php echo $form->labelEx($model,'Product Icon'); ?>
+			<INPUT TYPE=FILE NAME="upfile">
+			<?php echo $form->error($model,'uploadedFile'); ?>
+		</div>
+	</div>
+	<div class="right" id="iconArea" style="height:270px;">
+		<?php 
+		if($model->Id_multimedia)
+		{
+			$this->widget('ext.highslide.highslide', array(
+											'smallImage'=>"images/".$model->multimedia->file_name_small,
+											'image'=>"images/".$model->multimedia->file_name,
+											'caption'=>'',
+											'Id'=>$model->Id_multimedia,
+											'small_width'=>240,
+											'small_height'=>180,
+			
+			));
+			echo CHtml::button('Delete Icon',array('id'=>'deleteIcon'));
+		}
+		?>
+	</div>
+</div>
+		
 	<div class="row">
 		<?php echo $form->labelEx($model,'time_instalation'); ?>
 		<?php echo $form->textField($model,'time_instalation'); ?>

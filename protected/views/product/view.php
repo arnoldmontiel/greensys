@@ -21,7 +21,7 @@ $this->menu=array(
 	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
 );
 ?>
-<h1>View Product</h1>
+<h1>View Product <?php echo CHtml::image('images/'.$model->multimedia->file_name,'',array('style'=>'width:30px;height:30px') ); ?></h1> 
 
 <div class="left">
 
