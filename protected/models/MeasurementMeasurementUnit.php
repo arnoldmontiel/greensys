@@ -51,6 +51,7 @@ class MeasurementMeasurementUnit extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'measurementUnit' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit'),
 		);
 	}
 
