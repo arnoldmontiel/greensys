@@ -6,15 +6,11 @@ INSERT INTO `entity_type` VALUES (1,'Multimedia'),(2,'Area'),(3,'Product'),(4,'C
 /*!40000 ALTER TABLE `entity_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
-USE `green`;
-
 LOCK TABLES `language` WRITE;
 /*!40000 ALTER TABLE `language` DISABLE KEYS */;
 INSERT INTO `language` VALUES (5,'en_us','english','united state'),(6,'es_ar','spanish','argentina');
 /*!40000 ALTER TABLE `language` ENABLE KEYS */;
 UNLOCK TABLES;
-
-USE `green`;
 
 LOCK TABLES `measurement_type` WRITE;
 /*!40000 ALTER TABLE `measurement_type` DISABLE KEYS */;
@@ -22,15 +18,11 @@ INSERT INTO `measurement_type` VALUES (1,'volume'),(2,'weight'),(3,'linear');
 /*!40000 ALTER TABLE `measurement_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
-USE `green`;
-
 LOCK TABLES `measurement_unit` WRITE;
 /*!40000 ALTER TABLE `measurement_unit` DISABLE KEYS */;
 INSERT INTO `measurement_unit` VALUES (1,'kilograms','kg',2),(2,'pounds','lb',2),(3,'cubic meter','m3',1),(4,'linear meter','ml',3),(5,'inches','in',3),(7,'cubic inch','in3',1),(8,'feet','ft',3),(9,'cubic feet','ft3',1);
 /*!40000 ALTER TABLE `measurement_unit` ENABLE KEYS */;
 UNLOCK TABLES;
-
-USE `green`;
 
 LOCK TABLES `measurement_unit_converter` WRITE;
 /*!40000 ALTER TABLE `measurement_unit_converter` DISABLE KEYS */;
@@ -38,15 +30,11 @@ INSERT INTO `measurement_unit_converter` VALUES (1,7,3,1.6387064e-005),(2,3,3,1)
 /*!40000 ALTER TABLE `measurement_unit_converter` ENABLE KEYS */;
 UNLOCK TABLES;
 
-USE `green`;
-
 LOCK TABLES `multimedia_type` WRITE;
 /*!40000 ALTER TABLE `multimedia_type` DISABLE KEYS */;
 INSERT INTO `multimedia_type` VALUES (1,'Image'),(2,'Video'),(3,'PDF'),(4,'Autocad'),(5,'Word'),(6,'Excel');
 /*!40000 ALTER TABLE `multimedia_type` ENABLE KEYS */;
 UNLOCK TABLES;
-
-USE `green`;
 
 LOCK TABLES `price_list_type` WRITE;
 /*!40000 ALTER TABLE `price_list_type` DISABLE KEYS */;
@@ -54,16 +42,11 @@ INSERT INTO `price_list_type` VALUES (1,'Compra'),(2,'Venta');
 /*!40000 ALTER TABLE `price_list_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
-USE `green`;
-
-
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` VALUES ('admin','admin','pmainieri@gruposmartliving.com'),('ssantoni','ssantoni','ssantoni@smartliving.com');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
-
-USE `green`;
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
@@ -71,17 +54,26 @@ INSERT INTO `items` VALUES ('BrandCreate',0,'Create Brands','','s:0:\"\";'),('Br
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
-USE `green`;
 LOCK TABLES `assignments` WRITE;
 /*!40000 ALTER TABLE `assignments` DISABLE KEYS */;
 INSERT INTO `assignments` VALUES ('Administrator','admin','','s:0:\"\";'),('Authorizer','admin','','s:0:\"\";'),('Operator','ssantoni','','s:0:\"\";');
 /*!40000 ALTER TABLE `assignments` ENABLE KEYS */;
 UNLOCK TABLES;
 
-USE `green`;
-
 LOCK TABLES `itemchildren` WRITE;
 /*!40000 ALTER TABLE `itemchildren` DISABLE KEYS */;
 INSERT INTO `itemchildren` VALUES ('AdministrationManage','AdministrationViewMenu'),('Administrator','AdministrationManage'),('Administrator','AreaManage'),('Administrator','BrandManage'),('Administrator','CategoryManage'),('Administrator','GuildManage'),('Administrator','ImporterManage'),('Administrator','MultimediaManage'),('Administrator','NomenclatorManage'),('Administrator','PriceListManage'),('Administrator','ProductManage'),('Administrator','ProductRequirementManage'),('Administrator','ReportManage'),('Administrator','ServiceManage'),('Administrator','SiteManage'),('Administrator','SubCategoryManage'),('Administrator','SupplierMagane'),('Administrator','UserManage'),('AreaManage','AreaAdmin'),('AreaManage','AreaCategoryArea'),('AreaManage','AreaCreate'),('AreaManage','AreaDelete'),('AreaManage','AreaIndex'),('AreaManage','AreaUpdate'),('AreaManage','AreaView'),('BrandManage','BrandAdmin'),('BrandManage','BrandCreate'),('BrandManage','BrandCreateNew'),('BrandManage','BrandDelete'),('BrandManage','BrandIndex'),('BrandManage','BrandUpdate'),('BrandManage','BrandView'),('CategoryManage','CategoryAdmin'),('CategoryManage','CategoryCreate'),('CategoryManage','CategoryCreateNew'),('CategoryManage','CategoryDelete'),('CategoryManage','CategoryIndex'),('CategoryManage','CategoryUpdate'),('CategoryManage','CategoryView'),('CustomerManage','CustomerAdmin'),('CustomerManage','CustomerCreate'),('CustomerManage','CustomerDelete'),('CustomerManage','CustomerIndex'),('CustomerManage','CustomerUpdate'),('CustomerManage','CustomerView'),('GuildManage','GuildAdmin'),('GuildManage','GuildCreate'),('GuildManage','GuildCreateNew'),('GuildManage','GuildDelete'),('GuildManage','GuildIndex'),('GuildManage','GuildUpdate'),('GuildManage','GuildView'),('ImporterManage','ImporterAdmin'),('ImporterManage','ImporterCreate'),('ImporterManage','ImporterDelete'),('ImporterManage','ImporterIndex'),('ImporterManage','ImporterUpdate'),('ImporterManage','ImporterView'),('MultimediaManage','MultimediaPreviewImage'),('MultimediaManage','MultimediaPreviewImageSmall'),('NomenclatorManage','NomenclatorAdmin'),('NomenclatorManage','NomenclatorCreate'),('NomenclatorManage','NomenclatorCreateNew'),('NomenclatorManage','NomenclatorDelete'),('NomenclatorManage','NomenclatorIndex'),('NomenclatorManage','NomenclatorUpdate'),('NomenclatorManage','NomenclatorView'),('Operator','AreaManage'),('Operator','BrandManage'),('Operator','CategoryManage'),('Operator','CustomerManage'),('Operator','GuildManage'),('Operator','ImporterManage'),('Operator','MultimediaManage'),('Operator','NomenclatorManage'),('Operator','PriceListManage'),('Operator','ProductManage'),('Operator','ProductRequirementManage'),('Operator','ProjectManage'),('Operator','ReportManage'),('Operator','ServiceManage'),('Operator','SiteManage'),('Operator','SubCategoryManage'),('Operator','SupplierMagane'),('PriceListManage','PriceListAdmin'),('PriceListManage','PriceListCreate'),('PriceListManage','PriceListDelete'),('PriceListManage','PriceListIndex'),('PriceListManage','PriceListPriceListItem'),('PriceListManage','PriceListUpdate'),('PriceListManage','PriceListView'),('ProductManage','ProductAdmin'),('ProductManage','ProductCreate'),('ProductManage','ProductCreateDependency'),('ProductManage','ProductDelete'),('ProductManage','ProductIndex'),('ProductManage','ProductProductGroup'),('ProductManage','ProductProductRequirement'),('ProductManage','ProductUpdate'),('ProductManage','ProductView'),('ProductRequirementManage','ProductRequirementAdmin'),('ProductRequirementManage','ProductRequirementCreate'),('ProductRequirementManage','ProductRequirementCreateDependency'),('ProductRequirementManage','ProductRequirementDelete'),('ProductRequirementManage','ProductRequirementIndex'),('ProductRequirementManage','ProductRequirementUpdate'),('ProductRequirementManage','ProductRequirementUpdateMultimedia'),('ProductRequirementManage','ProductRequirementView'),('ProjectManage','ProjectAdmin'),('ProjectManage','ProjectCreate'),('ProjectManage','ProjectDelete'),('ProjectManage','ProjectIndex'),('ProjectManage','ProjectProjectArea'),('ProjectManage','ProjectUpdate'),('ProjectManage','ProjectView'),('ReportManage','CostIndex'),('ServiceManage','ServiceAdmin'),('ServiceManage','ServiceCreate'),('ServiceManage','ServiceDelete'),('ServiceManage','ServiceIndex'),('ServiceManage','ServiceUpdate'),('ServiceManage','ServiceView'),('SiteManage','SiteIndex'),('SubCategoryMagane','SubCategoryAdmin'),('SubCategoryMagane','SubCategoryIndex'),('SubCategoryMagane','SubCategoryView'),('SubCategoryMagane','SubCategoryCreate'),('SubCategoryMagane','SubCategoryUpdate'),('SubCategoryMagane','SubCategoryDelete'),('SupplierMagane','SupplierAdmin'),('SupplierMagane','SupplierCreate'),('SupplierMagane','SupplierCreateNew'),('SupplierMagane','SupplierDelete'),('SupplierMagane','SupplierIndex'),('SupplierMagane','SupplierUpdate'),('SupplierMagane','SupplierView'),('UserManage','UserAdmin'),('UserManage','UserCreate'),('UserManage','UserDelete'),('UserManage','UserIndex'),('UserManage','UserUpdate'),('UserManage','UserView');
 /*!40000 ALTER TABLE `itemchildren` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `measurement` WRITE;
+/*!40000 ALTER TABLE `measurement` DISABLE KEYS */;
+INSERT INTO `measurement` VALUES (1,'Sistema Internacional de Unidades');
+/*!40000 ALTER TABLE `measurement` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `measurement_measurement_unit` WRITE;
+/*!40000 ALTER TABLE `measurement_measurement_unit` DISABLE KEYS */;
+INSERT INTO `measurement_measurement_unit` VALUES (1,1),(1,3),(1,4);
+/*!40000 ALTER TABLE `measurement_measurement_unit` ENABLE KEYS */;
 UNLOCK TABLES;
