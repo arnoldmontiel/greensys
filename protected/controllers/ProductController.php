@@ -528,8 +528,11 @@ class ProductController extends Controller
 			else if($measureLinear->short_description=='ft')
 			{
 				$cubicFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'ft3'));
-			}	
-			$cubicTo = MeasurementUnit::model()->findByAttributes(array('short_description'=>'m3'));
+			}
+				
+			$settings = new Settings();
+			
+			$cubicTo = $settings->getMeasurementUnit(Settings::MT_VOLUME);
 			$converter = MeasurementUnitConverter::model()->findByAttributes(
 				array(
 					'Id_measurement_from'=>$cubicFrom->Id,
