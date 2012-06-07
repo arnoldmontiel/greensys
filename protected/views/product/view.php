@@ -21,11 +21,16 @@ $this->menu=array(
 	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
 );
 ?>
-<h1>View Product <?php echo CHtml::image('images/'.$model->multimedia->file_name,'',array('style'=>'width:30px;height:30px') ); ?></h1> 
+<h1>View Product <?php
+if(isset($model->multimedia)) 
+	echo CHtml::image('images/'.$model->multimedia->file_name,'',array('style'=>'width:30px;height:30px') ); 
+?>
+</h1> 
 
 <div class="left">
 
 <?php
+$settings = new Settings();
 $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',
@@ -58,25 +63,38 @@ $this->widget('zii.widgets.CDetailView', array(
 			'type'=>'raw',
 			'value'=>CHtml::checkBox("discontinued",$model->discontinued,array("disabled"=>"disabled"))
 		),
-		'length',
-		'width',
-		'height',
-		array('label'=>$model->getAttributeLabel('Id_measurement_unit_linear'),
+		array('label'=>$model->getAttributeLabel('length'),
 			'type'=>'raw',
-			'value'=>$model->measurementUnitLinear->short_description
+			'value'=>$model->length.' '.$model->measurementUnitLinear->short_description
+		),
+		array('label'=>$model->getAttributeLabel('width'),
+			'type'=>'raw',
+			'value'=>$model->width.' '.$model->measurementUnitLinear->short_description
+		),
+		array('label'=>$model->getAttributeLabel('height'),
+			'type'=>'raw',
+			'value'=>$model->height.' '.$model->measurementUnitLinear->short_description
 		),
 		array('label'=>$model->getAttributeLabel('volume'),
 			'type'=>'raw',
-			'value'=>$model->getVolume()
+			'value'=>$model->getVolume().' '.$settings->getMUShortDescription(Settings::MT_VOLUME)
 		),
-		'weight',
-		array('label'=>$model->getAttributeLabel('Id_measurement_unit_weight'),
+		array('label'=>$model->getAttributeLabel('weight'),
 			'type'=>'raw',
-			'value'=>$model->measurementUnitWeight->short_description
+			'value'=>$model->weight.' '.$model->measurementUnitWeight->short_description
 		),
-		'profit_rate',
-		'dealer_cost',
-		'msrp',
+		array('label'=>$model->getAttributeLabel('dealer_cost'),
+			'type'=>'raw',
+			'value'=>$model->dealer_cost.' '.$settings->getCurrencyShortDescription(),
+		),
+		array('label'=>$model->getAttributeLabel('msrp'),
+			'type'=>'raw',
+			'value'=>$model->msrp.' '.$settings->getCurrencyShortDescription(),
+		),
+		array('label'=>$model->getAttributeLabel('profit_rate'),
+			'type'=>'raw',
+			'value'=>$model->profit_rate.' %'
+		),
 		'time_instalation',
 		array('label'=>$model->getAttributeLabel('need_rack'),
 			'type'=>'raw',

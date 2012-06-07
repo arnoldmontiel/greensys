@@ -49,4 +49,8 @@ class Controller extends SBaseController
 			$app->lc->setLanguage($app->session['sel_lang']);
 		}
 	}
+	public function getSetting()
+	{
+		return Setting::model()->findByPk('1');
+	}
 }

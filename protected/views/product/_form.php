@@ -1,6 +1,8 @@
 <div class="form">
 
 <?php
+$settings = new Settings();
+
 $weightToShipping = MeasurementUnit::model()->findByAttributes(array('short_description'=>'kg'));
 Yii::app()->clientScript->registerScript(__CLASS__.'#Product_msrp', "
 fillVolumeTextBox('".ProductController::createUrl("AjaxFillVolume")."','txtVolume','product-form');
@@ -283,9 +285,10 @@ $('#deleteIcon').click(function(){
 			?>
 			<?php echo $form->error($model,'Id_measurement_unit_linear'); ?>
 		</div>
-		<div style="width: 120px; display: inline-block;">
-			<?php echo CHtml::label("Volume (m<SUP>3</SUP>)", "Product_volume"); ?>
+		<div style="width: 140px; display: inline-block;">
+			<?php echo CHtml::label("Volume", "Product_volume"); ?>
 			<?php echo CHtml::textField("txtVolume","",array('style'=>'width:90px;')); ?>
+			<?php echo $settings->getMUShortDescription(Settings::MT_VOLUME) ?>
 		</div>
 
 	</div>
@@ -323,19 +326,22 @@ $('#deleteIcon').click(function(){
 	</div>
 
 	<div class="row">
-		<div style="width: 120px; display: inline-block;">
+		<div style="width: 160px; display: inline-block;">
 			<?php echo $form->labelEx($model,'msrp'); ?>
 			<?php echo $form->textField($model,'msrp',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $settings->getCurrencyShortDescription() ?>
 			<?php echo $form->error($model,'msrp'); ?>
 		</div>
-		<div style="width: 120px; display: inline-block;">
+		<div style="width: 160px; display: inline-block;">
 			<?php echo $form->labelEx($model,'dealer_cost'); ?>
 			<?php echo $form->textField($model,'dealer_cost',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $settings->getCurrencyShortDescription() ?>
 			<?php echo $form->error($model,'dealer_cost'); ?>
 		</div>
-		<div style="width: 120px; display: inline-block;">
+		<div style="width: 160px; display: inline-block;">
 			<?php echo $form->labelEx($model,'profit_rate'); ?>
 			<?php echo $form->textField($model,'profit_rate',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo '%' ?>
 			<?php echo $form->error($model,'profit_rate'); ?>
 		</div>
 	</div>
