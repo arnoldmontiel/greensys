@@ -47,6 +47,17 @@ class Settings
 		}
 		return '';		
 	}
+	public function getMeasurementUnit($measurement_type=self::MT_VOLUME)
+	{
+		foreach ($this->_measurementUnits as $item)
+		{
+			if($item->Id_measurement_type == $measurement_type)
+			{
+				return $item;				
+			}			
+		}
+		return null;		
+	}
 	public function getCurrencyShortDescription()
 	{
 		return $this->_setting->currency->short_description;				

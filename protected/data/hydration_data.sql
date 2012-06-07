@@ -77,3 +77,21 @@ LOCK TABLES `measurement_measurement_unit` WRITE;
 INSERT INTO `measurement_measurement_unit` VALUES (1,1),(1,3),(1,4);
 /*!40000 ALTER TABLE `measurement_measurement_unit` ENABLE KEYS */;
 UNLOCK TABLES;
+
+LOCK TABLES `currency` WRITE;
+/*!40000 ALTER TABLE `currency` DISABLE KEYS */;
+INSERT INTO `currency` VALUES (1,'Dolar','U$D'),(2,'Pesos','$');
+/*!40000 ALTER TABLE `currency` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `volts` WRITE;
+/*!40000 ALTER TABLE `volts` DISABLE KEYS */;
+INSERT INTO `volts` VALUES (1,110),(2,220);
+/*!40000 ALTER TABLE `volts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `setting` WRITE;
+/*!40000 ALTER TABLE `setting` DISABLE KEYS */;
+INSERT INTO `setting` VALUES (1,2,1,1);
+/*!40000 ALTER TABLE `setting` ENABLE KEYS */;
+UNLOCK TABLES;
