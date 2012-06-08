@@ -96,6 +96,10 @@ $this->widget('zii.widgets.CDetailView', array(
 			'value'=>$model->profit_rate.' %'
 		),
 		'time_instalation',
+		array('label'=>$model->getAttributeLabel('Id_volts'),
+			'type'=>'raw',
+			'value'=>$model->volts->volts
+		),
 		array('label'=>$model->getAttributeLabel('need_rack'),
 			'type'=>'raw',
 			'value'=>CHtml::checkBox("need_rack",$model->need_rack,array("disabled"=>"disabled"))

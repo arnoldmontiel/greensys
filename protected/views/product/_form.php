@@ -345,7 +345,14 @@ $('#deleteIcon').click(function(){
 			<?php echo $form->error($model,'profit_rate'); ?>
 		</div>
 	</div>
-
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'Id_volts'); ?>
+		<?php echo $form->dropDownList($model,'Id_volts', CHtml::listData(
+			Volts::model()->findAll(), 'Id', 'volts'));?> 
+		<?php echo $form->error($model,'Id_volts'); ?>
+	</div>
+	
 	<div class="row">
 		<?php echo $form->labelEx($model,'need_rack'); ?>
 		<?php echo $form->checkBox($model,'need_rack'); ?>

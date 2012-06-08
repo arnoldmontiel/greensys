@@ -33,6 +33,7 @@
  * @property integer $need_rack
  * @property integer $unit_rack
  * @property integer $Id_multimedia
+ * @property integer $Id_volts
  * 
  * The followings are the available model relations:
  * @property BudgetItem[] $budgetItems
@@ -85,11 +86,11 @@ class Product extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('Id_brand, Id_category, Id_nomenclator, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, Id_category, Id_sub_category', 'required'),
-			array('Id_brand, Id_category, Id_nomenclator, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, power, current, need_rack, unit_rack', 'numerical', 'integerOnly'=>true),
+			array('Id_volts,Id_brand, Id_category, Id_nomenclator, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, power, current, need_rack, unit_rack', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier', 'length', 'max'=>255),
 			array('code, code_supplier, color, other', 'length', 'max'=>45),
 			array('length, width, height, profit_rate, msrp, weight, dealer_cost', 'length', 'max'=>10),
-			array('time_instalation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, Id_sub_category', 'safe'),
+			array('Id_volts, time_instalation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, Id_sub_category', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, Id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color, other, Id_category, power, current, need_rack, unit_rack', 'safe', 'on'=>'search'),
@@ -110,6 +111,7 @@ class Product extends CActiveRecord
 			'hyperlinks' => array(self::HAS_MANY, 'Hyperlink', 'Id_product'),
 			'multimedias' => array(self::HAS_MANY, 'Multimedia', 'Id_product'),
 			'multimedia' => array(self::BELONGS_TO, 'Multimedia', 'Id_multimedia'),
+			'volts' => array(self::BELONGS_TO, 'Volts', 'Id_volts'),
 			'notes' => array(self::HAS_MANY, 'Note', 'Id_product'),
 			'priceListItems' => array(self::HAS_MANY, 'PriceListItem', 'Id_product'),
 			'brand' => array(self::BELONGS_TO, 'Brand', 'Id_brand'),
@@ -166,6 +168,7 @@ class Product extends CActiveRecord
 			'current' => 'Current',
 			'need_rack' => 'Need Rack',
 			'unit_rack' => 'Unit Rack',
+			'Id_volts' => 'Volts',
 		);
 	}
 
