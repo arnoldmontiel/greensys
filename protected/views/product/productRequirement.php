@@ -5,8 +5,8 @@ $this->breadcrumbs=array(
 );
 $this->menu=array(
 	array('label'=>'List Product', 'url'=>array('index')),
-	array('label'=>'Create Project', 'url'=>array('create')),
-	array('label'=>'Manage Project', 'url'=>array('admin')),
+	array('label'=>'Create Product', 'url'=>array('create')),
+	array('label'=>'Manage Product', 'url'=>array('admin')),
 	array('label'=>'Assign Groups', 'url'=>array('productGroup')),
 );
 $this->showSideBar = true;
