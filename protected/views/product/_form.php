@@ -405,6 +405,18 @@ $('#deleteIcon').click(function(){
 	</div>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'color'); ?>
+		<?php echo $form->textField($model,'color'); ?>
+		<?php echo $form->error($model,'color'); ?>
+	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'other'); ?>
+		<?php echo $form->textField($model,'other'); ?>
+		<?php echo $form->error($model,'other'); ?>
+	</div>
+	
+	<div class="row">
 	
 		<?php echo $form->labelEx($model,'hide'); ?>
 		<?php echo $form->checkBox($model,'hide'); ?>
