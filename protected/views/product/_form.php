@@ -349,7 +349,7 @@ $('#deleteIcon').click(function(){
 	<div class="row">
 		<?php echo $form->labelEx($model,'Id_volts'); ?>
 		<?php echo $form->dropDownList($model,'Id_volts', CHtml::listData(
-			Volts::model()->findAll(), 'Id', 'volts'));?> 
+			Volts::model()->findAll(), 'Id', 'volts'),array('prompt'=>'None',));?> 
 		<?php echo $form->error($model,'Id_volts'); ?>
 	</div>
 	

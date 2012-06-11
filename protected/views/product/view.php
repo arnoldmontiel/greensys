@@ -98,7 +98,7 @@ $this->widget('zii.widgets.CDetailView', array(
 		'time_instalation',
 		array('label'=>$model->getAttributeLabel('Id_volts'),
 			'type'=>'raw',
-			'value'=>$model->volts->volts
+			'value'=>isset($model->volts)?$model->volts->volts:'none'
 		),
 		array('label'=>$model->getAttributeLabel('need_rack'),
 			'type'=>'raw',
