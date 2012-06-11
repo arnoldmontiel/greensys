@@ -147,14 +147,19 @@ class ProductController extends Controller
 	
 	public function createCode($model)
 	{
-		$newId = str_pad($model->Id, 2, "0", STR_PAD_LEFT);
-		$category = strtoupper(str_pad(substr($model->category->description,0,2), 2, "0"));
-		$subCategory = strtoupper(str_pad(substr($model->subCategory->description,0,2), 2, "0"));
+		//$newId = str_pad($model->Id, 1, "0", STR_PAD_LEFT);
+		$category = strtoupper(str_pad(substr($model->category->description,0,1), 1, "0"));
+		$subCategory = strtoupper(str_pad(substr($model->subCategory->description,0,1), 1, "0"));
 		$brand = strtoupper(str_pad(substr($model->brand->description,0,2), 2, "0"));
 		$productDesc = strtoupper(str_pad(substr($model->description_supplier,0,1), 1, "0"));
-		$color = strtoupper(str_pad(substr($model->color,0,1), 1, "0"));
-		$other = strtoupper(str_pad(substr($model->other,0,1), 1, "0"));
+		$color = strtoupper(substr($model->color,0,1));
+		$other = strtoupper(substr($model->other,0,1));
 		
+
+		$newId = Product::model()->countByAttributes( array('Id_category'=>$model->Id_category,
+														 'Id_sub_category'=>$model->Id_sub_category,
+														 'Id_brand'=>$model->Id_brand,
+														));
 		
 		$model->code = $category . $subCategory . $brand . $productDesc . $newId .  $color . $other;
 		$model->save();
