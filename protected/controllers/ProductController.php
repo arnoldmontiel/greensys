@@ -160,6 +160,7 @@ class ProductController extends Controller
 														 'Id_sub_category'=>$model->Id_sub_category,
 														 'Id_brand'=>$model->Id_brand,
 														));
+		$newId = str_pad($newId, 2, "0", STR_PAD_LEFT);
 		
 		$model->code = $category . $subCategory . $brand . $productDesc . $newId .  $color . $other;
 		$model->save();
