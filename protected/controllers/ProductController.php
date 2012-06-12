@@ -177,10 +177,6 @@ class ProductController extends Controller
 			
 	}
 	
-	private function deleteImage($id)
-	{
-		Multimedia::model()->deleteAllByAttributes(array('Id_product'=>$id));
-	}
 	
 	private function saveNote($noteProduct, $id)
 	{
@@ -306,10 +302,7 @@ class ProductController extends Controller
 					
 				//First delete note
 				$this->deleteNote($id);
-					
-				//First delete image
-				$this->deleteImage($id);
-					
+										
 				// we only allow deletion via POST request
 				$model->delete();
 				
