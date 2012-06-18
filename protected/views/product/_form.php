@@ -176,7 +176,7 @@ $('#deleteIcon').click(function(){
 			<?php echo $form->error($model,'Id_brand'); ?>
 		</div>
 		<div style="display: inline-block;">
-			<?php echo CHtml::link( 'Add new Brand', ProductController::createUrl('CreateDependency', array('dependency'=>'brand')));?>
+			<?php echo CHtml::link( 'Add new Brand','#',array('onclick'=>'jQuery("#CreateBrand").dialog("open"); return false;'));?>
 		</div>
 	</div>
 	
@@ -189,7 +189,7 @@ $('#deleteIcon').click(function(){
 			<?php echo $form->error($model,'Id_supplier'); ?>
 		</div>
 		<div style="display: inline-block;">
-			<?php echo CHtml::link( 'Add new Supplier', ProductController::createUrl('CreateDependency', array('dependency'=>'supplier')));?>
+			<?php echo CHtml::link( 'Add new Supplier','#',array('onclick'=>'jQuery("#CreateSupplier").dialog("open"); return false;'));?>
 		</div>
 	</div>
 
@@ -208,7 +208,7 @@ $('#deleteIcon').click(function(){
 			<?php echo $form->error($model,'Id_category'); ?>
 		</div>
 		<div style="display: inline-block;">
-			<?php echo CHtml::link( 'Add new Category', ProductController::createUrl('CreateDependency', array('dependency'=>'category')));?>
+			<?php echo CHtml::link( 'Add new Category','#',array('onclick'=>'jQuery("#CreateCategory").dialog("open"); return false;'));?>
 		</div>
 	</div>
 	
@@ -221,7 +221,10 @@ $('#deleteIcon').click(function(){
 			)	); ?>
 			<?php echo $form->error($model,'Id_sub_category'); ?>
 		</div>
-	</div>
+		<div style="display: inline-block;">
+			<?php echo CHtml::link( 'Add new Sub Category','#',array('onclick'=>'jQuery("#CreateSubCategory").dialog("open"); return false;'));?>
+		</div>
+		</div>
 	
 	
 	
@@ -234,7 +237,7 @@ $('#deleteIcon').click(function(){
 			<?php echo $form->error($model,'Id_nomenclator'); ?>
 		</div>
 		<div style="display: inline-block;">
-			<?php echo CHtml::link( 'Add new Nomenclator', ProductController::createUrl('CreateDependency', array('dependency'=>'nomenclator')));?>
+			<?php echo CHtml::link( 'Add new Nomenclator','#',array('onclick'=>'jQuery("#CreateNomenclator").dialog("open"); return false;'));?>
 		</div>		
 	</div>
 	
@@ -448,3 +451,187 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 
 <?php $this->endWidget(); ?>
 </div><!-- form -->
+
+
+	<?php 
+	$this->widget('ext.processingDialog.processingDialog', array(
+			'buttons'=>array('none'),
+			'idDialog'=>'wating',
+	));
+	//Brand
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'CreateBrand',
+			// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Create Brand',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '500',
+					'buttons'=>	array(
+							'Cancelar'=>'js:function(){jQuery("#CreateBrand").dialog( "close" );}',
+							'Grabar'=>'js:function()
+							{
+							jQuery("#wating").dialog("open");
+							jQuery.post("'.Yii::app()->createUrl("brand/ajaxCreate").'", $("#brand-form").serialize(),
+							function(data) {
+								$("#Product_Id_brand").append(
+    	  		  					$("<option></option>").val(data.Id).html(data.description)
+    							);
+							jQuery("#wating").dialog("close");
+							jQuery("#CreateBrand").dialog( "close" );
+						},"json"
+					);
+
+				}'),
+			),
+	));
+	$modelBrand = new Brand;
+	echo $this->renderPartial('../brand/_formPopUp', array('model'=>$modelBrand));
+
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+	//Supplier
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'CreateSupplier',
+			// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Create Supllier',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '500',
+					'buttons'=>	array(
+							'Cancelar'=>'js:function(){jQuery("#CreateSupplier").dialog( "close" );}',
+							'Grabar'=>'js:function()
+							{
+							jQuery("#wating").dialog("open");
+							jQuery.post("'.Yii::app()->createUrl("supplier/ajaxCreate").'", $("#supplier-form").serialize(),
+							function(data) {
+							$("#Product_Id_supplier").append(
+							$("<option></option>").val(data.Id).html(data.business_name)
+						);
+							jQuery("#wating").dialog("close");
+							jQuery("#CreateSupplier").dialog( "close" );
+						},"json"
+					);
+	
+	}'),
+			),
+	));
+	$modelSupplier=new Supplier;
+	$modelContact = new Contact;
+	$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$modelContact->Id,'Id_entity_type'=>SupplierController::getEntityTypeStatic()));
+	echo $this->renderPartial('../supplier/_formPopUp', 
+			array(
+				'model'=>$modelSupplier,
+				'modelContact'=>$modelContact,
+				'modelHyperlink'=>$modelHyperlink
+				)
+			);
+	
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+	//Category
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'CreateCategory',
+			// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Create Category',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '500',
+					'buttons'=>	array(
+							'Cancelar'=>'js:function(){jQuery("#CreateCategory").dialog( "close" );}',
+							'Grabar'=>'js:function()
+							{
+							jQuery("#wating").dialog("open");
+							jQuery.post("'.Yii::app()->createUrl("category/ajaxCreate").'", $("#category-form").serialize(),
+							function(data) {
+							$("#Product_Id_category").append(
+							$("<option></option>").val(data.Id).html(data.description)
+					);
+							jQuery("#wating").dialog("close");
+							jQuery("#CreateCategory").dialog( "close" );
+	},"json"
+					);
+	
+	}'),
+			),
+	));
+	$modelCategory = new Category;
+	echo $this->renderPartial('../category/_formPopUp', array('model'=>$modelCategory));
+	
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+	//SubCategory
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'CreateSubCategory',
+			// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Create SubCategory',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '500',
+					'buttons'=>	array(
+							'Cancelar'=>'js:function(){jQuery("#CreateSubCategory").dialog( "close" );}',
+							'Grabar'=>'js:function()
+							{
+							jQuery("#wating").dialog("open");
+							jQuery.post("'.Yii::app()->createUrl("subCategory/ajaxCreate").'", $("#sub-category-form").serialize(),
+							function(data) {
+								$("#Product_Id_sub_category").append(
+								$("<option></option>").val(data.Id).html(data.description)
+								);
+							
+							
+								jQuery.post("'.Yii::app()->createUrl("subCategory/ajaxAssignToCategory").'",
+									 {"Id_sub_category":data.Id,"Id_category":$("#Product_Id_category").val()},
+									function(data) {
+										$("#Product_Id_sub_category").append(
+											$("<option></option>").val(data.Id).html(data.description)
+										);
+									jQuery("#wating").dialog("close");
+									jQuery("#CreateSubCategory").dialog( "close" );
+								},"json"
+							);
+							
+							
+						},"json"
+					);
+	
+	}'),
+			),
+	));
+	$modelSubCategory = new SubCategory;
+	echo $this->renderPartial('../subCategory/_formPopUp', array('model'=>$modelSubCategory));
+	
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+	//Nomenclator
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'CreateNomenclator',
+			// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Create Nomenclator',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '500',
+					'buttons'=>	array(
+							'Cancelar'=>'js:function(){jQuery("#CreateNomenclator").dialog( "close" );}',
+							'Grabar'=>'js:function()
+							{
+							jQuery("#wating").dialog("open");
+							jQuery.post("'.Yii::app()->createUrl("nomenclator/ajaxCreate").'", $("#nomenclator-form").serialize(),
+							function(data) {
+							$("#Product_Id_nomenclator").append(
+							$("<option></option>").val(data.Id).html(data.description)
+					);
+							jQuery("#wating").dialog("close");
+							jQuery("#CreateNomenclator").dialog( "close" );
+						},"json"
+					);
+	
+	}'),
+			),
+	));
+	$modelNomenclator = new Nomenclator();
+	echo $this->renderPartial('../nomenclator/_formPopUp', array('model'=>$modelNomenclator));
+	
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+	
+	?>

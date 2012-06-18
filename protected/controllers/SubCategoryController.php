@@ -27,18 +27,6 @@ class SubCategoryController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
-			),
-			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
 		);
@@ -77,7 +65,46 @@ class SubCategoryController extends Controller
 			'model'=>$model,
 		));
 	}
-
+	
+	public function actionAjaxCreate()
+	{
+	
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+	
+		if(isset($_POST['SubCategory']))
+		{
+			$criteria = new CDbCriteria();
+			$criteria->condition = 'description = upper("'.strtoupper($_POST['SubCategory']['description']).'")';
+			$model = SubCategory::model()->find($criteria);
+			if(!isset($model))
+			{
+				$model=new SubCategory;
+				$model->attributes=$_POST['SubCategory'];
+				$model->save();				
+			}
+			echo json_encode($model->attributes);
+		}
+	}
+	public function actionAjaxAssignToCategory()
+	{
+		$model=new CategorySubCategory();
+	
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+	
+		if(isset($_POST['Id_sub_category'])&&isset($_POST['Id_category']))
+		{
+			$model->Id_category=$_POST['Id_category'];
+			$model->Id_sub_category=$_POST['Id_sub_category'];
+			if($model->save())
+			{
+				$modelSubCategory = SubCategory::model()->findByPk($model->Id_sub_category);
+				echo json_encode($model->attributes);
+			}
+		}
+	}
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.

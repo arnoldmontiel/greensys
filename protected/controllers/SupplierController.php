@@ -89,7 +89,40 @@ class SupplierController extends Controller
 			'modelHyperlink'=>$modelHyperlink
 		));
 	}
-
+	public function actionAjaxCreate()
+	{
+		$model=new Supplier;
+		$modelContact = new Contact;
+		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$modelContact->Id,'Id_entity_type'=>$this->getEntityType()));
+	
+	
+		if(isset($_POST['Supplier']) && isset($_POST['Contact']))
+		{
+			$model->attributes=$_POST['Supplier'];
+			$modelContact->attributes=$_POST['Contact'];
+	
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				if($modelContact->save()){
+	
+					$model->Id_contact = $modelContact->Id;
+	
+					//save links
+					if(isset($_POST['links'])){
+						$this->saveLinks($_POST['links'], $modelContact->Id);
+					}
+	
+					if($model->save()){
+						$transaction->commit();
+						echo json_encode($model->attributes);
+					}
+				}
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
+		}		
+	}
+	
 	public function actionCreateNew($modelCaller)
 	{
 		$model=new Supplier;
@@ -151,6 +184,11 @@ class SupplierController extends Controller
 	}
 	
 	public function getEntityType()
+	{
+		return EntityType::model()->findByAttributes(array('name'=>get_class(Supplier::model())))->Id;
+	}
+	
+	static function getEntityTypeStatic()
 	{
 		return EntityType::model()->findByAttributes(array('name'=>get_class(Supplier::model())))->Id;
 	}

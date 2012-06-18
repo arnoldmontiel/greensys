@@ -65,7 +65,22 @@ class CategoryController extends Controller
 			'model'=>$model,
 		));
 	}
-
+	public function actionAjaxCreate()
+	{
+		$model=new Category;
+	
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+	
+		if(isset($_POST['Category']))
+		{
+			$model->attributes=$_POST['Category'];
+			if($model->save())
+					echo json_encode($model->attributes);
+		}
+	
+	}
+	
 	
 	public function actionCreateNew($modelCaller)
 	{

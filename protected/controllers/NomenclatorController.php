@@ -65,7 +65,21 @@ class NomenclatorController extends Controller
 			'model'=>$model,
 		));
 	}
-
+	public function actionAjaxCreate()
+	{
+		$model=new Nomenclator;
+	
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+	
+		if(isset($_POST['Nomenclator']))
+		{
+			$model->attributes=$_POST['Nomenclator'];
+			if($model->save())
+				echo json_encode($model->attributes);
+		}
+	}
+	
 	public function actionCreateNew($modelCaller)
 	{
 		$model=new Nomenclator;

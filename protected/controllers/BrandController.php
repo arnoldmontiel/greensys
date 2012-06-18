@@ -65,7 +65,25 @@ class BrandController extends Controller
 			'model'=>$model,
 		));
 	}
-
+	/**
+	 * Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
+	public function actionAjaxCreate()
+	{
+		$model=new Brand;
+	
+		// Uncomment the following line if AJAX validation is needed
+		 $this->performAjaxValidation($model);
+	
+		if(isset($_POST['Brand']))
+		{
+			$model->attributes=$_POST['Brand'];
+			$model->save();
+			echo json_encode($model->attributes); 
+		}
+	}
+	
 	public function actionCreateNew($modelCaller)
 	{
 		$model=new Brand;
