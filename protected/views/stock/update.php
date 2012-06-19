@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Stocks'=>array('index'),
-	$model->Id=>array('view','id'=>$model->Id),
+	$model->movementType->description=>array('view','id'=>$model->Id),
 	'Update',
 );
 
@@ -13,6 +13,10 @@ $this->menu=array(
 );
 ?>
 
-<h1>Update Stock <?php echo $model->Id; ?></h1>
+<h1>Update Stock</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model,
+												'movementTypes'=>$movementTypes,
+												'projects'=>$projects,
+												'users'=>$users,
+												'modelProduct'=>$modelProduct,)); ?>

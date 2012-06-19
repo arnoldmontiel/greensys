@@ -15,6 +15,12 @@
  */
 class StockItem extends CActiveRecord
 {
+	public $product_code;
+	public $product_code_supplier;
+	public $product_brand_desc;
+	public $product_supplier_name;
+	public $product_customer_desc;
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -45,7 +51,7 @@ class StockItem extends CActiveRecord
 			array('Id_stock, Id_product, quantity', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_stock, Id_product, quantity', 'safe', 'on'=>'search'),
+			array('Id, Id_stock, Id_product, quantity, product_code, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,8 +63,8 @@ class StockItem extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idStock' => array(self::BELONGS_TO, 'Stock', 'Id_stock'),
-			'idProduct' => array(self::BELONGS_TO, 'Product', 'Id_product'),
+			'stock' => array(self::BELONGS_TO, 'Stock', 'Id_stock'),
+			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
 		);
 	}
 
@@ -72,6 +78,11 @@ class StockItem extends CActiveRecord
 			'Id_stock' => 'Id Stock',
 			'Id_product' => 'Id Product',
 			'quantity' => 'Quantity',
+			'product_code'=>'Code',
+			'product_code_supplier'=>'Code Supplier',
+			'product_customer_desc'=>'Description Customer',
+			'product_brand_desc'=>'Brand Description',
+			'product_supplier_name'=>'Supplier Name',
 		);
 	}
 
@@ -90,9 +101,46 @@ class StockItem extends CActiveRecord
 		$criteria->compare('Id_stock',$this->Id_stock);
 		$criteria->compare('Id_product',$this->Id_product);
 		$criteria->compare('quantity',$this->quantity);
-
+		
+		$criteria->join =	"LEFT OUTER JOIN product p ON p.Id=t.Id_product
+										 LEFT OUTER JOIN brand b ON p.Id_brand=b.Id
+										 LEFT OUTER JOIN supplier s ON p.Id_supplier=s.Id";
+		$criteria->addSearchCondition("p.code",$this->product_code);
+		$criteria->addSearchCondition("p.code_supplier",$this->product_code_supplier);
+		$criteria->addSearchCondition("p.description_customer",$this->product_customer_desc);
+		$criteria->addSearchCondition("b.description",$this->product_brand_desc);
+		$criteria->addSearchCondition("s.business_name",$this->product_supplier_name);
+		
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+									      'quantity',
+									      'product_code' => array(
+									        'asc' => 'product.code',
+									        'desc' => 'product.code DESC',
+		),
+											'product_code_supplier' => array(
+									        'asc' => 'product.code_supplier',
+									        'desc' => 'product.code_supplier DESC',
+		),
+									      'product_customer_desc' => array(
+									        'asc' => 'product.description_customer',
+									        'desc' => 'product.description_customer DESC',
+		),
+											'product_brand_desc'=> array(
+											'asc'=>'b.description',
+											'desc'=>'b.description DESC'
+		),
+											'product_supplier_name'=> array(
+											'asc'=>'s.business_name',
+											'desc'=>'s.business_name DESC'
+		),
+					'*',
+		);
+		
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+											'criteria'=>$criteria,
+											'sort'=>$sort,
 		));
 	}
 }

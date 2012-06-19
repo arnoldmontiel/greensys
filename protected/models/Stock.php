@@ -19,6 +19,18 @@
  */
 class Stock extends CActiveRecord
 {
+	public $project_desc;
+	public $movement_type_desc;
+	
+	protected function afterFind(){
+		$this->creation_date = Yii::app()->dateFormatter->formatDateTime(
+		CDateTimeParser::parse($this->creation_date, Yii::app()->params['database_format']['date']),'small',null);
+	
+	//	$this->creation_date = Yii::app()->dateFormatter->formatDateTime($this->creation_date,'small','small');
+	
+		return true;
+	}
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -52,7 +64,7 @@ class Stock extends CActiveRecord
 			array('creation_date', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_movement_type, Id_project, username, creation_date, description', 'safe', 'on'=>'search'),
+			array('Id, Id_movement_type, Id_project, username, creation_date, description, project_desc, movement_type_desc', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -83,6 +95,8 @@ class Stock extends CActiveRecord
 			'username' => 'Username',
 			'creation_date' => 'Creation Date',
 			'description' => 'Description',
+			'project_desc'=>'Project',
+			'movement_type_desc'=>'Movement Type',
 		);
 	}
 
@@ -103,9 +117,34 @@ class Stock extends CActiveRecord
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('creation_date',$this->creation_date,true);
 		$criteria->compare('description',$this->description,true);
-
+	
+		$criteria->with[]='project';
+		$criteria->addSearchCondition("project.description",$this->project_desc);
+		
+		$criteria->with[]='movementType';
+		$criteria->addSearchCondition("movementType.description",$this->movement_type_desc);
+		
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+				    'project_desc' => array(
+				        'asc' => 'project.description',
+				        'desc' => 'project.description DESC',
+					),
+				    'movement_type_desc' => array(
+				        'asc' => 'movementType.description',
+				        'desc' => 'movementType.description DESC',
+					),
+				    'creation_date',
+					'username',
+					'description',
+				    '*',
+		);
+		
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+								'criteria'=>$criteria,
+								'sort'=>$sort,
 		));
+		
 	}
 }

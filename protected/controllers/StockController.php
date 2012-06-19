@@ -167,8 +167,15 @@ class StockController extends Controller
 				$this->redirect(array('view','id'=>$model->Id));
 		}
 
+		$movementTypes = MovementType::model()->findAll();
+		$projects = Project::model()->findAll();
+		$users = User::model()->findAll();
+		
 		$this->render('update',array(
 			'model'=>$model,
+			'movementTypes'=>$movementTypes,
+			'projects'=>$projects,
+			'users'=>$users,
 		));
 	}
 

@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Stocks'=>array('index'),
-	$model->Id,
+	$model->movementType->description,
 );
 
 $this->menu=array(
@@ -23,8 +23,14 @@ jQuery.fn.yiiGridView.update('stock-item-grid');
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
-		'Id_movement_type',
-		'Id_project',
+			array('label'=>$model->getAttributeLabel('Id_movement_type'),
+			'type'=>'raw',
+			'value'=>$model->movementType->description
+		),
+		array('label'=>$model->getAttributeLabel('Id_project'),
+			'type'=>'raw',
+			'value'=>$model->project->description
+		),
 		'username',
 		'creation_date',
 		'description',
@@ -144,9 +150,29 @@ $this->widget('zii.widgets.grid.CGridView', array(
  									}',	
 	'columns'=>array(
 				array(
- 				            'name'=>'Id_product',
-				            'value'=>'$data->Id_product',
+					'name'=>'product_code',
+				    'value'=>'$data->product->code',
 				 
+				),
+				array(
+					'name'=>'product_code_supplier',
+				    'value'=>'$data->product->code_supplier',
+	
+				),
+				array(
+					'name'=>'product_customer_desc',
+				    'value'=>'$data->product->description_customer',
+	
+				),
+				array(
+ 					'name'=>'product_brand_desc',
+				    'value'=>'$data->product->brand->description',
+	
+				),
+				array(
+ 					'name'=>'product_supplier_name',
+				    'value'=>'$data->product->supplier->business_name',
+
 				),
 				array(
 					'name'=>'quantity',

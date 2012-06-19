@@ -1,15 +1,11 @@
 <div class="view">
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('Id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->Id), array('view', 'id'=>$data->Id)); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_movement_type')); ?>:</b>
-	<?php echo CHtml::encode($data->Id_movement_type); ?>
+	<?php echo CHtml::link(CHtml::encode($data->movementType->description), array('view', 'id'=>$data->Id)); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_project')); ?>:</b>
-	<?php echo CHtml::encode($data->Id_project); ?>
+	<?php echo CHtml::encode($data->project->description); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('username')); ?>:</b>
