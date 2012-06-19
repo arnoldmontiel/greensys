@@ -70,6 +70,10 @@ $this->breadcrumbs=array(
 					'value'=>'$data->stock->username',
 			),
 			array(
+ 					'name'=>'stock_creation_date',
+					'value'=>'$data->stock->creation_date',
+			),
+			array(
  					'name'=>'stock_desc',
 					'value'=>'$data->stock->description',
 			),

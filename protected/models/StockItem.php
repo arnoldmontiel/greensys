@@ -25,6 +25,7 @@ class StockItem extends CActiveRecord
 	public $movement_type_desc;
 	public $username;
 	public $stock_desc;
+	public $stock_creation_date;
 	
 	/**
 	 * Returns the static model of the specified AR class.
@@ -56,7 +57,7 @@ class StockItem extends CActiveRecord
 			array('Id_stock, Id_product, quantity', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_stock, Id_product, quantity, product_code, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, project_desc, movement_type_desc, username, stock_desc', 'safe', 'on'=>'search'),
+			array('Id, Id_stock, Id_product, quantity, product_code, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, project_desc, movement_type_desc, username, stock_desc, stock_creation_date', 'safe', 'on'=>'search'),
 		);
 	}
 	
@@ -92,6 +93,7 @@ class StockItem extends CActiveRecord
 			'movement_type_desc'=>'Movement Type', 
 			'username'=>'Username', 
 			'stock_desc'=>'Description',
+			'stock_creation_date'=>'Date',
 		
 		);
 	}
@@ -174,6 +176,7 @@ class StockItem extends CActiveRecord
 		$criteria->addSearchCondition("m.description",$this->movement_type_desc);
 		$criteria->addSearchCondition("s.username",$this->username);
 		$criteria->addSearchCondition("s.description",$this->stock_desc);
+		$criteria->addSearchCondition("s.creation_date",$this->stock_creation_date);
 		
 		// Create a custom sort
 		$sort=new CSort;
@@ -194,6 +197,10 @@ class StockItem extends CActiveRecord
 												'stock_desc'=> array(
 												'asc'=>'s.description',
 												'desc'=>'s.description DESC'
+		),
+												'stock_creation_date'=> array(
+														'asc'=>'s.creation_date',
+														'desc'=>'s.creation_date DESC'
 		),
 						'*',
 		);
