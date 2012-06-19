@@ -66,7 +66,7 @@ class linkcontainer extends CJuiWidget
         	
         	
 			$this->render($mode, array(
-							'items'=>$this->items,
+							'items'=>$this->items,'id'=>$this->id,
 			));
         	
         }

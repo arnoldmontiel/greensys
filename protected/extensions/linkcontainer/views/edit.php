@@ -1,3 +1,31 @@
+<?php 
+Yii::app()->clientScript->registerScript(__CLASS__.'#linkcontainer'.$id, "
+
+	$('#addLink_".$id."').click(function() {	 
+
+		var linkValue = $('#textLink_".$id."').attr('value'); 
+		if(validateURL(linkValue)){
+			if(!containHTTP(linkValue)){
+				linkValue = 'http://' + linkValue; 
+			}
+		  	var del = '<div class=\'deleteLink\' title=\'Delete\'></div>';
+			var hidden = '<input name=\'links[]\' type=\'hidden\' value=\''+linkValue+'\'>';
+			$('.links').append('<div class=\'linkContainer\'><div class=\'linkAdded\'><a target=\'_blank\' href=\''+linkValue+'\'>'+linkValue+'</a></div>'+del+hidden+'</div>');
+			$('.links').find('.deleteLink').click(function(){
+				$(this).parent().remove();
+			});
+		}
+		else{
+			alert('Please enter a valid URL');
+		}	
+		
+	});	
+	$('.deleteLink').click(function(){
+		$(this).parent().remove();
+	});
+	");
+
+?>
 <div class="links">
  <!--Links are added here -->
  <?php
@@ -20,14 +48,14 @@
  ?>
 </div>          
 <div class="addContainer">
-	<div id="addText">
+	<div id="addText_<?php echo $id?>" class="addText">
           <?php echo CHtml::textField('Text', '',
-				 array('id'=>'textLink', 
+				 array('id'=>'textLink_'.$id, 
 				 		'name' =>'textLink',
 				       'style'=>"width:200px;",
 				       'class' => 'required:true,url:true; ',
 				       'maxlength'=>150)); ?>
     </div>
-	<div id="addLink" title="Add link"></div>
+	<div id="addLink_<?php echo $id?>" title="Add link" class="addLink"></div>
 </div>
 	
