@@ -83,6 +83,9 @@
 			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Cost'),array('/cost/index'));?>
 			</div>
+			<div class="home-item-view" >
+			<?php echo CHtml::link(Yii::app()->lc->t('Stock'),array('/stockSummary/index'));?>
+			</div>
 		</div> <!-- end  home-right-view -->
 	</div>	<!-- end  home-row -->
 	<div class="home-row" >
