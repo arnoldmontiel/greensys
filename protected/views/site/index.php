@@ -34,7 +34,7 @@
 			<?php echo CHtml::link(Yii::app()->lc->t('Importer'),array('/importer/index'));?>
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Price List'),array('/pricelist/index'));?>			
+			<?php echo CHtml::link(Yii::app()->lc->t('Stock'),array('/stock/index'));?>			
 			</div>
 		</div>
 		<div class="home-right-view" >
