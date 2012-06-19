@@ -16,6 +16,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'application.controllers.*',
 		'application.modules.srbac.controllers.SBaseController',		
 	),
 	'localeDataPath'=>'protected/i18n/data/',
