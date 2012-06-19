@@ -4,6 +4,7 @@
  * This is the model class for table "stock_summary".
  *
  * The followings are the available columns in table 'stock_summary':
+ * @property integer $Id_product
  * @property string $description_customer
  * @property string $description_supplier
  * @property string $code
@@ -40,13 +41,14 @@ class StockSummary extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('Id_product', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier', 'length', 'max'=>255),
 			array('code, code_supplier, supplier_description', 'length', 'max'=>45),
 			array('brand_description', 'length', 'max'=>100),
 			array('quantity', 'length', 'max'=>32),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('description_customer, description_supplier, code, code_supplier, brand_description, supplier_description, quantity', 'safe', 'on'=>'search'),
+			array('Id_product, description_customer, description_supplier, code, code_supplier, brand_description, supplier_description, quantity', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -67,6 +69,7 @@ class StockSummary extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
+			'Id_product' => 'Id Product',
 			'description_customer' => 'Description Customer',
 			'description_supplier' => 'Description Supplier',
 			'code' => 'Code',
@@ -88,6 +91,7 @@ class StockSummary extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		$criteria->compare('Id_product',$this->Id_product);
 		$criteria->compare('description_customer',$this->description_customer,true);
 		$criteria->compare('description_supplier',$this->description_supplier,true);
 		$criteria->compare('code',$this->code,true);
@@ -98,6 +102,7 @@ class StockSummary extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'keyAttribute'=>'Id_product',
 		));
 	}
 }

@@ -21,6 +21,11 @@ class StockItem extends CActiveRecord
 	public $product_supplier_name;
 	public $product_customer_desc;
 	
+	public $project_desc;
+	public $movement_type_desc;
+	public $username;
+	public $stock_desc;
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -51,10 +56,10 @@ class StockItem extends CActiveRecord
 			array('Id_stock, Id_product, quantity', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_stock, Id_product, quantity, product_code, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc', 'safe', 'on'=>'search'),
+			array('Id, Id_stock, Id_product, quantity, product_code, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, project_desc, movement_type_desc, username, stock_desc', 'safe', 'on'=>'search'),
 		);
 	}
-
+	
 	/**
 	 * @return array relational rules.
 	 */
@@ -83,6 +88,11 @@ class StockItem extends CActiveRecord
 			'product_customer_desc'=>'Description Customer',
 			'product_brand_desc'=>'Brand Description',
 			'product_supplier_name'=>'Supplier Name',
+			'project_desc'=>'Project', 
+			'movement_type_desc'=>'Movement Type', 
+			'username'=>'Username', 
+			'stock_desc'=>'Description',
+		
 		);
 	}
 
@@ -141,6 +151,56 @@ class StockItem extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 											'criteria'=>$criteria,
 											'sort'=>$sort,
+		));
+	}
+	
+	public function searchDetail()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('Id',$this->Id);
+		$criteria->compare('Id_stock',$this->Id_stock);
+		$criteria->compare('Id_product',$this->Id_product);
+		$criteria->compare('quantity',$this->quantity);
+	
+		
+		$criteria->join =	"LEFT OUTER JOIN stock s ON s.Id=t.Id_stock
+											 LEFT OUTER JOIN project p ON p.Id=s.Id_project
+											 LEFT OUTER JOIN movement_type m ON m.Id=s.Id_movement_type";
+		$criteria->addSearchCondition("p.description",$this->project_desc);
+		$criteria->addSearchCondition("m.description",$this->movement_type_desc);
+		$criteria->addSearchCondition("s.username",$this->username);
+		$criteria->addSearchCondition("s.description",$this->stock_desc);
+		
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+										      'quantity',
+										      'project_desc' => array(
+										        'asc' => 'p.description',
+										        'desc' => 'p.description DESC',
+		),
+												'movement_type_desc' => array(
+										        'asc' => 'm.description',
+										        'desc' => 'm.description DESC',
+		),
+										      'username' => array(
+										        'asc' => 's.username',
+										        'desc' => 's.username DESC',
+		),
+												'stock_desc'=> array(
+												'asc'=>'s.description',
+												'desc'=>'s.description DESC'
+		),
+						'*',
+		);
+	
+		return new CActiveDataProvider($this, array(
+												'criteria'=>$criteria,
+												'sort'=>$sort,
 		));
 	}
 }
