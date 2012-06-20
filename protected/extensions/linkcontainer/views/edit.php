@@ -10,8 +10,8 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#linkcontainer'.$id, "
 			}
 		  	var del = '<div class=\'deleteLink\' title=\'Delete\'></div>';
 			var hidden = '<input name=\'links[]\' type=\'hidden\' value=\''+linkValue+'\'>';
-			$('.links').append('<div class=\'linkContainer\'><div class=\'linkAdded\'><a target=\'_blank\' href=\''+linkValue+'\'>'+linkValue+'</a></div>'+del+hidden+'</div>');
-			$('.links').find('.deleteLink').click(function(){
+			$('#links_".$id."').append('<div class=\'linkContainer\'><div class=\'linkAdded\'><a target=\'_blank\' href=\''+linkValue+'\'>'+linkValue+'</a></div>'+del+hidden+'</div>');
+			$('#links_".$id."').find('.deleteLink').click(function(){
 				$(this).parent().remove();
 			});
 		}
@@ -26,7 +26,7 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#linkcontainer'.$id, "
 	");
 
 ?>
-<div class="links">
+<div class="links" id="links_<?php echo $id;?>">
  <!--Links are added here -->
  <?php
  
