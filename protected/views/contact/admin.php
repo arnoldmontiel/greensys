@@ -55,15 +55,15 @@ $('.search-form form').submit(function(){
 			(
 			        'delete' => array
 					(
-			            'url'=>'Yii::app()->createUrl("contact/AjaxRemoveContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "modelRelName"=>'.$modelRelName.'))',
+			            'url'=>'Yii::app()->createUrl("contact/AjaxRemoveContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "modelRelName"=>"'.$modelRelName.'"))',
 					),
 					'update' => array
 					(
-						'url'=>'Yii::app()->createUrl("contact/AjaxUpdateContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "viewField"=>"'.$viewField.'", "modelRelName"=>'.$modelRelName.'))',
+						'url'=>'Yii::app()->createUrl("contact/AjaxUpdateContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "viewField"=>"'.$viewField.'", "modelRelName"=>"'.$modelRelName.'"))',
 					),
 					'view' => array
 					(
-			            'url'=>'Yii::app()->createUrl("contact/AjaxViewContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "viewField"=>"'.$viewField.'", "modelRelName"=>'.$modelRelName.'))',
+			            'url'=>'Yii::app()->createUrl("contact/AjaxViewContact", array("id"=>'.$id.',"idContact"=>$data->Id_contact, "viewField"=>"'.$viewField.'", "modelRelName"=>"'.$modelRelName.'"))',
 					),
 			),
 		),
@@ -72,6 +72,7 @@ $('.search-form form').submit(function(){
 <br>
 <div class="row buttons">
 	<?php
+		$relation = $modelRelName;
 		echo CHtml::link( CHtml::image('images/back.png','Back to '. $relation ,array(
 																   'title'=>'Back to '. $relation,
 												                   'style'=>'width:30px;',

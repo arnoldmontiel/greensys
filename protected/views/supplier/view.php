@@ -51,12 +51,13 @@ function () {
 	</div>
 	<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
 		<?php
+				
 		echo CHtml::link( CHtml::image('images/add_contact_blue.png','add Contact',array(
 												                                'title'=>'Add contact',
 												                                'style'=>'width:30px;',
 												                                'id'=>'addContact',
                                 												)
-                            ),SupplierController::createUrl('AjaxAddContact',array('id'=>$model->Id)));
+                            ),'#',array('onclick'=>'jQuery("#CreateContact").dialog("open"); return false;'));
 		?>
 
 	</div>
@@ -110,3 +111,50 @@ function () {
 	));
 	?>
 </div>
+<?php 
+	$this->widget('ext.processingDialog.processingDialog', array(
+			'buttons'=>array('none'),
+			'idDialog'=>'wating',
+	));
+
+	//Contact
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'CreateContact',
+			// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Create Contact',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '500',
+					'buttons'=>	array(
+							'Cancelar'=>'js:function(){jQuery("#CreateContact").dialog( "close" );}',
+							'Grabar'=>'js:function()
+							{
+							jQuery("#wating").dialog("open");
+							jQuery.post("'.Yii::app()->createUrl("contact/ajaxCreate").'", $("#contact-form").serialize(),
+							function(data) {
+								if(data!=null){
+								jQuery.post("'.Yii::app()->createUrl("supplier/ajaxAddContact").'",
+									 {"Id_contact":data.Id,"Id_supplier":'.$model->Id.'},
+										function(data) {
+											jQuery("#wating").dialog("close");
+											jQuery("#CreateContact").dialog( "close" );
+										},"json"
+									);
+								}
+								else
+								{
+									jQuery("#wating").dialog("close");							
+								}
+						},"json"
+					);
+	
+	}'),
+			),
+	));
+	$modelContact= new Contact();
+	echo $this->renderPartial('../contact/_formPopUp', array('model'=>$modelContact));
+	
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+	
+	?>

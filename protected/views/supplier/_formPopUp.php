@@ -2,7 +2,8 @@
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'supplier-form',
-	'enableAjaxValidation'=>false,
+	'enableAjaxValidation'=>true,
+	'action'=>Yii::app()->createUrl("supplier/ajaxCreate")
 )); ?>
 
 	<?php echo $form->errorSummary($model); ?>
@@ -49,11 +50,11 @@
 		<?php echo $form->error($modelContact,'address'); ?>
 	</div>
 	<?php
-	$hyperLinks = CHtml::listData($modelHyperlink, 'Id','description');
+	$hyperLinksSupplier = CHtml::listData($modelHyperlink, 'Id','description');
 	
 	$this->widget('ext.linkcontainer.linkcontainer', array(
-		'id'=>'linkContainer',	// default is class="ui-sortable" id="yw0"
-		'items'=>$hyperLinks,
+		'id'=>'linkContainerSupplier',	// default is class="ui-sortable" id="yw0"
+		'items'=>$hyperLinksSupplier,
 				));
 	?>
 

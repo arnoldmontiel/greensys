@@ -95,7 +95,8 @@ class SupplierController extends Controller
 		$modelContact = new Contact;
 		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$modelContact->Id,'Id_entity_type'=>$this->getEntityType()));
 	
-	
+		$this->performAjaxValidation($model,$modelContact);
+		
 		if(isset($_POST['Supplier']) && isset($_POST['Contact']))
 		{
 			$model->attributes=$_POST['Supplier'];
@@ -308,12 +309,26 @@ class SupplierController extends Controller
 		return $model;
 	}
 
-	
-	public function actionAjaxAddContact($id)
+	public function actionAjaxAddContactOld($id)
 	{
-  		$this->redirect(array('contact/AjaxCreateContact','modelRelName'=>get_class(Supplier::model()), 'id'=> $id, 'viewField'=> $this->loadModel($id)->business_name));
+		$this->redirect(array('contact/AjaxCreateContact','modelRelName'=>get_class(Supplier::model()), 'id'=> $id, 'viewField'=> $this->loadModel($id)->business_name));
 	}
 	
+	public function actionAjaxAddContact()
+	{
+		if(isset($_POST['Id_contact'])&& isset($_POST['Id_supplier']))
+		{
+			$supplierContact = new SupplierContact();
+			$supplierContact->Id_contact =$_POST['Id_contact'];
+			$supplierContact->Id_supplier=$_POST['Id_supplier'];
+			if($supplierContact->save())
+			{
+				$contact = Contact::model()->findByPk($_POST['Id_contact']);
+				if(isset($contact))				
+					echo json_encode($contact->attributes); 
+			} 										
+		}  		
+	}
 	public function actionAjaxViewContact($id)
 	{
 		$this->redirect(array('contact/AjaxAdminContact','modelRelName'=>get_class(Supplier::model()), 'id'=> $id, 'viewField'=> $this->loadModel($id)->business_name));
@@ -322,11 +337,12 @@ class SupplierController extends Controller
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated
 	 */
-	protected function performAjaxValidation($model)
+	protected function performAjaxValidation($model,$modelContact)
 	{
 		if(isset($_POST['ajax']) && $_POST['ajax']==='supplier-form')
 		{
 			echo CActiveForm::validate($model);
+			echo CActiveForm::validate($modelContact);			
 			Yii::app()->end();
 		}
 	}

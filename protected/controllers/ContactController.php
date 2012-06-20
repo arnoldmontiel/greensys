@@ -65,7 +65,22 @@ class ContactController extends Controller
 			'model'=>$model,
 		));
 	}
-
+	
+	public function actionAjaxCreate()
+	{
+		$model=new Contact;
+	
+		// Uncomment the following line if AJAX validation is needed
+		$this->performAjaxValidation($model);
+	
+		if(isset($_POST['Contact']))
+		{
+			$model->attributes=$_POST['Contact'];
+			if($model->save())
+				echo json_encode($model->attributes);
+		}
+	}
+	
 	/**
 	* Creates a new model.
 	* If creation is successful, the browser will be redirected to the 'view' page.

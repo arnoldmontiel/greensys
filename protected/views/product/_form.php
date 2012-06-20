@@ -1,12 +1,11 @@
-<div class="form">
 
 <?php
 $settings = new Settings();
-
 $weightToShipping = MeasurementUnit::model()->findByAttributes(array('short_description'=>'kg'));
-Yii::app()->clientScript->registerScript(__CLASS__.'#Product_msrp', "
-fillVolumeTextBox('".ProductController::createUrl("AjaxFillVolume")."','txtVolume','product-form');
 
+Yii::app()->clientScript->registerScript(__CLASS__.'#Product', "
+
+fillVolumeTextBox('".ProductController::createUrl("AjaxFillVolume")."','txtVolume','product-form');
 $('#display-weight').hide();
 
 $('#weight').change(function(){
@@ -140,6 +139,7 @@ $('#deleteIcon').click(function(){
 });
 ");
 ?>
+<div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'product-form',
