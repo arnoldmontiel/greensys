@@ -16,4 +16,4 @@ $this->menu=array(
 												'movementTypes'=>$movementTypes,
 												'projects'=>$projects,
 												'users'=>$users,
-												'modelProduct'=>$modelProduct,)); ?>
+												)); ?>
