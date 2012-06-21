@@ -38,7 +38,8 @@ class Nomenclator extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('description', 'length', 'max'=>45),
-			// The following rule is used by search().
+			array('description', 'required'),
+				// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, description', 'safe', 'on'=>'search'),
 		);

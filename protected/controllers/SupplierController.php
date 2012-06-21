@@ -341,8 +341,8 @@ class SupplierController extends Controller
 	{
 		if(isset($_POST['ajax']) && $_POST['ajax']==='supplier-form')
 		{
-			echo CActiveForm::validate($model);
-			echo CActiveForm::validate($modelContact);			
+			echo CActiveForm::validate(array($model,$modelContact));
+			//echo CActiveForm::validate($modelContact);			
 			Yii::app()->end();
 		}
 	}

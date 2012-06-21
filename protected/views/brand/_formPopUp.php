@@ -2,7 +2,8 @@
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'brand-form',
-	'enableAjaxValidation'=>false,
+	'enableAjaxValidation'=>true,
+	'action'=>Yii::app()->createUrl("brand/ajaxCreate")		
 )); ?>
 
 	<?php echo $form->errorSummary($model); ?>

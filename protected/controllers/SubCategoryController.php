@@ -68,9 +68,9 @@ class SubCategoryController extends Controller
 	
 	public function actionAjaxCreate()
 	{
-	
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$model = new SubCategory;
+
+		$this->performAjaxValidation($model);
 	
 		if(isset($_POST['SubCategory']))
 		{
@@ -81,9 +81,13 @@ class SubCategoryController extends Controller
 			{
 				$model=new SubCategory;
 				$model->attributes=$_POST['SubCategory'];
-				$model->save();				
+				if($model->save())
+					echo json_encode($model->attributes);						
 			}
-			echo json_encode($model->attributes);
+			else
+			{
+				echo json_encode($model->attributes);				
+			}
 		}
 	}
 	public function actionAjaxAssignToCategory()

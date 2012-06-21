@@ -74,13 +74,13 @@ class BrandController extends Controller
 		$model=new Brand;
 	
 		// Uncomment the following line if AJAX validation is needed
-		 $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 	
 		if(isset($_POST['Brand']))
 		{
 			$model->attributes=$_POST['Brand'];
-			$model->save();
-			echo json_encode($model->attributes); 
+			if($model->save())
+				echo json_encode($model->attributes); 
 		}
 	}
 	

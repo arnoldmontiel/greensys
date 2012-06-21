@@ -148,8 +148,6 @@ $('#deleteIcon').click(function(){
 )); 
 ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
 	<?php echo $form->errorSummary($model); ?>
 
 	<?php if (!$model->isNewRecord):?>
@@ -474,11 +472,14 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 							jQuery("#wating").dialog("open");
 							jQuery.post("'.Yii::app()->createUrl("brand/ajaxCreate").'", $("#brand-form").serialize(),
 							function(data) {
-								$("#Product_Id_brand").append(
-    	  		  					$("<option></option>").val(data.Id).html(data.description)
-    							);
+								if(data!=null)
+								{
+									$("#Product_Id_brand").append(
+    		  		  					$("<option></option>").val(data.Id).html(data.description)
+    								);
+									jQuery("#CreateBrand").dialog( "close" );
+								}
 							jQuery("#wating").dialog("close");
-							jQuery("#CreateBrand").dialog( "close" );
 						},"json"
 					);
 
@@ -505,11 +506,14 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 							jQuery("#wating").dialog("open");
 							jQuery.post("'.Yii::app()->createUrl("supplier/ajaxCreate").'", $("#supplier-form").serialize(),
 							function(data) {
-							$("#Product_Id_supplier").append(
-							$("<option></option>").val(data.Id).html(data.business_name)
-						);
-							jQuery("#wating").dialog("close");
-							jQuery("#CreateSupplier").dialog( "close" );
+								if(data!=null)
+								{							
+									$("#Product_Id_supplier").append(
+										$("<option></option>").val(data.Id).html(data.business_name)
+									);
+									jQuery("#CreateSupplier").dialog( "close" );							
+								}	
+								jQuery("#wating").dialog("close");
 						},"json"
 					);
 	

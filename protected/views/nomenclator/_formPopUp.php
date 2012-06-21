@@ -2,7 +2,8 @@
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'nomenclator-form',
-	'enableAjaxValidation'=>false,
+	'enableAjaxValidation'=>true,
+	'action'=>Yii::app()->createUrl("nomenclator/ajaxCreate")	
 )); ?>
 
 	<?php echo $form->errorSummary($model); ?>

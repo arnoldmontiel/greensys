@@ -2,7 +2,9 @@
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'sub-category-form',
-	'enableAjaxValidation'=>false,
+	'enableAjaxValidation'=>true,
+	'action'=>Yii::app()->createUrl("subCategory/ajaxCreate")
+		
 )); ?>
 
 	<?php echo $form->errorSummary($model); ?>

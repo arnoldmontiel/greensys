@@ -70,13 +70,13 @@ class CategoryController extends Controller
 		$model=new Category;
 	
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 	
 		if(isset($_POST['Category']))
 		{
 			$model->attributes=$_POST['Category'];
 			if($model->save())
-					echo json_encode($model->attributes);
+				echo json_encode($model->attributes);
 		}
 	
 	}
