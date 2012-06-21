@@ -95,3 +95,9 @@ LOCK TABLES `setting` WRITE;
 INSERT INTO `setting` VALUES (1,2,1,1);
 /*!40000 ALTER TABLE `setting` ENABLE KEYS */;
 UNLOCK TABLES;
+
+LOCK TABLES `movement_type` WRITE;
+/*!40000 ALTER TABLE `movement_type` DISABLE KEYS */;
+INSERT INTO `movement_type` VALUES (1,'Agregar'),(2,'Retirar');
+/*!40000 ALTER TABLE `movement_type` ENABLE KEYS */;
+UNLOCK TABLES;
