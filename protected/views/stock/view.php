@@ -25,10 +25,53 @@ $this->menu=array(
 		),
 		array('label'=>$model->getAttributeLabel('Id_project'),
 			'type'=>'raw',
-			'value'=>$model->project->description
+			'value'=>isset($model->project)?$model->project->description:""
 		),
 		'username',
 		'creation_date',
 		'description',
 	),
+)); ?>
+
+	<div class="gridTitle-decoration1" style="display: inline-block; width: 97%;height: 35px;margin-top: 10px;">
+		<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
+			Moved Stock
+		</div>
+	</div>
+			<?php 
+
+$this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'stock-item-grid',
+	'dataProvider'=>$modelStockItem->search(),
+ 	'filter'=>$modelStockItem,
+	'summaryText'=>'',
+	'columns'=>array(
+				array(
+					'name'=>'product_code',
+				    'value'=>'$data->product->code',
+				),
+				array(
+					'name'=>'product_code_supplier',
+				    'value'=>'$data->product->code_supplier',
+	
+				),
+				array(
+					'name'=>'product_customer_desc',
+				    'value'=>'$data->product->description_customer',
+				),
+				array(
+ 					'name'=>'product_brand_desc',
+				    'value'=>'$data->product->brand->description',
+				),
+				array(
+ 					'name'=>'product_supplier_name',
+				    'value'=>'$data->product->supplier->business_name',
+				),
+				array(
+					'name'=>'quantity',
+					'value'=>'$data->quantity',
+					'type'=>'raw',
+			        'htmlOptions'=>array('width'=>5,'style'=>'text-align:right;'),
+				),
+			),
 )); ?>

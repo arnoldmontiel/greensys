@@ -31,7 +31,7 @@ $this->menu=array(
 		),
 		array(
  			'name'=>'project_desc',
-			'value'=>'$data->project->description',
+			'value'=>'isset($data->project)?$data->project->description:""',
 		),
 		'username',
 		'creation_date',

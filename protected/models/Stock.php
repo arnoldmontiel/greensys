@@ -61,7 +61,7 @@ class Stock extends CActiveRecord
 			array('Id_movement_type, Id_project', 'numerical', 'integerOnly'=>true),
 			array('username', 'length', 'max'=>128),
 			array('description', 'length', 'max'=>255),
-			array('creation_date', 'safe'),
+			array('creation_date,username', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, Id_movement_type, Id_project, username, creation_date, description, project_desc, movement_type_desc', 'safe', 'on'=>'search'),

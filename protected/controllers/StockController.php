@@ -38,8 +38,16 @@ class StockController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$modelStockItem = new StockItem('search');
+		$modelStockItem->unsetAttributes();  // clear any default values
+		if(isset($_GET['StockItem']))
+		{
+			$modelStockItem->attributes =$_GET['StockItem'];			
+		}
+		$modelStockItem->Id_stock = $id;
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
+			'modelStockItem'=>$modelStockItem
 		));
 	}
 
@@ -50,6 +58,8 @@ class StockController extends Controller
 	
 		$modelStockItem = new StockItem('search');
 		$modelStockItem->unsetAttributes();  // clear any default values
+		if(isset($_GET['StockItem']))
+			$modelStockItem->attributes=$_GET['StockItem'];
 		$modelStockItem->Id_stock = $id;
 		
 		if(isset($_GET['Product']))
@@ -106,6 +116,10 @@ class StockController extends Controller
 		if(isset($_POST['Stock']))
 		{
 			$model->attributes=$_POST['Stock'];
+			if($model->username=="")
+			{
+				$model->username= null;				
+			}
 			if($model->save())
 				$this->redirect(array('moveStock','id'=>$model->Id));
 		}

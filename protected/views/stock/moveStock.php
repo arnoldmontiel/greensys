@@ -29,7 +29,7 @@ jQuery.fn.yiiGridView.update('stock-item-grid');
 		),
 		array('label'=>$model->getAttributeLabel('Id_project'),
 			'type'=>'raw',
-			'value'=>$model->project->description
+			'value'=>isset($model->project)?$model->project->description:""
 		),
 		'username',
 		'creation_date',
@@ -42,7 +42,7 @@ jQuery.fn.yiiGridView.update('stock-item-grid');
 	 
 <div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
 	<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
-		Products
+		Select Products
 	</div>
 	</div>
 <?php		
@@ -182,7 +182,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 												array(
 														"id"=>$data->Id,
 														"class"=>"txtQuantity",
-														"style"=>"width:50px",
+														"style"=>"width:50px;text-align:right;",
 													)
 											)',
 							

@@ -63,7 +63,7 @@ $this->breadcrumbs=array(
 			),
 			array(
  					'name'=>'project_desc',
-					'value'=>'$data->stock->project->description',
+					'value'=>'isset($data->stock->project)?$data->stock->project->description:""',
 			),
 			array(
  					'name'=>'username',

@@ -5,7 +5,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_project')); ?>:</b>
-	<?php echo CHtml::encode($data->project->description); ?>
+	<?php echo CHtml::encode(isset($data->project)?$data->project->description:""); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('username')); ?>:</b>
