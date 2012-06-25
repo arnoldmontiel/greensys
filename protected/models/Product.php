@@ -8,6 +8,7 @@
  * @property integer $Id_brand
  * @property integer $Id_category
  * @property integer $Id_nomenclator
+ * @property integer $Id_product_type
  * @property string $description_customer
  * @property string $description_supplier
  * @property string $code
@@ -85,15 +86,15 @@ class Product extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_brand, Id_category, Id_nomenclator, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, Id_category, Id_sub_category', 'required'),
-			array('Id_volts,Id_brand, Id_category, Id_nomenclator, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, power, current, need_rack, unit_rack', 'numerical', 'integerOnly'=>true),
+			array('Id_brand, Id_category, Id_nomenclator, Id_product_type, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, Id_category, Id_sub_category', 'required'),
+			array('Id_volts,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, power, current, need_rack, unit_rack', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier', 'length', 'max'=>255),
 			array('code, code_supplier, color, other', 'length', 'max'=>45),
 			array('length, width, height, profit_rate, msrp, weight, dealer_cost', 'length', 'max'=>10),
 			array('Id_volts, time_instalation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, Id_sub_category', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_brand, Id_category, Id_nomenclator, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color, other, Id_category, power, current, need_rack, unit_rack', 'safe', 'on'=>'search'),
+			array('Id, Id_brand, Id_category, Id_nomenclator, Id_product_type, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color, other, Id_category, power, current, need_rack, unit_rack', 'safe', 'on'=>'search'),
 		
 			
 		);
@@ -118,6 +119,7 @@ class Product extends CActiveRecord
 			'category' => array(self::BELONGS_TO, 'Category', 'Id_category'),
 			'subCategory' => array(self::BELONGS_TO, 'SubCategory', 'Id_sub_category'),
 			'nomenclator' => array(self::BELONGS_TO, 'Nomenclator', 'Id_nomenclator'),
+			'productType' => array(self::BELONGS_TO, 'ProductType', 'Id_product_type'),
 			'areas' => array(self::MANY_MANY, 'Area', 'product_area(Id_product, Id_area)'),
 			'categories' => array(self::MANY_MANY, 'Category', 'product_category(Id_product, Id_category)'),
 			'productGroupsChild' => array(self::HAS_MANY, 'ProductGroup', 'Id_product_child'),
@@ -140,6 +142,7 @@ class Product extends CActiveRecord
 			'Id_brand' => 'Brand',
 			'Id_category' => 'Category',
 			'Id_nomenclator' => 'Nomenclator',
+			'Id_product_type' => 'Type',
 			'description_customer' => 'Description Customer',
 			'description_supplier' => 'Description Supplier',
 			'code' => 'Code',
@@ -216,6 +219,7 @@ class Product extends CActiveRecord
 		$criteria->compare('Id_brand',$this->Id_brand);
 		$criteria->compare('Id_category',$this->Id_category);
 		$criteria->compare('Id_nomenclator',$this->Id_nomenclator);
+		$criteria->compare('Id_product_type',$this->Id_product_type);
 		$criteria->compare('description_customer',$this->description_customer,true);
 		$criteria->compare('description_supplier',$this->description_supplier,true);
 		$criteria->compare('code',$this->code,true);
@@ -257,6 +261,7 @@ class Product extends CActiveRecord
 		$criteria->compare('Id_brand',$this->Id_brand);
 		$criteria->compare('Id_category',$this->Id_category);
 		$criteria->compare('Id_nomenclator',$this->Id_nomenclator);
+		$criteria->compare('Id_product_type',$this->Id_product_type);
 		$criteria->compare('Id_supplier',$this->Id_supplier);
 		$criteria->compare('description_customer',$this->description_customer,true);
 		$criteria->compare('description_supplier',$this->description_supplier,true);
