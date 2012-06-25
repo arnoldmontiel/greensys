@@ -3,6 +3,7 @@
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'product-type-form',
 	'enableAjaxValidation'=>true,
+	'action'=>Yii::app()->createUrl("productType/ajaxCreate")		
 )); ?>
 
 	<?php echo $form->errorSummary($model); ?>

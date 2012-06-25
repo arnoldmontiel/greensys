@@ -13,6 +13,9 @@
 			<?php echo CHtml::link(Yii::app()->lc->t('Supplier'),array('/supplier/index'));?>
 			</div>
 			<div class="home-item-view" >
+			<?php echo CHtml::link(Yii::app()->lc->t('Product Type'),array('/productType/index'));?>
+			</div>
+			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Category'),array('/category/index'));?>
 			</div>
 			<div class="home-item-view" >

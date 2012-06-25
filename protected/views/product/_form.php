@@ -240,6 +240,19 @@ $('#deleteIcon').click(function(){
 	</div>
 	
 	<div class="row">
+		<div style="display: inline-block;">
+			<?php echo $form->labelEx($model,'Id_product_type'); ?>
+			<?php echo $form->dropDownList($model, 'Id_product_type', CHtml::listData(
+	    			ProductType::model()->findAll(), 'Id', 'description')); 
+			?>
+			<?php echo $form->error($model,'Id_product_type'); ?>
+		</div>
+		<div style="display: inline-block;">
+			<?php echo CHtml::link( 'Add new Type','#',array('onclick'=>'jQuery("#CreateProductType").dialog("open"); return false;'));?>
+		</div>		
+	</div>
+	
+	<div class="row">
 		<?php echo $form->labelEx($model,'description_customer'); ?>
 		<?php echo $form->textField($model,'description_customer',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'description_customer'); ?>
@@ -548,12 +561,15 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 							jQuery("#wating").dialog("open");
 							jQuery.post("'.Yii::app()->createUrl("category/ajaxCreate").'", $("#category-form").serialize(),
 							function(data) {
-							$("#Product_Id_category").append(
-							$("<option></option>").val(data.Id).html(data.description)
-					);
-							jQuery("#wating").dialog("close");
-							jQuery("#CreateCategory").dialog( "close" );
-	},"json"
+								if(data!=null)
+								{														
+									$("#Product_Id_category").append(
+										$("<option></option>").val(data.Id).html(data.description)
+									);
+									jQuery("#CreateCategory").dialog( "close" );
+								}
+								jQuery("#wating").dialog("close");
+							},"json"
 					);
 	
 	}'),
@@ -579,26 +595,28 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 							jQuery("#wating").dialog("open");
 							jQuery.post("'.Yii::app()->createUrl("subCategory/ajaxCreate").'", $("#sub-category-form").serialize(),
 							function(data) {
-								$("#Product_Id_sub_category").append(
-								$("<option></option>").val(data.Id).html(data.description)
-								);
-							
-							
-								jQuery.post("'.Yii::app()->createUrl("subCategory/ajaxAssignToCategory").'",
+								if(data!=null)
+								{														
+									jQuery.post("'.Yii::app()->createUrl("subCategory/ajaxAssignToCategory").'",
 									 {"Id_sub_category":data.Id,"Id_category":$("#Product_Id_category").val()},
-									function(data) {
-										$("#Product_Id_sub_category").append(
-											$("<option></option>").val(data.Id).html(data.description)
-										);
+										function(data) {
+											if(data!=null)
+											{																					
+												$("#Product_Id_sub_category").append(
+													$("<option></option>").val(data.Id).html(data.description)
+												);
+												jQuery("#CreateSubCategory").dialog( "close" );
+											}
+										jQuery("#wating").dialog("close");
+									},"json"
+								);
+								}
+								else
+								{
 									jQuery("#wating").dialog("close");
-									jQuery("#CreateSubCategory").dialog( "close" );
-								},"json"
-							);
-							
-							
+								}																
 						},"json"
-					);
-	
+					);	
 	}'),
 			),
 	));
@@ -622,11 +640,14 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 							jQuery("#wating").dialog("open");
 							jQuery.post("'.Yii::app()->createUrl("nomenclator/ajaxCreate").'", $("#nomenclator-form").serialize(),
 							function(data) {
-							$("#Product_Id_nomenclator").append(
-							$("<option></option>").val(data.Id).html(data.description)
-					);
+								if(data!=null)
+								{
+									$("#Product_Id_nomenclator").append(
+										$("<option></option>").val(data.Id).html(data.description)
+									);
+									jQuery("#CreateNomenclator").dialog( "close" );
+								}
 							jQuery("#wating").dialog("close");
-							jQuery("#CreateNomenclator").dialog( "close" );
 						},"json"
 					);
 	
@@ -635,6 +656,40 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 	));
 	$modelNomenclator = new Nomenclator();
 	echo $this->renderPartial('../nomenclator/_formPopUp', array('model'=>$modelNomenclator));
+	
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+	//ProductType
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'CreateProductType',
+			// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Create Product Type',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '500',
+					'buttons'=>	array(
+							'Cancelar'=>'js:function(){jQuery("#CreateProductType").dialog( "close" );}',
+							'Grabar'=>'js:function()
+							{
+							jQuery("#wating").dialog("open");
+							jQuery.post("'.Yii::app()->createUrl("productType/ajaxCreate").'", $("#product-type-form").serialize(),
+							function(data) {
+								if(data!=null)
+								{
+									$("#Product_Id_product_type").append(
+										$("<option></option>").val(data.Id).html(data.description)
+									);
+									jQuery("#CreateProductType").dialog( "close" );
+								}
+							jQuery("#wating").dialog("close");
+							},"json"
+					);
+	
+			}'),
+			),
+	));
+	$modelProductType = new ProductType();
+	echo $this->renderPartial('../productType/_formPopUp', array('model'=>$modelProductType));
 	
 	$this->endWidget('zii.widgets.jui.CJuiDialog');
 	

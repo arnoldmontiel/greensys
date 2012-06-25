@@ -282,7 +282,7 @@ div.home-right-view
 	background-image:url('home-view-bg.png');
 	background-repeat:repeat-x;
 	padding-bottom: 10px;
-	height: 285px;
+	height: 300px;
 	
 }
 
@@ -297,7 +297,7 @@ div.home-left-view
 	background-image:url('home-view-bg.png');
 	background-repeat:repeat-x;
 	padding-bottom: 10px;
-	height: 285px;
+	height: 300px;
 }
 
 div.home-title-view

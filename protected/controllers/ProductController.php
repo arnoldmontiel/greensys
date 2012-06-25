@@ -151,7 +151,7 @@ class ProductController extends Controller
 		$category = strtoupper(str_pad(substr($model->category->description,0,1), 1, "0"));
 		$subCategory = strtoupper(str_pad(substr($model->subCategory->description,0,1), 1, "0"));
 		$brand = strtoupper(str_pad(substr($model->brand->description,0,2), 2, "0"));
-		$productDesc = strtoupper(str_pad(substr($model->description_supplier,0,1), 1, "0"));
+		$productDesc = strtoupper(str_pad(substr($model->productType->description,0,1), 1, "0"));
 		$color = strtoupper(substr($model->color,0,1));
 		$other = strtoupper(substr($model->other,0,1));
 		
@@ -159,7 +159,8 @@ class ProductController extends Controller
 		$newId = Product::model()->countByAttributes( array('Id_category'=>$model->Id_category,
 														 'Id_sub_category'=>$model->Id_sub_category,
 														 'Id_brand'=>$model->Id_brand,
-														));
+														 'Id_product_type'=>$model->Id_product_type,
+													));
 		$newId = str_pad($newId, 2, "0", STR_PAD_LEFT);
 		
 		$model->code = $category . $subCategory . $brand . $productDesc . $newId .  $color . $other;

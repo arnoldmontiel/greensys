@@ -75,7 +75,7 @@ class SubCategoryController extends Controller
 		if(isset($_POST['SubCategory']))
 		{
 			$criteria = new CDbCriteria();
-			$criteria->condition = 'description = upper("'.strtoupper($_POST['SubCategory']['description']).'")';
+			$criteria->condition = 'upper("description") = upper("'.strtoupper($_POST['SubCategory']['description']).'")';
 			$model = SubCategory::model()->find($criteria);
 			if(!isset($model))
 			{
@@ -92,20 +92,19 @@ class SubCategoryController extends Controller
 	}
 	public function actionAjaxAssignToCategory()
 	{
-		$model=new CategorySubCategory();
-	
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
 	
 		if(isset($_POST['Id_sub_category'])&&isset($_POST['Id_category']))
 		{
-			$model->Id_category=$_POST['Id_category'];
-			$model->Id_sub_category=$_POST['Id_sub_category'];
-			if($model->save())
+			$model = CategorySubCategory::model()->findByPk(array('Id_category'=>$_POST['Id_category'],'Id_sub_category'=>$_POST['Id_sub_category']));
+			if(!isset($model))
 			{
-				$modelSubCategory = SubCategory::model()->findByPk($model->Id_sub_category);
-				echo json_encode($model->attributes);
+				$model=new CategorySubCategory();
+				$model->Id_category=$_POST['Id_category'];
+				$model->Id_sub_category=$_POST['Id_sub_category'];
+				$model->save();
 			}
+			$modelSubCategory = SubCategory::model()->findByPk($model->Id_sub_category);
+			echo json_encode($modelSubCategory->attributes);
 		}
 	}
 	
