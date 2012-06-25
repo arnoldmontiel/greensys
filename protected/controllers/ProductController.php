@@ -74,7 +74,6 @@ class ProductController extends Controller
 				if($_FILES['upfile']['size'] > 0)
 					$model->Id_multimedia = $this->saveImage($_FILES['upfile']);
 				
-				$model->Id_volts = 1;
 				if($model->save()){
 					//save links
 					if(isset($_POST['links'])){
@@ -139,7 +138,47 @@ class ProductController extends Controller
 			'ddlRacks'=>$ddlRacks,
 		));
 	}
-
+	public function actionAjaxCreate()
+	{
+		$model=new Product;
+	
+		// Uncomment the following line if AJAX validation is needed
+		$this->performAjaxValidation($model);
+	
+		if(isset($_POST['Product']))
+		{
+			$model->attributes=$_POST['Product'];
+				
+			if(!$model->need_rack)
+				$model->unit_rack = 0;
+				
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				if($model->save()){
+					//save links
+					if(isset($_POST['links'])){
+						$this->saveLinks($_POST['links'], $model->Id);
+					}
+	
+					//save note
+					if(isset($_POST['notes']) && !empty($_POST['notes']))
+						$this->saveNote($_POST['notes'], $model->Id);
+	
+					$this->createCode($model);
+					$transaction->commit();
+					echo json_encode($model->attributes);
+				}
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
+		}
+	
+	}
+	
+	static public function getEntityTypeStatic()
+	{
+		return EntityType::model()->findByAttributes(array('name'=>get_class(Product::model())))->Id;
+	}
 	public function getEntityType()
 	{
 		return EntityType::model()->findByAttributes(array('name'=>get_class(Product::model())))->Id;

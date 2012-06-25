@@ -92,7 +92,8 @@ function () {
 	<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
 		<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
 			Products
-		</div>
+		<?php echo CHtml::link( 'New Product','#',array('onclick'=>'jQuery("#CreateProduct").dialog("open"); return false;'));?>
+			</div>
 		<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
 		<?php
 		echo CHtml::imageButton(
@@ -424,4 +425,55 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	<?php $this->endWidget(); ?>
 
 </div><!-- form -->
-
+<?php 
+	//Product
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'CreateProduct',
+			// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Create Product',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '800',
+					'buttons'=>	array(
+							'Cancelar'=>'js:function(){jQuery("#CreateProduct").dialog( "close" );}',
+							'Grabar'=>'js:function()
+							{
+							jQuery("#wating").dialog("open");
+							jQuery.post("'.Yii::app()->createUrl("product/ajaxCreate").'", $("#product-form").serialize(),
+							function(data) {
+								if(data!=null)
+								{
+									$.fn.yiiGridView.update("product-grid", {
+										data: $(this).serialize()
+									});
+									jQuery("#CreateProduct").dialog( "close" );
+								}
+							jQuery("#wating").dialog("close");
+							},"json"
+					);
+	
+			}'),
+			),
+	));
+	$modelProductPopUp = new Product();
+	$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_product'=>$modelProductPopUp->Id,'Id_entity_type'=>ProductController::getEntityTypeStatic()));
+	$modelNote = new Note;
+	$ddlRacks = array();
+	for($index = 1; $index <= 10; $index++ )
+	{
+		$item['Id'] = $index;
+		$item['description'] = $index;
+		$ddlRacks[$index] = $item;
+	}
+		
+	echo $this->renderPartial('../product/_formPopUp',array(
+			'model'=>$modelProductPopUp,
+			'modelHyperlink'=>$modelHyperlink,
+			'modelNote'=>$modelNote,
+			'ddlRacks'=>$ddlRacks,
+	));
+	
+	
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+	?>
