@@ -26,7 +26,15 @@
 		<b><?php echo CHtml::encode($data->getAttributeLabel('Id_category')); ?>:</b>
 		<?php echo CHtml::encode($data->category->description); ?>
 		<br />
-	
+
+		<b><?php echo CHtml::encode($data->getAttributeLabel('Id_sub_category')); ?>:</b>
+		<?php echo CHtml::encode($data->subCategory->description); ?>
+		<br />
+		
+		<b><?php echo CHtml::encode($data->getAttributeLabel('Id_product_type')); ?>:</b>
+		<?php echo CHtml::encode($data->productType->description); ?>
+		<br />
+		
 		<b><?php echo CHtml::encode($data->getAttributeLabel('Id_nomenclator')); ?>:</b>
 		<?php echo CHtml::encode($data->nomenclator->description); ?>
 		<br />
@@ -38,13 +46,13 @@
 		<b><?php echo CHtml::encode($data->getAttributeLabel('description_supplier')); ?>:</b>
 		<?php echo CHtml::encode($data->description_supplier); ?>
 		<br />
-		
+	
+	</div>
+	<div class="view-right">
 		<b><?php echo CHtml::encode($data->getAttributeLabel('discontinued')); ?>:</b>
 		<?php echo CHtml::encode($formatter->formatBoolean($data->discontinued)); ?>
 		<br />
 	
-	</div>
-	<div class="view-right">
 		<b><?php echo CHtml::encode($data->getAttributeLabel('length')); ?>:</b>
 		<?php echo CHtml::encode($data->length).' '.$um; ?>
 		<br />
