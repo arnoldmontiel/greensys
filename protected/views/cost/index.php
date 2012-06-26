@@ -101,38 +101,39 @@ $('#Importer_Id').change(function(){
 		'filter'=>$model,
 		'columns'=>array(
 	 			'code',
-				array('name'=>'msrp','type'=>'raw',
-	 				'value'=>'number_format(round($data->msrp,4),2)',
-					'htmlOptions'=>array('style'=>'text-align: right;')
-				),
+	 			'description_customer',
 				array('name'=>'dealer_cost','type'=>'raw',
 					'value'=>'number_format(round($data->dealer_cost,4),2)',
 					'htmlOptions'=>array('style'=>'text-align: right;')
 				),
-				array('name'=>'profit_rate','type'=>'raw',
-					'value'=>'number_format(round($data->profit_rate,4),2)',
+				array('name'=>'msrp','type'=>'raw',
+	 				'value'=>'number_format(round($data->msrp,4),2)',
 					'htmlOptions'=>array('style'=>'text-align: right;')
 				),
-	 			array('name'=>'weight','type'=>'raw',
-	 				'value'=>'number_format(round($data->weight,4),2)',
-					'htmlOptions'=>array('style'=>'text-align: right;')
-	 			),
+// 				array('name'=>'profit_rate','type'=>'raw',
+// 					'value'=>'number_format(round($data->profit_rate,4),2)',
+// 					'htmlOptions'=>array('style'=>'text-align: right;')
+// 				),
+// 	 			array('name'=>'weight','type'=>'raw',
+// 	 				'value'=>'number_format(round($data->weight,4),2)',
+// 					'htmlOptions'=>array('style'=>'text-align: right;')
+// 	 			),
 				array('name'=>'cost_air','type'=>'raw',
 					'value'=>'number_format(round($data->cost_air,4),2)',
-					'htmlOptions'=>array('style'=>'text-align: right;')
-				),
-	 			array('name'=>'cost_air_final','type'=>'raw',
-	 				'value'=>'number_format(round($data->cost_air_final,4),2)',
-					'htmlOptions'=>array('style'=>'text-align: right;')
-				),
-				array('name'=>'volume','type'=>'raw',
-	 				'value'=>'number_format(round($data->volume,4),4)',
 					'htmlOptions'=>array('style'=>'text-align: right;')
 				),
 	 			array('name'=>'cost_maritime','type'=>'raw',
 	 				'value'=>'number_format(round($data->cost_maritime,4),2)',
 					'htmlOptions'=>array('style'=>'text-align: right;')
 				),
+				array('name'=>'cost_air_final','type'=>'raw',
+	 				'value'=>'number_format(round($data->cost_air_final,4),2)',
+					'htmlOptions'=>array('style'=>'text-align: right;')
+				),
+// 				array('name'=>'volume','type'=>'raw',
+// 	 				'value'=>'number_format(round($data->volume,4),4)',
+// 					'htmlOptions'=>array('style'=>'text-align: right;')
+// 				),
 	 			array('name'=>'cost_maritime_final','type'=>'raw',
 	 				'value'=>'number_format(round($data->cost_maritime_final,4),2)',
 					'htmlOptions'=>array('style'=>'text-align: right;')
