@@ -92,7 +92,7 @@ function () {
 	<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
 		<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
 			Products
-		<?php echo CHtml::link( 'New Product','#',array('onclick'=>'jQuery("#CreateProduct").dialog("open"); return false;'));?>
+				<?php echo CHtml::link( '(New Product)','#',array('onclick'=>'jQuery("#CreateProduct").dialog("open"); return false;'));?>
 			</div>
 		<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
 		<?php
@@ -435,6 +435,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'autoOpen'=>false,
 					'modal'=>true,
 					'width'=> '800',
+					'height'=> '530',
+					'resizable'=> false,
 					'buttons'=>	array(
 							'Cancelar'=>'js:function(){jQuery("#CreateProduct").dialog( "close" );}',
 							'Grabar'=>'js:function()
