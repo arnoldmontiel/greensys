@@ -39,8 +39,18 @@ class PriceListController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$model = $this->loadModel($id);
+		$modelPriceListItem = new PriceListItem();
+		$modelPriceListItem->unsetAttributes();
+		if(isset($_GET['PriceListItem']))
+		{
+			$modelPriceListItem->attributes = $_GET['PriceListItem']; 
+		}
+		$modelPriceListItem->Id_price_list = $model->Id;
+		 
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$model,
+			'modelPriceListItem'=>$modelPriceListItem,
 		));
 	}
 
