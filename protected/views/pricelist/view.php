@@ -33,3 +33,44 @@ $this->menu=array(
 		),
 ),
 )); ?>
+
+		<?php 
+
+$this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'price-list-item-grid',
+	'dataProvider'=>$modelPriceListItem->searchPriceList(),
+ 	'filter'=>$modelPriceListItem,
+	'summaryText'=>'',
+	'columns'=>array(
+				array(
+ 				            'name'=>'code',
+				            'value'=>'$data->product->code',				 
+				),
+				array(
+ 				            'name'=>'code_supplier',
+				            'value'=>'$data->product->code_supplier',
+				),
+				array(
+ 				            'name'=>'description_customer',
+				            'value'=>'$data->product->description_customer', 
+				),
+				array(
+					'name'=>'msrp',
+					'value'=>'$data->msrp',							
+					'type'=>'raw',					
+			        'htmlOptions'=>array('width'=>5),
+				),
+				array(
+					'name'=>'dealer_cost',
+					'value'=>'$data->dealer_cost',
+					'type'=>'raw',
+			        'htmlOptions'=>array('width'=>5),
+				),
+				array(
+					'name'=>'profit_rate',
+					'value'=>'$data->profit_rate',
+					'type'=>'raw',
+			        'htmlOptions'=>array('width'=>5),
+				),
+			),
+)); ?>
