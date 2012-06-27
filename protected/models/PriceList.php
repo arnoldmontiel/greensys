@@ -11,7 +11,8 @@
  * @property integer $Id_supplier
  * @property integer $Id_price_list_type
  * @property string $description
-
+ * @property integer $Id_importer
+ 
  *
  * The followings are the available model relations:
  * @property Budget[] $budgets
@@ -25,7 +26,6 @@ class PriceList extends CActiveRecord
 	public function beforeSave()
 	{		
 		$this->date_validity = Yii::app()->lc->toDatabase($this->date_validity,'date','small','date',null);//date('Y-m-d',strtotime($this->date_validity));
-		$this->Id_price_list_type = 1;//buy list
 		return parent::beforeSave();
 	}
 	
@@ -64,8 +64,8 @@ class PriceList extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			//array('Id_price_list_type', 'required'),
-			array('validity, Id_supplier, Id_price_list_type', 'numerical', 'integerOnly'=>true),
+			array('Id_price_list_type', 'required'),
+			array('validity, Id_supplier, Id_importer, Id_price_list_type', 'numerical', 'integerOnly'=>true),
 			array('date_creation, date_validity', 'safe'),
 			array('description', 'length', 'max'=>45),
 			array('date_creation','default',
@@ -73,7 +73,7 @@ class PriceList extends CActiveRecord
 		              'setOnEmpty'=>true,'on'=>'insert'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, date_creation, date_validity, validity, Id_supplier, Id_price_list_type, supplier_business_name', 'safe', 'on'=>'search'),
+			array('Id, date_creation, date_validity, validity, Id_supplier, Id_importer, Id_price_list_type, supplier_business_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -88,6 +88,7 @@ class PriceList extends CActiveRecord
 			'budgets' => array(self::HAS_MANY, 'Budget', 'Id_price_list'),
 			'priceListType' => array(self::BELONGS_TO, 'PriceListType', 'Id_price_list_type'),
 			'supplier' => array(self::BELONGS_TO, 'Supplier', 'Id_supplier'),
+			'importer' => array(self::BELONGS_TO, 'Importer', 'Id_importer'),				
 			'priceListItems' => array(self::HAS_MANY, 'PriceListItem', 'Id_price_list'),
 		);
 	}
@@ -103,7 +104,8 @@ class PriceList extends CActiveRecord
 			'date_validity' => 'Date Validity',
 			'validity' => 'Validity',
 			'Id_supplier' => 'Supplier',
-			'Id_price_list_type' => 'Price List Type',
+			'Id_importer'=>'Importer',
+			'Id_price_list_type' => 'Type',
 			'description' => 'Description',
 		
 		);
@@ -112,7 +114,10 @@ class PriceList extends CActiveRecord
 	
 	public function getPriceListDesc()
 	{
-		return $this->description .' - '. $this->supplier->business_name; 
+		if($this->Id_price_list_type==1)
+			return $this->priceListType->name.' - '.$this->description .' - '. $this->supplier->business_name;
+		else
+			return $this->priceListType->name.' - '.$this->description .' - '. $this->importer->contact->description;						 
 	}
 	
 	/**
@@ -131,6 +136,7 @@ class PriceList extends CActiveRecord
 		$criteria->compare('date_validity',$this->date_validity,true);
 		$criteria->compare('validity',$this->validity);
 		$criteria->compare('Id_supplier',$this->Id_supplier);
+		$criteria->compare('Id_importer',$this->Id_importer);		
 		$criteria->compare('Id_price_list_type',$this->Id_price_list_type);
 		$criteria->compare('description',$this->description,true);
 		
@@ -154,6 +160,7 @@ class PriceList extends CActiveRecord
 		$criteria->compare('date_validity',$this->date_validity,true);
 		$criteria->compare('validity',$this->validity);
 		$criteria->compare('Id_supplier',$this->Id_supplier);
+		$criteria->compare('Id_importer',$this->Id_importer);
 		$criteria->compare('Id_price_list_type',$this->Id_price_list_type);
 		$criteria->compare('description',$this->description,true);
 		

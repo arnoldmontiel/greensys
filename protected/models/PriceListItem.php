@@ -10,6 +10,8 @@
  * @property string $msrp
  * @property string $dealer_cost
  * @property string $profit_rate
+ * @property string $maritime_cost
+ * @property string $air_cost
 
  *
  * The followings are the available model relations:
@@ -51,11 +53,11 @@ class PriceListItem extends CActiveRecord
 		return array(
 			array('Id_product, Id_price_list', 'required'),
 			array('Id_product, Id_price_list', 'numerical', 'integerOnly'=>true),
-			array('msrp, dealer_cost, profit_rate', 'length', 'max'=>10),
+			array('msrp, dealer_cost, profit_rate, maritime_cost,air_cost', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, Id_product, Id_price_list, cost, description_customer, code, code_supplier', 'safe'),
-			array('Id, Id_product, Id_price_list, description_customer, code, code_supplier, msrp, dealer_cost, profit_rate', 'safe', 'on'=>'search'),
+			array('Id, Id_product, Id_price_list, description_customer, code, code_supplier, msrp, dealer_cost, profit_rate, maritime_cost,air_cost', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -84,6 +86,8 @@ class PriceListItem extends CActiveRecord
 			'msrp' => 'Msrp',
 			'dealer_cost' => 'Dealer Cost',
 			'profit_rate' => 'Profit Rate',
+			'maritime_cost' => 'Maritime',
+			'air_cost' => 'Air',
 		);
 	}
 
@@ -104,6 +108,8 @@ class PriceListItem extends CActiveRecord
 		$criteria->compare('msrp',$this->msrp,true);
 		$criteria->compare('dealer_cost',$this->dealer_cost,true);
 		$criteria->compare('profit_rate',$this->profit_rate,true);
+		$criteria->compare('maritime_cost',$this->maritime_cost,true);
+		$criteria->compare('air_cost',$this->air_cost,true);
 		
 		
 		return new CActiveDataProvider($this, array(
@@ -123,6 +129,8 @@ class PriceListItem extends CActiveRecord
 		$criteria->compare('t.msrp',$this->msrp);
 		$criteria->compare('t.dealer_cost',$this->dealer_cost);
 		$criteria->compare('t.profit_rate',$this->profit_rate);
+		$criteria->compare('t.maritime_cost',$this->maritime_cost);
+		$criteria->compare('t.air_cost',$this->air_cost);
 		
 		$criteria->with[]='product';
 		$criteria->addSearchCondition("description_customer",$this->description_customer);
@@ -153,5 +161,35 @@ class PriceListItem extends CActiveRecord
 				'criteria'=>$criteria,
 				'sort'=>$sort,
 		));
+	}
+	public function getMaritimePurchaseCost()
+	{
+		if(!isset($this->priceList))	return;
+		$importer = $this->priceList->importer;
+		if(isset($importer))
+		{
+			if(!empty($importer->shippingParameters))
+			{
+				$shippingParameter = $importer->shippingParameters[0];
+				$maritime = $shippingParameter->shippingParameterMaritime;
+				if (isset($this)&&isset($shippingParameter)&&isset($maritime)&&isset($this->product))
+					return $this->dealer_cost+($maritime->cost_measurement_unit*$this->product->length*$this->product->height*$this->product->width);
+			}						
+		}
+	}
+	public function getAirPurchaseCost()
+	{
+		if(!isset($this->priceList))	return;		
+		$importer = $this->priceList->importer;
+		if(isset($importer))
+		{
+			if(!empty($importer->shippingParameters))
+			{
+				$shippingParameter = $importer->shippingParameters[0];
+				$air = $shippingParameter->shippingParameterAir;
+				if (isset($this)&&isset($shippingParameter)&&isset($air)&&isset($this->product))
+					return $this->dealer_cost+($air->cost_measurement_unit*$this->product->weight);		
+			}						
+		}
 	}
 }

@@ -47,8 +47,12 @@ class PriceListController extends Controller
 			$modelPriceListItem->attributes = $_GET['PriceListItem']; 
 		}
 		$modelPriceListItem->Id_price_list = $model->Id;
-		 
-		$this->render('view',array(
+		$view = 'view';
+		if($model->Id_price_list_type==2)
+		{
+			$view ='viewSale';		 	
+		}
+		$this->render($view,array(
 			'model'=>$model,
 			'modelPriceListItem'=>$modelPriceListItem,
 		));
@@ -69,7 +73,12 @@ class PriceListController extends Controller
 		{
 			$model->attributes=$_POST['PriceList'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->Id));
+			{
+				if($model->Id_price_list_type==1)
+					$this->redirect(array('view','id'=>$model->Id));
+				else
+					$this->redirect(array('viewSale','id'=>$model->Id));										
+			}
 		}
 
 		$this->render('create',array(
@@ -218,9 +227,14 @@ class PriceListController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('PriceList');
+		$model = new PriceList();
+		$model->Id_price_list_type = 1;
+		$dataProvider=$model->search();
+		$model->Id_price_list_type = 2;
+		$dataProviderSale=$model->search();
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
+			'dataProviderSale'=>$dataProviderSale,
 		));
 	}
 
@@ -368,6 +382,62 @@ class PriceListController extends Controller
 		
 	}
 	
+	public function actionAjaxAddPriceListItemSale()
+	{
+	
+		$idPriceList = isset($_GET['Id_price_list'])?$_GET['Id_price_list']:'';
+		$idProduct = isset($_GET['Id_product'])?$_GET['Id_product']:'';
+	
+		if(!empty($idPriceList)&&!empty($idProduct))
+		{
+			$priceListItemInDb = PriceListItem::model()->findByAttributes(array('Id_price_list'=>(int) $idPriceList,'Id_product'=>(int)$idProduct));
+			if($priceListItemInDb==null)
+			{
+				$criteria = new CDbCriteria;
+				$criteria->compare('t.Id_product', $idProduct);
+				$criteria->with[]='priceList';
+				$criteria->compare('priceList.Id_price_list_type',1);//purchase
+				//$criteria->compare('priceList.validity',1);
+				$criteria->order = 't.Id_price_list DESC';
+				$priceListItemPurchase = PriceListItem::model()->find($criteria);
+				$product = Product::model()->findByPk($idProduct);
+				if(isset($priceListItemPurchase))
+				{
+					$priceListItem=new PriceListItem();
+					$priceList = PriceList::model()->findByPk($idPriceList);
+					$importer = $priceList->importer;
+					if(!empty($importer->shippingParameters))
+					{
+						$shippingParameter = $importer->shippingParameters[0];
+						$air = $shippingParameter->shippingParameterAir;
+						$maritime = $shippingParameter->shippingParameterMaritime;
+						
+						$maritime_cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$product->length*$product->height*$product->width); 
+						$air_cost = $priceListItemPurchase->dealer_cost+($air->cost_measurement_unit*$product->weight);
+						$priceListItem->attributes =  array('Id_price_list'=>$idPriceList,
+								'Id_product'=>$idProduct,
+								'msrp'=>$priceListItemPurchase->msrp,
+								'dealer_cost'=>$priceListItemPurchase->dealer_cost,
+								'profit_rate'=>$priceListItemPurchase->profit_rate,
+								'maritime_cost'=>$maritime_cost * $priceListItemPurchase->profit_rate,
+								'air_cost'=>$air_cost * $priceListItemPurchase->profit_rate,
+						);
+						$priceListItem->save();						
+					}
+				}
+				else
+				{
+					throw new CDbException('Product must be included in at least one purchase price list');						
+				}
+			}
+			else
+			{
+				throw new CDbException('Item has already been added');
+			}
+		}
+	
+	}
+	
 	
 	public function actionAjaxAddFilteredProducts()
 	{
@@ -437,7 +507,18 @@ class PriceListController extends Controller
 			echo $priceList->description;
 			echo CHtml::closeTag("li");
 			echo CHtml::openTag("li");
-			echo $priceList->supplier->business_name;
+			echo $priceList->priceListType->name;
+			echo CHtml::closeTag("li");
+				
+			echo CHtml::openTag("li");
+			if($priceList->Id_price_list_type=="1")
+			{
+				echo $priceList->supplier->business_name;				
+			}
+			else
+			{
+				echo $priceList->importer->contact->description;				
+			}
 			echo CHtml::closeTag("li");
 							
 			echo CHtml::openTag("li");
@@ -448,6 +529,17 @@ class PriceListController extends Controller
 				
 		}
 	}	
+	public function actionAjaxGetPriceListAttributes()
+	{
+		if(isset($_POST['PriceList']['Id']))
+		{
+			$model = PriceList::model()->findByPk($_POST['PriceList']['Id']);
+			if(isset($model))
+			{
+				echo json_encode($model->attributes);
+			}
+		}
+	}
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated

@@ -11,9 +11,16 @@ $this->menu=array(
 );
 ?>
 
-<h1>Price Lists</h1>
+<h1>Price Lists Purchases</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
+)); ?>
+
+<h1>Price Lists Sales</h1>
+
+<?php $this->widget('zii.widgets.CListView', array(
+	'dataProvider'=>$dataProviderSale,
+	'itemView'=>'_viewSale',
 )); ?>
