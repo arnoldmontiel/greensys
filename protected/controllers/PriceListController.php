@@ -267,17 +267,17 @@ class PriceListController extends Controller
 		if(isset($_GET['Product']))
 			$modelProduct->attributes=$_GET['Product'];
 		
-		
+		$modelPriceList = new PriceList();
 		if(isset($_GET['PriceList'])){
-			$model->Id_price_list=(int)$_GET['PriceList']['Id'];
-			$pl = PriceList::model()->findByPk((int)$_GET['PriceList']['Id']);
-			$modelProduct->Id_supplier = $pl->Id_supplier;
+			$model->Id_price_list=$_GET['PriceList']['Id'];
+			$modelPriceList = PriceList::model()->findByPk($_GET['PriceList']['Id']);
+			$modelProduct->Id_supplier = $modelPriceList->Id_supplier;
 		}
 		
 		$this->render('priceListItem',array(
 					'model'=>$model,
 					'modelProduct'=>$modelProduct,
-			//		'modelPriceListItem'=>$modelPriceListItem
+					'modelPriceList'=>$modelPriceList,
 		));
 		
 	}
@@ -300,6 +300,30 @@ class PriceListController extends Controller
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
+	}
+	public function actionAjaxUpdateMaritimeCost()
+	{
+		$idPriceListItem = $_POST['id_price_list_item'];
+		$maritimeCost = $_POST['maritime_cost'];
+		$priceListItem= PriceListItem::model()->findByPk($idPriceListItem);
+		if(isset($priceListItem))
+		{
+			$priceListItem->maritime_cost = (double) $maritimeCost;
+			$priceListItem->save();
+		}
+		echo json_encode($priceListItem->attributes);
+	}
+	public function actionAjaxUpdateAirCost()
+	{
+		$idPriceListItem = $_POST['id_price_list_item'];
+		$airCost = $_POST['air_cost'];
+		$priceListItem= PriceListItem::model()->findByPk($idPriceListItem);
+		if(isset($priceListItem))
+		{
+			$priceListItem->air_cost = (double) $airCost;
+			$priceListItem->save();
+		}
+		echo json_encode($priceListItem->attributes);
 	}
 	
 	public function actionAjaxUpdateMsrp()
@@ -444,9 +468,7 @@ class PriceListController extends Controller
 	
 		$productFilter = isset($_POST['Product'])?$_POST['Product']:null;
 		$idPriceList = isset($_POST['PriceList'])?(int)$_POST['PriceList']['Id']:null;
-		
-		
-		
+
 		if($productFilter != null && $idPriceList != null){
 			$products = Product::model();
 			$products->attributes = $productFilter;
@@ -455,7 +477,7 @@ class PriceListController extends Controller
 			$products->Id_supplier = $pl->Id_supplier;
 			
 			$prov = $products->searchSummary();
-			$prov->pagination = array('pageSize'=>100);
+			$prov->pagination = false;
 			foreach($prov->getData(true) as $product){
 				$priceListItemInDb = PriceListItem::model()->findByAttributes(array('Id_price_list'=>(int) $idPriceList,'Id_product'=>$product->Id));
 				if($priceListItemInDb==null)
@@ -473,6 +495,102 @@ class PriceListController extends Controller
 		}
 	
 	}
+	public function actionAjaxUpdatePriceListItemGrid()
+	{
+		$modelEmpty = new Product();
+		$model=new PriceListItem();
+		$model->unsetAttributes();  // clear any default values
+		
+		if(isset($_GET['PriceListItem']))
+			$model->attributes=$_GET['PriceListItem'];
+				
+		if(isset($_GET['PriceList']))
+		{
+			$model->Id_price_list= $_GET['PriceList']['Id'];
+		}
+		
+		$this->render('priceListItem',array(
+				'model'=>$model,
+				'modelProduct'=>$modelEmpty,
+		));				
+	}
+	public function actionAjaxUpdateProductGrid()
+	{
+		$modelEmpty = new PriceListItem();
+		$model=new Product();
+		$model->unsetAttributes();  // clear any default values
+		
+		if(isset($_GET['Product']))
+			$model->attributes=$_GET['Product'];
+		
+		if(isset($_GET['PriceList']))
+		{
+			$modelPriceList = PriceList::model()->findByPk($_GET['PriceList']['Id']);
+			$model->Id_supplier = $modelPriceList->Id_supplier;
+		}
+		
+		$this->render('priceListItem',array(
+				'model'=>$modelEmpty,
+				'modelProduct'=>$model,
+		));				
+	}
+	public function actionAjaxAddFilteredProductsSale()
+	{
+	
+		$productFilter = isset($_POST['Product'])?$_POST['Product']:null;
+		$idPriceList = isset($_POST['PriceList'])?(int)$_POST['PriceList']['Id']:null;
+	
+		if(isset($productFilter) && isset($idPriceList))
+		{
+			
+			$modelProduct = Product::model();
+			$modelProduct->attributes = $productFilter;
+	
+			$priceList = PriceList::model()->findByPk($idPriceList);
+			$modelProduct->Id_supplier = $priceList->Id_supplier;
+	
+			$provProduct = $modelProduct->searchSummary();
+			$provProduct->pagination = false;
+			$products = $provProduct->data;
+			foreach($products as $product){
+				$criteria = new CDbCriteria;
+				$criteria->compare('t.Id_product', $product->Id);
+				$criteria->with[]='priceList';
+				$criteria->compare('priceList.Id_price_list_type',1);//purchase
+				//$criteria->compare('priceList.validity',1);
+				$criteria->order = 't.Id_price_list DESC';
+				$priceListItemPurchase = PriceListItem::model()->find($criteria);
+				if(isset($priceListItemPurchase))
+				{
+					$priceListItemInDb = PriceListItem::model()->findByAttributes(array('Id_price_list'=>(int) $idPriceList,'Id_product'=>$product->Id));
+					if(!isset($priceListItemInDb))
+					{
+						$priceListItem=new PriceListItem();
+						$importer = $priceList->importer;
+						if(!empty($importer->shippingParameters))
+						{
+							$shippingParameter = $importer->shippingParameters[0];
+							$air = $shippingParameter->shippingParameterAir;
+							$maritime = $shippingParameter->shippingParameterMaritime;
+								
+							$maritime_cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$product->length*$product->height*$product->width);
+							$air_cost = $priceListItemPurchase->dealer_cost+($air->cost_measurement_unit*$product->weight);
+							$priceListItem->attributes =  array('Id_price_list'=>$idPriceList,
+									'Id_product'=>$product->Id,
+									'msrp'=>$priceListItemPurchase->msrp,
+									'dealer_cost'=>$priceListItemPurchase->dealer_cost,
+									'profit_rate'=>$priceListItemPurchase->profit_rate,
+									'maritime_cost'=>$maritime_cost * $priceListItemPurchase->profit_rate,
+									'air_cost'=>$air_cost * $priceListItemPurchase->profit_rate,
+							);
+							$priceListItem->save();
+						}
+					}						
+				}
+			}
+		}
+	}
+	
 	
 	public function actionAjaxDeleteFilteredProducts()
 	{

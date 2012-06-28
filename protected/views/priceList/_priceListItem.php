@@ -1,14 +1,14 @@
 <?php 
-Yii::app()->clientScript->registerScript(__CLASS__.'#price_list_sale', "
-$('#addAll-sale').hover(
+Yii::app()->clientScript->registerScript(__CLASS__.'#price_list_purchase', "
+$('#addAll').hover(
 function () {
 	$(this).attr('src','images/add_all_blue_light.png');
   },
   function () {
 	$(this).attr('src','images/add_all_blue.png');
-  S}
+  }
 );
-$('#deleteAll-sale').hover(
+$('#deleteAll').hover(
 function () {
 	$(this).attr('src','images/delete_all_blue_light.png');
   },
@@ -30,7 +30,7 @@ function () {
                                 array(
                                 'title'=>'Add current filtered products',
                                 'style'=>'width:30px;',
-                                'id'=>'addAll-sale',
+                                'id'=>'addAll',
                                 	'ajax'=> array(
 										'type'=>'POST',
 										'url'=>PriceListController::createUrl('AjaxAddFilteredProducts'),
@@ -40,7 +40,7 @@ function () {
 														}',
 										'success'=>'js:function(data)
 										{
-											$.fn.yiiGridView.update("price-list-item-grid-sale", {
+											$.fn.yiiGridView.update("price-list-item-grid", {
 												data: $(this).serialize()
 											});
 										}'
@@ -56,32 +56,32 @@ function () {
 
 	<?php		
 	$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'product-grid-sale',
+		'id'=>'product-grid',
 		'dataProvider'=>$modelProduct->searchSummary(),
 		'filter'=>$modelProduct,
 		'summaryText'=>'',	
 		'selectionChanged'=>'js:function(id){
-			$.get(	"'.PriceListController::createUrl('AjaxAddPriceListItemSale').'",
+			$.get(	"'.PriceListController::createUrl('AjaxAddPriceListItem').'",
 					{
-						Id_price_list:$("#PriceList_Id :selected").attr("value"),
-						Id_product:$.fn.yiiGridView.getSelection("product-grid-sale")[0],
+						IdPriceList:$("#PriceList_Id :selected").attr("value"),
+						IdProduct:$.fn.yiiGridView.getSelection("product-grid")
 					}).success(
 						function() 
 						{
-							markAddedRow("product-grid-sale");
+							markAddedRow("product-grid");
 							
-							$.fn.yiiGridView.update("price-list-item-grid-sale", {
+							$.fn.yiiGridView.update("price-list-item-grid", {
 							data: $(this).serialize()
 							});
 							
-							unselectRow("product-grid-sale");		
+							unselectRow("product-grid");		
 						})
 					.error(
-						function(data)
+						function()
 						{
 							$(".messageError").animate({opacity: "show"},2000);
 							$(".messageError").animate({opacity: "hide"},2000);
-							unselectRow("product-grid-sale");
+							unselectRow("product-grid");
 						});
 		}',
 		'columns'=>array(	
@@ -101,7 +101,7 @@ function () {
 				'description_customer',
 				'description_supplier',
 				array(
-					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok-sale", "style"=>"display:none; float:left;", "width"=>"15px", "height"=>"15px"))',
+					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok", "style"=>"display:none; float:left;", "width"=>"15px", "height"=>"15px"))',
 					'type'=>'raw',
 					'htmlOptions'=>array('width'=>20),
 				),
@@ -127,7 +127,7 @@ function () {
                                 array(
                                 'title'=>'Delete current filtered products',
                                 'width'=>'30px',
-                                'id'=>'deleteAll-sale',
+                                'id'=>'deleteAll',
                                 	'ajax'=> array(
 										'type'=>'POST',
 										'url'=>PriceListController::createUrl('AjaxDeleteFilteredProducts'),
@@ -137,7 +137,7 @@ function () {
 														}',
 										'success'=>'js:function(data)
 										{
-											$.fn.yiiGridView.update("price-list-item-grid-sale", {
+											$.fn.yiiGridView.update("price-list-item-grid", {
 												data: $(this).serialize()
 											});
 										}'
@@ -151,12 +151,12 @@ function () {
 		<?php 
 
 $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'price-list-item-grid-sale',
+	'id'=>'price-list-item-grid',
 	'dataProvider'=>$model->searchPriceList(),
  	'filter'=>$model,
 	'summaryText'=>'',
  	'afterAjaxUpdate'=>'function(id, data){
- 										$("#price-list-item-grid-sale").find("input.txtMsrp").each(
+ 										$("#price-list-item-grid").find("input.txtMsrp").each(
 												function(index, item){
 		
 																$(item).keyup(function(){
@@ -192,7 +192,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 																		
 																});
 													});	
-										$("#price-list-item-grid-sale").find("input.txtDealerCost").each(
+										$("#price-list-item-grid").find("input.txtDealerCost").each(
 												function(index, item){
 		
 																$(item).keyup(function(){
@@ -227,52 +227,89 @@ $this->widget('zii.widgets.grid.CGridView', array(
 																		
 																});
 													});	
+// 										$("#price-list-item-grid").find("input.txtProfitRate").each(
+// 												function(index, item){
+		
+// 																$(item).keyup(function(){
+// 			        												validateNumber($(this));
+// 																});
+												
+// 																$(item).change(function(){
+// 																	var target = $(this);
+// 																	$.post(
+// 																		"'.PriceListController::createUrl('AjaxUpdateProfitRate').'",
+// 																		 {
+// 																		 	idPriceListItem: $(this).attr("id"),
+// 																			profitRate:$(this).val()
+// 																		 }).success(
+// 																			 	function() 
+// 																			 		{ 
+// 																			 			$(target).parent().parent().find("#saveok3").animate({opacity: "show"},4000);
+// 																						$(target).parent().parent().find("#saveok3").animate({opacity: "hide"},4000); 
+// 																					});
+																		
+// 																});
+// 													});	
  									}',	
-			'columns'=>array(
+	'columns'=>array(
 				array(
  				            'name'=>'code',
 				            'value'=>'$data->product->code',
-				 
 				),
 				array(
  				            'name'=>'description_customer',
 				            'value'=>'$data->product->description_customer',
- 
 				),
 				array(
 					'name'=>'msrp',
-					'value'=>'$data->msrp',
+					'value'=>
+                                    	'CHtml::textField("txtMsrp",
+												$data->msrp,
+												array(
+														"id"=>$data->Id,
+														"class"=>"txtMsrp",
+														"style"=>"width:50px;text-align:right;",
+													)
+											)',
+							
+					'type'=>'raw',					
+					'htmlOptions'=>array("style"=>"text-align:right;"),
+				),
+				array(
+					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
 					'type'=>'raw',
-			        'htmlOptions'=>array('width'=>5),
+					'htmlOptions'=>array('width'=>25),
 				),
 				array(
 					'name'=>'dealer_cost',
-					'value'=>'$data->dealer_cost',
+					'value'=>
+                                    	'CHtml::textField("txtDealerCost",
+												$data->dealer_cost,
+												array(
+														"id"=>$data->Id,
+														"class"=>"txtDealerCost",
+														"style"=>"width:50px;text-align:right;",
+													)
+											)',
+	
 					'type'=>'raw',
-			        'htmlOptions'=>array('width'=>5),
+					'htmlOptions'=>array("style"=>"text-align:right;"),
+				),
+				array(
+					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok2", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+					'type'=>'raw',
+					'htmlOptions'=>array('width'=>25),
 				),
 				array(
 					'name'=>'profit_rate',
-					'value'=>'$data->profit_rate',
-					'type'=>'raw',
-			        'htmlOptions'=>array('width'=>5),
-				),
-					array(
-							'name'=>'AirPurchaseCost',
-							'value'=>'$data->AirPurchaseCost',
-							'type'=>'raw',
-							'htmlOptions'=>array('width'=>5),
-					),
-						
-				array(
-					'name'=>'air_cost',
 					'value'=>
-                                    	'CHtml::textField("txtAirCost",
-												$data->air_cost,
+                                    	'CHtml::textField("txtProfitRate",
+												$data->profit_rate,
 												array(
 														"id"=>$data->Id,
-														"class"=>"pli-air-cost",
-														"style"=>"width:50px",
+														"class"=>"txtProfitRate",
+														"disabled"=>"disabled",
+														"style"=>"width:50px;text-align:right;",
 													)
 											)',
 
@@ -281,34 +318,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			        'htmlOptions'=>array('width'=>5),
 				),
 				array(
-					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok1-sale", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
-					'type'=>'raw',
-					'htmlOptions'=>array('width'=>25),
-					),
-				array(
-					'name'=>'MaritimePurchaseCost',
-					'value'=>'$data->MaritimePurchaseCost',
-					'type'=>'raw',
-			        'htmlOptions'=>array('width'=>5),
-				),
-				array(
-					'name'=>'maritime_cost',
-					'value'=>
-                                    	'CHtml::textField("txtMaritimeCost",
-												$data->maritime_cost,
-												array(
-														"id"=>$data->Id,
-														"class"=>"pli-maritime-cost",
-														"style"=>"width:50px",
-													)
-											)',
-
-					'type'=>'raw',
-
-			        'htmlOptions'=>array('width'=>5),
-				),
-				array(
-					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok2-sale", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok3", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
 					'type'=>'raw',
 					'htmlOptions'=>array('width'=>25),
 				),
@@ -319,7 +329,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					(
 					        'delete' => array
 							(
-					            'url'=>'Yii::app()->createUrl("pricelist/AjaxDeletePriceListItem", array("id"=>$data->Id))',
+					            'url'=>'Yii::app()->createUrl("priceList/AjaxDeletePriceListItem", array("id"=>$data->Id))',
 							),
 					),
 				),

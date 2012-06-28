@@ -14,11 +14,11 @@ $this->menu=array(
 $this->showSideBar = true;
 
 Yii::app()->clientScript->registerScript(__CLASS__.'#price_list_assign', "
-$('#PriceList_Id').change(function(){
-	
-	if($(this).val()!= ''){
+function loadPage()
+	{
+	if($('#PriceList_Id').val()!= ''){
 		$.post('".PriceListController::createUrl('AjaxGetPriceListAttributes')."',
-			$(this).serialize(),
+			$('#PriceList_Id').serialize(),
 			function(data) 
 			{
 				if(data.Id_price_list_type == '1')
@@ -72,6 +72,12 @@ $('#PriceList_Id').change(function(){
 	}
 	return false;
 }
+
+loadPage();
+		
+$('#PriceList_Id').change(function(){
+		loadPage();
+}	
 );
 
 ");
@@ -82,18 +88,15 @@ $('#PriceList_Id').change(function(){
 		'id'=>'priceList-form',
 		'enableAjaxValidation'=>true,
 ));
-		
-		$priceListmodel= PriceList::model();
-		$priceListDB= PriceList::model()->findAll();
-		?>
+?>
 	
-	<div id="priceList" style="margin-bottom: 5px">
-		
-		<?php	$priceLists = CHtml::listData($priceListDB, 'Id', 'PriceListDesc');?>
-
-		<?php echo $form->labelEx($priceListmodel,'Price List'); ?>
-
-		<?php echo $form->dropDownList($priceListmodel, 'Id', $priceLists,		
+	<div id="priceList" style="margin-bottom: 5px">		
+		<?php
+			$priceListDB= PriceList::model()->findAll();
+			$priceLists = CHtml::listData($priceListDB, 'Id', 'PriceListDesc');
+		?>
+		<?php echo $form->labelEx($modelPriceList,'Price List'); ?>
+		<?php echo $form->dropDownList($modelPriceList, 'Id', $priceLists,		
 			array(
 				'prompt'=>'Select a Price List'
 			)		

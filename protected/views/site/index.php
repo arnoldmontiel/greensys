@@ -67,16 +67,16 @@
 			<?php echo Yii::app()->lc->t('Price List');?>
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Manage'),array('/pricelist/admin'));?>
+			<?php echo CHtml::link(Yii::app()->lc->t('Manage'),array('/priceList/admin'));?>
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Create'),array('/pricelist/create'));?>			
+			<?php echo CHtml::link(Yii::app()->lc->t('Create'),array('/priceList/create'));?>			
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('List'),array('/pricelist/index'));?>
+			<?php echo CHtml::link(Yii::app()->lc->t('List'),array('/priceList/index'));?>
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Assign Products'),array('/pricelist/priceListItem'));?>
+			<?php echo CHtml::link(Yii::app()->lc->t('Assign Products'),array('/priceList/priceListItem'));?>
 			</div>
 		</div><!-- end  home-left-view -->
 		<div class="home-right-view" >

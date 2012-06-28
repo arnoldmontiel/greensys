@@ -1,6 +1,6 @@
 <?php 
-Yii::app()->clientScript->registerScript(__CLASS__.'#price_list_purchase', "
-$('#addAll').hover(
+Yii::app()->clientScript->registerScript(__CLASS__.'#price_list_sale', "
+$('#addAll-sale').hover(
 function () {
 	$(this).attr('src','images/add_all_blue_light.png');
   },
@@ -8,7 +8,7 @@ function () {
 	$(this).attr('src','images/add_all_blue.png');
   }
 );
-$('#deleteAll').hover(
+$('#deleteAll-sale').hover(
 function () {
 	$(this).attr('src','images/delete_all_blue_light.png');
   },
@@ -30,17 +30,17 @@ function () {
                                 array(
                                 'title'=>'Add current filtered products',
                                 'style'=>'width:30px;',
-                                'id'=>'addAll',
+                                'id'=>'addAll-sale',
                                 	'ajax'=> array(
 										'type'=>'POST',
-										'url'=>PriceListController::createUrl('AjaxAddFilteredProducts'),
+										'url'=>PriceListController::createUrl('AjaxAddFilteredProductsSale'),
 										'beforeSend'=>'function(){
 													if(!confirm("Are you sure you want to add all filtered products?")) 
 														return false;
 														}',
 										'success'=>'js:function(data)
 										{
-											$.fn.yiiGridView.update("price-list-item-grid", {
+											$.fn.yiiGridView.update("price-list-item-grid-sale", {
 												data: $(this).serialize()
 											});
 										}'
@@ -56,32 +56,33 @@ function () {
 
 	<?php		
 	$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'product-grid',
+		'id'=>'product-grid-sale',
 		'dataProvider'=>$modelProduct->searchSummary(),
 		'filter'=>$modelProduct,
+		//'ajaxUrl'=>PriceListController::createUrl('AjaxUpdateProductGrid'),				
 		'summaryText'=>'',	
 		'selectionChanged'=>'js:function(id){
-			$.get(	"'.PriceListController::createUrl('AjaxAddPriceListItem').'",
+			$.get(	"'.PriceListController::createUrl('AjaxAddPriceListItemSale').'",
 					{
-						IdPriceList:$("#PriceList_Id :selected").attr("value"),
-						IdProduct:$.fn.yiiGridView.getSelection("product-grid")
+						Id_price_list:$("#PriceList_Id :selected").attr("value"),
+						Id_product:$.fn.yiiGridView.getSelection("product-grid-sale")[0],
 					}).success(
 						function() 
 						{
-							markAddedRow("product-grid");
+							markAddedRow("product-grid-sale");
 							
-							$.fn.yiiGridView.update("price-list-item-grid", {
-							data: $(this).serialize()
+							$.fn.yiiGridView.update("price-list-item-grid-sale", {
+							data: $(this).serialize()+$("#PriceList_Id").serialize()
 							});
 							
-							unselectRow("product-grid");		
+							unselectRow("product-grid-sale");		
 						})
 					.error(
-						function()
+						function(data)
 						{
 							$(".messageError").animate({opacity: "show"},2000);
 							$(".messageError").animate({opacity: "hide"},2000);
-							unselectRow("product-grid");
+							unselectRow("product-grid-sale");
 						});
 		}',
 		'columns'=>array(	
@@ -101,7 +102,7 @@ function () {
 				'description_customer',
 				'description_supplier',
 				array(
-					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok", "style"=>"display:none; float:left;", "width"=>"15px", "height"=>"15px"))',
+					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok-sale", "style"=>"display:none; float:left;", "width"=>"15px", "height"=>"15px"))',
 					'type'=>'raw',
 					'htmlOptions'=>array('width'=>20),
 				),
@@ -127,7 +128,7 @@ function () {
                                 array(
                                 'title'=>'Delete current filtered products',
                                 'width'=>'30px',
-                                'id'=>'deleteAll',
+                                'id'=>'deleteAll-sale',
                                 	'ajax'=> array(
 										'type'=>'POST',
 										'url'=>PriceListController::createUrl('AjaxDeleteFilteredProducts'),
@@ -137,7 +138,7 @@ function () {
 														}',
 										'success'=>'js:function(data)
 										{
-											$.fn.yiiGridView.update("price-list-item-grid", {
+											$.fn.yiiGridView.update("price-list-item-grid-sale", {
 												data: $(this).serialize()
 											});
 										}'
@@ -149,16 +150,15 @@ function () {
 		</div>
 		</div>
 		<?php 
-
-$this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'price-list-item-grid',
+	$this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'price-list-item-grid-sale',
+	//'ajaxUrl'=>PriceListController::createUrl('AjaxUpdatePriceListItemGrid'),
 	'dataProvider'=>$model->searchPriceList(),
  	'filter'=>$model,
 	'summaryText'=>'',
  	'afterAjaxUpdate'=>'function(id, data){
- 										$("#price-list-item-grid").find("input.txtMsrp").each(
+ 										$("#price-list-item-grid-sale").find("input.txtMaritimeCost").each(
 												function(index, item){
-		
 																$(item).keyup(function(){
 			        												validateNumber($(this));
 																});
@@ -166,33 +166,22 @@ $this->widget('zii.widgets.grid.CGridView', array(
 																$(item).change(function(){
 																	
 																	var target = $(this);
-																	var profitRate = 0;
-																	
-																	if($(this).parent().parent().find("input.txtDealerCost").val() > 0){
-																		profitRate = ($(this).val() / $(this).parent().parent().find("input.txtDealerCost").val()).toFixed(2);
-																	}
 																	
 																	$.post(
-																		"'.PriceListController::createUrl('AjaxUpdateMsrp').'",
+																		"'.PriceListController::createUrl('AjaxUpdateMaritimeCost').'",
 																		 {
-																		 	idPriceListItem: $(this).attr("id"),
-																			msrp:$(this).val(),
-																			profitRate: profitRate
+																		 	id_price_list_item: $(this).attr("id"),
+																			maritime_cost:$(this).val()
 																		 }).success(
 																			 	function() 
 																			 		{ 
-																			 			$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000);
-																						$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000);
-																						if(profitRate> 0){
-																							$(target).parent().parent().find("input.txtProfitRate").val(profitRate);
-																							$(target).parent().parent().find("#saveok3").animate({opacity: "show"},4000);
- 																							$(target).parent().parent().find("#saveok3").animate({opacity: "hide"},4000);
-																						}
+																			 			$(target).parent().parent().find("#saveok2-sale").animate({opacity: "show"},4000,
+																						function(){$(target).parent().parent().find("#saveok2-sale").animate({opacity: "hide"},4000);});																						
 																					});
 																		
 																});
 													});	
-										$("#price-list-item-grid").find("input.txtDealerCost").each(
+										$("#price-list-item-grid-sale").find("input.txtAirCost").each(
 												function(index, item){
 		
 																$(item).keyup(function(){
@@ -201,57 +190,23 @@ $this->widget('zii.widgets.grid.CGridView', array(
 												
 																$(item).change(function(){
 																	var target = $(this);
-																	var profitRate = 0;
-																	
-																	if($(this).val() > 0){
-																		profitRate = ($(this).parent().parent().find("input.txtMsrp").val() / $(this).val()).toFixed(2);
-																	}
 																	
 																	$.post(
-																		"'.PriceListController::createUrl('AjaxUpdateDealerCost').'",
+																		"'.PriceListController::createUrl('AjaxUpdateAirCost').'",
 																		 {
-																		 	idPriceListItem: $(this).attr("id"),
-																			dealerCost:$(this).val(),
-																			profitRate: profitRate
+																		 	id_price_list_item: $(this).attr("id"),
+																			air_cost:$(this).val()
 																		 }).success(
 																			 	function() 
 																			 		{ 
-																			 			$(target).parent().parent().find("#saveok2").animate({opacity: "show"},4000);
-																						$(target).parent().parent().find("#saveok2").animate({opacity: "hide"},4000);
-																						if(profitRate> 0){
-																							$(target).parent().parent().find("input.txtProfitRate").val(profitRate);
-																							$(target).parent().parent().find("#saveok3").animate({opacity: "show"},4000);
- 																							$(target).parent().parent().find("#saveok3").animate({opacity: "hide"},4000);
-																						} 
+																			 			$(target).parent().parent().find("#saveok1-sale").animate({opacity: "show"},4000,
+																						function(){$(target).parent().parent().find("#saveok1-sale").animate({opacity: "hide"},4000);});																						
 																					});
 																		
 																});
 													});	
-// 										$("#price-list-item-grid").find("input.txtProfitRate").each(
-// 												function(index, item){
-		
-// 																$(item).keyup(function(){
-// 			        												validateNumber($(this));
-// 																});
-												
-// 																$(item).change(function(){
-// 																	var target = $(this);
-// 																	$.post(
-// 																		"'.PriceListController::createUrl('AjaxUpdateProfitRate').'",
-// 																		 {
-// 																		 	idPriceListItem: $(this).attr("id"),
-// 																			profitRate:$(this).val()
-// 																		 }).success(
-// 																			 	function() 
-// 																			 		{ 
-// 																			 			$(target).parent().parent().find("#saveok3").animate({opacity: "show"},4000);
-// 																						$(target).parent().parent().find("#saveok3").animate({opacity: "hide"},4000); 
-// 																					});
-																		
-// 																});
-// 													});	
  									}',	
-	'columns'=>array(
+			'columns'=>array(
 				array(
  				            'name'=>'code',
 				            'value'=>'$data->product->code',
@@ -264,56 +219,38 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				),
 				array(
 					'name'=>'msrp',
-					'value'=>
-                                    	'CHtml::textField("txtMsrp",
-												$data->msrp,
-												array(
-														"id"=>$data->Id,
-														"class"=>"txtMsrp",
-														"style"=>"width:50px",
-													)
-											)',
-							
+					'value'=>'$data->msrp',
 					'type'=>'raw',
-					
-			        'htmlOptions'=>array('width'=>5),
-				),
-				array(
-					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
-					'type'=>'raw',
-					'htmlOptions'=>array('width'=>25),
+			        'htmlOptions'=>array("style"=>"width:50px;text-align:right;"),
 				),
 				array(
 					'name'=>'dealer_cost',
-					'value'=>
-                                    	'CHtml::textField("txtDealerCost",
-												$data->dealer_cost,
-												array(
-														"id"=>$data->Id,
-														"class"=>"txtDealerCost",
-														"style"=>"width:50px",
-													)
-											)',
-	
+					'value'=>'$data->dealer_cost',
 					'type'=>'raw',
-	
-			        'htmlOptions'=>array('width'=>5),
-				),
-				array(
-					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok2", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
-					'type'=>'raw',
-					'htmlOptions'=>array('width'=>25),
+			        'htmlOptions'=>array("style"=>"width:50px;text-align:right;"),
 				),
 				array(
 					'name'=>'profit_rate',
+					'value'=>'$data->profit_rate',
+					'type'=>'raw',
+			        'htmlOptions'=>array("style"=>"width:50px;text-align:right;"),
+				),
+					array(
+							'name'=>'AirPurchaseCost',
+							'value'=>'$data->AirPurchaseCost',
+							'type'=>'raw',
+							'htmlOptions'=>array("style"=>"width:50px;text-align:right;"),
+					),
+						
+				array(
+					'name'=>'air_cost',
 					'value'=>
-                                    	'CHtml::textField("txtProfitRate",
-												$data->profit_rate,
+                                    	'CHtml::textField("txtAirCost",
+												$data->air_cost,
 												array(
 														"id"=>$data->Id,
-														"class"=>"txtProfitRate",
-														"disabled"=>"disabled",
-														"style"=>"width:50px",
+														"class"=>"txtAirCost",
+														"style"=>"width:50px;text-align:right;",
 													)
 											)',
 
@@ -322,7 +259,34 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			        'htmlOptions'=>array('width'=>5),
 				),
 				array(
-					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok3", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok1-sale", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+					'type'=>'raw',
+					'htmlOptions'=>array('width'=>25),
+					),
+				array(
+					'name'=>'MaritimePurchaseCost',
+					'value'=>'$data->MaritimePurchaseCost',
+					'type'=>'raw',
+			        'htmlOptions'=>array("style"=>"width:50px;text-align:right;"),
+				),
+				array(
+					'name'=>'maritime_cost',
+					'value'=>
+                                    	'CHtml::textField("txtMaritimeCost",
+												$data->maritime_cost,
+												array(
+														"id"=>$data->Id,
+														"class"=>"txtMaritimeCost",
+														"style"=>"width:50px;text-align:right;",
+													)
+											)',
+
+					'type'=>'raw',
+
+			        'htmlOptions'=>array('width'=>5),
+				),
+				array(
+					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok2-sale", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
 					'type'=>'raw',
 					'htmlOptions'=>array('width'=>25),
 				),
@@ -333,7 +297,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					(
 					        'delete' => array
 							(
-					            'url'=>'Yii::app()->createUrl("pricelist/AjaxDeletePriceListItem", array("id"=>$data->Id))',
+					            'url'=>'Yii::app()->createUrl("priceList/AjaxDeletePriceListItem", array("id"=>$data->Id))',
 							),
 					),
 				),

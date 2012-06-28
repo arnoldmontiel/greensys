@@ -173,7 +173,10 @@ class PriceListItem extends CActiveRecord
 				$shippingParameter = $importer->shippingParameters[0];
 				$maritime = $shippingParameter->shippingParameterMaritime;
 				if (isset($this)&&isset($shippingParameter)&&isset($maritime)&&isset($this->product))
-					return $this->dealer_cost+($maritime->cost_measurement_unit*$this->product->length*$this->product->height*$this->product->width);
+				{
+					$cost = $this->dealer_cost+($maritime->cost_measurement_unit*$this->product->length*$this->product->height*$this->product->width);
+					return number_format(round($cost,4),2);
+				}
 			}						
 		}
 	}
@@ -188,7 +191,10 @@ class PriceListItem extends CActiveRecord
 				$shippingParameter = $importer->shippingParameters[0];
 				$air = $shippingParameter->shippingParameterAir;
 				if (isset($this)&&isset($shippingParameter)&&isset($air)&&isset($this->product))
-					return $this->dealer_cost+($air->cost_measurement_unit*$this->product->weight);		
+				{
+					$cost = $this->dealer_cost+($air->cost_measurement_unit*$this->product->weight);		
+					return number_format(round($cost,4),2);
+				}
 			}						
 		}
 	}

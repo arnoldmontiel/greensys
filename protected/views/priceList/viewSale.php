@@ -10,7 +10,7 @@ $this->menu=array(
 	array('label'=>'Update PriceList', 'url'=>array('update', 'id'=>$model->Id)),
 	array('label'=>'Delete PriceList', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage PriceList', 'url'=>array('admin')),
-	array('label'=>'Assing Products', 'url'=>array('priceListItem')),
+	array('label'=>'Assing Products', 'url'=>array('priceListItem','PriceList'=>array('Id'=>$model->Id))),
 	array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
 );
 ?>
@@ -21,15 +21,19 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'description',
+		array('label'=>$model->getAttributeLabel('Id_price_list_type'),
+			'type'=>'raw',
+			'value'=>$model->priceListType->name,
+		),
 		'date_creation',
 		'date_validity',
 		array('label'=>$model->getAttributeLabel('validity'),
 			'type'=>'raw',
 			'value'=>CHtml::checkBox("validity",$model->validity,array("disabled"=>"disabled"))
 		),
-		array('label'=>$model->getAttributeLabel('Id_supplier'),
+		array('label'=>$model->getAttributeLabel('Id_importer'),
 			'type'=>'raw',
-			'value'=>$model->supplier->business_name
+			'value'=>$model->importer->contact->description
 		),
 ),
 )); ?>
@@ -72,5 +76,17 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'type'=>'raw',
 			        'htmlOptions'=>array('width'=>5),
 				),
-			),
+				array(
+					'name'=>'air_cost',
+					'value'=>'$data->air_cost',
+					'type'=>'raw',
+			        'htmlOptions'=>array('width'=>5),
+				),
+				array(
+					'name'=>'maritime_cost',
+					'value'=>'$data->maritime_cost',
+					'type'=>'raw',
+			        'htmlOptions'=>array('width'=>5),
+				),
+	),
 )); ?>

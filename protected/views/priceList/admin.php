@@ -36,9 +36,14 @@ $names=$model->attributeNames();
 	'columns'=>array(
 		array(
 			'name'=>'supplier_business_name',
-			'value'=>'$data->supplier->business_name',
+			'value'=>'isset($data->supplier)?$data->supplier->business_name:""',
+		),
+		array(
+			'name'=>'Id_importer',
+			'value'=>'isset($data->importer)?$data->importer->contact->description:""',
 		),
 		'description',
+		'Id_price_list_type',
 		'date_creation',
 		'date_validity',
  		array(
