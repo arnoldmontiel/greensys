@@ -104,7 +104,6 @@ class PriceListController extends Controller
 		if(isset($_GET['PriceListItem']))
 			$modelPriceListItem->attributes=$_GET['PriceListItem'];
 	
-		
 		if(isset($_GET['PriceList'])){
 			$modelToClone->attributes=$_GET['PriceList'];
 		}
@@ -150,6 +149,7 @@ class PriceListController extends Controller
 			}
 	
 		}
+		$modelToClone->Id_price_list_type= 1;
 	
 		$this->render('clonePriceList',array(
 				'model'=>$model,

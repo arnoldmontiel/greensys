@@ -68,7 +68,9 @@ $('#Importer_Id').change(function(){
 <h1>Product Cost</h1>
 <div id="priceList" style="margin-bottom: 5px; display: inline-block">
 	
-	<?php $priceLists = CHtml::listData($modelPriceList->findAll(), 'Id', 'PriceListDesc');?>
+	<?php
+		$priceLists = CHtml::listData(PriceList::model()->findAllByAttributes(array('Id_price_list_type'=>1)), 'Id', 'PriceListDesc');
+	?>
 
 	<?php $form->labelEx($modelPriceList,'Price List');?>
 

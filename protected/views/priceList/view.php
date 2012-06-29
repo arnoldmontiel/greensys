@@ -58,19 +58,19 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'name'=>'msrp',
 					'value'=>'$data->msrp',							
 					'type'=>'raw',					
-			        'htmlOptions'=>array('width'=>5),
+			        'htmlOptions'=>array('style'=>'text-align: right;'),
 				),
 				array(
 					'name'=>'dealer_cost',
 					'value'=>'$data->dealer_cost',
 					'type'=>'raw',
-			        'htmlOptions'=>array('width'=>5),
+			        'htmlOptions'=>array('style'=>'text-align: right;'),
 				),
 				array(
 					'name'=>'profit_rate',
 					'value'=>'$data->profit_rate',
 					'type'=>'raw',
-			        'htmlOptions'=>array('width'=>5),
+			        'htmlOptions'=>array('style'=>'text-align: right;'),
 				),
 			),
 )); ?>
