@@ -43,7 +43,10 @@ $names=$model->attributeNames();
 			'value'=>'isset($data->importer)?$data->importer->contact->description:""',
 		),
 		'description',
-		'Id_price_list_type',
+		array(
+			'name'=>'Id_price_list_type',
+			'value'=>'isset($data->priceListType)?$data->priceListType->name:""',
+		),
 		'date_creation',
 		'date_validity',
  		array(
