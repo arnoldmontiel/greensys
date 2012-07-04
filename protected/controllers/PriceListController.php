@@ -78,6 +78,7 @@ class PriceListController extends Controller
 			}
 		}
 
+		$model->validity=1;
 		$this->render('create',array(
 			'model'=>$model,
 		));
