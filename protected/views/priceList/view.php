@@ -34,8 +34,7 @@ $this->menu=array(
 ),
 )); ?>
 
-		<?php 
-
+<?php 
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'price-list-item-grid',
 	'dataProvider'=>$modelPriceListItem->searchPriceList(),

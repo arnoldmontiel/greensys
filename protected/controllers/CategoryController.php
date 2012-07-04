@@ -38,8 +38,19 @@ class CategoryController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$modelCategorySubCategory = new CategorySubCategory();
+		$modelCategorySubCategory->Id_category = $id;
+		if(isset($_GET['CategorySubCategory']))
+		{
+			$modelCategorySubCategory->attributes =$_GET['CategorySubCategory'];
+			if(isset($_GET['CategorySubCategory']['subCategory_description']))
+				$modelCategorySubCategory->subCategory_description = $_GET['CategorySubCategory']['subCategory_description'];
+			if(isset($_GET['CategorySubCategory']['category_description']))
+				$modelCategorySubCategory->category_description = $_GET['CategorySubCategory']['category_description'];
+		}		
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
+				'modelCategorySubCategory'=>$modelCategorySubCategory,
 		));
 	}
 
@@ -173,20 +184,21 @@ class CategoryController extends Controller
 
 	public function actionAssignSubCategory()
 	{
-		$cmodel=new Category;
 		$model=new Category('search');
-		if(isset($_GET['AreaCategory']))
-			$model->attributes=$_GET['AreaCategory'];
 		
 		// Uncomment the following line if AJAX validation is needed
-		$this->performAjaxValidation($model);
+		//$this->performAjaxValidation($model);
 		$dataProvider=new CActiveDataProvider('Category');
 		$dataProviderSubCategory=new CActiveDataProvider('SubCategory');
 		
+		if(isset($_GET['Category']['Id']))
+		{
+			$model->Id = $_GET['Category']['Id'];
+		}
 		$this->render('assignSubCategory',array(
 						'dataProvider'=>$dataProvider,
 						'dataProviderSubCategory'=>$dataProviderSubCategory,
-						'model'=>$cmodel //model for creation
+						'model'=>$model
 		));
 	}
 	

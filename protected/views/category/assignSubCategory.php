@@ -10,6 +10,31 @@ $this->menu=array(
 );
 $this->trashDraggableId = 'ddlAssigment';
 
+Yii::app()->clientScript->registerScript(__CLASS__.'#Product', "
+	loadAssigned();
+	function loadAssigned()
+	{
+		if($('#Category_Id :selected').attr('value')=='')
+		{
+			$('#ddlAssigment').html('');
+			$('#Display').animate({opacity: 'hide'},'slow');
+		}
+		else
+		{
+			$.post('".CategoryController::createUrl('AjaxFillCategorySubCat')."',$('#Category_Id').serialize(),
+				function(data){
+					$('#ddlAssigment').html(data);
+					$('#Display' ).animate({opacity: 'show'},'slow');
+				}
+			)
+		}
+	}
+	$('#Category_Id').change(function(){
+		loadAssigned();
+	})
+		
+");
+
 ?>
 
 <div class="form">
@@ -26,25 +51,7 @@ $this->trashDraggableId = 'ddlAssigment';
 		<?php echo $form->labelEx($model,'Category'); ?>
 		<?php echo $form->dropDownList($model, 'Id', CHtml::listData($model->findAll(), 'Id', 'description'),		
 			array(
-				'ajax' => array(
-				'type'=>'POST',
-				'url'=>CategoryController::createUrl('AjaxFillCategorySubCat'),
-				'update'=>'#ddlAssigment', 
-				'success'=>'js:function(data)
-				{
-					if($("#Category_Id :selected").attr("value")=="")
-					{
-						$("#ddlAssigment").html(data);
-						$( "#Display" ).animate({opacity: "hide"},"slow");
-					}
-					else
-					{
-						$("#ddlAssigment").html(data);
-						$( "#Display" ).animate({opacity: "show"},"slow");
-					}
-				}',
-				//leave out the data key to pass all form values through
-				),'prompt'=>'Select a Category'
+				'prompt'=>'Select a Category'
 			)		
 		);
 		?>

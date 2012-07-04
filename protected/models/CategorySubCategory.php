@@ -9,6 +9,9 @@
  */
 class CategorySubCategory extends CActiveRecord
 {
+	public $category_description;
+	public $subCategory_description;
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -39,7 +42,7 @@ class CategorySubCategory extends CActiveRecord
 			array('Id_category, Id_sub_category', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id_category, Id_sub_category', 'safe', 'on'=>'search'),
+			array('Id_category, Id_sub_category,category_description,subCategory_description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,8 +65,11 @@ class CategorySubCategory extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'Id_category' => 'Id Category',
-			'Id_sub_category' => 'Id Sub Category',
+			'Id_category' => 'Category',
+			'Id_sub_category' => 'Sub Category',
+			'category_description' => 'Category',
+			'subCategory_description' => 'Sub Category',
+				
 		);
 	}
 
@@ -80,7 +86,11 @@ class CategorySubCategory extends CActiveRecord
 
 		$criteria->compare('Id_category',$this->Id_category);
 		$criteria->compare('Id_sub_category',$this->Id_sub_category);
-
+		$criteria->with[]='category';
+		$criteria->compare('category.description',$this->category_description,true);
+		$criteria->with[]='subCategory';
+		$criteria->compare('subCategory.description',$this->subCategory_description,true);
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
