@@ -15,7 +15,7 @@ function selectSpecificRow(idGrid, idRow)
 	var index = 0;
 	$("#"+idGrid).find('.keys span').each(function(i)
 	{
-		if(  "'" + idRow + "'" == $(this).text())
+		if(  "" + idRow + "" == $(this).text())
 			return false;
 		index++;
 	});
