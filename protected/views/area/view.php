@@ -10,9 +10,9 @@ $this->menu=array(
 	array('label'=>'Update Area', 'url'=>array('update', 'id'=>$model->Id)),
 	array('label'=>'Delete Area', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Area', 'url'=>array('admin')),
-	array('label'=>'Assign Products', 'url'=>array('productArea')),
-	array('label'=>'Assign Categories', 'url'=>array('categoryArea')),
-	array('label'=>'Assign Services', 'url'=>array('serviceArea')),
+	array('label'=>'Assign Products', 'url'=>array('productArea','Area'=>array('Id'=>$model->Id))),
+	array('label'=>'Assign Categories', 'url'=>array('categoryArea','Area'=>array('Id'=>$model->Id))),
+	array('label'=>'Assign Services', 'url'=>array('serviceArea','Area'=>array('Id'=>$model->Id))),
 );
 ?>
 

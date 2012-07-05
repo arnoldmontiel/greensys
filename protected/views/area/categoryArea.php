@@ -11,6 +11,30 @@ $this->menu=array(
 	array('label'=>'Assign Services', 'url'=>array('serviceArea')),
 );
 $this->trashDraggableId = 'ddlAssigment';
+Yii::app()->clientScript->registerScript(__CLASS__.'#category-area', "
+		function loadAssigned()
+		{
+			if($('#Area_Id :selected').attr('value')=='')
+			{
+				$('#ddlAssigment').html('');
+				$('#Display').animate({opacity: 'hide'},'slow');
+			}
+			else
+			{
+				$.post('".AreaController::createUrl('AjaxFillCategoryArea')."',$('#Area_Id').serialize(),
+					function(data){
+						$('#ddlAssigment').html(data);
+						$('#Display' ).animate({opacity: 'show'},'slow');
+					}
+				)
+			}
+		}
+		loadAssigned();
+		$('#Area_Id').change(function(){
+				loadAssigned();
+			}
+		);
+");
 
 ?>
 
@@ -20,34 +44,10 @@ $this->trashDraggableId = 'ddlAssigment';
 		'enableAjaxValidation'=>true,
 	)); ?>
 
-	<?php 	// Organize the dataProvider data into a Zii-friendly array
-		$items = CHtml::listData($dataProvider->getData(), 'Id', 'description');
-		?>
 	<div style="row;width:300px;margin:2px;">
-		
 		<?php echo $form->labelEx($model,'Area'); ?>
 		<?php echo $form->dropDownList($model, 'Id', CHtml::listData($model->findAll(), 'Id', 'description'),		
-			array(
-				'ajax' => array(
-				'type'=>'POST',
-				'url'=>AreaController::createUrl('AjaxFillCategoryArea'),
-				'update'=>'#ddlAssigment', 
-				'success'=>'js:function(data)
-				{
-					if($("#Area_Id :selected").attr("value")=="")
-					{
-						$("#ddlAssigment").html(data);
-						$( "#Display" ).animate({opacity: "hide"},"slow");
-					}
-					else
-					{
-						$("#ddlAssigment").html(data);
-						$( "#Display" ).animate({opacity: "show"},"slow");
-					}
-				}',
-				//leave out the data key to pass all form values through
-				),'prompt'=>'Select an Area'
-			)		
+			array('prompt'=>'Select an Area')		
 		);
 		?>
 		

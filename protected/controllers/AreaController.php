@@ -139,7 +139,6 @@ class AreaController extends Controller
 	*/
 	public function actionProductArea()
 	{
-		$cmodel=new Area;
 		$model=new Area('search');
 
 		$modelProduct=new Product('search');
@@ -169,7 +168,7 @@ class AreaController extends Controller
 				'dataProvider'=>$dataProvider,
 				'dataProviderProduct'=>$dataProviderProduct,
 				'dataProviderProductArea'=>$dataProviderProductArea,
-				'model'=>$cmodel, //model for creation,
+				'model'=>$model,
 				'modelProduct'=>$modelProduct,
 				'modelProductArea'=>$modelProductArea,
 		));
@@ -180,37 +179,37 @@ class AreaController extends Controller
 	*/
 	public function actionCategoryArea()
 	{
-	$cmodel=new Area;
 	$model=new Area('search');
-			if(isset($_GET['AreaCategory']))
-	$model->attributes=$_GET['AreaCategory'];
+	if(isset($_GET['Area']))
+		$model->attributes=$_GET['Area'];
 		
-			// Uncomment the following line if AJAX validation is needed
+	// Uncomment the following line if AJAX validation is needed
 	$this->performAjaxValidation($model);
 	$dataProvider=new CActiveDataProvider('Area');
 	$dataProviderCategory=new CActiveDataProvider('Category');
 	
-			$this->render('categoryArea',array(
-					'dataProvider'=>$dataProvider,
-	'dataProviderCategory'=>$dataProviderCategory,
-	'model'=>$cmodel //model for creation
+	$this->render('categoryArea',array(
+				'dataProvider'=>$dataProvider,
+				'dataProviderCategory'=>$dataProviderCategory,
+				'model'=>$model
 	));
 	
 	}
 	
 	public function actionServiceArea()
 	{
-	$cmodel=new Area;
+		$model=new Area('search');
+		if(isset($_GET['Area']))
+			$model->attributes = $_GET['Area'];	
+				
+		$dataProvider=new CActiveDataProvider('Area');
+		$dataProviderService=new CActiveDataProvider('Service');
 		
-	$dataProvider=new CActiveDataProvider('Area');
-	$dataProviderService=new CActiveDataProvider('Service');
-	
-			$this->render('serviceArea',array(
-				'dataProvider'=>$dataProvider,
-				'dataProviderService'=>$dataProviderService,
-				'model'=>$cmodel //model for creation
-	));
-	
+		$this->render('serviceArea',array(
+					'dataProvider'=>$dataProvider,
+					'dataProviderService'=>$dataProviderService,
+					'model'=>$model
+		));
 	}
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

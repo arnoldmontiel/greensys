@@ -10,9 +10,9 @@ $this->menu=array(
 	array('label'=>'Create Area', 'url'=>array('create')),
 	array('label'=>'View Area', 'url'=>array('view', 'id'=>$model->Id)),
 	array('label'=>'Manage Area', 'url'=>array('admin')),
-	array('label'=>'Assign Products', 'url'=>array('productArea')),
-	array('label'=>'Assign Categories', 'url'=>array('categoryArea')),
-	array('label'=>'Assign Services', 'url'=>array('serviceArea')),
+	array('label'=>'Assign Products', 'url'=>array('productArea','Area'=>array('Id'=>$model->Id))),
+	array('label'=>'Assign Categories', 'url'=>array('categoryArea','Area'=>array('Id'=>$model->Id))),
+	array('label'=>'Assign Services', 'url'=>array('serviceArea','Area'=>array('Id'=>$model->Id))),
 );
 ?>
 

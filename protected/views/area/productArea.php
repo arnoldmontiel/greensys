@@ -11,22 +11,27 @@ $this->menu=array(
 	array('label'=>'Assign Services', 'url'=>array('serviceArea')),
 );
 
-Yii::app()->clientScript-> registerScript('update', "
-				$('#Area_Id').change(function(){
-					$.fn.yiiGridView.update('productArea-grid', {
-						data: $(this).serialize()
-					});
-					if($('#Area_Id :selected').attr('value')=='')
-					{
-						$( '#display' ).animate({opacity: 'hide'},'slow');
-					}
-					else
-					{
-						$( '#display' ).animate({opacity: 'show'},'slow');
-					}
-					return false;
-				});
-				");
+Yii::app()->clientScript->registerScript(__CLASS__.'#product-area', "
+		function loadAssigned()
+		{
+			if($('#Area_Id :selected').attr('value')=='')
+			{
+				$( '#display' ).animate({opacity: 'hide'},'slow');
+			}
+			else
+			{
+				$( '#display' ).animate({opacity: 'show'},'slow');
+			}
+		}
+		loadAssigned();
+		$('#Area_Id').change(function(){
+			$.fn.yiiGridView.update('productArea-grid', {
+				data: $('#Area_Id').serialize()
+			});
+			loadAssigned();
+		}
+	);
+");
 ?>
 <div class="form">
 	<?php $form=$this->beginWidget('CActiveForm', array(
@@ -36,9 +41,7 @@ Yii::app()->clientScript-> registerScript('update', "
 
 	<div style="row;width:100%;margin:2px;">
 		<?php echo $form->labelEx($model,'Area'); ?>
-		<?php echo $form->dropDownList($model, 
-			'Id',
-			CHtml::listData($model->findAll(), 'Id', 'description'),
+		<?php echo $form->dropDownList($model,'Id',	CHtml::listData(Area::model()->findAll(), 'Id', 'description'),
 			array('prompt'=>'Select an Area')
 		);
 		?>				
