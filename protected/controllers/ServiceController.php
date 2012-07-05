@@ -139,14 +139,14 @@ class ServiceController extends Controller
 	public function actionServiceCategory()
 	{
 		$model=new Service('search');
-		if(isset($_GET['ServiceCategory']))
-		$model->attributes=$_GET['ServiceCategory'];
-	
+
+		if(isset($_GET['Service']))
+			$model->attributes=$_GET['Service'];
 		$dataProvider=new CActiveDataProvider('Service');
 	
 		$this->render('serviceCategory',array(
 								'dataProvider'=>$dataProvider,
-								'model'=>$model //model for creation
+								'model'=>$model 
 		));
 	
 	}

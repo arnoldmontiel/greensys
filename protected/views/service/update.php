@@ -10,7 +10,7 @@ $this->menu=array(
 	array('label'=>'Create Service', 'url'=>array('create')),
 	array('label'=>'View Service', 'url'=>array('view', 'id'=>$model->Id)),
 	array('label'=>'Manage Service', 'url'=>array('admin')),
-	array('label'=>'Assing Categories', 'url'=>array('serviceCategory')),
+	array('label'=>'Assing Categories', 'url'=>array('serviceCategory','Service'=>array('Id'=>$model->Id))),
 );
 ?>
 

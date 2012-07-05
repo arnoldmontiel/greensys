@@ -9,6 +9,35 @@ $this->menu=array(
 	array('label'=>'Manage Service', 'url'=>array('admin')),
 );
 $this->trashDraggableId = 'ddlAssigment';
+Yii::app()->clientScript->registerScript(__CLASS__.'#category-area', "
+		function loadAssigned()
+		{
+			if($('#Service_Id :selected').attr('value')=='')
+			{
+				$('#ddlAssigment').html('');
+				$('#category').animate({opacity: 'hide'},'slow');
+				$('#service').animate({opacity: 'hide'},'slow');
+				$('#serviceCategory').animate({opacity: 'hide'},'slow');
+			}
+			else
+			{
+				$.post('".ServiceController::createUrl('AjaxFillServiceCategory')."',$('#Service_Id').serialize(),
+				function(data){
+						$('#ddlAssigment').html(data);
+						$('#category').animate({opacity: 'show'},'slow');
+						$('#service').animate({opacity: 'show'},'slow');
+						$('#serviceCategory').animate({opacity: 'show'},'slow');
+					}
+				)
+			}
+		}
+		loadAssigned();
+		$('#Service_Id').change(function(){
+				loadAssigned();
+			}
+		);
+");
+
 ?>
 <div class="form">
 	<?php $form=$this->beginWidget('CActiveForm', array(
@@ -16,38 +45,13 @@ $this->trashDraggableId = 'ddlAssigment';
 		'enableAjaxValidation'=>true,
 	)); ?>
 
-	<?php 	// Organize the dataProvider data into a Zii-friendly array
-		$items = CHtml::listData($dataProvider->getData(), 'Id', 'description');
-		?>
 	<div style="row;width:100%;margin:2px;">
 		<div style="width:51%;float:left;">
 				
 		<?php echo $form->labelEx($model,'Service'); ?>
-		<?php echo $form->dropDownList($model, 'Id', $items,		
+		<?php echo $form->dropDownList($model, 'Id', CHtml::listData($model->findAll(), 'Id', 'description'),		
 			array(
-				'ajax' => array(
-				'type'=>'POST',
-				'url'=>ServiceController::createUrl('AjaxFillServiceCategory'),
-				'update'=>'#ddlAssigment', //selector to update
-				'success'=>'js:function(data)
-				{
-					if($("#Product_Id :selected").attr("value")=="")
-					{
-						$("#ddlAssigment").html(data);
-						$( "#category" ).animate({opacity: "hide"},"slow");
-						$( "#service" ).animate({opacity: "hide"},"slow");
-						$( "#serviceCategory" ).animate({opacity: "hide"},"slow");
-					}
-					else
-					{
-						$("#ddlAssigment").html(data);
-						$( "#category" ).animate({opacity: "show"},"slow");
-						$( "#product" ).animate({opacity: "show"},"slow");
-						$( "#serviceCategory" ).animate({opacity: "show"},"slow");
-					}
-				}',
-				//leave out the data key to pass all form values through
-				),'prompt'=>'Select a Service'
+				'prompt'=>'Select a Service'
 			)		
 		);
 		?>
