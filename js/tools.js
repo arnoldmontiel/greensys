@@ -13,20 +13,23 @@ function unselectRow(id)
 function selectSpecificRow(idGrid, idRow)
 {
 	var index = 0;
-	$("#"+idGrid).find('.keys span').each(function(i)
+	if(idRow != "")
 	{
-		if(  "" + idRow + "" == $(this).text())
-			return false;
-		index++;
-	});
-	
-	$("#"+idGrid+" > table > tbody > tr").each(function(i)
-	{
-		if(i == index)
+		$("#"+idGrid).find('.keys span').each(function(i)
 		{
-			$(this).addClass('selected');
-		}
-    });
+			if(  "" + idRow + "" == $(this).text())
+				return false;
+			index++;
+		});
+		
+		$("#"+idGrid+" > table > tbody > tr").each(function(i)
+		{
+			if(i == index)
+			{
+				$(this).addClass('selected');
+			}
+	    });
+	}
 }
 
 function fillSidebar(idGrid, sidebarTitle)
