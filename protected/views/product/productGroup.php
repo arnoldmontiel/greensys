@@ -10,8 +10,50 @@ $this->menu=array(
 	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
 );
 $this->showSideBar = true;
-Yii::app()->clientScript->registerScript('productGroup', "");
+Yii::app()->clientScript->registerScript('productGroup', "
 
+loadGrid();
+function loadGrid()
+{
+	selectSpecificRow('product-grid', '".$modelProductGroup->Id_product_parent."');
+	gridSelectionChange();
+	
+	
+}
+
+function gridSelectionChange()
+{
+	var idProduct = '".$modelProductGroup->Id_product_parent."';
+	
+	if(idProduct!='')
+	{
+		$( '#display' ).animate({opacity: 'show'},'slow');
+	}
+	else
+	{
+		$( '#display' ).animate({opacity: 'hide'},'slow');
+	}
+	
+	$.post('".ProductController::createUrl('AjaxFillSidebar')."',
+			{'Product[Id]':idProduct}
+		).success(
+			function(data) 
+			{
+				$('#sidebar').html(data);
+				if(data!='')
+				{
+					$( '#sidebar' ).show();
+				}
+				else
+				{
+					$( '#sidebar' ).hide();	
+				}	
+			}
+						);
+						
+}
+",CClientScript::POS_END);
+	
 ?>
 
 <div class="form">
