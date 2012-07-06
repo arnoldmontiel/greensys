@@ -18,7 +18,7 @@ $this->menu=array(
 	array('label'=>'Delete Product', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Product', 'url'=>array('admin')),
 	array('label'=>'Assign Groups', 'url'=>array('productGroup','Product'=>array('Id'=>$model->Id))),
-	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
+	array('label'=>'Assign Requirements', 'url'=>array('productRequirement','Product'=>array('Id'=>$model->Id))),
 );
 ?>
 <h1>View Product <?php
