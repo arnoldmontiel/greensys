@@ -109,6 +109,20 @@
 			<?php echo CHtml::link(Yii::app()->lc->t('Currency'),array('/currency/index'));?>
 			</div>
 		</div><!-- end  home-left-view -->
+		<div class="home-right-view" >
+			<div class="home-title-view" >
+				<?php echo Yii::app()->lc->t('Purchase Order');?>
+			</div>
+			<div class="home-item-view" >
+			<?php echo CHtml::link(Yii::app()->lc->t('Manage'),array('/purchaseOrder/admin'));?>
+			</div>
+			<div class="home-item-view" >
+			<?php echo CHtml::link(Yii::app()->lc->t('Create'),array('/purchaseOrder/create'));?>			
+			</div>
+			<div class="home-item-view" >
+			<?php echo CHtml::link(Yii::app()->lc->t('List'),array('/purchaseOrder/index'));?>
+			</div>
+		</div> <!-- end  home-right-view -->
 	</div>	<!-- end  home-row -->
 	
 </div>

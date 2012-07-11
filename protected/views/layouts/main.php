@@ -69,12 +69,13 @@ $(window).scroll(function() {
 			array('label'=>Yii::app()->lc->t('Manage'), 'visible'=>!Yii::app()->user->isGuest, 'items'=>array
 				(
 					array('label'=>Yii::app()->lc->t('Product'), 'url'=>array('/product/index'),'visible'=>Yii::app()->user->checkAccess('ProductIndex')),
+					array('label'=>Yii::app()->lc->t('Price List'), 'url'=>array('/priceList/index'),'visible'=>Yii::app()->user->checkAccess('PriceListIndex')),
+					array('label'=>Yii::app()->lc->t('Purhcase Order'), 'url'=>array('/purchaseOrder/index'),'visible'=>Yii::app()->user->checkAccess('PurchaseOrderIndex')),
 					array('label'=>Yii::app()->lc->t('Area'), 'url'=>array('/area/index'),'visible'=>Yii::app()->user->checkAccess('AreaIndex')),
 					array('label'=>Yii::app()->lc->t('Product Type'), 'url'=>array('/productType/index'),'visible'=>Yii::app()->user->checkAccess('ProductTypeIndex')),
 					array('label'=>Yii::app()->lc->t('Category'), 'url'=>array('/category/index'),'visible'=>Yii::app()->user->checkAccess('CategoryIndex')),
 					array('label'=>Yii::app()->lc->t('Sub Category'), 'url'=>array('/subCategory/index'),'visible'=>Yii::app()->user->checkAccess('SubCategoryIndex')),
 					array('label'=>Yii::app()->lc->t('Nomenclator'), 'url'=>array('/nomenclator/index'),'visible'=>Yii::app()->user->checkAccess('NomenclatorIndex')),
-					array('label'=>Yii::app()->lc->t('Price List'), 'url'=>array('/priceList/index'),'visible'=>Yii::app()->user->checkAccess('PriceListIndex')),
 					array('label'=>Yii::app()->lc->t('Service'), 'url'=>array('/service/index'),'visible'=>Yii::app()->user->checkAccess('ServiceIndex')),
 					array('label'=>Yii::app()->lc->t('Project'), 'url'=>array('/project/index'),'visible'=>Yii::app()->user->checkAccess('ProjectIndex')),
 					array('label'=>Yii::app()->lc->t('Customer'), 'url'=>array('/customer/index'),'visible'=>Yii::app()->user->checkAccess('CustomerIndex')),
