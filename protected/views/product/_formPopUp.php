@@ -112,8 +112,10 @@ $('#Product_code').change(function(){
 
 $('#Product_need_rack').change(function(){
 	if($(this).is(':checked'))
+		{
 		$('#Product_unit_rack').removeAttr('disabled');
 		$('#Product_unit_fan').removeAttr('disabled');
+		}
 	else
 	{
 		$('#Product_unit_rack').val('');

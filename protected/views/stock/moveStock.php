@@ -11,10 +11,9 @@ $this->menu=array(
 	array('label'=>'Delete Stock', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Stock', 'url'=>array('admin')),
 );
-Yii::app()->clientScript->registerScript('moveStockGreen', "
+Yii::app()->clientScript->registerScript(__CLASS__.'move-stock', "
 
-jQuery.fn.yiiGridView.update('stock-item-grid');
-",CClientScript:: POS_LOAD);
+");
 
 ?>
 
@@ -43,8 +42,10 @@ jQuery.fn.yiiGridView.update('stock-item-grid');
 <div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
 	<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
 		Select Products
+		<?php echo CHtml::link( '(New Product)','#',array('onclick'=>'jQuery("#CreateProduct").dialog("open"); return false;'));?>
+		
 	</div>
-	</div>
+</div>
 <?php		
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'product-grid',
@@ -209,3 +210,57 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			),
 )); ?>
 </div>
+<?php 
+	//Product PopUp
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'CreateProduct',
+			// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Create Product',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '800',
+					'height'=> '530',
+					'resizable'=> false,
+					'buttons'=>	array(
+							'Cancelar'=>'js:function(){jQuery("#CreateProduct").dialog( "close" );}',
+							'Grabar'=>'js:function()
+							{
+							jQuery("#wating").dialog("open");
+							jQuery.post("'.Yii::app()->createUrl("product/ajaxCreate").'", $("#product-form").serialize(),
+							function(data) {
+								if(data!=null)
+								{
+									$.fn.yiiGridView.update("product-grid", {
+										data: $(this).serialize()
+									});
+									jQuery("#CreateProduct").dialog( "close" );
+								}
+							jQuery("#wating").dialog("close");
+							},"json"
+					);
+	
+			}'),
+			),
+	));
+	$modelProductPopUp = new Product();
+	$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_product'=>$modelProductPopUp->Id,'Id_entity_type'=>ProductController::getEntityTypeStatic()));
+	$modelNote = new Note;
+	$ddlRacks = array();
+	for($index = 1; $index <= 10; $index++ )
+	{
+		$item['Id'] = $index;
+		$item['description'] = $index;
+		$ddlRacks[$index] = $item;
+	}
+		
+	echo $this->renderPartial('../product/_formPopUp',array(
+			'model'=>$modelProductPopUp,
+			'modelHyperlink'=>$modelHyperlink,
+			'modelNote'=>$modelNote,
+			'ddlRacks'=>$ddlRacks,
+	));
+	
+	
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+	?>
