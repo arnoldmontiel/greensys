@@ -65,7 +65,10 @@ class ProductController extends Controller
 			$model->attributes=$_POST['Product'];
 			
 			if(!$model->need_rack)
+			{
 				$model->unit_rack = 0;
+				$model->unit_fan = 0;				
+			}
 			
 			$transaction = $model->dbConnection->beginTransaction();
 			try {
@@ -150,7 +153,10 @@ class ProductController extends Controller
 			$model->attributes=$_POST['Product'];
 				
 			if(!$model->need_rack)
+			{
 				$model->unit_rack = 0;
+				$model->unit_fan = 0;				
+			}
 				
 			$transaction = $model->dbConnection->beginTransaction();
 			try {
@@ -271,7 +277,10 @@ class ProductController extends Controller
 			$model->attributes=$_POST['Product'];
 			
 			if(!$model->need_rack)
+			{
 				$model->unit_rack = 0;
+				$model->unit_fan = 0;				
+			}
 			
 			if($_FILES['upfile']['size'] > 0)
 				$model->Id_multimedia = $this->saveImage($_FILES['upfile']);

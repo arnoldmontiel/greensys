@@ -111,6 +111,7 @@ $this->widget('zii.widgets.CDetailView', array(
 			'value'=>CHtml::checkBox("need_rack",$model->need_rack,array("disabled"=>"disabled"))
 		),
 		'unit_rack',
+		'unit_fan',
 		array('label'=>$model->getAttributeLabel('hide'),
 			'type'=>'raw',
 			'value'=>CHtml::checkBox("hide",$model->hide,array("disabled"=>"disabled"))

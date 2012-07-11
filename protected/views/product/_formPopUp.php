@@ -110,17 +110,16 @@ $('#Product_code').change(function(){
 			);
 });
 
-$('#Product_unit_rack').keyup(function(){
-	validateNumber($(this));
-});
-
 $('#Product_need_rack').change(function(){
 	if($(this).is(':checked'))
 		$('#Product_unit_rack').removeAttr('disabled');
+		$('#Product_unit_fan').removeAttr('disabled');
 	else
 	{
 		$('#Product_unit_rack').val('');
 		$('#Product_unit_rack').attr('disabled','disabled');
+		$('#Product_unit_fan').val('');
+		$('#Product_unit_fan').attr('disabled','disabled');
 	}
 });
 
@@ -381,7 +380,8 @@ $('#deleteIcon').click(function(){
 		<?php echo $form->error($model,'need_rack'); ?>
 	</div>
 	
-	<div class="row" id="div-unit-rack">
+	<div class="row">
+	<div style="width: 160px; display: inline-block;" id="div-unit-rack">
 		<?php echo $form->labelEx($model,'unit_rack'); ?>
 		<?php $racks = CHtml::listData($ddlRacks, 'Id', 'description');?>
 		<?php
@@ -392,7 +392,19 @@ $('#deleteIcon').click(function(){
 		?>
 		<?php echo $form->error($model,'unit_rack'); ?>
 	</div>
-			
+	<div style="width: 160px; display: inline-block;" id="div-unit-rack">
+		<?php echo $form->labelEx($model,'unit_fan'); ?>
+		<?php $racks = CHtml::listData($ddlRacks, 'Id', 'description');?>
+		<?php
+			if($model->need_rack) 
+				echo $form->dropDownList($model, 'unit_fan', $racks);
+			else 
+				echo $form->dropDownList($model, 'unit_fan', $racks, array('disabled'=>'disabled'));
+		?>
+		<?php echo $form->error($model,'unit_rack'); ?>
+	</div>
+	</div>
+				
 	<div class="row">
 		<?php echo $form->labelEx($model,'time_instalation'); ?>
 		<?php echo $form->textField($model,'time_instalation'); ?>

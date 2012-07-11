@@ -33,6 +33,7 @@
  * @property integer $current
  * @property integer $need_rack
  * @property integer $unit_rack
+ * @property integer $unit_fan
  * @property integer $Id_multimedia
  * @property integer $Id_volts
  * 
@@ -87,7 +88,7 @@ class Product extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('Id_brand, Id_category, Id_nomenclator, Id_product_type, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, Id_category, Id_sub_category', 'required'),
-			array('Id_volts,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, power, current, need_rack, unit_rack', 'numerical', 'integerOnly'=>true),
+			array('Id_volts,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, power, current, need_rack, unit_rack, unit_fan', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier', 'length', 'max'=>255),
 			array('code, code_supplier, color, other', 'length', 'max'=>45),
 			array('length, width, height, profit_rate, msrp, weight, dealer_cost', 'length', 'max'=>10),
@@ -171,6 +172,7 @@ class Product extends CActiveRecord
 			'current' => 'Current',
 			'need_rack' => 'Need Rack',
 			'unit_rack' => 'Unit Rack',
+			'unit_fan' => 'Unit fan',
 			'Id_volts' => 'Volts',
 		);
 	}
@@ -244,6 +246,7 @@ class Product extends CActiveRecord
 		$criteria->compare('current',$this->current);
 		$criteria->compare('need_rack',$this->need_rack);
 		$criteria->compare('unit_rack',$this->unit_rack);
+		$criteria->compare('unit_fan',$this->unit_fan);
 		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -283,6 +286,7 @@ class Product extends CActiveRecord
 		$criteria->compare('current',$this->current);
 		$criteria->compare('need_rack',$this->need_rack);
 		$criteria->compare('unit_rack',$this->unit_rack);
+		$criteria->compare('unit_fan',$this->unit_fan);
 		
 		$criteria->with[]='brand';
 		$criteria->addSearchCondition("brand.description",$this->brand_description);
