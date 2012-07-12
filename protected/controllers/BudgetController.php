@@ -149,6 +149,60 @@ class BudgetController extends Controller
 		));
 	}
 
+	public function actionAddItem($id)
+	{
+		$modelProduct = new Product('search');
+		$modelProduct->unsetAttributes();
+		
+		$priceListItemSale = new PriceListItem();
+		$priceListItemSale->unsetAttributes();
+		
+		$modelBudgetItem = new BudgetItem('search');
+		$modelBudgetItem->unsetAttributes();  // clear any default values
+		if(isset($_GET['BudgetItem']))
+			$modelBudgetItem->attributes=$_GET['BudgetItem'];
+
+		$modelBudgetItem->Id_budget = $id;
+
+		if(isset($_GET['Product']))
+			$modelProduct->attributes=$_GET['Product'];
+
+		
+
+		if(isset($_GET['ProductSale']['Id'])){
+			$priceListItemSale->Id_product=$_GET['ProductSale']['Id'];
+		}
+
+		$this->render('addItem',array(
+					'model'=>$this->loadModel($id),
+					'modelProduct'=>$modelProduct,
+					'modelBudgetItem'=>$modelBudgetItem,
+					'priceListItemSale'=>$priceListItemSale,
+		));
+	}
+
+	public function actionAjaxAddBudgetItem()
+	{
+		$idPriceList = isset($_POST['IdPriceList'])?$_POST['IdPriceList']:'';
+		$idProduct = isset($_POST['IdProduct'])?$_POST['IdProduct']:'';
+		$idShippingType = isset($_POST['IdShippingType'])?$_POST['IdShippingType']:'';
+		$idBudget = isset($_POST['IdBudget'])?$_POST['IdBudget']:'';
+				
+		if(!empty($idPriceList)&&!empty($idProduct)&&!empty($idShippingType)&&!empty($idBudget))
+		{
+			$modelPriceListItem = PriceListItem::model()->findByAttributes(array('Id_price_list'=>$idPriceList,'Id_product'=>$idProduct));
+			
+			$modelBudgetItem = new BudgetItem;
+			$modelBudgetItem->Id_budget = $idBudget;
+			$modelBudgetItem->Id_price_list = $idPriceList;
+			$modelBudgetItem->Id_product = $idProduct;
+			$modelBudgetItem->Id_shipping_type = $idShippingType;
+			$modelBudgetItem->budget_version_number = 1;
+			$modelBudgetItem->price = ($idShippingType==1)?$modelPriceListItem->maritime_cost:$modelPriceListItem->air_cost;
+			$modelBudgetItem->save();
+		}
+	}
+
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.

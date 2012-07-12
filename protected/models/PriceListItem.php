@@ -117,6 +117,29 @@ class PriceListItem extends CActiveRecord
 		));
 	}
 	
+	public function searchForBudget()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('Id_product',$this->Id_product);
+		$criteria->compare('msrp',$this->msrp,true);
+		$criteria->compare('dealer_cost',$this->dealer_cost,true);
+		$criteria->compare('profit_rate',$this->profit_rate,true);
+		$criteria->compare('maritime_cost',$this->maritime_cost,true);
+		$criteria->compare('air_cost',$this->air_cost,true);
+	
+		$criteria->with[]='priceList';
+		$criteria->compare('priceList.Id_price_list_type',2);//sale
+		$criteria->compare('priceList.validity',1);//sale
+	
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+		));
+	}
+	
 	public function searchPriceList()
 	{
 		// Warning: Please modify the following code to remove attributes that

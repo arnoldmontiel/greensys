@@ -152,4 +152,51 @@ class Budget extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	
+	public function searchSummary()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('Id',$this->Id);
+		$criteria->compare('percent_discount',$this->percent_discount,true);
+		$criteria->compare('date_creation',$this->date_creation,true);
+		$criteria->compare('date_inicialization',$this->date_inicialization,true);
+		$criteria->compare('date_finalization',$this->date_finalization,true);
+		$criteria->compare('date_estimated_inicialization',$this->date_estimated_inicialization,true);
+		$criteria->compare('date_estimated_finalization',$this->date_estimated_finalization,true);
+		$criteria->compare('version_number',$this->version_number);
+		$criteria->compare('description',$this->description,true);
+	
+		$criteria->with[]='project';
+		$criteria->addSearchCondition('project.description',$this->Id_project);
+		
+		$criteria->with[]='budgetState';
+		$criteria->addSearchCondition('budgetState.description',$this->Id_budget_state);
+		
+		$sort=new CSort;
+		$sort->attributes=array(
+					'date_creation',
+					'date_inicialization',
+					'version_number',
+					'description',
+					'percent_discount',
+					'Id_budget_state' => array(
+						'asc' => 'budgetState.description',
+						'desc' => 'budgetState.description DESC',
+					),
+					'Id_project' => array(
+								'asc' => 'project.description',
+								'desc' => 'project.description DESC',
+					),
+		);
+		
+		return new CActiveDataProvider($this, array(
+					'criteria'=>$criteria,
+					'sort'=>$sort,
+		));
+	}
+	
 }

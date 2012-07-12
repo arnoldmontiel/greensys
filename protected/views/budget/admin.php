@@ -9,28 +9,10 @@ $this->menu=array(
 	array('label'=>'Create Budget', 'url'=>array('create')),
 );
 
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('budget-grid', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
 ?>
 
 <h1>Manage Budgets</h1>
 
-<p>
-You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
-
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
@@ -39,21 +21,21 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'budget-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$model->searchSummary(),
 	'filter'=>$model,
 	'columns'=>array(
-		'Id',
-		'Id_project',
+		array(
+ 			'name'=>'Id_project',
+			'value'=>'$data->project->description',
+		),
+		array(
+ 			'name'=>'Id_budget_state',
+			'value'=>'$data->budgetState->description',
+		),
+		'version_number',
 		'percent_discount',
 		'date_creation',
-		'Id_budget_state',
 		'date_inicialization',
-		/*
-		'date_finalization',
-		'date_estimated_inicialization',
-		'date_estimated_finalization',
-		'version_number',
-		*/
 		array(
 			'class'=>'CButtonColumn',
 		),
