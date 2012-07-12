@@ -139,16 +139,16 @@ class BudgetItem extends CActiveRecord
 		$sort=new CSort;
 		$sort->attributes=array(
 											      'product_code' => array(
-											        'asc' => 'product.code',
-											        'desc' => 'product.code DESC',
+											        'asc' => 'p.code',
+											        'desc' => 'p.code DESC',
 		),
 													'product_code_supplier' => array(
-											        'asc' => 'product.code_supplier',
-											        'desc' => 'product.code_supplier DESC',
+											        'asc' => 'p.code_supplier',
+											        'desc' => 'p.code_supplier DESC',
 		),
 											      'product_customer_desc' => array(
-											        'asc' => 'product.description_customer',
-											        'desc' => 'product.description_customer DESC',
+											        'asc' => 'p.description_customer',
+											        'desc' => 'p.description_customer DESC',
 		),
 													'product_brand_desc'=> array(
 													'asc'=>'b.description',

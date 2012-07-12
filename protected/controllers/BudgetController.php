@@ -38,8 +38,17 @@ class BudgetController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$modelBudgetItem = new BudgetItem('search');
+		$modelBudgetItem->unsetAttributes();  // clear any default values
+		if(isset($_GET['BudgetItem']))
+		{
+			$modelBudgetItem->attributes =$_GET['BudgetItem'];
+		}
+		$modelBudgetItem->Id_budget = $id;
+		
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
+			'modelBudgetItem'=>$modelBudgetItem,
 		));
 	}
 
@@ -74,6 +83,21 @@ class BudgetController extends Controller
 		));
 	}
 
+	public function actionAjaxDeleteBudgetItem($id)
+	{
+		if(Yii::app()->request->isPostRequest)
+		{
+			// we only allow deletion via POST request
+			BudgetItem::model()->deleteByPk($id);
+	
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('addItem'));
+		}
+		else
+		throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+	}
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.

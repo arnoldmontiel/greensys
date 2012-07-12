@@ -45,8 +45,6 @@ Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 <div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
 	<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
 		Select Products
-		<?php echo CHtml::link( '(New Product)','#',array('onclick'=>'jQuery("#CreateProduct").dialog("open"); return false;'));?>
-		
 	</div>
 </div>
 <?php		
@@ -126,9 +124,12 @@ Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 																 	IdProduct: $(this).attr("idProduct"),
 																 	IdShippingType: $(this).attr("idShippingType")
 															}).success(
-																function() 
+																function(data) 
 																{ 
-// 																	$.fn.yiiGridView.update("budget-item-grid");
+																	$.fn.yiiGridView.update("budget-item-grid", {
+																		data: $(this).serialize()
+																	});
+																	$.fn.yiiGridView.update("price-list-item-grid");
 																});
 														
 													});
@@ -136,8 +137,6 @@ Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 										);
  		}',
 	'columns'=>array(
-		'Id',
-		'Id_product',
 		array(
  			'name'=>'Id_product',
 			'value'=>'$data->priceList->importer->contact->description',
@@ -226,6 +225,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				    'value'=>'$data->product->supplier->business_name',
 
 				),
+				'price',
 				array(
 					'class'=>'CButtonColumn',
 					'template'=>'{delete}',
@@ -233,64 +233,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					(
 					        'delete' => array
 							(
-					            'url'=>'Yii::app()->createUrl("budget/AjaxDeleteStockItem", array("id"=>$data->Id))',
+					            'url'=>'Yii::app()->createUrl("budget/AjaxDeleteBudgetItem", array("id"=>$data->Id))',
 							),
 					),
 				),
 			),
 )); ?>
 </div>
-<?php 
-	//Product PopUp
-	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
-			'id'=>'CreateProduct',
-			// additional javascript options for the dialog plugin
-			'options'=>array(
-					'title'=>'Create Product',
-					'autoOpen'=>false,
-					'modal'=>true,
-					'width'=> '800',
-					'height'=> '530',
-					'resizable'=> false,
-					'buttons'=>	array(
-							'Cancelar'=>'js:function(){jQuery("#CreateProduct").dialog( "close" );}',
-							'Grabar'=>'js:function()
-							{
-							jQuery("#wating").dialog("open");
-							jQuery.post("'.Yii::app()->createUrl("product/ajaxCreate").'", $("#product-form").serialize(),
-							function(data) {
-								if(data!=null)
-								{
-									$.fn.yiiGridView.update("product-grid", {
-										data: $(this).serialize()
-									});
-									jQuery("#CreateProduct").dialog( "close" );
-								}
-							jQuery("#wating").dialog("close");
-							},"json"
-					);
-	
-			}'),
-			),
-	));
-	$modelProductPopUp = new Product();
-	$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_product'=>$modelProductPopUp->Id,'Id_entity_type'=>ProductController::getEntityTypeStatic()));
-	$modelNote = new Note;
-	$ddlRacks = array();
-	for($index = 1; $index <= 10; $index++ )
-	{
-		$item['Id'] = $index;
-		$item['description'] = $index;
-		$ddlRacks[$index] = $item;
-	}
-		
-	echo $this->renderPartial('../product/_formPopUp',array(
-			'model'=>$modelProductPopUp,
-			'modelHyperlink'=>$modelHyperlink,
-			'modelNote'=>$modelNote,
-			'ddlRacks'=>$ddlRacks,
-	));
-	
-	
-	$this->endWidget('zii.widgets.jui.CJuiDialog');
-	?>
