@@ -161,6 +161,14 @@ class Budget extends CActiveRecord
 	
 		$criteria=new CDbCriteria;
 	
+		$criteria->join = ',(SELECT Id, MAX(version_number) vn
+						FROM budget
+						GROUP BY Id) b2, 
+						project, budget_State';
+		
+		$criteria->condition = 't.Id = b2.Id and t.version_number = b2.vn and
+								project.Id = t.Id_project and budget_State.Id = t.Id_budget_state';
+		
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('percent_discount',$this->percent_discount,true);
 		$criteria->compare('date_creation',$this->date_creation,true);
@@ -171,10 +179,10 @@ class Budget extends CActiveRecord
 		$criteria->compare('version_number',$this->version_number);
 		$criteria->compare('description',$this->description,true);
 	
-		$criteria->with[]='project';
+		//$criteria->with[]='project';
 		$criteria->addSearchCondition('project.description',$this->Id_project);
 		
-		$criteria->with[]='budgetState';
+		//$criteria->with[]='budgetState';
 		$criteria->addSearchCondition('budgetState.description',$this->Id_budget_state);
 		
 		$sort=new CSort;

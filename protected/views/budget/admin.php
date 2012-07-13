@@ -33,11 +33,28 @@ $this->menu=array(
 			'value'=>'$data->budgetState->description',
 		),
 		'version_number',
+		'description',
 		'percent_discount',
 		'date_creation',
 		'date_inicialization',
 		array(
 			'class'=>'CButtonColumn',
+			'template'=>'{view}{update}{delete}',
+					'buttons'=>array
+					(
+					        'delete' => array
+							(
+					            'url'=>'Yii::app()->createUrl("budget/Delete", array("id"=>$data->Id, "version"=>$data->version_number))',
+							),
+							'view' => array
+							(
+					            'url'=>'Yii::app()->createUrl("budget/View", array("id"=>$data->Id, "version"=>$data->version_number))',
+							),
+							'update' => array
+							(
+					            'url'=>'Yii::app()->createUrl("budget/Update", array("id"=>$data->Id, "version"=>$data->version_number))',
+							),
+					),
 		),
 	),
 )); ?>

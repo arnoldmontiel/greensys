@@ -14,7 +14,14 @@ $this->menu=array(
 );
 ?>
 
-<h1>View Budget</h1>
+<h1>View Budget <?php echo CHtml::link( CHtml::image('images/new_version.png','Generate new version' ,array(
+																   'title'=>'Generate new version',
+												                   'style'=>'width:30px;',
+												                   'id'=>'addBack',
+)
+),BudgetController::createUrl('AjaxNewVersion', array('id'=>$model->Id, 'version'=>$model->version_number)));
+?>
+</h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,

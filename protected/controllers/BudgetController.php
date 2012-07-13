@@ -158,7 +158,18 @@ class BudgetController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Budget');
+		$criteria=new CDbCriteria;
+		
+		$criteria->join = ',(SELECT Id, MAX(version_number) vn
+				FROM budget
+				GROUP BY Id) b2';
+		
+		$criteria->condition = 't.Id = b2.Id and t.version_number = b2.vn';
+		
+		$dataProvider=new CActiveDataProvider('Budget', array(
+			'criteria'=>$criteria,
+		));
+		
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -193,7 +204,7 @@ class BudgetController extends Controller
 			$modelBudgetItem->attributes=$_GET['BudgetItem'];
 
 		$modelBudgetItem->Id_budget = $id;
-
+		$modelBudgetItem->version_number = $version;
 		if(isset($_GET['Product']))
 			$modelProduct->attributes=$_GET['Product'];
 
@@ -211,6 +222,36 @@ class BudgetController extends Controller
 		));
 	}
 
+	public function actionAjaxNewVersion($id, $version)
+	{
+		$previousModel = $this->loadModel($id, $version);
+		$model = new Budget;
+		$model->attributes = $previousModel->attributes;
+		$model->date_creation = new CDbExpression('NOW()');
+		$model->version_number = $model->version_number + 1;
+		$transaction = $model->dbConnection->beginTransaction();
+		try {
+			if($model->save())
+			{
+				$budgetItems = BudgetItem::model()->findAllByAttributes(array('Id_budget'=>$previousModel->Id, 'version_number'=>$previousModel->version_number));
+				
+				foreach($budgetItems as $item)
+				{
+					$modelBudgetItem = new BudgetItem;
+					$modelBudgetItem->attributes = $item->attributes;
+					$modelBudgetItem->version_number = $model->version_number;
+					$modelBudgetItem->save();
+				}
+				
+				$transaction->commit();
+				$this->redirect(array('view','id'=>$model->Id, 'version'=>$model->version_number));
+			}
+		} catch (Exception $e) {
+			$transaction->rollback();
+		}
+		
+	}
+	
 	public function actionAjaxAddBudgetItem()
 	{
 		$idPriceList = isset($_POST['IdPriceList'])?$_POST['IdPriceList']:'';
