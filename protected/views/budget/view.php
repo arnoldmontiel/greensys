@@ -7,9 +7,9 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List Budget', 'url'=>array('index')),
 	array('label'=>'Create Budget', 'url'=>array('create')),
-	array('label'=>'Update Budget', 'url'=>array('update', 'id'=>$model->Id)),
-	array('label'=>'Delete Budget', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Add Items Budget', 'url'=>array('addItem', 'id'=>$model->Id)),
+	array('label'=>'Update Budget', 'url'=>array('update', 'id'=>$model->Id, 'version'=>$model->version_number)),
+	array('label'=>'Delete Budget', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id, 'version'=>$model->version_number),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>'Add Items Budget', 'url'=>array('addItem', 'id'=>$model->Id, 'version'=>$model->version_number)),
 	array('label'=>'Manage Budget', 'url'=>array('admin')),
 );
 ?>

@@ -1,14 +1,14 @@
 <?php
 $this->breadcrumbs=array(
 	'Budgets'=>array('index'),
-	$model->project->description=>array('view','id'=>$model->Id),
+	$model->project->description=>array('view','id'=>$model->Id, 'version'=>$model->version_number),
 	'Update',
 );
 
 $this->menu=array(
 	array('label'=>'List Budget', 'url'=>array('index')),
 	array('label'=>'Create Budget', 'url'=>array('create')),
-	array('label'=>'View Budget', 'url'=>array('view', 'id'=>$model->Id)),
+	array('label'=>'View Budget', 'url'=>array('view', 'id'=>$model->Id, 'version'=>$model->version_number)),
 	array('label'=>'Manage Budget', 'url'=>array('admin')),
 );
 ?>

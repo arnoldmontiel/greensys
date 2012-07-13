@@ -1,3 +1,10 @@
+<?php 
+Yii::app()->clientScript->registerScript(__CLASS__.'#form_budget', "
+$('#Budget_percent_discount').keyup(function(){
+	validateNumber($(this));
+});
+");
+?>
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -23,12 +30,6 @@
 		echo $form->dropDownList($model, 'Id_budget_state', $budgetState,array('disabled'=>$model->isNewRecord ? '' : 'disabled'));
 		?>
 		<?php echo $form->error($model,'Id_budget_state'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'version_number'); ?>
-		<?php echo $form->textField($model,'version_number',array('disabled'=>'disabled')); ?>
-		<?php echo $form->error($model,'version_number'); ?>
 	</div>
 	
 	<div class="row">

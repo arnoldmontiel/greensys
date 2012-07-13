@@ -5,11 +5,11 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Stock', 'url'=>array('index')),
-	array('label'=>'Create Stock', 'url'=>array('create')),
-	array('label'=>'Update Stock', 'url'=>array('update', 'id'=>$model->Id)),
-	array('label'=>'Delete Stock', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Stock', 'url'=>array('admin')),
+	array('label'=>'List Budget', 'url'=>array('index')),
+	array('label'=>'Create Budget', 'url'=>array('create')),
+	array('label'=>'Update Budget', 'url'=>array('update', 'id'=>$model->Id, 'version'=>$model->version_number)),
+	array('label'=>'Delete Budget', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id, 'version'=>$model->version_number),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>'Manage Budget', 'url'=>array('admin')),
 );
 Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 
@@ -120,6 +120,7 @@ Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 															"'.BudgetController::createUrl('AjaxAddBudgetItem').'",
 															{
 																	IdBudget: "'.$model->Id.'",
+																	IdVersion: "'.$model->version_number.'",
 																 	IdPriceList: $(this).attr("idPriceList"),
 																 	IdProduct: $(this).attr("idProduct"),
 																 	IdShippingType: $(this).attr("idShippingType")

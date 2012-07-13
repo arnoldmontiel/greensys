@@ -27,22 +27,23 @@ class Budget extends CActiveRecord
 {
 	public function beforeSave()
 	{
-		$this->date_estimated_inicialization = Yii::app()->lc->toDatabase($this->date_estimated_inicialization,'date','small','date',null);//date('Y-m-d',strtotime($this->date_validity));
-		$this->date_estimated_finalization = Yii::app()->lc->toDatabase($this->date_estimated_finalization,'date','small','date',null);//date('Y-m-d',strtotime($this->date_validity));
-		$this->date_inicialization = Yii::app()->lc->toDatabase($this->date_inicialization,'date','small','date',null);//date('Y-m-d',strtotime($this->date_validity));
-		$this->date_finalization = Yii::app()->lc->toDatabase($this->date_finalization,'date','small','date',null);//date('Y-m-d',strtotime($this->date_validity));
+		$this->date_estimated_inicialization = (!empty($this->date_estimated_inicialization))?Yii::app()->lc->toDatabase($this->date_estimated_inicialization,'date','small','date',null):null;//date('Y-m-d',strtotime($this->date_validity));
+		$this->date_estimated_finalization = (!empty($this->date_estimated_finalization))?Yii::app()->lc->toDatabase($this->date_estimated_finalization,'date','small','date',null):null;//date('Y-m-d',strtotime($this->date_validity));
+		$this->date_inicialization = (!empty($this->date_inicialization))?Yii::app()->lc->toDatabase($this->date_inicialization,'date','small','date',null):null;//date('Y-m-d',strtotime($this->date_validity));
+		$this->date_finalization = (!empty($this->date_finalization))?Yii::app()->lc->toDatabase($this->date_finalization,'date','small','date',null):null;//date('Y-m-d',strtotime($this->date_validity));
+	
 		return parent::beforeSave();
 	}
 	
 	protected function afterFind(){
 		
-		$this->date_estimated_inicialization = Yii::app()->dateFormatter->formatDateTime($this->date_estimated_inicialization,'small',null);
+		$this->date_estimated_inicialization = isset($this->date_estimated_inicialization)?Yii::app()->dateFormatter->formatDateTime($this->date_estimated_inicialization,'small',null):null;
 		
-		$this->date_estimated_finalization = Yii::app()->dateFormatter->formatDateTime($this->date_estimated_finalization,'small',null);
+		$this->date_estimated_finalization = isset($this->date_estimated_finalization)?Yii::app()->dateFormatter->formatDateTime($this->date_estimated_finalization,'small',null):null;
 		
-		$this->date_inicialization = Yii::app()->dateFormatter->formatDateTime($this->date_inicialization,'small',null);
+		$this->date_inicialization = isset($this->date_inicialization)?Yii::app()->dateFormatter->formatDateTime($this->date_inicialization,'small',null):null;
 		
-		$this->date_finalization = Yii::app()->dateFormatter->formatDateTime($this->date_finalization,'small',null);
+		$this->date_finalization = isset($this->date_finalization)?Yii::app()->dateFormatter->formatDateTime($this->date_finalization,'small',null):null;
 	
 		
 	
@@ -75,7 +76,7 @@ class Budget extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_project, Id_budget_state, version_number', 'required'),
+			array('Id, Id_project, Id_budget_state, version_number', 'required'),
 			array('Id_project, Id_budget_state, version_number', 'numerical', 'integerOnly'=>true),
 			array('percent_discount', 'length', 'max'=>10),
 			array('date_creation, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization', 'safe'),

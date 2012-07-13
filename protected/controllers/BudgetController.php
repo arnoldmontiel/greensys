@@ -36,7 +36,7 @@ class BudgetController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView($id, $version)
 	{
 		$modelBudgetItem = new BudgetItem('search');
 		$modelBudgetItem->unsetAttributes();  // clear any default values
@@ -44,10 +44,13 @@ class BudgetController extends Controller
 		{
 			$modelBudgetItem->attributes =$_GET['BudgetItem'];
 		}
+		
+		//seteo el presupuesto y su version
 		$modelBudgetItem->Id_budget = $id;
+		$modelBudgetItem->version_number = $version;
 		
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$this->loadModel($id, $version),
 			'modelBudgetItem'=>$modelBudgetItem,
 		));
 	}
@@ -68,13 +71,16 @@ class BudgetController extends Controller
 
 		if(isset($_POST['Budget']))
 		{
+			//Genero el Id
+			$model->Id = Budget::model()->count() + 1;
+			
+			//Solo para la creacion la version 1
+			$model->version_number = 1;
+			
 			$model->attributes=$_POST['Budget'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->Id));
+				$this->redirect(array('view','id'=>$model->Id, 'version'=>$model->version_number));
 		}
-
-		//Solo para la creacion
-		$model->version_number = 1;
 		
 		$this->render('create',array(
 			'model'=>$model,
@@ -103,9 +109,9 @@ class BudgetController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
+	public function actionUpdate($id, $version)
 	{
-		$model=$this->loadModel($id);
+		$model=$this->loadModel($id, $version);
 
 		$modelBudgetState = BudgetState::model()->findAll();
 		$modelProject = Project::model()->findAll();
@@ -117,7 +123,7 @@ class BudgetController extends Controller
 		{
 			$model->attributes=$_POST['Budget'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->Id));
+				$this->redirect(array('view','id'=>$model->Id, 'version'=>$model->version_number));
 		}
 
 		$this->render('update',array(
@@ -132,12 +138,12 @@ class BudgetController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+	public function actionDelete($id, $version)
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
 			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
+			$this->loadModel($id, $version)->delete();
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
@@ -173,7 +179,7 @@ class BudgetController extends Controller
 		));
 	}
 
-	public function actionAddItem($id)
+	public function actionAddItem($id, $version)
 	{
 		$modelProduct = new Product('search');
 		$modelProduct->unsetAttributes();
@@ -198,7 +204,7 @@ class BudgetController extends Controller
 		}
 
 		$this->render('addItem',array(
-					'model'=>$this->loadModel($id),
+					'model'=>$this->loadModel($id, $version),
 					'modelProduct'=>$modelProduct,
 					'modelBudgetItem'=>$modelBudgetItem,
 					'priceListItemSale'=>$priceListItemSale,
@@ -211,8 +217,9 @@ class BudgetController extends Controller
 		$idProduct = isset($_POST['IdProduct'])?$_POST['IdProduct']:'';
 		$idShippingType = isset($_POST['IdShippingType'])?$_POST['IdShippingType']:'';
 		$idBudget = isset($_POST['IdBudget'])?$_POST['IdBudget']:'';
+		$idVersion = isset($_POST['IdVersion'])?$_POST['IdVersion']:'';
 				
-		if(!empty($idPriceList)&&!empty($idProduct)&&!empty($idShippingType)&&!empty($idBudget))
+		if(!empty($idPriceList)&&!empty($idProduct)&&!empty($idShippingType)&&!empty($idBudget)&&!empty($idVersion))
 		{
 			$modelPriceListItem = PriceListItem::model()->findByAttributes(array('Id_price_list'=>$idPriceList,'Id_product'=>$idProduct));
 			
@@ -221,7 +228,7 @@ class BudgetController extends Controller
 			$modelBudgetItem->Id_price_list = $idPriceList;
 			$modelBudgetItem->Id_product = $idProduct;
 			$modelBudgetItem->Id_shipping_type = $idShippingType;
-			$modelBudgetItem->budget_version_number = 1;
+			$modelBudgetItem->version_number = $idVersion;
 			$modelBudgetItem->price = ($idShippingType==1)?$modelPriceListItem->maritime_cost:$modelPriceListItem->air_cost;
 			$modelBudgetItem->save();
 		}
@@ -232,9 +239,9 @@ class BudgetController extends Controller
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer the ID of the model to be loaded
 	 */
-	public function loadModel($id)
+	public function loadModel($id, $version)
 	{
-		$model=Budget::model()->findByPk($id);
+		$model=Budget::model()->findByPk(array('Id'=>$id,'version_number'=>$version));
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;

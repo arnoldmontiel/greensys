@@ -1,7 +1,7 @@
 <div class="view">
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_project')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->project->description), array('view', 'id'=>$data->Id)); ?>
+	<?php echo CHtml::link(CHtml::encode($data->project->description), array('view', 'id'=>$data->Id, 'version'=>$data->version_number)); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('version_number')); ?>:</b>
