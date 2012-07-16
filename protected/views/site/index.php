@@ -25,9 +25,6 @@
 			<?php echo CHtml::link(Yii::app()->lc->t('Nomenclator'),array('/nomenclator/index'));?>
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Guild'),array('/guild/index'));?>
-			</div>
-			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Product Requirements'),array('/productRequirement/index'));?>
 			</div>
 			<div class="home-item-view" >
@@ -94,19 +91,16 @@
 	<div class="home-row" >
 		<div class="home-left-view" >
 			<div class="home-title-view" >
-			<?php echo Yii::app()->lc->t('Settings');?>
+			<?php echo Yii::app()->lc->t('Budget');?>
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Settings'),array('/setting/index'));?>
+			<?php echo CHtml::link(Yii::app()->lc->t('Manage'),array('/budget/admin'));?>
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Measurement'),array('/measurement/index'));?>
+			<?php echo CHtml::link(Yii::app()->lc->t('Create'),array('/budget/create'));?>
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Volts'),array('/volts/index'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Currency'),array('/currency/index'));?>
+			<?php echo CHtml::link(Yii::app()->lc->t('list'),array('/budget/index'));?>
 			</div>
 		</div><!-- end  home-left-view -->
 		<div class="home-right-view" >
@@ -124,5 +118,23 @@
 			</div>
 		</div> <!-- end  home-right-view -->
 	</div>	<!-- end  home-row -->
-	
+	<div class="home-row" >
+		<div class="home-left-view" >
+			<div class="home-title-view" >
+			<?php echo Yii::app()->lc->t('Settings');?>
+			</div>
+			<div class="home-item-view" >
+			<?php echo CHtml::link(Yii::app()->lc->t('Settings'),array('/setting/index'));?>
+			</div>
+			<div class="home-item-view" >
+			<?php echo CHtml::link(Yii::app()->lc->t('Measurement'),array('/measurement/index'));?>
+			</div>
+			<div class="home-item-view" >
+			<?php echo CHtml::link(Yii::app()->lc->t('Volts'),array('/volts/index'));?>
+			</div>
+			<div class="home-item-view" >
+			<?php echo CHtml::link(Yii::app()->lc->t('Currency'),array('/currency/index'));?>
+			</div>
+		</div><!-- end  home-left-view -->
+	</div>	<!-- end  home-row -->
 </div>

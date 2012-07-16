@@ -13,6 +13,16 @@ $this->menu=array(
 );
 Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 
+
+$('.areaTitle').click(function(){
+	var idArea = $(this).attr('idArea');	
+	if($( '#itemArea_' + idArea ).is(':visible'))
+		$( '#itemArea_' + idArea ).animate({opacity: 'hide'},'slow');
+	else
+		$( '#itemArea_' + idArea ).animate({opacity: 'show'},'slow');
+});
+
+
 ");
 
 ?>
@@ -41,203 +51,31 @@ Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 <br>
 
 <div id="display">
-	 
-<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
-	<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
-		Select Products
-	</div>
-</div>
-<?php		
-	$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'product-grid',
-		'dataProvider'=>$modelProduct->searchSummary(),
-		'filter'=>$modelProduct,
-		'summaryText'=>'',	
-		'selectionChanged'=>'js:function(){
-		
-			$.fn.yiiGridView.update("price-list-item-grid", {
-				data: "ProductSale[Id]="+$.fn.yiiGridView.getSelection("product-grid")
-			});
-			
-			var idProduct = $.fn.yiiGridView.getSelection("product-grid");
-			if(idProduct!="")
-			{
-				$( "#displayPrices" ).animate({opacity: "show"},"slow");
-			}
-			else
-			{
-				$( "#displayPrices" ).animate({opacity: "hide"},"slow");
-			}
-			
-		}',
-		'columns'=>array(	
-				array(
-					'name'=>'code',
-				    'value'=>'$data->code',
-				 
-				),
-				array(
- 				    'name'=>'code_supplier',
-				    'value'=>'$data->code_supplier',
- 
-				),
-				array(
-		 			'name'=>'brand_description',
-					'value'=>'$data->brand->description',
-				),
-				array(
-			 		'name'=>'category_description',
-					'value'=>'$data->category->description',
-				),
-				'description_customer',
-				'description_supplier',
-				array(
-					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok", "style"=>"display:none; float:left;", "width"=>"15px", "height"=>"15px"))',
-					'type'=>'raw',
-					'htmlOptions'=>array('width'=>20),
-				),
-			),
-		));		
-		?>	
 
-<div id="displayPrices" style="display: none">
 <?php
- $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'price-list-item-grid',
-	'dataProvider'=>$priceListItemSale->searchForBudget(),
-	'filter'=>$priceListItemSale,
- 	'afterAjaxUpdate'=>'function(id, data){
- 				$("#price-list-item-grid").find(":radio").each(
-												function(index, item){
-													$(item).change(function(){
-															
-														if(!confirm("Are you sure you want to select this price?")) 
-														{
-															$.fn.yiiGridView.update("price-list-item-grid");
-															return false;
-														}
-														$.post(
-															"'.BudgetController::createUrl('AjaxAddBudgetItem').'",
-															{
-																	IdBudget: "'.$model->Id.'",
-																	IdVersion: "'.$model->version_number.'",
-																 	IdPriceList: $(this).attr("idPriceList"),
-																 	IdProduct: $(this).attr("idProduct"),
-																 	IdShippingType: $(this).attr("idShippingType")
-															}).success(
-																function(data) 
-																{ 
-																	$.fn.yiiGridView.update("budget-item-grid", {
-																		data: $(this).serialize()
-																	});
-																	$.fn.yiiGridView.update("price-list-item-grid");
-																});
-														
-													});
-												}
-										);
- 		}',
-	'columns'=>array(
-		array(
- 			'name'=>'Id_product',
-			'value'=>'$data->priceList->importer->contact->description',
-		),
-		'msrp',
-		'maritime_cost',
-		array(
- 			'type'=>'raw',
- 			'value'=>'CHtml::radioButton("rbtPrice","",array("idPriceList"=>$data->Id_price_list,"idProduct"=>$data->Id_product,"idShippingType"=>1))',
-		),
-		'air_cost',
-		 array(
-	  			'type'=>'raw',
-	  			'value'=>'CHtml::radioButton("rbtPrice","",array("idPriceList"=>$data->Id_price_list,"idProduct"=>$data->Id_product,"idShippingType"=>2))',
-		 ),
-	),
-)); ?>
-</div>
-
-	<p class="messageError"><?php
-		echo Yii::app()->lc->t('Product has already been added');
-		?></p>
-
-	<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
-		<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
-			Items
+	foreach($areaProjects as $item)
+	{ 
+	?>
+		<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
+			<div class="areaTitle" idArea="<?php echo $item->Id_area; ?>" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
+				<?php echo $item->area->description;?>
+			</div>
 		</div>
-	</div>
-			<?php 
-
-$this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'budget-item-grid',
-	'dataProvider'=>$modelBudgetItem->search(),
- 	'filter'=>$modelBudgetItem,
-	'summaryText'=>'',
- 	'afterAjaxUpdate'=>'function(id, data){
- 										$("#stock-item-grid").find("input.txtQuantity").each(
-												function(index, item){
+		<br>&nbsp;
+		<div id="itemArea_<?php echo $item->Id_area; ?>" style="display: none">
+		<?php		
+		$modelBudgetItem->Id_area = $item->Id_area;		
+		$modelProduct->product_area_id = $item->Id_area;
 		
-																$(item).keyup(function(){
-			        												validateNumber($(this));
-																});
-												
-																$(item).change(function(){
-																	
-																	var target = $(this);
-																	
-																	$.post(
-																		"'.BudgetController::createUrl('AjaxUpdateQuantity').'",
-																		 {
-																		 	idStockItem: $(this).attr("id"),
-																			quantity:$(this).val()
-																		 }).success(
-																			 	function() 
-																			 		{ 
-																			 			$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000);
-																						$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000);
-																					});
-																		
-																});
-													});	
- 									}',	
-	'columns'=>array(
-				array(
-					'name'=>'product_code',
-				    'value'=>'$data->product->code',
-				 
-				),
-				array(
-					'name'=>'product_code_supplier',
-				    'value'=>'$data->product->code_supplier',
-	
-				),
-				array(
-					'name'=>'product_customer_desc',
-				    'value'=>'$data->product->description_customer',
-	
-				),
-				array(
- 					'name'=>'product_brand_desc',
-				    'value'=>'$data->product->brand->description',
-	
-				),
-				array(
- 					'name'=>'product_supplier_name',
-				    'value'=>'$data->product->supplier->business_name',
+		echo $this->renderPartial('_selectItem', array('model'=>$model,
+													   'idArea'=>$item->Id_area,
+													   'modelProduct'=>$modelProduct,
+													   //'productGroup'=>$productGroup,
+													   'priceListItemSale'=>$priceListItemSale,
+													   'modelBudgetItem'=>$modelBudgetItem));
+		echo "</div>";//close itemArea <div>
+	}
+?>
+	 
 
-				),
-				'price',
-				array(
-					'class'=>'CButtonColumn',
-					'template'=>'{delete}',
-					'buttons'=>array
-					(
-					        'delete' => array
-							(
-					            'url'=>'Yii::app()->createUrl("budget/AjaxDeleteBudgetItem", array("id"=>$data->Id))',
-							),
-					),
-				),
-			),
-)); ?>
 </div>

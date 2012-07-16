@@ -190,13 +190,31 @@ class BudgetController extends Controller
 		));
 	}
 
+	public function actionAjaxSelect()
+	{
+		$modelProduct = new Product('search');
+		$modelProduct->unsetAttributes();
+	
+		if(isset($_GET['Product']))
+			$modelProduct->attributes=$_GET['Product'];
+	
+		$this->render('_filteredGrid',array(
+					'modelProduct'=>$modelProduct,
+					'idArea'=>1,
+		));
+	}
+	
 	public function actionAddItem($id, $version)
 	{
+		$model = $this->loadModel($id, $version);
+		
 		$modelProduct = new Product('search');
 		$modelProduct->unsetAttributes();
 		
 		$priceListItemSale = new PriceListItem();
 		$priceListItemSale->unsetAttributes();
+		
+		$areaProjects = AreaProject::model()->findAllByAttributes(array('Id_project'=>$model->Id_project));
 		
 		$modelBudgetItem = new BudgetItem('search');
 		$modelBudgetItem->unsetAttributes();  // clear any default values
@@ -215,10 +233,11 @@ class BudgetController extends Controller
 		}
 
 		$this->render('addItem',array(
-					'model'=>$this->loadModel($id, $version),
+					'model'=>$model,
 					'modelProduct'=>$modelProduct,
 					'modelBudgetItem'=>$modelBudgetItem,
 					'priceListItemSale'=>$priceListItemSale,
+					'areaProjects'=>$areaProjects,
 		));
 	}
 
@@ -259,8 +278,9 @@ class BudgetController extends Controller
 		$idShippingType = isset($_POST['IdShippingType'])?$_POST['IdShippingType']:'';
 		$idBudget = isset($_POST['IdBudget'])?$_POST['IdBudget']:'';
 		$idVersion = isset($_POST['IdVersion'])?$_POST['IdVersion']:'';
+		$idArea = isset($_POST['IdArea'])?$_POST['IdArea']:'';
 				
-		if(!empty($idPriceList)&&!empty($idProduct)&&!empty($idShippingType)&&!empty($idBudget)&&!empty($idVersion))
+		if(!empty($idPriceList)&&!empty($idProduct)&&!empty($idShippingType)&&!empty($idBudget)&&!empty($idVersion)&&!empty($idArea))
 		{
 			$modelPriceListItem = PriceListItem::model()->findByAttributes(array('Id_price_list'=>$idPriceList,'Id_product'=>$idProduct));
 			
@@ -270,6 +290,7 @@ class BudgetController extends Controller
 			$modelBudgetItem->Id_product = $idProduct;
 			$modelBudgetItem->Id_shipping_type = $idShippingType;
 			$modelBudgetItem->version_number = $idVersion;
+			$modelBudgetItem->Id_area = $idArea;
 			$modelBudgetItem->price = ($idShippingType==1)?$modelPriceListItem->maritime_cost:$modelPriceListItem->air_cost;
 			$modelBudgetItem->save();
 		}

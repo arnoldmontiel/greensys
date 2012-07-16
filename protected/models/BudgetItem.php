@@ -12,8 +12,11 @@
  * @property integer $Id_budget_item
  * @property integer $Id_price_list
  * @property integer $Id_shipping_type
+ * @property integer $Id_area
  *
  * The followings are the available model relations:
+ * @property Budget $versionNumber
+ * @property Area $idArea
  * @property Budget $idBudget
  * @property BudgetItem $idBudgetItem
  * @property BudgetItem[] $budgetItems
@@ -57,12 +60,12 @@ class BudgetItem extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_product, Id_budget, version_number, Id_price_list, Id_shipping_type', 'required'),
-			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type', 'numerical', 'integerOnly'=>true),
+			array('Id_product, Id_budget, version_number, Id_price_list, Id_shipping_type, Id_area', 'required'),
+			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type, Id_area', 'numerical', 'integerOnly'=>true),
 			array('price', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_product, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type,product_code, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc', 'safe', 'on'=>'search'),
+			array('Id, Id_product, Id_area, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type,product_code, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -77,6 +80,7 @@ class BudgetItem extends CActiveRecord
 			'budgetItem' => array(self::BELONGS_TO, 'BudgetItem', 'Id_budget_item'),
 			'budgetItems' => array(self::HAS_MANY, 'BudgetItem', 'Id_budget_item'),
 			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
+			'area' => array(self::BELONGS_TO, 'Area', 'Id_area'),
 			'priceList' => array(self::BELONGS_TO, 'PriceList', 'Id_price_list'),
 			'shippingType' => array(self::BELONGS_TO, 'ShippingType', 'Id_shipping_type'),
 			'productItems' => array(self::HAS_MANY, 'ProductItem', 'Id_budget_item'),
@@ -103,6 +107,7 @@ class BudgetItem extends CActiveRecord
 			'product_customer_desc'=>'Description Customer',
 			'product_brand_desc'=>'Brand Description',
 			'product_supplier_name'=>'Supplier Name',
+			'Id_area'=>'Area',
 		);
 	}
 
@@ -119,6 +124,7 @@ class BudgetItem extends CActiveRecord
 
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('Id_product',$this->Id_product);
+		$criteria->compare('Id_area',$this->Id_area);
 		$criteria->compare('Id_budget',$this->Id_budget);
 		$criteria->compare('version_number',$this->version_number);
 		$criteria->compare('price',$this->price,true);
