@@ -75,6 +75,18 @@ class Importer extends CActiveRecord
 		);
 	}
 
+	public function getCurrentMaritimeDelayDays()
+	{
+		$modelShippingParam = ShippingParameter::model()->findByAttributes(array('Id_importer'=>$this->Id,'current'=>1));
+		return $modelShippingParam->shippingParameterMaritime->days;
+	}
+	
+	public function getCurrentAirDelayDays()
+	{
+		$modelShippingParam = ShippingParameter::model()->findByAttributes(array('Id_importer'=>$this->Id,'current'=>1));
+		return $modelShippingParam->shippingParameterAir->days;
+	}
+	
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

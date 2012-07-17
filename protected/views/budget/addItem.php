@@ -1,7 +1,8 @@
 <?php
 $this->breadcrumbs=array(
 	'Stocks'=>array('index'),
-	$model->project->description,
+	$model->project->description=>array('view','id'=>$model->Id, 'version'=>$model->version_number),
+	'Add Products',
 );
 
 $this->menu=array(
@@ -16,10 +17,14 @@ Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 
 $('.areaTitle').click(function(){
 	var idArea = $(this).attr('idArea');	
-	if($( '#itemArea_' + idArea ).is(':visible'))
+	if($( '#itemArea_' + idArea ).is(':visible')){
 		$( '#itemArea_' + idArea ).animate({opacity: 'hide'},'slow');
-	else
+		$('#expandCollapse_' + idArea).text('+');
+	}
+	else{
 		$( '#itemArea_' + idArea ).animate({opacity: 'show'},'slow');
+		$('#expandCollapse_' + idArea).text('-');
+	}
 });
 
 
@@ -58,7 +63,7 @@ $('.areaTitle').click(function(){
 	?>
 		<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
 			<div class="areaTitle" idArea="<?php echo $item->Id_area; ?>" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
-				<?php echo $item->area->description;?>
+				<span id="expandCollapse_<?php echo $item->Id_area; ?>">+</span>&nbsp;<?php echo $item->area->description;?>
 			</div>
 		</div>
 		<br>&nbsp;
@@ -70,10 +75,11 @@ $('.areaTitle').click(function(){
 		echo $this->renderPartial('_selectItem', array('model'=>$model,
 													   'idArea'=>$item->Id_area,
 													   'modelProduct'=>$modelProduct,
-													   //'productGroup'=>$productGroup,
 													   'priceListItemSale'=>$priceListItemSale,
 													   'modelBudgetItem'=>$modelBudgetItem));
-		echo "</div>";//close itemArea <div>
+		?>		
+		</div><!-- close itemArea -->
+<?php				
 	}
 ?>
 	 

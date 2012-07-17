@@ -49,6 +49,7 @@ class BudgetController extends Controller
 		$modelBudgetItem->Id_budget = $id;
 		$modelBudgetItem->version_number = $version;
 		
+		
 		$this->render('view',array(
 			'model'=>$this->loadModel($id, $version),
 			'modelBudgetItem'=>$modelBudgetItem,
@@ -226,7 +227,9 @@ class BudgetController extends Controller
 		if(isset($_GET['Product']))
 			$modelProduct->attributes=$_GET['Product'];
 
-		
+		if(isset($_GET['PriceListItem'])){
+			$priceListItemSale->attributes=$_GET['PriceListItem'];
+		}
 
 		if(isset($_GET['ProductSale']['Id'])){
 			$priceListItemSale->Id_product=$_GET['ProductSale']['Id'];

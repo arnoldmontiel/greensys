@@ -33,6 +33,7 @@ class BudgetItem extends CActiveRecord
 	public $product_brand_desc;
 	public $product_supplier_name;
 	public $product_customer_desc;
+	public $area_desc;
 	
 	/**
 	 * Returns the static model of the specified AR class.
@@ -65,7 +66,7 @@ class BudgetItem extends CActiveRecord
 			array('price', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_product, Id_area, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type,product_code, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc', 'safe', 'on'=>'search'),
+			array('Id, Id_product, Id_area, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type,product_code, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -134,12 +135,14 @@ class BudgetItem extends CActiveRecord
 		
 		$criteria->join =	"LEFT OUTER JOIN product p ON p.Id=t.Id_product
 												 LEFT OUTER JOIN brand b ON p.Id_brand=b.Id
+												 LEFT OUTER JOIN area a ON a.Id = t.Id_area
 												 LEFT OUTER JOIN supplier s ON p.Id_supplier=s.Id";
 		$criteria->addSearchCondition("p.code",$this->product_code);
 		$criteria->addSearchCondition("p.code_supplier",$this->product_code_supplier);
 		$criteria->addSearchCondition("p.description_customer",$this->product_customer_desc);
 		$criteria->addSearchCondition("b.description",$this->product_brand_desc);
 		$criteria->addSearchCondition("s.business_name",$this->product_supplier_name);
+		$criteria->addSearchCondition("a.description",$this->area_desc);
 		
 		// Create a custom sort
 		$sort=new CSort;
@@ -151,6 +154,10 @@ class BudgetItem extends CActiveRecord
 													'product_code_supplier' => array(
 											        'asc' => 'p.code_supplier',
 											        'desc' => 'p.code_supplier DESC',
+		),
+													'area_desc' => array(
+													        'asc' => 'a.description',
+													        'desc' => 'a.description DESC',
 		),
 											      'product_customer_desc' => array(
 											        'asc' => 'p.description_customer',

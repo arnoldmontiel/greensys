@@ -62,6 +62,7 @@
 	'id'=>'price-list-item-grid_'. $idArea.$type,
 	'dataProvider'=>$priceListItemSale->searchForBudget(),
 	'filter'=>$priceListItemSale,
+ 	'summaryText'=>'',
  	'afterAjaxUpdate'=>'function(id, data){
  				$("#price-list-item-grid_'.$idArea.$type.'").find(":radio").each(
 												function(index, item){
@@ -96,15 +97,25 @@
  		}',
 	'columns'=>array(
 		array(
- 			'name'=>'Id_product',
+ 			'name'=>'importer_desc',
 			'value'=>'$data->priceList->importer->contact->description',
 		),
 		'msrp',
+		'dealer_cost',
+		'profit_rate',
+ 		array(
+   			'name'=>'maritime_days',
+  			'value'=>'$data->priceList->importer->currentMaritimeDelayDays',
+ 		),
 		'maritime_cost',
 		array(
  			'type'=>'raw',
  			'value'=>'CHtml::radioButton("rbtPrice","",array("idPriceList"=>$data->Id_price_list,"idProduct"=>$data->Id_product,"idShippingType"=>1))',
 		),
+ 		array(
+    		'name'=>'air_days',
+   			'value'=>'$data->priceList->importer->currentAirDelayDays',
+ 		),
 		'air_cost',
 		 array(
 	  			'type'=>'raw',

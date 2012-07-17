@@ -25,6 +25,9 @@ class PriceListItem extends CActiveRecord
 	public $code;
 	public $code_supplier;
 	public $Id_importer;
+	public $importer_desc;
+	public $maritime_days;
+	public $air_days;
 	
 	/**
 	 * Returns the static model of the specified AR class.
@@ -56,8 +59,8 @@ class PriceListItem extends CActiveRecord
 			array('msrp, dealer_cost, profit_rate, maritime_cost,air_cost', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_product, Id_price_list, cost, description_customer, code, code_supplier', 'safe'),
-			array('Id, Id_product, Id_price_list, description_customer, code, code_supplier, msrp, dealer_cost, profit_rate, maritime_cost,air_cost', 'safe', 'on'=>'search'),
+			array('Id, Id_product, Id_price_list, cost, description_customer, code, code_supplier,importer_desc, maritime_days, air_days', 'safe'),
+			array('Id, Id_product, Id_price_list, description_customer, code, code_supplier, msrp, dealer_cost, profit_rate, maritime_cost,air_cost, importer_desc, maritime_days, air_days', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -88,6 +91,9 @@ class PriceListItem extends CActiveRecord
 			'profit_rate' => 'Profit Rate',
 			'maritime_cost' => 'Maritime',
 			'air_cost' => 'Air',
+			'importer_desc'=>'Importer',
+			'maritime_days'=>'Maritime days',
+			'air_days'=>'Air days',
 		);
 	}
 
@@ -131,13 +137,47 @@ class PriceListItem extends CActiveRecord
 		$criteria->compare('maritime_cost',$this->maritime_cost,true);
 		$criteria->compare('air_cost',$this->air_cost,true);
 	
-		$criteria->with[]='priceList';
-		$criteria->compare('priceList.Id_price_list_type',2);//sale
-		$criteria->compare('priceList.validity',1);//sale
-	
+		$criteria->join = "INNER JOIN price_list pl ON (t.Id_price_list = pl.Id)
+							INNER JOIN importer i ON (pl.Id_importer = i.Id)
+							INNER JOIN contact c ON (i.Id_contact = c.Id)
+							INNER JOIN shipping_parameter sp ON (i.Id = sp.Id_importer AND sp.current = 1)
+							INNER JOIN shipping_parameter_maritime spm ON (sp.Id_shipping_parameter_maritime = spm.Id)
+							INNER JOIN shipping_parameter_air spa ON (sp.Id_shipping_parameter_air = spa.Id)";
+		
+		$criteria->addSearchCondition("c.description",$this->importer_desc,true);
+		$criteria->addSearchCondition("pl.Id_price_list_type",2);
+		$criteria->addSearchCondition("pl.validity",1);
+		$criteria->addSearchCondition("spm.days",$this->maritime_days,true);
+		$criteria->addSearchCondition("spa.days",$this->air_days,true);
+		
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+								      'msrp',
+								      'maritime_cost',
+								      'air_cost',
+								      'dealer_cost',
+								      'profit_rate',
+								      'importer_desc' => array(
+								        'asc' => 'c.description',
+								        'desc' => 'c.description DESC',
+		),
+									'maritime_days' => array(
+										        'asc' => 'spm.days',
+										        'desc' => 'spm.days DESC',
+		),
+									'air_days' => array(
+										        'asc' => 'spa.days',
+										        'desc' => 'spa.days DESC',
+		),
+				'*',
+		);
+		
 		return new CActiveDataProvider($this, array(
-				'criteria'=>$criteria,
+										'criteria'=>$criteria,
+										'sort'=>$sort,
 		));
+		
 	}
 	
 	public function searchPriceList()

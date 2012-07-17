@@ -34,11 +34,7 @@ $this->widget('zii.widgets.jui.CJuiTabs', array(
 		echo Yii::app()->lc->t('Product has already been added');
 		?></p>
 
-	<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
-		<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
-			Items
-		</div>
-	</div>
+	<br>
 			<?php 
 
 $this->widget('zii.widgets.grid.CGridView', array(

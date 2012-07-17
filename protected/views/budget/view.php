@@ -52,6 +52,11 @@ $this->menu=array(
 	</div>
 			<?php 
 
+			$creteria = new CDbCriteria();
+			$creteria->join = "INNER JOIN area_project ap on (ap.Id_project = ". $model->Id_project.")";
+			$area = Area::model()->findAll($creteria);
+			$areaList = CHtml::listData($area,'Id','description');
+			
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'stock-item-grid',
 	'dataProvider'=>$modelBudgetItem->search(),
@@ -59,13 +64,18 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'summaryText'=>'',
 	'columns'=>array(
 				array(
+		 			'name'=>"Id_area",
+		 			'type'=>'raw',
+		 			'value'=>'$data->area->description',
+		 			'filter'=>$areaList,
+				),
+				array(
 					'name'=>'product_code',
 				    'value'=>'$data->product->code',
 				),
 				array(
 					'name'=>'product_code_supplier',
 				    'value'=>'$data->product->code_supplier',
-	
 				),
 				array(
 					'name'=>'product_customer_desc',
