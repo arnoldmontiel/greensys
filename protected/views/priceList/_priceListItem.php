@@ -16,6 +16,27 @@ function () {
 	$(this).attr('src','images/delete_all_blue.png');
   }
 );
+
+$('#addAll').click(
+		function()
+		{
+			if(!confirm('Are you sure you want to add all filtered products?'))
+			{ 
+				return false;
+			}
+		
+			$.post('".PriceListController::createUrl('AjaxAddFilteredProducts')."',
+				$.param($(
+			        '#product-grid .filters input,  #product-grid .filters select, '
+    		))+'&Id_price_list='+$('#PriceList_Id :selected').attr('value'),
+				function(data){
+					$.fn.yiiGridView.update('price-list-item-grid');
+				}
+			);	
+			return false;				
+		}
+);
+		
 ");
 ?>
 	<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
@@ -31,20 +52,6 @@ function () {
                                 'title'=>'Add current filtered products',
                                 'style'=>'width:30px;',
                                 'id'=>'addAll',
-                                	'ajax'=> array(
-										'type'=>'POST',
-										'url'=>PriceListController::createUrl('AjaxAddFilteredProducts'),
-										'beforeSend'=>'function(){
-													if(!confirm("Are you sure you want to add all filtered products?")) 
-														return false;
-														}',
-										'success'=>'js:function(data)
-										{
-											$.fn.yiiGridView.update("price-list-item-grid", {
-												data: $(this).serialize()
-											});
-										}'
-                                	)
                                 )
                                                          
                             ); 

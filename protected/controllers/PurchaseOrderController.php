@@ -68,18 +68,78 @@ class PurchaseOrderController extends Controller
 				'modelPurchaseOrderItem'=>$modelPurchaseOrderItem,
 		));
 	}
-	public function AjaxDeletePurchaseOrderItem($id)
+	public function actionAjaxDeletePurchaseOrderItem($id)
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
 			// we only allow deletion via POST request
-			$this->loadPriceListItem($id)->delete();
 			$purchaseOrderItem = PurchaseOrderItem::model()->findByPk($id);
-			$purchaseOrderItem->delete();
+			if(isset($purchaseOrderItem))
+			{
+				$purchaseOrderItem->delete();				
+			}
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		}
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');		
+	}
+	public function actionAjaxAddPurchaseOrderItem()
+	{
+		if(isset($_POST['Id_product'])&&isset($_POST['Id_purchase_order'])){
+			$idPurchaseOrder = $_POST['Id_purchase_order'];
+
+			$purchaseOrder = PurchaseOrder::model()->findByPk($idPurchaseOrder);
+				
+			$product = Product::model()->findByPk($_POST['Id_product']);
+			
+			if(isset($product)){
+				$criteria = new CDbCriteria;
+				$criteria->compare('t.Id_product', $product->Id);
+				$criteria->with[]='priceList';
+				$criteria->compare('priceList.Id_price_list_type',1);//purchase
+				//$criteria->compare('priceList.validity',1);
+				$criteria->order = 't.Id_price_list DESC';
+				$priceListItemPurchase = PriceListItem::model()->find($criteria);
+				if(isset($priceListItemPurchase))
+				{
+					$purchasOrderItemInDb = PurchaseOrderItem::model()->findByAttributes(array('Id_purchase_order'=> $idPurchaseOrder,'Id_product'=>$product->Id));
+					if(!isset($purchasOrderItemInDb))
+					{
+						$purchaseOrderItem=new PurchaseOrderItem();
+		
+						$shippingParameter = $purchaseOrder->shippingParameter;
+						$air = $shippingParameter->shippingParameterAir;
+						$maritime = $shippingParameter->shippingParameterMaritime;
+						$cost = 0;
+						if($purchaseOrder->Id_shipping_type == 1)
+						{
+							$cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$product->length*$product->height*$product->width);
+						}
+						else
+						{
+							$cost = $priceListItemPurchase->dealer_cost+($air->cost_measurement_unit*$product->weight);
+						}
+						$total = $priceListItemPurchase->dealer_cost+$cost;
+						$purchaseOrderItem->attributes =  array('Id_purchase_order'=>$idPurchaseOrder,
+								'Id_product'=>$product->Id,
+								'price_purchase'=>$priceListItemPurchase->dealer_cost,
+								'price_shipping'=>$cost,
+								'quantity'=>1,
+								'price_total'=>$total,
+						);
+							
+						$purchaseOrderItem->save();
+					}
+					else
+					{
+						$purchasOrderItemInDb->quantity += 1;
+						$purchasOrderItemInDb->price_total = $purchasOrderItemInDb->quantity*($purchasOrderItemInDb->price_purchase+$purchasOrderItemInDb->price_shipping);
+						$purchasOrderItemInDb->save();
+					}
+				}
+			}
+		}
+		
 	}
 	public function actionAjaxAddFilteredProducts()
 	{
@@ -140,7 +200,6 @@ class PurchaseOrderController extends Controller
 				}
 			}
 		}
-	
 	}
 	
 	/**

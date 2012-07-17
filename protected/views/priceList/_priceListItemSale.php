@@ -16,6 +16,25 @@ function () {
 	$(this).attr('src','images/delete_all_blue.png');
   }
 );
+		
+$('#addAll-sale').click(
+		function()
+		{
+			if(!confirm('Are you sure you want to add all filtered products?'))
+			{ 
+				return false;
+			}
+			$.post('".PriceListController::createUrl('AjaxAddFilteredProductsSale')."',
+				$.param($(
+			        '#product-grid-sale .filters input,  #product-grid-sale .filters select, '
+    		))+'&Id_price_list='+$('#PriceList_Id :selected').attr('value'),
+				function(data){
+					$.fn.yiiGridView.update('price-list-item-grid-sale');
+				}
+			);	
+			return false;		
+		}
+);
 ");
 ?>
 	<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
@@ -31,20 +50,6 @@ function () {
                                 'title'=>'Add current filtered products',
                                 'style'=>'width:30px;',
                                 'id'=>'addAll-sale',
-                                	'ajax'=> array(
-										'type'=>'POST',
-										'url'=>PriceListController::createUrl('AjaxAddFilteredProductsSale'),
-										'beforeSend'=>'function(){
-													if(!confirm("Are you sure you want to add all filtered products?")) 
-														return false;
-														}',
-										'success'=>'js:function(data)
-										{
-											$.fn.yiiGridView.update("price-list-item-grid-sale", {
-												data: $(this).serialize()
-											});
-										}'
-                                	)
                                 )
                                                          
                             ); 
@@ -90,6 +95,10 @@ function () {
 					'name'=>'code',
 				    'value'=>'$data->code',
 				 
+				),
+				array(
+		 			'name'=>'supplier_description',
+					'value'=>'$data->supplier->business_name',
 				),
 				array(
 		 			'name'=>'brand_description',

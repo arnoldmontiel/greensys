@@ -99,7 +99,7 @@ $('#addAll').click(
 		'filter'=>$modelProduct,
 		'summaryText'=>'',	
 		'selectionChanged'=>'js:function(id){
-			$.get(	"'.PurchaseOrderController::createUrl('AjaxAddPurchaseOrderItem').'",
+			$.post(	"'.PurchaseOrderController::createUrl('AjaxAddPurchaseOrderItem').'",
 					{
 						Id_purchase_order:'.$model->Id.',
 						Id_product:$.fn.yiiGridView.getSelection("product-grid")

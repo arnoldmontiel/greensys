@@ -465,7 +465,7 @@ class PriceListController extends Controller
 	{
 	
 		$productFilter = isset($_POST['Product'])?$_POST['Product']:null;
-		$idPriceList = isset($_POST['PriceList'])?(int)$_POST['PriceList']['Id']:null;
+		$idPriceList = isset($_POST['Id_price_list'])?$_POST['Id_price_list']:null;
 
 		if($productFilter != null && $idPriceList != null){
 			$products = Product::model();
@@ -477,7 +477,7 @@ class PriceListController extends Controller
 			$prov = $products->searchSummary();
 			$prov->pagination = false;
 			foreach($prov->getData(true) as $product){
-				$priceListItemInDb = PriceListItem::model()->findByAttributes(array('Id_price_list'=>(int) $idPriceList,'Id_product'=>$product->Id));
+				$priceListItemInDb = PriceListItem::model()->findByAttributes(array('Id_price_list'=> $idPriceList,'Id_product'=>$product->Id));
 				if($priceListItemInDb==null)
 				{
 					$priceListItem=new PriceListItem();
@@ -536,7 +536,7 @@ class PriceListController extends Controller
 	{
 	
 		$productFilter = isset($_POST['Product'])?$_POST['Product']:null;
-		$idPriceList = isset($_POST['PriceList'])?(int)$_POST['PriceList']['Id']:null;
+		$idPriceList = isset($_POST['Id_price_list'])?(int)$_POST['Id_price_list']:null;
 	
 		if(isset($productFilter) && isset($idPriceList))
 		{
