@@ -49,8 +49,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				 
 				),
 				array(
-					'name'=>'product_code_supplier',
-				    'value'=>'$data->product->code_supplier',
+					'name'=>'parent_product_code',
+				    'value'=>'$data->budgetItem->product->code',
 	
 				),
 				array(

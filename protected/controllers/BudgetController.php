@@ -332,6 +332,24 @@ class BudgetController extends Controller
 			$modelBudgetItem->Id_area = $idArea;
 			$modelBudgetItem->price = ($idShippingType==1)?$modelPriceListItem->maritime_cost:$modelPriceListItem->air_cost;
 			$modelBudgetItem->save();
+			
+			$productGroups = ProductGroup::model()->findAllByAttributes(array('Id_product_parent'=>$idProduct));
+			foreach($productGroups as $item)
+			{
+				for($index = 0; $index < $item->quantity; $index++)
+				{
+					$modelPriceListItem = PriceListItem::model()->findByAttributes(array('Id_price_list'=>$idPriceList,'Id_product'=>$item->Id_product_child));
+					
+					$modelBudgetItemChild = new BudgetItem;
+					$modelBudgetItemChild->Id_budget = $idBudget;
+					$modelBudgetItemChild->Id_product = $item->Id_product_child;
+					$modelBudgetItemChild->version_number = $idVersion;
+					$modelBudgetItemChild->Id_budget_item = $modelBudgetItem->Id;
+					$modelBudgetItemChild->Id_area = $idArea;
+					$modelBudgetItemChild->price = 0;
+					$modelBudgetItemChild->save();
+				}
+			}
 		}
 	}
 

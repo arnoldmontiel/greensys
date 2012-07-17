@@ -34,6 +34,7 @@ class BudgetItem extends CActiveRecord
 	public $product_supplier_name;
 	public $product_customer_desc;
 	public $area_desc;
+	public $parent_product_code;
 	
 	/**
 	 * Returns the static model of the specified AR class.
@@ -61,12 +62,12 @@ class BudgetItem extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_product, Id_budget, version_number, Id_price_list, Id_shipping_type, Id_area', 'required'),
+			array('Id_product, Id_budget, version_number, Id_area', 'required'),
 			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type, Id_area', 'numerical', 'integerOnly'=>true),
 			array('price', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_product, Id_area, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type,product_code, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc', 'safe', 'on'=>'search'),
+			array('Id, Id_product, Id_area, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type,product_code, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc, parent_product_code', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -109,6 +110,7 @@ class BudgetItem extends CActiveRecord
 			'product_brand_desc'=>'Brand Description',
 			'product_supplier_name'=>'Supplier Name',
 			'Id_area'=>'Area',
+			'parent_product_code'=>'Parent Code',
 		);
 	}
 
@@ -123,26 +125,30 @@ class BudgetItem extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('Id',$this->Id);
-		$criteria->compare('Id_product',$this->Id_product);
-		$criteria->compare('Id_area',$this->Id_area);
-		$criteria->compare('Id_budget',$this->Id_budget);
-		$criteria->compare('version_number',$this->version_number);
-		$criteria->compare('price',$this->price,true);
-		$criteria->compare('Id_budget_item',$this->Id_budget_item);
-		$criteria->compare('Id_price_list',$this->Id_price_list);
-		$criteria->compare('Id_shipping_type',$this->Id_shipping_type);
+		$criteria->compare('t.Id',$this->Id);
+		$criteria->compare('t.Id_product',$this->Id_product);
+		$criteria->compare('t.Id_area',$this->Id_area);
+		$criteria->compare('t.Id_budget',$this->Id_budget);
+		$criteria->compare('t.version_number',$this->version_number);
+		$criteria->compare('t.price',$this->price,true);
+		$criteria->compare('t.Id_budget_item',$this->Id_budget_item);
+		$criteria->compare('t.Id_price_list',$this->Id_price_list);
+		$criteria->compare('t.Id_shipping_type',$this->Id_shipping_type);
 		
 		$criteria->join =	"LEFT OUTER JOIN product p ON p.Id=t.Id_product
 												 LEFT OUTER JOIN brand b ON p.Id_brand=b.Id
 												 LEFT OUTER JOIN area a ON a.Id = t.Id_area
-												 LEFT OUTER JOIN supplier s ON p.Id_supplier=s.Id";
+												 LEFT OUTER JOIN supplier s ON p.Id_supplier=s.Id
+												 LEFT OUTER JOIN budget_item bi ON bi.Id=t.Id_budget_item
+												 LEFT OUTER JOIN product p2 ON p2.Id=bi.Id_product";
+		
 		$criteria->addSearchCondition("p.code",$this->product_code);
 		$criteria->addSearchCondition("p.code_supplier",$this->product_code_supplier);
 		$criteria->addSearchCondition("p.description_customer",$this->product_customer_desc);
 		$criteria->addSearchCondition("b.description",$this->product_brand_desc);
 		$criteria->addSearchCondition("s.business_name",$this->product_supplier_name);
 		$criteria->addSearchCondition("a.description",$this->area_desc);
+		$criteria->addSearchCondition("p2.code",$this->parent_product_code);
 		
 		// Create a custom sort
 		$sort=new CSort;
@@ -159,9 +165,13 @@ class BudgetItem extends CActiveRecord
 													        'asc' => 'a.description',
 													        'desc' => 'a.description DESC',
 		),
-											      'product_customer_desc' => array(
-											        'asc' => 'p.description_customer',
-											        'desc' => 'p.description_customer DESC',
+											      'parent_product_code' => array(
+											        'asc' => 'p2.code',
+											        'desc' => 'p2.code DESC',
+		),
+													'product_customer_desc' => array(
+													        'asc' => 'p.description_customer',
+													        'desc' => 'p.description_customer DESC',
 		),
 													'product_brand_desc'=> array(
 													'asc'=>'b.description',
