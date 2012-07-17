@@ -56,6 +56,42 @@ class BudgetController extends Controller
 		));
 	}
 
+	public function actionViewVersion($id, $version)
+	{
+		$modelBudgetItem = new BudgetItem('search');
+		$modelBudgetItem->unsetAttributes();  // clear any default values
+		if(isset($_GET['BudgetItem']))
+		{
+			$modelBudgetItem->attributes =$_GET['BudgetItem'];
+		}
+	
+		//seteo el presupuesto y su version
+		$modelBudgetItem->Id_budget = $id;
+		$modelBudgetItem->version_number = $version;
+	
+	
+		$this->render('viewVersion',array(
+				'model'=>$this->loadModel($id, $version),
+				'modelBudgetItem'=>$modelBudgetItem,
+		));
+	}
+	
+	public function actionAdminAllVersion($id, $version)
+	{
+		$model=new Budget('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Budget']))
+			$model->attributes=$_GET['Budget'];
+
+		$model->Id = $id;
+		
+		$this->render('adminAllVersion',array(
+			'model'=>$model,
+			'modelInstance'=>$this->loadModel($id, $version),
+			'version'=>$version,
+		));
+	}
+	
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.

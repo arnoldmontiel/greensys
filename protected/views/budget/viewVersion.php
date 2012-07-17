@@ -1,27 +1,19 @@
 <?php
 $this->breadcrumbs=array(
 	'Budgets'=>array('index'),
-	$model->project->description,
+	$model->project->description=>array('view','id'=>$model->Id, 'version'=>$model->currentVersion),
+	'All Versions'=>array('adminAllVersion','id'=>$model->Id, 'version'=>$model->currentVersion),
+	'Version '. $model->version_number
 );
 
 $this->menu=array(
 	array('label'=>'List Budget', 'url'=>array('index')),
-	array('label'=>'Create Budget', 'url'=>array('create')),
-	array('label'=>'Update Budget', 'url'=>array('update', 'id'=>$model->Id, 'version'=>$model->version_number)),
-	array('label'=>'Delete Budget', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id, 'version'=>$model->version_number),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Add Items Budget', 'url'=>array('addItem', 'id'=>$model->Id, 'version'=>$model->version_number)),
+	array('label'=>'Create Budget', 'url'=>array('create')),	
 	array('label'=>'Manage Budget', 'url'=>array('admin')),
 );
 ?>
 
-<h1>View Budget <?php echo CHtml::link( CHtml::image('images/new_version.png','Generate new version' ,array(
-																   'title'=>'Generate new version',
-												                   'style'=>'width:30px;',
-												                   'id'=>'addBack',
-)
-),BudgetController::createUrl('AjaxNewVersion', array('id'=>$model->Id, 'version'=>$model->version_number)));
-?>
-</h1>
+<h1>View Budget Version</h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
@@ -30,10 +22,7 @@ $this->menu=array(
 			'type'=>'raw',
 			'value'=>$model->project->description
 		),
-		array('label'=>$model->getAttributeLabel('version_number'),
-						'type'=>'raw',
-						'value'=>$model->version_number . ' ( ' . CHtml::link('view all versions', BudgetController::createUrl('adminAllVersion',array('id'=>$model->Id, 'version'=>$model->version_number))) . ' )'
-		),
+		'version_number',
 		array('label'=>$model->getAttributeLabel('Id_budget_state'),
 			'type'=>'raw',
 			'value'=>$model->budgetState->description

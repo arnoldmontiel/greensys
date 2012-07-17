@@ -25,6 +25,8 @@
  */
 class Budget extends CActiveRecord
 {
+	public $curVersion;
+	
 	public function beforeSave()
 	{
 		$this->date_estimated_inicialization = (!empty($this->date_estimated_inicialization))?Yii::app()->lc->toDatabase($this->date_estimated_inicialization,'date','small','date',null):null;//date('Y-m-d',strtotime($this->date_validity));
@@ -126,6 +128,18 @@ class Budget extends CActiveRecord
 		);
 	}
 
+	public function getCurrentVersion()
+	{
+		$criteria=new CDbCriteria;
+	
+		$criteria->select='MAX(version_number) as curVersion';
+		$criteria->condition='Id = '.$this->Id;
+		
+		$modelMax = Budget::model()->find($criteria);
+		
+		return $modelMax->curVersion;
+	}
+	
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
