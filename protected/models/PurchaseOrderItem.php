@@ -6,8 +6,10 @@
  * The followings are the available columns in table 'purchase_order_item':
  * @property integer $Id
  * @property integer $Id_purchase_order
- * @property string $price_with_shipping
+ * @property string $price_shipping
  * @property string $price_purchase
+ * @property string $price_total
+ * 
  *
  * The followings are the available model relations:
  * @property ProductItem[] $productItems
@@ -15,6 +17,11 @@
  */
 class PurchaseOrderItem extends CActiveRecord
 {
+	public $product_description_supplier;
+	public $product_description_customer;
+	public $product_code;
+	public $product_code_supplier;
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -41,12 +48,12 @@ class PurchaseOrderItem extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_purchase_order', 'required'),
-			array('Id_purchase_order', 'numerical', 'integerOnly'=>true),
-			array('price_with_shipping, price_purchase', 'length', 'max'=>10),
+			array('Id_purchase_order, Id_product', 'required'),
+			array('Id_purchase_order, Id_product,quantity', 'numerical', 'integerOnly'=>true),
+			array('price_shipping, price_purchase,price_total', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_purchase_order, price_with_shipping, price_purchase', 'safe', 'on'=>'search'),
+			array('Id, Id_purchase_order, price_shipping,price_total, price_purchase, price_total,product_description_supplier,product_description_customer,product_code,product_code_supplier,quantity', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,7 +66,8 @@ class PurchaseOrderItem extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'productItems' => array(self::HAS_MANY, 'ProductItem', 'Id_purchase_order_item'),
-			'idPurchaseOrder' => array(self::BELONGS_TO, 'PurchaseOrder', 'Id_purchase_order'),
+			'purchaseOrder' => array(self::BELONGS_TO, 'PurchaseOrder', 'Id_purchase_order'),
+			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
 		);
 	}
 
@@ -71,8 +79,9 @@ class PurchaseOrderItem extends CActiveRecord
 		return array(
 			'Id' => 'ID',
 			'Id_purchase_order' => 'Id Purchase Order',
-			'price_with_shipping' => 'Price With Shipping',
+			'price_shipping' => 'Price Shipping',
 			'price_purchase' => 'Price Purchase',
+				'price_total'=> 'Price Total',
 		);
 	}
 
@@ -89,11 +98,40 @@ class PurchaseOrderItem extends CActiveRecord
 
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('Id_purchase_order',$this->Id_purchase_order);
-		$criteria->compare('price_with_shipping',$this->price_with_shipping,true);
+		$criteria->compare('price_shipping',$this->price_shipping,true);
 		$criteria->compare('price_purchase',$this->price_purchase,true);
-
+		$criteria->compare('price_total',$this->price_total,true);		
+		
+		$criteria->with[]='product';
+		$criteria->addSearchCondition("description_customer",$this->product_description_customer);
+		$criteria->addSearchCondition("description_supplier",$this->product_description_supplier);
+		$criteria->addSearchCondition("code",$this->product_code);
+		$criteria->addSearchCondition("code_supplier",$this->product_code_supplier);
+		
+		$sort=new CSort;
+		$sort->attributes=array(
+				'product_description_customer' => array(
+						'asc' => 'product.description_customer',
+						'desc' => 'product.description_customer DESC',
+				),
+				'product_description_supplier' => array(
+						'asc' => 'product.description_supplier',
+						'desc' => 'product.description_supplier DESC',
+				),
+				'product_code' => array(
+						'asc' => 'product.code',
+						'desc' => 'product.code DESC',
+				),
+				'product_code_supplier' => array(
+						'asc' => 'product.code_supplier',
+						'desc' => 'product.code_supplier DESC',
+				),
+				'*',
+		);
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+				'sort'=>$sort,
 		));
 	}
 }

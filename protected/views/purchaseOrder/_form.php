@@ -5,43 +5,28 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'Id_supplier'); ?>
-		<?php echo $form->textField($model,'Id_supplier'); ?>
+		<?php echo $form->dropDownList($model, 'Id_supplier', CHtml::listData(
+    			Supplier::model()->findAll(), 'Id', 'business_name')); 
+		?>
 		<?php echo $form->error($model,'Id_supplier'); ?>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'Id_shipping_parameter'); ?>
-		<?php echo $form->textField($model,'Id_shipping_parameter'); ?>
-		<?php echo $form->error($model,'Id_shipping_parameter'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'date_creation'); ?>
-		<?php echo $form->textField($model,'date_creation'); ?>
-		<?php echo $form->error($model,'date_creation'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'Id_purchase_order_state'); ?>
-		<?php echo $form->textField($model,'Id_purchase_order_state'); ?>
-		<?php echo $form->error($model,'Id_purchase_order_state'); ?>
-	</div>
-
 	<div class="row">
 		<?php echo $form->labelEx($model,'Id_importer'); ?>
-		<?php echo $form->textField($model,'Id_importer'); ?>
+		<?php echo $form->dropDownList($model, 'Id_importer', CHtml::listData(
+    			Importer::model()->findAll(), 'Id', 'contact.description')); 
+		?>
 		<?php echo $form->error($model,'Id_importer'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'Id_shipping_type'); ?>
-		<?php echo $form->textField($model,'Id_shipping_type'); ?>
+		<?php echo $form->dropDownList($model, 'Id_shipping_type', CHtml::listData(
+    			ShippingType::model()->findAll(), 'Id', 'description')); 
+		?>
 		<?php echo $form->error($model,'Id_shipping_type'); ?>
 	</div>
 

@@ -65,11 +65,11 @@ class PurchaseOrder extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idShippingParameter' => array(self::BELONGS_TO, 'ShippingParameter', 'Id_shipping_parameter'),
-			'idPurchaseOrderState' => array(self::BELONGS_TO, 'PurchaseOrderState', 'Id_purchase_order_state'),
-			'idShippingType' => array(self::BELONGS_TO, 'ShippingType', 'Id_shipping_type'),
-			'idSupplier' => array(self::BELONGS_TO, 'Supplier', 'Id_supplier'),
-			'idImporter' => array(self::BELONGS_TO, 'Importer', 'Id_importer'),
+			'shippingParameter' => array(self::BELONGS_TO, 'ShippingParameter', 'Id_shipping_parameter'),
+			'purchaseOrderState' => array(self::BELONGS_TO, 'PurchaseOrderState', 'Id_purchase_order_state'),
+			'shippingType' => array(self::BELONGS_TO, 'ShippingType', 'Id_shipping_type'),
+			'supplier' => array(self::BELONGS_TO, 'Supplier', 'Id_supplier'),
+			'importer' => array(self::BELONGS_TO, 'Importer', 'Id_importer'),
 			'purchaseOrderItems' => array(self::HAS_MANY, 'PurchaseOrderItem', 'Id_purchase_order'),
 		);
 	}
@@ -81,12 +81,12 @@ class PurchaseOrder extends CActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
-			'Id_supplier' => 'Id Supplier',
-			'Id_shipping_parameter' => 'Id Shipping Parameter',
+			'Id_supplier' => 'Supplier',
+			'Id_shipping_parameter' => 'Shipping Parameter',
 			'date_creation' => 'Date Creation',
-			'Id_purchase_order_state' => 'Id Purchase Order State',
-			'Id_importer' => 'Id Importer',
-			'Id_shipping_type' => 'Id Shipping Type',
+			'Id_purchase_order_state' => 'Purchase Order State',
+			'Id_importer' => 'Importer',
+			'Id_shipping_type' => 'Shipping Type',
 		);
 	}
 

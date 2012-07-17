@@ -42,7 +42,107 @@ class PurchaseOrderController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
-
+	/**
+	 * Displays a particular model.
+	 * @param integer $id the ID of the model to be displayed
+	 */
+	public function actionAssignProducts($id)
+	{
+		$modelProduct = new Product('search');
+		$modelProduct->unsetAttributes();
+		if(isset($_GET['Product']))
+		{
+			$modelProduct->attributes =$_GET['Product'];				
+		}
+		$modelPurchaseOrderItem = new PurchaseOrderItem('search');
+		$modelPurchaseOrderItem->unsetAttributes();
+		if(isset($_GET['PurchaseOrderItem']))
+		{
+			$modelPurchaseOrderItem->attributes =$_GET['PurchaseOrderItem'];
+		}
+		$modelPurchaseOrderItem->Id_purchase_order = $id;
+		
+		$this->render('assignProducts',array(
+				'model'=>$this->loadModel($id),
+				'modelProduct'=>$modelProduct,
+				'modelPurchaseOrderItem'=>$modelPurchaseOrderItem,
+		));
+	}
+	public function AjaxDeletePurchaseOrderItem($id)
+	{
+		if(Yii::app()->request->isPostRequest)
+		{
+			// we only allow deletion via POST request
+			$this->loadPriceListItem($id)->delete();
+			$purchaseOrderItem = PurchaseOrderItem::model()->findByPk($id);
+			$purchaseOrderItem->delete();
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		}
+		else
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');		
+	}
+	public function actionAjaxAddFilteredProducts()
+	{
+		if(isset($_POST['Product'])&&isset($_POST['Id_purchase_order'])){
+			$idPurchaseOrder = $_POST['Id_purchase_order'];
+			$modelProduct = new Product('search');
+			$modelProduct->unsetAttributes();
+			$modelProduct->attributes = $_POST['Product']; 
+			$dataProvider = $modelProduct->searchSummary();
+			$purchaseOrder = PurchaseOrder::model()->findByPk($idPurchaseOrder);
+							
+			$dataProvider->pagination = false;
+			$data = $dataProvider->getData(true);
+			foreach($data as $product){
+				$criteria = new CDbCriteria;
+				$criteria->compare('t.Id_product', $product->Id);
+				$criteria->with[]='priceList';
+				$criteria->compare('priceList.Id_price_list_type',1);//purchase
+				//$criteria->compare('priceList.validity',1);
+				$criteria->order = 't.Id_price_list DESC';
+				$priceListItemPurchase = PriceListItem::model()->find($criteria);
+				if(isset($priceListItemPurchase))
+				{
+					$purchasOrderItemInDb = PurchaseOrderItem::model()->findByAttributes(array('Id_purchase_order'=> $idPurchaseOrder,'Id_product'=>$product->Id));
+					if(!isset($purchasOrderItemInDb))
+					{
+						$purchaseOrderItem=new PurchaseOrderItem();
+						
+						$shippingParameter = $purchaseOrder->shippingParameter;
+						$air = $shippingParameter->shippingParameterAir;
+						$maritime = $shippingParameter->shippingParameterMaritime;
+						$cost = 0;
+						if($purchaseOrder->Id_shipping_type == 1)
+						{
+							$cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$product->length*$product->height*$product->width);
+						}
+						else
+						{
+							$cost = $priceListItemPurchase->dealer_cost+($air->cost_measurement_unit*$product->weight);								
+						}
+						$total = $priceListItemPurchase->dealer_cost+$cost;
+						$purchaseOrderItem->attributes =  array('Id_purchase_order'=>$idPurchaseOrder,
+								'Id_product'=>$product->Id,
+								'price_purchase'=>$priceListItemPurchase->dealer_cost,
+								'price_shipping'=>$cost,
+								'quantity'=>1,
+								'price_total'=>$total,
+						);
+					
+						$purchaseOrderItem->save();
+					}
+					else
+					{
+						$purchasOrderItemInDb->quantity += 1;
+						$purchasOrderItemInDb->price_total = $purchasOrderItemInDb->quantity*($purchasOrderItemInDb->price_purchase+$purchasOrderItemInDb->price_shipping);
+						$purchasOrderItemInDb->save();
+					}						
+				}
+			}
+		}
+	
+	}
+	
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
@@ -57,6 +157,9 @@ class PurchaseOrderController extends Controller
 		if(isset($_POST['PurchaseOrder']))
 		{
 			$model->attributes=$_POST['PurchaseOrder'];
+			$model->Id_purchase_order_state = 1;//nuevo
+			$importer = Importer::model()->findByPk($model->Id_importer);
+			$model->Id_shipping_parameter = $importer->shippingParameters[0]->Id;
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->Id));
 		}
