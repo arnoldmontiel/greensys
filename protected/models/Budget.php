@@ -126,6 +126,7 @@ class Budget extends CActiveRecord
 			'date_estimated_finalization' => 'Date Estimated Finalization',
 			'version_number' => 'Version Number',
 			'description' => 'Description',
+			'totPrice'=>'Total Price',
 		);
 	}
 
