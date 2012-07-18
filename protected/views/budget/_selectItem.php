@@ -68,7 +68,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				    'value'=>'$data->product->supplier->business_name',
 
 				),
-				'price',
+				array(
+ 					'name'=>'price',
+				    'value'=>'$data->price',
+					'type'=>'raw',
+			        'htmlOptions'=>array('style'=>'text-align: right;'),
+				),
 				array(
 					'class'=>'CButtonColumn',
 					'template'=>'{delete}',

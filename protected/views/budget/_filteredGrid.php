@@ -100,14 +100,36 @@
  			'name'=>'importer_desc',
 			'value'=>'$data->priceList->importer->contact->description',
 		),
-		'msrp',
-		'dealer_cost',
-		'profit_rate',
+ 		array(
+      		'name'=>'msrp',
+     		'value'=>'$data->msrp',
+    		'type'=>'raw',
+     		'htmlOptions'=>array('style'=>'text-align: right;'),
+ 		),
+ 		array(
+      		'name'=>'dealer_cost',
+     		'value'=>'$data->dealer_cost',
+    		'type'=>'raw',
+     		'htmlOptions'=>array('style'=>'text-align: right;'),
+ 		),
+ 		array(
+      		'name'=>'profit_rate',
+     		'value'=>'$data->profit_rate',
+    		'type'=>'raw',
+     		'htmlOptions'=>array('style'=>'text-align: right;'),
+ 		),
  		array(
    			'name'=>'maritime_days',
   			'value'=>'$data->priceList->importer->currentMaritimeDelayDays',
+ 			'type'=>'raw',
+  			'htmlOptions'=>array('style'=>'text-align: right;'),
  		),
-		'maritime_cost',
+ 		array(
+    		'name'=>'maritime_cost',
+   			'value'=>'$data->maritime_cost',
+  			'type'=>'raw',
+   			'htmlOptions'=>array('style'=>'text-align: right;'),
+ 		),
 		array(
  			'type'=>'raw',
  			'value'=>'CHtml::radioButton("rbtPrice","",array("idPriceList"=>$data->Id_price_list,"idProduct"=>$data->Id_product,"idShippingType"=>1))',
@@ -115,8 +137,15 @@
  		array(
     		'name'=>'air_days',
    			'value'=>'$data->priceList->importer->currentAirDelayDays',
+ 			'type'=>'raw',
+ 			'htmlOptions'=>array('style'=>'text-align: right;'),
  		),
-		'air_cost',
+ 		array(
+     		'name'=>'air_cost',
+    		'value'=>'$data->air_cost',
+   			'type'=>'raw',
+    		'htmlOptions'=>array('style'=>'text-align: right;'),
+ 		),
 		 array(
 	  			'type'=>'raw',
 	  			'value'=>'CHtml::radioButton("rbtPrice","",array("idPriceList"=>$data->Id_price_list,"idProduct"=>$data->Id_product,"idShippingType"=>2))',
