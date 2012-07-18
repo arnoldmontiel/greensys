@@ -35,6 +35,7 @@ class BudgetItem extends CActiveRecord
 	public $product_customer_desc;
 	public $area_desc;
 	public $parent_product_code;
+	public $total_price;
 	
 	/**
 	 * Returns the static model of the specified AR class.

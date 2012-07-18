@@ -32,12 +32,28 @@ $this->menu=array(
 		array(
  			'name'=>'Id_budget_state',
 			'value'=>'$data->budgetState->description',
+		),		
+		array(
+ 			'name'=>'version_number',
+			'value'=>'$data->version_number',
+			'type'=>'raw',
+     		'htmlOptions'=>array('style'=>'text-align: right;'),
 		),
-		'version_number',
-		'description',
-		'percent_discount',
+		'description',		
+		array(
+ 			'name'=>'percent_discount',
+			'value'=>'$data->percent_discount',
+			'type'=>'raw',
+     		'htmlOptions'=>array('style'=>'text-align: right;'),
+		),
 		'date_creation',
 		'date_inicialization',
+		array(
+ 			'name'=>'totPrice',
+			'value'=>'$data->totalPrice',
+			'type'=>'raw',
+     		'htmlOptions'=>array('style'=>'text-align: right;'),
+		),
 		array(
 			'class'=>'CButtonColumn',
 			'template'=>'{view}',

@@ -23,7 +23,9 @@ $this->menu=array(
 ?>
 </h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
+<?php 
+
+$this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		array('label'=>$model->getAttributeLabel('Id_project'),
@@ -45,6 +47,7 @@ $this->menu=array(
 		'date_finalization',
 		'date_estimated_inicialization',
 		'date_estimated_finalization',
+		'totalPrice',
 	),
 )); ?>
 

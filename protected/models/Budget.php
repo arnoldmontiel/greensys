@@ -26,6 +26,7 @@
 class Budget extends CActiveRecord
 {
 	public $curVersion;
+	public $totPrice;
 	
 	public function beforeSave()
 	{
@@ -81,14 +82,14 @@ class Budget extends CActiveRecord
 			array('Id, Id_project, Id_budget_state, version_number', 'required'),
 			array('Id_project, Id_budget_state, version_number', 'numerical', 'integerOnly'=>true),
 			array('percent_discount', 'length', 'max'=>10),
-			array('date_creation, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization', 'safe'),
+			array('date_creation, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, totPrice', 'safe'),
 			array('description', 'length', 'max'=>255),
 			array('date_creation','default',
 			              'value'=>new CDbExpression('NOW()'),
 			              'setOnEmpty'=>true,'on'=>'insert'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_project, percent_discount, date_creation, Id_budget_state, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, version_number', 'safe', 'on'=>'search'),
+			array('Id, Id_project, percent_discount, date_creation, Id_budget_state, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, version_number, totPrice', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -140,6 +141,19 @@ class Budget extends CActiveRecord
 		return $modelMax->curVersion;
 	}
 	
+	public function getTotalPrice()
+	{
+		
+		$criteria=new CDbCriteria;
+	
+		$criteria->select='SUM(price) as total_price';
+		$criteria->condition='Id_budget = '.$this->Id . ' AND version_number = '. $this->version_number;
+	
+		$modelBudgetItem = BudgetItem::model()->find($criteria);
+	
+		return $modelBudgetItem->total_price;
+	}
+	
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -151,6 +165,11 @@ class Budget extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		$criteria->join = ',(SELECT Id_budget, version_number, SUM(price) as totPrice
+												FROM budget_item group by Id_budget, version_number
+												) bi';
+		$criteria->condition = 't.Id = bi.Id_budget and t.version_number = bi.version_number';
+		
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('Id_project',$this->Id_project);
 		$criteria->compare('percent_discount',$this->percent_discount,true);
@@ -163,8 +182,24 @@ class Budget extends CActiveRecord
 		$criteria->compare('version_number',$this->version_number);
 		$criteria->compare('description',$this->description,true);
 
+		$criteria->addSearchCondition('bi.totPrice',$this->totPrice);
+		
+		$sort=new CSort;
+		$sort->attributes=array(
+					'date_creation',
+					'date_inicialization',
+					'version_number',
+					'description',
+					'percent_discount',
+					'totPrice' => array(
+						'asc' => 'bi.totPrice',
+						'desc' => 'bi.totPrice DESC',
+					),
+		);
+		
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+					'criteria'=>$criteria,
+					'sort'=>$sort,
 		));
 	}
 	
