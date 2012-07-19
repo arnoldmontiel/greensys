@@ -38,8 +38,16 @@ class PurchaseOrderController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$modelPurchaseOrderItem = new PurchaseOrderItem('search');
+		$modelPurchaseOrderItem->unsetAttributes();
+		if(isset($_GET['PurchaseOrderItem']))
+		{
+			$modelPurchaseOrderItem->attributes =$_GET['PurchaseOrderItem'];
+		}
+		$modelPurchaseOrderItem->Id_purchase_order = $id;
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
+				'modelPurchaseOrderItem'=>$modelPurchaseOrderItem,
 		));
 	}
 	/**
@@ -82,6 +90,31 @@ class PurchaseOrderController extends Controller
 		}
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');		
+	}
+	public function actionAjaxUpdateItemValues()
+	{
+		if(isset($_POST['Id_purchase_order_item'])
+				&&isset($_POST['price_shipping'])
+				&&isset($_POST['price_total'])
+				&&isset($_POST['quantity']))
+		{
+			$purchaseOrderItem = PurchaseOrderItem::model()->findByPk($_POST['Id_purchase_order_item']);
+			if(isset($purchaseOrderItem)){
+				$purchaseOrderItem->price_shipping =$_POST['price_shipping'];
+				$purchaseOrderItem->price_total =$_POST['price_total'];
+				$purchaseOrderItem->quantity =$_POST['quantity'];
+				if($purchaseOrderItem->save())
+				{
+					$result = array();
+					$result = $purchaseOrderItem->attributes;
+					$purchaseOrder = PurchaseOrder::model()->findByPk($purchaseOrderItem->Id_purchase_order);
+					$result['purhcase_order_price_total'] =$purchaseOrder->PriceTotal;
+					$result['purhcase_order_price_shipping'] =$purchaseOrder->PriceShippingTotal;
+					echo json_encode($result);
+						
+				}
+			}
+		}
 	}
 	public function actionAjaxAddPurchaseOrderItem()
 	{

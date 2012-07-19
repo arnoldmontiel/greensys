@@ -5,11 +5,11 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_supplier')); ?>:</b>
-	<?php echo CHtml::encode($data->Id_supplier); ?>
+	<?php echo CHtml::encode($data->supplier->business_name); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_shipping_parameter')); ?>:</b>
-	<?php echo CHtml::encode($data->Id_shipping_parameter); ?>
+	<?php echo CHtml::encode($data->shippingParameter->description); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('date_creation')); ?>:</b>
@@ -17,11 +17,11 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_purchase_order_state')); ?>:</b>
-	<?php echo CHtml::encode($data->Id_purchase_order_state); ?>
+	<?php echo CHtml::encode($data->purchaseOrderState->description); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_importer')); ?>:</b>
-	<?php echo CHtml::encode($data->Id_importer); ?>
+	<?php echo CHtml::encode($data->importer->contact->description); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Id_shipping_type')); ?>:</b>

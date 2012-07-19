@@ -13,6 +13,21 @@ $this->menu=array(
 );
 
 Yii::app()->clientScript->registerScript(__CLASS__.'#purchase_order_purchase', "
+$('#expand-products').click(function(){
+		if($('#expand-products').html()=='+')
+		{
+			$('#expand-products').html('-');
+			$('#product-grid').toggle('blind',{},1000);
+			$('#addAll').toggle('blind',{},1000);		
+		}
+		else
+		{
+			$('#expand-products').html('+');
+			$('#product-grid').toggle('blind',{},1000);
+			$('#addAll').toggle('blind',{},1000);		
+		}
+})
+		
 $('#addAll').hover(
 	function () {
 		$(this).attr('src','images/add_all_blue_light.png');
@@ -39,24 +54,133 @@ $('#addAll').click(
 			);	
 			
 		}
+)
+loadPage();
+function loadPage()
+{
+	$('#product-grid').attr('style','display: none;');
+	bindObjects();
+}
+function bindObjects()
+		{
+$('.link-popup').click(
+	function()
+	{
+		$.post('".PurchaseOrderController::createUrl('product/AjaxDinamicViewPopUp')."',
+			{Id_product:$(this).attr('id')},
+			function(data)
+			{
+				$('#popup-place-holder').html(data);
+				$('#ViewProduct').dialog('open'); 
+			}
+		);
+		return false;
+	}
 );
+$('.link-popup-product').click(
+	function()
+	{
+		$.post('".PurchaseOrderController::createUrl('product/AjaxDinamicViewPopUp')."',
+			{Id_product:$(this).attr('id')},
+			function(data)
+			{
+				$('#popup-place-holder').html(data);
+				$('#ViewProduct').dialog('open'); 
+			}
+		);
+		return false;
+	}
+);
+		
+		$('#purchase-order-item-grid').find('input.txt-price-shipping').each(
+				function(index, item){
+					$(item).keyup(function(){
+						validateNumber($(this));
+					});
+			
+					$(item).change(function(){
+						var target = $(this);
+						var quantity = $(this).parent().parent().find('input.txt-quantity').val();
+						var price_total = parseFloat(parseFloat($(this).val()) + parseFloat($(this).parent().parent().find('input.txt-price-purchase').val())).toFixed(2)*quantity;
+						var price_shipping = parseFloat($(this).val()).toFixed(2);
+		
+						$.post(
+							'".PurchaseOrderController::createUrl('AjaxUpdateItemValues')."',
+						{
+							Id_purchase_order_item: $(this).attr('id'),
+							price_shipping: price_shipping,
+							price_total: price_total,
+							quantity: quantity,
+						},
+							function(data)
+						{
+							$(target).parent().parent().find('#saveok1').animate({opacity: 'show'},4000,
+							function(){
+								$(target).parent().parent().find('#saveok1').animate({opacity: 'hide'},4000)
+							} 
+							);
+							$(target).parent().parent().find('#saveok3').animate({opacity: 'show'},4000,
+							function(){
+								$(target).parent().parent().find('#saveok3').animate({opacity: 'hide'},4000)
+							} 
+							);
+							$(target).parent().parent().find('input.txt-price-total').val(data.price_total);							
+							$('#purchase_order_price_total').val(data.purhcase_order_price_total);							
+							$('#purchase_order_price_shipping').val(data.purhcase_order_price_shipping);							
+					},'json');			
+				});
+			});		
+		$('#purchase-order-item-grid').find('input.txt-quantity').each(
+				function(index, item){
+					$(item).keyup(function(){
+						validateNumber($(this));
+					});
+			
+					$(item).change(function(){
+						var target = $(this);
+						var quantity = $(this).parent().parent().find('input.txt-quantity').val();
+						var price_total = parseFloat(parseFloat($(this).parent().parent().find('input.txt-price-shipping').val()) + parseFloat($(this).parent().parent().find('input.txt-price-purchase').val())).toFixed(2)*quantity;
+						var price_shipping = parseFloat($(this).parent().parent().find('input.txt-price-shipping').val()).toFixed(2);
+		
+						$.post(
+							'".PurchaseOrderController::createUrl('AjaxUpdateItemValues')."',
+						{
+							Id_purchase_order_item: $(this).attr('id'),
+							price_shipping: price_shipping,
+							price_total: price_total,
+							quantity: quantity,
+						},
+							function(data)
+						{
+							$(target).parent().parent().find('#saveok2').animate({opacity: 'show'},4000,
+							function(){
+								$(target).parent().parent().find('#saveok2').animate({opacity: 'hide'},4000)
+							} 
+							);
+							$(target).parent().parent().find('#saveok3').animate({opacity: 'show'},4000,
+							function(){
+								$(target).parent().parent().find('#saveok3').animate({opacity: 'hide'},4000)
+							} 
+							);
+							$(target).parent().parent().find('input.txt-price-total').val(data.price_total);
+							$('#purchase_order_price_total').val(data.purhcase_order_price_total);							
+							$('#purchase_order_price_shipping').val(data.purhcase_order_price_shipping);							
+						},'json');
+			
+				});
+			});		
+		
+}
 ");
 ?>
 
-<h1>Assign Products</h1>
-
+<h1>Purchase Order</h1>
+<div class="left">
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
-	'attributes'=>array(
-		array('label'=>$model->getAttributeLabel('Id_supplier'),
-				'type'=>'raw',
-				'value'=>$model->supplier->business_name
-		),
-		'date_creation',
-		array('label'=>$model->getAttributeLabel('Id_purchase_order_state'),
-				'type'=>'raw',
-				'value'=>$model->purchaseOrderState->description
-		),
+	'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',
+		'attributes'=>array(
+		'Id',
 		array('label'=>$model->getAttributeLabel('Id_importer'),
 				'type'=>'raw',
 				'value'=>$model->importer->contact->description
@@ -71,9 +195,29 @@ $('#addAll').click(
 		),
 	),
 )); ?>
-	<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
-		<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
-			Products
+</div>
+<div class="right">
+<?php $this->widget('zii.widgets.CDetailView', array(
+	'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',
+	'data'=>$model,
+	'attributes'=>array(
+		'date_creation',
+		array('label'=>$model->getAttributeLabel('Id_purchase_order_state'),
+				'type'=>'raw',
+				'value'=>$model->purchaseOrderState->description
+		),
+		array('label'=>$model->getAttributeLabel('Id_supplier'),
+				'type'=>'raw',
+				'value'=>$model->supplier->business_name
+		),
+	),
+)); ?>
+</div>
+
+	<div class="gridTitle-decoration1" style="display: inline-block; width: 97%;height: 35px;">
+		<div id="product-title" class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
+			<?php echo CHtml::link('+','#',array('id'=>'expand-products'))?>
+			Pendings products
 			</div>
 		<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
 		<?php
@@ -81,7 +225,7 @@ $('#addAll').click(
                                 'images/add_all_blue.png',
                                 array(
                                 'title'=>'Add current filtered products',
-                                'style'=>'width:30px;',
+                                'style'=>'width:30px;display: none;',
                                 'id'=>'addAll',
                                 )
                                                          
@@ -93,11 +237,12 @@ $('#addAll').click(
 	
 
 	<?php		
+			
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'product-grid',
-		'dataProvider'=>$modelProduct->searchSummary(),
+		'dataProvider'=>$modelProduct->searchPending(),
 		'filter'=>$modelProduct,
-		'summaryText'=>'',	
+		'summaryText'=>'',
 		'selectionChanged'=>'js:function(id){
 			$.post(	"'.PurchaseOrderController::createUrl('AjaxAddPurchaseOrderItem').'",
 					{
@@ -125,8 +270,8 @@ $('#addAll').click(
 		'columns'=>array(	
 				array(
 					'name'=>'code',
-				    'value'=>'$data->code',
-				 
+				    'value'=>'CHtml::link($data->code,"#",array("id"=>$data->Id,"class"=>"link-popup"))',
+					'type'=>'raw'				 
 				),
 				array(
 		 			'name'=>'brand_description',
@@ -161,10 +306,15 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$modelPurchaseOrderItem->search(),
  	'filter'=>$modelPurchaseOrderItem,
 	'summaryText'=>'',
-	'columns'=>array(
+		'afterAjaxUpdate'=>'function(id, data){
+			bindObjects();
+		}',
+		'columns'=>array(
 				array(
  				            'name'=>'product_code',
-				            'value'=>'$data->product->code',
+				            'value'=>'CHtml::link($data->product->code,"#",array("id"=>$data->product->Id,"class"=>"link-popup-product"))',
+							'type'=>'raw',
+							'footer'=>'Total'
 				),
 				array(
  				            'name'=>'product_description_customer',
@@ -173,51 +323,50 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				array(
 					'name'=>'price_purchase',
 					'value'=>
-                                    	'CHtml::textField("txtMsrp",
+                                    	'CHtml::textField("txt_price_purchase",
 												$data->price_purchase,
 												array(
 														"id"=>$data->Id,
-														"class"=>"txtPricePurchase",
+														"class"=>"txt-price-purchase",
 														"style"=>"width:50px;text-align:right;",
-													)
+														"disabled"=>"disabled",													)
 											)',
 							
 					'type'=>'raw',					
 					'htmlOptions'=>array("style"=>"text-align:right;"),
 				),
 				array(
-					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
-					'type'=>'raw',
-					'htmlOptions'=>array('width'=>25),
-				),
-				array(
 					'name'=>'price_shipping',
 					'value'=>
-                                    	'CHtml::textField("txtPriceShipping",
+                                    	'CHtml::textField("txt_price_shipping",
 												$data->price_shipping,
 												array(
 														"id"=>$data->Id,
-														"class"=>"txtPriceShipping",
+														"class"=>"txt-price-shipping",
 														"style"=>"width:50px;text-align:right;",
 													)
 											)',
 	
 					'type'=>'raw',
 					'htmlOptions'=>array("style"=>"text-align:right;"),
+					'htmlOptions'=>array("style"=>"text-align:right;"),
+					'footer'=>'<input id="purchase_order_price_shipping" class="txt-purchase-order-price-shipping-total" type="text" name="txt_purchase_order_price_shipping_total" value="'.$model->PriceShippingTotal.'" disabled="disabled" style="width:50px;text-align:right;">',
+					'footerHtmlOptions'=>array("style"=>"text-align:right;"),
+						
 				),
 				array(
-					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok2", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok1", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
 					'type'=>'raw',
 					'htmlOptions'=>array('width'=>25),
 				),
 				array(
 					'name'=>'quantity',
 					'value'=>
-                                    	'CHtml::textField("txtQuantity",
+                                    	'CHtml::textField("txt_quantity",
 												$data->quantity,
 												array(
 														"id"=>$data->Id,
-														"class"=>"txtQuantity",
+														"class"=>"txt-quantity",
 														"style"=>"width:50px;text-align:right;",
 													)
 											)',
@@ -233,17 +382,20 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				array(
 					'name'=>'price_total',
 					'value'=>
-                                    	'CHtml::textField("txtPriceTotal",
+                                    	'CHtml::textField("txt_price_total",
 												$data->price_total,
 												array(
 														"id"=>$data->Id,
-														"class"=>"txtPriceTotal",
+														"class"=>"txt-price-total",
 														"style"=>"width:50px;text-align:right;",
+														"disabled"=>"disabled",
 													)
 											)',
 	
 					'type'=>'raw',
 					'htmlOptions'=>array("style"=>"text-align:right;"),
+					'footer'=>'<input id="purchase_order_price_total" class="txt-purchase-order-price-total" type="text" name="txt_purchase_order_price_total" value="'.$model->PriceTotal.'" disabled="disabled" style="width:50px;text-align:right;">',
+						'footerHtmlOptions'=>array("style"=>"text-align:right;"),
 				),
 				array(
 					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok3", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
@@ -263,4 +415,25 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				),
 			),
 )); ?>
+<?php 
+	//Product View
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'ViewProduct',
+			// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Product',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '700',
+					'buttons'=>	array(
+							'cerrar'=>'js:function(){jQuery("#ViewProduct").dialog( "close" );}',
+					),
+			),
+	));
+	echo CHtml::openTag('div',array('id'=>'popup-place-holder','style'=>'position:relative;display:inline-block;width:97%'));
+	echo CHtml::closeTag('div');
+		
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+	
+	?>
 		

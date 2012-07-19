@@ -10,6 +10,8 @@ $this->menu=array(
 	array('label'=>'Create PurchaseOrder', 'url'=>array('create')),
 	array('label'=>'View PurchaseOrder', 'url'=>array('view', 'id'=>$model->Id)),
 	array('label'=>'Manage PurchaseOrder', 'url'=>array('admin')),
+	array('label'=>'Assign Products', 'url'=>array('assignProducts', 'id'=>$model->Id)),
+		
 );
 ?>
 

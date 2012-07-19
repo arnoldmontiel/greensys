@@ -814,6 +814,14 @@ class ProductController extends Controller
 			array('value'=>$item->Id_sub_category),CHtml::encode($item->subCategory->description),true);
 		}
 	}
+	public function actionAjaxDinamicViewPopUp()
+	{
+		if(isset($_POST['Id_product']))
+		{
+			$modelProduct = Product::model()->findByPk($_POST['Id_product']);
+			echo $this->renderPartial('_viewPopUp', array('data'=>$modelProduct));				
+		}
+	}
 	
 	/**
 	 * Performs the AJAX validation.

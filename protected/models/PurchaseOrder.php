@@ -21,7 +21,10 @@
  * @property PurchaseOrderItem[] $purchaseOrderItems
  */
 class PurchaseOrder extends CActiveRecord
+
 {
+	public $price_total;
+	public $price_shipping_total;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -83,8 +86,8 @@ class PurchaseOrder extends CActiveRecord
 			'Id' => 'ID',
 			'Id_supplier' => 'Supplier',
 			'Id_shipping_parameter' => 'Shipping Parameter',
-			'date_creation' => 'Date Creation',
-			'Id_purchase_order_state' => 'Purchase Order State',
+			'date_creation' => 'Creation',
+			'Id_purchase_order_state' => 'State',
 			'Id_importer' => 'Importer',
 			'Id_shipping_type' => 'Shipping Type',
 		);
@@ -112,5 +115,29 @@ class PurchaseOrder extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	public function getPriceTotal()
+	{
+		$criteria=new CDbCriteria;
+	
+		$criteria->select='sum(purchaseOrderItems.price_total) as price_total, t.*';
+		$criteria->condition='t.Id = '.$this->Id;
+		$criteria->with[]='purchaseOrderItems';
+		
+		$modelTotal = PurchaseOrder::model()->find($criteria);
+		
+		return $modelTotal->price_total;
+	}
+	public function getPriceShippingTotal()
+	{
+		$criteria=new CDbCriteria;
+	
+		$criteria->select='sum(purchaseOrderItems.price_shipping*purchaseOrderItems.quantity) as price_shipping_total, t.*';
+		$criteria->condition='t.Id = '.$this->Id;
+		$criteria->with[]='purchaseOrderItems';
+		
+		$modelTotal = PurchaseOrder::model()->find($criteria);
+		
+		return $modelTotal->price_shipping_total;
 	}
 }
