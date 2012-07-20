@@ -6,33 +6,27 @@
 <?php 
 
 $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$modelProduct,
+	'data'=>$modelBudgetItemParent,
 	'attributes'=>array(
-			'code',
-		'code_supplier',
-		array('label'=>$modelProduct->getAttributeLabel('Id_supplier'),
+		array('label'=>$modelBudgetItemParent->getAttributeLabel('product_code'),
 					'type'=>'raw',
-					'value'=>$modelProduct->supplier->business_name
+					'value'=>$modelBudgetItemParent->product->code
 		),
-		array('label'=>$modelProduct->getAttributeLabel('Id_brand'),
+		array('label'=>$modelBudgetItemParent->getAttributeLabel('product_customer_desc'),
 			'type'=>'raw',
-			'value'=>$modelProduct->brand->description
+			'value'=>$modelBudgetItemParent->product->description_customer
 		),
-		array('label'=>$modelProduct->getAttributeLabel('Id_category'),
+		array('label'=>$modelBudgetItemParent->getAttributeLabel('product_brand_desc'),
 			'type'=>'raw',
-			'value'=>$modelProduct->category->description
+			'value'=>$modelBudgetItemParent->product->brand->description
 		),
-		array('label'=>$modelProduct->getAttributeLabel('Id_sub_category'),
+		array('label'=>$modelBudgetItemParent->getAttributeLabel('product_supplier_name'),
 			'type'=>'raw',
-			'value'=>$modelProduct->subCategory->description
+			'value'=>$modelBudgetItemParent->product->supplier->business_name
 		),
-		array('label'=>$modelProduct->getAttributeLabel('Id_product_type'),
+		array('label'=>$modelBudgetItemParent->getAttributeLabel('price'),
 			'type'=>'raw',
-			'value'=>$modelProduct->productType->description
-		),
-		array('label'=>$modelProduct->getAttributeLabel('Id_nomenclator'),
-			'type'=>'raw',
-			'value'=>$modelProduct->nomenclator->description
+			'value'=>$modelBudgetItemParent->price
 		),
 	)
 ));
