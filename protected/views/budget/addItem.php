@@ -17,14 +17,15 @@ Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 
 $('.areaTitle').click(function(){
 	var idArea = $(this).attr('idArea');	
+	
 	if($( '#itemArea_' + idArea ).is(':visible')){
-		$( '#itemArea_' + idArea ).animate({opacity: 'hide'},'slow');
 		$('#expandCollapse_' + idArea).text('+');
 	}
 	else{
-		$( '#itemArea_' + idArea ).animate({opacity: 'show'},'slow');
 		$('#expandCollapse_' + idArea).text('-');
 	}
+	$('#itemArea_' + idArea ).toggle('blind',{},1000);
+	
 });
 
 

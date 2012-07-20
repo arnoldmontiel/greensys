@@ -280,15 +280,27 @@ class BudgetController extends Controller
 		));
 	}
 
-	public function actionAjaxNewVersion($id, $version)
+	public function actionAjaxNewVersion()
 	{
-		$previousModel = $this->loadModel($id, $version);
+
+		$id = isset($_POST['id'])?$_POST['id']:'';
+		$version = isset($_POST['version'])?$_POST['version']:'';
+		$note = isset($_POST['note'])?$_POST['note']:'';
+		
 		$model = new Budget;
-		$model->attributes = $previousModel->attributes;
-		$model->date_creation = new CDbExpression('NOW()');
-		$model->version_number = $model->version_number + 1;
 		$transaction = $model->dbConnection->beginTransaction();
+		
 		try {
+			$previousModel = $this->loadModel($id, $version);
+			$previousModel->note = $note;
+			$previousModel->save();
+			
+			
+			$model->attributes = $previousModel->attributes;
+			$model->date_creation = new CDbExpression('NOW()');
+			$model->version_number = $model->version_number + 1;
+			$model->note = '';
+			
 			if($model->save())
 			{
 				$budgetItems = BudgetItem::model()->findAllByAttributes(array('Id_budget'=>$previousModel->Id, 'version_number'=>$previousModel->version_number));
@@ -301,8 +313,7 @@ class BudgetController extends Controller
 					$modelBudgetItem->save();
 				}
 				
-				$transaction->commit();
-				$this->redirect(array('view','id'=>$model->Id, 'version'=>$model->version_number));
+				$transaction->commit();				
 			}
 		} catch (Exception $e) {
 			$transaction->rollback();

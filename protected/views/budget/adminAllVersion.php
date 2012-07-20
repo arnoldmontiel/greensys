@@ -54,6 +54,7 @@ $this->menu=array(
 			'type'=>'raw',
      		'htmlOptions'=>array('style'=>'text-align: right;'),
 		),
+		'note',
 		array(
 			'class'=>'CButtonColumn',
 			'template'=>'{view}',

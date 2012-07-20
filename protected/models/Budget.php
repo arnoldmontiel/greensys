@@ -15,6 +15,7 @@
  * @property string $date_estimated_finalization
  * @property integer $version_number
  * @property string $description
+ * @property string $note
  *
  * The followings are the available model relations:
  * @property BudgetState $idBudgetState
@@ -83,13 +84,13 @@ class Budget extends CActiveRecord
 			array('Id_project, Id_budget_state, version_number', 'numerical', 'integerOnly'=>true),
 			array('percent_discount', 'length', 'max'=>10),
 			array('date_creation, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, totPrice', 'safe'),
-			array('description', 'length', 'max'=>255),
+			array('description, note', 'length', 'max'=>255),
 			array('date_creation','default',
 			              'value'=>new CDbExpression('NOW()'),
 			              'setOnEmpty'=>true,'on'=>'insert'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_project, percent_discount, date_creation, Id_budget_state, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, version_number, totPrice', 'safe', 'on'=>'search'),
+			array('Id, Id_project, percent_discount, date_creation, Id_budget_state, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, version_number, totPrice, note', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -127,6 +128,7 @@ class Budget extends CActiveRecord
 			'version_number' => 'Version Number',
 			'description' => 'Description',
 			'totPrice'=>'Total Price',
+			'note' => 'Note',
 		);
 	}
 

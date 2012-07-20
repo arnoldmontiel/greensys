@@ -12,15 +12,27 @@ $this->menu=array(
 	array('label'=>'Add Items Budget', 'url'=>array('addItem', 'id'=>$model->Id, 'version'=>$model->version_number)),
 	array('label'=>'Manage Budget', 'url'=>array('admin')),
 );
+Yii::app()->clientScript->registerScript(__CLASS__.'view-budget', "
+
+
+$('.areaTitle').click(function(){
+	var idArea = $(this).attr('idArea');	
+	if($( '#itemArea_' + idArea ).is(':visible')){
+		$('#expandCollapse_' + idArea).text('+');
+	}
+	else{
+		$('#expandCollapse_' + idArea).text('-');
+	}
+	$('#itemArea_' + idArea ).toggle('blind',{},1000);
+	
+});
+
+
+");
 ?>
 
-<h1>View Budget <?php echo CHtml::link( CHtml::image('images/new_version.png','Generate new version' ,array(
-																   'title'=>'Generate new version',
-												                   'style'=>'width:30px;',
-												                   'id'=>'addBack',
-)
-),BudgetController::createUrl('AjaxNewVersion', array('id'=>$model->Id, 'version'=>$model->version_number)));
-?>
+<h1>View Budget
+<?php echo CHtml::link( ' (Create new version)','#',array('onclick'=>'jQuery("#CreateBudgetNewVersion").dialog("open"); return false;'));?>
 </h1>
 
 <?php 
@@ -47,59 +59,68 @@ $this->widget('zii.widgets.CDetailView', array(
 		'date_finalization',
 		'date_estimated_inicialization',
 		'date_estimated_finalization',
+		'note',
 		'totalPrice',
 	),
 )); ?>
+<br>
+<?php 
+	$areaProjects = AreaProject::model()->findAllByAttributes(array('Id_project'=>$model->Id_project));		
 
-	<div class="gridTitle-decoration1" style="display: inline-block; width: 97%;height: 35px;margin-top: 10px;">
-		<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
-			Items
+	foreach($areaProjects as $item)
+	{ 
+	?>
+		<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
+			<div class="areaTitle" idArea="<?php echo $item->Id_area; ?>" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
+				<span id="expandCollapse_<?php echo $item->Id_area; ?>">+</span>&nbsp;<?php echo $item->area->description;?>
+			</div>
 		</div>
-	</div>
-			<?php 
+		<br>&nbsp;
+		<div id="itemArea_<?php echo $item->Id_area; ?>" style="display: none">
+		<?php		
+		$modelBudgetItem->Id_area = $item->Id_area;		
+		
+		echo $this->renderPartial('_budgetItem', array('idArea'=>$item->Id_area,
+													   'modelBudgetItem'=>$modelBudgetItem,
+													   'canEdit'=>false,));
+		?>		
+		</div><!-- close itemArea -->
+<?php				
+	}
 
-			$creteria = new CDbCriteria();
-			$creteria->join = " INNER JOIN area_project ap on (ap.Id_area = t.Id)";
-			$area = Area::model()->findAll($creteria);
-			$areaList = CHtml::listData($area,'Id','description');
-			
-$this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'stock-item-grid',
-	'dataProvider'=>$modelBudgetItem->search(),
- 	'filter'=>$modelBudgetItem,
-	'summaryText'=>'',
-	'columns'=>array(
-				array(
-		 			'name'=>"Id_area",
-		 			'type'=>'raw',
-		 			'value'=>'$data->area->description',
-		 			'filter'=>$areaList,
-				),
-				array(
-					'name'=>'product_code',
-				    'value'=>'$data->product->code',
-				),
-				array(
-					'name'=>'parent_product_code',
-				    'value'=>'$data->budgetItem->product->code',	
-				),
-				array(
-					'name'=>'product_customer_desc',
-				    'value'=>'$data->product->description_customer',
-				),
-				array(
- 					'name'=>'product_brand_desc',
-				    'value'=>'$data->product->brand->description',
-				),
-				array(
- 					'name'=>'product_supplier_name',
-				    'value'=>'$data->product->supplier->business_name',
-				),
-				array(
- 					'name'=>'price',
-				    'value'=>'$data->price',
-					'type'=>'raw',
-			        'htmlOptions'=>array('style'=>'text-align: right;'),
-				),
-			),
-)); ?>
+
+//New Budget Version
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'CreateBudgetNewVersion',
+// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Generate new budget version',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '500',
+					'buttons'=>	array(
+							'Cancelar'=>'js:function(){jQuery("#CreateBudgetNewVersion").dialog( "close" );}',
+							'Grabar'=>'js:function()
+							{
+							jQuery("#wating").dialog("open");
+							debugger;
+							jQuery.post("'.Yii::app()->createUrl("budget/AjaxNewVersion").'", 
+								{
+									id: "'. $model->Id . '",
+									version: "'. $model->version_number . '",
+									note: $("#Budget_note").val()
+								},
+							function(data) {
+								jQuery("#CreateBudgetNewVersion").dialog( "close" );
+								window.location = "'.BudgetController::createUrl('index') .'";
+							}
+					);
+	
+			}'),
+),
+));
+
+echo $this->renderPartial('../budget/_formNewVersion', array('id'=>$model->Id, 'version'=>$model->version_number));
+
+$this->endWidget('zii.widgets.jui.CJuiDialog');
+?>

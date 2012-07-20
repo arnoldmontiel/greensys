@@ -34,6 +34,7 @@ $this->menu=array(
 		'date_finalization',
 		'date_estimated_inicialization',
 		'date_estimated_finalization',
+		'note',
 		'totalPrice',
 	),
 )); ?>
