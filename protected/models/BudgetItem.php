@@ -13,6 +13,7 @@
  * @property integer $Id_price_list
  * @property integer $Id_shipping_type
  * @property integer $Id_area
+ * @property integer $quantity
  *
  * The followings are the available model relations:
  * @property Budget $versionNumber
@@ -64,11 +65,11 @@ class BudgetItem extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('Id_product, Id_budget, version_number, Id_area', 'required'),
-			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type, Id_area', 'numerical', 'integerOnly'=>true),
+			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type, Id_area, quantity', 'numerical', 'integerOnly'=>true),
 			array('price', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_product, Id_area, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type,product_code, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc, parent_product_code', 'safe', 'on'=>'search'),
+			array('Id, Id_product, Id_area, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type,product_code, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc, parent_product_code, quantity', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -112,9 +113,15 @@ class BudgetItem extends CActiveRecord
 			'product_supplier_name'=>'Supplier Name',
 			'Id_area'=>'Area',
 			'parent_product_code'=>'Parent Code',
+			'quantity'=>'Quantity',
 		);
 	}
 
+	public function getChildrenCount()
+	{
+		$count = BudgetItem::model()->countByAttributes(array('Id_budget_item'=>$this->Id));
+		return $count;
+	}
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -131,10 +138,14 @@ class BudgetItem extends CActiveRecord
 		$criteria->compare('t.Id_area',$this->Id_area);
 		$criteria->compare('t.Id_budget',$this->Id_budget);
 		$criteria->compare('t.version_number',$this->version_number);
-		$criteria->compare('t.price',$this->price,true);
 		$criteria->compare('t.Id_budget_item',$this->Id_budget_item);
+		$criteria->compare('t.price',$this->price,true);
 		$criteria->compare('t.Id_price_list',$this->Id_price_list);
 		$criteria->compare('t.Id_shipping_type',$this->Id_shipping_type);
+		$criteria->compare('quantity',$this->quantity);
+		
+		if(!isset($this->Id_budget_item))
+			$criteria->addCondition('isnull(t.Id_budget_item)');
 		
 		$criteria->join =	"LEFT OUTER JOIN product p ON p.Id=t.Id_product
 												 LEFT OUTER JOIN brand b ON p.Id_brand=b.Id
@@ -190,4 +201,5 @@ class BudgetItem extends CActiveRecord
 													'sort'=>$sort,
 		));
 	}
+	
 }

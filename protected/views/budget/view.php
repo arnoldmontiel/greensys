@@ -27,6 +27,27 @@ $('.areaTitle').click(function(){
 	
 });
 
+$('.link-popup').click(function(){
+	var idArea = $(this).attr('idArea');
+	var idBudgetItem = $(this).attr('id');
+	var idProduct = $(this).attr('idProduct');
+	
+	$.post(
+			'".BudgetController::createUrl('AjaxDinamicViewPopUp')."',
+			{
+			 	Id_budget_item:idBudgetItem,
+				Id_area : idArea,
+				Id_product : idProduct
+			 }).success(
+					function(data) 
+					{ 
+						$('#popup-place-holder').html(data);
+ 						$('#ViewProductChild').dialog('open');						
+					}
+			);
+
+ 		return false; 	
+});
 
 ");
 ?>
@@ -123,4 +144,24 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 echo $this->renderPartial('../budget/_formNewVersion', array('id'=>$model->Id, 'version'=>$model->version_number));
 
 $this->endWidget('zii.widgets.jui.CJuiDialog');
+
+
+//Product View Childe
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'ViewProductChild',
+			// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Children Product',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '700',
+					'buttons'=>	array(
+							'cerrar'=>'js:function(){jQuery("#ViewProductChild").dialog( "close" );}',
+					),
+			),
+	));
+	echo CHtml::openTag('div',array('id'=>'popup-place-holder','style'=>'position:relative;display:inline-block;width:97%'));
+	echo CHtml::closeTag('div');
+		
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
 ?>

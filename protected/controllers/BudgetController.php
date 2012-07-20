@@ -280,6 +280,24 @@ class BudgetController extends Controller
 		));
 	}
 
+	public function actionAjaxDinamicViewPopUp()
+	{
+		if(isset($_POST['Id_budget_item']) && isset($_POST['Id_area']) && isset($_POST['Id_product']))
+		{
+			$modelBudgetItem = new BudgetItem('search');
+			$modelBudgetItem->unsetAttributes();  // clear any default values
+			$modelBudgetItem->Id_budget_item = $_POST['Id_budget_item'];
+			
+			$modelProduct = Product::model()->findByPk($_POST['Id_product']);
+		
+			echo $this->renderPartial('_budgetItemChildren', array('idArea'=>$_POST['Id_area'],
+																   'modelBudgetItem'=>$modelBudgetItem,
+																   'canEdit'=>false,
+																   'modelProduct'=>$modelProduct,));
+			
+		}
+	}
+	
 	public function actionAjaxNewVersion()
 	{
 

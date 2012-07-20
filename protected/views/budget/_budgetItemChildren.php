@@ -1,22 +1,51 @@
 
 <div id="display">
 
+
+
 <?php 
 
+$this->widget('zii.widgets.CDetailView', array(
+	'data'=>$modelProduct,
+	'attributes'=>array(
+			'code',
+		'code_supplier',
+		array('label'=>$modelProduct->getAttributeLabel('Id_supplier'),
+					'type'=>'raw',
+					'value'=>$modelProduct->supplier->business_name
+		),
+		array('label'=>$modelProduct->getAttributeLabel('Id_brand'),
+			'type'=>'raw',
+			'value'=>$modelProduct->brand->description
+		),
+		array('label'=>$modelProduct->getAttributeLabel('Id_category'),
+			'type'=>'raw',
+			'value'=>$modelProduct->category->description
+		),
+		array('label'=>$modelProduct->getAttributeLabel('Id_sub_category'),
+			'type'=>'raw',
+			'value'=>$modelProduct->subCategory->description
+		),
+		array('label'=>$modelProduct->getAttributeLabel('Id_product_type'),
+			'type'=>'raw',
+			'value'=>$modelProduct->productType->description
+		),
+		array('label'=>$modelProduct->getAttributeLabel('Id_nomenclator'),
+			'type'=>'raw',
+			'value'=>$modelProduct->nomenclator->description
+		),
+	)
+));
+
 $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'budget-item-grid_'.$idArea,
+	'id'=>'budget-item-children-grid_'.$idArea,
 	'dataProvider'=>$modelBudgetItem->search(),
- 	'filter'=>$modelBudgetItem,
+	'enableSorting'=>false,
 	'summaryText'=>'',
 	'columns'=>array(
 				array(
 					'name'=>'product_code',
 				    'value'=>'$data->product->code',				 
-				),
-				array(
-					'name'=>'product_code',
-					'value'=>'CHtml::link(($data->childrenCount > 0)?$data->childrenCount:"","#",array("id"=>$data->Id, "idArea"=>$data->Id_area, "idProduct"=>$data->Id_product, "class"=>"link-popup"))',
-					'type'=>'raw'
 				),
 				array(
 					'name'=>'parent_product_code',
