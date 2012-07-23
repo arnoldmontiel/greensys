@@ -31,22 +31,42 @@ $('.link-popup').click(function(){
 	var idArea = $(this).attr('idArea');
 	var idBudgetItem = $(this).attr('id');
 	var idProduct = $(this).attr('idProduct');
+		
+	$.fn.yiiGridView.update('budget-item-children-grid', {
+ 		data: 'BudgetItem[Id_budget_item]=' + idBudgetItem
+ 	});
 	
-	$.post(
-			'".BudgetController::createUrl('AjaxDinamicViewPopUp')."',
-			{
-			 	Id_budget_item:idBudgetItem,
-				Id_area : idArea,
-				Id_product : idProduct
-			 }).success(
-					function(data) 
-					{ 
-						$('#popup-place-holder').html(data);
- 						$('#ViewProductChild').dialog('open');						
-					}
-			);
+	$('#ViewProductChild').dialog('open');
+		
+ 	return false; 	
+});
 
- 		return false; 	
+$('input:checkbox').live('click',function() {
+
+	var idProduct = $(this).attr('idProduct');
+	var idBudgetItem = $(this).attr('idBudgetItem');
+	if($(this).is(':checked'))
+	{
+		selectSpecificRow('budget-item-children-grid', idBudgetItem);
+	
+		$('#displayChildrenPrices' ).toggle('blind',{},1000);
+	
+		$.fn.yiiGridView.update('price-list-item-child-grid', {
+				data: 'ProductSale[Id]=' + idProduct
+			});			
+	}
+	else
+	{
+		$.post(
+			'".BudgetController::createUrl('AjaxQuitItem')."',
+			{
+				IdBudgetItem: idBudgetItem
+			}).success(
+				function(data) 
+					{ 
+				
+			});
+	}
 });
 
 ");
@@ -161,6 +181,28 @@ $this->endWidget('zii.widgets.jui.CJuiDialog');
 			),
 	));
 	echo CHtml::openTag('div',array('id'=>'popup-place-holder','style'=>'position:relative;display:inline-block;width:97%'));
+	
+	$modelBudgetItem = new BudgetItem('search');
+	$modelBudgetItem->unsetAttributes();  // clear any default values
+	
+	$modelBudgetItem2 = new BudgetItem('search');
+	$modelBudgetItem2->unsetAttributes();  // clear any default values
+	
+	//$modelBudgetItem->Id_budget_item = $_POST['Id_budget_item'];
+	
+	//$modelBudgetItemParent = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
+		
+	$priceListItemSale = new PriceListItem();
+	$priceListItemSale->unsetAttributes();
+		
+		
+	echo $this->renderPartial('_budgetItemChildren', array('idArea'=>$_POST['Id_area'],
+																	   'modelBudgetItem'=>$modelBudgetItem,
+																	   'canEdit'=>false,
+																	   'priceListItemSale'=>$priceListItemSale,
+																	   'modelBudgetItemParent'=>$modelBudgetItem2,
+																	));
+	
 	echo CHtml::closeTag('div');
 		
 	$this->endWidget('zii.widgets.jui.CJuiDialog');

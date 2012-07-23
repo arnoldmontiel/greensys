@@ -14,6 +14,7 @@
  * @property integer $Id_shipping_type
  * @property integer $Id_area
  * @property integer $quantity
+ * @property integer $is_included
  *
  * The followings are the available model relations:
  * @property Budget $versionNumber
@@ -65,7 +66,7 @@ class BudgetItem extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('Id_product, Id_budget, version_number, Id_area', 'required'),
-			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type, Id_area, quantity', 'numerical', 'integerOnly'=>true),
+			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type, Id_area, quantity, is_included', 'numerical', 'integerOnly'=>true),
 			array('price', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

@@ -280,21 +280,88 @@ class BudgetController extends Controller
 		));
 	}
 
-	public function actionAjaxDinamicViewPopUp()
+	public function actionAjaxBudgetItemChildren()
 	{
-		if(isset($_POST['Id_budget_item']) && isset($_POST['Id_area']) && isset($_POST['Id_product']))
-		{
-			$modelBudgetItem = new BudgetItem('search');
-			$modelBudgetItem->unsetAttributes();  // clear any default values
-			$modelBudgetItem->Id_budget_item = $_POST['Id_budget_item'];
+		$modelBudgetItem = new BudgetItem('search');
+		$modelBudgetItem->unsetAttributes();  // clear any default values
+		
+		if(isset($_GET['BudgetItem']['Id_budget_item']))
+			$modelBudgetItem->Id_budget_item = $_GET['BudgetItem']['Id_budget_item'];
+		
+		if(isset($_GET['BudgetItem']['Id'])){
+			$model = BudgetItem::model()->findByPk($_GET['BudgetItem']['Id']);
+			$modelBudgetItem->Id_budget_item = $model->Id_budget_item;
+		}
+		
+		//$modelBudgetItemParent = BudgetItem::model()->findByPk($modelBudgetItem->Id_budget_item);
+			
+		$priceListItemSale = new PriceListItem();
+		$priceListItemSale->unsetAttributes();
+			
+		if(isset($_GET['ProductSale']['Id'])){
+			$priceListItemSale->Id_product=$_GET['ProductSale']['Id'];
+		}
+			
+		echo $this->renderPartial('_budgetItemChildren', array('modelBudgetItem'=>$modelBudgetItem,
+															   'priceListItemSale'=>$priceListItemSale,
+																//'modelBudgetItemParent'=>$modelBudgetItemParent,
+																));
+	}
+// 	public function actionAjaxDinamicViewPopUp()
+// 	{
+// 		if(isset($_POST['Id_budget_item']) && isset($_POST['Id_area']) && isset($_POST['Id_product']))
+// 		{
+// 			$modelBudgetItem = new BudgetItem('search');
+// 			$modelBudgetItem->unsetAttributes();  // clear any default values
+// 			$modelBudgetItem->Id_budget_item = $_POST['Id_budget_item'];
 						
-			$modelBudgetItemParent = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
+// 			$modelBudgetItemParent = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
 			
-			echo $this->renderPartial('_budgetItemChildren', array('idArea'=>$_POST['Id_area'],
-																   'modelBudgetItem'=>$modelBudgetItem,
-																   'canEdit'=>false,
-																   'modelBudgetItemParent'=>$modelBudgetItemParent,));
+// 			$priceListItemSale = new PriceListItem();
+// 			$priceListItemSale->unsetAttributes();
 			
+// 			if(isset($_GET['ProductSale']['Id'])){
+// 				$priceListItemSale->Id_product=$_GET['ProductSale']['Id'];
+// 			}
+			
+// 			echo $this->renderPartial('_budgetItemChildren', array('idArea'=>$_POST['Id_area'],
+// 																   'modelBudgetItem'=>$modelBudgetItem,
+// 																   'canEdit'=>false,
+// 																	'priceListItemSale'=>$priceListItemSale,
+// 																   'modelBudgetItemParent'=>$modelBudgetItemParent,));
+			
+// 		}
+// 	}
+	
+	public function actionAjaxUpdateChildPrice()
+	{
+		$idProduct = isset($_POST['IdProduct'])?$_POST['IdProduct']:'';
+		$idShippingType = isset($_POST['IdShippingType'])?$_POST['IdShippingType']:'';
+		$idBudgetItem = isset($_POST['IdBudgetItem'][0])?$_POST['IdBudgetItem'][0]:'';
+		$idPriceList = isset($_POST['IdPriceList'])?$_POST['IdPriceList']:'';
+		$price = isset($_POST['price'])?$_POST['price']:'';
+		
+		if(!empty($idPriceList)&&!empty($idProduct)&&!empty($idShippingType)&&!empty($price)&&!empty($idBudgetItem))
+		{
+			$model = BudgetItem::model()->findByPk($idBudgetItem);
+			$model->Id_shipping_type = $idShippingType;
+			$model->Id_price_list = $idPriceList;
+			$model->price = $price;
+			$model->is_included = true;
+			$model->save();
+		}
+	}
+	
+	public function actionAjaxQuitItem()
+	{
+		$idBudgetItem = isset($_POST['IdBudgetItem'])?$_POST['IdBudgetItem']:'';
+	
+		if(!empty($idBudgetItem))
+		{
+			$model = BudgetItem::model()->findByPk($idBudgetItem);
+			$model->price = 0;
+			$model->is_included = false;
+			$model->save();
 		}
 	}
 	
