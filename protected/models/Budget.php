@@ -216,10 +216,10 @@ class Budget extends CActiveRecord
 		$criteria->join = ',(SELECT Id, MAX(version_number) vn
 						FROM budget
 						GROUP BY Id) b2, 
-						project, budget_State';
+						project, budget_state';
 		
 		$criteria->condition = 't.Id = b2.Id and t.version_number = b2.vn and
-								project.Id = t.Id_project and budget_State.Id = t.Id_budget_state';
+								project.Id = t.Id_project and budget_state.Id = t.Id_budget_state';
 		
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('percent_discount',$this->percent_discount,true);
