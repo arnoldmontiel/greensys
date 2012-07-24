@@ -481,7 +481,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 	<?php 
 	$this->widget('ext.processingDialog.processingDialog', array(
 			'buttons'=>array('none'),
-			'idDialog'=>'wating',
+			'idDialog'=>'waiting',
 	));
 	//Brand
 	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
@@ -496,7 +496,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 							'Cancelar'=>'js:function(){jQuery("#CreateBrand").dialog( "close" );}',
 							'Grabar'=>'js:function()
 							{
-							jQuery("#wating").dialog("open");
+							jQuery("#waiting").dialog("open");
 							jQuery.post("'.Yii::app()->createUrl("brand/ajaxCreate").'", $("#brand-form").serialize(),
 							function(data) {
 								if(data!=null)
@@ -506,7 +506,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
     								);
 									jQuery("#CreateBrand").dialog( "close" );
 								}
-							jQuery("#wating").dialog("close");
+							jQuery("#waiting").dialog("close");
 						},"json"
 					);
 
@@ -530,7 +530,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 							'Cancelar'=>'js:function(){jQuery("#CreateSupplier").dialog( "close" );}',
 							'Grabar'=>'js:function()
 							{
-							jQuery("#wating").dialog("open");
+							jQuery("#waiting").dialog("open");
 							jQuery.post("'.Yii::app()->createUrl("supplier/ajaxCreate").'", $("#supplier-form").serialize(),
 							function(data) {
 								if(data!=null)
@@ -540,7 +540,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 									);
 									jQuery("#CreateSupplier").dialog( "close" );							
 								}	
-								jQuery("#wating").dialog("close");
+								jQuery("#waiting").dialog("close");
 						},"json"
 					);
 	
@@ -572,7 +572,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 							'Cancelar'=>'js:function(){jQuery("#CreateCategory").dialog( "close" );}',
 							'Grabar'=>'js:function()
 							{
-							jQuery("#wating").dialog("open");
+							jQuery("#waiting").dialog("open");
 							jQuery.post("'.Yii::app()->createUrl("category/ajaxCreate").'", $("#category-form").serialize(),
 							function(data) {
 								if(data!=null)
@@ -582,7 +582,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 									);
 									jQuery("#CreateCategory").dialog( "close" );
 								}
-								jQuery("#wating").dialog("close");
+								jQuery("#waiting").dialog("close");
 							},"json"
 					);
 	
@@ -606,7 +606,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 							'Cancelar'=>'js:function(){jQuery("#CreateSubCategory").dialog( "close" );}',
 							'Grabar'=>'js:function()
 							{
-							jQuery("#wating").dialog("open");
+							jQuery("#waiting").dialog("open");
 							jQuery.post("'.Yii::app()->createUrl("subCategory/ajaxCreate").'", $("#sub-category-form").serialize(),
 							function(data) {
 								if(data!=null)
@@ -621,13 +621,13 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 												);
 												jQuery("#CreateSubCategory").dialog( "close" );
 											}
-										jQuery("#wating").dialog("close");
+										jQuery("#waiting").dialog("close");
 									},"json"
 								);
 								}
 								else
 								{
-									jQuery("#wating").dialog("close");
+									jQuery("#waiting").dialog("close");
 								}																
 						},"json"
 					);	
@@ -651,7 +651,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 							'Cancelar'=>'js:function(){jQuery("#CreateNomenclator").dialog( "close" );}',
 							'Grabar'=>'js:function()
 							{
-							jQuery("#wating").dialog("open");
+							jQuery("#waiting").dialog("open");
 							jQuery.post("'.Yii::app()->createUrl("nomenclator/ajaxCreate").'", $("#nomenclator-form").serialize(),
 							function(data) {
 								if(data!=null)
@@ -661,7 +661,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 									);
 									jQuery("#CreateNomenclator").dialog( "close" );
 								}
-							jQuery("#wating").dialog("close");
+							jQuery("#waiting").dialog("close");
 						},"json"
 					);
 	
@@ -685,7 +685,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 							'Cancelar'=>'js:function(){jQuery("#CreateProductType").dialog( "close" );}',
 							'Grabar'=>'js:function()
 							{
-							jQuery("#wating").dialog("open");
+							jQuery("#waiting").dialog("open");
 							jQuery.post("'.Yii::app()->createUrl("productType/ajaxCreate").'", $("#product-type-form").serialize(),
 							function(data) {
 								if(data!=null)
@@ -695,7 +695,7 @@ $this->widget('ext.linkcontainer.linkcontainer', array(
 									);
 									jQuery("#CreateProductType").dialog( "close" );
 								}
-							jQuery("#wating").dialog("close");
+							jQuery("#waiting").dialog("close");
 							},"json"
 					);
 	
