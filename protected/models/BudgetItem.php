@@ -39,6 +39,9 @@ class BudgetItem extends CActiveRecord
 	public $parent_product_code;
 	public $total_price;
 	public $children_total_price;
+	public $children_count;
+	public $children_included;
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -70,7 +73,7 @@ class BudgetItem extends CActiveRecord
 			array('price', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_product, Id_area, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type,product_code, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc, parent_product_code, quantity', 'safe', 'on'=>'search'),
+			array('Id, Id_product, Id_area, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type, product_code, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc, parent_product_code, quantity, children_count, children_included', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -115,12 +118,20 @@ class BudgetItem extends CActiveRecord
 			'Id_area'=>'Area',
 			'parent_product_code'=>'Parent Code',
 			'quantity'=>'Quantity',
+			'children_count'=>'Children Qty',
+			'children_included'=>'Children Inc',
 		);
 	}
 
 	public function getChildrenCount()
 	{
 		$count = BudgetItem::model()->countByAttributes(array('Id_budget_item'=>$this->Id));
+		return $count;
+	}
+	
+	public function getChildrenIncluded()
+	{
+		$count = BudgetItem::model()->countByAttributes(array('Id_budget_item'=>$this->Id, 'is_included'=>'1'));
 		return $count;
 	}
 	
@@ -170,8 +181,15 @@ class BudgetItem extends CActiveRecord
 												 LEFT OUTER JOIN brand b ON p.Id_brand=b.Id
 												 LEFT OUTER JOIN area a ON a.Id = t.Id_area
 												 LEFT OUTER JOIN supplier s ON p.Id_supplier=s.Id
-												 LEFT OUTER JOIN budget_item bi ON bi.Id=t.Id_budget_item
-												 LEFT OUTER JOIN product p2 ON p2.Id=bi.Id_product";
+												 LEFT OUTER JOIN (select Id_budget_item, count(*) as child 
+												 	from budget_item group by Id_budget_item) bud on
+													t.Id =  bud.Id_budget_item
+												 LEFT OUTER JOIN (select Id_budget_item, count(*) as child 
+												 	from budget_item where is_included = 1 
+												 	group by Id_budget_item) bud2 on
+													t.Id =  bud2.Id_budget_item";
+		
+		
 		
 		$criteria->addSearchCondition("p.code",$this->product_code);
 		$criteria->addSearchCondition("p.code_supplier",$this->product_code_supplier);
@@ -179,7 +197,9 @@ class BudgetItem extends CActiveRecord
 		$criteria->addSearchCondition("b.description",$this->product_brand_desc);
 		$criteria->addSearchCondition("s.business_name",$this->product_supplier_name);
 		$criteria->addSearchCondition("a.description",$this->area_desc);
-		$criteria->addSearchCondition("p2.code",$this->parent_product_code);
+		$criteria->addSearchCondition("bud.child",$this->children_count);
+		$criteria->addSearchCondition("bud2.child",$this->children_included);
+		
 		
 		// Create a custom sort
 		$sort=new CSort;
@@ -188,6 +208,14 @@ class BudgetItem extends CActiveRecord
 											        'asc' => 'p.code',
 											        'desc' => 'p.code DESC',
 		),
+												'children_count' => array(
+													        'asc' => 'bud.child',
+													        'desc' => 'bud.child DESC',
+		),
+												'children_included' => array(
+															        'asc' => 'bud2.child',
+															        'desc' => 'bud2.child DESC',
+		),
 													'product_code_supplier' => array(
 											        'asc' => 'p.code_supplier',
 											        'desc' => 'p.code_supplier DESC',
@@ -195,10 +223,6 @@ class BudgetItem extends CActiveRecord
 													'area_desc' => array(
 													        'asc' => 'a.description',
 													        'desc' => 'a.description DESC',
-		),
-											      'parent_product_code' => array(
-											        'asc' => 'p2.code',
-											        'desc' => 'p2.code DESC',
 		),
 													'product_customer_desc' => array(
 													        'asc' => 'p.description_customer',
