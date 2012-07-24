@@ -118,58 +118,63 @@ class PurchaseOrderController extends Controller
 	}
 	public function actionAjaxAddPurchaseOrderItem()
 	{
-		if(isset($_POST['Id_product'])&&isset($_POST['Id_purchase_order'])){
+		if(false && isset($_POST['Id_product'])&&isset($_POST['Id_purchase_order'])){
+			$budgetItems = $_POST['budegetsItems'];
 			$idPurchaseOrder = $_POST['Id_purchase_order'];
 
 			$purchaseOrder = PurchaseOrder::model()->findByPk($idPurchaseOrder);
 				
 			$product = Product::model()->findByPk($_POST['Id_product']);
-			
-			if(isset($product)){
-				$criteria = new CDbCriteria;
-				$criteria->compare('t.Id_product', $product->Id);
-				$criteria->with[]='priceList';
-				$criteria->compare('priceList.Id_price_list_type',1);//purchase
-				//$criteria->compare('priceList.validity',1);
-				$criteria->order = 't.Id_price_list DESC';
-				$priceListItemPurchase = PriceListItem::model()->find($criteria);
-				if(isset($priceListItemPurchase))
+			foreach($budgetItems as $budgetItem)
+			{
+				$modelBudgetItem = BudgetItem::model()->findByPk($budgetItem);
+				if(isset($product)&&isset($modelBudgetItem))
 				{
-					$purchasOrderItemInDb = PurchaseOrderItem::model()->findByAttributes(array('Id_purchase_order'=> $idPurchaseOrder,'Id_product'=>$product->Id));
-					if(!isset($purchasOrderItemInDb))
+					$criteria = new CDbCriteria;
+					$criteria->compare('t.Id_product', $product->Id);
+					$criteria->with[]='priceList';
+					$criteria->compare('priceList.Id_price_list_type',1);//purchase
+					//$criteria->compare('priceList.validity',1);
+					$criteria->order = 't.Id_price_list DESC';
+					$priceListItemPurchase = PriceListItem::model()->find($criteria);
+					if(isset($priceListItemPurchase))
 					{
-						$purchaseOrderItem=new PurchaseOrderItem();
-		
-						$shippingParameter = $purchaseOrder->shippingParameter;
-						$air = $shippingParameter->shippingParameterAir;
-						$maritime = $shippingParameter->shippingParameterMaritime;
-						$cost = 0;
-						if($purchaseOrder->Id_shipping_type == 1)
+						$purchasOrderItemInDb = PurchaseOrderItem::model()->findByAttributes(array('Id_purchase_order'=> $idPurchaseOrder,'Id_product'=>$product->Id));
+						if(!isset($purchasOrderItemInDb))
 						{
-							$cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$product->length*$product->height*$product->width);
+							$purchaseOrderItem=new PurchaseOrderItem();
+				
+							$shippingParameter = $purchaseOrder->shippingParameter;
+							$air = $shippingParameter->shippingParameterAir;
+							$maritime = $shippingParameter->shippingParameterMaritime;
+							$cost = 0;
+							if($purchaseOrder->Id_shipping_type == 1)
+							{
+								$cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$product->length*$product->height*$product->width);
+							}
+							else
+							{
+								$cost = $priceListItemPurchase->dealer_cost+($air->cost_measurement_unit*$product->weight);
+							}
+							$total = $priceListItemPurchase->dealer_cost+$cost;
+							$purchaseOrderItem->attributes =  array('Id_purchase_order'=>$idPurchaseOrder,
+									'Id_product'=>$product->Id,
+									'price_purchase'=>$priceListItemPurchase->dealer_cost,
+									'price_shipping'=>$cost,
+									'quantity'=>1,
+									'price_total'=>$total,
+							);
+								
+							$purchaseOrderItem->save();
 						}
 						else
 						{
-							$cost = $priceListItemPurchase->dealer_cost+($air->cost_measurement_unit*$product->weight);
+							$purchasOrderItemInDb->quantity += 1;
+							$purchasOrderItemInDb->price_total = $purchasOrderItemInDb->quantity*($purchasOrderItemInDb->price_purchase+$purchasOrderItemInDb->price_shipping);
+							$purchasOrderItemInDb->save();
 						}
-						$total = $priceListItemPurchase->dealer_cost+$cost;
-						$purchaseOrderItem->attributes =  array('Id_purchase_order'=>$idPurchaseOrder,
-								'Id_product'=>$product->Id,
-								'price_purchase'=>$priceListItemPurchase->dealer_cost,
-								'price_shipping'=>$cost,
-								'quantity'=>1,
-								'price_total'=>$total,
-						);
-							
-						$purchaseOrderItem->save();
 					}
-					else
-					{
-						$purchasOrderItemInDb->quantity += 1;
-						$purchasOrderItemInDb->price_total = $purchasOrderItemInDb->quantity*($purchasOrderItemInDb->price_purchase+$purchasOrderItemInDb->price_shipping);
-						$purchasOrderItemInDb->save();
-					}
-				}
+				}				
 			}
 		}
 		
@@ -354,6 +359,15 @@ class PurchaseOrderController extends Controller
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
+		}
+	}
+	public function actionAjaxDinamicBudgetSelectorPopUp()
+	{
+		if(isset($_POST['Id_product']))
+		{
+			$modelBudgetItem = new BudgetItem;
+			$modelProduct = Product::model()->findByPk($_POST['Id_product']);
+			$this->renderPartial('selectorBudget',array('modelProduct'=>$modelProduct,'modelBudgetItem'=>$modelBudgetItem));
 		}
 	}
 }

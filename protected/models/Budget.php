@@ -120,7 +120,7 @@ class Budget extends CActiveRecord
 			'Id_project' => 'Project',
 			'percent_discount' => 'Percent Discount',
 			'date_creation' => 'Date Creation',
-			'Id_budget_state' => 'Budget State',
+			'Id_budget_state' => 'State',
 			'date_inicialization' => 'Date Inicialization',
 			'date_finalization' => 'Date Finalization',
 			'date_estimated_inicialization' => 'Date Estimated Inicialization',

@@ -77,6 +77,24 @@ $('.link-popup').click(
 		return false;
 	}
 );
+$('.budget-select-link-popup').click(
+	function()
+	{
+		jQuery('#waiting').dialog('open');
+		
+		$.post('".PurchaseOrderController::createUrl('AjaxDinamicBudgetSelectorPopUp')."',
+			{Id_product:$(this).attr('id')},
+			function(data)
+			{
+				$('#select-budget-popup-place-holder').html(data);
+				$('#SelectBudget').dialog('open'); 
+				jQuery('#waiting').dialog('close');
+}
+		);
+		return false;
+	}
+);
+		
 $('.link-popup-product').click(
 	function()
 	{
@@ -172,6 +190,11 @@ $('.link-popup-product').click(
 		
 }
 ");
+$this->widget('ext.processingDialog.processingDialog', array(
+		'buttons'=>array('none'),
+		'idDialog'=>'waiting',
+));
+
 ?>
 
 <h1>Purchase Order</h1>
@@ -275,7 +298,8 @@ $('.link-popup-product').click(
 				),
 				array(
 		 			'name'=>'brand_description',
-					'value'=>'$data->brand->description',
+					'type'=>'raw',
+					'value'=>'CHtml::link($data->brand->description,"#",array("id"=>$data->Id,"class"=>"budget-select-link-popup"))',
 				),
 				array(
 			 		'name'=>'category_description',
@@ -433,6 +457,26 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	echo CHtml::openTag('div',array('id'=>'popup-place-holder','style'=>'position:relative;display:inline-block;width:97%'));
 	echo CHtml::closeTag('div');
 		
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+
+	//Budget Selector View
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'SelectBudget',
+			// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Budgets',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '700',
+					'buttons'=>	array(
+							'cerrar'=>'js:function(){jQuery("#SelectBudget").dialog( "close" );}',
+							'aplicar'=>'js:function(){jQuery("#SelectBudget").dialog( "close" );}',
+					),
+			),
+	));
+	echo CHtml::openTag('div',array('id'=>'select-budget-popup-place-holder','style'=>'position:relative;display:inline-block;width:97%'));
+	echo CHtml::closeTag('div');
+	
 	$this->endWidget('zii.widgets.jui.CJuiDialog');
 	
 	?>
