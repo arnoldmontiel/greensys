@@ -32,7 +32,7 @@ echo CHtml::hiddenField("IdItemBudgetParent","",array("id"=>"IdItemBudgetParent"
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'budget-item-children-grid',
 	'dataProvider'=>$modelBudgetItem->search(),
-	'ajaxUrl'=>BudgetController::createUrl('AjaxBudgetItemChildren'),
+	'ajaxUrl'=>BudgetController::createUrl('AjaxBudgetItemChildrenView'),
 	'enableSorting'=>false,
 	'selectableRows'=>1,
 	'summaryText'=>'',
@@ -68,9 +68,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
 																	{ 
 																		$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000);
 																		$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000);
-																		$.fn.yiiGridView.update("budget-item-children-grid", {
- 																			data: "BudgetItem[Id_budget_item]=" + $("#IdItemBudgetParent").val()
- 																		});
 																	});
 																		
 														});
@@ -117,7 +114,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 												array(
 														"id"=>$data->Id,
 														"class"=>"txtQuantity",
-														"disabled"=>($data->is_included)?"":"disabled",
+														"disabled"=>"disabled",
 														"style"=>"width:50px;text-align:right;",
 													)
 											)',
@@ -134,7 +131,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
  					'type'=>'raw',
  					'value'=>'CHtml::checkBox("chkChild",$data->is_included,array("idProduct"=>$data->Id_product, 
  																				"idBudgetItem"=>$data->Id, 
- 																				"idBudgetItemParent"=>$data->Id_budget_item,))',
+ 																				"idBudgetItemParent"=>$data->Id_budget_item,
+ 																				"disabled"=>"disabled"))',
 				),
 			),
 )); 

@@ -28,26 +28,72 @@ $('.areaTitle').click(function(){
 	
 });
 
+
+function fillParentData(data)
+{
+	$('#IdItemBudgetParent').val(data.id);
+	$('#parent_code').text(data.parent_code);
+	$('#parent_customer_desc').text(data.parent_customer_desc);
+	$('#parent_brand_desc').text(data.parent_brand_desc);
+	$('#parent_supplier_name').text(data.parent_supplier_name);
+	$('#parent_price').text(data.parent_price);
+	
+}
+
 $('.link-popup').click(function(){
 	var idArea = $(this).attr('idArea');
 	var idBudgetItem = $(this).attr('id');
-	
+	var idProduct = $(this).attr('idProduct');
+	$('#ViewProductChild').attr('area',idArea);	
 	$.post(
-			'".BudgetController::createUrl('AjaxDinamicViewPopUp')."',
+			'".BudgetController::createUrl('AjaxGetParentInfo')."',
 			{
-			 	Id_budget_item:idBudgetItem,
-				Id_area : idArea
-			 }).success(
-					function(data) 
-					{ 
-						$('#popup-place-holder').html(data);
- 						$('#ViewProductChild').dialog('open');						
-					}
-			);
-
- 		return false; 	
+				IdBudgetItem: idBudgetItem
+			},
+			function(data)
+			{
+				fillParentData(data);				
+		},'json');	
+		
+	$('#ViewProductChild').dialog('open');
+	
+	$.fn.yiiGridView.update('budget-item-children-grid', {
+ 		data: 'BudgetItem[Id_budget_item]=' + idBudgetItem
+ 	});
+			
+ 	return false; 	
 });
 
+$('input:checkbox').live('click',function() {
+
+	var idProduct = $(this).attr('idProduct');
+	var idBudgetItem = $(this).attr('idBudgetItem');
+	var idBudgetItemParent = $(this).attr('idBudgetItemParent');
+	if($(this).is(':checked'))
+	{
+		selectSpecificRow('budget-item-children-grid', idBudgetItem);
+	
+		$('#displayChildrenPrices' ).toggle('blind',{},1000);
+	
+		$.fn.yiiGridView.update('price-list-item-child-grid', {
+				data: 'ProductSale[Id]=' + idProduct
+			});			
+	}
+	else
+	{
+		$.post(
+			'".BudgetController::createUrl('AjaxQuitItem')."',
+			{
+				IdBudgetItem: idBudgetItem
+			}).success(
+				function(data) 
+					{ 
+				$.fn.yiiGridView.update('budget-item-children-grid', {
+ 					data: 'BudgetItem[Id_budget_item]=' + idBudgetItemParent
+ 				});
+			});
+	}
+});
 ");
 
 ?>
@@ -107,22 +153,37 @@ $('.link-popup').click(function(){
 </div>
 
 <?php				
+
 //Product View Childe
 	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
-			'id'=>'ViewProductChild',
-			// additional javascript options for the dialog plugin
-			'options'=>array(
-					'title'=>'Children Product',
-					'autoOpen'=>false,
-					'modal'=>true,
-					'width'=> '700',
-					'buttons'=>	array(
-							'cerrar'=>'js:function(){jQuery("#ViewProductChild").dialog( "close" );}',
-					),
-			),
+				'id'=>'ViewProductChild',
+	// additional javascript options for the dialog plugin
+				'options'=>array(
+						'title'=>'Children Product',
+						'autoOpen'=>false,
+						'modal'=>true,
+						'width'=> '700',
+						'buttons'=>	array(
+								'cerrar'=>'js:function(){jQuery("#ViewProductChild").dialog( "close" );
+														$.fn.yiiGridView.update("budget-item-grid_" + $("#ViewProductChild").attr("area"));
+														}',
+	),
+	),
 	));
 	echo CHtml::openTag('div',array('id'=>'popup-place-holder','style'=>'position:relative;display:inline-block;width:97%'));
+	
+	$modelBudgetItem = new BudgetItem('search');
+	$modelBudgetItem->unsetAttributes();  // clear any default values
+	
+	$priceListItemSale = new PriceListItem();
+	$priceListItemSale->unsetAttributes();
+	
+	
+	echo $this->renderPartial('_budgetItemChildren', array(	'modelBudgetItem'=>$modelBudgetItem,
+																		   'priceListItemSale'=>$priceListItemSale,
+	));
+	
 	echo CHtml::closeTag('div');
-		
+	
 	$this->endWidget('zii.widgets.jui.CJuiDialog');
 ?>

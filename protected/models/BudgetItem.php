@@ -38,7 +38,7 @@ class BudgetItem extends CActiveRecord
 	public $area_desc;
 	public $parent_product_code;
 	public $total_price;
-	
+	public $children_total_price;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -123,6 +123,24 @@ class BudgetItem extends CActiveRecord
 		$count = BudgetItem::model()->countByAttributes(array('Id_budget_item'=>$this->Id));
 		return $count;
 	}
+	
+	public function getChildrenTotalPrice()
+	{
+		$criteria=new CDbCriteria;
+	
+		$criteria->select='sum(price * quantity) as children_total_price';
+		$criteria->condition='t.Id_budget_item = '.$this->Id;
+	
+		$modelTotal = BudgetItem::model()->find($criteria);
+	
+		return $modelTotal->children_total_price;
+	}
+	
+	public function getTotalPrice()
+	{	
+		return $this->getChildrenTotalPrice() + $this->price;
+	}
+	
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -200,32 +218,6 @@ class BudgetItem extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 													'criteria'=>$criteria,
 													'sort'=>$sort,
-		));
-	}
-	
-	public function searchByProduct()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
-	
-		$criteria=new CDbCriteria;
-	
-		$criteria->compare('t.Id',$this->Id);
-		$criteria->compare('t.Id_product',$this->Id_product);
-		$criteria->compare('t.Id_area',$this->Id_area);
-		$criteria->compare('t.Id_budget',$this->Id_budget);
-		$criteria->compare('t.version_number',$this->version_number);
-		$criteria->compare('t.Id_budget_item',$this->Id_budget_item);
-		$criteria->compare('t.price',$this->price,true);
-		$criteria->compare('t.Id_price_list',$this->Id_price_list);
-		$criteria->compare('t.Id_shipping_type',$this->Id_shipping_type);
-		$criteria->compare('quantity',$this->quantity);
-		
-		$criteria->addCondition('t.version_number in (SELECT MAX(version_number) FROM budget WHERE budget.Id = t.Id_budget)');
-	
-	
-		return new CActiveDataProvider($this, array(
-				'criteria'=>$criteria,
 		));
 	}
 	

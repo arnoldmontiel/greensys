@@ -8,6 +8,37 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$modelBudgetItem->search(),
  	'filter'=>$modelBudgetItem,
 	'summaryText'=>'',
+	'afterAjaxUpdate'=>'function(id, data){
+ 				$("#budget-item-grid_'.$idArea.'").find(".link-popup").each(
+												function(index, item){
+													$(item).click(function(){
+															
+														var idArea = $(this).attr("idArea");
+														var idBudgetItem = $(this).attr("id");
+														var idProduct = $(this).attr("idProduct");
+														$("#ViewProductChild").attr("area",idArea);	
+														$.post(
+																"'.BudgetController::createUrl('AjaxGetParentInfo').'",
+																{
+																	IdBudgetItem: idBudgetItem
+																},
+																function(data)
+																{
+																	fillParentData(data);				
+															},"json");	
+															
+														$("#ViewProductChild").dialog("open");
+														
+														$.fn.yiiGridView.update("budget-item-children-grid", {
+													 		data: "BudgetItem[Id_budget_item]=" + idBudgetItem
+													 	});
+																
+													 	return false; 	
+														
+													});
+												}
+										);
+ 		}',
 	'columns'=>array(
 				array(
 					'name'=>'product_code',
@@ -35,7 +66,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				),
 				array(
  					'name'=>'price',
-				    'value'=>'$data->price',
+				    'value'=>'$data->totalPrice',
 					'type'=>'raw',
 			        'htmlOptions'=>array('style'=>'text-align: right;'),
 				),

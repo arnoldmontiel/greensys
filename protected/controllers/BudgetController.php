@@ -131,14 +131,25 @@ class BudgetController extends Controller
 		if(Yii::app()->request->isPostRequest)
 		{
 			// we only allow deletion via POST request
-			BudgetItem::model()->deleteByPk($id);
+			$model = BudgetItem::model()->findByPk($id);
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				
+				BudgetItem::model()->deleteAllByAttributes(array('Id_budget_item'=>$id));
+				$model->deleteByPk($id);
+				
+				$transaction->commit();
+				
+				if(!isset($_GET['ajax']))
+					$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('addItem'));
+				
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
 	
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('addItem'));
 		}
 		else
-		throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 	
 	/**
@@ -293,7 +304,6 @@ class BudgetController extends Controller
 			$modelBudgetItem->Id_budget_item = $model->Id_budget_item;
 		}
 		
-		//$modelBudgetItemParent = BudgetItem::model()->findByPk($modelBudgetItem->Id_budget_item);
 			
 		$priceListItemSale = new PriceListItem();
 		$priceListItemSale->unsetAttributes();
@@ -303,35 +313,64 @@ class BudgetController extends Controller
 		}
 			
 		echo $this->renderPartial('_budgetItemChildren', array('modelBudgetItem'=>$modelBudgetItem,
-															   'priceListItemSale'=>$priceListItemSale,
-																//'modelBudgetItemParent'=>$modelBudgetItemParent,
+															    'priceListItemSale'=>$priceListItemSale,
 																));
 	}
-// 	public function actionAjaxDinamicViewPopUp()
-// 	{
-// 		if(isset($_POST['Id_budget_item']) && isset($_POST['Id_area']) && isset($_POST['Id_product']))
-// 		{
-// 			$modelBudgetItem = new BudgetItem('search');
-// 			$modelBudgetItem->unsetAttributes();  // clear any default values
-// 			$modelBudgetItem->Id_budget_item = $_POST['Id_budget_item'];
-						
-// 			$modelBudgetItemParent = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
+	
+	public function actionAjaxBudgetItemChildrenView()
+	{
+		$modelBudgetItem = new BudgetItem('search');
+		$modelBudgetItem->unsetAttributes();  // clear any default values
+	
+		if(isset($_GET['BudgetItem']['Id_budget_item']))
+			$modelBudgetItem->Id_budget_item = $_GET['BudgetItem']['Id_budget_item'];
+	
+		if(isset($_GET['BudgetItem']['Id'])){
+			$model = BudgetItem::model()->findByPk($_GET['BudgetItem']['Id']);
+			$modelBudgetItem->Id_budget_item = $model->Id_budget_item;
+		}
+	
 			
-// 			$priceListItemSale = new PriceListItem();
-// 			$priceListItemSale->unsetAttributes();
+		$priceListItemSale = new PriceListItem();
+		$priceListItemSale->unsetAttributes();
 			
-// 			if(isset($_GET['ProductSale']['Id'])){
-// 				$priceListItemSale->Id_product=$_GET['ProductSale']['Id'];
-// 			}
+		if(isset($_GET['ProductSale']['Id'])){
+			$priceListItemSale->Id_product=$_GET['ProductSale']['Id'];
+		}
 			
-// 			echo $this->renderPartial('_budgetItemChildren', array('idArea'=>$_POST['Id_area'],
-// 																   'modelBudgetItem'=>$modelBudgetItem,
-// 																   'canEdit'=>false,
-// 																	'priceListItemSale'=>$priceListItemSale,
-// 																   'modelBudgetItemParent'=>$modelBudgetItemParent,));
-			
-// 		}
-// 	}
+		echo $this->renderPartial('_budgetItemChildrenView', array('modelBudgetItem'=>$modelBudgetItem,
+																    'priceListItemSale'=>$priceListItemSale,
+		));
+	}
+	
+	public function actionAjaxGetParentInfo()
+	{
+		
+		if(isset($_POST['IdBudgetItem']))
+		{
+			$model = BudgetItem::model()->findByPk($_POST['IdBudgetItem']);
+			if(isset($model))
+			{
+				$arrayParent = array();
+				$arrayParent['parent_code'] = $model->product->code;
+				$arrayParent['parent_customer_desc'] = $model->product->description_customer;
+				$arrayParent['parent_brand_desc'] = $model->product->brand->description;
+				$arrayParent['parent_supplier_name'] = $model->product->supplier->business_name;
+				$arrayParent['parent_price'] = $model->price;
+				$arrayParent['id'] = $model->Id;
+				echo json_encode($arrayParent);
+			} 
+		}
+	}
+	
+	public function actionAjaxGetChildrenTotalPrice()
+	{
+		if(isset($_POST['IdBudgetItem']))
+		{
+			$model = BudgetItem::model()->findByPk($_POST['IdBudgetItem']);
+			echo $model->ChildrenTotalPrice;
+		}	
+	}
 	
 	public function actionAjaxUpdateChildPrice()
 	{
@@ -347,7 +386,20 @@ class BudgetController extends Controller
 			$model->Id_shipping_type = $idShippingType;
 			$model->Id_price_list = $idPriceList;
 			$model->price = $price;
-			$model->is_included = true;
+			$model->is_included = 1;
+			$model->save();
+		}
+	}
+	
+	public function actionAjaxUpdateQuantity()
+	{
+		$idBudgetItem = isset($_POST['IdBudgetItem'])?$_POST['IdBudgetItem']:'';
+		$quantity = isset($_POST['quantity'])?$_POST['quantity']:'';
+	
+		if(!empty($quantity)&&!empty($idBudgetItem))
+		{
+			$model = BudgetItem::model()->findByPk($idBudgetItem);
+			$model->quantity = $quantity;			
 			$model->save();
 		}
 	}
@@ -360,7 +412,8 @@ class BudgetController extends Controller
 		{
 			$model = BudgetItem::model()->findByPk($idBudgetItem);
 			$model->price = 0;
-			$model->is_included = false;
+			$model->quantity = 1;
+			$model->is_included = 0;
 			$model->save();
 		}
 	}

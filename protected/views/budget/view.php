@@ -27,17 +27,38 @@ $('.areaTitle').click(function(){
 	
 });
 
+function fillParentData(data)
+{
+	$('#IdItemBudgetParent').val(data.id);
+	$('#parent_code').text(data.parent_code);
+	$('#parent_customer_desc').text(data.parent_customer_desc);
+	$('#parent_brand_desc').text(data.parent_brand_desc);
+	$('#parent_supplier_name').text(data.parent_supplier_name);
+	$('#parent_price').text(data.parent_price);
+	
+}
+
 $('.link-popup').click(function(){
 	var idArea = $(this).attr('idArea');
 	var idBudgetItem = $(this).attr('id');
 	var idProduct = $(this).attr('idProduct');
 		
+	$.post(
+			'".BudgetController::createUrl('AjaxGetParentInfo')."',
+			{
+				IdBudgetItem: idBudgetItem
+			},
+			function(data)
+			{
+				fillParentData(data);				
+		},'json');	
+		
+	$('#ViewProductChild').dialog('open');
+	
 	$.fn.yiiGridView.update('budget-item-children-grid', {
  		data: 'BudgetItem[Id_budget_item]=' + idBudgetItem
  	});
-	
-	$('#ViewProductChild').dialog('open');
-		
+			
  	return false; 	
 });
 
@@ -45,6 +66,7 @@ $('input:checkbox').live('click',function() {
 
 	var idProduct = $(this).attr('idProduct');
 	var idBudgetItem = $(this).attr('idBudgetItem');
+	var idBudgetItemParent = $(this).attr('idBudgetItemParent');
 	if($(this).is(':checked'))
 	{
 		selectSpecificRow('budget-item-children-grid', idBudgetItem);
@@ -64,7 +86,9 @@ $('input:checkbox').live('click',function() {
 			}).success(
 				function(data) 
 					{ 
-				
+				$.fn.yiiGridView.update('budget-item-children-grid', {
+ 					data: 'BudgetItem[Id_budget_item]=' + idBudgetItemParent
+ 				});
 			});
 	}
 });
@@ -184,23 +208,13 @@ $this->endWidget('zii.widgets.jui.CJuiDialog');
 	
 	$modelBudgetItem = new BudgetItem('search');
 	$modelBudgetItem->unsetAttributes();  // clear any default values
-	
-	$modelBudgetItem2 = new BudgetItem('search');
-	$modelBudgetItem2->unsetAttributes();  // clear any default values
-	
-	//$modelBudgetItem->Id_budget_item = $_POST['Id_budget_item'];
-	
-	//$modelBudgetItemParent = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
 		
 	$priceListItemSale = new PriceListItem();
 	$priceListItemSale->unsetAttributes();
 		
 		
-	echo $this->renderPartial('_budgetItemChildren', array('idArea'=>$_POST['Id_area'],
-																	   'modelBudgetItem'=>$modelBudgetItem,
-																	   'canEdit'=>false,
+	echo $this->renderPartial('_budgetItemChildrenView', array(	'modelBudgetItem'=>$modelBudgetItem,
 																	   'priceListItemSale'=>$priceListItemSale,
-																	   'modelBudgetItemParent'=>$modelBudgetItem2,
 																	));
 	
 	echo CHtml::closeTag('div');
