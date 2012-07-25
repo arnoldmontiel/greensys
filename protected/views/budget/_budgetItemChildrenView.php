@@ -36,43 +36,43 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'enableSorting'=>false,
 	'selectableRows'=>1,
 	'summaryText'=>'',
-	'afterAjaxUpdate'=>'function(id, data){
-							$.post(
-								"'.BudgetController::createUrl('AjaxGetChildrenTotalPrice').'",
-									{
-										IdBudgetItem: $("#IdItemBudgetParent").val()
-									}).success(
-									function(data) 
-									{ 
-										$("#children_total_price").val(data);
-									});
+// 	'afterAjaxUpdate'=>'function(id, data){
+// 							$.post(
+// 								"'.BudgetController::createUrl('AjaxGetChildrenTotalPrice').'",
+// 									{
+// 										IdBudgetItem: $("#IdItemBudgetParent").val()
+// 									}).success(
+// 									function(data) 
+// 									{ 
+// 										$("#children_total_price").val(data);
+// 									});
 									
-							$("#budget-item-children-grid").find("input.txtQuantity").each(
-									function(index, item){
+// 							$("#budget-item-children-grid").find("input.txtQuantity").each(
+// 									function(index, item){
 
-														$(item).keyup(function(){
-															validateNumber($(this));
-														});
-														$(item).change(function(){
+// 														$(item).keyup(function(){
+// 															validateNumber($(this));
+// 														});
+// 														$(item).change(function(){
 																	
-															var target = $(this);
-															var profitRate = 0;
+// 															var target = $(this);
+// 															var profitRate = 0;
 																	
-															$.post(
-																"'.BudgetController::createUrl('AjaxUpdateQuantity').'",
-																	{
-																		IdBudgetItem: $(this).attr("id"),
-																		quantity:$(this).val()
-																	}).success(
-																	function() 
-																	{ 
-																		$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000);
-																		$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000);
-																	});
+// 															$.post(
+// 																"'.BudgetController::createUrl('AjaxUpdateQuantity').'",
+// 																	{
+// 																		IdBudgetItem: $(this).attr("id"),
+// 																		quantity:$(this).val()
+// 																	}).success(
+// 																	function() 
+// 																	{ 
+// 																		$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000);
+// 																		$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000);
+// 																	});
 																		
-														});
-									});
-			}	',
+// 														});
+// 									});
+// 			}	',
 	'columns'=>array(
 				array(
 					'name'=>'product_code',
@@ -127,13 +127,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'type'=>'raw',
 					'htmlOptions'=>array('width'=>25),
 				),
-// 				array(
-//  					'type'=>'raw',
-//  					'value'=>'CHtml::checkBox("chkChild",$data->is_included,array("idProduct"=>$data->Id_product, 
-//  																				"idBudgetItem"=>$data->Id, 
-//  																				"idBudgetItemParent"=>$data->Id_budget_item,
-//  																				"disabled"=>"disabled"))',
-// 				),
+				array(
+ 					'type'=>'raw',
+ 					'value'=>'CHtml::checkBox("chkChild",$data->is_included,array("idProduct"=>$data->Id_product, 
+ 																				"idBudgetItem"=>$data->Id, 
+ 																				"idBudgetItemParent"=>$data->Id_budget_item,
+ 																				"disabled"=>"disabled"))',
+				),
 			),
 )); 
 
