@@ -127,13 +127,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'type'=>'raw',
 					'htmlOptions'=>array('width'=>25),
 				),
-				array(
- 					'type'=>'raw',
- 					'value'=>'CHtml::checkBox("chkChild",$data->is_included,array("idProduct"=>$data->Id_product, 
- 																				"idBudgetItem"=>$data->Id, 
- 																				"idBudgetItemParent"=>$data->Id_budget_item,
- 																				"disabled"=>"disabled"))',
-				),
+// 				array(
+//  					'type'=>'raw',
+//  					'value'=>'CHtml::checkBox("chkChild",$data->is_included,array("idProduct"=>$data->Id_product, 
+//  																				"idBudgetItem"=>$data->Id, 
+//  																				"idBudgetItemParent"=>$data->Id_budget_item,
+//  																				"disabled"=>"disabled"))',
+// 				),
 			),
 )); 
 
