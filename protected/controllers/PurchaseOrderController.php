@@ -118,16 +118,16 @@ class PurchaseOrderController extends Controller
 	}
 	public function actionAjaxAddPurchaseOrderItem()
 	{
-		if(false && isset($_POST['Id_product'])&&isset($_POST['Id_purchase_order'])){
-			$budgetItems = $_POST['budegetsItems'];
+		if(isset($_POST['budegetItems'])&&isset($_POST['Id_purchase_order'])){
+			$budgetItems = $_POST['budegetItems'];
 			$idPurchaseOrder = $_POST['Id_purchase_order'];
 
 			$purchaseOrder = PurchaseOrder::model()->findByPk($idPurchaseOrder);
 				
-			$product = Product::model()->findByPk($_POST['Id_product']);
 			foreach($budgetItems as $budgetItem)
 			{
-				$modelBudgetItem = BudgetItem::model()->findByPk($budgetItem);
+				$modelBudgetItem = BudgetItem::model()->findByPk($budgetItem['Id']);
+				$product = Product::model()->findByPk($modelBudgetItem->Id_product);
 				if(isset($product)&&isset($modelBudgetItem))
 				{
 					$criteria = new CDbCriteria;
@@ -150,28 +150,47 @@ class PurchaseOrderController extends Controller
 							$cost = 0;
 							if($purchaseOrder->Id_shipping_type == 1)
 							{
-								$cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$product->length*$product->height*$product->width);
+								//$cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$product->length*$product->height*$product->width);
 							}
 							else
 							{
-								$cost = $priceListItemPurchase->dealer_cost+($air->cost_measurement_unit*$product->weight);
+								//$cost = $priceListItemPurchase->dealer_cost+($air->cost_measurement_unit*$product->weight);
 							}
 							$total = $priceListItemPurchase->dealer_cost+$cost;
 							$purchaseOrderItem->attributes =  array('Id_purchase_order'=>$idPurchaseOrder,
 									'Id_product'=>$product->Id,
 									'price_purchase'=>$priceListItemPurchase->dealer_cost,
 									'price_shipping'=>$cost,
-									'quantity'=>1,
+									'quantity'=>$budgetItem['quantity'],
 									'price_total'=>$total,
 							);
-								
 							$purchaseOrderItem->save();
+							for($i = 0; $i<$budgetItem['quantity']; $i++)
+							{
+								$modelProductItem = new ProductItem;
+								$modelProductItem->Id_product = $purchaseOrderItem->Id_product;
+								$modelProductItem->Id_purchase_order_item =$purchaseOrderItem->Id; 
+								$modelProductItem->real_shipping_cost = $cost;
+								$modelProductItem->Id_budget_item = $modelBudgetItem->Id;
+								$modelProductItem->Id_project = $modelBudgetItem->budget->Id_project;
+								$modelProductItem->save();								
+							}
 						}
 						else
 						{
-							$purchasOrderItemInDb->quantity += 1;
+							$purchasOrderItemInDb->quantity += $budgetItem['quantity'];
 							$purchasOrderItemInDb->price_total = $purchasOrderItemInDb->quantity*($purchasOrderItemInDb->price_purchase+$purchasOrderItemInDb->price_shipping);
 							$purchasOrderItemInDb->save();
+							for($i = 0; $i<$budgetItem['quantity']; $i++)
+							{
+								$modelProductItem = new ProductItem;
+								$modelProductItem->Id_product = $purchasOrderItemInDb->Id_product;
+								$modelProductItem->Id_purchase_order_item =$purchasOrderItemInDb->Id; 
+								$modelProductItem->real_shipping_cost = $cost;
+								$modelProductItem->Id_budget_item = $modelBudgetItem->Id;
+								$modelProductItem->Id_project = $modelBudgetItem->budget->Id_project;
+								$modelProductItem->save();								
+							}
 						}
 					}
 				}				
@@ -365,9 +384,19 @@ class PurchaseOrderController extends Controller
 	{
 		if(isset($_POST['Id_product']))
 		{
+			
 			$modelBudgetItem = new BudgetItem;
 			$modelProduct = Product::model()->findByPk($_POST['Id_product']);
-			$this->renderPartial('selectorBudget',array('modelProduct'=>$modelProduct,'modelBudgetItem'=>$modelBudgetItem));
+			
+			$criteria = new CDbCriteria;
+			$criteria->compare('t.Id_product', $modelProduct->Id);
+			$criteria->with[]='priceList';
+			$criteria->compare('priceList.Id_price_list_type',1);//purchase
+			//$criteria->compare('priceList.validity',1);
+			$criteria->order = 't.Id_price_list DESC';
+			$priceListItemPurchase = PriceListItem::model()->find($criteria);
+				
+			$this->renderPartial('selectorBudget',array('modelProduct'=>$modelProduct,'modelBudgetItem'=>$modelBudgetItem,'modelPriceListItem'=>$priceListItemPurchase));
 		}
 	}
 }

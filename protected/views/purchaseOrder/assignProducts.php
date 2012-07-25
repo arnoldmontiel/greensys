@@ -87,9 +87,31 @@ $('.budget-select-link-popup').click(
 			function(data)
 			{
 				$('#select-budget-popup-place-holder').html(data);
+		
+				$('#selectedAll').change(function()
+				{
+					if($('#selectedAll').attr('checked'))
+					{
+						$('#select-budget-popup-place-holder').find('input.check-selector').attr('checked','checked');
+					}
+					else
+					{
+						$('#select-budget-popup-place-holder').find('input.check-selector').removeAttr('checked');
+					}
+				})
+				$('input.txt-quantity').keyup(function(){
+					validateNumber($(this));
+				});
+				$('input.txt-quantity').change(function(){
+					if($(this).val()==''){
+						$(this).val('0')
+					}
+				});
+		
+		
 				$('#SelectBudget').dialog('open'); 
 				jQuery('#waiting').dialog('close');
-}
+			}
 		);
 		return false;
 	}
@@ -266,6 +288,9 @@ $this->widget('ext.processingDialog.processingDialog', array(
 		'dataProvider'=>$modelProduct->searchPending(),
 		'filter'=>$modelProduct,
 		'summaryText'=>'',
+		'afterAjaxUpdate'=>'function(id, data){
+			bindObjects();
+		}',				
 		'selectionChanged'=>'js:function(id){
 			$.post(	"'.PurchaseOrderController::createUrl('AjaxAddPurchaseOrderItem').'",
 					{
@@ -329,9 +354,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'purchase-order-item-grid',
 	'dataProvider'=>$modelPurchaseOrderItem->search(),
  	'filter'=>$modelPurchaseOrderItem,
-	'summaryText'=>'',
+		'summaryText'=>'',
 		'afterAjaxUpdate'=>'function(id, data){
 			bindObjects();
+			$.fn.yiiGridView.update("product-grid");
 		}',
 		'columns'=>array(
 				array(
@@ -358,30 +384,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
 							
 					'type'=>'raw',					
 					'htmlOptions'=>array("style"=>"text-align:right;"),
-				),
-				array(
-					'name'=>'price_shipping',
-					'value'=>
-                                    	'CHtml::textField("txt_price_shipping",
-												$data->price_shipping,
-												array(
-														"id"=>$data->Id,
-														"class"=>"txt-price-shipping",
-														"style"=>"width:50px;text-align:right;",
-													)
-											)',
-	
-					'type'=>'raw',
-					'htmlOptions'=>array("style"=>"text-align:right;"),
-					'htmlOptions'=>array("style"=>"text-align:right;"),
-					'footer'=>'<input id="purchase_order_price_shipping" class="txt-purchase-order-price-shipping-total" type="text" name="txt_purchase_order_price_shipping_total" value="'.$model->PriceShippingTotal.'" disabled="disabled" style="width:50px;text-align:right;">',
-					'footerHtmlOptions'=>array("style"=>"text-align:right;"),
-						
-				),
-				array(
-					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok1", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
-					'type'=>'raw',
-					'htmlOptions'=>array('width'=>25),
 				),
 				array(
 					'name'=>'quantity',
@@ -470,7 +472,38 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'width'=> '700',
 					'buttons'=>	array(
 							'cerrar'=>'js:function(){jQuery("#SelectBudget").dialog( "close" );}',
-							'aplicar'=>'js:function(){jQuery("#SelectBudget").dialog( "close" );}',
+							'aplicar'=>'js:function(){
+								var items="";
+								var params = {};
+								$("#select-budget-popup-place-holder").find("div.budget-selector-view-pop").each(
+								function (index, element) {
+										var budgetItem = $(element).find("#BudgetItem_Id");
+										if(budgetItem.attr("checked"))
+										{
+											var item = {};
+											item["Id"]=budgetItem.val();
+											item["quantity"]=$(element).find("#BudgetItem_quantity").val();
+											params[index] =item; 
+										}
+									}
+								)
+								var parameters = {budegetItems:params};
+								$.post(	"'.PurchaseOrderController::createUrl('AjaxAddPurchaseOrderItem').'",
+											"Id_purchase_order='.$model->Id.'"+"&"+$.param(parameters)
+								).success(
+									function() 
+									{
+										$.fn.yiiGridView.update("purchase-order-item-grid", {
+										data: $(this).serialize()
+									});
+								}).error(
+								function()
+									{
+										$(".messageError").animate({opacity: "show"},2000);
+										$(".messageError").animate({opacity: "hide"},2000);
+									});							
+								jQuery("#SelectBudget").dialog( "close" );
+							}',
 					),
 			),
 	));

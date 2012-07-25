@@ -105,6 +105,20 @@ div.view
 	display: inline-block;
 	width: 90%;
 }
+div.budget-selector-view-pop
+{
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #C9E0ED;
+	display: inline-block;
+	width: 97%;
+}
+
+div.view-end
+{
+	width: 15%;
+	float: left;
+}
 div.view-right
 {
 	width: 25%;

@@ -535,6 +535,12 @@ class Product extends CActiveRecord
 	
 		$criteria->with[]='supplier';
 		$criteria->addSearchCondition("supplier.business_name",$this->supplier_description);
+		
+		$criteria->join='INNER JOIN `budget_item` `budgetItems` ON (`budgetItems`.`Id_product`=`t`.`Id`)';
+		
+		$criteria->addCondition('budgetItems.Id not in (select pi.Id_budget_item from product_item pi where pi.Id_product=t.Id)');
+		
+		
 	
 	
 		// Create a custom sort

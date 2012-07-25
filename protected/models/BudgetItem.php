@@ -244,7 +244,7 @@ class BudgetItem extends CActiveRecord
 													'sort'=>$sort,
 		));
 	}
-	public function searchByProduct()
+	public function searchByProductsPending()
 	{
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
@@ -263,6 +263,8 @@ class BudgetItem extends CActiveRecord
 		$criteria->compare('quantity',$this->quantity);
 	
 		$criteria->addCondition('t.version_number in (SELECT MAX(version_number) FROM budget WHERE budget.Id = t.Id_budget)');
+		$criteria->addCondition('t.Id not in (select pi.Id_budget_item from product_item pi where pi.Id_product=t.Id_product)');
+		
 	
 	
 		return new CActiveDataProvider($this, array(
