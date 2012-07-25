@@ -36,53 +36,48 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'enableSorting'=>false,
 	'selectableRows'=>1,
 	'summaryText'=>'',
-// 	'afterAjaxUpdate'=>'function(id, data){
-// 							$.post(
-// 								"'.BudgetController::createUrl('AjaxGetChildrenTotalPrice').'",
-// 									{
-// 										IdBudgetItem: $("#IdItemBudgetParent").val()
-// 									}).success(
-// 									function(data) 
-// 									{ 
-// 										$("#children_total_price").val(data);
-// 									});
+	'afterAjaxUpdate'=>'function(id, data){
+							$.post(
+								"'.BudgetController::createUrl('AjaxGetChildrenTotalPrice').'",
+									{
+										IdBudgetItem: $("#IdItemBudgetParent").val()
+									}).success(
+									function(data) 
+									{ 
+										$("#children_total_price").val(data);
+									});
 									
-// 							$("#budget-item-children-grid").find("input.txtQuantity").each(
-// 									function(index, item){
+							$("#budget-item-children-grid").find("input.txtQuantity").each(
+									function(index, item){
 
-// 														$(item).keyup(function(){
-// 															validateNumber($(this));
-// 														});
-// 														$(item).change(function(){
+														$(item).keyup(function(){
+															validateNumber($(this));
+														});
+														$(item).change(function(){
 																	
-// 															var target = $(this);
-// 															var profitRate = 0;
+															var target = $(this);
+															var profitRate = 0;
 																	
-// 															$.post(
-// 																"'.BudgetController::createUrl('AjaxUpdateQuantity').'",
-// 																	{
-// 																		IdBudgetItem: $(this).attr("id"),
-// 																		quantity:$(this).val()
-// 																	}).success(
-// 																	function() 
-// 																	{ 
-// 																		$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000);
-// 																		$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000);
-// 																	});
+															$.post(
+																"'.BudgetController::createUrl('AjaxUpdateQuantity').'",
+																	{
+																		IdBudgetItem: $(this).attr("id"),
+																		quantity:$(this).val()
+																	}).success(
+																	function() 
+																	{ 
+																		$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000);
+																		$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000);
+																	});
 																		
-// 														});
-// 									});
-// 			}	',
+														});
+									});
+			}	',
 	'columns'=>array(
 				array(
 					'name'=>'product_code',
 				    'value'=>'$data->product->code',		
 					'footer'=>'Total'
-				),
-				array(
-					'name'=>'parent_product_code',
-				    'value'=>'$data->budgetItem->product->code',
-	
 				),
 				array(
 					'name'=>'product_customer_desc',
