@@ -83,11 +83,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'footer'=>'Total'
 				),
 				array(
-					'name'=>'parent_product_code',
-				    'value'=>'$data->budgetItem->product->code',
-	
-				),
-				array(
 					'name'=>'product_customer_desc',
 				    'value'=>'$data->product->description_customer',
 	
