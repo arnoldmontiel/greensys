@@ -77,8 +77,20 @@ class StockController extends Controller
 		if(Yii::app()->request->isPostRequest)
 		{
 			// we only allow deletion via POST request
-			StockItem::model()->deleteByPk($id);
-	
+			
+			$model = StockItem::model()->findByPk($id);
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				ProductItem::model()->deleteAllByAttributes(array(
+																	'Id_product'=>$model->Id_product,
+																	'Id_stock'=>$model->Id_stock,
+				));
+				$model->delete();
+				$transaction->commit();
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
+			
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
 				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('moveStock'));
@@ -95,8 +107,26 @@ class StockController extends Controller
 		$stockItemInDB = StockItem::model()->findByPk($idStockItem);
 		if(isset($stockItemInDB))
 		{
-			$stockItemInDB->attributes = array('quantity'=>(double) $quantity);
-			$stockItemInDB->save();
+			$transaction = $stockItemInDB->dbConnection->beginTransaction();
+			try {
+				//elimino todos los product item
+				ProductItem::model()->deleteAllByAttributes(array(
+																	'Id_product'=>$stockItemInDB->Id_product,
+																	'Id_stock'=>$stockItemInDB->Id_stock,
+				));
+				//creo la cantidad necesaria
+				for($i=0;$i<$quantity;$i++)
+				{
+					$this->createProductItem($stockItemInDB->Id_product, $stockItemInDB->Id_stock);
+				}
+					
+				$stockItemInDB->attributes = array('quantity'=>(double) $quantity);
+				$stockItemInDB->save();
+				
+				$transaction->commit();
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
 		}
 		return $stockItemInDB;
 	
@@ -148,11 +178,22 @@ class StockController extends Controller
 			if($stockItemInDb==null)
 			{				
 				$stockItem = new StockItem();
-				$stockItem->attributes = array('Id_stock'=>$idStock,
-												'Id_product'=>$idProduct,
-												'quantity'=>1,												
-												);
-				$stockItem->save();
+				$transaction = $stockItem->dbConnection->beginTransaction();
+				try {
+					
+					$stockItem->attributes = array('Id_stock'=>$idStock,
+																	'Id_product'=>$idProduct,
+																	'quantity'=>1,												
+					);
+					$stockItem->save();
+					
+					$this->createProductItem($idProduct, $idStock);					
+					
+					$transaction->commit();
+				} catch (Exception $e) {
+					$transaction->rollback();
+				}
+				
 			}
 			else
 			{
@@ -160,6 +201,14 @@ class StockController extends Controller
 			}
 		}
 	
+	}
+	
+	private function createProductItem($idProduct, $idStock)
+	{
+		$productItem = new ProductItem();
+		$productItem->Id_product = $idProduct;
+		$productItem->Id_stock = $idStock;
+		$productItem->save();
 	}
 	
 	/**

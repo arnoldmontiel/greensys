@@ -10,6 +10,7 @@
  * @property integer $Id_purchase_order_item
  * @property integer $Id_budget_item
  * @property integer $Id_project
+ * @property integer $Id_stock
  *
  * The followings are the available model relations:
  * @property BudgetItem $idBudgetItem
@@ -48,11 +49,11 @@ class ProductItem extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('Id_product', 'required'),
-			array('Id_product, Id_purchase_order_item, Id_budget_item, Id_project', 'numerical', 'integerOnly'=>true),
+			array('Id_product, Id_purchase_order_item, Id_budget_item, Id_project, Id_stock', 'numerical', 'integerOnly'=>true),
 			array('real_shipping_cost', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_product, real_shipping_cost, Id_purchase_order_item, Id_budget_item, Id_project', 'safe', 'on'=>'search'),
+			array('Id, Id_product, real_shipping_cost, Id_purchase_order_item, Id_budget_item, Id_project, Id_stock', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -70,6 +71,7 @@ class ProductItem extends CActiveRecord
 			'idPurchaseOrderItem' => array(self::BELONGS_TO, 'PurchaseOrderItem', 'Id_purchase_order_item'),
 			'productRequirements' => array(self::MANY_MANY, 'ProductRequirement', 'product_requirement_product_item(Id_product_item, Id_product_requirement)'),
 			'trackingItems' => array(self::HAS_MANY, 'TrackingItem', 'Id_product_item'),
+			'stock' => array(self::BELONGS_TO, 'Stock', 'Id_stock'),
 		);
 	}
 
@@ -105,6 +107,7 @@ class ProductItem extends CActiveRecord
 		$criteria->compare('Id_purchase_order_item',$this->Id_purchase_order_item);
 		$criteria->compare('Id_budget_item',$this->Id_budget_item);
 		$criteria->compare('Id_project',$this->Id_project);
+		$criteria->compare('Id_stock',$this->Id_stock);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -13,6 +13,31 @@ $this->menu=array(
 );
 Yii::app()->clientScript->registerScript(__CLASS__.'move-stock', "
 
+$('#stock-item-grid').find('input.txtQuantity').each(
+												function(index, item){
+		
+																$(item).keyup(function(){
+			        												validateNumber($(this));
+																});
+												
+																$(item).change(function(){
+																	
+																	var target = $(this);
+																	
+																	$.post(
+																		'".StockController::createUrl('AjaxUpdateQuantity')."',
+																		 {
+																		 	idStockItem: $(this).attr('id'),
+																			quantity:$(this).val()
+																		 }).success(
+																			 	function() 
+																			 		{ 
+																			 			$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000);
+																						$(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000);
+																					});
+																		
+																});
+													});	
 ");
 
 ?>
