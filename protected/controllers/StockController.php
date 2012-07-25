@@ -81,10 +81,13 @@ class StockController extends Controller
 			$model = StockItem::model()->findByPk($id);
 			$transaction = $model->dbConnection->beginTransaction();
 			try {
-				ProductItem::model()->deleteAllByAttributes(array(
+				if($model->stock->Id_movement_type == 1)
+				{
+					ProductItem::model()->deleteAllByAttributes(array(
 																	'Id_product'=>$model->Id_product,
 																	'Id_stock'=>$model->Id_stock,
-				));
+					));
+				}
 				$model->delete();
 				$transaction->commit();
 			} catch (Exception $e) {
@@ -109,15 +112,20 @@ class StockController extends Controller
 		{
 			$transaction = $stockItemInDB->dbConnection->beginTransaction();
 			try {
-				//elimino todos los product item
-				ProductItem::model()->deleteAllByAttributes(array(
-																	'Id_product'=>$stockItemInDB->Id_product,
-																	'Id_stock'=>$stockItemInDB->Id_stock,
-				));
-				//creo la cantidad necesaria
-				for($i=0;$i<$quantity;$i++)
+				
+				//solo si es movimiento de "Agregar"
+				if($stockItemInDB->stock->Id_movement_type == 1)
 				{
-					$this->createProductItem($stockItemInDB->Id_product, $stockItemInDB->Id_stock);
+					//elimino todos los product item
+					ProductItem::model()->deleteAllByAttributes(array(
+																		'Id_product'=>$stockItemInDB->Id_product,
+																		'Id_stock'=>$stockItemInDB->Id_stock,
+					));
+					//creo la cantidad necesaria
+					for($i=0;$i<$quantity;$i++)
+					{
+						$this->createProductItem($stockItemInDB->Id_product, $stockItemInDB->Id_stock);
+					}
 				}
 					
 				$stockItemInDB->attributes = array('quantity'=>(double) $quantity);
@@ -180,14 +188,15 @@ class StockController extends Controller
 				$stockItem = new StockItem();
 				$transaction = $stockItem->dbConnection->beginTransaction();
 				try {
-					
 					$stockItem->attributes = array('Id_stock'=>$idStock,
 																	'Id_product'=>$idProduct,
 																	'quantity'=>1,												
 					);
 					$stockItem->save();
 					
-					$this->createProductItem($idProduct, $idStock);					
+					//solo si es movimiento de "Agregar"
+					if($stockItem->stock->Id_movement_type == 1)
+						$this->createProductItem($idProduct, $idStock);				
 					
 					$transaction->commit();
 				} catch (Exception $e) {
