@@ -62,37 +62,6 @@ $('.link-popup').click(function(){
  	return false; 	
 });
 
-$('input:checkbox').live('click',function() {
-
-	var idProduct = $(this).attr('idProduct');
-	var idBudgetItem = $(this).attr('idBudgetItem');
-	var idBudgetItemParent = $(this).attr('idBudgetItemParent');
-	if($(this).is(':checked'))
-	{
-		selectSpecificRow('budget-item-children-grid', idBudgetItem);
-	
-		$('#displayChildrenPrices' ).toggle('blind',{},1000);
-	
-		$.fn.yiiGridView.update('price-list-item-child-grid', {
-				data: 'ProductSale[Id]=' + idProduct
-			});			
-	}
-	else
-	{
-		$.post(
-			'".BudgetController::createUrl('AjaxQuitItem')."',
-			{
-				IdBudgetItem: idBudgetItem
-			}).success(
-				function(data) 
-					{ 
-				$.fn.yiiGridView.update('budget-item-children-grid', {
- 					data: 'BudgetItem[Id_budget_item]=' + idBudgetItemParent
- 				});
-			});
-	}
-});
-
 ");
 ?>
 

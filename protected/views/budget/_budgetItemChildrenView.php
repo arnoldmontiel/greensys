@@ -99,7 +99,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				    'value'=>'$data->price',
 					'type'=>'raw',
 			        'htmlOptions'=>array('style'=>'text-align: right;'),
-					'footer'=>'<input id="children_total_price" class="txt-children-total-price" type="text" name="txt_purchase_order_price_shipping_total"  disabled="disabled" style="width:50px;text-align:right;">',
+					'footer'=>'<input id="children_total_price" class="txt-children-total-price" type="text" name="txt_purchase_order_price_shipping_total"  disabled="disabled" style="width:90px;text-align:right;">',
 				),
 				array(
 					'name'=>'quantity',
