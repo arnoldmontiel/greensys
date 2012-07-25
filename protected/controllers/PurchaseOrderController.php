@@ -56,12 +56,14 @@ class PurchaseOrderController extends Controller
 	 */
 	public function actionAssignProducts($id)
 	{
+		$model = $this->loadModel($id);
 		$modelProduct = new Product('search');
 		$modelProduct->unsetAttributes();
 		if(isset($_GET['Product']))
 		{
 			$modelProduct->attributes =$_GET['Product'];				
 		}
+		$modelProduct->Id_supplier=$model->Id_supplier;
 		$modelPurchaseOrderItem = new PurchaseOrderItem('search');
 		$modelPurchaseOrderItem->unsetAttributes();
 		if(isset($_GET['PurchaseOrderItem']))
@@ -71,7 +73,7 @@ class PurchaseOrderController extends Controller
 		$modelPurchaseOrderItem->Id_purchase_order = $id;
 		
 		$this->render('assignProducts',array(
-				'model'=>$this->loadModel($id),
+				'model'=>$model,
 				'modelProduct'=>$modelProduct,
 				'modelPurchaseOrderItem'=>$modelPurchaseOrderItem,
 		));
@@ -118,9 +120,10 @@ class PurchaseOrderController extends Controller
 	}
 	public function actionAjaxAddPurchaseOrderItem()
 	{
-		if(isset($_POST['budegetItems'])&&isset($_POST['Id_purchase_order'])){
+		if(isset($_POST['budegetItems'])&&isset($_POST['Id_purchase_order'])&&isset($_POST['Id_product'])){
 			$budgetItems = $_POST['budegetItems'];
 			$idPurchaseOrder = $_POST['Id_purchase_order'];
+			$idProduct = $_POST['Id_product'];
 
 			$purchaseOrder = PurchaseOrder::model()->findByPk($idPurchaseOrder);
 				
@@ -128,10 +131,10 @@ class PurchaseOrderController extends Controller
 			try {
 				foreach($budgetItems as $budgetItem)
 				{
-					$modelBudgetItem = BudgetItem::model()->findByPk($budgetItem['Id']);
-					$product = Product::model()->findByPk($modelBudgetItem->Id_product);
-					if(isset($product)&&isset($modelBudgetItem))
+					if(isset($budgetItem['Id']))
 					{
+						$modelBudgetItem = BudgetItem::model()->findByPk($budgetItem['Id']);
+						$product = Product::model()->findByPk($idProduct);
 						$criteria = new CDbCriteria;
 						$criteria->compare('t.Id_product', $product->Id);
 						$criteria->with[]='priceList';
@@ -173,8 +176,8 @@ class PurchaseOrderController extends Controller
 									$modelProductItem->Id_product = $purchaseOrderItem->Id_product;
 									$modelProductItem->Id_purchase_order_item =$purchaseOrderItem->Id; 
 									$modelProductItem->real_shipping_cost = $cost;
-									$modelProductItem->Id_budget_item = $modelBudgetItem->Id;
-									$modelProductItem->Id_project = $modelBudgetItem->budget->Id_project;
+									if(isset($modelBudgetItem))
+										$modelProductItem->Id_budget_item = $modelBudgetItem->Id;
 									$modelProductItem->save();								
 								}
 							}
@@ -189,13 +192,13 @@ class PurchaseOrderController extends Controller
 									$modelProductItem->Id_product = $purchasOrderItemInDb->Id_product;
 									$modelProductItem->Id_purchase_order_item =$purchasOrderItemInDb->Id; 
 									$modelProductItem->real_shipping_cost = $cost;
-									$modelProductItem->Id_budget_item = $modelBudgetItem->Id;
-									$modelProductItem->Id_project = $modelBudgetItem->budget->Id_project;
+									if(isset($modelBudgetItem))
+										$modelProductItem->Id_budget_item = $modelBudgetItem->Id;
 									$modelProductItem->save();								
 								}
 							}
 						}
-					}				
+					}
 				}
 				$transaction->commit();
 			} catch (Exception $e) {
@@ -394,6 +397,28 @@ class PurchaseOrderController extends Controller
 			
 			$modelBudgetItem = new BudgetItem;
 			$modelProduct = Product::model()->findByPk($_POST['Id_product']);
+			
+			$criteria = new CDbCriteria;
+			$criteria->compare('t.Id_product', $modelProduct->Id);
+			$criteria->with[]='priceList';
+			$criteria->compare('priceList.Id_price_list_type',1);//purchase
+			//$criteria->compare('priceList.validity',1);
+			$criteria->order = 't.Id_price_list DESC';
+			$priceListItemPurchase = PriceListItem::model()->find($criteria);
+				
+			$this->renderPartial('selectorBudget',array('modelProduct'=>$modelProduct,'modelBudgetItem'=>$modelBudgetItem,'modelPriceListItem'=>$priceListItemPurchase));
+		}
+	}
+	public function actionAjaxDinamicBudgetSelectorViewPopUp()
+	{
+		if(isset($_POST['Id_purchase_item']))
+		{
+			
+			$modelBudgetItem = new BudgetItem;
+			$modelBudgetItem->unsetAttributes();
+			
+			$modelPurchaseOrderItem = PurchaseOrderItem::model()->findByPk($_POST['Id_purchase_item']);
+			$modelProduct = Product::model()->findByPk($modelPurchaseOrderItem->Id_product);
 			
 			$criteria = new CDbCriteria;
 			$criteria->compare('t.Id_product', $modelProduct->Id);

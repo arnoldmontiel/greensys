@@ -4,7 +4,7 @@
 
 		$settings= new Settings();
 		$cu = $settings->getCurrencyShortDescription();
-
+			echo CHtml::hiddenField('Product[Id]',$modelProduct->Id,array('id'=>'Selector_Id_product'));
 			echo CHtml::openTag('div',array("class"=>"left"));
 			$this->widget('zii.widgets.CDetailView', array(
 					'data'=>$modelProduct,
@@ -50,10 +50,26 @@
 			echo CHtml::label('Check All', 'selectedAll',array('id'=>'chkAll'));
 			echo CHtml::checkBox('selectedAll',false);
 			echo CHtml::closeTag('div');
-				
-			$modelBudgetItem->Id_product = $_POST['Id_product'];
+
+			$modelBudgetItem->Id_product = $modelProduct->Id;
 			$this->widget('zii.widgets.CListView', array(
 					'dataProvider'=>$modelBudgetItem->searchByProductsPending(),
 					'itemView'=>'_selectorBudget',
-					'summaryText'=>''
+					'summaryText'=>'',
+					'emptyText'=>'',
 					)); 
+?>
+<div class="budget-selector-view-pop">
+	<div class="view-left">
+		<b><?php echo CHtml::encode('To stock'); ?>:</b>
+	</div>
+	<div class="view-end"style="float:right">
+		<b><?php echo CHtml::textField('BudgetItem[quantity]',1,array('id'=>'BudgetItem_quantity','class'=>'txt-quantity','style'=>'width:30px;text-align:right;')); ?></b>
+		<b><?php echo CHtml::checkBox('BudgetItem[Id]',false,array('id'=>'BudgetItem_Id','value'=>0,'class'=>'check-selector'));?></b>
+		<br />
+	</div>
+	
+</div>
+			
+			
+			

@@ -19,7 +19,7 @@
 		<br />
 	</div>
 	<div class="view-end">
-		<b><?php echo CHtml::textField('BudgetItem[quantity]',$data->quantity,array('id'=>'BudgetItem_quantity','class'=>'txt-quantity','style'=>'width:30px;text-align:right;')); ?></b>
+		<b><?php echo CHtml::textField('BudgetItem[quantity]',$data->quantity,array('id'=>'BudgetItem_quantity','class'=>'txt-quantity','style'=>'width:30px;text-align:right;','disabled'=>'disabled')); ?></b>
 		<b><?php echo CHtml::checkBox('BudgetItem[Id]',false,array('id'=>'BudgetItem_Id','value'=>$data->Id,'class'=>'check-selector'));?></b>
 		<br />
 	</div>

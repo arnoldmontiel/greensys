@@ -14,17 +14,17 @@ $this->menu=array(
 
 Yii::app()->clientScript->registerScript(__CLASS__.'#purchase_order_purchase', "
 $('#expand-products').click(function(){
-		if($('#expand-products').html()=='+')
+		if($('#expand-products').html()=='+ Pendings products')
 		{
-			$('#expand-products').html('-');
-			$('#product-grid').toggle('blind',{},1000);
-			$('#addAll').toggle('blind',{},1000);		
+			$('#expand-products').html('- Pendings products');
+			$('#product-selector').toggle('blind',{},1000);
+			//$('#addAll').toggle('blind',{},1000);		
 		}
 		else
 		{
-			$('#expand-products').html('+');
-			$('#product-grid').toggle('blind',{},1000);
-			$('#addAll').toggle('blind',{},1000);		
+			$('#expand-products').html('+ Pendings products');
+			$('#product-selector').toggle('blind',{},1000);
+			//$('#addAll').toggle('blind',{},1000);		
 		}
 })
 		
@@ -46,7 +46,7 @@ $('#addAll').click(
 		
 			$.post('".PurchaseOrderController::createUrl('AjaxAddFilteredProducts')."',
 				$.param($(
-			        '#product-grid .filters input,  #product-grid .filters select, '
+			        '#product-all-grid .filters input,  #product-all-grid .filters select, '
     		))+'&Id_purchase_order=".$model->Id."',
 				function(data){
 					$.fn.yiiGridView.update('purchase-order-item-grid');
@@ -58,32 +58,15 @@ $('#addAll').click(
 loadPage();
 function loadPage()
 {
-	$('#product-grid').attr('style','display: none;');
+	$('#product-selector').attr('style','display: none;');
 	bindObjects();
 }
-function bindObjects()
-		{
-$('.link-popup').click(
-	function()
-	{
-		$.post('".PurchaseOrderController::createUrl('product/AjaxDinamicViewPopUp')."',
-			{Id_product:$(this).attr('id')},
-			function(data)
-			{
-				$('#popup-place-holder').html(data);
-				$('#ViewProduct').dialog('open'); 
-			}
-		);
-		return false;
-	}
-);
-$('.budget-select-link-popup').click(
-	function()
+function openBudgetSelector(id)
 	{
 		jQuery('#waiting').dialog('open');
 		
 		$.post('".PurchaseOrderController::createUrl('AjaxDinamicBudgetSelectorPopUp')."',
-			{Id_product:$(this).attr('id')},
+			{Id_product:$.fn.yiiGridView.getSelection(id)},
 			function(data)
 			{
 				$('#select-budget-popup-place-holder').html(data);
@@ -111,6 +94,59 @@ $('.budget-select-link-popup').click(
 		
 				$('#SelectBudget').dialog('open'); 
 				jQuery('#waiting').dialog('close');
+			}
+		);
+		return false;
+	}
+function openBudgetSelectorView(id)
+	{
+		jQuery('#waiting').dialog('open');
+		
+		$.post('".PurchaseOrderController::createUrl('AjaxDinamicBudgetSelectorViewPopUp')."',
+			{Id_purchase_item:$.fn.yiiGridView.getSelection(id)},
+			function(data)
+			{
+				$('#select-budget-popup-place-holder-view').html(data);
+		
+				$('#selectedAll').change(function()
+				{
+					if($('#selectedAll').attr('checked'))
+					{
+						$('#select-budget-popup-place-holder-view').find('input.check-selector').attr('checked','checked');
+					}
+					else
+					{
+						$('#select-budget-popup-place-holder-view').find('input.check-selector').removeAttr('checked');
+					}
+				})
+				$('input.txt-quantity').keyup(function(){
+					validateNumber($(this));
+				});
+				$('input.txt-quantity').change(function(){
+					if($(this).val()==''){
+						$(this).val('0')
+					}
+				});
+		
+		
+				$('#SelectBudgetView').dialog('open'); 
+				jQuery('#waiting').dialog('close');
+			}
+		);
+		return false;
+	}
+		
+function bindObjects()
+		{
+$('.link-popup').click(
+	function()
+	{
+		$.post('".PurchaseOrderController::createUrl('product/AjaxDinamicViewPopUp')."',
+			{Id_product:$(this).attr('id')},
+			function(data)
+			{
+				$('#popup-place-holder').html(data);
+				$('#ViewProduct').dialog('open'); 
 			}
 		);
 		return false;
@@ -226,17 +262,9 @@ $this->widget('ext.processingDialog.processingDialog', array(
 	'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',
 		'attributes'=>array(
 		'Id',
-		array('label'=>$model->getAttributeLabel('Id_importer'),
+		array('label'=>$model->getAttributeLabel('Id_supplier'),
 				'type'=>'raw',
-				'value'=>$model->importer->contact->description
-		),
-		array('label'=>$model->getAttributeLabel('Id_shipping_parameter'),
-				'type'=>'raw',
-				'value'=>$model->shippingParameter->description
-		),
-		array('label'=>$model->getAttributeLabel('Id_shipping_type'),
-				'type'=>'raw',
-				'value'=>$model->shippingType->description
+				'value'=>$model->supplier->business_name
 		),
 	),
 )); ?>
@@ -251,22 +279,17 @@ $this->widget('ext.processingDialog.processingDialog', array(
 				'type'=>'raw',
 				'value'=>$model->purchaseOrderState->description
 		),
-		array('label'=>$model->getAttributeLabel('Id_supplier'),
-				'type'=>'raw',
-				'value'=>$model->supplier->business_name
-		),
 	),
 )); ?>
 </div>
 
 	<div class="gridTitle-decoration1" style="display: inline-block; width: 97%;height: 35px;">
 		<div id="product-title" class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
-			<?php echo CHtml::link('+','#',array('id'=>'expand-products'))?>
-			Pendings products
+			<?php echo CHtml::link('+ Pendings products','#',array('id'=>'expand-products'))?>
 			</div>
 		<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
 		<?php
-		echo CHtml::imageButton(
+		/*echo CHtml::imageButton(
                                 'images/add_all_blue.png',
                                 array(
                                 'title'=>'Add current filtered products',
@@ -274,90 +297,42 @@ $this->widget('ext.processingDialog.processingDialog', array(
                                 'id'=>'addAll',
                                 )
                                                          
-                            ); 
+                            );*/ 
 		?>
 
 		</div>
 	</div>
+	<div id="product-selector">
+	<?php	
+		$this->widget('zii.widgets.jui.CJuiTabs', array(
+		    'tabs'=>array(
+				'Products Pending' => array('content' => $this->renderPartial("_productFiltered",
+				array("modelProduct"=>$modelProduct),true)),
+		        'All Products' => array('content' => $this->renderPartial("_productAll",
+				array("modelProduct"=>$modelProduct),true)),
+		),
+		// additional javascript options for the tabs plugin
+		    'options'=>array(
+		        'collapsible'=>true,
+		),
+		));
+	?>	
+	</div>
 	
-
-	<?php		
-			
-	$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'product-grid',
-		'dataProvider'=>$modelProduct->searchPending(),
-		'filter'=>$modelProduct,
-		'summaryText'=>'',
-		'afterAjaxUpdate'=>'function(id, data){
-			bindObjects();
-		}',				
-		'selectionChanged'=>'js:function(id){
-			$.post(	"'.PurchaseOrderController::createUrl('AjaxAddPurchaseOrderItem').'",
-					{
-						Id_purchase_order:'.$model->Id.',
-						Id_product:$.fn.yiiGridView.getSelection("product-grid")
-					}).success(
-						function() 
-						{
-							markAddedRow("product-grid");
-							
-							$.fn.yiiGridView.update("purchase-order-item-grid", {
-							data: $(this).serialize()
-							});
-							
-							unselectRow("product-grid");		
-						})
-					.error(
-						function()
-						{
-							$(".messageError").animate({opacity: "show"},2000);
-							$(".messageError").animate({opacity: "hide"},2000);
-							unselectRow("product-grid");
-						});
-		}',
-		'columns'=>array(	
-				array(
-					'name'=>'code',
-				    'value'=>'CHtml::link($data->code,"#",array("id"=>$data->Id,"class"=>"link-popup"))',
-					'type'=>'raw'				 
-				),
-				array(
-		 			'name'=>'brand_description',
-					'type'=>'raw',
-					'value'=>'CHtml::link($data->brand->description,"#",array("id"=>$data->Id,"class"=>"budget-select-link-popup"))',
-				),
-				array(
-			 		'name'=>'category_description',
-					'value'=>'$data->category->description',
-				),
-				'description_customer',
-				'description_supplier',
-				array(
-					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok", "style"=>"display:none; float:left;", "width"=>"15px", "height"=>"15px"))',
-					'type'=>'raw',
-					'htmlOptions'=>array('width'=>20),
-				),
-			),
-		));		
-		?>
-
-
-
-		<p class="messageError"><?php
-		echo Yii::app()->lc->t('Product has already been added to selected Purchase Order');
-		?></p>
-
-		
-				<?php 
-
+<?php 
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'purchase-order-item-grid',
 	'dataProvider'=>$modelPurchaseOrderItem->search(),
- 	'filter'=>$modelPurchaseOrderItem,
-		'summaryText'=>'',
+	'selectionChanged'=>'js:function(id){
+		if($.fn.yiiGridView.getSelection(id)!="")
+			openBudgetSelectorView(id);
+		}',
+	'filter'=>$modelPurchaseOrderItem,
+	'summaryText'=>'',
 		'afterAjaxUpdate'=>'function(id, data){
 			bindObjects();
 			$.fn.yiiGridView.update("product-grid");
+			$.fn.yiiGridView.update("product-all-grid");
 		}',
 		'columns'=>array(
 				array(
@@ -394,6 +369,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 														"id"=>$data->Id,
 														"class"=>"txt-quantity",
 														"style"=>"width:50px;text-align:right;",
+														"disabled"=>"disabled",
 													)
 											)',
 	
@@ -461,7 +437,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		
 	$this->endWidget('zii.widgets.jui.CJuiDialog');
 
-	//Budget Selector View
+	//Budget Selector
 	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 			'id'=>'SelectBudget',
 			// additional javascript options for the dialog plugin
@@ -471,8 +447,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'modal'=>true,
 					'width'=> '700',
 					'buttons'=>	array(
-							'cerrar'=>'js:function(){jQuery("#SelectBudget").dialog( "close" );}',
-							'aplicar'=>'js:function(){
+							'Close'=>'js:function(){jQuery("#SelectBudget").dialog( "close" );}',
+							'Add'=>'js:function(){
+								var idProduct;
 								var items="";
 								var params = {};
 								$("#select-budget-popup-place-holder").find("div.budget-selector-view-pop").each(
@@ -489,7 +466,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 								)
 								var parameters = {budegetItems:params};
 								$.post(	"'.PurchaseOrderController::createUrl('AjaxAddPurchaseOrderItem').'",
-											"Id_purchase_order='.$model->Id.'"+"&"+$.param(parameters)
+											"Id_purchase_order='.$model->Id.'"+"&"+$.param(parameters)+"&Id_product="+$("#Selector_Id_product").val()
 								).success(
 									function() 
 									{
@@ -508,6 +485,24 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			),
 	));
 	echo CHtml::openTag('div',array('id'=>'select-budget-popup-place-holder','style'=>'position:relative;display:inline-block;width:97%'));
+	echo CHtml::closeTag('div');
+	
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+	//Budget Selector
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'SelectBudgetView',
+			// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Aplicated Budgets',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '700',
+					'buttons'=>	array(
+							'Close'=>'js:function(){jQuery("#SelectBudgetView").dialog( "close" );}',
+					),
+			),
+	));
+	echo CHtml::openTag('div',array('id'=>'select-budget-popup-place-holder-view','style'=>'position:relative;display:inline-block;width:97%'));
 	echo CHtml::closeTag('div');
 	
 	$this->endWidget('zii.widgets.jui.CJuiDialog');
