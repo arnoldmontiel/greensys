@@ -140,6 +140,7 @@ class PurchaseOrderController extends Controller
 					if(isset($priceListItemPurchase))
 					{
 						$purchasOrderItemInDb = PurchaseOrderItem::model()->findByAttributes(array('Id_purchase_order'=> $idPurchaseOrder,'Id_product'=>$product->Id));
+						$cost = 0;
 						if(!isset($purchasOrderItemInDb))
 						{
 							$purchaseOrderItem=new PurchaseOrderItem();
@@ -147,7 +148,6 @@ class PurchaseOrderController extends Controller
 							$shippingParameter = $purchaseOrder->shippingParameter;
 							$air = $shippingParameter->shippingParameterAir;
 							$maritime = $shippingParameter->shippingParameterMaritime;
-							$cost = 0;
 							if($purchaseOrder->Id_shipping_type == 1)
 							{
 								//$cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$product->length*$product->height*$product->width);
