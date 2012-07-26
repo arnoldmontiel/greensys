@@ -428,6 +428,17 @@ class BudgetController extends Controller
 	
 	}
 	
+	public function actionAjaxUnAssignStock()
+	{
+	
+		$idBudgetItem = isset($_POST['IdBudgetItem'])?$_POST['IdBudgetItem']:'';
+		$idProduct = isset($_POST['IdProduct'])?$_POST['IdProduct']:'';
+	
+		$modelProductItem = ProductItem::model()->findByAttributes(array('Id_product'=>$idProduct,'Id_budget_item'=>$idBudgetItem));
+		$modelProductItem->Id_budget_item = null;
+		$modelProductItem->save();
+	
+	}
 	
 	public function actionAjaxUpdateQuantity()
 	{
