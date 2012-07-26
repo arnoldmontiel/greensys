@@ -122,8 +122,7 @@ $('.btn-Assign-From-Stock').click(function(){
 			}).success(
 				function(data) 
 				{ 
-					$.fn.yiiGridView.update('budget-item-grid_' + idArea);
-					
+					updateGridViews();					
 				});
 });
 
