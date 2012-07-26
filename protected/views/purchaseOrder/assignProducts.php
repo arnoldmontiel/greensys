@@ -1,7 +1,8 @@
 <?php
 $this->breadcrumbs=array(
 	'Purchase Orders'=>array('index'),
-	$model->Id,
+	$model->code=>array('view','id'=>$model->Id),
+	'Assigning',
 );
 
 $this->menu=array(
@@ -250,7 +251,7 @@ $this->widget('ext.processingDialog.processingDialog', array(
 	'data'=>$model,
 	'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',
 		'attributes'=>array(
-		'Id',
+		'code',
 		array('label'=>$model->getAttributeLabel('Id_supplier'),
 				'type'=>'raw',
 				'value'=>$model->supplier->business_name

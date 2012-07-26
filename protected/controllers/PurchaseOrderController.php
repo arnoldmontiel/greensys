@@ -284,8 +284,8 @@ class PurchaseOrderController extends Controller
 		{
 			$model->attributes=$_POST['PurchaseOrder'];
 			$model->Id_purchase_order_state = 1;//nuevo
-			$importer = Importer::model()->findByPk($model->Id_importer);
-			$model->Id_shipping_parameter = $importer->shippingParameters[0]->Id;
+// 			$importer = Importer::model()->findByPk($model->Id_importer);
+// 			$model->Id_shipping_parameter = $importer->shippingParameters[0]->Id;
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->Id));
 		}

@@ -27,14 +27,18 @@ class PurchaseOrder extends CActiveRecord
 	public $price_total;
 	public $price_shipping_total;
 	public function beforeSave()
-	{
-		$modelSupplier = Supplier::model()->findByPk($this->Id_supplier);
-		$sub = strtoupper(substr($modelSupplier->business_name,0,2));
-		
-		$newId = PurchaseOrder::model()->countByAttributes(array('Id_supplier'=>$this->Id_supplier));
-		$newId = str_pad($newId, 4, "0", STR_PAD_LEFT);
-		
-		$model->code = $sub . $newId;
+	{ 
+		if ($this->isNewRecord)
+		{
+			$modelSupplier = Supplier::model()->findByPk($this->Id_supplier);
+			$sub = strtoupper(substr($modelSupplier->business_name,0,2));
+			
+			$newId = PurchaseOrder::model()->countByAttributes(array('Id_supplier'=>$this->Id_supplier));
+			$newId = $newId+1;
+			$newId = str_pad($newId, 4, "0", STR_PAD_LEFT);
+			
+			$this->code = $sub . $newId;				
+		}
 		return parent::beforeSave();
 	}
 	/**
@@ -63,7 +67,7 @@ class PurchaseOrder extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_supplier, Id_shipping_parameter, Id_purchase_order_state, Id_importer, Id_shipping_type', 'required'),
+			array('Id_supplier, Id_purchase_order_state', 'required'),
 			array('Id_supplier, Id_shipping_parameter, Id_purchase_order_state, Id_importer, Id_shipping_type', 'numerical', 'integerOnly'=>true),
 			array('code', 'length', 'max'=>45),				
 			array('date_creation', 'safe'),

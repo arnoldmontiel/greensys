@@ -18,26 +18,14 @@ $this->menu=array(
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		'Id',
+		'code',
 		array(
 				'name'=>'Id_supplier',
 				'value'=>'$data->supplier->business_name',
 		),
 		array(
-				'name'=>'Id_shipping_parameter',
-				'value'=>'$data->shippingParameter->description',
-		),
-		array(
 				'name'=>'Id_purchase_order_state',
 				'value'=>'$data->purchaseOrderState->description',
-		),
-		array(
-				'name'=>'Id_importer',
-				'value'=>'$data->importer->contact->description',
-		),
-		array(
-				'name'=>'Id_shipping_type',
-				'value'=>'$data->shippingType->description',
 		),
 		'date_creation',
 		array(

@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Purchase Orders'=>array('index'),
-	$model->Id=>array('view','id'=>$model->Id),
+	$model->code=>array('view','id'=>$model->Id),
 	'Update',
 );
 

@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Purchase Orders'=>array('index'),
-	$model->Id,
+	$model->code,
 );
 
 $this->menu=array(
@@ -70,7 +70,7 @@ function openBudgetSelectorView(id)
 	'data'=>$model,
 	'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',
 		'attributes'=>array(
-		'Id',
+		'code',
 		array('label'=>$model->getAttributeLabel('Id_supplier'),
 				'type'=>'raw',
 				'value'=>$model->supplier->business_name

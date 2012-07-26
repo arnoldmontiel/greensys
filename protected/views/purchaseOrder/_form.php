@@ -14,21 +14,6 @@
 		?>
 		<?php echo $form->error($model,'Id_supplier'); ?>
 	</div>
-	<div class="row">
-		<?php echo $form->labelEx($model,'Id_importer'); ?>
-		<?php echo $form->dropDownList($model, 'Id_importer', CHtml::listData(
-    			Importer::model()->findAll(), 'Id', 'contact.description')); 
-		?>
-		<?php echo $form->error($model,'Id_importer'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'Id_shipping_type'); ?>
-		<?php echo $form->dropDownList($model, 'Id_shipping_type', CHtml::listData(
-    			ShippingType::model()->findAll(), 'Id', 'description')); 
-		?>
-		<?php echo $form->error($model,'Id_shipping_type'); ?>
-	</div>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
