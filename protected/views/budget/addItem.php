@@ -14,6 +14,16 @@ $this->menu=array(
 );
 Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 
+function updateGridViews()
+{
+	$('div.grid-view').each(
+		function(index){
+			if($(this).attr('id').indexOf('budget-item-grid') != -1)
+				$.fn.yiiGridView.update($(this).attr('id'));
+		}
+	)
+}
+		
 
 $('.aareaTitle').click(function(){
 	var idArea = $(this).attr('idArea');	
@@ -259,9 +269,11 @@ $('.btn-View-Assign').click(function(){
 						'modal'=>true,
 						'width'=> '700',
 						'buttons'=>	array(
-								'cerrar'=>'js:function(){jQuery("#ViewProductChild").dialog( "close" );
-														$.fn.yiiGridView.update("budget-item-grid_" + $("#ViewProductChild").attr("area"));
-														}',
+								'cerrar'=>'js:function(){
+									jQuery("#ViewProductChild").dialog( "close" );
+									updateGridViews();
+									//$.fn.yiiGridView.update("budget-item-grid_" + $("#ViewProductChild").attr("area"));
+									}',
 	),
 	),
 	));

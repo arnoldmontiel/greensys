@@ -57,7 +57,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 														}).success(
 															function(data) 
 															{ 
-																$.fn.yiiGridView.update("budget-item-grid_" + idArea);
+																updateGridViews();
+																//$.fn.yiiGridView.update("budget-item-grid_" + idArea);
 																
 															}); 	
 														
