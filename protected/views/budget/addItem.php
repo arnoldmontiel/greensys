@@ -161,8 +161,8 @@ $('.btn-View-Assign').click(function(){
 								}).success(
 									function(data) 
 									{ 
-										$.fn.yiiGridView.update('budget-item-grid_' + idArea);
 										$('#ViewStockAssign').dialog('close');
+										updateGridViews();
 									});
 						return false;
 					});

@@ -78,6 +78,7 @@ $('.btn-View-Assign').click(function(){
 				function(data) 
 				{ 
 					$('#popup-stock-assign-place-holder').html(data);
+					$('.btn-un-assign-stock').attr('disabled','disabled');
 					$('#ViewStockAssign').dialog('open');
 					
 				});
