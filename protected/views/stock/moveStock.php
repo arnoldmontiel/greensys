@@ -12,7 +12,7 @@ $this->menu=array(
 	array('label'=>'Manage Stock', 'url'=>array('admin')),
 );
 Yii::app()->clientScript->registerScript(__CLASS__.'move-stock', "
-
+$('#product-grid').attr('style','display:none;');
 $('#stock-item-grid').find('input.txtQuantity').each(
 												function(index, item){
 		
@@ -64,12 +64,30 @@ $('#stock-item-grid').find('input.txtQuantity').each(
 <br>
 <div id="display">
 	 
-<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
+<div class="gridTitle-decoration1" style="display: inline-block; width: 97%;height: 35px;margin-bottom:10px">
 	<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
-		Select Products
+		<?php 		echo CHtml::link('+ Select Products',
+						'#',
+						array(	'id'=>'expand-products',
+								'onclick'=>'
+									jQuery("#product-grid").toggle("blind",{},1000);
+									if($(this).html()=="+ Select Products")
+									{
+										$(this).html("- Select Products");
+									}
+									else
+									{
+										$(this).html("+ Select Products");
+									}
+									return false;
+								'
+								)
+							)
+		?>
 		<?php echo CHtml::link( '(New Product)','#',array('onclick'=>'jQuery("#CreateProduct").dialog("open"); return false;'));?>
 		
 	</div>
+	
 </div>
 <?php		
 	$this->widget('zii.widgets.grid.CGridView', array(
@@ -135,7 +153,7 @@ $('#stock-item-grid').find('input.txtQuantity').each(
 		echo Yii::app()->lc->t('Product has already been added');
 		?></p>
 
-	<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
+	<div class="gridTitle-decoration1" style="display: inline-block; width: 97%;height: 35px;">
 		<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
 			Moved Stock
 		</div>
