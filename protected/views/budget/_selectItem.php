@@ -1,12 +1,7 @@
 
 <div id="display">
 
-<?php
-echo $this->renderPartial('_budgetItem', array('idArea'=>$idArea,
-											   'modelBudgetItem'=>$modelBudgetItem,
-											   'canEdit'=>true,));
-?>
-<br>
+<div id="selectProducts_<?php echo $idArea; ?>" style="display: none;">
  <?php	
 $this->widget('zii.widgets.jui.CJuiTabs', array(
     'tabs'=>array(
@@ -36,4 +31,11 @@ $this->widget('zii.widgets.jui.CJuiTabs', array(
 ));
  ?>
 <br>
+</div>
+<?php
+echo $this->renderPartial('_budgetItem', array('idArea'=>$idArea,
+											   'modelBudgetItem'=>$modelBudgetItem,
+											   'canEdit'=>true,));
+?>
+ <br>
 </div>

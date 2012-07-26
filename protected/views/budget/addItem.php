@@ -15,7 +15,7 @@ $this->menu=array(
 Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 
 
-$('.areaTitle').click(function(){
+$('.aareaTitle').click(function(){
 	var idArea = $(this).attr('idArea');	
 	
 	if($( '#itemArea_' + idArea ).is(':visible')){
@@ -174,9 +174,58 @@ $('.btn-View-Assign').click(function(){
 	{ 
 	?>
 		<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
-			<div class="areaTitle" idArea="<?php echo $item->Id_area; ?>" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
-				<span id="expandCollapse_<?php echo $item->Id_area; ?>">+</span>&nbsp;<?php echo $item->area->description;?>
-			</div>
+			<div class="gridTitle1" idArea="<?php echo $item->Id_area; ?>" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
+				<?php 
+					echo CHtml::link('+ '.$item->area->description,
+						'#',
+						array(	'description'=>$item->area->description,
+								'state'=>'+',
+								'id'=>'expand-products',
+								'onclick'=>'
+									jQuery("#itemArea_'.$item->Id_area.'").toggle("blind",{},1000);
+									jQuery("#expand-products'.$item->Id_area.'").toggle("blind",{},1000);
+									if($(this).attr("state")=="+")
+									{
+										$(this).attr("state","-");
+										$(this).html("- "+$(this).attr("description"));
+									}
+									else
+									{
+										if(jQuery("#expand-products'.$item->Id_area.'").html()=="- Products"){
+											jQuery("#expand-products'.$item->Id_area.'").html("+ Products");
+											jQuery("#selectProducts_'.$item->Id_area.'").toggle("blind",{},1000);
+										}
+										$(this).attr("state","+");
+										$(this).html("+ "+$(this).attr("description"));
+									}
+									return false;
+								'
+								)
+							)
+				?><div style="float: right;margin-right:400px">
+				<?php 
+					echo CHtml::link('+ Products',
+						'#',
+						array(	'description'=>$item->area->description,
+								'state'=>'+',
+								'style'=>'display:none',
+								'id'=>'expand-products'.$item->Id_area,
+								'onclick'=>'
+									jQuery("#selectProducts_'.$item->Id_area.'").toggle("blind",{},1000);
+									if($(this).html()=="+ Products")
+									{
+										$(this).html("- Products");
+									}
+									else
+									{
+										$(this).html("+ Products");
+									}
+									return false;
+								'
+								)
+							)
+				?></div>
+					</div>
 		</div>
 		<br>&nbsp;
 		<div id="itemArea_<?php echo $item->Id_area; ?>" style="display: none">
