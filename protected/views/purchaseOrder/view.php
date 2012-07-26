@@ -22,17 +22,9 @@ $this->menu=array(
 	'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',
 		'attributes'=>array(
 		'Id',
-		array('label'=>$model->getAttributeLabel('Id_importer'),
+		array('label'=>$model->getAttributeLabel('Id_supplier'),
 				'type'=>'raw',
-				'value'=>$model->importer->contact->description
-		),
-		array('label'=>$model->getAttributeLabel('Id_shipping_parameter'),
-				'type'=>'raw',
-				'value'=>$model->shippingParameter->description
-		),
-		array('label'=>$model->getAttributeLabel('Id_shipping_type'),
-				'type'=>'raw',
-				'value'=>$model->shippingType->description
+				'value'=>$model->supplier->business_name
 		),
 	),
 )); ?>
@@ -46,10 +38,6 @@ $this->menu=array(
 		array('label'=>$model->getAttributeLabel('Id_purchase_order_state'),
 				'type'=>'raw',
 				'value'=>$model->purchaseOrderState->description
-		),
-		array('label'=>$model->getAttributeLabel('Id_supplier'),
-				'type'=>'raw',
-				'value'=>$model->supplier->business_name
 		),
 	),
 )); ?>

@@ -263,12 +263,34 @@ class BudgetItem extends CActiveRecord
 		$criteria->compare('quantity',$this->quantity);
 	
 		$criteria->addCondition('t.version_number in (SELECT MAX(version_number) FROM budget WHERE budget.Id = t.Id_budget)');
-		$criteria->addCondition('t.Id not in (select pi.Id_budget_item from product_item pi where pi.Id_product=t.Id_product)');
-		
-	
-	
+		$criteria->addCondition('t.Id not in (select pi.Id_budget_item from product_item pi where pi.Id_product=t.Id_product and pi.Id_budget_item is not NULL )');
+
 		return new CActiveDataProvider($this, array(
 				'criteria'=>$criteria,
 		));
 	}
+	public function searchByPurchaseItemsAssigned($Id_purchase_item)
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('t.Id',$this->Id);
+		$criteria->compare('t.Id_product',$this->Id_product);
+		$criteria->compare('t.Id_area',$this->Id_area);
+		$criteria->compare('t.Id_budget',$this->Id_budget);
+		$criteria->compare('t.version_number',$this->version_number);
+		$criteria->compare('t.Id_budget_item',$this->Id_budget_item);
+		$criteria->compare('t.price',$this->price,true);
+		$criteria->compare('t.Id_price_list',$this->Id_price_list);
+		$criteria->compare('t.Id_shipping_type',$this->Id_shipping_type);
+		$criteria->compare('quantity',$this->quantity);
+		$criteria->compare('productItems.Id_purchase_order_item',$Id_purchase_item);
+		$criteria->join='LEFT OUTER JOIN `product_item` `productItems` ON (`productItems`.`Id_budget_item`=`t`.`Id`) ';
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+		));
+	}
+	
 }

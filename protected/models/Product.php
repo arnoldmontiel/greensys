@@ -538,7 +538,7 @@ class Product extends CActiveRecord
 		
 		$criteria->join='INNER JOIN `budget_item` `budgetItems` ON (`budgetItems`.`Id_product`=`t`.`Id`)';
 		
-		$criteria->addCondition('budgetItems.Id not in (select pi.Id_budget_item from product_item pi where pi.Id_product=t.Id)');
+		$criteria->addCondition('budgetItems.Id not in (select pi.Id_budget_item from product_item pi where pi.Id_product=t.Id and pi.Id_budget_item is not NULL)');
 		
 		
 	

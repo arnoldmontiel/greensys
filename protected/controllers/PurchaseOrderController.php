@@ -396,6 +396,8 @@ class PurchaseOrderController extends Controller
 		{
 			
 			$modelBudgetItem = new BudgetItem;
+			$modelBudgetItem->unsetAttributes();
+				
 			$modelProduct = Product::model()->findByPk($_POST['Id_product']);
 			
 			$criteria = new CDbCriteria;
@@ -428,7 +430,7 @@ class PurchaseOrderController extends Controller
 			$criteria->order = 't.Id_price_list DESC';
 			$priceListItemPurchase = PriceListItem::model()->find($criteria);
 				
-			$this->renderPartial('selectorBudget',array('modelProduct'=>$modelProduct,'modelBudgetItem'=>$modelBudgetItem,'modelPriceListItem'=>$priceListItemPurchase));
+			$this->renderPartial('selectorBudget',array('modelProduct'=>$modelProduct,'modelBudgetItem'=>$modelBudgetItem,'modelPriceListItem'=>$priceListItemPurchase,'modelPurchaseOrderItem'=>$modelPurchaseOrderItem));
 		}
 	}
 }
