@@ -95,6 +95,27 @@ $('input:checkbox').live('click',function() {
 			});
 	}
 });
+
+$('.btn-Assign-From-Stock').click(function(){
+	if(!confirm('Are you sure you want to assign from stock?')) 
+	{			
+		return false;
+	}
+	var idProduct = $(this).attr('idProduct');
+	var idBudgetItem = $(this).attr('idBudgetItem');
+	var idArea = $(this).attr('idArea');
+	$.post(
+			'".BudgetController::createUrl('AjaxAssignFromStock')."',
+			{
+				IdProduct: idProduct,																 	
+				IdBudgetItem: idBudgetItem
+			}).success(
+				function(data) 
+				{ 
+					$.fn.yiiGridView.update('budget-item-grid_' + idArea);
+					
+				});
+});
 ");
 
 ?>

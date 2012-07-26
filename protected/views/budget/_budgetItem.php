@@ -2,7 +2,6 @@
 <div id="display">
 
 <?php 
-
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'budget-item-grid_'.$idArea,
 	'dataProvider'=>$modelBudgetItem->search(),
@@ -34,6 +33,33 @@ $this->widget('zii.widgets.grid.CGridView', array(
 													 	});
 																
 													 	return false; 	
+														
+													});
+												}
+										);
+				$("#budget-item-grid_'.$idArea.'").find(".btn-Assign-From-Stock").each(
+												function(index, item){
+												
+													$(item).click(function(){
+														if(!confirm("Are you sure you want to assign from stock?")) 
+														{			
+															return false;
+														}	
+														var idProduct = $(this).attr("idProduct");
+														var idBudgetItem = $(this).attr("idBudgetItem");
+														var idArea = $(this).attr("idArea");
+	
+														$.post(
+														"'.BudgetController::createUrl('AjaxAssignFromStock').'",
+														{
+															IdProduct: idProduct,																 	
+															IdBudgetItem: idBudgetItem
+														}).success(
+															function(data) 
+															{ 
+																$.fn.yiiGridView.update("budget-item-grid_" + idArea);
+																
+															}); 	
 														
 													});
 												}
@@ -70,6 +96,27 @@ $this->widget('zii.widgets.grid.CGridView', array(
 
 				),
 				array(
+ 					'name'=>'product_supplier_name',
+				    'value'=>'$data->product->stockCount',
+				),
+				array(
+					'name'=>'product_supplier_name',
+				    'value'=>'$data->hasStockAssigned?
+				    		 CHtml::button("View Stock Assign",
+				    					array("class"=>"btn-View-Assign",
+				    							"idBudgetItem"=>$data->Id,
+				    							"idProduct"=>$data->Id_product,
+				    							"idArea"=>$data->Id_area,))
+				    		: 
+				    		 CHtml::button(($data->product->stockCount)>0?"Assign from stock":"No Stock",
+				    					array("class"=>"btn-Assign-From-Stock",
+				    							"idBudgetItem"=>$data->Id,
+				    							"idProduct"=>$data->Id_product,
+				    							"idArea"=>$data->Id_area,
+				    							"disabled"=>($data->product->stockCount > 0)?"":"disabled", ))',
+					'type'=>'raw'				 
+				),
+				array(
  					'name'=>'price',
 				    'value'=>'$data->totalPrice',
 					'type'=>'raw',
@@ -78,12 +125,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				array(
 					'class'=>'CButtonColumn',
 					'template'=>($canEdit)?'{delete}':'',
+					'deleteConfirmation'=>"js:'Are you sure you want to delete this item?'",
 					'buttons'=>array
 					(
 					        'delete' => array
 							(
 					            'url'=>'Yii::app()->createUrl("budget/AjaxDeleteBudgetItem", array("id"=>$data->Id))',
-							),
+							),							
 					),
 				),
 			),

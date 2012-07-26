@@ -391,6 +391,29 @@ class BudgetController extends Controller
 		}
 	}
 	
+	public function actionAjaxAssignFromStock()
+	{
+	
+		$idBudgetItem = isset($_POST['IdBudgetItem'])?$_POST['IdBudgetItem']:'';
+		$idProduct = isset($_POST['IdProduct'])?$_POST['IdProduct']:'';
+		
+		if(!empty($idProduct)&&!empty($idBudgetItem))
+		{
+			$modelProductItem = ProductItem::model()->findByAttributes(array(
+																		'Id_product'=>$idProduct,
+																		'Id_budget_item'=>null,
+																		'Id_purchase_order_item'=>null,
+																		));
+			if(isset($modelProductItem))
+			{
+				$modelProductItem->Id_budget_item = $idBudgetItem;
+				$modelProductItem->save();
+			}
+
+		}
+
+	}
+	
 	public function actionAjaxUpdateQuantity()
 	{
 		$idBudgetItem = isset($_POST['IdBudgetItem'])?$_POST['IdBudgetItem']:'';

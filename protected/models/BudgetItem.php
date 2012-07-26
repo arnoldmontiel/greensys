@@ -135,6 +135,11 @@ class BudgetItem extends CActiveRecord
 		return $count;
 	}
 	
+	public function getHasStockAssigned()
+	{
+		return ProductItem::model()->countByAttributes(array('Id_product'=>$this->Id_product,'Id_budget_item'=>$this->Id)) > 0;
+	}
+	
 	public function getChildrenTotalPrice()
 	{
 		$criteria=new CDbCriteria;

@@ -182,6 +182,14 @@ class Product extends CActiveRecord
 	{
 		return $this->description_customer . ' - ' . $this->code;
 	}
+	
+	public function getStockCount()
+	{
+		return ProductItem::model()->countByAttributes(array('Id_product'=>$this->Id,
+												'Id_budget_item'=>null,
+												'Id_purchase_order_item'=>null));		
+	}
+	
 	public function getVolume()
 	{
 		$width = $this->width;
