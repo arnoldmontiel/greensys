@@ -143,12 +143,37 @@ $('.btn-View-Assign').click(function(){
 				function(data) 
 				{ 
 					$('#popup-stock-assign-place-holder').html(data);
+					$('.btn-un-assign-stock').click(function(){
+						if(!confirm('Are you sure you want to un assign from stock?')) 
+						{			
+							return false;
+						}
+						
+						var idProduct = $(this).attr('idProduct');
+						var idBudgetItem = $(this).attr('idBudgetItem');	
+						var idArea = $('#ViewStockAssign').attr('area');
+						
+						$.post(
+								'".BudgetController::createUrl('AjaxUnAssignStock')."',
+								{
+									IdProduct: idProduct,																 	
+									IdBudgetItem: idBudgetItem
+								}).success(
+									function(data) 
+									{ 
+										$.fn.yiiGridView.update('budget-item-grid_' + idArea);
+										$('#ViewStockAssign').dialog('close');
+									});
+						return false;
+					});
 					$('#ViewStockAssign').dialog('open');
-					
 				});
 			
  	return false; 	
 });
+
+
+										
 
 ");
 

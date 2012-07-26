@@ -1,7 +1,6 @@
 <?php
 
-Yii::app()->clientScript->registerScript(__CLASS__.'view-assign', "
-
+Yii::app()->clientScript->registerScript(__CLASS__.'view-assign-', "
 
 ");
 ?>
@@ -18,7 +17,7 @@ $this->widget('zii.widgets.CDetailView', array(
 		'description',
 	),
 ));
-//CHtml::button("UnAssing from stock",array('id'))
+echo CHtml::button("Un Assing from stock",array('class'=>'btn-un-assign-stock','idProduct'=>$model->Id_product, 'idBudgetItem'=>$model->Id_budget_item));
 }
 else{
 
