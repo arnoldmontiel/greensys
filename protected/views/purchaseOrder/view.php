@@ -17,6 +17,22 @@ $this->widget('ext.processingDialog.processingDialog', array(
 	'idDialog'=>'waiting',
 ));
 Yii::app()->clientScript->registerScript(__CLASS__.'#purchase_order_purchase_view', "
+$('.link-popup-product').click(
+	function()
+	{
+		jQuery('#waiting').dialog('open');
+		$.post('".PurchaseOrderController::createUrl('product/AjaxDinamicViewPopUp')."',
+			{Id_product:$(this).attr('id')},
+			function(data)
+			{
+				$('#popup-place-holder').html(data);
+				$('#ViewProduct').dialog('open'); 
+				jQuery('#waiting').dialog('close');
+			}
+		);
+		return false;
+	}
+);
 		
 function openBudgetSelectorView(id)
 	{
@@ -184,6 +200,24 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			),
 	));
 	echo CHtml::openTag('div',array('id'=>'select-budget-popup-place-holder-view','style'=>'position:relative;display:inline-block;width:97%'));
+	echo CHtml::closeTag('div');
+	
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+	//Product View
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'ViewProduct',
+			// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Product',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '700',
+					'buttons'=>	array(
+							'cerrar'=>'js:function(){jQuery("#ViewProduct").dialog( "close" );}',
+					),
+			),
+	));
+	echo CHtml::openTag('div',array('id'=>'popup-place-holder','style'=>'position:relative;display:inline-block;width:97%'));
 	echo CHtml::closeTag('div');
 	
 	$this->endWidget('zii.widgets.jui.CJuiDialog');

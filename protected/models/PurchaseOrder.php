@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'purchase_order':
  * @property integer $Id
+ * @property integer $code
  * @property integer $Id_supplier
  * @property integer $Id_shipping_parameter
  * @property string $date_creation
@@ -25,6 +26,17 @@ class PurchaseOrder extends CActiveRecord
 {
 	public $price_total;
 	public $price_shipping_total;
+	public function beforeSave()
+	{
+		$modelSupplier = Supplier::model()->findByPk($this->Id_supplier);
+		$sub = strtoupper(substr($modelSupplier->business_name,0,2));
+		
+		$newId = PurchaseOrder::model()->countByAttributes(array('Id_supplier'=>$this->Id_supplier));
+		$newId = str_pad($newId, 4, "0", STR_PAD_LEFT);
+		
+		$model->code = $sub . $newId;
+		return parent::beforeSave();
+	}
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -53,10 +65,11 @@ class PurchaseOrder extends CActiveRecord
 		return array(
 			array('Id_supplier, Id_shipping_parameter, Id_purchase_order_state, Id_importer, Id_shipping_type', 'required'),
 			array('Id_supplier, Id_shipping_parameter, Id_purchase_order_state, Id_importer, Id_shipping_type', 'numerical', 'integerOnly'=>true),
+			array('code', 'length', 'max'=>45),				
 			array('date_creation', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_supplier, Id_shipping_parameter, date_creation, Id_purchase_order_state, Id_importer, Id_shipping_type', 'safe', 'on'=>'search'),
+			array('Id, code, Id_supplier, Id_shipping_parameter, date_creation, Id_purchase_order_state, Id_importer, Id_shipping_type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -84,6 +97,7 @@ class PurchaseOrder extends CActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
+			'code' => 'Code',
 			'Id_supplier' => 'Supplier',
 			'Id_shipping_parameter' => 'Shipping Parameter',
 			'date_creation' => 'Creation',
@@ -105,6 +119,7 @@ class PurchaseOrder extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('Id',$this->Id);
+		$criteria->compare('code',$this->code);
 		$criteria->compare('Id_supplier',$this->Id_supplier);
 		$criteria->compare('Id_shipping_parameter',$this->Id_shipping_parameter);
 		$criteria->compare('date_creation',$this->date_creation,true);
