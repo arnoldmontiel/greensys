@@ -116,6 +116,30 @@ $('.btn-Assign-From-Stock').click(function(){
 					
 				});
 });
+
+$('.btn-View-Assign').click(function(){
+	var idProduct = $(this).attr('idProduct');
+	var idBudgetItem = $(this).attr('idBudgetItem');
+	var idArea = $(this).attr('idArea');
+	
+	$('#ViewStockAssign').attr('area',idArea);	
+
+	$.post(
+			'".BudgetController::createUrl('AjaxViewAssign')."',
+			{
+				IdProduct: idProduct,																 	
+				IdBudgetItem: idBudgetItem
+			}).success(
+				function(data) 
+				{ 
+					$('#popup-stock-assign-place-holder').html(data);
+					$('#ViewStockAssign').dialog('open');
+					
+				});
+			
+ 	return false; 	
+});
+
 ");
 
 ?>
@@ -176,7 +200,7 @@ $('.btn-Assign-From-Stock').click(function(){
 
 <?php				
 
-//Product View Childe
+//Product View Child
 	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 				'id'=>'ViewProductChild',
 	// additional javascript options for the dialog plugin
@@ -192,7 +216,7 @@ $('.btn-Assign-From-Stock').click(function(){
 	),
 	),
 	));
-	echo CHtml::openTag('div',array('id'=>'popup-place-holder','style'=>'position:relative;display:inline-block;width:97%'));
+	echo CHtml::openTag('div',array('id'=>'popup-child-view-place-holder','style'=>'position:relative;display:inline-block;width:97%'));
 	
 	$modelBudgetItem = new BudgetItem('search');
 	$modelBudgetItem->unsetAttributes();  // clear any default values
@@ -205,6 +229,27 @@ $('.btn-Assign-From-Stock').click(function(){
 																		   'priceListItemSale'=>$priceListItemSale,
 	));
 	
+	echo CHtml::closeTag('div');
+	
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+
+//View Stock Assign
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+					'id'=>'ViewStockAssign',
+	// additional javascript options for the dialog plugin
+					'options'=>array(
+							'title'=>'Assign',
+							'autoOpen'=>false,
+							'modal'=>true,
+							'width'=> '700',
+							'buttons'=>	array(
+									'cerrar'=>'js:function(){jQuery("#ViewStockAssign").dialog( "close" );
+															//$.fn.yiiGridView.update("budget-item-grid_" + $("#ViewStockAssign").attr("area"));
+															}',
+	),
+	),
+	));
+	echo CHtml::openTag('div',array('id'=>'popup-stock-assign-place-holder','style'=>'position:relative;display:inline-block;width:97%'));	
 	echo CHtml::closeTag('div');
 	
 	$this->endWidget('zii.widgets.jui.CJuiDialog');

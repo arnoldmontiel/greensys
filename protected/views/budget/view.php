@@ -62,6 +62,29 @@ $('.link-popup').click(function(){
  	return false; 	
 });
 
+$('.btn-View-Assign').click(function(){
+	var idProduct = $(this).attr('idProduct');
+	var idBudgetItem = $(this).attr('idBudgetItem');
+	var idArea = $(this).attr('idArea');
+	
+	$('#ViewStockAssign').attr('area',idArea);	
+
+	$.post(
+			'".BudgetController::createUrl('AjaxViewAssign')."',
+			{
+				IdProduct: idProduct,																 	
+				IdBudgetItem: idBudgetItem
+			}).success(
+				function(data) 
+				{ 
+					$('#popup-stock-assign-place-holder').html(data);
+					$('#ViewStockAssign').dialog('open');
+					
+				});
+			
+ 	return false; 	
+});
+
 ");
 ?>
 
@@ -188,5 +211,26 @@ $this->endWidget('zii.widgets.jui.CJuiDialog');
 	
 	echo CHtml::closeTag('div');
 		
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+	
+//View Stock Assign
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+						'id'=>'ViewStockAssign',
+	// additional javascript options for the dialog plugin
+						'options'=>array(
+								'title'=>'Assign',
+								'autoOpen'=>false,
+								'modal'=>true,
+								'width'=> '700',
+								'buttons'=>	array(
+										'cerrar'=>'js:function(){jQuery("#ViewStockAssign").dialog( "close" );
+																//$.fn.yiiGridView.update("budget-item-grid_" + $("#ViewStockAssign").attr("area"));
+																}',
+	),
+	),
+	));
+	echo CHtml::openTag('div',array('id'=>'popup-stock-assign-place-holder','style'=>'position:relative;display:inline-block;width:97%'));
+	echo CHtml::closeTag('div');
+	
 	$this->endWidget('zii.widgets.jui.CJuiDialog');
 ?>

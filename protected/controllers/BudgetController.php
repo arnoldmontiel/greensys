@@ -414,6 +414,21 @@ class BudgetController extends Controller
 
 	}
 	
+	public function actionAjaxViewAssign()
+	{
+	
+		$idBudgetItem = isset($_POST['IdBudgetItem'])?$_POST['IdBudgetItem']:'';
+		$idProduct = isset($_POST['IdProduct'])?$_POST['IdProduct']:'';
+		
+		$modelProductItem = ProductItem::model()->findByAttributes(array('Id_product'=>$idProduct,'Id_budget_item'=>$idBudgetItem));
+		
+		echo $this->renderPartial('_viewAssign',array(
+					'model'=>$modelProductItem,
+		));
+	
+	}
+	
+	
 	public function actionAjaxUpdateQuantity()
 	{
 		$idBudgetItem = isset($_POST['IdBudgetItem'])?$_POST['IdBudgetItem']:'';

@@ -64,6 +64,32 @@ $this->widget('zii.widgets.grid.CGridView', array(
 													});
 												}
 										);
+				$("#budget-item-grid_'.$idArea.'").find(".btn-View-Assign").each(
+												function(index, item){
+												
+													$(item).click(function(){
+														var idProduct = $(this).attr("idProduct");
+														var idBudgetItem = $(this).attr("idBudgetItem");
+														var idArea = $(this).attr("idArea");
+														
+														$("#ViewStockAssign").attr("area",idArea);	
+													
+														$.post(
+																"'.BudgetController::createUrl('AjaxViewAssign').'",
+																{
+																	IdProduct: idProduct,																 	
+																	IdBudgetItem: idBudgetItem
+																}).success(
+																	function(data) 
+																	{ 
+																		$("#popup-stock-assign-place-holder").html(data);
+																		$("#ViewStockAssign").dialog("open");
+																		
+																	});
+														
+													});
+												}
+										);
  		}',
 	'columns'=>array(
 				array(
@@ -96,12 +122,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 
 				),
 				array(
- 					'name'=>'product_supplier_name',
-				    'value'=>'$data->product->stockCount',
-				),
-				array(
-					'name'=>'product_supplier_name',
-				    'value'=>'$data->hasStockAssigned?
+					
+				    'value'=>($canEdit)?'$data->hasStockAssigned?
 				    		 CHtml::button("View Stock Assign",
 				    					array("class"=>"btn-View-Assign",
 				    							"idBudgetItem"=>$data->Id,
@@ -113,7 +135,22 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				    							"idBudgetItem"=>$data->Id,
 				    							"idProduct"=>$data->Id_product,
 				    							"idArea"=>$data->Id_area,
-				    							"disabled"=>($data->product->stockCount > 0)?"":"disabled", ))',
+				    							"disabled"=>($data->product->stockCount > 0)?"":"disabled", ))'
+				    		:'
+							$data->hasStockAssigned?
+							CHtml::button("View Stock Assign",
+							array("class"=>"btn-View-Assign",
+				    							"idBudgetItem"=>$data->Id,
+				    							"idProduct"=>$data->Id_product,
+				    							"idArea"=>$data->Id_area,))
+							:
+							CHtml::button(($data->product->stockCount)>0?"Assign from stock":"No Stock",
+							array("class"=>"btn-Assign-From-Stock",
+				    							"idBudgetItem"=>$data->Id,
+				    							"idProduct"=>$data->Id_product,
+				    							"idArea"=>$data->Id_area,
+				    							"disabled"=>"disabled", ))'
+				    		,
 					'type'=>'raw'				 
 				),
 				array(
