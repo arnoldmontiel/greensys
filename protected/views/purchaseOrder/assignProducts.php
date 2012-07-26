@@ -108,17 +108,6 @@ function openBudgetSelectorView(id)
 			{
 				$('#select-budget-popup-place-holder-view').html(data);
 		
-				$('#selectedAll').change(function()
-				{
-					if($('#selectedAll').attr('checked'))
-					{
-						$('#select-budget-popup-place-holder-view').find('input.check-selector').attr('checked','checked');
-					}
-					else
-					{
-						$('#select-budget-popup-place-holder-view').find('input.check-selector').removeAttr('checked');
-					}
-				})
 				$('input.txt-quantity').keyup(function(){
 					validateNumber($(this));
 				});

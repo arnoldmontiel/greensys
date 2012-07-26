@@ -12,6 +12,39 @@ $this->menu=array(
 	array('label'=>'Manage PurchaseOrder', 'url'=>array('admin')),
 	array('label'=>'Assign Products', 'url'=>array('assignProducts', 'id'=>$model->Id)),
 );
+$this->widget('ext.processingDialog.processingDialog', array(
+	'buttons'=>array('none'),
+	'idDialog'=>'waiting',
+));
+Yii::app()->clientScript->registerScript(__CLASS__.'#purchase_order_purchase_view', "
+		
+function openBudgetSelectorView(id)
+	{
+		jQuery('#waiting').dialog('open');
+		
+		$.post('".PurchaseOrderController::createUrl('AjaxDinamicBudgetSelectorViewPopUp')."',
+			{Id_purchase_item:$.fn.yiiGridView.getSelection(id)},
+			function(data)
+			{
+				$('#select-budget-popup-place-holder-view').html(data);
+		
+				$('input.txt-quantity').keyup(function(){
+					validateNumber($(this));
+				});
+				$('input.txt-quantity').change(function(){
+					if($(this).val()==''){
+						$(this).val('0')
+					}
+				});
+		
+		
+				$('#SelectBudgetView').dialog('open'); 
+				jQuery('#waiting').dialog('close');
+			}
+		);
+		return false;
+	}
+");
 ?>
 
 <h1>View PurchaseOrder</h1>
@@ -40,19 +73,21 @@ $this->menu=array(
 				'value'=>$model->purchaseOrderState->description
 		),
 	),
-)); ?>
+)); 
+?>
 </div>
-				<?php 
+<?php 
 
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'purchase-order-item-grid',
 	'dataProvider'=>$modelPurchaseOrderItem->search(),
  	'filter'=>$modelPurchaseOrderItem,
 	'summaryText'=>'',
-		'afterAjaxUpdate'=>'function(id, data){
-			bindObjects();
-		}',
-		'columns'=>array(
+	'selectionChanged'=>'js:function(id){
+		if($.fn.yiiGridView.getSelection(id)!="")
+			openBudgetSelectorView(id);
+	}',
+	'columns'=>array(
 				array(
  				            'name'=>'product_code',
 				            'value'=>'CHtml::link($data->product->code,"#",array("id"=>$data->product->Id,"class"=>"link-popup-product"))',
@@ -133,5 +168,24 @@ $this->widget('zii.widgets.grid.CGridView', array(
 						'footerHtmlOptions'=>array("style"=>"text-align:right;"),
 				),
 			),
-)); ?>
+)); 
+	//Budget Selector
+	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'SelectBudgetView',
+			// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Aplicated Budgets',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '700',
+					'buttons'=>	array(
+							'Close'=>'js:function(){jQuery("#SelectBudgetView").dialog( "close" );}',
+					),
+			),
+	));
+	echo CHtml::openTag('div',array('id'=>'select-budget-popup-place-holder-view','style'=>'position:relative;display:inline-block;width:97%'));
+	echo CHtml::closeTag('div');
+	
+	$this->endWidget('zii.widgets.jui.CJuiDialog');
+?>
 
