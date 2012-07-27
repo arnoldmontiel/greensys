@@ -38,6 +38,8 @@ class BudgetItem extends CActiveRecord
 	public $area_desc;
 	public $parent_product_code;
 	public $total_price;
+	public $total_unit_rack;
+	public $total_unit_fan;
 	public $children_total_price;
 	public $children_count;
 	public $children_included;

@@ -119,6 +119,8 @@ $this->widget('zii.widgets.CDetailView', array(
 		'date_estimated_finalization',
 		'note',
 		'totalPrice',
+		'totalRack',
+		'totalFan',
 	),
 )); ?>
 <br>

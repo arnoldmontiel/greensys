@@ -144,6 +144,36 @@ class Budget extends CActiveRecord
 		return $modelMax->curVersion;
 	}
 	
+	public function getTotalRack()
+	{
+		$criteria=new CDbCriteria;
+		
+		$criteria->select='SUM(unit_rack) as total_unit_rack';
+		$criteria->with[] = 'product';
+		$criteria->condition='Id_budget = '.$this->Id . ' 
+				AND version_number = '. $this->version_number . '
+				AND need_rack = 1';
+		
+		$modelBudgetItem = BudgetItem::model()->find($criteria);
+		
+		return $modelBudgetItem->total_unit_rack;
+	}
+	
+	public function getTotalFan()
+	{
+		$criteria=new CDbCriteria;
+	
+		$criteria->select='SUM(unit_fan) as total_unit_fan';
+		$criteria->with[] = 'product';
+		$criteria->condition='Id_budget = '.$this->Id . '
+					AND version_number = '. $this->version_number . '
+					AND need_rack = 1';
+	
+		$modelBudgetItem = BudgetItem::model()->find($criteria);
+	
+		return $modelBudgetItem->total_unit_fan;
+	}
+	
 	public function getTotalPrice()
 	{
 		
