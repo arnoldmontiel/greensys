@@ -18,6 +18,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				'type'=>'raw'				 
 			),
 			array(
+				'name'=>'code_supplier',
+			    'value'=>'$data->code_supplier',
+				'type'=>'raw'				 
+			),
+			array(
 	 			'name'=>'brand_description',
 				'value'=>'$data->brand->description',
 			),

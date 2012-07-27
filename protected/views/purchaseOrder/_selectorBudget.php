@@ -6,7 +6,7 @@
 		<b><?php echo CHtml::encode($data->getAttributeLabel('project')); ?>:</b>
 		<?php echo CHtml::encode($data->budget->project->description); ?>
 		<br />
-		<b><?php echo CHtml::encode($data->getAttributeLabel('project')); ?>:</b>
+		<b><?php echo CHtml::encode($data->getAttributeLabel('area')); ?>:</b>
 		<?php echo CHtml::encode($data->area->description); ?>
 		<br />
 	</div>

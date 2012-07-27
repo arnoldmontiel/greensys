@@ -31,6 +31,7 @@
 				'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',
 				'data'=>$modelProduct,
 				'attributes'=>array(
+					'code_supplier',
 					array('label'=>$modelProduct->getAttributeLabel('Id_category'),
 							'type'=>'raw',
 							'value'=>$modelProduct->category->description

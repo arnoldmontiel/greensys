@@ -332,6 +332,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
 							'footer'=>'Total'
 				),
 				array(
+ 				            'name'=>'product_code_supplier',
+				            'value'=>'$data->product->code_supplier',
+				),
+				array(
  				            'name'=>'product_description_customer',
 				            'value'=>'$data->product->description_customer',
 				),
