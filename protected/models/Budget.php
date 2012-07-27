@@ -156,7 +156,7 @@ class Budget extends CActiveRecord
 		
 		$modelBudgetItem = BudgetItem::model()->find($criteria);
 		
-		return $modelBudgetItem->total_unit_rack;
+		return (isset($modelBudgetItem))?$modelBudgetItem->total_unit_rack:0;
 	}
 	
 	public function getTotalFan()
@@ -171,7 +171,7 @@ class Budget extends CActiveRecord
 	
 		$modelBudgetItem = BudgetItem::model()->find($criteria);
 	
-		return $modelBudgetItem->total_unit_fan;
+		return (isset($modelBudgetItem))?$modelBudgetItem->total_unit_fan: 0;
 	}
 	
 	public function getTotalPrice()
