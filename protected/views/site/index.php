@@ -19,15 +19,6 @@
 			<?php echo CHtml::link(Yii::app()->lc->t('Supplier'),array('/supplier/index'));?>
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Sub Category'),array('/subCategory/index'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Nomenclator'),array('/nomenclator/index'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Product Requirements'),array('/productRequirement/index'));?>
-			</div>
-			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Importer'),array('/importer/index'));?>
 			</div>
 			<div class="home-item-view" >
