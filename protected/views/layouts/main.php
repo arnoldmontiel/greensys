@@ -70,6 +70,7 @@ $(window).scroll(function() {
 				(
 					array('label'=>Yii::app()->lc->t('Product'), 'url'=>array('/product/index'),'visible'=>Yii::app()->user->checkAccess('ProductIndex')),
 					array('label'=>Yii::app()->lc->t('Price List'), 'url'=>array('/priceList/index'),'visible'=>Yii::app()->user->checkAccess('PriceListIndex')),
+					array('label'=>Yii::app()->lc->t('Budget'), 'url'=>array('/budget/index'),'visible'=>Yii::app()->user->checkAccess('BudgetIndex')),
 					array('label'=>Yii::app()->lc->t('Purhcase Order'), 'url'=>array('/purchaseOrder/index'),'visible'=>Yii::app()->user->checkAccess('PurchaseOrderIndex')),
 					array('label'=>Yii::app()->lc->t('Area'), 'url'=>array('/area/index'),'visible'=>Yii::app()->user->checkAccess('AreaIndex')),
 					array('label'=>Yii::app()->lc->t('Product Type'), 'url'=>array('/productType/index'),'visible'=>Yii::app()->user->checkAccess('ProductTypeIndex')),
