@@ -136,6 +136,7 @@ class PurchaseOrderController extends Controller
 						$modelBudgetItem = BudgetItem::model()->findByPk($budgetItem['Id']);
 						$product = Product::model()->findByPk($idProduct);
 						$criteria = new CDbCriteria;
+						echo 
 						$criteria->compare('t.Id_product', $product->Id);
 						$criteria->with[]='priceList';
 						$criteria->compare('priceList.Id_price_list_type',1);//purchase
@@ -151,16 +152,6 @@ class PurchaseOrderController extends Controller
 								$purchaseOrderItem=new PurchaseOrderItem();
 					
 								$shippingParameter = $purchaseOrder->shippingParameter;
-								$air = $shippingParameter->shippingParameterAir;
-								$maritime = $shippingParameter->shippingParameterMaritime;
-								if($purchaseOrder->Id_shipping_type == 1)
-								{
-									//$cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$product->length*$product->height*$product->width);
-								}
-								else
-								{
-									//$cost = $priceListItemPurchase->dealer_cost+($air->cost_measurement_unit*$product->weight);
-								}
 								$total = $priceListItemPurchase->dealer_cost+$cost;
 								$purchaseOrderItem->attributes =  array('Id_purchase_order'=>$idPurchaseOrder,
 										'Id_product'=>$product->Id,
