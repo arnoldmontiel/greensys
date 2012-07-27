@@ -215,9 +215,7 @@ $('#deleteIcon').click(function(){
 		<div style="display: inline-block;">
 			<?php echo $form->labelEx($model,'Id_sub_category'); ?>
 			<?php $subCategory = CHtml::listData($ddlSubCategory, 'Id', 'description');?>
-			<?php echo $form->dropDownList($model, 'Id_sub_category', $subCategory,array(
-				'prompt'=>'Select a Sub Category'
-			)	); ?>
+			<?php echo $form->dropDownList($model, 'Id_sub_category', $subCategory); ?>
 			<?php echo $form->error($model,'Id_sub_category'); ?>
 		</div>
 		<div style="display: inline-block;">
