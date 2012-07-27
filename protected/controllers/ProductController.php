@@ -89,7 +89,8 @@ class ProductController extends Controller
 				
 					$this->createCode($model);
 					$transaction->commit();		
-					$this->redirect(array('updateMultimedia','id'=>$model->Id));
+					//$this->redirect(array('updateMultimedia','id'=>$model->Id));
+					$this->redirect(array('view','id'=>$model->Id));
 				}	
 			} catch (Exception $e) {
 				$transaction->rollback();

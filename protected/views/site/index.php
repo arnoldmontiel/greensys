@@ -7,16 +7,16 @@
 				<?php echo Yii::app()->lc->t('Master Data');?>
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Brand'),array('/brand/index'));?>
+			<?php echo CHtml::link(Yii::app()->lc->t('Customer'),array('/customer/index'));?>
+			</div>
+			<div class="home-item-view" >
+			<?php echo CHtml::link(Yii::app()->lc->t('Area'),array('/area/index'));?>
+			</div>
+			<div class="home-item-view" >
+			<?php echo CHtml::link(Yii::app()->lc->t('Project'),array('/project/index'));?>
 			</div>
 			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Supplier'),array('/supplier/index'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Product Type'),array('/productType/index'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Category'),array('/category/index'));?>
 			</div>
 			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Sub Category'),array('/subCategory/index'));?>
@@ -26,9 +26,6 @@
 			</div>
 			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Product Requirements'),array('/productRequirement/index'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Product'),array('/product/index'));?>
 			</div>
 			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Importer'),array('/importer/index'));?>
