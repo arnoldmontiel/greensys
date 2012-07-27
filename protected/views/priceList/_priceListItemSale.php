@@ -113,9 +113,12 @@ $('#addAll-sale').click(
 		'columns'=>array(	
 				array(
 					'name'=>'code',
-				    'value'=>'$data->code',
-				 
+				    'value'=>'$data->code',				 
 				),
+				array(
+						'name'=>'code_supplier',
+						'value'=>'$data->code_supplier',
+				),				
 				array(
 		 			'name'=>'supplier_description',
 					'value'=>'$data->supplier->business_name',
@@ -241,6 +244,11 @@ $('#addAll-sale').click(
 				            'value'=>'$data->product->code',
 				 
 				),
+					array(
+							'name'=>'code_supplier',
+							'value'=>'$data->code_supplier',
+					),
+						
 				array(
  				            'name'=>'description_customer',
 				            'value'=>'$data->product->description_customer',

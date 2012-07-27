@@ -107,6 +107,7 @@ class PriceList extends CActiveRecord
 			'Id_importer'=>'Importer',
 			'Id_price_list_type' => 'Type',
 			'description' => 'Description',
+			'supplier_business_name'=>'Supplier',
 		
 		);
 	}
