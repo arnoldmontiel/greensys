@@ -14,8 +14,10 @@ $this->menu=array(
 $this->showSideBar = true;
 
 Yii::app()->clientScript->registerScript(__CLASS__.'#price_list_assign', "
+		
 function loadPage()
 	{
+				
 	if($('#PriceList_Id').val()!= ''){
 		$.post('".PriceListController::createUrl('AjaxGetPriceListAttributes')."',
 			$('#PriceList_Id').serialize(),

@@ -1,5 +1,6 @@
 <?php 
 Yii::app()->clientScript->registerScript(__CLASS__.'#price_list_purchase', "
+		
 $('#addAll').hover(
 function () {
 	$(this).attr('src','images/add_all_blue_light.png');
@@ -39,9 +40,26 @@ $('#addAll').click(
 		
 ");
 ?>
-	<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
+	<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;margin-bottom: 5px;">
 		<div class="gridTitle1" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
-			Products
+					<?php 		echo CHtml::link('+ Select Products',
+						'#',
+						array(	'id'=>'expand-products',
+								'onclick'=>'
+									jQuery("#product-grid-container").toggle("blind",{},1000);
+									if($(this).html()=="+ Select Products")
+									{
+										$(this).html("- Select Products");
+									}
+									else
+									{
+										$(this).html("+ Select Products");
+									}
+									return false;
+								'
+								)
+							)
+					?>		
 				<?php echo CHtml::link( '(New Product)','#',array('onclick'=>'jQuery("#CreateProduct").dialog("open"); return false;'));?>
 			</div>
 		<div style="display: inline-block;position: relative; width: 20px;height:20px; vertical-align: middle;">
@@ -59,7 +77,7 @@ $('#addAll').click(
 
 		</div>
 	</div>
-	
+	<div id="product-grid-container" style="display:none">
 
 	<?php		
 	$this->widget('zii.widgets.grid.CGridView', array(
@@ -115,7 +133,7 @@ $('#addAll').click(
 			),
 		));		
 		?>
-
+</div>
 
 
 		<p class="messageError"><?php
