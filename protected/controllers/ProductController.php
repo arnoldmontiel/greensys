@@ -127,7 +127,7 @@ class ProductController extends Controller
 		}
 		
 		$ddlRacks = array();
-		for($index = 1; $index <= 10; $index++ )
+		for($index = 0; $index <= 10; $index++ )
 		{
 			$item['Id'] = $index;
 			$item['description'] = $index;
@@ -318,7 +318,7 @@ class ProductController extends Controller
 		}
 		
 		$ddlRacks = array();
-		for($index = 1; $index <= 10; $index++ )
+		for($index = 0; $index <= 10; $index++ )
 		{
 			$item['Id'] = $index;
 			$item['description'] = $index;
