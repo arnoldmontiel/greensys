@@ -15,7 +15,6 @@ Yii::app()->clientScript->registerScript(__CLASS__.'move-stock', "
 $('#product-grid').attr('style','display:none;');
 $('#stock-item-grid').find('input.txtQuantity').each(
 												function(index, item){
-		
 																$(item).keyup(function(){
 			        												validateNumber($(this));
 																});
@@ -25,17 +24,19 @@ $('#stock-item-grid').find('input.txtQuantity').each(
 																	var target = $(this);
 																	
 																	$.post(
-																		'".StockController::createUrl('AjaxUpdateQuantity')."',
+																		'".StockController::createUrl("AjaxUpdateQuantity")."',
 																		 {
 																		 	idStockItem: $(this).attr('id'),
 																			quantity:$(this).val()
-																		 }).success(
-																			 	function() 
-																			 		{ 
-																			 			$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000);
-																						$(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000);
-																					});
-																		
+																		 },
+																	 	function(data) 
+																	 		{	
+																				$(target).val(data.quantity);
+ 																	 			$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000);
+																				$(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000);
+																			},
+																		'json');
+																				
 																});
 													});	
 ");
@@ -168,7 +169,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
  	'afterAjaxUpdate'=>'function(id, data){
  										$("#stock-item-grid").find("input.txtQuantity").each(
 												function(index, item){
-		
 																$(item).keyup(function(){
 			        												validateNumber($(this));
 																});
@@ -182,12 +182,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
 																		 {
 																		 	idStockItem: $(this).attr("id"),
 																			quantity:$(this).val()
-																		 }).success(
-																			 	function() 
-																			 		{ 
-																			 			$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000);
-																						$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000);
-																					});
+																		 },
+																	 	function(data) 
+																	 		{	
+																				$(target).val(data.quantity);
+ 																	 			$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000);
+																				$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000);
+																			},
+																		"json");
 																		
 																});
 													});	

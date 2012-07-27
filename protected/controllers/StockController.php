@@ -77,29 +77,37 @@ class StockController extends Controller
 		if(Yii::app()->request->isPostRequest)
 		{
 			// we only allow deletion via POST request
-			
 			$model = StockItem::model()->findByPk($id);
-			$transaction = $model->dbConnection->beginTransaction();
-			try {
-				if($model->stock->Id_movement_type == 1)
-				{
-					ProductItem::model()->deleteAllByAttributes(array(
-																	'Id_product'=>$model->Id_product,
-																	'Id_stock'=>$model->Id_stock,
-					));
+			$modelStock = Stock::model()->findByPk($model->Id_stock);
+			$criteria = new CDbCriteria;
+			$criteria->compare('Id_stock', $modelStock->Id);
+			$criteria->compare('Id_product', $model->Id_product);
+			$criteria->addCondition('Id_budget_item is not NULL');
+			$productsAsigned = ProductItem::model()->count($criteria);
+			if($productsAsigned=='0')
+			{
+				$transaction = $model->dbConnection->beginTransaction();
+				try {
+					if($model->stock->Id_movement_type == 1)
+					{
+						ProductItem::model()->deleteAllByAttributes(array(
+								'Id_product'=>$model->Id_product,
+								'Id_stock'=>$model->Id_stock,
+						));
+					}
+					$model->delete();
+					$transaction->commit();
+				} catch (Exception $e) {
+					$transaction->rollback();
 				}
-				$model->delete();
-				$transaction->commit();
-			} catch (Exception $e) {
-				$transaction->rollback();
-			}
-			
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('moveStock'));
+					
+				// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+				if(!isset($_GET['ajax']))
+					$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('moveStock'));				
+			}			
 		}
 		else
-		throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 	
 	public function actionAjaxUpdateQuantity()
@@ -108,36 +116,46 @@ class StockController extends Controller
 		$quantity = $_POST['quantity'];
 		
 		$stockItemInDB = StockItem::model()->findByPk($idStockItem);
-		if(isset($stockItemInDB))
+		
+		$modelStock = Stock::model()->findByPk($stockItemInDB->Id_stock);
+		$criteria = new CDbCriteria;
+		$criteria->compare('Id_stock', $modelStock->Id);
+		$criteria->compare('Id_product', $stockItemInDB->Id_product);
+		$criteria->addCondition('Id_budget_item is not NULL');
+		$productsAsigned = ProductItem::model()->count($criteria);
+		if($productsAsigned=='0')
 		{
-			$transaction = $stockItemInDB->dbConnection->beginTransaction();
-			try {
-				
-				//solo si es movimiento de "Agregar"
-				if($stockItemInDB->stock->Id_movement_type == 1)
-				{
-					//elimino todos los product item
-					ProductItem::model()->deleteAllByAttributes(array(
-																		'Id_product'=>$stockItemInDB->Id_product,
-																		'Id_stock'=>$stockItemInDB->Id_stock,
-					));
-					//creo la cantidad necesaria
-					for($i=0;$i<$quantity;$i++)
-					{
-						$this->createProductItem($stockItemInDB->Id_product, $stockItemInDB->Id_stock);
-					}
-				}
+			
+			if(isset($stockItemInDB))
+			{
+				$transaction = $stockItemInDB->dbConnection->beginTransaction();
+				try {
 					
-				$stockItemInDB->attributes = array('quantity'=>(double) $quantity);
-				$stockItemInDB->save();
-				
-				$transaction->commit();
-			} catch (Exception $e) {
-				$transaction->rollback();
+					//solo si es movimiento de "Agregar"
+					if($stockItemInDB->stock->Id_movement_type == 1)
+					{
+						//elimino todos los product item
+						ProductItem::model()->deleteAllByAttributes(array(
+																			'Id_product'=>$stockItemInDB->Id_product,
+																			'Id_stock'=>$stockItemInDB->Id_stock,
+						));
+						//creo la cantidad necesaria
+						for($i=0;$i<$quantity;$i++)
+						{
+							$this->createProductItem($stockItemInDB->Id_product, $stockItemInDB->Id_stock);
+						}
+					}
+						
+					$stockItemInDB->attributes = array('quantity'=>(double) $quantity);
+					$stockItemInDB->save();
+					
+					$transaction->commit();
+				} catch (Exception $e) {
+					$transaction->rollback();
+				}
 			}
-		}
-		return $stockItemInDB;
-	
+		}		
+		echo json_encode($stockItemInDB->attributes);
 	}
 	
 	/**
