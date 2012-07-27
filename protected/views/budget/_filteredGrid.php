@@ -29,13 +29,11 @@
 		'columns'=>array(	
 				array(
 					'name'=>'code',
-				    'value'=>'$data->code',
-				 
+				    'value'=>'$data->code',				 
 				),
 				array(
- 				    'name'=>'code_supplier',
-				    'value'=>'$data->code_supplier',
- 
+					'name'=>'code_supplier',
+					'value'=>'$data->code_supplier',
 				),
 				array(
 		 			'name'=>'brand_description',

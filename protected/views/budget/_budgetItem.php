@@ -123,6 +123,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				    'value'=>'$data->product->code',				 
 				),
 				array(
+					'name'=>'product_code_supplier',
+				    'value'=>'$data->product->code_supplier',				 
+				),
+				array(
 					'name'=>'children_count',
 					'value'=>'CHtml::link(($data->childrenCount > 0)?$data->childrenCount:"","#",array("id"=>$data->Id, "idArea"=>$data->Id_area, "idProduct"=>$data->Id_product, "class"=>"link-popup"))',
 					'type'=>'raw'
