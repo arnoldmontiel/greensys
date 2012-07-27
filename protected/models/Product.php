@@ -175,6 +175,9 @@ class Product extends CActiveRecord
 			'unit_rack' => 'Unit Rack',
 			'unit_fan' => 'Unit fan',
 			'Id_volts' => 'Volts',
+			'supplier_description'=>'Supplier',
+			'brand_description'=>'Brand',
+			'category_description'=>'Category',
 		);
 	}
 
