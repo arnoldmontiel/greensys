@@ -136,7 +136,6 @@ class PurchaseOrderController extends Controller
 						$modelBudgetItem = BudgetItem::model()->findByPk($budgetItem['Id']);
 						$product = Product::model()->findByPk($idProduct);
 						$criteria = new CDbCriteria;
-						echo 
 						$criteria->compare('t.Id_product', $product->Id);
 						$criteria->with[]='priceList';
 						$criteria->compare('priceList.Id_price_list_type',1);//purchase
