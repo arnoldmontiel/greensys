@@ -168,7 +168,7 @@ $('#addAll-sale').click(
 													if(!confirm("Are you sure you want to delete all filtered products?")) 
 														return false;
 														}',
-										'success'=>'js:function(data)
+										'success'=>'function(data)
 										{
 											$.fn.yiiGridView.update("price-list-item-grid-sale", {
 												data: $(this).serialize()
