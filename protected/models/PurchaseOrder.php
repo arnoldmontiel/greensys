@@ -21,7 +21,7 @@
  * @property Importer $idImporter
  * @property PurchaseOrderItem[] $purchaseOrderItems
  */
-class PurchaseOrder extends CActiveRecord
+class PurchaseOrder extends ModelAudit
 
 {
 	public $price_total;

@@ -54,7 +54,7 @@
  * @property ProductRequirement[] $productRequirements
  * @property Supplier $idSupplier
  */
-class Product extends CActiveRecord
+class Product extends ModelAudit
 {
 	
 	public $brand_description;
@@ -62,11 +62,36 @@ class Product extends CActiveRecord
 	public $nomenclator_description;
 	public $supplier_description;
 	public $product_area_id;
+	public function beforeSave()
+	{
+		if($this->isNewRecord)
+		{
+			$category = strtoupper(str_pad(substr($this->category->description,0,1), 1, "0"));
+			$subCategory = strtoupper(str_pad(substr($this->subCategory->description,0,1), 1, "0"));
+			$brand = strtoupper(str_pad(substr($this->brand->description,0,2), 2, "0"));
+			$productDesc = strtoupper(str_pad(substr($this->productType->description,0,1), 1, "0"));
+			$color = strtoupper(substr($this->color,0,1));
+			$other = strtoupper(substr($this->other,0,1));
+			
+			
+			$newId = Product::model()->countByAttributes( array('Id_category'=>$this->Id_category,
+					'Id_sub_category'=>$this->Id_sub_category,
+					'Id_brand'=>$this->Id_brand,
+					'Id_product_type'=>$this->Id_product_type,
+			));
+			$newId++;
+			$newId = str_pad($newId, 2, "0", STR_PAD_LEFT);
+			
+			$this->code = $category . $subCategory . $brand . $productDesc . $newId .  $color . $other;				
+		}
+		return parent::beforeSave();
+	}
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
 	 * @return Product the static model class
 	 */
+	
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

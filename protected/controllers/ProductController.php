@@ -87,7 +87,7 @@ class ProductController extends Controller
 					if(isset($_POST['notes']) && !empty($_POST['notes']))
 						$this->saveNote($_POST['notes'], $model->Id);
 				
-					$this->createCode($model);
+					//$this->createCode($model);
 					$transaction->commit();		
 					//$this->redirect(array('updateMultimedia','id'=>$model->Id));
 					$this->redirect(array('view','id'=>$model->Id));
@@ -171,7 +171,7 @@ class ProductController extends Controller
 					if(isset($_POST['notes']) && !empty($_POST['notes']))
 						$this->saveNote($_POST['notes'], $model->Id);
 	
-					$this->createCode($model);
+					//$this->createCode($model);
 					$transaction->commit();
 					echo json_encode($model->attributes);
 				}
@@ -190,7 +190,7 @@ class ProductController extends Controller
 	{
 		return EntityType::model()->findByAttributes(array('name'=>get_class(Product::model())))->Id;
 	}
-	
+	//deprecated, now impemented into Product::beforeSave 
 	public function createCode($model)
 	{
 		//$newId = str_pad($model->Id, 1, "0", STR_PAD_LEFT);

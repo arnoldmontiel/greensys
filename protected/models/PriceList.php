@@ -20,7 +20,7 @@
  * @property Supplier $idSupplier
  * @property PriceListItem[] $priceListItems
  */
-class PriceList extends CActiveRecord
+class PriceList extends ModelAudit
 {
 	public $supplier_business_name;
 	public function beforeSave()

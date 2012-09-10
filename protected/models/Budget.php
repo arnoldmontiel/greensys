@@ -24,7 +24,7 @@
  * @property Note[] $notes
  * @property Tracking[] $trackings
  */
-class Budget extends CActiveRecord
+class Budget extends ModelAudit
 {
 	public $curVersion;
 	public $totPrice;
