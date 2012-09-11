@@ -60,6 +60,7 @@
 	'id'=>'price-list-item-grid_'. $idArea.$type,
 	'dataProvider'=>$priceListItemSale->searchForBudget(),
 	'filter'=>$priceListItemSale,
+ 	'emptyText'=>Yii::app()->lc->t('The selected product has not been included in a price list of sales.'),
  	'summaryText'=>'',
  	'afterAjaxUpdate'=>'function(id, data){
  				$("#price-list-item-grid_'.$idArea.$type.'").find(":radio").each(

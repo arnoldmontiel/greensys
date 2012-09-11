@@ -277,7 +277,7 @@ class PurchaseOrderController extends Controller
 // 			$importer = Importer::model()->findByPk($model->Id_importer);
 // 			$model->Id_shipping_parameter = $importer->shippingParameters[0]->Id;
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->Id));
+				$this->redirect(array('assignProducts', 'id'=>$model->Id));				
 		}
 
 		$this->render('create',array(

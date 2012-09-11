@@ -116,7 +116,7 @@ class BudgetController extends Controller
 			
 			$model->attributes=$_POST['Budget'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->Id, 'version'=>$model->version_number));
+				$this->redirect(array('addItem', 'id'=>$model->Id, 'version'=>$model->version_number));
 		}
 		
 		$this->render('create',array(

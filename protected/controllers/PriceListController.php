@@ -74,7 +74,9 @@ class PriceListController extends Controller
 			$model->attributes=$_POST['PriceList'];
 			if($model->save())
 			{
-				$this->redirect(array('view','id'=>$model->Id));
+				$this->redirect(array('priceListItem','PriceList'=>array('Id'=>$model->Id)));
+				//array('label'=>'Assing Products', 'url'=>array('priceListItem',),
+				
 			}
 		}
 

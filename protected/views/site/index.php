@@ -88,7 +88,7 @@
 			<?php echo CHtml::link(Yii::app()->lc->t('Create'),array('/budget/create'));?>
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('list'),array('/budget/index'));?>
+			<?php echo CHtml::link(Yii::app()->lc->t('List'),array('/budget/index'));?>
 			</div>
 		</div><!-- end  home-left-view -->
 		<div class="home-right-view" >
