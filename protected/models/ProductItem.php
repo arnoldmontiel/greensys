@@ -20,7 +20,7 @@
  * @property ProductRequirement[] $productRequirements
  * @property TrackingItem[] $trackingItems
  */
-class ProductItem extends CActiveRecord
+class ProductItem extends ModelAudit
 {
 	/**
 	 * Returns the static model of the specified AR class.

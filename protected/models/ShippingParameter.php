@@ -17,7 +17,7 @@
  * @property ShippingParameterAir $idShippingParameterAir
  * @property ShippingParameterMaritime $idShippingParameterMaritime
  */
-class ShippingParameter extends CActiveRecord
+class ShippingParameter extends ModelAudit
 {
 	/**
 	 * Returns the static model of the specified AR class.

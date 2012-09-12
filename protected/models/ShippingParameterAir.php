@@ -20,7 +20,7 @@
  * @property MeasurementUnit $idMeasurementUnitCost
  * @property MeasurementUnit $idMeasurementUnitSizesMax
  */
-class ShippingParameterAir extends CActiveRecord
+class ShippingParameterAir extends ModelAudit
 {
 	/**
 	 * Returns the static model of the specified AR class.

@@ -14,7 +14,7 @@
  * @property Currency $idCurrency
  * @property Volts $idVolts
  */
-class Setting extends CActiveRecord
+class Setting extends ModelAudit
 {
 	/**
 	 * Returns the static model of the specified AR class.

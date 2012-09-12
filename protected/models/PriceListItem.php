@@ -18,7 +18,7 @@
  * @property PriceList $idPriceList
  * @property Product $idProduct
  */
-class PriceListItem extends CActiveRecord
+class PriceListItem extends ModelAudit
 {
 	
 	public $description_customer;

@@ -12,7 +12,7 @@
  * @property PurchaseOrder[] $purchaseOrders
  * @property Contact[] $contacts
  */
-class Supplier extends CActiveRecord
+class Supplier extends ModelAudit
 {
 	public $telephone_1;
 	public $description;

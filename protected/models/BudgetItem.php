@@ -27,7 +27,7 @@
  * @property ShippingType $idShippingType
  * @property ProductItem[] $productItems
  */
-class BudgetItem extends CActiveRecord
+class BudgetItem extends ModelAudit
 {
 	
 	public $product_code;

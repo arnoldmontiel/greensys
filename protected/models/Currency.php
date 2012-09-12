@@ -11,7 +11,7 @@
  * The followings are the available model relations:
  * @property Setting[] $settings
  */
-class Currency extends CActiveRecord
+class Currency extends ModelAudit
 {
 	/**
 	 * Returns the static model of the specified AR class.

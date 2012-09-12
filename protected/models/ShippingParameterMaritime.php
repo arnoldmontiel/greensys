@@ -13,7 +13,7 @@
  * @property ShippingParameter[] $shippingParameters
  * @property MeasurementUnit $idMeasurementUnitCost
  */
-class ShippingParameterMaritime extends CActiveRecord
+class ShippingParameterMaritime extends ModelAudit
 {
 	/**
 	 * Returns the static model of the specified AR class.

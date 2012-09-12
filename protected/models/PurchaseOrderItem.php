@@ -15,7 +15,7 @@
  * @property ProductItem[] $productItems
  * @property PurchaseOrder $idPurchaseOrder
  */
-class PurchaseOrderItem extends CActiveRecord
+class PurchaseOrderItem extends ModelAudit
 {
 	public $product_description_supplier;
 	public $product_description_customer;

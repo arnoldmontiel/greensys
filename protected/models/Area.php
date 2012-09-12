@@ -14,7 +14,7 @@
  * @property Product[] $products
  * @property Service[] $services
  */
-class Area extends CActiveRecord
+class Area extends ModelAudit
 {
 	/**
 	 * Returns the static model of the specified AR class.

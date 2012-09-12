@@ -11,7 +11,7 @@
  * @property Contact[] $contacts
  * @property Product[] $products
  */
-class Brand extends CActiveRecord
+class Brand extends ModelAudit
 {
 	/**
 	 * Returns the static model of the specified AR class.

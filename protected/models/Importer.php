@@ -13,7 +13,7 @@
  * @property PurchaseOrder[] $purchaseOrders
  * @property ShippingParameter[] $shippingParameters
  */
-class Importer extends CActiveRecord
+class Importer extends ModelAudit
 {
 	public $contact_telephone_1;
 	public $contact_telephone_2;
