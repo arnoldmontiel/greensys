@@ -15,7 +15,7 @@
  * @property Contact[] $contacts
  * @property Project[] $projects
  */
-class Customer extends CActiveRecord
+class Customer extends ModelAudit
 {
 	public $name;
 	public $last_name;
