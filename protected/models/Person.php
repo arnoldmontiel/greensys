@@ -13,7 +13,7 @@
  * The followings are the available model relations:
  * @property Customer[] $customers
  */
-class Person extends CActiveRecord
+class Person extends ModelAudit
 {
 	public function beforeSave()
 	{

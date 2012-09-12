@@ -19,7 +19,7 @@
  * @property Project[] $projects
  * @property Supplier[] $suppliers
  */
-class Contact extends CActiveRecord
+class Contact extends ModelAudit
 {
 	/**
 	 * Returns the static model of the specified AR class.
