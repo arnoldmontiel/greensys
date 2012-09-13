@@ -74,7 +74,7 @@
  		'Volts'=>'Voltaje',
  		'Currency'=>'Moneda',
  		'Purchase Order'=>'Orden de Compras',		
- 		'Budget'=>'Presupueto',
+ 		'Budget'=>'Presupuesto',
  		'Products'=>'Productos',
  		'Product'=>'Producto',
  		'Category'=>'Categoria',
