@@ -150,7 +150,7 @@ $('#PriceList_Id').change(function(){
 	));
 	$modelProductPopUp = new Product();
 	$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_product'=>$modelProductPopUp->Id,'Id_entity_type'=>ProductController::getEntityTypeStatic()));
-	$modelNote = new Note;
+	$modelNote = new GNote;
 	$ddlRacks = array();
 	for($index = 1; $index <= 10; $index++ )
 	{

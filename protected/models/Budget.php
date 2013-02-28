@@ -21,7 +21,7 @@
  * @property BudgetState $idBudgetState
  * @property Project $idProject
  * @property BudgetItem[] $budgetItems
- * @property Note[] $notes
+ * @property GNote[] $notes
  * @property Tracking[] $trackings
  */
 class Budget extends ModelAudit
@@ -105,7 +105,7 @@ class Budget extends ModelAudit
 			'budgetState' => array(self::BELONGS_TO, 'BudgetState', 'Id_budget_state'),
 			'project' => array(self::BELONGS_TO, 'Project', 'Id_project'),
 			'budgetItems' => array(self::HAS_MANY, 'BudgetItem', 'Id_budget'),
-			'notes' => array(self::HAS_MANY, 'Note', 'budget_Id'),
+			'notes' => array(self::HAS_MANY, 'GNote', 'budget_Id'),
 			'trackings' => array(self::HAS_MANY, 'Tracking', 'Id_budget'),
 		);
 	}

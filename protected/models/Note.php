@@ -7,29 +7,37 @@
  * @property integer $Id
  * @property string $note
  * @property string $creation_date
- * @property integer $Id_entity_type
- * @property integer $Id_product_requirement_product_requirement_product_item
- * @property integer $Id_product_item_product_requirement_product_item
- * @property integer $budget_Id
- * @property integer $budget_version_number
- * @property integer $Id_tracking
- * @property integer $Id_product
- * @property integer $Id_product_requirement
+ * @property string $change_date
+ * @property integer $Id_customer
+ * @property integer $Id_review
+ * @property integer $in_progress
+ * @property integer $need_confirmation
+ * @property integer $confirmed
+ * @property string $username
+ * @property integer $Id_user_group_owner
  *
  * The followings are the available model relations:
- * @property Budget $budget
- * @property Budget $budgetVersionNumber
- * @property Product $idProduct
- * @property ProductRequirement $idProductRequirement
- * @property EntityType $idEntityType
- * @property ProductRequirementProductItem $idProductRequirementProductRequirementProductItem
- * @property ProductRequirementProductItem $idProductItemProductRequirementProductItem
- * @property Tracking $idTracking
+ * @property Review $idReview
+ * @property Album[] $albums
+ * @property User $user
+ * @property UserGroup $idUserGroupOwner
+ * @property TMultimedia[] $multimedias
+ * @property Customer $idCustomer
+ * @property Wall[] $walls
+ * @property Note[] $notes
+ * @property Note[] $parentNotes
  */
-class Note extends CActiveRecord
-{
+class Note extends TapiaActiveRecord
+{	
+	public function beforeSave()
+	{		
+		$this->change_date = date("Y-m-d H:i:s",time());
+		return parent::beforeSave();
+	}
+	
 	/**
 	 * Returns the static model of the specified AR class.
+	 * @param string $className active record class name.
 	 * @return Note the static model class
 	 */
 	public static function model($className=__CLASS__)
@@ -53,15 +61,13 @@ class Note extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_entity_type', 'required'),
-			array('Id_entity_type, Id_product_requirement_product_requirement_product_item, Id_product_item_product_requirement_product_item, budget_Id, budget_version_number, Id_tracking, Id_product', 'numerical', 'integerOnly'=>false),
-			array('creation_date','default',
-		              'value'=>new CDbExpression('NOW()'),
-		              'setOnEmpty'=>false,'on'=>'insert'),
-			array('note, creation_date', 'safe'),
+			array('Id_customer, username, Id_user_group_owner', 'required'),
+			array('Id_customer, Id_review, in_progress, need_confirmation, confirmed, Id_user_group_owner', 'numerical', 'integerOnly'=>true),
+			array('title', 'length', 'max'=>255),
+			array('note, creation_date,change_date', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, note, creation_date, Id_entity_type, Id_product_requirement_product_requirement_product_item, Id_product_item_product_requirement_product_item, budget_Id, budget_version_number, Id_tracking, Id_product', 'safe', 'on'=>'search'),
+			array('Id, note, creation_date, change_date, Id_customer, Id_review, in_progress, need_confirmation, confirmed, username, Id_user_group_owner, title', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -73,14 +79,17 @@ class Note extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'budget' => array(self::BELONGS_TO, 'Budget', 'budget_Id'),
-			'budgetVersionNumber' => array(self::BELONGS_TO, 'Budget', 'budget_version_number'),
-			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
-			'entityType' => array(self::BELONGS_TO, 'EntityType', 'Id_entity_type'),
-			'productRequirementProductRequirementProductItem' => array(self::BELONGS_TO, 'ProductRequirementProductItem', 'Id_product_requirement_product_requirement_product_item'),
-			'productItemProductRequirementProductItem' => array(self::BELONGS_TO, 'ProductRequirementProductItem', 'Id_product_item_product_requirement_product_item'),
-			'tracking' => array(self::BELONGS_TO, 'Tracking', 'Id_tracking'),
-			'productRequirement' => array(self::BELONGS_TO, 'ProductRequirement', 'Id_product_requirement'),
+			'albums' => array(self::MANY_MANY, 'Album', 'album_note(Id_note, Id_album)'),
+			'multimedias' => array(self::MANY_MANY, 'TMultimedia', 'multimedia_note(Id_note, Id_multimedia)'),
+			'idCustomer' => array(self::BELONGS_TO, 'TCustomer', 'Id_customer'),
+			'walls' => array(self::HAS_MANY, 'Wall', 'Id_note'),
+			'notes' => array(self::MANY_MANY, 'Note', 'note_note(Id_parent, Id_child)'),
+			'parentNotes' => array(self::MANY_MANY, 'Note', 'note_note(Id_child, Id_parent)'),
+			'review' => array(self::BELONGS_TO, 'Review', 'Id_review'),
+			'userGroupOwner' => array(self::BELONGS_TO, 'UserGroup', 'Id_user_group_owner'),
+			'userGroups' => array(self::MANY_MANY, 'UserGroup', 'user_group_note(Id_note,Id_user_group)'),
+			'userGroupNotes' => array(self::HAS_MANY, 'UserGroupNote', 'Id_note'),
+			'user' => array(self::BELONGS_TO, 'User', 'username'),
 		);
 	}
 
@@ -93,18 +102,18 @@ class Note extends CActiveRecord
 			'Id' => 'ID',
 			'note' => 'Note',
 			'creation_date' => 'Creation Date',
-			'Id_entity_type' => 'Id Entity Type',
-			'Id_product_requirement_product_requirement_product_item' => 'Id Product Requirement Product Requirement Product Item',
-			'Id_product_item_product_requirement_product_item' => 'Id Product Item Product Requirement Product Item',
-			'budget_Id' => 'Budget',
-			'budget_version_number' => 'Budget Version Number',
-			'Id_tracking' => 'Id Tracking',
-			'Id_product' => 'Id Product',
-			'Id_product_requirement' => 'Id Product Requirement',
+			'change_date'=>'Change Date',
+			'Id_customer' => 'Id Customer',
+			'Id_review' => 'Id Review',
+			'in_progress' => 'In Progress',
+			'need_confirmation' => 'Con confirmacion necesaria',
+			'confirmed' => 'Confirmed',
+			'username' => 'Username',
+			'Id_user_group_owner' => 'Id User Group Owner',
+			'title' => 'Titulo',
 		);
 	}
 
-	
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -119,15 +128,13 @@ class Note extends CActiveRecord
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('note',$this->note,true);
 		$criteria->compare('creation_date',$this->creation_date,true);
-		$criteria->compare('Id_entity_type',$this->Id_entity_type);
-		$criteria->compare('Id_product_requirement_product_requirement_product_item',$this->Id_product_requirement_product_requirement_product_item);
-		$criteria->compare('Id_product_item_product_requirement_product_item',$this->Id_product_item_product_requirement_product_item);
-		$criteria->compare('budget_Id',$this->budget_Id);
-		$criteria->compare('budget_version_number',$this->budget_version_number);
-		$criteria->compare('Id_tracking',$this->Id_tracking);
-		$criteria->compare('Id_product',$this->Id_product);
-		$criteria->compare('Id_product_requirement',$this->Id_product_requirement);
+		$criteria->compare('change_date',$this->change_date,true);		
+		$criteria->compare('Id_customer',$this->Id_customer);
+		$criteria->compare('Id_review',$this->Id_review);
+		$criteria->compare('in_progress',0);
+		$criteria->compare('Id_user_group_owner',$this->Id_user_group_owner);
 		
+		$criteria->addCondition('t.Id NOT IN(select Id_note from user_group_note)');
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

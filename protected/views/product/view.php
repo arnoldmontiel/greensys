@@ -210,7 +210,7 @@ $this->widget('zii.widgets.CDetailView', array(
 	<b><?php echo CHtml::encode($model->getAttributeLabel('note')); ?>:</b>
 	</div>
 	<?php
-	$note = Note::model()->findByAttributes(array('Id_product'=>$model->Id));
+	$note = GNote::model()->findByAttributes(array('Id_product'=>$model->Id));
 	$noteTxt = '';
 	if(isset($note))
 	{		

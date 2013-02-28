@@ -6,7 +6,7 @@ class UserController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	public $layout='//layouts/tcolumn2';
 
 	/**
 	 * @return array action filters
@@ -29,17 +29,6 @@ class UserController extends Controller
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'users'=>array('*'),
 			),
-// 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-// 				'actions'=>array('create','update'),
-// 				'users'=>array('@'),
-// 			),
-// 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-// 				'actions'=>array('admin','delete'),
-// 				'users'=>array('admin'),
-// 			),
-// 			array('deny',  // deny all users
-// 				'users'=>array('*'),
-// 			),
 		);
 	}
 
@@ -63,24 +52,23 @@ class UserController extends Controller
 		$model=new User;
 
 		// Uncomment the following line if AJAX validation is needed
-		$this->performAjaxValidation($model);
+		// $this->performAjaxValidation($model);
 
+		$criteria=new CDbCriteria;
+		$criteria->condition='Id <> 3'; // clients
+		
+		$ddlUserGroup = UserGroup::model()->findAll($criteria);
+		
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
-			try {
-				if($model->save())
+			if($model->save())
 				$this->redirect(array('view','id'=>$model->username));
-				
-			} catch (CDbException $e) {
-				Yii::log($log,CLogger::LEVEL_ERROR,'Internal server error - saving new user');
-				throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
-				
-			}
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
+			'ddlUserGroup'=>$ddlUserGroup,
 		));
 	}
 
@@ -92,7 +80,8 @@ class UserController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+		$ddlUserGroup = UserGroup::model()->findAll();
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -105,6 +94,7 @@ class UserController extends Controller
 
 		$this->render('update',array(
 			'model'=>$model,
+			'ddlUserGroup'=>$ddlUserGroup,
 		));
 	}
 
@@ -133,7 +123,13 @@ class UserController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('User');
+		$criteria=new CDbCriteria;
+		$criteria->condition='t.Id_user_group <> 3'; // clients
+		
+		$dataProvider=new CActiveDataProvider('User', array(
+			'criteria'=>$criteria,
+		));
+		
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));

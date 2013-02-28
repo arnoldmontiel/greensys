@@ -35,7 +35,7 @@ return array(
 			'userid'=>'username', //default: userid
 			'username'=>'username', //default:username
 			'delimeter'=>'@', //default:-
-			'debug'=>false, //default :false
+			'debug'=>true, //default :false
 			'pageSize'=>10, // default : 15
 			'superUser' =>'Authority', //default: Authorizer
 			'css'=>'srbac.css', //default: srbac.css
@@ -88,9 +88,18 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=green',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'admin',
+			'password' => '',
 			'charset' => 'utf8',
 		),
+		'db2'=>array(
+					'class' => 'CDbConnection',
+					'connectionString' => 'mysql:host=localhost;dbname=tapia',
+					'emulatePrepare' => true,
+					'username' => 'root',
+					'password' => '',
+					'charset' => 'utf8',
+		),
+
 		'authManager'=>array(
 		// Path to SDbAuthManager in srbac module if you want to use case insensitive
 		//access checking (or CDbAuthManager for case sensitive access checking)

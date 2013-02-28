@@ -55,7 +55,7 @@ class ProductController extends Controller
 		$model=new Product;
 
 		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
-		$modelNote = new Note;
+		$modelNote = new GNote;
 					
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -229,7 +229,7 @@ class ProductController extends Controller
 	{
 		$this->deleteNote($id);
 	
-		$note = new Note;
+		$note = new GNote;
 		$note->attributes = array(
 							'note'=>$noteProduct,							
 							'Id_entity_type'=>$this->getEntityType(),
@@ -239,7 +239,7 @@ class ProductController extends Controller
 	
 	private function deleteNote($id)
 	{
-		Note::model()->deleteAllByAttributes(array('Id_product'=>$id));
+		GNote::model()->deleteAllByAttributes(array('Id_product'=>$id));
 	}
 	
 	private function saveLinks($links, $id)
@@ -272,7 +272,7 @@ class ProductController extends Controller
 	{
 		$model=$this->loadModel($id);
 		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
-		$modelNote = Note::model()->findByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
+		$modelNote = GNote::model()->findByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
 		if(isset($_POST['Product']))
 		{
 			$model->attributes=$_POST['Product'];

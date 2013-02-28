@@ -22,6 +22,17 @@ class Customer extends ModelAudit
 	public $telephone_1;
 	public $email;
 	
+	public function afterSave()
+	{
+		if($this->isNewRecord)
+		{
+			$tcustomer = new TCustomer();
+			$tcustomer->attributes = $this->attributes;
+			$tcustomer->save();
+		}
+
+	}
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Customer the static model class

@@ -39,7 +39,7 @@ class ProductRequirementController extends Controller
 	public function actionView($id)
 	{
 		$model = $this->loadModel($id);
-		$modelNote = Note::model()->findByAttributes(array('Id_product_requirement'=>$model->Id, 'Id_entity_type'=>$this->getEntityType()));
+		$modelNote = GNote::model()->findByAttributes(array('Id_product_requirement'=>$model->Id, 'Id_entity_type'=>$this->getEntityType()));
 		$modelProductReqMultimedias = ProductRequirementMultimedia::model()->findAllByAttributes(array('Id_product_requirement'=>$model->Id));
 
 		$this->render('view',array(
@@ -56,7 +56,7 @@ class ProductRequirementController extends Controller
 	public function actionCreate()
 	{
 		$model=new ProductRequirement;
-		$modelNote = new Note;
+		$modelNote = new GNote;
 
 		if(isset($_POST['ProductRequirement']))
 		{
@@ -149,7 +149,7 @@ class ProductRequirementController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-		$modelNote = Note::model()->findByAttributes(array('Id_product_requirement'=>$model->Id, 'Id_entity_type'=>$this->getEntityType()));
+		$modelNote = GNote::model()->findByAttributes(array('Id_product_requirement'=>$model->Id, 'Id_entity_type'=>$this->getEntityType()));
 		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -165,7 +165,7 @@ class ProductRequirementController extends Controller
 					
 					if(isset($_POST['notes']) && !empty($_POST['notes'])){
 						if($modelNote == null){
-							$modelNote = new Note;
+							$modelNote = new GNote;
 							$modelNote->attributes = array(
 														'Id_entity_type'=>$this->getEntityType(),
 														);
@@ -201,7 +201,7 @@ class ProductRequirementController extends Controller
 		{
 			// we only allow deletion via POST request
 			$model = $this->loadModel($id);
-			$modelNote = Note::model()->findByAttributes(array('Id_product_requirement'=>$model->Id, 'Id_entity_type'=>$this->getEntityType()));
+			$modelNote = GNote::model()->findByAttributes(array('Id_product_requirement'=>$model->Id, 'Id_entity_type'=>$this->getEntityType()));
 			
 			$transaction = $model->dbConnection->beginTransaction();
 			try {

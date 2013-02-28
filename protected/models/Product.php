@@ -41,7 +41,7 @@
  * @property BudgetItem[] $budgetItems
  * @property Hyperlink[] $hyperlinks
  * @property Multimedia[] $multimedias
- * @property Note[] $notes
+ * @property GNote[] $notes
  * @property PriceListItem[] $priceListItems
  * @property Brand $idBrand
  * @property Category $idCategory
@@ -140,7 +140,7 @@ class Product extends ModelAudit
 			'multimedias' => array(self::HAS_MANY, 'Multimedia', 'Id_product'),
 			'multimedia' => array(self::BELONGS_TO, 'Multimedia', 'Id_multimedia'),
 			'volts' => array(self::BELONGS_TO, 'Volts', 'Id_volts'),
-			'notes' => array(self::HAS_MANY, 'Note', 'Id_product'),
+			'notes' => array(self::HAS_MANY, 'GNote', 'Id_product'),
 			'priceListItems' => array(self::HAS_MANY, 'PriceListItem', 'Id_product'),
 			'brand' => array(self::BELONGS_TO, 'Brand', 'Id_brand'),
 			'category' => array(self::BELONGS_TO, 'Category', 'Id_category'),

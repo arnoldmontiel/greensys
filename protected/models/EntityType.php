@@ -9,7 +9,7 @@
  *
  * The followings are the available model relations:
  * @property Multimedia[] $multimedias
- * @property Note[] $notes
+ * @property GNote[] $notes
  */
 class EntityType extends CActiveRecord
 {
@@ -54,7 +54,7 @@ class EntityType extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'multimedias' => array(self::HAS_MANY, 'Multimedia', 'Id_entity_type'),
-			'notes' => array(self::HAS_MANY, 'Note', 'Id_entity_type'),
+			'notes' => array(self::HAS_MANY, 'GNote', 'Id_entity_type'),
 		);
 	}
 
