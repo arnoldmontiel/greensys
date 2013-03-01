@@ -5,15 +5,18 @@
  *
  * The followings are the available columns in table 'customer':
  * @property integer $Id
- * @property string $name
- * @property string $last_name
  * @property string $username
- * @property string $building_address
+ * @property integer $Id_person
+ * @property integer $Id_contact
  * 
  * The followings are the available model relations:
  * @property User $user
  * @property TMultimedia[] $multimedias
  * @property Note[] $notes
+ * @property Contact $idContact
+ * @property Person $idPerson
+ * @property Contact[] $contacts
+ * @property Project[] $projects
  */
 class TCustomer extends TapiaActiveRecord
 {
@@ -44,13 +47,12 @@ class TCustomer extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username', 'required'),
-			array('name, last_name', 'length', 'max'=>45),
+			array('username,Id_person, Id_contact', 'required'),
+			array('Id_person, Id_contact', 'numerical', 'integerOnly'=>true),		
 			array('username', 'length', 'max'=>128),
-			array('building_address', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, name, last_name, username, building_address, tag_description', 'safe', 'on'=>'search'),
+			array('Id, Id_person, Id_contact, username, tag_description', 'safe', 'on'=>'search'),
 		);
 	}
 
