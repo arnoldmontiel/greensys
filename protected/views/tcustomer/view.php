@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 		'Customers'=>array('index'),
-		$model->name,
+		$model->person->name,
 );
 
 $this->menu=array(
@@ -36,8 +36,14 @@ Yii::app()->clientScript->registerScript('viewTapiaCustomer', "
 <?php $this->widget('zii.widgets.CDetailView', array(
 		'data'=>$model,
 		'attributes'=>array(
-				'name',
-				'last_name',
+				array('label'=>$model->getAttributeLabel('name'),
+						'type'=>'raw',
+						'value'=>$model->person->name
+				),
+				array('label'=>$model->getAttributeLabel('last_name'),
+						'type'=>'raw',
+						'value'=>$model->person->last_name
+				),
 				array('label'=>$model->getAttributeLabel('username'),
 						'type'=>'raw',
 						'value'=>$model->username . ' ( ' . CHtml::link('Asignar permisos', Yii::app()->createUrl('srbac/authitem/assign'),array('id'=>'linkPermission')) . ' )'
@@ -54,7 +60,6 @@ Yii::app()->clientScript->registerScript('viewTapiaCustomer', "
 						'type'=>'raw',
 						'value'=>$model->user->address
 				),
-				'building_address',
 				array('label'=>$model->getAttributeLabel('phone_house'),
 						'type'=>'raw',
 						'value'=>$model->user->phone_house

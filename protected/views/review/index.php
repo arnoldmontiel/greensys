@@ -330,7 +330,7 @@ function getCheck(checkName)
 
 
 <div id="customer" class="review-action-back" >
-	<?php echo CHtml::link(User::getCustomer()->name.' '.User::getCustomer()->last_name,
+	<?php echo CHtml::link(User::getCustomer()->person->name.' '.User::getCustomer()->person->last_name,
 		ReviewController::createUrl('index',array('Id_customer'=>User::getCustomer()->Id)),
 		array('class'=>'index-review-single-link')
 		);

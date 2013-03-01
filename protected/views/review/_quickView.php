@@ -1,8 +1,8 @@
 <div class="index-review-quick-view">
 <div class="review-action-customer" >
 	<?php 
-		//echo CHtml::link($customer->name.' '.$customer->last_name. ' - ' . $customer->tagDesc,
-	echo CHtml::link($customer->name.' '.$customer->last_name,
+		//echo CHtml::link($customer->person->name.' '.$customer->person->last_name. ' - ' . $customer->tagDesc,
+	echo CHtml::link($customer->person->name.' '.$customer->person->last_name,
 		ReviewController::createUrl('index',array('Id_customer'=>$customer->Id)),
 		array('class'=>'index-review-single-link')
 		);
