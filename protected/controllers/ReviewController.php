@@ -577,7 +577,7 @@ class ReviewController extends Controller
 			
 			$criteria=new CDbCriteria;
 
-			$criteria->select = 't.Id, gp.name, gp.last_name, max(n.change_date) as max_date';
+			$criteria->select = 't.*, gp.name, gp.last_name, max(n.change_date) as max_date';
 			$criteria->join =  	" 
 					LEFT OUTER JOIN green.person gp on (t.Id_person = gp.Id)
 					LEFT OUTER JOIN user_customer uc on (t.Id = uc.Id_customer)
