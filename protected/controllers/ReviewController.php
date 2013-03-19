@@ -375,6 +375,12 @@ class ReviewController extends Controller
 			$this->showFilter = false;			
 		}
 		
+		if(isset($_GET['code']))
+		{
+			GDriveHelper::uploadFile($_GET['code'], $_GET['state']);
+			parse_str($_GET['state'], $params);
+			$this->redirect(array('index','Id_customer'=>$params['Id_customer']));
+		}
 		
 		$hasAlbum = Album::model()->countByAttributes(array('Id_customer'=>$Id_customer,
 						'Id_user_group_owner'=>User::getCurrentUserGroup()->Id )) > 0;		
@@ -818,14 +824,51 @@ class ReviewController extends Controller
 				$model->uploadedFile = $file;
 				$model->Id_customer = $_POST['Id_customer'];				
 				
+				if(isset($model->Id_document_type))
+				{
+					$criteria=new CDbCriteria;
+					$criteria->addCondition('Id_document_type = '. $model->Id_document_type);
+					$criteria->addCondition('Id_customer = '. $model->Id_customer);
+					$criteria->order = 'Id DESC';
+					
+					//copio Id_google_drive si ya existe un documento del mismo tipo
+					$multimediaDB = TMultimedia::model()->find($criteria);
+					
+					$model->Id_google_drive = isset($multimediaDB)?$multimediaDB->Id_google_drive:null;
+				}
+				
 				$model->save();													
 				
 				$transaction->commit();
-								
-				if(isset($_POST['Id_review']) && $_POST['Id_review'] != null)
-					$this->redirect(array('update','id'=>$_POST['Id_review']));
+				
+				if(isset($model->Id_document_type))
+				{
+					if(isset($_POST['Id_review']) && $_POST['Id_review'] != null)
+					{						
+						$redirectUri = 'http://localhost/workspace/Green/index.php?r=review/update';
+						$this->redirect( GDriveHelper::getAuthUrl($redirectUri,
+										array('id'=>$_POST['Id_review'],
+											  'Id_multimedia'=>$model->Id,
+											  'Id_customer'=>$model->Id_customer)
+						));
+					}
+					else 
+					{
+						$redirectUri = 'http://localhost/workspace/Green/index.php?r=review/index';
+						$this->redirect( GDriveHelper::getAuthUrl($redirectUri, 
+										array('Id_customer'=>$_POST['Id_customer'],
+											  'Id_multimedia'=>$model->Id,
+											  'Id_customer'=>$model->Id_customer)
+						));
+					}
+				}
 				else
-					$this->redirect(array('index&Id_customer='. $_POST['Id_customer']));
+				{
+					if(isset($_POST['Id_review']) && $_POST['Id_review'] != null)
+						$this->redirect(array('update','id'=>$_POST['Id_review']));
+					else
+						$this->redirect(array('index','Id_customer'=>$_POST['Id_customer']));
+				}
 					
 			} catch (Exception $e) {				
 				$transaction->rollback();
