@@ -121,7 +121,7 @@ class TMultimedia extends TapiaActiveRecord
 				
 				
 				$folder = "docs/";
-				$fileName = $this->customer->last_name . '_' . $this->customer->name . '_' . $uniqueId.'.'.$ext;
+				$fileName = $this->customer->person->last_name . '_' . $this->customer->person->name . '_' . $uniqueId.'.'.$ext;
 				$filePath = $folder . $fileName;
 				
 				//save doc
@@ -129,6 +129,7 @@ class TMultimedia extends TapiaActiveRecord
 				
 				$this->file_name = $fileName;
 				$this->size =$this->uploadedFile["size"];
+				$this->mimeType = $this->uploadedFile["type"];
 				
 //***************************************** To save pdf preview ****************************************************************				
 // 				$template = new Imagick();
