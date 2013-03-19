@@ -86,7 +86,7 @@ class GDriveHelper
 				$Id_google_drive = self::insertFile($service, $file, $data, $mimeType, $params['Id_multimedia']);
 			
 			if($Id_google_drive != null)
-				self::shareFile($service, $Id_google_drive);
+				self::shareFile($service, $Id_google_drive, $params['Id_customer']);
 				
 				
 			return true;
@@ -95,13 +95,19 @@ class GDriveHelper
 		return false;
 	}
 	
-	private function shareFile($service, $Id_google_drive)
+	private function shareFile($service, $Id_google_drive, $Id_customer)
 	{
-		$newPermission = new Google_Permission();
-		$newPermission->setValue('wensel84@gmail.com');
-		$newPermission->setType('user');
-		$newPermission->setRole('reader');
-		$service->permissions->insert($Id_google_drive, $newPermission);
+		
+		$userCustomers = UserCustomer::model()->findAllByAttributes(array('Id_customer'=>$Id_customer));
+		
+		foreach($userCustomers as $modelUserCustomer)
+		{
+			$newPermission = new Google_Permission();
+			$newPermission->setValue($modelUserCustomer->user->email);
+			$newPermission->setType('user');
+			$newPermission->setRole('reader');
+			$service->permissions->insert($Id_google_drive, $newPermission);
+		}
 	}
 	
 	private function insertFile($service, $file, $data, $mimeType, $Id_multimedia)
