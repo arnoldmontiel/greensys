@@ -9,6 +9,7 @@
  */
 class TSetting extends TapiaActiveRecord
 {
+	private static $setting;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -19,6 +20,17 @@ class TSetting extends TapiaActiveRecord
 		return parent::model($className);
 	}
 
+	public static function getInstance()
+	{
+		if(!isset(self::$instancia))
+		{
+			$setings = Setting::model()->findAll();
+			if($setings!=null)
+			Setting::$setting= $setings[0];
+		}
+		return self::$setting;
+	}
+	
 	/**
 	 * @return string the associated database table name
 	 */

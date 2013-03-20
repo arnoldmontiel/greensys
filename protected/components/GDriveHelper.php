@@ -12,10 +12,12 @@ class GDriveHelper
 	{
 		$client = new Google_Client();
 		
-		// Get your credentials from the APIs Console
-		$client->setClientId('740580923589-mnpka332ukf9ilvtgqn0tvgfcci4v0n3.apps.googleusercontent.com');
-		$client->setClientSecret('zhD-rtPm_EnLtT_fu50BIfjZ');
+		$setting = TSetting::getInstance();
 		
+		// Get your credentials from the APIs Console
+		$client->setClientId($setting->g_drive_client_id);
+		$client->setClientSecret($setting->g_drive_client_secret);
+		$client->setScopes(array($setting->g_drive_scope));
 		$client->setRedirectUri($redirectUri);
 		
 		$stringParam = '';		
@@ -28,7 +30,7 @@ class GDriveHelper
 		}
 		$client->setState($stringParam);
 		
-		$client->setScopes(array('https://www.googleapis.com/auth/drive'));
+		
 		$service = new Google_DriveService($client);
 			
 		$authUrl = $client->createAuthUrl();
@@ -48,13 +50,15 @@ class GDriveHelper
 		parse_str($state, $params);
 		
 		$client = new Google_Client();
-			
+
+		$setting = TSetting::getInstance();
+		
 		// Get your credentials from the APIs Console
-		$client->setClientId('740580923589-mnpka332ukf9ilvtgqn0tvgfcci4v0n3.apps.googleusercontent.com');
-		$client->setClientSecret('zhD-rtPm_EnLtT_fu50BIfjZ');	
+		$client->setClientId($setting->g_drive_client_id);
+		$client->setClientSecret($setting->g_drive_client_secret);			
+		$client->setScopes(array($setting->g_drive_scope));
 		$redirectUri = 'http://localhost/workspace/Green/index.php?r=review/index';
 		$client->setRedirectUri($redirectUri);
-		$client->setScopes(array('https://www.googleapis.com/auth/drive'));
 
 		$service = new Google_DriveService($client);
 		
