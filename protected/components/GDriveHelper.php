@@ -32,10 +32,18 @@ class GDriveHelper
 		$service = new Google_DriveService($client);
 			
 		$authUrl = $client->createAuthUrl();
-		return $authUrl; 
+		
+		if(isset($_SESSION['token']))
+		{
+			self::uploadFile($stringParam);
+			$authUrl = $redirectUri. '&'. $stringParam;
+		}						
+
+		return $authUrl;
+		
 	}
 
-	static public function uploadFile($code, $state)
+	static public function uploadFile($state, $code = null)
 	{
 		parse_str($state, $params);
 		
@@ -43,21 +51,28 @@ class GDriveHelper
 			
 		// Get your credentials from the APIs Console
 		$client->setClientId('740580923589-mnpka332ukf9ilvtgqn0tvgfcci4v0n3.apps.googleusercontent.com');
-		$client->setClientSecret('zhD-rtPm_EnLtT_fu50BIfjZ');		
+		$client->setClientSecret('zhD-rtPm_EnLtT_fu50BIfjZ');	
 		$redirectUri = 'http://localhost/workspace/Green/index.php?r=review/index';
 		$client->setRedirectUri($redirectUri);
 		$client->setScopes(array('https://www.googleapis.com/auth/drive'));
 
 		$service = new Google_DriveService($client);
 		
-		$accessToken = $client->authenticate($code);
-		$client->setAccessToken($accessToken);
-		
+		if(!isset($_SESSION['token']))
+		{
+			$accessToken = $client->authenticate($code);
+			$client->setAccessToken($accessToken);
+			$_SESSION['token'] = $client->getAccessToken();
+		}		
+		else 
+		{
+			$client->setAccessToken($_SESSION['token']);
+		}
+		 
 		$multimedia = TMultimedia::model()->findByPk($params['Id_multimedia']);
 		
 		if(isset($multimedia))
 		{
-			//$mimeType = mime_content_type(Yii::app()->baseUrl.'/docs/'.$multimedia->file_name);
 			$mimeType = $multimedia->mimeType;
 			
 			//prepare file info
@@ -100,14 +115,14 @@ class GDriveHelper
 		
 		$userCustomers = UserCustomer::model()->findAllByAttributes(array('Id_customer'=>$Id_customer));
 		
-		foreach($userCustomers as $modelUserCustomer)
-		{
-			$newPermission = new Google_Permission();
-			$newPermission->setValue($modelUserCustomer->user->email);
-			$newPermission->setType('user');
-			$newPermission->setRole('reader');
-			$service->permissions->insert($Id_google_drive, $newPermission);
-		}
+// 		foreach($userCustomers as $modelUserCustomer)
+// 		{
+// 			$newPermission = new Google_Permission();
+// 			$newPermission->setValue($modelUserCustomer->user->email);
+// 			$newPermission->setType('user');
+// 			$newPermission->setRole('reader');
+// 			$service->permissions->insert($Id_google_drive, $newPermission);
+// 		}
 	}
 	
 	private function insertFile($service, $file, $data, $mimeType, $Id_multimedia)
