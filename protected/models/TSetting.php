@@ -24,9 +24,9 @@ class TSetting extends TapiaActiveRecord
 	{
 		if(!isset(self::$instancia))
 		{
-			$setings = Setting::model()->findAll();
+			$setings = TSetting::model()->findAll();
 			if($setings!=null)
-			Setting::$setting= $setings[0];
+				TSetting::$setting= $setings[0];
 		}
 		return self::$setting;
 	}
