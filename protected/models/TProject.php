@@ -6,8 +6,6 @@
  * The followings are the available columns in table 'project':
  * @property integer $Id
  * @property integer $Id_customer
- * @property string $description
- * @property string $address
  *
  * The followings are the available model relations:
  * @property Area[] $areas
@@ -17,25 +15,8 @@
  * @property Contact[] $contacts
  * @property Tracking[] $trackings
  */
-class Project extends ModelAudit
+class TProject extends TapiaActiveRecord
 {
-	public function afterSave()
-	{
-		parent::afterSave();
-		$project = TProject::model()->findByPk($this->Id);
-		if(!isset($project))
-		{
-			$project = new TProject();
-		}
-		$project->Id = $this->Id;
-		$project->Id_customer = $this->Id_customer;
-		$project->save();
-	}
-	public function afterDelete()
-	{
-		parent::afterDelete();		
-		TProject::model()->deleteByPk($this->Id);
-	}
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Project the static model class
@@ -61,13 +42,11 @@ class Project extends ModelAudit
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_customer', 'required'),
-			array('Id_customer', 'numerical', 'integerOnly'=>true),
-			array('description', 'length', 'max'=>45),
-			array('address', 'length', 'max'=>100),
+			array('Id, Id_customer', 'required'),
+			array('Id, Id_customer', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_customer, description, address', 'safe', 'on'=>'search'),
+			array('Id, Id_customer', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -96,8 +75,6 @@ class Project extends ModelAudit
 		return array(
 			'Id' => 'ID',
 			'Id_customer' => 'Customer',
-			'description' => 'Description',
-			'address' => 'Address',
 		);
 	}
 
@@ -114,8 +91,6 @@ class Project extends ModelAudit
 
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('Id_customer',$this->Id_customer);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('address',$this->address,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

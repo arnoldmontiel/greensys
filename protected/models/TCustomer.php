@@ -47,8 +47,8 @@ class TCustomer extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username,Id_person, Id_contact', 'required'),
-			array('Id_person, Id_contact', 'numerical', 'integerOnly'=>true),		
+			array('Id,Id_person, Id_contact', 'required'),
+			array('Id, Id_person, Id_contact', 'numerical', 'integerOnly'=>true),		
 			array('username', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

@@ -2,8 +2,9 @@
 
 class ModelAudit extends CActiveRecord
 {
-	public function afterSave()
+	protected function afterSave()
 	{
+		parent::afterSave();		
 		$audit = new Audit;
 		if($this->hasAttribute('Id'))
 		{			
@@ -24,10 +25,10 @@ class ModelAudit extends CActiveRecord
 			//$this->date_modification = Yii::app()->lc->toDatabase($date->getTimestamp(),'datetime','small','datetime',null);//date('Y-m-d',strtotime($this->date_validity));
 		}
 		$audit->save();
-		return parent::beforeSave();		
 	}
-	public function afterDelete()
+	protected function afterDelete()
 	{
+		parent::afterDelete();
 		$audit = new Audit;
 		if($this->hasAttribute('Id'))
 		{
@@ -39,7 +40,6 @@ class ModelAudit extends CActiveRecord
 		$audit->operation = 'D';//delete
 		
 		$audit->save();
-		return parent::afterDelete();
 	}	
 // 	public function getEntityType()
 // 	{

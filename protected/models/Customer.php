@@ -22,15 +22,23 @@ class Customer extends ModelAudit
 	public $telephone_1;
 	public $email;
 	
-	public function afterSave()
+	protected function afterSave()
 	{
-		if($this->isNewRecord)
+		parent::afterSave();
+		$tcustomer = TCustomer::model()->findByPk($this->Id);
+		if(!isset($tcustomer))
 		{
 			$tcustomer = new TCustomer();
-			$tcustomer->attributes = $this->attributes;
-			$tcustomer->save();
 		}
-
+		$tcustomer->Id = $this->Id;
+		$tcustomer->Id_contact = $this->Id_contact;
+		$tcustomer->Id_person= $this->Id_person;
+		$tcustomer->save();
+	}
+	protected function afterDelete()
+	{
+		parent::afterDelete();
+		TCustomer::model()->deleteByPk($this->Id);
 	}
 	
 	/**
