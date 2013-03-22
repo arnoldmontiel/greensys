@@ -10,15 +10,7 @@ class GDriveHelper
 	 */
 	static public function getAuthUrl($redirectUri, $getParams)
 	{
-		$client = new Google_Client();
-		
-		$setting = TSetting::getInstance();
-		
-		// Get your credentials from the APIs Console
-		$client->setClientId($setting->g_drive_client_id);
-		$client->setClientSecret($setting->g_drive_client_secret);
-		$client->setScopes(array($setting->g_drive_scope));
-		$client->setRedirectUri($redirectUri);
+		$client = self::getClient($redirectUri);
 		
 		$stringParam = '';		
 		foreach($getParams as $key => $value)
@@ -29,8 +21,7 @@ class GDriveHelper
 				$stringParam = $stringParam . '&'.$key. '='. $value;
 		}
 		$client->setState($stringParam);
-		
-		
+				
 		$service = new Google_DriveService($client);
 			
 		$authUrl = $client->createAuthUrl();
@@ -45,21 +36,34 @@ class GDriveHelper
 		
 	}
 
+	static public function test()
+	{
+// 		$client = Yii::app()->eauth->getIdentity(Yii::app()->user->service);
+// 		$service = new Google_DriveService($client);
+// 		$hola = $service->files->delete('0B3IgC6E17ly-VHM1TTdNck50MkE');
+		
+// 		$client = new Google_Client();
+		
+// 		$setting = TSetting::getInstance();
+		
+// 		// Get your credentials from the APIs Console
+// 		$client->setClientId($setting->g_drive_client_id);
+// 		$client->setClientSecret($setting->g_drive_client_secret);
+// 		$client->setScopes(array($setting->g_drive_scope));
+		
+// 		if($redirectUri == null)
+// 		$redirectUri = 'http://localhost/workspace/Green/index.php?r=review/update';
+			
+// 		$client->setRedirectUri($redirectUri);
+		
+	}
+	
 	static public function uploadFile($state, $code = null)
 	{
 		parse_str($state, $params);
 		
-		$client = new Google_Client();
-
-		$setting = TSetting::getInstance();
+		$client = self::getClient();
 		
-		// Get your credentials from the APIs Console
-		$client->setClientId($setting->g_drive_client_id);
-		$client->setClientSecret($setting->g_drive_client_secret);			
-		$client->setScopes(array($setting->g_drive_scope));
-		$redirectUri = 'http://localhost/workspace/Green/index.php?r=review/index';
-		$client->setRedirectUri($redirectUri);
-
 		$service = new Google_DriveService($client);
 		
 		if(!isset($_SESSION['token']))
@@ -112,6 +116,30 @@ class GDriveHelper
 		}
 		
 		return false;
+	}
+	
+	static public function removeFilePermission($fileId, $permissionId)
+	{
+		//$service->permissions->delete($fileId, $permissionId);
+	}
+	
+	private function getClient($redirectUri = null)
+	{
+		$client = new Google_Client();
+		
+		$setting = TSetting::getInstance();
+		
+		// Get your credentials from the APIs Console
+		$client->setClientId($setting->g_drive_client_id);
+		$client->setClientSecret($setting->g_drive_client_secret);
+		$client->setScopes(array($setting->g_drive_scope));
+		
+		if($redirectUri == null)
+			$redirectUri = 'http://localhost/workspace/Green/index.php?r=review/update';
+			
+		$client->setRedirectUri($redirectUri);
+		
+		return $client;
 	}
 	
 	private function shareFile($service, $Id_google_drive, $Id_customer)
