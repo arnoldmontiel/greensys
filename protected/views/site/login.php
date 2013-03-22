@@ -31,8 +31,11 @@
 	<div class="row buttons">
 		<?php echo CHtml::submitButton(Yii::app()->lc->t('Login')); ?>
 	</div>
-
+		
 <?php $this->endWidget(); ?>
+<?php 
+$this->widget('ext.eauth.EAuthWidget', array('action' => 'site/login'));
+ ?>
 </div><!-- form -->
 </div><!-- left -->
 <div class="login-right">
