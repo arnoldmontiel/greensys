@@ -69,7 +69,7 @@ class SiteController extends Controller
 	/**
 	 * Displays the login page
 	 */
-	public function actionLogin()
+	public function actionLoginOLD()
 	{
 		$this->layout='//layouts/login';	
 		$model=new LoginForm;
@@ -93,6 +93,54 @@ class SiteController extends Controller
 		$this->render('login',array('model'=>$model));
 	}
 
+	public function actionLogin() {
+		$service = Yii::app()->request->getQuery('service');
+        if (isset($service)) {
+            $authIdentity = Yii::app()->eauth->getIdentity($service);
+            $authIdentity->redirectUrl = Yii::app()->user->returnUrl;
+            $authIdentity->cancelUrl = $this->createAbsoluteUrl('site/login');
+
+            if ($authIdentity->authenticate()) {
+                $identity = new EAuthUserIdentity($authIdentity);
+
+                // successful authentication
+                if ($identity->authenticate()) {
+                    Yii::app()->user->login($identity);
+
+                    // special redirect with closing popup window
+                    $authIdentity->redirect();
+                }
+                else {
+                    // close popup window and redirect to cancelUrl
+                    $authIdentity->cancel();
+                }
+            }
+
+            // Something went wrong, redirect to login page
+            $this->redirect(array('site/login'));
+        }
+		$this->layout='//layouts/login';
+		$model=new LoginForm;
+		
+		// if it is ajax validation request
+		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
+		{
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
+		
+		// collect user input data
+		if(isset($_POST['LoginForm']))
+		{
+			$model->attributes=$_POST['LoginForm'];
+			// validate user input and redirect to the previous page if valid
+			if($model->validate() && $model->login())
+			$this->redirect(Yii::app()->user->returnUrl);
+		}
+		// display the login form
+		$this->render('login',array('model'=>$model));
+	}
+	
 	/**
 	 * Logs out the current user and redirect to homepage.
 	 */
