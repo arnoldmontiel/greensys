@@ -610,12 +610,12 @@ class ReviewController extends Controller
 
 			$criteria->select = 't.*, max(n.change_date) as max_date';
 			$criteria->join =  	" 
-					LEFT OUTER JOIN customer cus on (t.Id_customer = cus.Id)
+					LEFT OUTER JOIN tapia.customer cus on (t.Id_customer = cus.Id)
 					LEFT OUTER JOIN green.person gp on (cus.Id_person = gp.Id)
-					LEFT OUTER JOIN user_customer uc on (cus.Id = uc.Id_customer)
-					LEFT OUTER JOIN user u on (u.username = uc.username)
-          			LEFT OUTER JOIN note n ON ( n.Id_customer = uc.Id_customer)
-          			LEFT OUTER JOIN user_group_note ugn on (u.Id_user_group = ugn.Id_user_group)
+					LEFT OUTER JOIN tapia.user_customer uc on (cus.Id = uc.Id_customer)
+					LEFT OUTER JOIN tapia.user u on (u.username = uc.username)
+          			LEFT OUTER JOIN tapia.note n ON ( n.Id_customer = uc.Id_customer)
+          			LEFT OUTER JOIN tapia.user_group_note ugn on (u.Id_user_group = ugn.Id_user_group)
 				";
 			$criteria->addCondition('uc.username = "'. User::getCurrentUser()->username.'"');
 			$criteria->group = 't.Id';
@@ -629,7 +629,7 @@ class ReviewController extends Controller
 				$criteria->addSearchCondition('CONCAT(CONCAT(gp.name," "),gp.last_name)', $arrFilters['customerNameFilter'],true,'OR');				
 			}			
 			
-			$projects = TProject::model()->findAll($criteria);
+			$projects = Project::model()->findAll($criteria);
 	
 			foreach ($projects as $project){
 				$review->Id_customer = $project->customer->Id;
