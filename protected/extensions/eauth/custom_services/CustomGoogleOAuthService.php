@@ -1,11 +1,9 @@
 <?php
-YiiBase::setPathOfAlias('GoogleAPISrcAlias', dirname(__FILE__) . '/lib/google-api-php-client/src');
 
+//Para usar esta clase hace falta previamente hacer in import del google-api-php-client
 class CustomGoogleOAuthService extends GoogleOAuthService
 {
 	protected $scope = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.email';
-	
-	protected $googleDriveService = null;
 	
 	protected function fetchAttributes() {
 		$this->attributes = (array) $this->makeSignedRequest('https://www.googleapis.com/oauth2/v1/userinfo');		
@@ -13,7 +11,6 @@ class CustomGoogleOAuthService extends GoogleOAuthService
 	}
 	
 	protected function getAccessToken($code) {
-		Yii::import('GoogleAPISrcAlias.Google_Client');
 				
 		$client = new Google_Client();
 		$client->setClientId($this->client_id);
@@ -21,13 +18,12 @@ class CustomGoogleOAuthService extends GoogleOAuthService
 		$client->setScopes($this->scope);					
 		$client->setRedirectUri($this->getState('redirect_uri'));
 				
-		Yii::import('GoogleAPISrcAlias.contrib.Google_DriveService');
-		$this->googleDriveService = new Google_DriveService($client);
+		$service = new Google_DriveService($client);
 				
 		$accessToken = $client->authenticate($code);
 		$client->setAccessToken($accessToken);		
 		
-		$_SESSION['GOOGLE_DRIVE'] = $this->googleDriveService; 
+		$_SESSION['GOOGLE_DRIVE'] = $service; 
 		return $this->parseJson($accessToken);
 	}
 	
@@ -40,10 +36,5 @@ class CustomGoogleOAuthService extends GoogleOAuthService
 		$this->setState('expires', time() + $token->expires_in - 60);
 		$this->access_token = $token->access_token;
 	}
-	
-	public function getService()
-	{
-		return $this->googleDriveService;
-	}
-	
+		
 }
