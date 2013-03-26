@@ -15,6 +15,8 @@ class EAuthUserIdentity extends CBaseUserIdentity {
 
 	const ERROR_NOT_AUTHENTICATED = 3;
 
+	private $_username;
+	
 	/**
 	 * @var EAuthServiceBase the authorization service instance.
 	 */
@@ -45,19 +47,23 @@ class EAuthUserIdentity extends CBaseUserIdentity {
 	 */
 	public function authenticate() {
 		if ($this->service->isAuthenticated) {
-			$this->id = $this->service->id;
-			$this->name = $this->service->getAttribute('name');
-
-			$this->setState('id', $this->id);
-			$this->setState('name', $this->name);
-			$this->setState('service', $this->service->serviceName);
-
-			// You can save all given attributes in session.
-			//$attributes = $this->service->getAttributes();
-			//$session = Yii::app()->session;
-			//$session['eauth_attributes'][$this->service->serviceName] = $attributes;
-
-			$this->errorCode = self::ERROR_NONE;
+			
+			// Match authenticated user with DB user.
+			$attributes = $this->service->getAttributes();
+			$record=User::model()->findByAttributes(array('email'=>$attributes['email']));
+			if($record===null){
+				$this->errorCode = self::ERROR_NOT_AUTHENTICATED;
+			}else{
+				$this->_username=$record->username;
+				$this->id = $record->username;
+				$this->name = $this->service->getAttribute('name');
+					
+				$this->setState('id', $this->id);
+				$this->setState('name', $this->name);
+				$this->setState('service', $this->service->serviceName);
+				
+				$this->errorCode=self::ERROR_NONE;
+			}			
 		}
 		else {
 			$this->errorCode = self::ERROR_NOT_AUTHENTICATED;
@@ -71,7 +77,7 @@ class EAuthUserIdentity extends CBaseUserIdentity {
 	 * @return string the unique identifier for the identity.
 	 */
 	public function getId() {
-		return $this->id;
+		return $this->_username;
 	}
 
 	/**
