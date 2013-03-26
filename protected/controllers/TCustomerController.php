@@ -126,12 +126,9 @@ class TCustomerController extends Controller
 		
 		foreach($userGroups as $userGroup)
 		{
-			echo "Id_customer=".$idCustomer.' Id_project='.$idProject; 
 			$uGroupCustomerDb = UserGroupCustomer::model()->findAllByAttributes(array('Id_customer'=>$idCustomer,'Id_project'=>$idProject, 'Id_user_group'=>$userGroup->Id));
-			echo "is empty?";
 			if(empty($uGroupCustomerDb))
 			{
-				echo "yes it is";
 				$this->savePermission($idCustomer, $userGroup, $idProject);
 			}
 		}
@@ -176,12 +173,8 @@ class TCustomerController extends Controller
 		}
 	}
 	
-	private function savePermission($idCustomer, $modelUserGroup,$idPrject)
+	private function savePermission($idCustomer, $modelUserGroup,$idProject)
 	{
-		echo "savePermission(idCustomer  modelUserGroup idPrject)";
-		echo "idCustomer=".$idCustomer;
-		echo "idProject=".$idPrject;
-		echo "modelUserGroup->Id=".$modelUserGroup->Id;
 		$modelUserGroupCustomer = new UserGroupCustomer;
 		$modelUserGroupCustomer->Id_customer = $idCustomer;
 		$modelUserGroupCustomer->Id_project = $idProject;
@@ -191,19 +184,7 @@ class TCustomerController extends Controller
 		else
 			$modelUserGroupCustomer->Id_interest_power = 1;
 			
-		echo "modelUserGroupCustomer->Id_interest_power =".$modelUserGroupCustomer->Id_interest_power;
-		try {
-			
-			$modelUserGroupCustomer->save();
-			foreach ($modelUserGroupCustomer->errors as $value) {
-			echo $value;
-				}
-		} catch (Exception $e) {
-		echo "--------------------------------------";
-		echo "ERROR";
-		echo $e.message();
-		}
-		echo "--------------------------------------";
+		$modelUserGroupCustomer->save();
 	}
 	
 	public function actionAssign()
