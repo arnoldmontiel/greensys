@@ -38,6 +38,14 @@ class TMultimedia extends TapiaActiveRecord
 	public $uploadedFile;
 	public $last;
 	
+	protected function afterSave()
+	{
+		parent::afterSave();
+		
+		if($this->Id_document_type > 0)
+			GDriveHelper::uploadFile($this->Id);
+	}
+	
 	public function beforeSave()
 	{
 		$this->username = User::getCurrentUser()->username;
