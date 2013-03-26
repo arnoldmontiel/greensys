@@ -11,24 +11,57 @@ $this->menu=array(
 		array('label'=>'Actualizar Cliente', 'url'=>array('update', 'id'=>$model->Id)),
 		array('label'=>'Administrar Clientes', 'url'=>array('admin')),
 );
+Yii::app()->clientScript->registerScript('viewTapiaCustomer-begins', "
+function getIdProjectSelected()
+{
+	var id_project = jQuery('#project-grid').yiiGridView('getSelection');
+	if(id_project.length>0)
+		id_project = id_project[0];
+	else
+		id_project = '';
+	return id_project;
+}
+");
+
 Yii::app()->clientScript->registerScript('viewTapiaCustomer', "
+function getIdProjectSelected()
+{
+	var id_project = jQuery('#project-grid').yiiGridView('getSelection');
+	if(id_project.length>0)
+		id_project = id_project[0];
+	else
+		id_project = '';
+	return id_project;
+}
 
 		jQuery.fn.yiiGridView.update('userGroup-customer-grid');
 
 		jQuery('#btnUpdateGrid').click(function(){
-		jQuery.post(
-		'".TCustomerController::createUrl('AjaxUpdatePermissionGrid')."',
-		{
-		idCustomer: '".$model->Id."'
-}).success(
-		function()
-		{
-		jQuery.fn.yiiGridView.update('userGroup-customer-grid');
-});
-		return false;
-});
+		
+		var id_project = jQuery('#project-grid').yiiGridView('getSelection');
+		if(id_project.length>0)
+			id_project = id_project[0];
+		else
+			id_project = '';
 
-		",CClientScript:: POS_LOAD);
+		jQuery.post(
+			'".TCustomerController::createUrl('AjaxUpdatePermissionGrid')."',
+			{
+				idCustomer: '".$model->Id."',
+				idProject: id_project,
+			}).success(
+				function()
+				{
+		 			jQuery.fn.yiiGridView.update('userGroup-customer-grid', {data: 
+						{				
+							UserGroupCustomer: {Id_project:getIdProjectSelected()}
+						}
+					});			
+				});
+			return false;
+		});
+
+		",CClientScript::POS_LOAD);
 ?>
 
 <h1>Cliente</h1>
@@ -79,23 +112,114 @@ Yii::app()->clientScript->registerScript('viewTapiaCustomer', "
 		),
 )); ?>
 <br>
+<div class="customer-assign-title">
+		<div style="display: inline-block;">
+			Proyectos
+		</div>
+		<div style="display: inline-block; float: right;margin-right:20px;">
+			<?php echo CHtml::link( 'Nuevo','#',array('onclick'=>'jQuery("#CreateProject").dialog("open"); return false;'));?>
+		</div>
+</div>
+<?php 
+$this->widget('zii.widgets.grid.CGridView', array(
+		'id'=>'project-grid',
+		'dataProvider'=>$modelProject->search(),
+		'filter'=>$modelProject,
+		'afterAjaxUpdate'=>'js:function(){$.fn.yiiGridView.update("user-group-grid");}',
+		'selectionChanged'=>'js:function(id){
+			var id_project = jQuery("#project-grid").yiiGridView("getSelection");
+			if(id_project.length>0)
+				id_project = id_project[0];
+			else
+				id_project = "";
+			$.fn.yiiGridView.update("user-customer-grid", {data: 
+				{				
+					UserCustomer: {Id_project:id_project}
+				}
+			});
+ 			$.fn.yiiGridView.update("user-group-grid", {data: 
+				{				
+					User: {Id_project:id_project}
+				}
+			});
+ 			$.fn.yiiGridView.update("userGroup-customer-grid", {data: 
+				{				
+					UserGroupCustomer: {Id_project:id_project}
+				}
+			});			
+			if(id_project!="")
+			{			
+				jQuery(".customer-project-assign-area").animate({opacity: "show"},1000);
+			}
+			else
+			{
+				jQuery(".customer-project-assign-area").animate({opacity: "hide"},1000);
+			}
+
+		}',
+		'summaryText'=>'',
+		'columns'=>array(
+				array(
+			 		'name'=>'description',
+						'value'=>'$data->description',
+				),
+				array(
+			 		'name'=>'address',
+						'value'=>'$data->address',
+				),
+				array(
+						'class'=>'CButtonColumn',
+						'template'=>'{delete}',
+						'buttons'=>array(
+								'delete' => array(
+										'url'=>'Yii::app()->createUrl("tcustomer/AjaxRemoveProject", array("IdProject"=>$data->Id))',
+								),
+						),
+				),
+
+		),
+)
+);
+?>
+<div class="customer-project-assign-area" style="display: none">
+<div class="customer-assign-title">
+	Usuarios Asignados
+	<div class="customer-button-box">
+		<?php echo CHtml::button('Asignar Usuarios',array('id'=>'btn-assign-user',
+				'onclick'=>
+				'
+				if(jQuery(this).val()=="Terminar")
+				{
+				jQuery("#customer-assign-area").animate({opacity: "hide"},100);
+		 	jQuery(this).val("Asignar Usuarios");
+}
+				else
+				{
+				jQuery("#customer-assign-area").animate({opacity: "show"},2000);
+		 	jQuery(this).val("Terminar");
+}
+				return false;',
+	)); ?>
+	</div>
+</div>
+<br>
 <div id="customer-assign-area" style="display: none">
 
-	<div class="customer-assign-title">
-		Usuarios Disponibles
-		<div class="customer-button-box">
-			<?php echo CHtml::button('Terminar',array(
+<div class="customer-assign-title">
+Usuarios Disponibles
+<div class="customer-button-box">
+<?php echo CHtml::button('Terminar',array(
 					'onclick'=>
 					'
 					jQuery("#customer-assign-area").animate({opacity: "hide"},100);
 					jQuery("#btn-assign-user").val("Asignar Usuarios");
 					return false;',
-			));
-			echo CHtml::button('Nuevo Usuario', array('class'=>'customer-new-user',
+));
+echo CHtml::button('Nuevo Usuario', array('class'=>'customer-new-user',
 					'onclick'=>'jQuery("#CreateUser").dialog("open"); return false;',
-			));
+));
 
-			?>
+?>
 		</div>
 
 	</div>
@@ -108,25 +232,37 @@ Yii::app()->clientScript->registerScript('viewTapiaCustomer', "
 	$userGroupList = CHtml::listData($userGroup,'Id','description');
 	$this->widget('zii.widgets.grid.CGridView', array(
 			'id'=>'user-group-grid',
-			'dataProvider'=>$modelUser->searchUnassigned($model->Id),
+			'dataProvider'=>$modelUser->searchUnassigned(),
 			'filter'=>$modelUser,
 			'summaryText'=>'',
 			'selectionChanged'=>'js:function(id){
+			var id_project = jQuery("#project-grid").yiiGridView("getSelection");
+			if(id_project.length>0)
+				id_project = id_project[0];
+			else
+				id_project = "";
+	
 			$.get(	"'.TCustomerController::createUrl('AjaxAddUserCustomer').'",
 			{
 			IdCustomer:'.$model->Id.',
+			IdProject:id_project,
 			username:$.fn.yiiGridView.getSelection("user-group-grid")
 			}).success(
 			function()
 			{
+				var id_project = jQuery("#project-grid").yiiGridView("getSelection");
+				if(id_project.length>0)
+					id_project = id_project[0];
+				else
+					id_project = "";
 				$.fn.yiiGridView.update("user-group-grid", {
-					data: $(this).serialize()
+					//data: $(this).serialize()
+					data:{ User: {Id_project:id_project}}
 				});
 			
 				$.fn.yiiGridView.update("user-customer-grid", {
-					data: $(this).serialize()
+					data:{ UserCustomer: {Id_project:id_project}}
 				});
-			unselectRow("user-group-grid");
 
 })
 			.error(
@@ -134,7 +270,6 @@ Yii::app()->clientScript->registerScript('viewTapiaCustomer', "
 			{
 			$(".messageError").animate({opacity: "show"},2000);
 			$(".messageError").animate({opacity: "hide"},2000);
-			unselectRow("user-group-grid");
 });
 }',
 			'columns'=>array(
@@ -173,11 +308,18 @@ Yii::app()->clientScript->registerScript('viewTapiaCustomer', "
 							'Grabar'=>'js:function()
 							{
 							jQuery("#wating").dialog("open");
+					
 							jQuery.post("'.Yii::app()->createUrl("user/create").'", $("#user-form").serialize(),
 							function(data) {
+							var id_project = jQuery("#project-grid").yiiGridView("getSelection");
+							if(id_project.length>0)
+								id_project = id_project[0];
+							else
+								id_project = "";
+	
 							$.fn.yiiGridView.update("user-group-grid", {
-							data: $(this).serialize()
-});
+							User: {Id_project:id_project}
+							});
 
 							jQuery("#wating").dialog("close");
 							jQuery("#CreateUser").dialog( "close" );
@@ -196,33 +338,25 @@ Yii::app()->clientScript->registerScript('viewTapiaCustomer', "
 	$this->endWidget('zii.widgets.jui.CJuiDialog');
 	?>
 </div>
-<div class="customer-assign-title">
-	Usuarios Asignados
-	<div class="customer-button-box">
-		<?php echo CHtml::button('Asignar Usuarios',array('id'=>'btn-assign-user',
-				'onclick'=>
-				'
-				if(jQuery(this).val()=="Terminar")
-				{
-				jQuery("#customer-assign-area").animate({opacity: "hide"},100);
-		 	jQuery(this).val("Asignar Usuarios");
-}
-				else
-				{
-				jQuery("#customer-assign-area").animate({opacity: "show"},2000);
-		 	jQuery(this).val("Terminar");
-}
-				return false;',
-	)); ?>
-	</div>
-</div>
 <?php 
 
 $this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'user-customer-grid',
 		'dataProvider'=>$modelUserCustomer->search(),
 		'filter'=>$modelUserCustomer,
-		'afterAjaxUpdate'=>'js:function(){$.fn.yiiGridView.update("user-group-grid");}',
+		'afterAjaxUpdate'=>'js:function(){
+			var id_project = jQuery("#project-grid").yiiGridView("getSelection");
+			if(id_project.length>0)
+				id_project = id_project[0];
+			else
+				id_project = "";
+
+			$.fn.yiiGridView.update("user-group-grid", {
+			data:{User: {Id_project:id_project}}
+			});
+
+			//$.fn.yiiGridView.update("user-group-grid");
+		}',
 		'summaryText'=>'',
 		'columns'=>array(
 				array(
@@ -283,13 +417,19 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		$("#userGroup-customer-grid").find("select[name = ddlInterestPower]").each(
 		function(index, item){
 		$(item).change(function(){
-			
+		var id_project = jQuery("#project-grid").yiiGridView("getSelection");
+		if(id_project.length>0)
+			id_project = id_project[0];
+		else
+			id_project = "";
+
 		$.post(
 		"'.TCustomerController::createUrl('AjaxUpdatePermission').'",
 		{
 		idUserGroup: $(this).attr("id"),
 		idInterestPower: $(this).val(),
-		idCustomer: "'.$model->Id.'"
+		idCustomer: "'.$model->Id.'",
+		idProject: id_project
 }).success(
 		function()
 		{
@@ -318,3 +458,42 @@ $this->widget('zii.widgets.grid.CGridView', array(
 )
 );
 ?>
+</div>
+<?php 
+//Project
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'CreateProject',
+// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Crear Proyecto',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '600',
+					'buttons'=>	array(
+							'Cancelar'=>'js:function(){jQuery("#CreateProject").dialog( "close" );}',
+							'Grabar'=>'js:function()
+							{
+							jQuery("#waiting").dialog("open");
+							jQuery.post("'.Yii::app()->createUrl("project/ajaxCreate").'", $("#project-form").serialize(),
+							function(data) {
+								if(data!=null)
+								{
+									//actualizar
+									$.fn.yiiGridView.update("project-grid")
+									jQuery("#CreateProject").dialog( "close" );
+								}
+							jQuery("#waiting").dialog("close");
+						},"json"
+					);
+
+				}'),
+),
+));
+$modelProjectPopUp = new Project;
+$modelProjectPopUp->Id_customer = $model->Id;
+echo $this->renderPartial('../project/_formPopUp', array('model'=>$modelProjectPopUp));
+
+$this->endWidget('zii.widgets.jui.CJuiDialog');
+
+?>
+

@@ -75,12 +75,12 @@ class UserCustomer extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, Id_customer', 'required'),
-			array('Id_customer', 'numerical', 'integerOnly'=>true),
+			array('username, Id_customer,Id_project', 'required'),
+			array('Id_customer,Id_project', 'numerical', 'integerOnly'=>true),
 			array('username', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('username, Id_customer, user_group_desc, name, last_name, email, phone_house, phone_mobile,address,Id_user_group', 'safe', 'on'=>'search'),
+			array('username, Id_customer,Id_project, user_group_desc, name, last_name, email, phone_house, phone_mobile,address,Id_user_group', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -93,6 +93,7 @@ class UserCustomer extends TapiaActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'customer' => array(self::BELONGS_TO, 'TCustomer', 'Id_customer'),
+			'project' => array(self::BELONGS_TO, 'Project', 'Id_project'),
 			'user' => array(self::BELONGS_TO, 'User', 'username'),
 		);
 	}
@@ -104,7 +105,8 @@ class UserCustomer extends TapiaActiveRecord
 	{
 		return array(
 			'username' => 'Usuario',
-			'Id_customer' => 'Id Customer',
+			'Id_customer' => 'Customer',
+			'Id_project' => 'Project',
 			'user_group_desc'=> 'Grupo',
 			'name'=>'Nombre',
 			'last_name'=>'Apellido',
@@ -129,6 +131,7 @@ class UserCustomer extends TapiaActiveRecord
 
 		$criteria->compare('t.username',$this->username,true);
 		$criteria->compare('Id_customer',$this->Id_customer);
+		$criteria->compare('Id_project',$this->Id_project);
 		$criteria->compare('u.name',$this->name,true);
 		
 		$criteria->compare('u.email',$this->email,true);

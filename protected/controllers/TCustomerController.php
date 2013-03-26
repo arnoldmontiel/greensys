@@ -38,7 +38,9 @@ class TCustomerController extends Controller
 	 */
 	public function actionView($id)
 	{
+		
 		$modelUserCustomer = new UserCustomer('Search');
+		$modelUserCustomer->unsetAttributes();
 		$modelUserCustomer->Id_customer = $id;
 		if(isset($_GET['UserCustomer']))
 		{
@@ -63,22 +65,36 @@ class TCustomerController extends Controller
 		}
 		
 		$modelUserGroupCustomer = new UserGroupCustomer('Search');
+		$modelUserGroupCustomer->unsetAttributes();
 		$modelUserGroupCustomer->Id_customer = $id;
 		if(isset($_GET['UserGroupCustomer']))
 		{
 			$modelUserGroupCustomer->attributes = $_GET['UserGroupCustomer'];
 		}
 		$modelUser = new User('Search');
+		$modelUser->unsetAttributes();
 		if(isset($_GET['User']))
 		{
 			$modelUser->attributes = $_GET['User'];
+			if(isset($_GET['User']['Id_project']))
+				$modelUser->Id_project =$_GET['User']['Id_project']; 			
+		}
+		$model= $this->loadModel($id);
+
+		$modelProject = new Project('Search');
+		$modelProject->unsetAttributes();
+		$modelProject->Id_customer = $model->Id;
+		if(isset($_GET['Project']))
+		{
+			$modelProject->attributes = $_GET['Project'];
 		}
 		
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$model,
 			'modelUser'=>$modelUser,
 			'modelUserCustomer'=>$modelUserCustomer,
 			'modelUserGroupCustomer'=>$modelUserGroupCustomer,
+			'modelProject'=>$modelProject
 		));
 	}
 
@@ -87,8 +103,9 @@ class TCustomerController extends Controller
 		$idUserGroup = $_POST['idUserGroup'];
 		$idInterestPower = $_POST['idInterestPower'];
 		$idCustomer = $_POST['idCustomer'];
+		$idProject = $_POST['idProject'];
 		
-		$modelUserGroupCustomer = UserGroupCustomer::model()->findByPk(array('Id_user_group'=>$idUserGroup, 'Id_customer'=>$idCustomer));
+		$modelUserGroupCustomer = UserGroupCustomer::model()->findByPk(array('Id_user_group'=>$idUserGroup, 'Id_customer'=>$idCustomer,'Id_project'=>$idProject));
 		$modelUserGroupCustomer->Id_interest_power = $idInterestPower;
 		$modelUserGroupCustomer->save();
 	}
@@ -96,15 +113,19 @@ class TCustomerController extends Controller
 	public function actionAjaxUpdatePermissionGrid()
 	{
 		$idCustomer = $_POST['idCustomer'];
+		$idProject = $_POST['idProject'];
 		
 		$userGroups = UserGroup::model()->findAll();
 		
 		foreach($userGroups as $userGroup)
 		{
-			$uGroupCustomerDb = UserGroupCustomer::model()->findAllByAttributes(array('Id_customer'=>$idCustomer, 'Id_user_group'=>$userGroup->Id));
+			echo "Id_customer=".$idCustomer.' Id_project='.$idProject; 
+			$uGroupCustomerDb = UserGroupCustomer::model()->findAllByAttributes(array('Id_customer'=>$idCustomer,'Id_project'=>$idProject, 'Id_user_group'=>$userGroup->Id));
+			echo "is empty?";
 			if(empty($uGroupCustomerDb))
 			{
-				$this->savePermission($idCustomer, $userGroup);
+				echo "yes it is";
+				$this->savePermission($idCustomer, $userGroup, $idProject);
 			}
 		}
 	}
@@ -148,17 +169,34 @@ class TCustomerController extends Controller
 		}
 	}
 	
-	private function savePermission($idCustomer, $modelUserGroup)
+	private function savePermission($idCustomer, $modelUserGroup,$idPrject)
 	{
+		echo "savePermission(idCustomer  modelUserGroup idPrject)";
+		echo "idCustomer=".$idCustomer;
+		echo "idProject=".$idPrject;
+		echo "modelUserGroup->Id=".$modelUserGroup->Id;
 		$modelUserGroupCustomer = new UserGroupCustomer;
 		$modelUserGroupCustomer->Id_customer = $idCustomer;
+		$modelUserGroupCustomer->Id_project = $idProject;
 		$modelUserGroupCustomer->Id_user_group = $modelUserGroup->Id;
 		if($modelUserGroup->is_administrator)
 			$modelUserGroupCustomer->Id_interest_power = 2;
 		else
 			$modelUserGroupCustomer->Id_interest_power = 1;
 			
-		$modelUserGroupCustomer->save();
+		echo "modelUserGroupCustomer->Id_interest_power =".$modelUserGroupCustomer->Id_interest_power;
+		try {
+			
+			$modelUserGroupCustomer->save();
+			foreach ($modelUserGroupCustomer->errors as $value) {
+			echo $value;
+				}
+		} catch (Exception $e) {
+		echo "--------------------------------------";
+		echo "ERROR";
+		echo $e.message();
+		}
+		echo "--------------------------------------";
 	}
 	
 	public function actionAssign()
@@ -207,15 +245,17 @@ class TCustomerController extends Controller
 	{
 		
 		$idCustomer = isset($_GET['IdCustomer'])?$_GET['IdCustomer']:'';
+		$idProject = isset($_GET['IdProject'])?$_GET['IdProject'][0]:'';
 		$idUser = isset($_GET['username'])?$_GET['username'][0]:'';
 	
-		if(!empty($idCustomer)&&!empty($idUser))
+		if(!empty($idCustomer)&&!empty($idUser)&&!empty($idProject))
 		{
-			$userCustomerDb = UserCustomer::model()->findByAttributes(array('Id_customer'=>(int) $idCustomer,'username'=>$idUser));
+			$userCustomerDb = UserCustomer::model()->findByAttributes(array('Id_customer'=>(int) $idCustomer,'Id_project'=>$idProject,'username'=>$idUser));
 			if($userCustomerDb==null)
 			{
 				$userCustomer = new UserCustomer;
 				$userCustomer->attributes =  array('Id_customer'=>$idCustomer,
+													'Id_project'=>$idProject,
 													'username'=>$idUser,
 												);
 				$userCustomer->save();

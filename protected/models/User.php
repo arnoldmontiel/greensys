@@ -27,6 +27,7 @@ class User extends TapiaActiveRecord
 {
 	public $userGroupDescription;
 	public $building_address;
+	public $Id_project;
 
 	protected function afterSave()
 	{
@@ -273,7 +274,7 @@ class User extends TapiaActiveRecord
 		));
 	}
 	
-	public function searchUnassigned($id_customer)
+	public function searchUnassigned()
 	{
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
@@ -296,10 +297,10 @@ class User extends TapiaActiveRecord
 							INNER JOIN user_group ug ON (t.Id_user_group = ug.Id)';
 		$criteria->addCondition('Id_user_group not in(3)');//clients (3) and administrators (1)
 		//$criteria->addCondition('ug.is_internal = 0');
-		
- 		$criteria->addCondition('t.username not in (
- 				select u.username from user u LEFT OUTER JOIN user_customer uc on (u.username = uc.username)
- 				where uc.Id_customer = '.$id_customer.')');
+		if(isset($this->Id_project)&&$this->Id_project!="")
+	 		$criteria->addCondition('t.username not in (
+	 				select u.username from user u LEFT OUTER JOIN user_customer uc on (u.username = uc.username)
+	 				where uc.Id_project = '.$this->Id_project.')');
 		return new CActiveDataProvider($this, array(
 				'criteria'=>$criteria,
 		));

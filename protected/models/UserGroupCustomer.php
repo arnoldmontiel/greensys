@@ -7,6 +7,7 @@
  * @property integer $Id_user_group
  * @property integer $Id_customer
  * @property integer $Id_interest_power
+ * @property integer $Id_project
  */
 class UserGroupCustomer extends TapiaActiveRecord
 {
@@ -36,11 +37,11 @@ class UserGroupCustomer extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_user_group, Id_customer, Id_interest_power', 'required'),
-			array('Id_user_group, Id_customer, Id_interest_power', 'numerical', 'integerOnly'=>true),
+			array('Id_user_group, Id_customer, Id_interest_power, Id_project', 'required'),
+			array('Id_user_group, Id_customer, Id_interest_power, Id_project', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id_user_group, Id_customer, Id_interest_power', 'safe', 'on'=>'search'),
+			array('Id_user_group, Id_customer, Id_interest_power, Id_project', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,6 +56,7 @@ class UserGroupCustomer extends TapiaActiveRecord
 			'userGroup' => array(self::BELONGS_TO, 'UserGroup', 'Id_user_group'),
 			'interestPower' => array(self::BELONGS_TO, 'InterestPower', 'Id_interest_power'),
 			'customer' => array(self::BELONGS_TO, 'TCustomer', 'Id_customer'),
+			'project' => array(self::BELONGS_TO, 'Project', 'Id_project'),
 		);
 	}
 
@@ -66,6 +68,7 @@ class UserGroupCustomer extends TapiaActiveRecord
 		return array(
 			'Id_user_group' => 'Id User Group',
 			'Id_customer' => 'Id Customer',
+			'Id_project' => 'Project',
 			'Id_interest_power' => 'Id Interest Power',
 		);
 	}
@@ -83,6 +86,7 @@ class UserGroupCustomer extends TapiaActiveRecord
 
 		$criteria->compare('Id_user_group',$this->Id_user_group);
 		$criteria->compare('Id_customer',$this->Id_customer);
+		$criteria->compare('Id_project',$this->Id_project);
 		$criteria->compare('Id_interest_power',$this->Id_interest_power);
 
 		return new CActiveDataProvider($this, array(
