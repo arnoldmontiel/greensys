@@ -45,6 +45,7 @@ class TCustomerController extends Controller
 		if(isset($_GET['UserCustomer']))
 		{
 			$modelUserCustomer->attributes =$_GET['UserCustomer'];
+			 			
 			if(isset($_GET['UserCustomer']['Id_user_group']))
 				$modelUserCustomer->Id_user_group =$_GET['UserCustomer']['Id_user_group']; 			
 
@@ -87,6 +88,12 @@ class TCustomerController extends Controller
 		if(isset($_GET['Project']))
 		{
 			$modelProject->attributes = $_GET['Project'];
+			if(isset($_GET['Project']['Id']))
+			{
+				$modelUser->Id_project =$_GET['Project']['Id'];				
+				$modelUserCustomer->Id_project =$_GET['Project']['Id'];				
+				$modelUserGroupCustomer->Id_project =$_GET['Project']['Id'];				
+			}
 		}
 		
 		$this->render('view',array(

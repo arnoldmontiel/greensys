@@ -134,17 +134,17 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				id_project = "";
 			$.fn.yiiGridView.update("user-customer-grid", {data: 
 				{				
-					UserCustomer: {Id_project:id_project}
+					Project: {Id:id_project}
 				}
 			});
  			$.fn.yiiGridView.update("user-group-grid", {data: 
 				{				
-					User: {Id_project:id_project}
+					Project: {Id:id_project}
 				}
 			});
  			$.fn.yiiGridView.update("userGroup-customer-grid", {data: 
 				{				
-					UserGroupCustomer: {Id_project:id_project}
+					Project: {Id:id_project}
 				}
 			});			
 			if(id_project!="")
@@ -257,11 +257,11 @@ echo CHtml::button('Nuevo Usuario', array('class'=>'customer-new-user',
 					id_project = "";
 				$.fn.yiiGridView.update("user-group-grid", {
 					//data: $(this).serialize()
-					data:{ User: {Id_project:id_project}}
+					data:{ Project: {Id:id_project}}
 				});
 			
 				$.fn.yiiGridView.update("user-customer-grid", {
-					data:{ UserCustomer: {Id_project:id_project}}
+					data:{ Project: {Id:id_project}}
 				});
 
 })
@@ -318,7 +318,7 @@ echo CHtml::button('Nuevo Usuario', array('class'=>'customer-new-user',
 								id_project = "";
 	
 							$.fn.yiiGridView.update("user-group-grid", {
-							User: {Id_project:id_project}
+							Project: {Id:id_project}
 							});
 
 							jQuery("#wating").dialog("close");
@@ -352,7 +352,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				id_project = "";
 
 			$.fn.yiiGridView.update("user-group-grid", {
-			data:{User: {Id_project:id_project}}
+			data:{Project: {Id:id_project}}
 			});
 
 			//$.fn.yiiGridView.update("user-group-grid");
