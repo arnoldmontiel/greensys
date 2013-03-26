@@ -18,7 +18,17 @@ return array(
 		'application.components.*',
 		'application.controllers.*',
 		'application.modules.srbac.controllers.SBaseController',		
+		'ext.eoauth.*',
+        'ext.eoauth.lib.*',
+        'ext.lightopenid.*',
+        'ext.eauth.*',
+        'ext.eauth.services.*',
+		'ext.eauth.custom_services.*',
+		'application.modules.apigoogle.google-api-php-client.src.*',
+		'application.modules.apigoogle.google-api-php-client.src.contrib.*',		
+		'application.modules.apigoogle.google-api-php-client.src.service.*',
 	),
+	
 	'localeDataPath'=>'protected/i18n/data/',
 
 	'modules'=>array(
@@ -35,9 +45,9 @@ return array(
 			'userid'=>'username', //default: userid
 			'username'=>'username', //default:username
 			'delimeter'=>'@', //default:-
-			'debug'=>false, //default :false
+			'debug'=>true, //default :false
 			'pageSize'=>10, // default : 15
-			'superUser' =>'Authority', //default: Authorizer
+			'superUser' =>'Authorizer', //default: Authorizer
 			'css'=>'srbac.css', //default: srbac.css
 			'layout'=>'application.views.layouts.main', //default: application.views.layouts.main,
 //must be an existing alias
@@ -59,6 +69,44 @@ return array(
 
 	// application components
 	'components'=>array(
+		'loid' => array(
+        	'class' => 'ext.lightopenid.loid',
+		),
+
+		'eauth' => array(
+	        'class' => 'ext.eauth.EAuth',
+            'popup' => true, // Use the popup window instead of redirecting.
+			'cache' => true, // Cache component name or false to disable cache. Defaults to 'cache'.
+            'cacheExpire' => 0, // Cache lifetime. Defaults to 0 - means unlimited.
+            'services' => array( // You can change the providers and their classes.
+                'google' => array(
+                    'class' => 'GoogleOpenIDService',
+                ),
+                'yandex' => array(
+                    'class' => 'YandexOpenIDService',
+                ),
+                'twitter' => array(
+                    // register your app here: https://dev.twitter.com/apps/new
+                    'class' => 'TwitterOAuthService',
+                    'key' => '...',
+                    'secret' => '...',
+                ),
+                'google_oauth' => array(
+                    // register your app here: https://code.google.com/apis/console/
+                    'class' => 'CustomGoogleOAuthService',
+                    'client_id' => '740580923589-mnpka332ukf9ilvtgqn0tvgfcci4v0n3.apps.googleusercontent.com',
+                    'client_secret' => 'zhD-rtPm_EnLtT_fu50BIfjZ',
+                    'title' => 'Google (OAuth)',
+                ),             
+                'facebook' => array(
+                    // register your app here: https://developers.facebook.com/apps/
+                    'class' => 'FacebookOAuthService',
+                    'client_id' => '...',
+                    'client_secret' => '...',
+                ),
+			),
+		),
+
 		'lc'=>array(
 			'class' => 'application.components.LocaleManager',
 		),
@@ -85,7 +133,7 @@ return array(
 		*/
 		// uncomment the following to use a MySQL database
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=green',
+			'connectionString' => 'mysql:host=localhost;dbname=Green',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',
