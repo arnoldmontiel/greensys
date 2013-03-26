@@ -121,7 +121,6 @@ class AlbumController extends Controller
 	
 	public function actionAjaxUpload($idAlbum, $idCustomer)
 	{
-
 		$file = $_FILES['file'];
 		
 		$modelMultimedia = new TMultimedia;
@@ -139,7 +138,7 @@ class AlbumController extends Controller
 		echo json_encode(array("name" => $img,"type" => '',"size"=> $size, "id"=>$modelMultimedia->Id));
 	}
 
-	public function actionAjaxUploadify($idAlbum, $idCustomer)
+	public function actionAjaxUploadify($idAlbum, $idCustomer, $idProject)
 	{
  		$tempFile = $_FILES['Filedata'];
 	
@@ -295,6 +294,7 @@ class AlbumController extends Controller
 		{
 			$modelAlbum = new Album;
 			$modelAlbum->Id_customer = $_POST['idCustomer'];
+			$modelAlbum->Id_project = $_POST['idProject'];
 			$modelAlbum->Id_review = isset($_POST['idReview'])?$_POST['idReview']:null;
 			$modelAlbum->username = User::getCurrentUser()->username;
 			$modelAlbum->Id_user_group_owner = User::getCurrentUserGroup()->Id;
@@ -317,6 +317,7 @@ class AlbumController extends Controller
 		{
 			$modelAlbum = new Album;
 			$modelAlbum->Id_customer = $_POST['idCustomer'];
+			$modelAlbum->Id_project = $_POST['idProject'];
 			$modelAlbum->Id_review = isset($_POST['idReview'])?$_POST['idReview']:null;
 			$modelAlbum->username = User::getCurrentUser()->username;
 			$modelAlbum->Id_user_group_owner = User::getCurrentUserGroup()->Id;

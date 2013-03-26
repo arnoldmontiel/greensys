@@ -218,6 +218,7 @@ class Review extends TapiaActiveRecord
 		}
 		
 		$criteria->addCondition('t.Id_customer = '. $this->Id_customer);
+		$criteria->addCondition('t.Id_project = '. $this->Id_project);
 		$criteria->distinct = true;
 		
 		$criteria->order = 't.change_date DESC, t.review DESC';
@@ -278,9 +279,10 @@ class Review extends TapiaActiveRecord
 		}
 	
 		$criteria->addCondition('t.Id_customer = '. $this->Id_customer);
+		$criteria->addCondition('t.Id_project = '. $this->Id_project);
 		$criteria->distinct = true;
 
-		$criteria->order = ' t.Id_customer, t.change_date DESC, t.review DESC';
+		$criteria->order = 't.Id_project, t.Id_customer, t.change_date DESC, t.review DESC';
 		$criteria->limit = 4;
 			
 		return new CActiveDataProvider($this, array(

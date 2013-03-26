@@ -67,6 +67,7 @@ function doFilter()
 		{
 			tagFilter: $('#tagFilter').val(),
 			Id_customer: $('#Id_customer').val(),
+			Id_project: $('#Id_project').val(),
 			typeFilter: $('#typeFilter').val(),
 			reviewTypeFilter: $('#reviewTypeFilter').val(),
 			dateFromFilter: $('#dateFromFilter').val(),
@@ -201,13 +202,13 @@ $('#btnCreate').click(function(){
 		return false;
 	}
 	SelectAButton($(this));
-	var url = '".ReviewController::createUrl('create') . "' + '&Id_customer='+$('#Id_customer').val();
+	var url = '".ReviewController::createUrl('create') . "' + '&Id_project='+$('#Id_project').val();
 	window.location = url;
 	return false;
 });
 
 $('#btnPublicAlbum').click(function(){
-	var url = '".ReviewController::createUrl('index&Id_customer='.$Id_customer)."';
+	var url = '".ReviewController::createUrl('index',array('Id_customer'=>$Id_customer,'Id_project'=>$Id_projet))."';
 	window.location = url;
 	return false;
 });
@@ -246,7 +247,9 @@ $('#btnAlbum').click(function(){
 		}
 		$.post(url, 
 			{
-				idCustomer: ".$Id_customer."
+				idCustomer: ".$Id_customer.",
+				idProject: ".$Id_project."
+
 			}
 		).success(
 		function(data){
@@ -260,7 +263,7 @@ $('#btnAlbum').click(function(){
 			{
 				$('#file_upload').uploadify({
 			        'swf'      : '".Yii::app()->request->baseUrl."/js/uploadify.swf',
-			        'uploader' : '".AlbumController::createUrl('album/AjaxUploadify')."&idAlbum='+$('#uploadify_id_album').val()+'&idCustomer='+$('#uploadify_id_customer').val(),
+			        'uploader' : '".AlbumController::createUrl('album/AjaxUploadify')."&idAlbum='+$('#uploadify_id_album').val()+'&idCustomer='+$('#uploadify_id_customer').val()+'&idProject='+$('#uploadify_id_project').val(),
 			        // Put your options here
 			        'buttonText' : 'Seleccione',
 			        'onUploadSuccess' : function(file, data, response) {
@@ -326,6 +329,7 @@ function getCheck(checkName)
 <div id="loading" class="loading-place-holder" >
 </div>
 <?php echo CHtml::hiddenField('Id_customer',$Id_customer,array('id'=>'Id_customer'))?>
+<?php echo CHtml::hiddenField('Id_project',$Id_project,array('id'=>'Id_project'))?>
 <?php if(User::getCustomer()):?>
 
 
@@ -439,7 +443,7 @@ function getCheck(checkName)
 					echo CHtml::image('images/image_resource.png','',array('style'=>'width:25px;'));
 				echo CHtml::closeTag('div');
 				echo CHtml::link("Im&aacute;genes",
-							ReviewController::createUrl('AjaxViewImageResource',array('Id_customer'=>$Id_customer))
+							ReviewController::createUrl('AjaxViewImageResource',array('Id_customer'=>$Id_customer,'Id_project'=>$Id_project))
 							);
 			echo CHtml::closeTag('div');			
 		}

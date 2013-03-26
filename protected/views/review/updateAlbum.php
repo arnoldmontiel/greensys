@@ -95,7 +95,7 @@ echo CHtml::imageButton(
 																}',
 												'success'=>'js:function(data)
 												{													
-													window.location = "'.ReviewController::createUrl('AjaxViewImageResource',array('Id_customer'=>$model->Id_customer)).'";
+													window.location = "'.ReviewController::createUrl('AjaxViewImageResource',array('Id_customer'=>$model->Id_customer,'Id_project'=>$model->Id_project)).'";
 												}'
 									)
 								)
@@ -221,7 +221,7 @@ $this->widget('ext.xupload.XUploadWidget', array(
 	<div class="row" style="text-align: center;">
 			<?php 
 				echo CHtml::link('Volver',
-					ReviewController::createUrl('AjaxViewImageResource',array('Id_customer'=>$model->Id_customer)),
+					ReviewController::createUrl('AjaxViewImageResource',array('Id_customer'=>$model->Id_customer,'Id_project'=>$model->Id_project)),
 					array('id'=>'finish-btn','class'=>'wall-action-submit-btn')
 				);
 			?>

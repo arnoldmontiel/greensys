@@ -27,7 +27,7 @@
 		<div class="header-menu" >
 			<div class="header-menu-item">
 				<?php $params = User::getCustomer()?array('Id_customer'=>User::getCustomer()->Id):array(); ?>
-				<?php echo CHtml::link(CHtml::encode(Yii::app()->name),Yii::app()->createUrl('review/index',$params),array('class'=>'header-menu-item')); ?>
+				<?php echo CHtml::link(CHtml::encode("Tapia"),Yii::app()->createUrl('review/index',$params),array('class'=>'header-menu-item')); ?>
 			</div>
 			<div class="header-menu-item">
 				<?php echo CHtml::link('Clientes',Yii::app()->createUrl('tcustomer/index'),array('class'=>(Yii::app()->user->checkAccess('TCustomerIndex'))?'header-menu-item':'header-menu-item-hidden')); ?>

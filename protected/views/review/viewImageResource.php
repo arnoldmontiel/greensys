@@ -8,7 +8,7 @@ $cs->registerCssFile(Yii::app()->request->baseUrl.'/js/highslide.css');
 
 Yii::app()->clientScript->registerScript('viewImageResource', "
 $('#btnBack').click(function(){
-		window.location = '".ReviewController::createUrl('index',array('Id_customer'=>$Id_customer))."';		
+		window.location = '".ReviewController::createUrl('index',array('Id_customer'=>$Id_customer,'Id_project'=>$Id_project))."';		
 		return false;
 });
 

@@ -3,7 +3,7 @@
 	
 	$('#file_upload').uploadify({
 	        'swf'      : '".$assets."/uploadify.swf',
-	        'uploader' : '".$action."&idAlbum='+$('#uploadify_id_album').val()+'&idCustomer='+$('#uploadify_id_customer').val(),
+	        'uploader' : '".$action."&idAlbum='+$('#uploadify_id_album').val()+'&idCustomer='+$('#uploadify_id_customer').val()+'&idProject='+$('#uploadify_id_project').val(),
 	        // Put your options here
 			        'buttonText' : 'Seleccione',
 			        'onUploadSuccess' : function(file, data, response) {
@@ -40,6 +40,7 @@
 	");
 	echo CHtml::openTag('input',array('type'=>'file','name'=>'file_upload', 'id'=>'file_upload'));
  	echo CHtml::hiddenField('uploadify_id_customer',$idCustomer);
+ 	echo CHtml::hiddenField('uploadify_id_project',$idProject);
  	echo CHtml::hiddenField('uploadify_id_album',$idAlbum);
  	?>
  	<div id="uploaded">

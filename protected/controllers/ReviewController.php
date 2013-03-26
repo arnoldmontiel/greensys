@@ -50,14 +50,17 @@ class ReviewController extends Controller
 	{
 		$model=new Review;
 		$modelCustomer=new TCustomer;
+		$modelProject=new Project;
 		
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 		
-		if(isset($_GET['Id_customer']))
+		if(isset($_GET['Id_project']))
 		{
-			$model->Id_customer=$_GET['Id_customer'];
-			$modelCustomer = TCustomer::model()->findByPk($model->Id_customer);
+			$model->Id_project=$_GET['Id_project'];
+			$modelProject = Project::model()->findByPk($model->Id_project);
+			$modelCustomer = TCustomer::model()->findByPk($modelProject->Id_customer);
+			$model->Id_customer=$modelCustomer->Id;
 		}
 		if(isset($_POST['Review']))
 		{
@@ -90,6 +93,7 @@ class ReviewController extends Controller
 		
 		$criteria->select='MAX(review) as maxReview';
 		$criteria->condition='Id_customer = '.$model->Id_customer . ' AND Id_review_type = '. key($modelReviewType);
+		$criteria->condition='Id_project = '.$model->Id_project;
 		
 		$modelMax = Review::model()->find($criteria);
 		
@@ -99,6 +103,7 @@ class ReviewController extends Controller
 		$this->render('create',array(
 			'model'=>$model,
 			'modelCustomer'=>$modelCustomer,
+			'modelProject'=>$modelProject,
 			'modelReviewType'=>$modelReviewType,
 		));
 	}
@@ -120,12 +125,14 @@ class ReviewController extends Controller
 	public function actionAjaxGetNextReviewIndex()
 	{
 		$idCustomer = $_POST['idCustomer'];
+		$idProject = $_POST['idProject'];
 		$idReviewType = $_POST['idReviewType'];
 		
 		$criteria=new CDbCriteria;
 		
 		$criteria->select='MAX(review) as maxReview';
 		$criteria->condition='Id_customer = '.$idCustomer ;
+		$criteria->condition='Id_project = '.$idProject ;
 		$criteria->addCondition('Id_review_type = '.$idReviewType);
 		
 		$modelMax = Review::model()->find($criteria);
@@ -206,14 +213,15 @@ class ReviewController extends Controller
 		));
 	}
 
-	public function actionAjaxViewImageResource($Id_customer)
+	public function actionAjaxViewImageResource($Id_customer,$Id_project)
 	{
-		$modelAlbum = Album::model()->findAllByAttributes(array('Id_customer'=>$Id_customer,
+		$modelAlbum = Album::model()->findAllByAttributes(array('Id_customer'=>$Id_customer,'Id_project'=>$Id_project,
 								'Id_user_group_owner'=>User::getCurrentUserGroup()->Id ));
 		
 		$this->render('viewImageResource',array(					
 					'modelAlbum'=>$modelAlbum,
 					'Id_customer'=>$Id_customer,
+					'Id_project'=>$Id_project,
 		));
 	}
 	
@@ -370,11 +378,16 @@ class ReviewController extends Controller
 		$modelNote = new Note;
 		
 		$Id_customer = -1;
+		$Id_project = -1;
 		if(isset($_GET['Id_customer']))
 		{
 			$Id_customer =$_GET['Id_customer'];
 		}
-
+		if(isset($_GET['Id_project']))
+		{
+			$Id_project =$_GET['Id_project'];
+		}
+		
 		$this->showFilter = true;
 		
 		if($Id_customer==-1)
@@ -414,6 +427,7 @@ class ReviewController extends Controller
 			array('modelMultimedia'=>$modelMultimedia,
 					'modelNote'=>$modelNote,
 					'Id_customer'=>$Id_customer,
+					'Id_project'=>$Id_project,
 					'hasAlbum'=>$hasAlbum,
 					'hasDocs'=>$hasDocs,
 					'hasTechDocs'=>$hasTechDocs,
@@ -426,9 +440,12 @@ class ReviewController extends Controller
 		$idMultimedia = $_POST['idMultimedia'];
 		$idDocType = $_POST['idDocType'];
 		$idCustomer = $_POST['idCustomer'];
+		$idProject = $_POST['idProject'];
 		
 		$criteria=new CDbCriteria;
 		$criteria->select = 'MAX(Id) as last';
+		$criteria->join = 'INNER JOIN album a ON(a.Id = t.Id_album)';
+		$criteria->addCondition('a.Id_project = '. $idProject);
 		$criteria->addCondition('Id_document_type = '. $idDocType);
 		$criteria->addCondition('Id_customer = '. $idCustomer);		
 		
@@ -567,14 +584,15 @@ class ReviewController extends Controller
 	
 	}
 	
-	private function fillIndex($Id_customer, $arrFilters)
+	private function fillIndex($Id_customer,$Id_project, $arrFilters)
 	{
 		
 		$review = new Review;
 		if($Id_customer > 0)
 		{
 			$review->Id_customer = $Id_customer;
-	
+			$review->Id_project = $Id_project;
+				
 			$dataProvider = $review->searchSummary($arrFilters);
 			
 			$dataProvider->pagination->pageSize= 20;
@@ -590,10 +608,11 @@ class ReviewController extends Controller
 			
 			$criteria=new CDbCriteria;
 
-			$criteria->select = 't.*, gp.name, gp.last_name, max(n.change_date) as max_date';
+			$criteria->select = 't.*, max(n.change_date) as max_date';
 			$criteria->join =  	" 
-					LEFT OUTER JOIN green.person gp on (t.Id_person = gp.Id)
-					LEFT OUTER JOIN user_customer uc on (t.Id = uc.Id_customer)
+					LEFT OUTER JOIN customer cus on (t.Id_customer = cus.Id)
+					LEFT OUTER JOIN green.person gp on (cus.Id_person = gp.Id)
+					LEFT OUTER JOIN user_customer uc on (cus.Id = uc.Id_customer)
 					LEFT OUTER JOIN user u on (u.username = uc.username)
           			LEFT OUTER JOIN note n ON ( n.Id_customer = uc.Id_customer)
           			LEFT OUTER JOIN user_group_note ugn on (u.Id_user_group = ugn.Id_user_group)
@@ -610,22 +629,37 @@ class ReviewController extends Controller
 				$criteria->addSearchCondition('CONCAT(CONCAT(gp.name," "),gp.last_name)', $arrFilters['customerNameFilter'],true,'OR');				
 			}			
 			
-			
-			$customers = TCustomer::model()->findAll($criteria);
-			
-			foreach ($customers as $customer){
-				
-				$review->Id_customer = $customer->Id;
+			$projects = TProject::model()->findAll($criteria);
+	
+			foreach ($projects as $project){
+				$review->Id_customer = $project->customer->Id;
+				$review->Id_project = $project->Id;
 				
 				$dataProvider = $review->searchQuickView($arrFilters);
-					
+	
 				$dataProvider->pagination->pageSize= 4;
-					
+	
 				$data = $dataProvider->getData();
-								
-				$this->renderPartial('_quickView',array('data'=>$data, 'customer'=>$customer));
-								
+
+				$this->renderPartial('_quickView',array('data'=>$data, 'customer'=>$project->customer,'project'=>$project));
+
 			}
+					
+// 			$customers = TCustomer::model()->findAll($criteria);
+			
+// 			foreach ($customers as $customer){
+				
+// 				$review->Id_customer = $customer->Id;
+				
+// 				$dataProvider = $review->searchQuickView($arrFilters);
+					
+// 				$dataProvider->pagination->pageSize= 4;
+					
+// 				$data = $dataProvider->getData();
+								
+// 				$this->renderPartial('_quickView',array('data'=>$data, 'customer'=>$customer));
+								
+// 			}
 			
 		}
 	}
@@ -641,7 +675,7 @@ class ReviewController extends Controller
 							 'dateToFilter'=>$_POST['dateToFilter'],
 							 'customerNameFilter'=>$_POST['customerNameFilter']);
 			
-			$this->fillIndex($_POST['Id_customer'], $arrFilters);
+			$this->fillIndex($_POST['Id_customer'],$_POST['Id_project'], $arrFilters);
 		}		
 	}
 	
@@ -736,6 +770,7 @@ class ReviewController extends Controller
 		$id = $_POST['id'];
 		$value = $_POST['value'];
 		$idCustomer = $_POST['idCustomer'];
+		$idProject = $_POST['idProject'];
 		$chk = $_POST['chk'];
 		
 		$modelNote = new Note;
@@ -747,6 +782,7 @@ class ReviewController extends Controller
 			$modelNote->Id_user_group_owner = User::getCurrentUserGroup()->Id;
 			$modelNote->note = $value;
 			$modelNote->Id_customer = $idCustomer;
+			$modelNote->Id_project = $idProject;
 			$modelNote->in_progress = 0;
 			$modelNote->need_confirmation = $chk;
 			$modelNote->save();
@@ -918,10 +954,12 @@ class ReviewController extends Controller
 			isset($_POST['idNote'])&&
 			isset($_POST['value'])&&
 			isset($_POST['type'])&&
-			isset($_POST['idCustomer'])
+			isset($_POST['idCustomer'])&&
+			isset($_POST['idProject'])
 		)
 		{
 			$idCustomer = $_POST['idCustomer'];
+			$idProject = $_POST['idProject'];
 			$idUserGroup = $_POST['idUserGroup'];
 			$idNote = $_POST['idNote'];
 			$value = $_POST['value']=='true'?1:0;
@@ -988,6 +1026,7 @@ class ReviewController extends Controller
 				$modelUserGroupNote->Id_note=$idNote;
 				$modelUserGroupNote->Id_user_group=$idUserGroup;
 				$modelUserGroupNote->Id_customer=$idCustomer;
+				$modelUserGroupNote->Id_project=$idProject;
 				if($type=='addressed')
 				{
 					$modelUserGroupNote->addressed = $value;				
@@ -1029,6 +1068,7 @@ class ReviewController extends Controller
 		$needConf = (isset($_POST['needConf'])?$_POST['needConf']:null);
 		$idNote = (isset($_POST['idNote'])?$_POST['idNote']:null);
 		$idCustomer = (isset($_POST['idCustomer'])?$_POST['idCustomer']:null);
+		$idProject = (isset($_POST['idProject'])?$_POST['idProject']:null);
 		
 		$model = new UserGroupNote;
 		$transaction = $model->dbConnection->beginTransaction();
@@ -1056,6 +1096,7 @@ class ReviewController extends Controller
 			
 			$model->Id_note = $idNote;
 			$model->Id_customer = $idCustomer;
+			$model->Id_project = $idProject;
 			$model->Id_user_group = User::getCurrentUserGroup()->Id;
 			$model->can_feedback = 1;
 			$model->save();
@@ -1079,6 +1120,7 @@ class ReviewController extends Controller
 					$model = new UserGroupNote;
 					$model->Id_note = $idNote;
 					$model->Id_customer = $idCustomer;
+					$model->Id_project = $idProject;
 					$model->Id_user_group = User::getAdminUserGroupId();
 					$model->can_feedback = 1;
 					if(isset($addressed) && in_array(User::getAdminUserGroupId(),$addressed))
@@ -1093,6 +1135,7 @@ class ReviewController extends Controller
 					$model = new UserGroupNote;
 					$model->Id_note = $idNote;
 					$model->Id_customer = $idCustomer;
+					$model->Id_project = $idProject;
 					$model->Id_user_group = User::getAdminUserGroupId();
 					$model->can_feedback = 1;
 					$model->save();
@@ -1104,6 +1147,7 @@ class ReviewController extends Controller
 		
 					$model->Id_note = $idNote;
 					$model->Id_customer = $idCustomer;
+					$model->Id_project = $idProject;						
 					$model->Id_user_group = $item;
 					
 					if(isset($canFeedback) && in_array($item,$canFeedback))

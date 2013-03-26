@@ -5,6 +5,7 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-form-create', "
 			'".ReviewController::createUrl('AjaxGetNextReviewIndex')."',
 		{
 		idCustomer: ".$model->Id_customer.",
+		idProject: ".$model->Id_project.",
 		idReviewType:$(this).val()
 	}).success(
 		function(data)
@@ -14,7 +15,7 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-form-create', "
 	});
 	
 	$('#btnCancel').click(function(){
-		window.location = '".ReviewController::createUrl('index',array('Id_customer'=>$model->Id_customer))."';
+		window.location = '".ReviewController::createUrl('index',array('Id_customer'=>$model->Id_customer,'Id_project'=>$model->Id_project))."';
 		return false;
 	});
 ");

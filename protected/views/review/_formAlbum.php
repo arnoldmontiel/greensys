@@ -41,6 +41,7 @@ $('#Album_description').change(function(){
 	'method'=>'post',
 ));
 echo $formAlbum->hiddenField($model,'Id_customer');
+echo $formAlbum->hiddenField($model,'Id_project');
 ?>
 
 	<?php echo CHtml::hiddenField('Album_Id_album',$model->Id,array('id'=>'Album_Id_album')); ?>

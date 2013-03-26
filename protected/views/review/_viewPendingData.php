@@ -198,7 +198,7 @@ $('#publicArea_".$data->Id."').children().each(
 			foreach($userGroups as $item)
 			{
 				
-				$userGroupCustomer = UserGroupCustomer::model()->findByPk(array('Id_customer'=>$data->Id_customer,'Id_user_group'=>$item->Id));
+				$userGroupCustomer = UserGroupCustomer::model()->findByPk(array('Id_customer'=>$data->Id_customer,'Id_project'=>$data->Id_project,'Id_user_group'=>$item->Id));
 				
 				if($data->review->reviewType->is_for_client)
 				{

@@ -147,6 +147,7 @@ function bindEvents(item)
 			 	id: idMainNote,
 				value: $(item).find('#note_'+idMainNote).val(),
 				idCustomer: ".$model->Id_customer.",
+				idProject: ".$model->Id_project.",
 				chk: chk
 			 }).success(
 					function(data) 
@@ -322,7 +323,7 @@ function bindEvents(item)
 		//alert('Grabando '+type+' '+value+' '+idUserGroup);
 		$.ajax({
 				type : 'POST',
-				data : {type:type,value:value,idUserGroup:idUserGroup,idNote:idNote,idCustomer: ".$model->Id_customer."},
+				data : {type:type,value:value,idUserGroup:idUserGroup,idNote:idNote,idCustomer: ".$model->Id_customer.",idProject: ".$model->Id_project."},
 				url : '" . ReviewController::createUrl('AjaxSavePermissions') ."',
 				beforeSend : function(){
 								},
@@ -513,6 +514,7 @@ function bindEvents(item)
 			{
 				idNote: idMainNote,
 				idCustomer: ".$model->Id_customer.",
+				idProject: ".$model->Id_project.",
 				userGroup: dataUserGroup['value[]'],
 				canFeedback: dataFeedback['value[]'],
 				addressed: dataAddressed['value[]'],
@@ -580,6 +582,7 @@ $('#btnAlbum').click(function(){
 		$.post(url, 
 			{
 				idCustomer: ".$model->Id_customer.",
+				idProject: ".$model->Id_project.",
 				idReview: ".$model->Id."
 			}
 		).success(
@@ -653,6 +656,7 @@ $('#btnNote').click(function(){
 	$.post('".NoteController::createUrl('note/AjaxCreateNote')."', 
 		{
 			idCustomer: ".$model->Id_customer.",
+			idProject: ".$model->Id_project.",
 			idReview: ".$model->Id."
 		}
 	).success(
@@ -958,7 +962,7 @@ $('#need_reload').click(function(){
 <div class="wall-action-area" id="wall-action-area">
 <div id="customer" class="review-action-back" >
 	<?php echo CHtml::link($model->customer->person->name.' '.$model->customer->person->last_name,
-		ReviewController::createUrl('index',array('Id_customer'=>$model->Id_customer)),
+		ReviewController::createUrl('index',array('Id_customer'=>$model->Id_customer,'Id_project'=>$model->Id_project)),
 		array('class'=>'index-review-single-link')
 		);
 	 ?>
@@ -1158,7 +1162,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 								},
 							function(data) {
 								jQuery("#ClosingReviewDialog").dialog( "close" );
-								window.location = "'.ReviewController::createUrl('index',array('Id_customer'=>$model->Id_customer)) .'";
+								window.location = "'.ReviewController::createUrl('index',array('Id_customer'=>$model->Id_customer,'Id_project'=>$model->Id_project)) .'";
 							}
 					);
 	

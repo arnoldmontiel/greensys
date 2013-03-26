@@ -3,7 +3,7 @@
 	<?php 
 		//echo CHtml::link($customer->person->name.' '.$customer->person->last_name. ' - ' . $customer->tagDesc,
 	echo CHtml::link($customer->person->name.' '.$customer->person->last_name,
-		ReviewController::createUrl('index',array('Id_customer'=>$customer->Id)),
+		ReviewController::createUrl('index',array('Id_customer'=>$customer->Id,'Id_project'=>$project->Id)),
 		array('class'=>'index-review-single-link')
 		);
 	 ?>
