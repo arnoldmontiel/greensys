@@ -73,8 +73,8 @@ class Review extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_customer,Id_review_type', 'required'),
-			array('review, Id_customer, read, Id_review_type, is_open', 'numerical', 'integerOnly'=>true),
+			array('Id_customer,Id_review_type,Id_project', 'required'),
+			array('review, Id_customer, read, Id_review_type, is_open,Id_project', 'numerical', 'integerOnly'=>true),
 			array('description, creation_date, change_date, closing_description, closing_date', 'safe'),		
 			array('username', 'length', 'max'=>128),
 			array('change_date','default',
@@ -82,7 +82,7 @@ class Review extends TapiaActiveRecord
 				              'setOnEmpty'=>false,'on'=>'insert,update'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, review, Id_customer, description,creation_date, change_date, read, Id_review_type, closing_description, is_open, closing_date', 'safe', 'on'=>'search'),
+			array('Id, review, Id_customer,Id_project, description,creation_date, change_date, read, Id_review_type, closing_description, is_open, closing_date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -99,6 +99,7 @@ class Review extends TapiaActiveRecord
 			'notes' => array(self::HAS_MANY, 'Note', 'Id_review'),
 			'reviewType' => array(self::BELONGS_TO, 'ReviewType', 'Id_review_type'),
 			'customer' => array(self::BELONGS_TO, 'TCustomer', 'Id_customer'),
+			'project' => array(self::BELONGS_TO, 'Project', 'Id_project'),
 			'tags' => array(self::MANY_MANY, 'Tag', 'tag_review(Id_review, Id_tag)'),
 			'walls' => array(self::HAS_MANY, 'Wall', 'Id_review'),
 			'reviewUsers' => array(self::HAS_MANY, 'ReviewUser', 'Id_review'),

@@ -961,7 +961,7 @@ $('#need_reload').click(function(){
 
 <div class="wall-action-area" id="wall-action-area">
 <div id="customer" class="review-action-back" >
-	<?php echo CHtml::link($model->customer->person->name.' '.$model->customer->person->last_name,
+	<?php echo CHtml::link($model->customer->person->last_name.' - '.$model->project->description,
 		ReviewController::createUrl('index',array('Id_customer'=>$model->Id_customer,'Id_project'=>$model->Id_project)),
 		array('class'=>'index-review-single-link')
 		);

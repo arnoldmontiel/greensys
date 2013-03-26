@@ -64,6 +64,7 @@ $this->widget('ext.xupload.XUploadWidget', array(
                     'url' => AlbumController::createUrl('album/AjaxUpload'),
 					'multiple'=>true,
 					'name'=>'file',
+					'htmlOptions'=>array('id'=>'XUploadWidget_form'),
 					'options' => array(
 						'acceptFileTypes' => '/(\.|\/)(gif|jpeg|png)$/i',
 						'onComplete' => 'js:function (event, files, index, xhr, handler, callBack) {

@@ -11,7 +11,8 @@ function loadPage()
 		$('#Id_customer').val(id_customer);
 		$.post('".ReviewController::createUrl('AjaxGetCustomerName')."', 
 			{
-				Id_customer: $('#Id_customer').val()
+				Id_customer: $('#Id_customer').val(),
+				Id_project: $('#Id_project').val(),
 			}	
 			).success(
 			function(data){
@@ -208,7 +209,7 @@ $('#btnCreate').click(function(){
 });
 
 $('#btnPublicAlbum').click(function(){
-	var url = '".ReviewController::createUrl('index',array('Id_customer'=>$Id_customer,'Id_project'=>$Id_projet))."';
+	var url = '".ReviewController::createUrl('index',array('Id_customer'=>$Id_customer,'Id_project'=>$Id_project))."';
 	window.location = url;
 	return false;
 });
@@ -253,9 +254,9 @@ $('#btnAlbum').click(function(){
 			}
 		).success(
 		function(data){
+		debugger;
 			$('#loading').removeClass('loading');
 			var param = '&idAlbum='+data+'&idCustomer='+".$Id_customer.";
-		
 			$('#XUploadWidget_form').attr('action','".AlbumController::createUrl('album/AjaxUpload')."'+param);
 			$('#Album_Id_album').val(data);
 			$('#uploader').html(data);

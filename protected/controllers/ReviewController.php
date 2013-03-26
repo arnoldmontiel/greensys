@@ -402,13 +402,14 @@ class ReviewController extends Controller
 			$this->redirect(array('index','Id_customer'=>$params['Id_customer']));
 		}
 		
-		$hasAlbum = Album::model()->countByAttributes(array('Id_customer'=>$Id_customer,
+		$hasAlbum = Album::model()->countByAttributes(array('Id_customer'=>$Id_customer,'Id_project'=>$Id_project,
 						'Id_user_group_owner'=>User::getCurrentUserGroup()->Id )) > 0;		
 		
 		$criteria=new CDbCriteria;
 		$criteria->addCondition('Id_document_type is null');
 		$criteria->addCondition('Id_user_group = '. User::getCurrentUserGroup()->Id);
 		$criteria->addCondition('Id_customer = '. $Id_customer);
+		$criteria->addCondition('Id_project = '. $Id_project);
 		$criteria->addCondition('Id_multimedia_type > 1 ');
 		
 		$hasDocs = count(TMultimedia::model()->findAll($criteria)) > 0;
@@ -444,8 +445,7 @@ class ReviewController extends Controller
 		
 		$criteria=new CDbCriteria;
 		$criteria->select = 'MAX(Id) as last';
-		$criteria->join = 'INNER JOIN album a ON(a.Id = t.Id_album)';
-		$criteria->addCondition('a.Id_project = '. $idProject);
+		$criteria->addCondition('Id_project = '. $idProject);
 		$criteria->addCondition('Id_document_type = '. $idDocType);
 		$criteria->addCondition('Id_customer = '. $idCustomer);		
 		
@@ -463,12 +463,13 @@ class ReviewController extends Controller
 	public function actionAjaxGetCustomerName()
 	{
 		$idCustomer = ($_POST['Id_customer'])?$_POST['Id_customer']:null;
-
+		$idProject = ($_POST['Id_project'])?$_POST['Id_project']:null;
+		
 		$name = "Buscar";
-		if(isset($idCustomer) && $idCustomer > 0)
+		if(isset($idCustomer) && isset($idProject) && $idCustomer > 0 && $idProject > 0)
 		{
-			$modelCustomer = TCustomer::model()->findByPk($idCustomer);
-			$name = $modelCustomer->getCustomerDesc();
+			$modelProject = Project::model()->findByPk($idProject);
+			$name = $modelProject->customer->person->last_name.' - '.$modelProject->description;
 		}	
 		echo $name;
 	}
