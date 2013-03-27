@@ -225,7 +225,7 @@ class ReviewController extends Controller
 		));
 	}
 	
-	public function actionAjaxViewDocResource($Id_customer)
+	public function actionAjaxViewDocResource($Id_customer,$Id_project)
 	{
 		$criteria=new CDbCriteria;
 		$criteria->addCondition('Id_document_type is null');
@@ -237,10 +237,11 @@ class ReviewController extends Controller
 		$this->render('viewDocResource',array(
 						'modelMultimedia'=>$modelMultimedia,
 						'Id_customer'=>$Id_customer,
+						'Id_project'=>$Id_project,
 		));
 	}
 	
-	public function actionAjaxViewTechDocResource($Id_customer)
+	public function actionAjaxViewTechDocResource($Id_customer,$Id_project)
 	{
 		$criteria=new CDbCriteria;
 		$criteria->addCondition('Id_document_type is not null');		
@@ -252,6 +253,7 @@ class ReviewController extends Controller
 		$this->render('viewTechDocResource',array(
 						'modelMultimedia'=>$modelMultimedia,
 						'Id_customer'=>$Id_customer,
+						'Id_project'=>$Id_project,
 		));
 	}
 	

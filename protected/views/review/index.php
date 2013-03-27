@@ -456,7 +456,7 @@ function getCheck(checkName)
 			echo CHtml::image('images/document_resource.png','',array('style'=>'width:25px;'));
 			echo CHtml::closeTag('div');
 			echo CHtml::link("Documentos Generales",
-			ReviewController::createUrl('AjaxViewDocResource',array('Id_customer'=>$Id_customer))
+			ReviewController::createUrl('AjaxViewDocResource',array('Id_customer'=>$Id_customer,'Id_project'=>$Id_project))
 			);
 			echo CHtml::closeTag('div');
 		}
@@ -468,7 +468,7 @@ function getCheck(checkName)
 			echo CHtml::image('images/tech_document_resource.png','',array('style'=>'width:25px;'));
 			echo CHtml::closeTag('div');
 			echo CHtml::link("Documentos T&eacute;cnicos",
-			ReviewController::createUrl('AjaxViewTechDocResource',array('Id_customer'=>$Id_customer))
+				ReviewController::createUrl('AjaxViewTechDocResource',array('Id_customer'=>$Id_customer,'Id_project'=>$Id_project))
 			);
 			echo CHtml::closeTag('div');
 		}		
