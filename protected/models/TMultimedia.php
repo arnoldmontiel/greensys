@@ -38,14 +38,6 @@ class TMultimedia extends TapiaActiveRecord
 	public $uploadedFile;
 	public $last;
 	
-	protected function afterSave()
-	{
-		parent::afterSave();
-		
-		if($this->Id_document_type > 0)
-			GDriveHelper::uploadFile($this->Id);
-	}
-	
 	public function beforeSave()
 	{
 		$this->username = User::getCurrentUser()->username;
@@ -138,6 +130,9 @@ class TMultimedia extends TapiaActiveRecord
 				$this->file_name = $fileName;
 				$this->size =$this->uploadedFile["size"];
 				$this->mimeType = $this->uploadedFile["type"];
+				
+				if($this->Id_document_type > 0)
+					$this->Id_google_drive = GDriveHelper::uploadFile($this);
 				
 //***************************************** To save pdf preview ****************************************************************				
 // 				$template = new Imagick();
