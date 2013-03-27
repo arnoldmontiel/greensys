@@ -78,32 +78,14 @@ return array(
 	        'class' => 'ext.eauth.EAuth',
             'popup' => true, // Use the popup window instead of redirecting.
 			'cache' => true, // Cache component name or false to disable cache. Defaults to 'cache'.
-            'cacheExpire' => 0, // Cache lifetime. Defaults to 0 - means unlimited.
-            'services' => array( // You can change the providers and their classes.
-                'google' => array(
-                    'class' => 'GoogleOpenIDService',
-                ),
-                'yandex' => array(
-                    'class' => 'YandexOpenIDService',
-                ),
-                'twitter' => array(
-                    // register your app here: https://dev.twitter.com/apps/new
-                    'class' => 'TwitterOAuthService',
-                    'key' => '...',
-                    'secret' => '...',
-                ),
+            'cacheExpire' => 1, // Cache lifetime. Defaults to 0 - means unlimited.
+            'services' => array( // You can change the providers and their classes.     
                 'google_oauth' => array(
                     // register your app here: https://code.google.com/apis/console/
                     'class' => 'CustomGoogleOAuthService',
                     'client_id' => '740580923589-mnpka332ukf9ilvtgqn0tvgfcci4v0n3.apps.googleusercontent.com',
                     'client_secret' => 'zhD-rtPm_EnLtT_fu50BIfjZ',
-                    'title' => 'Google (OAuth)',
-                ),             
-                'facebook' => array(
-                    // register your app here: https://developers.facebook.com/apps/
-                    'class' => 'FacebookOAuthService',
-                    'client_id' => '...',
-                    'client_secret' => '...',
+                    'title' => 'Google (OAuth2)',
                 ),
 			),
 		),
