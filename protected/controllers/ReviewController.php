@@ -869,12 +869,14 @@ class ReviewController extends Controller
 				$model->attributes = $multi;
 				$model->uploadedFile = $file;
 				$model->Id_customer = $_POST['Id_customer'];				
+				$model->Id_project = $_POST['Id_project'];
 				
 				if(isset($model->Id_document_type))
 				{
 					$criteria=new CDbCriteria;
 					$criteria->addCondition('Id_document_type = '. $model->Id_document_type);
 					$criteria->addCondition('Id_customer = '. $model->Id_customer);
+					$criteria->addCondition('Id_project = '. $model->Id_project);
 					$criteria->order = 'Id DESC';
 					
 					//copio Id_google_drive si ya existe un documento del mismo tipo
@@ -890,7 +892,8 @@ class ReviewController extends Controller
 				if(isset($_POST['Id_review']) && $_POST['Id_review'] != null)
 					$this->redirect(array('update','id'=>$_POST['Id_review']));
 				else
-					$this->redirect(array('index','Id_customer'=>$_POST['Id_customer']));
+					$this->redirect(array('index','Id_customer'=>$_POST['Id_customer'],
+												'Id_project'=>$_POST['Id_project']));
 				
 					
 			} catch (Exception $e) {				
