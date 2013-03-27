@@ -7,6 +7,12 @@ class TCustomerController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/tcolumn2';
+	
+	public function getEntityType()
+	{
+		return EntityType::model()->findByAttributes(array('name'=>get_class(Customer::model())))->Id;
+	}
+	
 
 	/**
 	 * @return array action filters
@@ -42,6 +48,7 @@ class TCustomerController extends Controller
 		$modelUserCustomer = new UserCustomer('Search');
 		$modelUserCustomer->unsetAttributes();
 		$modelUserCustomer->Id_customer = $id;
+		
 		if(isset($_GET['UserCustomer']))
 		{
 			$modelUserCustomer->attributes =$_GET['UserCustomer'];
@@ -72,13 +79,18 @@ class TCustomerController extends Controller
 		{
 			$modelUserGroupCustomer->attributes = $_GET['UserGroupCustomer'];
 		}
+		$modelUserGrid = new User('Search');		
 		$modelUser = new User('Search');
 		$modelUser->unsetAttributes();
 		if(isset($_GET['User']))
 		{
 			$modelUser->attributes = $_GET['User'];
+			$modelUserGrid->attributes = $_GET['User'];
 			if(isset($_GET['User']['Id_project']))
-				$modelUser->Id_project =$_GET['User']['Id_project']; 			
+			{
+				$modelUser->Id_project =$_GET['User']['Id_project'];				
+				$modelUserGrid->Id_project =$_GET['User']['Id_project'];
+			}
 		}
 		$model= $this->loadModel($id);
 
@@ -90,18 +102,22 @@ class TCustomerController extends Controller
 			$modelProject->attributes = $_GET['Project'];
 			if(isset($_GET['Project']['Id']))
 			{
-				$modelUser->Id_project =$_GET['Project']['Id'];				
+				$modelUserGrid->Id_project =$_GET['Project']['Id'];				
 				$modelUserCustomer->Id_project =$_GET['Project']['Id'];				
 				$modelUserGroupCustomer->Id_project =$_GET['Project']['Id'];				
 			}
 		}
-		
+		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$model->Id_contact,'Id_entity_type'=>$this->getEntityType()));
 		$this->render('view',array(
 			'model'=>$model,
-			'modelUser'=>$modelUser,
+			'modelContact'=>$model->contact,
+			'modelPerson'=>$model->person,
+			'modelUser'=>$model->user,
 			'modelUserCustomer'=>$modelUserCustomer,
 			'modelUserGroupCustomer'=>$modelUserGroupCustomer,
-			'modelProject'=>$modelProject
+			'modelProject'=>$modelProject,
+			'modelHyperlink'=>$modelHyperlink,
+			'modelUserGrid'=>$modelUserGrid
 		));
 	}
 
@@ -140,27 +156,54 @@ class TCustomerController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new User;
+		$modelUser=new User();
+		$modelCustomer=new Customer();
+		$modelContact=new Contact();
+		$modelPerson=new Person();
+		
+		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$modelContact->Id,'Id_entity_type'=>$this->getEntityType()));
 		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 		
-		$model->Id_user_group = 3; // cliente
+		$modelCustomer->Id_user_group = 3; // cliente
 		
-		if(isset($_POST['User']))
+		if(isset($_POST['User'])&&isset($_POST['Person'])&&isset($_POST['Contact']))
 		{
-			$model->attributes=$_POST['User'];
-			$model->building_address = $_POST['User']['building_address'];
-			if($model->save())
-			{
-				$modelCustomer = TCustomer::model()->findByAttributes(array('username'=>$model->username));
-				$this->createDefaultPermissions($modelCustomer->Id);
+			$modelUser->attributes=$_POST['User'];
+			$modelContact->attributes=$_POST['Contact'];
+			$modelPerson->attributes=$_POST['Person'];
+			$transaction = $modelCustomer->dbConnection->beginTransaction();
+			try {
+				$modelUser->email = $modelContact->email;
+				$modelUser->Id_user_group = $modelCustomer->Id_user_group;
+				$modelUser->save();
+				$modelContact->save();
+				$modelPerson->save();
+				
+				$modelCustomer->Id_contact = $modelContact->Id;
+				$modelCustomer->Id_person = $modelPerson->Id;
+				$modelCustomer->username = $modelUser->username;
+				$modelCustomer->save();
+
+				Hyperlink::model()->deleteAllByAttributes(array('Id_customer'=>$modelCustomer->Id));
+				GreenHelper::saveLinks($_POST['links'], $modelCustomer->Id, $this);
+				
+				$transaction->commit();
+				
+				//$this->createDefaultPermissions($modelCustomer->Id);
 				$this->redirect(array('view','id'=>$modelCustomer->Id));
+			} catch (Exception $e) {
+				$transaction->rollback();
 			}
 		}
 		
 		$this->render('create',array(
-					'model'=>$model,
+					'modelCustomer'=>$modelCustomer,
+					'modelUser'=>$modelUser,
+					'modelContact'=>$modelContact,
+					'modelPerson'=>$modelPerson,
+					'modelHyperlink'=>$modelHyperlink
 		));
 	}
 
@@ -233,7 +276,7 @@ class TCustomerController extends Controller
 	{
 		
 		$idCustomer = isset($_GET['IdCustomer'])?$_GET['IdCustomer']:'';
-		$idProject = isset($_GET['IdProject'])?$_GET['IdProject'][0]:'';
+		$idProject = isset($_GET['IdProject'])?$_GET['IdProject']:'';
 		$idUser = isset($_GET['username'])?$_GET['username'][0]:'';
 	
 		if(!empty($idCustomer)&&!empty($idUser)&&!empty($idProject))
@@ -279,24 +322,54 @@ class TCustomerController extends Controller
 	public function actionUpdate($id)
 	{
 		$modelCustomer = $this->loadModel($id);
+		$modelUser= $modelCustomer->user;
+		$modelContact= $modelCustomer->contact;
+		$modelPerson= $modelCustomer->person();
+		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$modelContact->Id,'Id_entity_type'=>$this->getEntityType()));
 		
-		$model = User::model()->findByAttributes(array('username'=>$modelCustomer->username));
-		$model->building_address = $modelCustomer->building_address; 
 		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['User']))
+		
+		if(isset($_POST['User'])&&isset($_POST['Person'])&&isset($_POST['Contact']))
 		{
-			$model->attributes=$_POST['User'];
-			$model->building_address = $_POST['User']['building_address'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$modelCustomer->Id));
-		}
+			$modelUser->attributes=$_POST['User'];
+			$modelContact->attributes=$_POST['Contact'];
+			$modelPerson->attributes=$_POST['Person'];
+			$transaction = $modelCustomer->dbConnection->beginTransaction();
+			try {
+				$modelUser->email = $modelContact->email;
+				$modelUser->Id_user_group = $modelCustomer->Id_user_group;				
+				$modelUser->save();
+				$modelContact->save();
+				$modelPerson->save();
+// 				$modelCustomer->Id_contact = $modelContact->Id;
+// 				$modelCustomer->Id_person = $modelPerson->Id;
+// 				$modelCustomer->username = $modelPerson->username;
+				$modelCustomer->save();
+				
+				Hyperlink::model()->deleteAllByAttributes(array('Id_contact'=>$modelCustomer->Id_contact));
+				GreenHelper::saveLinks($_POST['links'], $modelCustomer->Id_contact, $this->getEntityType(),'Id_contact');
 
+				$transaction->commit();
+		
+				//$this->createDefaultPermissions($modelCustomer->Id);
+				$this->redirect(array('view','id'=>$modelCustomer->Id));
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
+		}
+		
 		$this->render('update',array(
-			'model'=>$model,
+							'modelCustomer'=>$modelCustomer,
+							'modelUser'=>$modelUser,
+							'modelContact'=>$modelContact,
+							'modelPerson'=>$modelPerson,
+							'modelHyperlink'=>$modelHyperlink
 		));
+		
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
 	}
 
 	/**
@@ -344,7 +417,11 @@ class TCustomerController extends Controller
 			'model'=>$model,
 		));
 	}
-
+	public function actionAjaxRemoveProject()
+	{
+		//TODO
+	}
+	
 	public function actionAjaxSelect()
 	{
 		$model=new TCustomer('search');

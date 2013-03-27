@@ -65,54 +65,69 @@ function getIdProjectSelected()
 ?>
 
 <h1>Cliente</h1>
-
+<div class="left"style="margin-left:1px; width: 48%; ">
 <?php $this->widget('zii.widgets.CDetailView', array(
 		'data'=>$model,
+		'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',
 		'attributes'=>array(
-				array('label'=>$model->getAttributeLabel('name'),
+				array('label'=>$modelPerson->getAttributeLabel('name'),
 						'type'=>'raw',
-						'value'=>$model->person->name
+						'value'=>$modelPerson->name
 				),
-				array('label'=>$model->getAttributeLabel('last_name'),
+				array('label'=>$modelPerson->getAttributeLabel('last_name'),
 						'type'=>'raw',
-						'value'=>$model->person->last_name
+						'value'=>$modelPerson->last_name
 				),
-				array('label'=>$model->getAttributeLabel('username'),
+				array('label'=>$modelUser->getAttributeLabel('username'),
 						'type'=>'raw',
-						'value'=>$model->username . ' ( ' . CHtml::link('Asignar permisos', Yii::app()->createUrl('srbac/authitem/assign'),array('id'=>'linkPermission')) . ' )'
+						'value'=>$modelUser->username . ' ( ' . CHtml::link('Asignar permisos', Yii::app()->createUrl('srbac/authitem/assign'),array('id'=>'linkPermission')) . ' )'
 				),
-				array('label'=>$model->getAttributeLabel('password'),
+				array('label'=>$modelUser->getAttributeLabel('password'),
 						'type'=>'raw',
-						'value'=>$model->user->password
+						'value'=>$modelUser->password
 				),
-				array('label'=>$model->getAttributeLabel('email'),
+				array('label'=>$modelUser->getAttributeLabel('email'),
 						'type'=>'raw',
-						'value'=>$model->user->email
+						'value'=>$modelUser->email
 				),
-				array('label'=>$model->getAttributeLabel('address'),
+				array('label'=>$modelContact->getAttributeLabel('address'),
 						'type'=>'raw',
-						'value'=>$model->user->address
+						'value'=>$modelContact->address
 				),
-				array('label'=>$model->getAttributeLabel('phone_house'),
+				array('label'=>$modelContact->getAttributeLabel('telephone_1'),
 						'type'=>'raw',
-						'value'=>$model->user->phone_house
+						'value'=>$modelContact->telephone_1
 				),
-				array('label'=>$model->getAttributeLabel('phone_mobile'),
+				array('label'=>$modelContact->getAttributeLabel('telephone_2'),
 						'type'=>'raw',
-						'value'=>$model->user->phone_mobile
+						'value'=>$modelContact->telephone_2
 				),
-				array('label'=>$model->getAttributeLabel('description'),
+				array('label'=>$modelContact->getAttributeLabel('description'),
 						'type'=>'raw',
-						'value'=>$model->user->description
+						'value'=>$modelContact->description
 				),
-				array('label'=>$model->getAttributeLabel('send_mail'),
+				array('label'=>$modelUser->getAttributeLabel('send_mail'),
 						'type'=>'raw',
-						'value'=>CHtml::checkBox("send_mail",$model->user->send_mail,array("disabled"=>"disabled"))
+						'value'=>CHtml::checkBox("send_mail",$modelUser->send_mail,array("disabled"=>"disabled"))
 				),
 		),
 )); ?>
+</div>
+<div class="right" style="margin-left:1px; width: 48%; ">
+	<?php
+	$hyperLinks = CHtml::listData($modelHyperlink, 'Id','description');
+	
+	$this->widget('ext.linkcontainer.linkcontainer', array(
+		'id'=>'linkContainer',	// default is class="ui-sortable" id="yw0"
+		'items'=>$hyperLinks,
+		'mode'=>'show'
+	));
+	?>
+
 <br>
-<div class="customer-assign-title">
+</div>
+<br>
+<div class="customer-assign-title"style="float:left">
 		<div style="display: inline-block;">
 			Proyectos
 		</div>
@@ -232,8 +247,8 @@ echo CHtml::button('Nuevo Usuario', array('class'=>'customer-new-user',
 	$userGroupList = CHtml::listData($userGroup,'Id','description');
 	$this->widget('zii.widgets.grid.CGridView', array(
 			'id'=>'user-group-grid',
-			'dataProvider'=>$modelUser->searchUnassigned(),
-			'filter'=>$modelUser,
+			'dataProvider'=>$modelUserGrid->searchUnassigned(),
+			'filter'=>$modelUserGrid,
 			'summaryText'=>'',
 			'selectionChanged'=>'js:function(id){
 			var id_project = jQuery("#project-grid").yiiGridView("getSelection");

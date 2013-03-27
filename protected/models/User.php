@@ -33,30 +33,6 @@ class User extends TapiaActiveRecord
 	{
 		parent::afterSave();
 
-		if($this->Id_user_group == 3)
-		{
-			$modelCustomerDb = TCustomer::model()->findByAttributes(array('username'=>$this->username));
-			if($modelCustomerDb)
-			{
-				$person = $modelCustomerDb->person;
-				$person->name = $this->name;
-				$person->last_name = $this->last_name;
-				$person->save();
-				$modelCustomerDb->save();
-			}
-			else
-			{
-				$modelCustomer = new TCustomer;
-				$person = new Person();
-				$person->name = $this->name;
-				$person->last_name = $this->last_name;
-				$person->save();
-				
-				$modelCustomer->username = $this->username;				
-				$modelCustomer->Id_person = $person->Id;				
-				$modelCustomer->save();
-			}
-		}
 		
 		//Asigno permisos de SRBAC si es nuevo el registro
 		if($this->isNewRecord)

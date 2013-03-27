@@ -5,78 +5,110 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Campos con <span class="required">*</span> son requeridos.</p>
-
-	<?php echo $form->errorSummary($model); ?>
-
+	<?php echo $form->errorSummary($modelPerson); ?>
+	<?php echo $form->errorSummary($modelContact); ?>
+	<?php echo $form->errorSummary($modelUser); ?>
 	<div class="row">
-		<?php echo $form->labelEx($model,'username'); ?>
-		<?php echo $form->textField($model,'username',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($model,'username'); ?>
+		<?php echo $form->labelEx($modelPerson,'name'); ?>
+		<?php echo $form->textField($modelPerson,'name',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($modelPerson,'name'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($model,'password'); ?>
+		<?php echo $form->labelEx($modelPerson,'last_name'); ?>
+		<?php echo $form->textField($modelPerson,'last_name',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($modelPerson,'last_name'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'email'); ?>
-		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($model,'email'); ?>
+		<?php echo $form->labelEx($modelPerson,'date_birth'); ?>
+ 		<?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+	     // additional javascript options for the date picker plugin
+ 		'language'=>'es',
+ 		'model'=>$modelPerson, 		
+ 		'attribute'=>'date_birth',
+ 		'options'=>array(
+	         'showAnim'=>'fold',
+ 			 'yearRange'=>'1930',
+	         'changeYear'=>'true'
+	     ),
+	     'htmlOptions'=>array(
+	         'style'=>'height:20px;'
+	    ),
+		));?>
+		<?php echo $form->error($modelPerson,'date_birth'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($modelPerson,'uid'); ?>
+		<?php echo $form->textField($modelPerson,'uid',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($modelPerson,'uid'); ?>
 	</div>
 	
 	<div class="row">
-		<?php echo $form->labelEx($model,'name'); ?>
-		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>100)); ?>
-		<?php echo $form->error($model,'name'); ?>
+		<?php echo $form->labelEx($modelContact,'description'); ?>
+		<?php echo $form->textField($modelContact,'description',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($modelContact,'description'); ?>
 	</div>
-			
+
 	<div class="row">
-		<?php echo $form->labelEx($model,'last_name'); ?>
-		<?php echo $form->textField($model,'last_name',array('size'=>60,'maxlength'=>100)); ?>
-		<?php echo $form->error($model,'last_name'); ?>
+		<?php echo $form->labelEx($modelContact,'telephone_1'); ?>
+		<?php echo $form->textField($modelContact,'telephone_1',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($modelContact,'telephone_1'); ?>
 	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($modelContact,'telephone_2'); ?>
+		<?php echo $form->textField($modelContact,'telephone_2',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($modelContact,'telephone_2'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($modelContact,'telephone_3'); ?>
+		<?php echo $form->textField($modelContact,'telephone_3',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($modelContact,'telephone_3'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($modelContact,'email'); ?>
+		<?php echo $form->textField($modelContact,'email',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->error($modelContact,'email'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($modelContact,'address'); ?>
+		<?php echo $form->textField($modelContact,'address',array('size'=>60,'maxlength'=>100)); ?>
+		<?php echo $form->error($modelContact,'address'); ?>
+	</div>
+	<?php
+	$hyperLinks = CHtml::listData($modelHyperlink, 'Id','description');
 	
+	$this->widget('ext.linkcontainer.linkcontainer', array(
+		'id'=>'linkContainer',	// default is class="ui-sortable" id="yw0"
+		'items'=>$hyperLinks,
+				));
+	?>
+
 	<div class="row">
-		<?php echo $form->labelEx($model,'address'); ?>
-		<?php echo $form->textField($model,'address',array('size'=>60,'maxlength'=>100)); ?>
-		<?php echo $form->error($model,'address'); ?>
+		<?php echo $form->labelEx($modelUser,'username'); ?>
+		<?php echo $form->textField($modelUser,'username',array('size'=>60,'maxlength'=>128,'disabled'=>$modelCustomer->isNewRecord ? false : true)); ?>
+		<?php echo $form->error($modelUser,'username'); ?>
 	</div>
-	
+
 	<div class="row">
-		<?php echo $form->labelEx($model,'building_address'); ?>
-		<?php echo $form->textField($model,'building_address',array('size'=>60,'maxlength'=>100)); ?>
-		<?php echo $form->error($model,'building_address'); ?>
+		<?php echo $form->labelEx($modelUser,'password'); ?>
+		<?php echo $form->passwordField($modelUser,'password',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->error($modelUser,'password'); ?>
 	</div>
-			
-	<div class="row">
-		<?php echo $form->labelEx($model,'phone_house'); ?>
-		<?php echo $form->textField($model,'phone_house',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'phone_house'); ?>
-	</div>
-	
-	<div class="row">
-		<?php echo $form->labelEx($model,'phone_mobile'); ?>
-		<?php echo $form->textField($model,'phone_mobile',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'phone_mobile'); ?>
-	</div>
-	
-	<div class="row">
-		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('size'=>255,'maxlength'=>255,'cols'=>80)); ?>
-		<?php echo $form->error($model,'description'); ?>
-	</div>
-	
+		
 	<div class="row">	
-		<?php echo $form->labelEx($model,'send_mail'); ?>
-		<?php echo $form->checkBox($model,'send_mail', array('checked','checked')); ?>
-		<?php echo $form->error($model,'send_mail'); ?>
+		<?php echo $form->labelEx($modelUser,'send_mail'); ?>
+		<?php echo $form->checkBox($modelUser,'send_mail', array('checked','checked')); ?>
+		<?php echo $form->error($modelUser,'send_mail'); ?>
 	</div>
 	
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar'); ?>
+		<?php echo CHtml::submitButton($modelCustomer->isNewRecord ? 'Crear' : 'Guardar'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

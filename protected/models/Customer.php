@@ -21,7 +21,9 @@ class Customer extends ModelAudit
 	public $last_name;
 	public $telephone_1;
 	public $email;
-	
+	//from tapia
+	public $Id_user_group;
+	public $username;
 	protected function afterSave()
 	{
 		parent::afterSave();
@@ -33,6 +35,8 @@ class Customer extends ModelAudit
 		$tcustomer->Id = $this->Id;
 		$tcustomer->Id_contact = $this->Id_contact;
 		$tcustomer->Id_person= $this->Id_person;
+		$tcustomer->Id_user_group = $this->Id_user_group;
+		$tcustomer->username = $this->username;
 		$tcustomer->save();
 	}
 	protected function afterDelete()

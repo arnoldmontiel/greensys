@@ -37,7 +37,7 @@
 	         'style'=>'height:20px;'
 	    ),
 		));?>
-		<?php echo $form->error($model,'date_birth'); ?>
+		<?php echo $form->error($modelPerson,'date_birth'); ?>
 	</div>
 
 	<div class="row">

@@ -47,7 +47,7 @@ class Person extends ModelAudit
 		// will receive user inputs.
 		return array(
 			array('name, last_name, uid', 'length', 'max'=>45),
-			array('last_name', 'required'),
+			array('name,last_name', 'required'),
 			array('date_birth', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -77,7 +77,7 @@ class Person extends ModelAudit
 			'name' => 'Name',
 			'last_name' => 'Last Name',
 			'date_birth' => 'Date Birth',
-			'uid' => 'Id',
+			'uid' => 'Documento',
 		);
 	}
 

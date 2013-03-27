@@ -58,8 +58,10 @@ class ProjectController extends Controller
 		if(isset($_POST['Project']))
 		{
 			$model->attributes=$_POST['Project'];
-			if($model->save())
+			if($model->save()){
+				$this->createDefaultPermissions($model->Id_customer,$model->Id);
 				$this->redirect(array('view','id'=>$model->Id));
+			}
 		}
 
 		$this->render('create',array(
@@ -76,11 +78,36 @@ class ProjectController extends Controller
 		if(isset($_POST['Project']))
 		{
 			$model->attributes=$_POST['Project'];
-			if($model->save())
-				echo json_encode($model->attributes); 
+			if($model->save()){
+				$this->createDefaultPermissions($model->Id_customer,$model->Id);				
+				echo json_encode($model->attributes);
+			} 
 		}
 	
 	}
+	private function createDefaultPermissions($idCustomer,$idProject)
+	{
+		$userGroups = UserGroup::model()->findAll();
+		foreach($userGroups as $item)
+		{
+			$this->savePermission($idCustomer, $item, $idProject);
+		}
+	}
+	
+	private function savePermission($idCustomer, $modelUserGroup, $idProject)
+	{
+		$modelUserGroupCustomer = new UserGroupCustomer;
+		$modelUserGroupCustomer->Id_customer = $idCustomer;
+		$modelUserGroupCustomer->Id_project = $idProject;
+		$modelUserGroupCustomer->Id_user_group = $modelUserGroup->Id;
+		if($modelUserGroup->is_administrator)
+		$modelUserGroupCustomer->Id_interest_power = 2;
+		else
+		$modelUserGroupCustomer->Id_interest_power = 1;
+			
+		$modelUserGroupCustomer->save();
+	}
+	
 	
 	/**
 	 * Updates a particular model.
