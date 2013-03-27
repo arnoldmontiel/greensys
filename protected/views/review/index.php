@@ -416,7 +416,7 @@ function getCheck(checkName)
 	</div>
 	<?php
 		$modelMulti = new TMultimedia;
-		$this->renderPartial('_formDocument',array('model'=>$modelMulti, 'Id_review'=>null, 'Id_customer'=>$Id_customer));
+		$this->renderPartial('_formDocument',array('model'=>$modelMulti, 'Id_review'=>null, 'Id_customer'=>$Id_customer, 'Id_project'=>$Id_project));
 	?>
 </div>
 

@@ -1085,7 +1085,7 @@ echo CHtml::closeTag('div');
 	</div>
 	<?php 
 		$modelMulti = new TMultimedia;
-		$this->renderPartial('_formDocument',array('model'=>$modelMulti, 'Id_review'=>$model->Id, 'Id_customer'=>$model->Id_customer));
+		$this->renderPartial('_formDocument',array('model'=>$modelMulti, 'Id_review'=>$model->Id, 'Id_customer'=>$model->Id_customer, 'Id_project'=>$model->Id_project));
 	?>
 </div>
 
