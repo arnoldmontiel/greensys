@@ -22,8 +22,7 @@ class GDriveHelper
 			$file->setMimeType($mimeType);
 
 			//get file data
-			//$data = file_get_contents(Yii::app()->baseUrl.'/docs/'.$multimedia->file_name);
-			$data = file_get_contents('http://localhost/workspace/Green/docs/'.$modelMultimedia->file_name);
+			$data = file_get_contents('docs/'.$modelMultimedia->file_name);
 	
 // 			$parentId = '0B3IgC6E17ly-cnRSdEFFMFpIMzA';
 
