@@ -1,28 +1,29 @@
 <?php
 class GDriveHelper
 {
-	
-	static public function uploadFile($Id_multimedia)
+	/**
+	 * 
+	 * Insert or update a file in GoogleDrive
+	 * @param TMultimedia $modelMultimedia
+	 * @return Id_google_drive
+	 */
+	static public function uploadFile($modelMultimedia)
 	{
 		$service = self::getService();
-		//$service->files->listFiles()
-		$client = self::getClient();
-		$client->authenticate();
+		$idGoogleDrive = $modelMultimedia->Id_google_drive;
 		
-		$multimedia = TMultimedia::model()->findByPk($Id_multimedia);
-		
-		if(isset($multimedia))
+		if(isset($modelMultimedia))
 		{
-			$mimeType = $multimedia->mimeType;
+			$mimeType = $modelMultimedia->mimeType;
 	
 			//prepare file info
 			$file = new Google_DriveFile();
-			$file->setTitle($multimedia->description);
+			$file->setTitle($modelMultimedia->description);
 			$file->setMimeType($mimeType);
 
 			//get file data
 			//$data = file_get_contents(Yii::app()->baseUrl.'/docs/'.$multimedia->file_name);
-			$data = file_get_contents('http://localhost/workspace/Green/docs/'.$multimedia->file_name);
+			$data = file_get_contents('http://localhost/workspace/Green/docs/'.$modelMultimedia->file_name);
 	
 // 			$parentId = '0B3IgC6E17ly-cnRSdEFFMFpIMzA';
 
@@ -34,16 +35,14 @@ class GDriveHelper
 // 				$file->setParents(array($parent));
 // 			}
 	
-			if(isset($multimedia->Id_google_drive))
-				self::updateFile($service, $multimedia->Id_google_drive, $file, $data, $mimeType);
+			if(isset($idGoogleDrive))
+				self::updateFile($service, $idGoogleDrive, $file, $data, $mimeType);
 			else
-				self::insertFile($service, $file, $data, $mimeType, $Id_multimedia);
-	
-
-			return true;
+				$idGoogleDrive = self::insertFile($service, $file, $data, $mimeType);
+				
 		}
 		
-		return false;
+		return $idGoogleDrive;
 	}
 	
 	static public function removeFilePermission($fileId, $permissionId)
@@ -66,17 +65,14 @@ class GDriveHelper
 // 		}
 	}
 	
-	private function insertFile($service, $file, $data, $mimeType, $Id_multimedia)
+	private function insertFile($service, $file, $data, $mimeType)
 	{
 		$createdFile = $service->files->insert($file, array(
 		      'data' => $data,
 		      'mimeType' => $mimeType,
 		));
 		
-		$multimedia = TMultimedia::model()->findByPk($Id_multimedia);
-		$multimedia->Id_google_drive = (string)$createdFile['id'];
-		$multimedia->save();
-		
+		return (string)$createdFile['id'];
 	}
 	
 	private function updateFile($service, $Id_google_drive, $file, $data, $mimeType)
@@ -90,12 +86,21 @@ class GDriveHelper
 	
 	private function getService()
 	{
-		return $_SESSION['GOOGLE_DRIVE_SERVICE'];
+		$clientData = $_SESSION['GOOGLE_DRIVE_CLIENT_DATA'];
+		
+		$client = new Google_Client();
+		
+		$client->setClientId($clientData->getClientId());
+		$client->setClientSecret($clientData->getClientSecret());
+		$client->setScopes($clientData->getScope());
+		$client->setRedirectUri($clientData->getRedirectUri());
+		
+		$service = new Google_DriveService($client);
+		
+		$client->setAccessToken($_SESSION['GOOGLE_DRIVE_TOKEN']);
+		
+		return $service;
 	}
 	
-	private function getClient()
-	{
-		return $_SESSION['GOOGLE_DRIVE_CLIENT'];
-	}
 
 }
