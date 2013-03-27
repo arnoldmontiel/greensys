@@ -12,6 +12,7 @@ class CustomGoogleOAuthService extends GoogleOAuthService
 	
 	protected function getAccessToken($code) {
 				
+		//$client = new Google_Client(array('authClass'=>'CustomEOAuth2Service'));
 		$client = new Google_Client();
 		$client->setClientId($this->client_id);
 		$client->setClientSecret($this->client_secret);
@@ -22,9 +23,10 @@ class CustomGoogleOAuthService extends GoogleOAuthService
 				
 		$accessToken = $client->authenticate($code);
 		$client->setAccessToken($accessToken);		
-		
-		$_SESSION['GOOGLE_DRIVE_SERVICE'] = $service; 
-		$_SESSION['GOOGLE_DRIVE_CLIENT'] = $client;
+				
+		$_SESSION['GOOGLE_DRIVE_SERVICE'] = $service; 		
+		$_SESSION['GOOGLE_DRIVE_CLIENT_DATA'] = $this;
+		$_SESSION['GOOGLE_DRIVE_TOKEN'] = $accessToken;
 		return $this->parseJson($accessToken);
 	}
 	
@@ -37,5 +39,24 @@ class CustomGoogleOAuthService extends GoogleOAuthService
 		$this->setState('expires', time() + $token->expires_in - 60);
 		$this->access_token = $token->access_token;
 	}
+	
+	public function getClientId()
+	{
+		return $this->client_id;	
+	}
+	
+	public function getScope()
+	{
+		return $this->scope;
+	}
+	
+	public function getClientSecret()
+	{
+		return $this->client_secret;
+	}
 		
+	public function getRedirectUri()
+	{
+		return $this->getState('redirect_uri');
+	}
 }
