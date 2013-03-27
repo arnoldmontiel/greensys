@@ -1,7 +1,7 @@
 <?php
 Yii::app()->clientScript->registerScript('viewDocResource', "
 $('#btnBack').click(function(){
-		window.location = '".ReviewController::createUrl('index',array('Id_customer'=>$Id_customer))."';
+		window.location = '".ReviewController::createUrl('index',array('Id_customer'=>$Id_customer,'Id_project'=>$Id_project))."';
 		return false;
 });
 
