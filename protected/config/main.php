@@ -27,6 +27,7 @@ return array(
 		'application.modules.apigoogle.google-api-php-client.src.*',
 		'application.modules.apigoogle.google-api-php-client.src.contrib.*',		
 		'application.modules.apigoogle.google-api-php-client.src.service.*',
+		'application.modules.apigoogle.google-api-php-client.src.io.*',
 	),
 	
 	'localeDataPath'=>'protected/i18n/data/',
