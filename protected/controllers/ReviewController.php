@@ -885,34 +885,11 @@ class ReviewController extends Controller
 				
 				$transaction->commit();
 				
-				if(isset($model->Id_document_type))
-				{
-					if(isset($_POST['Id_review']) && $_POST['Id_review'] != null)
-					{						
-						$redirectUri = 'http://localhost/workspace/Green/index.php?r=review/update';
-						$this->redirect( GDriveHelper::getAuthUrl($redirectUri,
-										array('id'=>$_POST['Id_review'],
-											  'Id_multimedia'=>$model->Id,
-											  'Id_customer'=>$model->Id_customer)
-						));
-					}
-					else 
-					{
-						$redirectUri = 'http://localhost/workspace/Green/index.php?r=review/index';
-						$this->redirect( GDriveHelper::getAuthUrl($redirectUri, 
-										array('Id_customer'=>$_POST['Id_customer'],
-											  'Id_multimedia'=>$model->Id,
-											  'Id_customer'=>$model->Id_customer)
-						));
-					}
-				}
+				if(isset($_POST['Id_review']) && $_POST['Id_review'] != null)
+					$this->redirect(array('update','id'=>$_POST['Id_review']));
 				else
-				{
-					if(isset($_POST['Id_review']) && $_POST['Id_review'] != null)
-						$this->redirect(array('update','id'=>$_POST['Id_review']));
-					else
-						$this->redirect(array('index','Id_customer'=>$_POST['Id_customer']));
-				}
+					$this->redirect(array('index','Id_customer'=>$_POST['Id_customer']));
+				
 					
 			} catch (Exception $e) {				
 				$transaction->rollback();
