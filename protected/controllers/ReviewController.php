@@ -613,11 +613,11 @@ class ReviewController extends Controller
 
 			$criteria->select = 't.*, max(n.change_date) as max_date';
 			$criteria->join =  	" 
-					LEFT OUTER JOIN tapia.customer cus on (t.Id_customer = cus.Id)
+					JOIN tapia.customer cus on (t.Id_customer = cus.Id)
 					LEFT OUTER JOIN green.person gp on (cus.Id_person = gp.Id)
-					LEFT OUTER JOIN tapia.user_customer uc on (cus.Id = uc.Id_customer)
+					LEFT OUTER JOIN tapia.user_customer uc on (t.Id = uc.Id_project)
 					LEFT OUTER JOIN tapia.user u on (u.username = uc.username)
-          			LEFT OUTER JOIN tapia.note n ON ( n.Id_customer = uc.Id_customer)
+          			LEFT OUTER JOIN tapia.note n ON ( n.Id_project = uc.Id_project)
           			LEFT OUTER JOIN tapia.user_group_note ugn on (u.Id_user_group = ugn.Id_user_group)
 				";
 			$criteria->addCondition('uc.username = "'. User::getCurrentUser()->username.'"');
