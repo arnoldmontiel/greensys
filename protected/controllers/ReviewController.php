@@ -156,14 +156,7 @@ class ReviewController extends Controller
 	 * @param integer $id the ID of the model to be updated
 	 */
 	public function actionUpdate($id=null, $order=null)
-	{
-		if(isset($_GET['code']))
-		{
-			GDriveHelper::uploadFile($_GET['state'], $_GET['code']);
-			parse_str($_GET['state'], $params);
-			$this->redirect(array('update','id'=>$params['id']));
-		}
-		
+	{				
 		$model=$this->loadModel($id);
 		$this->modelTag = $model;
 		
@@ -395,13 +388,6 @@ class ReviewController extends Controller
 		if($Id_customer==-1)
 		{
 			$this->showFilter = false;			
-		}
-		
-		if(isset($_GET['code']))
-		{
-			GDriveHelper::uploadFile($_GET['state'], $_GET['code']);
-			parse_str($_GET['state'], $params);
-			$this->redirect(array('index','Id_customer'=>$params['Id_customer']));
 		}
 		
 		$hasAlbum = Album::model()->countByAttributes(array('Id_customer'=>$Id_customer,'Id_project'=>$Id_project,
