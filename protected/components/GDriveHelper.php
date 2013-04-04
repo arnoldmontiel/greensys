@@ -44,24 +44,39 @@ class GDriveHelper
 		return $idGoogleDrive;
 	}
 	
+	/**
+	 * 
+	 * Insert a new permission.
+	 * @param String $Id_google_drive
+	 * @param integer $Id_customer
+	 * @param String $role The value "owner", "writer" or "reader".
+	 */
+	static public function shareFile($Id_google_drive, $Id_customer, $role = 'writer')
+	{
+		$service = self::getService();
+		
+		$criteria=new CDbCriteria;
+		$criteria->join =  	"INNER JOIN user u on u.username = t.username
+							INNER JOIN user_group ug on u.Id_user_group = ug.Id";
+		$criteria->addCondition('ug.use_technical_docs = 1');		
+		$criteria->addCondition('t.Id_customer = '. $Id_customer);		
+		$criteria->addCondition('u.username <> "'. User::getCurrentUser()->username .'"');
+		
+		$userCustomers = UserCustomer::model()->findAll($criteria);
+		
+		foreach($userCustomers as $modelUserCustomer)
+		{
+			$newPermission = new Google_Permission();
+			$newPermission->setValue($modelUserCustomer->user->email);
+			$newPermission->setType('user');
+			$newPermission->setRole($role);
+			$service->permissions->insert($Id_google_drive, $newPermission);
+		}
+	}
+	
 	static public function removeFilePermission($fileId, $permissionId)
 	{
 		//$service->permissions->delete($fileId, $permissionId);
-	}
-	
-	private function shareFile($service, $Id_google_drive, $Id_customer)
-	{
-		
-		$userCustomers = UserCustomer::model()->findAllByAttributes(array('Id_customer'=>$Id_customer));
-		
-// 		foreach($userCustomers as $modelUserCustomer)
-// 		{
-// 			$newPermission = new Google_Permission();
-// 			$newPermission->setValue($modelUserCustomer->user->email);
-// 			$newPermission->setType('user');
-// 			$newPermission->setRole('reader');
-// 			$service->permissions->insert($Id_google_drive, $newPermission);
-// 		}
 	}
 	
 	private function insertFile($service, $file, $data, $mimeType)

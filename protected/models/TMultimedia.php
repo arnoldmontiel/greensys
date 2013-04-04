@@ -131,8 +131,10 @@ class TMultimedia extends TapiaActiveRecord
 				$this->size =$this->uploadedFile["size"];
 				$this->mimeType = $this->uploadedFile["type"];
 				
-				if($this->Id_document_type > 0)
+				if($this->Id_document_type > 0){
 					$this->Id_google_drive = GDriveHelper::uploadFile($this);
+					GDriveHelper::shareFile($this->Id_google_drive, $this->Id_customer);
+				}
 				
 //***************************************** To save pdf preview ****************************************************************				
 // 				$template = new Imagick();

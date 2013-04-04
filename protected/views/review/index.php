@@ -254,7 +254,6 @@ $('#btnAlbum').click(function(){
 			}
 		).success(
 		function(data){
-		debugger;
 			$('#loading').removeClass('loading');
 			var param = '&idAlbum='+data+'&idCustomer='+".$Id_customer.";
 			$('#XUploadWidget_form').attr('action','".AlbumController::createUrl('album/AjaxUpload')."'+param);
@@ -475,3 +474,9 @@ function getCheck(checkName)
 ?>
 </div>
 <?php endif;?>
+
+<?php
+$this->widget('ext.processingDialog.processingDialog', array(
+		'idDialog'=>'dialogProcessing',
+));
+?>
