@@ -224,7 +224,7 @@ class GDriveHelper
 		{
 			$criteria=new CDbCriteria;
 			$criteria->join =  	"INNER JOIN user_customer uc on uc.username = t.username
-								 INNER JOIN user_gourp ug on ug.Id = t.Id_user_group";
+								 INNER JOIN user_group ug on ug.Id = t.Id_user_group";
 			$criteria->addCondition('t.Id_user_group = ' . $Id_user_group);
 			$criteria->addCondition('uc.Id_project = ' . $modelMultimediaNote->multimedia->Id_project);
 			$criteria->addCondition('ug.use_technical_docs = 0');
