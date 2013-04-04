@@ -217,17 +217,18 @@ class GDriveHelper
 		$criteria->join =  	"INNER JOIN multimedia m on m.Id = t.Id_multimedia";
 		$criteria->addCondition('m.Id_document_type is not null');
 		$criteria->addCondition('t.Id_note = '. $Id_note);
-		$criteria->addCondition('m.use_technical_docs = 0');
 		
 		$multimediaNotes = MultimediaNote::model()->findAll($criteria);
 	
 		foreach($multimediaNotes as $modelMultimediaNote)
 		{
 			$criteria=new CDbCriteria;
-			$criteria->join =  	"INNER JOIN user_customer uc on uc.username = t.username";
+			$criteria->join =  	"INNER JOIN user_customer uc on uc.username = t.username
+								 INNER JOIN user_gourp ug on ug.Id = t.Id_user_group";
 			$criteria->addCondition('t.Id_user_group = ' . $Id_user_group);
 			$criteria->addCondition('uc.Id_project = ' . $modelMultimediaNote->multimedia->Id_project);
-	
+			$criteria->addCondition('ug.use_technical_docs = 0');
+				
 			$users = User::model()->findAll($criteria);
 	
 			foreach($users as $user)
