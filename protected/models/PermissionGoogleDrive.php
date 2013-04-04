@@ -4,7 +4,8 @@
  * This is the model class for table "permission_google_drive".
  *
  * The followings are the available columns in table 'permission_google_drive':
- * @property string $Id
+ * @property stringinteger $Id
+ * @property string $Id_permission
  * @property string $username
  * @property string $Id_google_drive
  *
@@ -39,12 +40,12 @@ class PermissionGoogleDrive extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id, username', 'required'),
-			array('Id, Id_google_drive', 'length', 'max'=>255),
+			array('Id_permission, username', 'required'),
+			array('Id_permission, Id_google_drive', 'length', 'max'=>255),
 			array('username', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, username, Id_google_drive', 'safe', 'on'=>'search'),
+			array('Id, Id_permission, username, Id_google_drive', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -67,6 +68,7 @@ class PermissionGoogleDrive extends TapiaActiveRecord
 	{
 		return array(
 			'Id' => 'Permission Google Drive',
+			'Id_permission' => 'Id Permission',
 			'username' => 'Username',
 			'Id_google_drive' => 'Google Drive',
 		);

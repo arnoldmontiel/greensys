@@ -73,16 +73,12 @@ class GDriveHelper
 			{
 				$permission = self::share($service, $modelUserCustomer->user->email, $role, $Id_google_drive);
 				if(isset($permission))
-				{
-					$modelPermission = PermissionGoogleDrive::model()->findByPk($permission['id']);
-					if(!isset($modelPermission))
-					{
-						$modelPermission = new PermissionGoogleDrive();
-						$modelPermission->Id = $permission['id'];
-						$modelPermission->username = $modelUserCustomer->user->username;
-						$modelPermission->Id_google_drive = $Id_google_drive;
-						$modelPermission->save();
-					}
+				{					
+					$modelPermission = new PermissionGoogleDrive();
+					$modelPermission->Id_permission = $permission['id'];
+					$modelPermission->username = $modelUserCustomer->user->username;
+					$modelPermission->Id_google_drive = $Id_google_drive;
+					$modelPermission->save();
 				}			
 			}
 		}
@@ -129,15 +125,11 @@ class GDriveHelper
 					$permission = self::share($service, $user->email, $role, $modelUserGroup->Id_google_drive);
 					if(isset($permission))
 					{
-						$modelPermission = PermissionGoogleDrive::model()->findByPk($permission['id']);
-						if(!isset($modelPermission))
-						{
-							$modelPermission = new PermissionGoogleDrive();
-							$modelPermission->Id = $permission['id'];
-							$modelPermission->username = $user->username;
-							$modelPermission->Id_google_drive = $modelUserGroup->Id_google_drive;
-							$modelPermission->save();
-						}
+						$modelPermission = new PermissionGoogleDrive();
+						$modelPermission->Id_permission = $permission['id'];
+						$modelPermission->username = $user->username;
+						$modelPermission->Id_google_drive = $modelUserGroup->Id_google_drive;
+						$modelPermission->save();
 					}				
 				}
 			}			
@@ -186,17 +178,13 @@ class GDriveHelper
 				{
 					$permission = self::share($service, $user->email, $role, $modelUserGroup->Id_google_drive);
 					if(isset($permission))
-					{
-						$modelPermission = PermissionGoogleDrive::model()->findByPk($permission['id']);
-						if(!isset($modelPermission))
-						{
-							$modelPermission = new PermissionGoogleDrive();
-							$modelPermission->Id = $permission['id'];
-							$modelPermission->username = $user->username;
-							$modelPermission->Id_google_drive = $modelUserGroup->Id_google_drive;
-							$modelPermission->save();
-						}
-				}
+					{					
+						$modelPermission = new PermissionGoogleDrive();
+						$modelPermission->Id_permission = $permission['id'];
+						$modelPermission->username = $user->username;
+						$modelPermission->Id_google_drive = $modelUserGroup->Id_google_drive;
+						$modelPermission->save();
+					}
 				}
 			}
 		}
@@ -204,10 +192,9 @@ class GDriveHelper
 	
 	/**
 	*
-	* Share files by a particular id user group.
+	* unShare files by a particular id user group.
 	* @param integer $Id_note
 	* @param integer $Id_user_group
-	* @param String $role The value "owner", "writer" or "reader".
 	*/
 	static public function unShareFilesByUserGroup($Id_note, $Id_user_group)
 	{
@@ -237,16 +224,21 @@ class GDriveHelper
 																		'Id_google_drive'=>$modelMultimediaNote->multimedia->Id_google_drive));
 				if(isset($modelPermission))
 				{
-					self::unShare($service, $modelMultimediaNote->multimedia->Id_google_drive, $modelPermission->Id);
+					self::unShare($service, $modelMultimediaNote->multimedia->Id_google_drive, $modelPermission->Id_permission);
 					$modelPermission->delete();
 				}				
 			}
 		}
 	}
-	
-	static public function removeFilePermission($fileId, $permissionId)
+
+	/**
+	 * 
+	 * share and unshare docs by checking attached docs with permission_google_drive
+	 * @param integer $Id_note
+	 */
+	static public function shareAndUnshare($Id_note)
 	{
-		//$service->permissions->delete($fileId, $permissionId);
+		
 	}
 	
 	private function share($service, $email, $role, $Id_google_drive)
