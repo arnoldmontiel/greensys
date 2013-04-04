@@ -18,6 +18,7 @@
  */
 class UserGroupNote extends TapiaActiveRecord
 {
+	public $Id_google_drive;
 	
 	protected function beforeSave()
 	{
@@ -173,7 +174,7 @@ class UserGroupNote extends TapiaActiveRecord
 			array('Id_user_group, Id_note, Id_customer, can_read, can_feedback,addressed, need_confirmation, confirmed, declined', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id_user_group, Id_note, Id_customer, can_read, can_feedback, addressed, need_confirmation, confirmed, declined, confirmation_date, request_confirmation_date', 'safe', 'on'=>'search'),
+			array('Id_user_group, Id_note, Id_customer, can_read, can_feedback, addressed, need_confirmation, confirmed, declined, confirmation_date, request_confirmation_date, Id_google_drive', 'safe', 'on'=>'search'),
 		);
 	}
 
