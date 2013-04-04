@@ -328,7 +328,7 @@ function bindEvents(item)
 				url : '" . ReviewController::createUrl('AjaxSavePermissions') ."',
 				beforeSend : function(){
 								},
-				error: function(){				$('#dialogProcessing').dialog('close');}
+				error: function(data){				$('#dialogProcessing').dialog('close');},
 				success : function(data)
 				{
 				$('#dialogProcessing').dialog('close');
