@@ -14,9 +14,12 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/tmain.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/tform.css" />
 	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl."/js/autoresize.js");?>
-		
-
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl."/js/tools.js");?>
+			
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
+	<?php Yii::app()->clientScript->registerScript('tmain-scripts', "preventSubmit($(':text'));")
+	?>
+	
 </head>
 
 <body>

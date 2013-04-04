@@ -1,6 +1,5 @@
 <?php
 Yii::app()->clientScript->registerScript('form-album-create', "
-
 $('#Album_title').change(function(){	
 	$.post(
 		'".AlbumController::createUrl('album/AjaxUpdateTitle')."',
@@ -52,7 +51,7 @@ echo $formAlbum->hiddenField($model,'Id_project');
 	</div>
 
 	<div class="row">
-		<?php echo CHtml::label('Descripci&oacute;n', 'Album_Title'); ?>
+		<?php echo CHtml::label('Descripci&oacute;n', 'Album_Description'); ?>
 		<?php echo $formAlbum->textArea($model,'description',array('style'=>'width:500px;resize:none;')); ?>
 		<?php echo $formAlbum->error($model,'description'); ?>
 	</div>

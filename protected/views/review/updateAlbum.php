@@ -110,7 +110,7 @@ echo CHtml::imageButton(
 	</div>
 
 	<div class="row">
-		<?php echo CHtml::label('Descripci&oacute;n', 'Album_Title'); ?>
+		<?php echo CHtml::label('Descripci&oacute;n', 'Album_Description'); ?>
 		<?php echo $form->textArea($model,'description',array('style'=>'width:500px;resize:none;')); ?>
 		<?php echo CHtml::image("images/save_ok.png","",array("id"=>"saveok2", "style"=>"display:none", "width"=>"20px", "height"=>"20px")); ?>
 		<?php echo $form->error($model,'description'); ?>
