@@ -217,7 +217,8 @@ class GDriveHelper
 		$criteria->join =  	"INNER JOIN multimedia m on m.Id = t.Id_multimedia";
 		$criteria->addCondition('m.Id_document_type is not null');
 		$criteria->addCondition('t.Id_note = '. $Id_note);
-	
+		$criteria->addCondition('m.use_technical_docs = 0');
+		
 		$multimediaNotes = MultimediaNote::model()->findAll($criteria);
 	
 		foreach($multimediaNotes as $modelMultimediaNote)
