@@ -46,7 +46,7 @@ class GDriveHelper
 	
 	/**
 	 * 
-	 * Share files.
+	 * Share files to user group which can use technical docs.
 	 * @param String $Id_google_drive
 	 * @param integer $Id_customer
 	 * @param String $role The value "owner", "writer" or "reader".
@@ -66,7 +66,25 @@ class GDriveHelper
 		
 		foreach($userCustomers as $modelUserCustomer)
 		{
-			self::share($service, $modelUserCustomer->user->email, $role, $Id_google_drive);			
+			$modelPermission = PermissionGoogleDrive::model()->findByAttributes(array('username'=>$modelUserCustomer->user->username,
+																					'Id_google_drive'=>$modelUserGroup->Id_google_drive));
+			
+			if(!isset($modelPermission))
+			{
+				$permission = self::share($service, $modelUserCustomer->user->email, $role, $Id_google_drive);
+				if(isset($permission))
+				{
+					$modelPermission = PermissionGoogleDrive::model()->findByPk($permission['id']);
+					if(!isset($modelPermission))
+					{
+						$modelPermission = new PermissionGoogleDrive();
+						$modelPermission->Id = $permission['id'];
+						$modelPermission->username = $modelUserCustomer->user->username;
+						$modelPermission->Id_google_drive = $modelUserGroup->Id_google_drive;
+						$modelPermission->save();
+					}
+				}			
+			}
 		}
 	}
 	
@@ -103,7 +121,25 @@ class GDriveHelper
 			
 			foreach($users as $user)
 			{
-				self::share($service, $user->email, $role, $modelUserGroup->Id_google_drive);				
+				$modelPermission = PermissionGoogleDrive::model()->findByAttributes(array('username'=>$user->username,
+																						'Id_google_drive'=>$modelUserGroup->Id_google_drive));
+				
+				if(!isset($modelPermission))
+				{
+					$permission = self::share($service, $user->email, $role, $modelUserGroup->Id_google_drive);
+					if(isset($permission))
+					{
+						$modelPermission = PermissionGoogleDrive::model()->findByPk($permission['id']);
+						if(!isset($modelPermission))
+						{
+							$modelPermission = new PermissionGoogleDrive();
+							$modelPermission->Id = $permission['id'];
+							$modelPermission->username = $user->username;
+							$modelPermission->Id_google_drive = $modelUserGroup->Id_google_drive;
+							$modelPermission->save();
+						}
+					}				
+				}
 			}			
 		}
 	}
@@ -143,7 +179,65 @@ class GDriveHelper
 				
 			foreach($users as $user)
 			{
-				self::share($service, $user->email, $role, $modelUserGroup->Id_google_drive);
+				$modelPermission = PermissionGoogleDrive::model()->findByAttributes(array('username'=>$user->username,
+																		'Id_google_drive'=>$modelUserGroup->Id_google_drive));
+				
+				if(!isset($modelPermission))
+				{
+					$permission = self::share($service, $user->email, $role, $modelUserGroup->Id_google_drive);
+					if(isset($permission))
+					{
+						$modelPermission = PermissionGoogleDrive::model()->findByPk($permission['id']);
+						if(!isset($modelPermission))
+						{
+							$modelPermission = new PermissionGoogleDrive();
+							$modelPermission->Id = $permission['id'];
+							$modelPermission->username = $user->username;
+							$modelPermission->Id_google_drive = $modelUserGroup->Id_google_drive;
+							$modelPermission->save();
+						}
+				}
+				}
+			}
+		}
+	}
+	
+	/**
+	*
+	* Share files by a particular id user group.
+	* @param integer $Id_note
+	* @param integer $Id_user_group
+	* @param String $role The value "owner", "writer" or "reader".
+	*/
+	static public function unShareFilesByUserGroup($Id_note, $Id_user_group)
+	{
+		$service = self::getService();
+	
+		$criteria=new CDbCriteria;
+		$criteria->join =  	"INNER JOIN multimedia m on m.Id = t.Id_multimedia";
+		$criteria->addCondition('m.Id_document_type is not null');
+		$criteria->addCondition('t.Id_note = '. $Id_note);
+	
+		$multimediaNotes = MultimediaNote::model()->findAll($criteria);
+	
+		foreach($multimediaNotes as $modelMultimediaNote)
+		{
+			$criteria=new CDbCriteria;
+			$criteria->join =  	"INNER JOIN user_customer uc on uc.username = t.username";
+			$criteria->addCondition('t.Id_user_group = ' . $Id_user_group);
+			$criteria->addCondition('uc.Id_project = ' . $modelMultimediaNote->multimedia->Id_project);
+	
+			$users = User::model()->findAll($criteria);
+	
+			foreach($users as $user)
+			{
+				$modelPermission = PermissionGoogleDrive::model()->findByAttributes(array('username'=>$user->username,
+																		'Id_google_drive'=>$modelMultimediaNote->multimedia->Id_google_drive));
+				if(isset($modelPermission))
+				{
+					self::unShare($service, $modelMultimediaNote->multimedia->Id_google_drive, $modelPermission->Id);
+					$modelPermission->delete();
+				}				
 			}
 		}
 	}
@@ -159,7 +253,12 @@ class GDriveHelper
 		$newPermission->setValue($email);
 		$newPermission->setType('user');
 		$newPermission->setRole($role);
-		$service->permissions->insert($Id_google_drive, $newPermission);
+		return $service->permissions->insert($Id_google_drive, $newPermission);
+	}
+	
+	private function unShare($service, $Id_google_drive, $Id_permission)
+	{
+		$service->permissions->delete($Id_google_drive, $Id_permission);
 	}
 	
 	private function insertFile($service, $file, $data, $mimeType)
