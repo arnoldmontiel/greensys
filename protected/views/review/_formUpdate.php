@@ -739,7 +739,8 @@ $('#btnCancelNote').click(function(){
 			$('#note-images').html('');
 		});
 	}).error(function(data){
-		$('#dialogProcessing').dialog('close');}
+		$('#dialogProcessing').dialog('close');
+	}
 	);
 });
 
@@ -761,7 +762,8 @@ $('#btnCancelAlbum').click(function(){
 				$('#Album_title').val('');
 		});
 	}).error(function(data){
-		$('#dialogProcessing').dialog('close');}
+		$('#dialogProcessing').dialog('close');
+		}
 		);
 });
 
@@ -841,10 +843,12 @@ $('#btnDoc').click(function(){
 	});
 });
 
-$(':checkbox').click(function() {
+$(':checkbox').click(
+function()
+	{
 		if($(this).val() != '' && $(this).attr('name') == 'chklist-tag-review[]')
  	 	{
- 	 	$('#dialogProcessing').dialog('open');
+ 	 		$('#dialogProcessing').dialog('open');
  	 		if($(this).is(':checked'))
  	 		{
  	 			$.post(
@@ -858,7 +862,7 @@ $(':checkbox').click(function() {
 			
 					}).error(function(data){
 						$('#dialogProcessing').dialog('close');
-					);
+					});
  	 		}
  	 		else
  	 		{
@@ -873,11 +877,12 @@ $(':checkbox').click(function() {
 							$('#dialogProcessing').dialog('close');
 					}).error(function(data){
 						$('#dialogProcessing').dialog('close');
-					);;
+					});
  	 		}
 
  	 	}
-	});
+	}
+);
 
 	
 	$('#Review_Id_review_type').change(function(){
