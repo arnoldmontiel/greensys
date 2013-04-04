@@ -67,7 +67,7 @@ class GDriveHelper
 		foreach($userCustomers as $modelUserCustomer)
 		{
 			$modelPermission = PermissionGoogleDrive::model()->findByAttributes(array('username'=>$modelUserCustomer->user->username,
-																					'Id_google_drive'=>$modelUserGroup->Id_google_drive));
+																					'Id_google_drive'=>$Id_google_drive));
 			
 			if(!isset($modelPermission))
 			{
@@ -80,7 +80,7 @@ class GDriveHelper
 						$modelPermission = new PermissionGoogleDrive();
 						$modelPermission->Id = $permission['id'];
 						$modelPermission->username = $modelUserCustomer->user->username;
-						$modelPermission->Id_google_drive = $modelUserGroup->Id_google_drive;
+						$modelPermission->Id_google_drive = $Id_google_drive;
 						$modelPermission->save();
 					}
 				}			
