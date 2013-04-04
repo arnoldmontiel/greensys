@@ -1014,10 +1014,11 @@ class ReviewController extends Controller
 				$modelUserGroupNote->save();
 			}
 			
-			if(!$wasDeleted)
-			{
+			if($wasDeleted)
+				GDriveHelper::unShareFilesByUserGroup($idNote, $idUserGroup);
+			else			
 				GDriveHelper::shareFilesByUserGroup($idNote, $idUserGroup);	
-			}
+			
 			
 			//Envio de Mail
 			
