@@ -579,6 +579,8 @@ $('#btnAlbum').click(function(){
 		{
 			url = '".AlbumController::createUrl('album/AjaxCreateAlbumIE')."';
 		}
+		$('#dialogProcessing').dialog('open');
+
 		$.post(url, 
 			{
 				idCustomer: ".$model->Id_customer.",
@@ -587,6 +589,7 @@ $('#btnAlbum').click(function(){
 			}
 		).success(
 		function(data){
+			$('#dialogProcessing').dialog('close');
 			$('#loading').removeClass('loading');
 			var param = '&idAlbum='+data+'&idCustomer='+".$model->Id_customer.";
 		
@@ -642,6 +645,11 @@ $('#btnAlbum').click(function(){
 			});
 		
 		}
+		).error
+		(
+			function(data){
+				$('#dialogProcessing').dialog('close');
+			}
 		);
 });
 
@@ -702,12 +710,14 @@ $('#btnSaveNote').click(function(){
 });
 
 $('#btnPublicAlbum').click(function(){
+	$('#dialogProcessing').dialog('open');
 	var url = '".ReviewController::createUrl('update',array('id'=>$model->Id))."';
 	window.location = url;
 	return false;
 });
 
 $('#btnPublicAlbum').click(function(){
+	$('#dialogProcessing').dialog('open');
 	var url = '".ReviewController::createUrl('update',array('id'=>$model->Id))."';
 	window.location = url;
 	return false;
@@ -715,10 +725,12 @@ $('#btnPublicAlbum').click(function(){
 
 $('#btnCancelNote').click(function(){
 	$('#loading').addClass('loading');
+	$('#dialogProcessing').dialog('open');
 	$.post('".NoteController::createUrl('note/AjaxCancelNote')."', 
 		$('#Note_Id_note').serialize()
 	).success(
 	function(data){
+		$('#dialogProcessing').dialog('close');
 		$('#loading').removeClass('loading');
 		$('#wall-action-note').animate({opacity: 'hide'},240,
 			function(){		
@@ -726,15 +738,19 @@ $('#btnCancelNote').click(function(){
 			$('#Note_note').val('');
 			$('#note-images').html('');
 		});
-	});
+	}).error(function(data){
+		$('#dialogProcessing').dialog('close');}
+	);
 });
 
 $('#btnCancelAlbum').click(function(){
 	$('#loading').addClass('loading');
+	$('#dialogProcessing').dialog('open');
 	$.post('".AlbumController::createUrl('album/AjaxCancelAlbum')."', 
 		$('#Album_Id_album').serialize()
 	).success(
 	function(data){
+	$('#dialogProcessing').dialog('close');
 		$('#loading').removeClass('loading');
 		$('#wall-action-album').animate({opacity: 'hide'},240,
 			function(){		
@@ -744,7 +760,9 @@ $('#btnCancelAlbum').click(function(){
 				$('#Album_description').val('');
 				$('#Album_title').val('');
 		});
-	});
+	}).error(function(data){
+		$('#dialogProcessing').dialog('close');}
+		);
 });
 
 $('#Review_review').change(function(){
@@ -775,21 +793,21 @@ $('#Review_description').change(function(){
 });
 	
 $('#btnAttachImgToNote').click(function(){
-	
+	$('#dialogProcessing').dialog('open');
 	var url = '".ReviewController::createUrl('AjaxAttachImage',array('id'=>$model->Id))."';
 	window.location = url + '&idNote='+$('#Note_Id_note').val();
 	return false;
 });
 
 $('#btnAttachDocToNote').click(function(){
-	
+	$('#dialogProcessing').dialog('open');
 	var url = '".ReviewController::createUrl('AjaxAttachDoc',array('id'=>$model->Id))."';
 	window.location = url + '&idNote='+$('#Note_Id_note').val();
 	return false;
 });
 
 $('#btnAttachTechDocToNote').click(function(){
-	
+	$('#dialogProcessing').dialog('open');
 	var url = '".ReviewController::createUrl('AjaxAttachTechDoc',array('id'=>$model->Id))."';
 	window.location = url + '&idNote='+$('#Note_Id_note').val();
 	return false;
@@ -826,6 +844,7 @@ $('#btnDoc').click(function(){
 $(':checkbox').click(function() {
 		if($(this).val() != '' && $(this).attr('name') == 'chklist-tag-review[]')
  	 	{
+ 	 	$('#dialogProcessing').dialog('open');
  	 		if($(this).is(':checked'))
  	 		{
  	 			$.post(
@@ -835,9 +854,11 @@ $(':checkbox').click(function() {
 						idTag:$(this).val()
 					}).success(
 						function() 
-						{ 
+						{ $('#dialogProcessing').dialog('close');
 			
-					});
+					}).error(function(data){
+						$('#dialogProcessing').dialog('close');
+					);
  	 		}
  	 		else
  	 		{
@@ -849,8 +870,10 @@ $(':checkbox').click(function() {
 					}).success(
 						function() 
 						{ 
-			
-					});
+							$('#dialogProcessing').dialog('close');
+					}).error(function(data){
+						$('#dialogProcessing').dialog('close');
+					);;
  	 		}
 
  	 	}
@@ -873,6 +896,7 @@ $(':checkbox').click(function() {
 	
 	$('#info_order').change(function(){
 		if($(this).val()!= ''){
+			$('#dialogProcessing').dialog('open');
 			var url = '".ReviewController::createUrl('update',array('id'=>$model->Id))."';
 			window.location = url + '&order='+$(this).val();
 			return false;
@@ -898,7 +922,7 @@ setInterval(function() {
 	});
 }, 20000)
 $('#notification').click(function(){
-		
+		$('#dialogProcessing').dialog('open');
 	var url = '".ReviewController::createUrl('update',array('id'=>$model->Id))."';
 	window.location = url + '&order='+$('#info_order').val();
 	return false;
@@ -906,7 +930,7 @@ $('#notification').click(function(){
 	});
 		
 $('#need_reload').click(function(){
-		
+		$('#dialogProcessing').dialog('open');
 	var url = '".ReviewController::createUrl('update',array('id'=>$model->Id))."';
 	window.location = url + '&order='+$('#info_order').val();
 	return false;

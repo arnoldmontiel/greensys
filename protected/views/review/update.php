@@ -6,3 +6,4 @@
 													'modelAlbum'=>$modelAlbum,
 		//											'order'=>$order //deprecated
 		)); ?>
+		
