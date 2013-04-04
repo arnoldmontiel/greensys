@@ -321,14 +321,18 @@ function bindEvents(item)
 	function SavePermissionsChanges(type,value,idUserGroup,idNote,parent,caller,check)
 	{
 		//alert('Grabando '+type+' '+value+' '+idUserGroup);
+		$('#dialogProcessing').dialog('open');		
 		$.ajax({
 				type : 'POST',
 				data : {type:type,value:value,idUserGroup:idUserGroup,idNote:idNote,idCustomer: ".$model->Id_customer.",idProject: ".$model->Id_project."},
 				url : '" . ReviewController::createUrl('AjaxSavePermissions') ."',
 				beforeSend : function(){
 								},
+				error: function(){				$('#dialogProcessing').dialog('close');}
 				success : function(data)
 				{
+				$('#dialogProcessing').dialog('close');
+				
 					if(data=='ok')
 					{
 						if(type=='canSee')
