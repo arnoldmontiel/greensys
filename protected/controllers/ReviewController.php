@@ -934,6 +934,7 @@ class ReviewController extends Controller
 			$value = $_POST['value']=='true'?1:0;
 			$type= $_POST['type'];
 			$modelUserGroupNoteArray = UserGroupNote::model()->findAllByAttributes(array('Id_note'=>$idNote,'Id_user_group'=>$idUserGroup));
+			$wasDeleted = false;
 			
 			if(isset($modelUserGroupNoteArray[0]))
 			{
@@ -959,6 +960,7 @@ class ReviewController extends Controller
 					if(!$value&&$canEditNeedConf&&$canEditFeedback)
 					{
 						$modelUserGroupNote->delete();
+						$wasDeleted = true;
 						$response = 'ok';
 					}				
 				}
@@ -1011,6 +1013,12 @@ class ReviewController extends Controller
 				$response = 'ok';
 				$modelUserGroupNote->save();
 			}
+			
+			if(!$wasDeleted)
+			{
+				GDriveHelper::shareFilesByUserGroup($idNote, $idUserGroup);	
+			}
+			
 			//Envio de Mail
 			
 // 			$userGroup = UserGroup::model()->findByPk($idUserGroup);
@@ -1132,9 +1140,10 @@ class ReviewController extends Controller
 				}
 			}
 			$transaction->commit();
+			GDriveHelper::shareFilesByNote($idNote);
 		} catch (Exception $e) {
 			$transaction->rollback();
-		}
+		}		
 	}
 	
 	public function actionAjaxSaveNote()

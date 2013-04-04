@@ -46,7 +46,7 @@ class GDriveHelper
 	
 	/**
 	 * 
-	 * Insert a new permission.
+	 * Share files.
 	 * @param String $Id_google_drive
 	 * @param integer $Id_customer
 	 * @param String $role The value "owner", "writer" or "reader".
@@ -66,17 +66,100 @@ class GDriveHelper
 		
 		foreach($userCustomers as $modelUserCustomer)
 		{
-			$newPermission = new Google_Permission();
-			$newPermission->setValue($modelUserCustomer->user->email);
-			$newPermission->setType('user');
-			$newPermission->setRole($role);
-			$service->permissions->insert($Id_google_drive, $newPermission);
+			self::share($service, $modelUserCustomer->user->email, $role, $Id_google_drive);			
+		}
+	}
+	
+	/**
+	*
+	* Share files by id note (all user group related).
+	* @param integer $Id_note
+	* @param String $role The value "owner", "writer" or "reader".
+	*/
+	static public function shareFilesByNote($Id_note, $role = 'reader')
+	{
+		$service = self::getService();
+	
+		$criteria=new CDbCriteria;
+		$criteria->select = 't.Id_user_group, t.Id_project, m.Id_google_drive as Id_google_drive';
+		$criteria->join =  	"INNER JOIN multimedia_note mn on t.Id_note = mn.Id_note
+							INNER JOIN multimedia m on m.Id = mn.Id_multimedia
+							INNER JOIN user_group ug on ug.Id = t.Id_user_group";
+		$criteria->addCondition('m.Id_document_type is not null');
+		$criteria->addCondition('t.Id_note = '. $Id_note);
+		$criteria->addCondition('ug.use_technical_docs = 0');
+	
+		
+		$userGroupNotes = UserGroupNote::model()->findAll($criteria);
+	
+		foreach($userGroupNotes as $modelUserGroup)
+		{
+			$criteria=new CDbCriteria;
+			$criteria->join =  	"INNER JOIN user_customer uc on uc.username = t.username";			
+			$criteria->addCondition('t.Id_user_group = ' . $modelUserGroup->Id_user_group);
+			$criteria->addCondition('uc.Id_project = ' . $modelUserGroup->Id_project);
+			
+			$users = User::model()->findAll($criteria);
+			
+			foreach($users as $user)
+			{
+				self::share($service, $user->email, $role, $modelUserGroup->Id_google_drive);				
+			}			
+		}
+	}
+	
+	/**
+	*
+	* Share files by a particular id user group.
+	* @param integer $Id_note
+	* @param integer $Id_user_group
+	* @param String $role The value "owner", "writer" or "reader".
+	*/
+	static public function shareFilesByUserGroup($Id_note, $Id_user_group, $role = 'reader')
+	{
+		$service = self::getService();
+	
+		$criteria=new CDbCriteria;
+		$criteria->select = 't.Id_project, m.Id_google_drive as Id_google_drive';
+		$criteria->join =  	"INNER JOIN multimedia_note mn on t.Id_note = mn.Id_note
+								INNER JOIN multimedia m on m.Id = mn.Id_multimedia
+								INNER JOIN user_group ug on ug.Id = t.Id_user_group";
+		$criteria->addCondition('m.Id_document_type is not null');
+		$criteria->addCondition('t.Id_note = '. $Id_note);
+		$criteria->addCondition('t.Id_user_group = '. $Id_user_group);
+		$criteria->addCondition('ug.use_technical_docs = 0');
+	
+	
+		$userGroupNotes = UserGroupNote::model()->findAll($criteria);
+	
+		foreach($userGroupNotes as $modelUserGroup)
+		{
+			$criteria=new CDbCriteria;
+			$criteria->join =  	"INNER JOIN user_customer uc on uc.username = t.username";
+			$criteria->addCondition('t.Id_user_group = ' . $Id_user_group);
+			$criteria->addCondition('uc.Id_project = ' . $modelUserGroup->Id_project);
+				
+			$users = User::model()->findAll($criteria);
+				
+			foreach($users as $user)
+			{
+				self::share($service, $user->email, $role, $modelUserGroup->Id_google_drive);
+			}
 		}
 	}
 	
 	static public function removeFilePermission($fileId, $permissionId)
 	{
 		//$service->permissions->delete($fileId, $permissionId);
+	}
+	
+	private function share($service, $email, $role, $Id_google_drive)
+	{
+		$newPermission = new Google_Permission();
+		$newPermission->setValue($email);
+		$newPermission->setType('user');
+		$newPermission->setRole($role);
+		$service->permissions->insert($Id_google_drive, $newPermission);
 	}
 	
 	private function insertFile($service, $file, $data, $mimeType)
