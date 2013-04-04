@@ -436,7 +436,7 @@ $editable = $isAdministrator||$isOwner;
 			echo CHtml::openTag('p',array('class'=>'review-text-docs check-last-doc',
 														'url'=>Yii::app()->baseUrl.'/docs/'.$item->file_name,
 														'idcustomer'=>$item->Id_customer,
-														'idproject'=>$item->album->Id_project,
+														'idproject'=>$item->Id_project,
 														'idmultimedia'=>$item->Id, 
 														'iddocType'=>$item->Id_document_type));
 			echo CHtml::encode($item->documentType->name);
