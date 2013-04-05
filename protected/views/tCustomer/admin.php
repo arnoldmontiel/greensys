@@ -25,8 +25,8 @@ $this->menu=array(
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		'name',
-		'last_name',
+		'person.name',
+		'person.last_name',
 		'username',
 		array(
 			'class'=>'CButtonColumn',

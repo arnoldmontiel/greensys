@@ -132,10 +132,10 @@ class TCustomer extends TapiaActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('Id',$this->Id);
-		$criteria->compare('name',$this->person->name,true);
-		$criteria->compare('last_name',$this->last_name,true);
+		$criteria->with[]='person';
+		$criteria->compare('person.name',$this->person->name,true);
+		$criteria->compare('person.last_name',$this->last_name,true);
 		$criteria->compare('username',$this->username,true);
-		$criteria->compare('building_address',$this->building_address,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
