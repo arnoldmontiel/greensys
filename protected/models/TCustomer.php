@@ -140,11 +140,11 @@ class TCustomer extends TapiaActiveRecord
 		$criteria->compare('Id_person',$this->Id_person);
 		$criteria->compare('Id_contact',$this->Id_contact);
 	
-		$criteria->with[]='person';
+		$criteria->with[]='green.person';
 		$criteria->addSearchCondition("person.name",$this->name);
 		$criteria->addSearchCondition("person.last_name",$this->last_name);
 	
-		$criteria->with[]='contact';
+		$criteria->with[]='green.contact';
 		$criteria->addSearchCondition("contact.telephone_1",$this->telephone_1);
 		$criteria->addSearchCondition("contact.email",$this->email);
 		
