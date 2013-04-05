@@ -20,6 +20,11 @@
  */
 class TCustomer extends TapiaActiveRecord
 {
+	public $name;
+	public $last_name;
+	public $telephone_1;
+	public $email;
+	
 	public $tag_description;
 	/**
 	 * Returns the static model of the specified AR class.
@@ -132,11 +137,17 @@ class TCustomer extends TapiaActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('Id',$this->Id);
+		$criteria->compare('Id_person',$this->Id_person);
+		$criteria->compare('Id_contact',$this->Id_contact);
+	
 		$criteria->with[]='person';
-		$criteria->compare('person.name',$this->person->name,true);
-		$criteria->compare('person.last_name',$this->last_name,true);
-		$criteria->compare('username',$this->username,true);
-
+		$criteria->addSearchCondition("person.name",$this->name);
+		$criteria->addSearchCondition("person.last_name",$this->last_name);
+	
+		$criteria->with[]='contact';
+		$criteria->addSearchCondition("contact.telephone_1",$this->telephone_1);
+		$criteria->addSearchCondition("contact.email",$this->email);
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
@@ -150,8 +161,9 @@ class TCustomer extends TapiaActiveRecord
 		$criteria=new CDbCriteria;
 	
 		$criteria->compare('Id',$this->Id);
-		$criteria->compare('name',$this->person->name,true);
-		$criteria->compare('last_name',$this->last_name,true);
+		$criteria->with[]='person';
+		$criteria->addSearchCondition("person.name",$this->name);
+		$criteria->addSearchCondition("person.last_name",$this->last_name);
 		$criteria->compare('t.username',$this->username,true);
 		$criteria->compare('building_address',$this->building_address,true);
 	
