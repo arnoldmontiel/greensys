@@ -25,9 +25,22 @@ $this->menu=array(
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		'person.name',
-		'person.last_name',
-		'username',
+		array(
+ 			'name'=>'name',
+			'value'=>'$data->person->name',
+		),
+		array(
+ 			'name'=>'last_name',
+			'value'=>'$data->person->last_name',
+		),
+		array(
+ 			'name'=>'telephone_1',
+			'value'=>'$data->contact->telephone_1',
+		),
+		array(
+ 			'name'=>'email',
+			'value'=>'$data->contact->email',
+		),
 		array(
 			'class'=>'CButtonColumn',
 			'template'=>'{view}{update}',
