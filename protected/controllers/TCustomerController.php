@@ -174,6 +174,7 @@ class TCustomerController extends Controller
 			$modelContact->attributes=$_POST['Contact'];
 			$modelPerson->attributes=$_POST['Person'];
 			$transaction = $modelCustomer->dbConnection->beginTransaction();
+			$transactionTapia = $modelUser->dbConnection->beginTransaction();
 			try {
 				$modelUser->email = $modelContact->email;
 				$modelUser->Id_user_group = $modelCustomer->Id_user_group;
@@ -190,11 +191,13 @@ class TCustomerController extends Controller
 				GreenHelper::saveLinks($_POST['links'], $modelCustomer->Id, $this);
 				
 				$transaction->commit();
+				$transactionTapia->commit();
 				
 				//$this->createDefaultPermissions($modelCustomer->Id);
 				$this->redirect(array('view','id'=>$modelCustomer->Id));
 			} catch (Exception $e) {
 				$transaction->rollback();
+				$transactionTapia->rollback();
 			}
 		}
 		
