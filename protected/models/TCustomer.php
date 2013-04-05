@@ -140,13 +140,13 @@ class TCustomer extends TapiaActiveRecord
 		$criteria->compare('Id_person',$this->Id_person);
 		$criteria->compare('Id_contact',$this->Id_contact);
 	
-		$criteria->with[]='green.person';
-		$criteria->addSearchCondition("person.name",$this->name);
-		$criteria->addSearchCondition("person.last_name",$this->last_name);
-	
-		$criteria->with[]='green.contact';
-		$criteria->addSearchCondition("contact.telephone_1",$this->telephone_1);
-		$criteria->addSearchCondition("contact.email",$this->email);
+		$criteria->join =" INNER JOIN green.person gp on (t.Id_person = gp.Id)
+						INNER JOIN green.contact gc on (t.Id_contact = gc.Id)";
+
+		$criteria->addSearchCondition("gp.name",$this->name);
+		$criteria->addSearchCondition("gp.last_name",$this->last_name);
+		$criteria->addSearchCondition("gc.telephone_1",$this->telephone_1);
+		$criteria->addSearchCondition("gc.email",$this->email);
 		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
