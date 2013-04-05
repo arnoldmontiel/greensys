@@ -18,7 +18,7 @@ class GDriveHelper
 	
 			//prepare file info
 			$file = new Google_DriveFile();
-			$file->setTitle($modelMultimedia->description);
+			$file->setTitle($modelMultimedia->file_name);
 			$file->setMimeType($mimeType);
 
 			//get file data

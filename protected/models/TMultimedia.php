@@ -121,7 +121,7 @@ class TMultimedia extends TapiaActiveRecord
 				
 				
 				$folder = "docs/";
-				$fileName = $this->customer->person->last_name . '_' . $this->customer->person->name . '_' . $uniqueId.'.'.$ext;
+				$fileName = $this->customer->person->last_name . '_' . $this->project->description . '_' . $uniqueId.'.'.$ext;
 				$filePath = $folder . $fileName;
 				
 				//save doc
