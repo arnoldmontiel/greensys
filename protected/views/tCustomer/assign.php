@@ -182,7 +182,7 @@ function unselectRow(id)
 					'template'=>'{delete}',
 					'buttons'=>array(
 						'delete' => array(
-								'url'=>'Yii::app()->createUrl("tcustomer/AjaxRemoveUserCustomer", array("IdCustomer"=>$data->Id_customer,"username"=>$data->username))',
+								'url'=>'Yii::app()->createUrl("tCustomer/AjaxRemoveUserCustomer", array("IdCustomer"=>$data->Id_customer,"username"=>$data->username))',
 									),
 								),
 					),

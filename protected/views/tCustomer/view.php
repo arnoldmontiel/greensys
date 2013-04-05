@@ -187,7 +187,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 						'template'=>'{delete}',
 						'buttons'=>array(
 								'delete' => array(
-										'url'=>'Yii::app()->createUrl("tcustomer/AjaxRemoveProject", array("IdProject"=>$data->Id))',
+										'url'=>'Yii::app()->createUrl("tCustomer/AjaxRemoveProject", array("IdProject"=>$data->Id))',
 								),
 						),
 				),
@@ -405,7 +405,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 						'template'=>'{delete}',
 						'buttons'=>array(
 								'delete' => array(
-										'url'=>'Yii::app()->createUrl("tcustomer/AjaxRemoveUserCustomer", array("IdCustomer"=>$data->Id_customer,"username"=>$data->username))',
+										'url'=>'Yii::app()->createUrl("tCustomer/AjaxRemoveUserCustomer", array("IdCustomer"=>$data->Id_customer,"username"=>$data->username))',
 								),
 						),
 				),

@@ -28,7 +28,7 @@ function loadGrid()
 	'id'=>'customer-grid',
 	'dataProvider'=>(User::isInternal())?$model->searchInternal():$model->searchNotInternal(),
 	'filter'=>$model,
-	'ajaxUrl'=>TCustomerController::createUrl('tcustomer/AjaxSelect'),
+	'ajaxUrl'=>TCustomerController::createUrl('tCustomer/AjaxSelect'),
 	'columns'=>array(
 		'name',
 		'last_name',
