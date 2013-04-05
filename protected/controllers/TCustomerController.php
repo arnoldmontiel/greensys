@@ -187,7 +187,7 @@ class TCustomerController extends Controller
 				$modelCustomer->username = $modelUser->username;
 				$modelCustomer->save();
 
-				Hyperlink::model()->deleteAllByAttributes(array('Id_customer'=>$modelCustomer->Id));
+				Hyperlink::model()->deleteAllByAttributes(array('Id_contact'=>$modelCustomer->Id_contact));
 				GreenHelper::saveLinks($_POST['links'], $modelCustomer->Id_contact, $this->getEntityType(),'Id_contact');
 				
 				$transaction->commit();
