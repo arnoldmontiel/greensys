@@ -5,9 +5,7 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<?php echo $form->errorSummary($modelPerson); ?>
-	<?php echo $form->errorSummary($modelContact); ?>
-	<?php echo $form->errorSummary($modelUser); ?>
+	
 	<div class="row">
 		<?php echo $form->labelEx($modelPerson,'name'); ?>
 		<?php echo $form->textField($modelPerson,'name',array('size'=>45,'maxlength'=>45)); ?>
