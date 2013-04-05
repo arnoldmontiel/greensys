@@ -174,12 +174,13 @@ class User extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-				array('username, password, email, Id_user_group', 'required'),
+				array('username, password, Id_user_group', 'required'),
 				array('Id_user_group, send_mail', 'numerical', 'integerOnly'=>true),
 				array('username, password, email', 'length', 'max'=>128),
 				array('name, last_name, address', 'length', 'max'=>100),
 				array('phone_house, phone_mobile', 'length', 'max'=>45),
 				array('description', 'length', 'max'=>255),
+				array('email', 'email', 'allowEmpty'=>true),
 				// The following rule is used by search().
 				// Please remove those attributes that should not be searched.
 				array('username, password, email, Id_user_group, userGroupDescription, phone_house, phone_mobile, building_address, description, send_mail', 'safe', 'on'=>'search'),
