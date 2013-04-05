@@ -161,7 +161,7 @@ class TCustomerController extends Controller
 		$modelContact=new Contact();
 		$modelPerson=new Person();
 		
-		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$modelContact->Id,'Id_entity_type'=>$this->getEntityType()));
+		$modelHyperlink = new Hyperlink;
 		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
