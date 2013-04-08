@@ -184,10 +184,19 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				),
 				array(
 						'class'=>'CButtonColumn',
-						'template'=>'{delete}',
+						'template'=>'{delete}{update}',
 						'buttons'=>array(
 								'delete' => array(
 										'url'=>'Yii::app()->createUrl("tCustomer/AjaxRemoveProject", array("IdProject"=>$data->Id))',
+								),'update'=>array(
+									'url'=>'Yii::app()->controller->createUrl("project/AjaxUpdate",array("id"=>$data->primaryKey))',
+									'click'=>"function(){
+										$.post($(this).attr('href')).success(function(data){
+											$('#update-project').html(data);
+											$('#UpdateProject').dialog( 'open' );
+										});
+										return false;
+									}"
 								),
 						),
 				),
@@ -475,7 +484,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 ?>
 </div>
 <?php 
-//Project
+//Project create
 $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 			'id'=>'CreateProject',
 // additional javascript options for the dialog plugin
@@ -507,6 +516,42 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 $modelProjectPopUp = new Project;
 $modelProjectPopUp->Id_customer = $model->Id;
 echo $this->renderPartial('../project/_formPopUp', array('model'=>$modelProjectPopUp));
+
+$this->endWidget('zii.widgets.jui.CJuiDialog');
+//Project update
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'UpdateProject',
+// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Actualizar Proyecto',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '600',
+					'buttons'=>	array(
+							'Cancelar'=>'js:function(){jQuery("#UpdateProject").dialog( "close" );}',
+							'Grabar'=>'js:function()
+							{
+							jQuery("#waiting").dialog("open");
+							jQuery.post("'.Yii::app()->createUrl("project/ajaxSave").'", $("#project-update-form").serialize(),
+							function(data) {
+								if(data!=null)
+								{
+									//actualizar
+									$.fn.yiiGridView.update("project-grid")
+									jQuery("#UpdateProject").dialog( "close" );
+								}
+							jQuery("#waiting").dialog("close");
+						},"json"
+					);
+
+				}'),
+),
+));
+$modelProjectPopUp = new Project;
+$modelProjectPopUp->Id_customer = $model->Id;
+echo CHtml::openTag('div',array('id'=>'update-project'));
+//place holder
+echo CHtml::closeTag('div');
 
 $this->endWidget('zii.widgets.jui.CJuiDialog');
 

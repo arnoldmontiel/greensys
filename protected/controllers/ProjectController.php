@@ -100,9 +100,6 @@ class ProjectController extends Controller
 		$modelUserGroupCustomer->Id_customer = $idCustomer;
 		$modelUserGroupCustomer->Id_project = $idProject;
 		$modelUserGroupCustomer->Id_user_group = $modelUserGroup->Id;
-		if($modelUserGroup->is_administrator)
-		$modelUserGroupCustomer->Id_interest_power = 2;
-		else
 		$modelUserGroupCustomer->Id_interest_power = 1;
 			
 		$modelUserGroupCustomer->save();
@@ -132,7 +129,42 @@ class ProjectController extends Controller
 			'model'=>$model,
 		));
 	}
-
+	public function actionAjaxUpdate($id)
+	{
+		$model=$this->loadModel($id);
+	
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+	
+		if(isset($_POST['Project']))
+		{
+			$model->attributes=$_POST['Project'];
+			if($model->save())
+			{
+				echo json_encode($model->attributes);				
+			}
+		}
+		echo $this->renderPartial('_formUpdatePopUp', array('model'=>$model)); 				
+	}
+	public function actionAjaxSave()
+	{
+	
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+	
+		if(isset($_POST['Project']))
+		{
+			$model=$this->loadModel($_POST['Project']['Id']);
+			$model->attributes=$_POST['Project'];
+			if($model->save())
+			{
+				echo json_encode($model->attributes);
+				return;
+			}
+		}
+		echo "Error Updating";
+	}
+	
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.

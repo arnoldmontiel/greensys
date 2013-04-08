@@ -1,7 +1,7 @@
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'project-form',
+	'id'=>'project-update-form',
 	'enableAjaxValidation'=>false,
 )); ?>
 
@@ -9,7 +9,7 @@
 	<?php echo $form->errorSummary($model); ?>
 
 
-	<?php echo $form->hiddenField($model, 'Id_customer'); ?>
+	<?php echo $form->hiddenField($model, 'Id'); ?>
 	<?php echo $form->hiddenField($model, 'Id_customer'); ?>
 	<?php if(!isset($model->Id_customer)) : ?>
 		<div class="row" >
