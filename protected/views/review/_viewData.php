@@ -12,7 +12,7 @@ $editable = $isAdministrator||$isOwner;
 
 <div class="review-single-view" id="<?php echo $data->Id?>" >
 	<div class="view-note-title">
-	<?php if($editable):?>
+	<?php if($isOwner	):?>
 		<div id='edit_main_title_<?php echo $data->Id?>' class="review-create-note-btn review-create-title-btn-main div-hidden">
 			Grabar
 		</div>
@@ -28,7 +28,7 @@ $editable = $isAdministrator||$isOwner;
 		<?php endif;?>
 	</div>
 	<div class="view-text-date"><?php echo $data->change_date;?></div>
-	<?php if($editable):?>
+	<?php if($isOwner):?>
 	<div id='edit_image<?php echo $data->Id?>' class="review-edit-image div-hidden">	
 	<?php
 		echo CHtml::link('Editar Imagenes',
@@ -143,7 +143,7 @@ $editable = $isAdministrator||$isOwner;
 		<div id='edit_main_note_cancel_<?php echo $data->Id?>' class="review-create-note-btn review-create-note-btn-main-cancel div-hidden">
 			Cancelar
 		</div>
-		<?php if($editable):?>
+		<?php if($isOwner):?>
 			<textarea id='main_note<?php echo $data->Id?>' class="wall-action-edit-main-note" placeholder='Escriba una nota...'><?php echo $data->note;?></textarea>
 			<textarea id='main_original_note<?php echo $data->Id?>' class="wall-action-edit-main-note" style="display: none;" placeholder='Escriba una nota...'><?php echo $data->note;?></textarea>
 		<?php else:?>
@@ -352,7 +352,7 @@ $editable = $isAdministrator||$isOwner;
 			if(sizeof($images)==0)
 			{
 				echo CHtml::openTag('div', array('class'=>'review-add-images-container'));
-				if($editable){
+				if($isOwner){
 					echo CHtml::link('Adjuntar Imagenes',
 						ReviewController::createUrl('AjaxAttachImage',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
 						array('class'=>'review-text-docs')
@@ -398,7 +398,7 @@ $editable = $isAdministrator||$isOwner;
 					
 			}
 			echo CHtml::openTag('div', array('class'=>'review-add-docs-container'));
-			if($editable){
+			if($isOwner){
 				echo CHtml::link('Adjuntar Documentos',
 					ReviewController::createUrl('AjaxAttachDoc',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
 					array('class'=>'review-text-docs'));
@@ -453,7 +453,7 @@ $editable = $isAdministrator||$isOwner;
 				
 		}
 		echo CHtml::openTag('div', array('class'=>'review-add-docs-container'));
-		if($editable && User::useTechnicalDocs()){
+		if($isOwner && User::useTechnicalDocs()){
 			echo CHtml::link('Adjuntar Documentos Tecnicos',
 				ReviewController::createUrl('AjaxAttachTechDoc',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
 					array('class'=>'review-text-docs'));

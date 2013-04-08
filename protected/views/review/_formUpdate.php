@@ -245,7 +245,8 @@ function bindEvents(item)
 				success : function(data)
 				{
 					$('#noteContainer_'+idMainNote).html(data);
-					bindEvents($('#noteContainer_'+idMainNote))
+					bindEvents($('#noteContainer_'+idMainNote));
+					$('#btnNote').removeClass('wall-action-btn-disable');
 				}
 		});
 	});
@@ -714,6 +715,8 @@ $('#btnSaveNote').click(function(){
 		function(){		
 			RestoreButtons();
 			$('#Note_note').val('');
+			$('#Note_title').val('');
+			$('#btnNote').addClass('wall-action-btn-disable');
 			
 		});
 		bindEvents($('#noteContainer_'+id));
@@ -991,7 +994,7 @@ $('#need_reload').click(function(){
 	</div>
 	<div class="review-close-review">
 		<?php
-			if(User::canCreate() && $model->username == User::getCurrentUser()->username)
+			if(User::isAdministartor() || $model->username == User::getCurrentUser()->username)
 			{
 				echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnClose'));
 					echo 'Cerrar';
@@ -1010,7 +1013,6 @@ $('#need_reload').click(function(){
 	 ?>
 </div>
 
-<?php if(User::canCreate() && $model->username == User::getCurrentUser()->username):?>
 <div id="loading" class="loading-place-holder" >
 </div>
 <?php
@@ -1018,22 +1020,19 @@ $('#need_reload').click(function(){
 		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnAlbum'));
 			echo 'Album';
 		echo CHtml::closeTag('div');	
-		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnNote'));
-			echo 'Notas';
-		echo CHtml::closeTag('div');	
+		if($model->username == User::getCurrentUser()->username)
+		{
+			if(count($model->notes) > 0)
+				echo CHtml::openTag('div',array('class'=>'wall-action-btn wall-action-btn-disable','id'=>'btnNote'));
+			else
+				echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnNote'));
+			
+				echo 'Notas';
+			echo CHtml::closeTag('div');	
+		}
 		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnDoc'));
 			echo 'Documentos';
 		echo CHtml::closeTag('div');
-// 		if($model->username == User::getCurrentUser()->username )
-// 		{
-// 			echo CHtml::openTag('div',array('class'=>'review-type'));
-// 				$reviewTypes = CHtml::listData($ddlReviewType, 'Id', 'description');
-// 				echo CHtml::label('Tipo: ','Id_review_type');
-// 				echo CHtml::activeDropDownList($model, 'Id_review_type', $reviewTypes);
-// 			echo CHtml::closeTag('div');
-// 		}
-// 		else
-// 		{
 			echo CHtml::openTag('div',array('class'=>'review-type'));
 				echo CHtml::openTag('div',array('class'=>'review-attr-level'));		
 					echo CHtml::label('Tipo: ','Id_review_type');
@@ -1042,37 +1041,9 @@ $('#need_reload').click(function(){
 					echo CHtml::encode($model->reviewType->description);
 				echo CHtml::closeTag('div');
 			echo CHtml::closeTag('div');
-// 		}
-// 		echo CHtml::openTag('div',array('class'=>'order-info'));
-// 			echo CHtml::label('Orden: ','info_order');
-// 			$orderData = array('addressed'=>'Para','can_feedback'=>'Respuesta','need_confirmation'=>'Confirmaci'.utf8_encode('ó').'n');
-// 			echo CHtml::dropDownList('info_order', ($order)?$order:'addressed', $orderData);
-// 		echo CHtml::closeTag('div');
-		
 	echo CHtml::closeTag('div');	
 ?> 
-<?php else:?>
-<div id="loading" class="loading-place-holder" >
-</div>
-<?php
-echo CHtml::openTag('div',array('class'=>'wall-action-box-btn','id'=>'btn-box'));
 
-	echo CHtml::openTag('div',array('class'=>'review-type'));
-		echo CHtml::openTag('div',array('class'=>'review-attr-level'));		
-			echo CHtml::label('Tipo: ','Id_review_type');
-		echo CHtml::closeTag('div');
-		echo CHtml::openTag('div',array('class'=>'review-attr-text'));		
-			echo CHtml::encode($model->reviewType->description);
-		echo CHtml::closeTag('div');
-	echo CHtml::closeTag('div');
-// 	echo CHtml::openTag('div',array('class'=>'order-info'));
-// 		echo CHtml::label('Orden: ','info_order');
-// 		$orderData = array('addressed'=>'Para','can_feedback'=>'Respuesta','need_confirmation'=>'Confirmaci'.utf8_encode('ó').'n');
-// 		echo CHtml::dropDownList('info_order', ($order)?$order:'addressed', $orderData);
-// 	echo CHtml::closeTag('div');
-echo CHtml::closeTag('div');
-?>
-<?php endif;?>
 </div>
 <!-- *************** NOTE ******************************* -->
 
