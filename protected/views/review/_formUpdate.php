@@ -282,6 +282,11 @@ function bindEvents(item)
 				bindEvents($('#noteContainer_'+idMainNote))
 			});
 	});
+		
+	$('#editPermission_'+idMainNote).click(function(){		
+		var idMainNote = $(this).attr('id').split('_')[1];		
+		$(this).parent().parent().find('#publicArea_' + idMainNote).toggle();
+	});
 	
 	$('#confirm_note_'+idMainNote).click(function(){
 		$.ajax({

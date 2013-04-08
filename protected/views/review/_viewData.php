@@ -168,9 +168,13 @@ $editable = $isAdministrator||$isOwner;
 				$modelUserGroupNote = UserGroupNote::model()->findAllByAttributes(array('Id_note'=>$data->Id));
 				
 				$modelNoteNote = NoteNote::model()->findAllByAttributes(array('Id_parent'=>$data->Id));
-				
-				echo CHtml::openTag('div', array('id'=>'publicArea_'.$data->Id,'name'=>'edit-permissions', 'class'=>'review-permission-area'));
+
+				echo CHtml::openTag('div', array('name'=>'edit-permissions', 'class'=>'review-permission-area-edit'));
+				echo CHtml::openTag('p',array('id'=>'editPermission_'.$data->Id, 'class'=>'note-edit-permission'));
 				echo CHtml::decode('Editar Permisos');
+				echo CHtml::closeTag('p');
+				echo CHtml::closeTag('div');
+				echo CHtml::openTag('div', array('id'=>'publicArea_'.$data->Id,'name'=>'edit-permissions', 'class'=>'review-permission-area'));								
 				
 				foreach($modelUserGroup as $item)
 				{
