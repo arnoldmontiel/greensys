@@ -248,6 +248,7 @@ class TMultimedia extends TapiaActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'album' => array(self::BELONGS_TO, 'Album', 'Id_album'),
+			'project' => array(self::BELONGS_TO, 'Project', 'Id_project'),
 			'user' => array(self::BELONGS_TO, 'User', 'username'),
 			'idUserGroup' => array(self::BELONGS_TO, 'UserGroup', 'Id_user_group'),
 			'customer' => array(self::BELONGS_TO, 'TCustomer', 'Id_customer'),
