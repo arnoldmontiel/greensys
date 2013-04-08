@@ -243,7 +243,19 @@ div.view-text-note
 	background-color: #f4f6fb;
 	position: relative;
 }
-
+div.mini-note-attch-zone
+{
+	font-size: 13px;
+	line-height: 18px;
+	padding:18px 10px 10px 10px;
+	border-top: 1px solid white;
+	border-bottom: 1px solid #D2D9E7;
+	background-color: #E5ECFB;
+	position: relative;	
+	display:none;
+	height:auto;
+	margin-top: 10px;
+}
 div.view-text-simple-note
 {
 	font-size: 13px;
@@ -1195,6 +1207,36 @@ img.wall-action-remove-small
 	right:0px;
 	width:20px;
 	cursor: pointer;
+}
+img.action-show-hide-attch
+{	
+	position:absolute;
+	top:0px;
+	right:0px;
+	width:20px;
+	cursor: pointer;
+}
+div.mini-note-attch-link
+{	
+	position:absolute;	
+	top:0px;
+	right:2px;
+	margin-right: 2px;
+	height:25px;		
+}
+div.mini-note-images
+{	
+	width: 50%;
+	margin-top :10px;
+	top:2px;
+	display:inline-block;	
+}
+div.mini-note-docs
+{		
+	right:0px;
+	display:inline-block;
+	margin-top :12px;
+	vertical-align: top;
 }
 img.review-action-remove-small
 {	
