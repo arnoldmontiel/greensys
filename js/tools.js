@@ -104,7 +104,7 @@ function fillWieghtTextBox(url,textBoxId,formId)
 }
 function preventSubmit(element)
 {
-	jQuery(element).keydown(function() {
+	jQuery(element).keydown(function(event) {
         if (event.keyCode == 13) {
             return false;
          }
