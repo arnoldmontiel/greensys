@@ -9,7 +9,7 @@
 			<div class="search-box-list">
 			<?php
 				$modelUser = User::getCurrentUser();
-				if($modelUser->username == $this->modelTag->username)
+				if(User::isAdministartor() || $modelUser->username == $this->modelTag->username)
 				{
 					$modelReviewType = $this->modelTag->reviewType;
 					$modelTags = $modelReviewType->tags;
