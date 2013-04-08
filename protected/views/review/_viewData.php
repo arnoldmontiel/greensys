@@ -532,27 +532,12 @@ $editable = $isAdministrator||$isOwner;
 	<div id="singleNoteContainer" class="singles-notes-container">
 	<?php $notes=$data->notes;?>
 	<?php if (!empty($notes)):?>
-		<?php 
+		<?php
 		foreach($notes as $item)
 		{
-			echo CHtml::openTag('div',array('class'=>'view-text-note'));
-				echo CHtml::openTag('div',array('class'=>'view-text-user'));
-					echo CHtml::encode($item->user->name.' '.$item->user->last_name);
-				echo CHtml::closeTag('div');
-				echo CHtml::openTag('div',array('class'=>'view-text-date'));
-					echo $item->creation_date;
-				echo CHtml::closeTag('div');
-				if($editable||User::isOwnerOf($item))
-				{
-					echo CHtml::image('images/remove.png','',
-					array('id'=>'left_note_'.$item->Id.'_'.$data->Id, 'class'=>'wall-action-remove-small','title'=>'Eliminar'));						
-				}
-				echo CHtml::openTag('p',array('class'=>'single-formated-text'));
-					echo $item->note;
-				echo CHtml::closeTag('p');
-			echo CHtml::closeTag('div');
+			$this->renderPartial('_viewMiniNote',array('modelMiniNote'=>$item,'modelMainNote'=>$data));
 		}
-		?>		
+		?>
 	<?php endif?>
 	</div>
 	<?php if($canDoFeeback):?>

@@ -77,7 +77,8 @@ function bindEvents(item)
 			{
 				idCustomer: $(this).attr('idcustomer'),
 			 	idMultimedia: $(this).attr('idmultimedia'),
-				idDocType: $(this).attr('iddocType')				
+				idDocType: $(this).attr('iddocType'),				
+				idProject: $(this).attr('idproject')
 			 }).success(
 					function(data) 
 					{ 
@@ -202,25 +203,33 @@ function bindEvents(item)
 		function(i, imgItem){
 			
 			$(imgItem).click(function(){
-				var id = $(imgItem).attr('id');								
-				var idNote = id.split('_')[2];
-				var idParent = id.split('_')[3];
+				var id = $(imgItem).attr('id');
+				var idName = id.split('_')[0];								
+				var idNote = id.split('_')[1];
+				var idParent = id.split('_')[2];
 				
-				var getParam = '&id='+idNote+'&idParent='+idParent;
-												
-				$.ajax({
-						type : 'GET',
-						url : '" . ReviewController::createUrl('AjaxRemoveSingleNote') ."' + getParam,
-						beforeSend : function(){
-									if(!confirm('\u00BFSeguro que quiere borrar esta nota?')) 
-										return false;
-										},
-						success : function(data)
-						{
-							$('#noteContainer_'+idParent).html(data);
-							bindEvents($('#noteContainer_'+idParent))
-						}
-				});
+				if(idName == 'left-note')
+				{
+					var getParam = '&id='+idNote+'&idParent='+idParent;
+													
+					$.ajax({
+							type : 'GET',
+							url : '" . ReviewController::createUrl('AjaxRemoveSingleNote') ."' + getParam,
+							beforeSend : function(){
+										if(!confirm('\u00BFSeguro que quiere borrar esta nota?')) 
+											return false;
+											},
+							success : function(data)
+							{
+								$('#noteContainer_'+idParent).html(data);
+								bindEvents($('#noteContainer_'+idParent))
+							}
+					});					
+				}
+				if(idName == 'attch-left-note')
+				{
+					$(this).parent().parent().find('.mini-note-attch-zone').toggle();
+				}
 			});
 	});
 	
