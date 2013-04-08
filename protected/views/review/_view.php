@@ -5,8 +5,7 @@ if(!$data->isOpen())
 ?>
 <a href="<?php echo ReviewController::createUrl($route,array('id'=>$data->Id))?>" class="index-review-single-link">
 <div class="index-review-single" id='review_<?php echo $data->Id; ?>'>
-	<div class="index-review-single-container">
-
+	<div class="index-review-single-container">		
 	<?php
 		$classStyle = 'index-review-summary-unread';
 		$modelReviewUser = ReviewUser::model()->findByPk(array('Id_review'=>$data->Id,'username'=>User::getCurrentUser()->username));
@@ -19,6 +18,25 @@ if(!$data->isOpen())
 			echo CHtml::openTag('div',array('class'=>'index-review-close-box','title'=>$data->closing_description));
 				echo "Cerrado";
 			echo CHtml::closeTag('div');
+		}else
+		{
+			$tags = $data->tags;
+			echo CHtml::openTag('div',array('class'=>'index-review-tag-box'));
+			foreach($tags as $tag)
+			{
+				$options = array('class'=>'index-review-single-tag');
+				if($tag->Id==1)
+				$options['style']='background-color: #CC3300;color: white';//rojo
+				else if($tag->Id==2)
+				$options['style']='background-color: #66FF66';//verde
+				else if($tag->Id==3)
+				$options['style']='background-color: #FFFF99';//amarillo
+			
+				echo CHtml::openTag('div',$options);
+				echo $tag->description;
+				echo CHtml::closeTag('div');
+			}
+			echo CHtml::closeTag('div');				
 		}	
 		echo CHtml::openTag('div',array('class'=>'index-review-type-box'));
 			echo $data->reviewType->description;
@@ -33,20 +51,6 @@ if(!$data->isOpen())
 	<?php echo $data->change_date; ?>
 		</div>
 		
-	<?php 
-		$tags = $data->tags;
-		
-		echo CHtml::openTag('div',array('class'=>'index-review-tag-box'));
-		foreach($tags as $tag)
-		{
-			echo CHtml::openTag('div',array('class'=>'index-review-single-tag'));
-			echo $tag->description;
-			echo CHtml::closeTag('div');
-		}
-		echo CHtml::closeTag('div');
-	?>
-
-	
 		<?php 
 		
 		$modelReview = Review::model()->findByPk($data->Id);
