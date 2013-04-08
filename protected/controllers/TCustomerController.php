@@ -341,15 +341,16 @@ class TCustomerController extends Controller
 			$modelPerson->attributes=$_POST['Person'];
 			$transaction = $modelCustomer->dbConnection->beginTransaction();
 			try {
+				$saveOk = true;
 				$modelUser->email = $modelContact->email;
 				$modelUser->Id_user_group = $modelCustomer->Id_user_group;				
-				$modelUser->save();
-				$modelContact->save();
-				$modelPerson->save();
+				$saveOk &= $modelUser->save();
+				$saveOk &= $modelContact->save();
+				$saveOk &= $modelPerson->save();
 // 				$modelCustomer->Id_contact = $modelContact->Id;
 // 				$modelCustomer->Id_person = $modelPerson->Id;
 // 				$modelCustomer->username = $modelPerson->username;
-				$modelCustomer->save();
+				$saveOk &= $modelCustomer->save();
 				
 				Hyperlink::model()->deleteAllByAttributes(array('Id_contact'=>$modelCustomer->Id_contact));
 				GreenHelper::saveLinks($_POST['links'], $modelCustomer->Id_contact, $this->getEntityType(),'Id_contact');
@@ -357,7 +358,8 @@ class TCustomerController extends Controller
 				$transaction->commit();
 		
 				//$this->createDefaultPermissions($modelCustomer->Id);
-				$this->redirect(array('view','id'=>$modelCustomer->Id));
+				if($saveOk)
+					$this->redirect(array('view','id'=>$modelCustomer->Id));
 			} catch (Exception $e) {
 				$transaction->rollback();
 			}
