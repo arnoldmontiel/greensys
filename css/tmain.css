@@ -443,12 +443,12 @@ div.review-create-title-btn-main-cancel
 div.review-create-note-btn-main
 {	
 	right:80px;
-	top: 310px;
+	top: 180px;
 }
 div.review-create-note-btn-main-cancel
 {	
 	right:15px;
-	top: 310px;
+	top: 180px;
 }
 
 div.review-edit-image
@@ -1066,10 +1066,11 @@ div.wall-action-edit-main-note
 	font-size: 13px;
 	line-height: 18px;
 	width: 540px;
-	height: 280px;
+	height: 150px;
 	font: inherit;
 	color: inherit;
 	margin: 0px;
+	overflow: auto;
 }
 
 textarea.wall-action-edit-main-title
@@ -1105,7 +1106,7 @@ textarea.wall-action-edit-main-note
 	line-height: 18px;
 	resize: none;
 	width: 540px;
-	height: 280px;
+	height: 150px;
 	font: inherit;
 	color: inherit;
 	margin: 0px;
