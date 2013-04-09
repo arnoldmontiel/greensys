@@ -887,9 +887,7 @@ class ReviewController extends Controller
 			} catch (Exception $e) {				
 				$transaction->rollback();
 			}
-		}
-	
-	
+		}		
 	}
 	
 	public function actionUpdateDocuments($id)
