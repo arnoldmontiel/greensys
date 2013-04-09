@@ -610,8 +610,7 @@ $('#btnAlbum').click(function(){
 		function(data){
 			$('#dialogProcessing').dialog('close');
 			$('#loading').removeClass('loading');
-			var param = '&idAlbum='+data+'&idCustomer='+".$model->Id_customer.";
-		
+			var param = '&idAlbum='+data+'&idCustomer='+".$model->Id_customer."+'&idProject='+".$model->Id_project.";
 			$('#XUploadWidget_form').attr('action','".AlbumController::createUrl('album/AjaxUpload')."'+param);
 			$('#Album_Id_album').val(data);
 			$('#uploader').html(data);

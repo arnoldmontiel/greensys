@@ -52,7 +52,7 @@ $('#Id_customer').change(function(){
 
 setInterval(function() {
    doFilter();
-}, 5000)
+}, 50000000)
 
 function doFilter()
 {
@@ -255,7 +255,7 @@ $('#btnAlbum').click(function(){
 		).success(
 		function(data){
 			$('#loading').removeClass('loading');
-			var param = '&idAlbum='+data+'&idCustomer='+".$Id_customer.";
+			var param = '&idAlbum='+data+'&idCustomer='+".$Id_customer."+'&idProject='+".$Id_project.";
 			$('#XUploadWidget_form').attr('action','".AlbumController::createUrl('album/AjaxUpload')."'+param);
 			$('#Album_Id_album').val(data);
 			$('#uploader').html(data);

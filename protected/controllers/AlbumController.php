@@ -119,7 +119,7 @@ class AlbumController extends Controller
 		));
 	}
 	
-	public function actionAjaxUpload($idAlbum, $idCustomer)
+	public function actionAjaxUpload($idAlbum, $idCustomer, $idProject)
 	{
 		$file = $_FILES['file'];
 		
@@ -129,6 +129,7 @@ class AlbumController extends Controller
  		$modelMultimedia->uploadedFile = $file;
  		$modelMultimedia->Id_multimedia_type = 1;
  		$modelMultimedia->Id_customer = $idCustomer;
+ 		$modelMultimedia->Id_project = $idProject;
  		
  		$modelMultimedia->save();
  		
