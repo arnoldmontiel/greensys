@@ -133,7 +133,7 @@ class TMultimedia extends TapiaActiveRecord
 				
 				if($this->Id_document_type > 0){
 					$this->Id_google_drive = GDriveHelper::uploadFile($this);
-					GDriveHelper::shareFile($this->Id_google_drive, $this->Id_customer);
+					GDriveHelper::shareFile($this->Id_google_drive, $this->Id_project);
 				}
 				
 //***************************************** To save pdf preview ****************************************************************				

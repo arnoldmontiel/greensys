@@ -49,10 +49,10 @@ class GDriveHelper
 	 * 
 	 * Share files to user group which can use technical docs.
 	 * @param String $Id_google_drive
-	 * @param integer $Id_customer
+	 * @param integer $Id_project
 	 * @param String $role The value "owner", "writer" or "reader".
 	 */
-	static public function shareFile($Id_google_drive, $Id_customer, $role = 'writer')
+	static public function shareFile($Id_google_drive, $Id_project, $role = 'writer')
 	{
 		$service = self::getService();
 		
@@ -60,7 +60,7 @@ class GDriveHelper
 		$criteria->join =  	"INNER JOIN user u on u.username = t.username
 							INNER JOIN user_group ug on u.Id_user_group = ug.Id";
 		$criteria->addCondition('ug.use_technical_docs = 1');		
-		$criteria->addCondition('t.Id_customer = '. $Id_customer);		
+		$criteria->addCondition('t.Id_project = '. $Id_project);		
 		$criteria->addCondition('u.username <> "'. User::getCurrentUser()->username .'"');
 		
 		$userCustomers = UserCustomer::model()->findAll($criteria);
