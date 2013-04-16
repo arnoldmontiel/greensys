@@ -14,7 +14,7 @@ $('.link-permission-g-drive').click(function(){
 $('.image-g-drive').click(function(){
 
 	$('#dialogProcessing').dialog('open');
-	var mainParent = $(this).parent().parent();
+	//var mainParent = $(this).parent().parent();
 	var target = $(this);
 	
 	var shared = $(this).attr('shared');
@@ -113,7 +113,62 @@ $('.image-g-drive').click(function(){
 				echo CHtml::closeTag('div');
 				echo CHtml::openTag('div',array('class'=>'review-tech-files-descr'));						
 					echo CHtml::encode($item->description);
-					echo "<p>Subido por : ". $item->username ." el ". $item->creation_date . "</p>";										
+					echo "<p>Subido por : ". $item->username ." el ". $item->creation_date . "</p>";
+
+					echo CHtml::openTag('div',array('id'=>'table_'.$item->Id_google_drive, 'class'=>'google-permission-zone'));
+					echo CHtml::openTag('table');
+					echo CHtml::openTag('tr');
+					echo CHtml::openTag('td');
+					echo "Usuario";
+					echo CHtml::closeTag('td');
+					echo CHtml::openTag('td');
+					echo "Correo";
+					echo CHtml::closeTag('td');
+					echo CHtml::openTag('td');
+					echo "Estado";
+					echo CHtml::closeTag('td');
+					echo CHtml::closeTag('tr');
+						
+					foreach($userCustomers as $modelUserCustomer)
+					{
+						echo CHtml::openTag('tr');
+							
+						echo CHtml::openTag('td');
+						echo $modelUserCustomer->user->name . ' '. $modelUserCustomer->user->last_name;
+						echo CHtml::closeTag('td');
+							
+						echo CHtml::openTag('td');
+						echo $modelUserCustomer->user->email;
+						echo CHtml::closeTag('td');
+							
+						echo CHtml::openTag('td');
+						$modelPermission = PermissionGoogleDrive::model()->findByAttributes(array('username'=>$modelUserCustomer->username,
+																											'Id_google_drive'=>$item->Id_google_drive));
+					
+						if(isset($modelPermission) || $modelUserCustomer->username == $item->username)
+						{
+							echo CHtml::image('images/g-drive-shared.png','',
+							array('id'=>$modelUserCustomer->username.'_'.$item->Id_google_drive,
+																'class'=>'image-g-drive', 
+																'title'=>'Compartido',
+																'shared'=>'true',
+																'style'=>'width:25px;'));
+						}
+						else
+						{
+							echo CHtml::image('images/g-drive-unshared.png','',
+							array('id'=>$modelUserCustomer->username.'_'.$item->Id_google_drive,
+																'class'=>'image-g-drive', 
+																'title'=>'No Compartido',
+																'shared'=>'false', 
+																'style'=>'width:25px;'));
+						}
+						echo CHtml::closeTag('td');
+							
+						echo CHtml::closeTag('tr');
+					}
+					echo CHtml::closeTag('table');
+					echo CHtml::closeTag('div');
 				echo CHtml::closeTag('div');
 				
 				if($isCurrent)
@@ -121,40 +176,7 @@ $('.image-g-drive').click(function(){
 					echo CHtml::openTag('div',array('class'=>'review-tech-files-permission'));
 						echo CHtml::link('Permisos G-Drive','#',
 						array('id'=>$item->Id_google_drive, 'class'=>'link-permission-g-drive')
-						);
-						echo CHtml::openTag('div',array('id'=>'table_'.$item->Id_google_drive, 'class'=>'google-permission-zone'));
-						foreach($userCustomers as $modelUserCustomer)
-						{
-							
-							echo CHtml::openTag('div',array('class'=>'google-permission-users'));						
-								echo $modelUserCustomer->user->name . ' '. $modelUserCustomer->user->last_name;
-							echo CHtml::closeTag('div');
-							
-							echo CHtml::openTag('div',array('class'=>'google-permission-status'));
-								$modelPermission = PermissionGoogleDrive::model()->findByAttributes(array('username'=>$modelUserCustomer->username,
-																						'Id_google_drive'=>$item->Id_google_drive));
-														
-								if(isset($modelPermission) || $modelUserCustomer->username == $item->username)
-								{
-									echo CHtml::image('images/g-drive-shared.png','',
-									array('id'=>$modelUserCustomer->username.'_'.$item->Id_google_drive, 
-											'class'=>'image-g-drive', 
-											'title'=>'Compartido',
-											'shared'=>'true',
-											'style'=>'width:25px;'));
-								}						
-								else 
-								{
-									echo CHtml::image('images/g-drive-unshared.png','',
-									array('id'=>$modelUserCustomer->username.'_'.$item->Id_google_drive, 
-											'class'=>'image-g-drive', 
-											'title'=>'No Compartido',
-											'shared'=>'false', 
-											'style'=>'width:25px;'));
-								}						
-							echo CHtml::closeTag('div');
-						}
-						echo CHtml::closeTag('div');
+						);						
 					echo CHtml::closeTag('div');
 				}				
 			echo CHtml::closeTag('div');
