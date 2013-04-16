@@ -117,17 +117,17 @@ $('.image-g-drive').click(function(){
 
 					echo CHtml::openTag('div',array('id'=>'table_'.$item->Id_google_drive, 'class'=>'google-permission-zone'));
 					echo CHtml::openTag('table');
-					echo CHtml::openTag('tr');
-					echo CHtml::openTag('td');
-					echo "Usuario";
-					echo CHtml::closeTag('td');
-					echo CHtml::openTag('td');
-					echo "Correo";
-					echo CHtml::closeTag('td');
-					echo CHtml::openTag('td');
-					echo "Estado";
-					echo CHtml::closeTag('td');
-					echo CHtml::closeTag('tr');
+						echo CHtml::openTag('tr');
+							echo CHtml::openTag('td');
+								echo "Usuario";
+							echo CHtml::closeTag('td');
+							echo CHtml::openTag('td');
+								echo "Correo";
+							echo CHtml::closeTag('td');
+							echo CHtml::openTag('td');
+								echo "Estado";
+							echo CHtml::closeTag('td');
+						echo CHtml::closeTag('tr');
 						
 					foreach($userCustomers as $modelUserCustomer)
 					{
