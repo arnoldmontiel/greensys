@@ -235,6 +235,7 @@ class ReviewController extends Controller
 		$criteria->addCondition('Id_document_type is not null');		
 		$criteria->addCondition('Id_customer = '. $Id_customer);
 		$criteria->addCondition('Id_project = '. $Id_project);
+		$criteria->addCondition('Id_multimedia_type <> 1'); //no traigo imagenes		
 		$criteria->order = 'Id_document_type, Id DESC';
 				
 		$modelMultimedia = TMultimedia::model()->findAll($criteria);
@@ -1160,5 +1161,29 @@ class ReviewController extends Controller
 			$this->renderPartial('_viewPendingData',array('data'=>$model));
 			echo CHtml::closeTag('div');
 		}
+	}
+	
+	public function actionAjaxShareFile()
+	{
+		$Id_google_drive = ($_POST['Id_google_drive'])?$_POST['Id_google_drive']:null;
+		$username = ($_POST['username'])?$_POST['username']:null;
+		$shared = ($_POST['shared'])?$_POST['shared']:null;
+		
+		$response = false;
+		
+		if(isset($Id_google_drive) && isset($username) && isset($shared))
+		{
+			if($shared == 'false')
+				$response = GDriveHelper::shareFileByUser($Id_google_drive, $username);
+			else
+				$response = GDriveHelper::unShareFileByUser($Id_google_drive, $username);
+		}
+		
+		if($response)
+			$response = 1;
+		else
+			$response = 0;
+		
+		echo $response;
 	}
 }
