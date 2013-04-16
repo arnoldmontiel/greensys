@@ -87,6 +87,42 @@ class GDriveHelper
 	
 	/**
 	*
+	* Share files to a particular user.
+	* @param String $Id_google_drive
+	* @param String $username
+	* @param String $role The value "owner", "writer" or "reader".
+	* @return boolean if file was shared.
+	*/
+	static public function shareFileByUser($Id_google_drive, $username, $role = 'reader')
+	{
+		$user = User::model()->findByPk($username);
+		
+		if(isset($user))
+		{
+			$modelPermission = PermissionGoogleDrive::model()->findByAttributes(array('username'=>$username,
+																								'Id_google_drive'=>$Id_google_drive));
+			if(!isset($modelPermission))
+			{
+				$service = self::getService();
+				
+				$permission = self::share($service, $user->email, $role, $Id_google_drive);
+				if(isset($permission))
+				{
+					$modelPermission = new PermissionGoogleDrive();
+					$modelPermission->Id_permission = $permission['id'];
+					$modelPermission->username = $username;
+					$modelPermission->Id_google_drive = $Id_google_drive;
+					
+					if($modelPermission->save())
+						return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
+	*
 	* Share files by id note (all user group related).
 	* @param integer $Id_note
 	* @param String $role The value "owner", "writer" or "reader".
@@ -189,6 +225,30 @@ class GDriveHelper
 				}
 			}
 		}
+	}
+	
+	/**
+	*
+	* unShare files by a particular username.
+	* @param String $Id_google_drive
+	* @param String $username
+	* @param String $role The value "owner", "writer" or "reader".
+	* @return boolean if file was un-shared.
+	*/
+	static public function unShareFileByUser($Id_google_drive, $username, $role = 'reader')
+	{
+		$modelPermission = PermissionGoogleDrive::model()->findByAttributes(array('username'=>$username,
+																				'Id_google_drive'=>$Id_google_drive));
+		if(isset($modelPermission))
+		{
+			$service = self::getService();
+			
+			self::unShare($service, $Id_google_drive, $modelPermission->Id_permission);
+			if($modelPermission->delete())
+				return true;
+			
+		}
+		return false;
 	}
 	
 	/**
