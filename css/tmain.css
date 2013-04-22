@@ -2322,7 +2322,7 @@ div.customer-button-box
 }.google-permission-zone tr:hover td{
 	background-color:#82c0ff;
 	background:-o-linear-gradient(bottom, #82c0ff 5%, #56aaff 100%);	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #82c0ff), color-stop(1, #56aaff) );
-	background:-moz-linear-gradient( center top, #82c0ff 5%, #56aaff 100% );
+	background:-moz-linear-gradient( center top, #e5ecfb 5%, #AFBAD7 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#82c0ff", endColorstr="#56aaff");	background: -o-linear-gradient(top,#82c0ff,56aaff);
 }.google-permission-zone tr:first-child td{
 	background:-o-linear-gradient(bottom, #0069d3 5%, #007fff 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #0069d3), color-stop(1, #007fff) );
