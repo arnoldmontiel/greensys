@@ -23,6 +23,9 @@ $('.image-g-drive').click(function(){
 	var username = idSplited[0];
 	var idGoogle = idSplited[1];
 	
+	//solo temporal
+	if(username != 'amagatelli')
+	{
 	$.post('".ReviewController::createUrl('AjaxShareFile')."', 
 			{
 				Id_google_drive: idGoogle,
@@ -48,6 +51,14 @@ $('.image-g-drive').click(function(){
 				}).error(function(data){
 						$('#dialogProcessing').dialog('close');
 			});
+	}
+	else
+	{
+		alert('No puede descompartir el archivo del propietario');
+		$('#dialogProcessing').dialog('close');
+	}
+		
+	
 });
 
 ");
@@ -145,7 +156,7 @@ $('.image-g-drive').click(function(){
 						$modelPermission = PermissionGoogleDrive::model()->findByAttributes(array('username'=>$modelUserCustomer->username,
 																											'Id_google_drive'=>$item->Id_google_drive));
 					
-						if(isset($modelPermission) || $modelUserCustomer->username == $item->username)
+						if(isset($modelPermission))
 						{
 							echo CHtml::image('images/g-drive-shared.png','',
 							array('id'=>$modelUserCustomer->username.'_'.$item->Id_google_drive,
