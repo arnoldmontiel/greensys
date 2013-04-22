@@ -3,7 +3,7 @@
 //Para usar esta clase hace falta previamente hacer in import del google-api-php-client
 class CustomGoogleOAuthService extends GoogleOAuthService
 {
-	protected $scope = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.email';
+	protected $scope = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/userinfo.email';
 	
 	protected function fetchAttributes() {
 		$this->attributes = (array) $this->makeSignedRequest('https://www.googleapis.com/oauth2/v1/userinfo');		
