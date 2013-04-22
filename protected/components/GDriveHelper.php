@@ -38,7 +38,21 @@ class GDriveHelper
 			if(isset($idGoogleDrive))
 				self::updateFile($service, $idGoogleDrive, $file, $data, $mimeType);
 			else
-				$idGoogleDrive = self::insertFile($service, $file, $data, $mimeType);
+			{
+				$createdFile = self::insertFile($service, $file, $data, $mimeType);				
+				$idGoogleDrive = (string)$createdFile['id'];				
+				$modelPermission = PermissionGoogleDrive::model()->findByAttributes(array('username'=>$modelMultimedia->username,
+																									'Id_google_drive'=>$idGoogleDrive));
+				if(!isset($modelPermission))
+				{					
+					$modelPermission = new PermissionGoogleDrive();
+					$modelPermission->Id_permission = (string)$createdFile['owners'][0]['permissionId'];
+					$modelPermission->username = $modelMultimedia->username;
+					$modelPermission->Id_google_drive = $idGoogleDrive;
+					$modelPermission->save();					
+				}
+				
+			}
 				
 		}
 		
@@ -323,7 +337,7 @@ class GDriveHelper
 		      'mimeType' => $mimeType,
 		));
 		
-		return (string)$createdFile['id'];
+		return $createdFile;
 	}
 	
 	private function updateFile($service, $Id_google_drive, $file, $data, $mimeType)
