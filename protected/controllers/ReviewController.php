@@ -1173,8 +1173,14 @@ class ReviewController extends Controller
 		
 		if(isset($Id_google_drive) && isset($username) && isset($shared))
 		{
+			$modelUser = User::model()->findByPk($username);
+			
+			$role = 'reader';
+			if(isset($modelUser))
+				$role = ($modelUser->userGroup->use_technical_docs != 0)?'writer':$role;
+			
 			if($shared == 'false')
-				$response = GDriveHelper::shareFileByUser($Id_google_drive, $username);
+				$response = GDriveHelper::shareFileByUser($Id_google_drive, $username, $role);
 			else
 				$response = GDriveHelper::unShareFileByUser($Id_google_drive, $username);
 		}
