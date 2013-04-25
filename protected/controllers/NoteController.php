@@ -184,6 +184,18 @@ class NoteController extends Controller
 	
 	}
 	
+	private function shareTechDoc($model)
+	{
+		$idNote = $model->Id;
+		$modelNoteNote = NoteNote::model()->findByAttributes(array('Id_child'=>$idNote));
+		
+		if(isset($modelNoteNote))
+			$idNote = $modelNoteNote->Id_parent;
+
+		GDriveHelper::shareFilesByNote($idNote);
+
+	}
+	
 	public function actionAjaxRemoveResourceFromNote()
 	{
 			
@@ -258,6 +270,15 @@ class NoteController extends Controller
 		}
 	}
 	
+	private function deleteTechDocs($idNote)
+	{
+		$criteria=new CDbCriteria;
+		
+		$criteria->addCondition('Id_multimedia IN(select Id from multimedia where Id_document_type is not null AND Id_multimedia_type IN ( 3,4,5,6))');
+		
+		MultimediaNote::model()->deleteAllByAttributes(array('Id_note'=>$idNote),$criteria);
+	}
+	
 	public function actionAjaxAttachTechDoc()
 	{
 		$docs = isset($_POST['docs'])?$_POST['docs']:null;
@@ -266,11 +287,8 @@ class NoteController extends Controller
 		$modelNote =$this->loadModel($id);
 		$transaction =  $modelNote->dbConnection->beginTransaction();
 	
-		$criteria=new CDbCriteria;
-	
-		$criteria->addCondition('Id_multimedia IN(select Id from multimedia where Id_document_type is not null AND Id_multimedia_type IN ( 3,4,5,6))');
-	
-		MultimediaNote::model()->deleteAllByAttributes(array('Id_note'=>$id),$criteria);
+		$this->deleteTechDocs($id);	
+		
 		try {
 			if($docs)
 			{
@@ -284,8 +302,20 @@ class NoteController extends Controller
 				$this->markAsUnread($modelNote);
 			}
 			$transaction->commit();
+			$this->shareAttachTechDocs($modelNote);
+			
 		} catch (Exception $e) {
 			$transaction->rollback();
+		}
+	}
+	
+		
+	private function shareAttachTechDocs($modelNote)
+	{
+		//si ya esta publicada la nota, comparto los archivos en G-Drive
+		if($modelNote->in_progress == 0)
+		{
+			$this->shareTechDoc($modelNote);
 		}
 	}
 	
