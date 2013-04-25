@@ -4,10 +4,11 @@
  * This is the model class for table "permission_google_drive".
  *
  * The followings are the available columns in table 'permission_google_drive':
- * @property stringinteger $Id
+ * @property integer $Id
  * @property string $Id_permission
  * @property string $username
  * @property string $Id_google_drive
+ * @property string $role
  *
  * The followings are the available model relations:
  * @property User $username0
@@ -43,9 +44,10 @@ class PermissionGoogleDrive extends TapiaActiveRecord
 			array('Id_permission, username', 'required'),
 			array('Id_permission, Id_google_drive', 'length', 'max'=>255),
 			array('username', 'length', 'max'=>128),
+			array('role', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_permission, username, Id_google_drive', 'safe', 'on'=>'search'),
+			array('Id, Id_permission, username, Id_google_drive, role', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,6 +73,7 @@ class PermissionGoogleDrive extends TapiaActiveRecord
 			'Id_permission' => 'Id Permission',
 			'username' => 'Username',
 			'Id_google_drive' => 'Google Drive',
+			'role' => 'Role',
 		);
 	}
 
@@ -86,9 +89,11 @@ class PermissionGoogleDrive extends TapiaActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('Id',$this->Id,true);
+		$criteria->compare('Id_permission',$this->Id_permission,true);
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('Id_google_drive',$this->Id_google_drive,true);
-
+		$criteria->compare('role',$this->role,true);
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
