@@ -35,7 +35,7 @@ $('.image-g-drive').click(function(){
 			).success(
 			function(data){				
 				if(data == '1')
-				{				
+				{									
 					if(shared == 'true'){
 						$(target).attr('shared','false');
 						$(target).attr('src','images/g-drive-unshared.png')
@@ -134,7 +134,7 @@ $('.image-g-drive').click(function(){
 							echo CHtml::closeTag('td');
 							echo CHtml::openTag('td');
 								echo "Correo";
-							echo CHtml::closeTag('td');
+							echo CHtml::closeTag('td');							
 							echo CHtml::openTag('td');
 								echo "Estado";
 							echo CHtml::closeTag('td');
@@ -150,20 +150,27 @@ $('.image-g-drive').click(function(){
 							
 						echo CHtml::openTag('td');
 						echo $modelUserCustomer->user->email;
-						echo CHtml::closeTag('td');
-							
+						echo CHtml::closeTag('td');						
+						
 						echo CHtml::openTag('td');
 						$modelPermission = PermissionGoogleDrive::model()->findByAttributes(array('username'=>$modelUserCustomer->username,
 																											'Id_google_drive'=>$item->Id_google_drive));
 					
 						if(isset($modelPermission))
 						{
+							if($modelPermission->role == 'owner')
+							{
+								echo 'Propietario';	
+							}
+							else 
+							{
 							echo CHtml::image('images/g-drive-shared.png','',
 							array('id'=>$modelUserCustomer->username.'_'.$item->Id_google_drive,
 																'class'=>'image-g-drive', 
 																'title'=>'Compartido',
 																'shared'=>'true',
 																'style'=>'width:25px;'));
+							}
 						}
 						else
 						{
