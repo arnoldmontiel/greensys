@@ -49,6 +49,7 @@ class GDriveHelper
 					$modelPermission->Id_permission = (string)$createdFile['owners'][0]['permissionId'];
 					$modelPermission->username = $modelMultimedia->username;
 					$modelPermission->Id_google_drive = $idGoogleDrive;
+					$modelPermission->role = 'owner';
 					$modelPermission->save();					
 				}
 				
@@ -93,6 +94,7 @@ class GDriveHelper
 					$modelPermission->Id_permission = $permission['id'];
 					$modelPermission->username = $modelUserCustomer->user->username;
 					$modelPermission->Id_google_drive = $Id_google_drive;
+					$modelPermission->role = $role;
 					$modelPermission->save();
 				}			
 			}
@@ -126,6 +128,7 @@ class GDriveHelper
 					$modelPermission->Id_permission = $permission['id'];
 					$modelPermission->username = $username;
 					$modelPermission->Id_google_drive = $Id_google_drive;
+					$modelPermission->role = $role;
 					
 					if($modelPermission->save())
 						return true;
@@ -180,6 +183,7 @@ class GDriveHelper
 						$modelPermission->Id_permission = $permission['id'];
 						$modelPermission->username = $user->username;
 						$modelPermission->Id_google_drive = $modelUserGroup->Id_google_drive;
+						$modelPermission->role = $role;
 						$modelPermission->save();
 					}				
 				}
@@ -234,6 +238,7 @@ class GDriveHelper
 						$modelPermission->Id_permission = $permission['id'];
 						$modelPermission->username = $user->username;
 						$modelPermission->Id_google_drive = $modelUserGroup->Id_google_drive;
+						$modelPermission->role = $role;
 						$modelPermission->save();
 					}
 				}
@@ -306,15 +311,6 @@ class GDriveHelper
 		}
 	}
 
-	/**
-	 * 
-	 * share and unshare docs by checking attached docs with permission_google_drive
-	 * @param integer $Id_note
-	 */
-	static public function shareAndUnshare($Id_note)
-	{
-		
-	}
 	
 	private function share($service, $email, $role, $Id_google_drive)
 	{
