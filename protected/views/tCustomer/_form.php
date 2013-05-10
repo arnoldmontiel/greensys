@@ -1,3 +1,28 @@
+<?php
+Yii::app()->clientScript->registerScript(__CLASS__.'#Customer-tapia-form', "
+$('#User_username').val('');
+$('#User_username').change(function(){
+	$.post(
+			'". TCustomerController::createUrl('AjaxCheckUsername')."',
+			{
+			 	username: $(this).val()
+			 }).success(
+					function(data) 
+					{ 						
+						if(data != '')
+						{
+							$('#errorMsg').text(data);
+							$('#errorMsg').animate({opacity: 'show'},2000);		
+							$('#User_username').val('');				
+						}
+						else{
+							$('#errorMsg').animate({opacity: 'hide'},2000);
+						}
+					}
+			);
+});
+");
+?>
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -91,6 +116,7 @@
 		<?php echo $form->labelEx($modelUser,'username'); ?>
 		<?php echo $form->textField($modelUser,'username',array('size'=>60,'maxlength'=>128,'disabled'=>$modelCustomer->isNewRecord ? false : true)); ?>
 		<?php echo $form->error($modelUser,'username'); ?>
+		<p id="errorMsg" class="errorMessage"></p>
 	</div>
 
 	<div class="row">
