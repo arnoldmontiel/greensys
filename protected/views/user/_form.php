@@ -1,6 +1,9 @@
 <?php
 Yii::app()->clientScript->registerScript(__CLASS__.'#User-tapia-form', "
-$('#User_username').val('');
+
+if(".$model->isNewRecord.")
+	$('#User_username').val('');
+	
 $('#User_username').change(function(){
 	$.post(
 			'". UserController::createUrl('AjaxCheckUsername')."',
@@ -34,7 +37,7 @@ $('#User_username').change(function(){
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'username'); ?>
-		<?php echo $form->textField($model,'username',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->textField($model,'username',array('size'=>60,'maxlength'=>128,'disabled'=>$model->isNewRecord ? false : true)); ?>
 		<?php echo $form->error($model,'username'); ?>
 		<p id="errorMsg" class="errorMessage"></p>
 	</div>

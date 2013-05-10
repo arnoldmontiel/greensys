@@ -1,6 +1,9 @@
 <?php
 Yii::app()->clientScript->registerScript(__CLASS__.'#Customer-tapia-form', "
-$('#User_username').val('');
+
+if(".$modelCustomer->isNewRecord.")
+	$('#User_username').val('');
+	
 $('#User_username').change(function(){
 	$.post(
 			'". TCustomerController::createUrl('AjaxCheckUsername')."',
