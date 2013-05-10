@@ -170,6 +170,7 @@ class TCustomerController extends Controller
 		
 		if(isset($_POST['User'])&&isset($_POST['Person'])&&isset($_POST['Contact']))
 		{
+			$valid = true;
 			$modelUser->attributes=$_POST['User'];
 			$modelContact->attributes=$_POST['Contact'];
 			$modelPerson->attributes=$_POST['Person'];
@@ -178,15 +179,23 @@ class TCustomerController extends Controller
 			try {
 				$modelUser->email = $modelContact->email;
 				$modelUser->Id_user_group = $modelCustomer->Id_user_group;
-				$modelUser->save();
-				$modelContact->save();
-				$modelPerson->save();
+				
+				if(!$modelUser->save())
+					$valid = false;
+				
+				if(!$modelContact->save())
+					$valid = false;
+				
+				if(!$modelPerson->save())
+					$valid = false;
 				
 				$modelCustomer->Id_contact = $modelContact->Id;
 				$modelCustomer->Id_person = $modelPerson->Id;
 				$modelCustomer->username = $modelUser->username;
-				$modelCustomer->save();
-
+				
+				if(!$modelCustomer->save())
+					$valid = false;
+				
 				Hyperlink::model()->deleteAllByAttributes(array('Id_contact'=>$modelCustomer->Id_contact));
 				GreenHelper::saveLinks($_POST['links'], $modelCustomer->Id_contact, $this->getEntityType(),'Id_contact');
 				
@@ -194,7 +203,8 @@ class TCustomerController extends Controller
 				$transactionTapia->commit();
 				
 				//$this->createDefaultPermissions($modelCustomer->Id);
-				$this->redirect(array('view','id'=>$modelCustomer->Id));
+				if($valid)
+					$this->redirect(array('view','id'=>$modelCustomer->Id));
 			} catch (Exception $e) {
 				$transaction->rollback();
 				$transactionTapia->rollback();
