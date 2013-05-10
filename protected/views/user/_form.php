@@ -1,3 +1,28 @@
+<?php
+Yii::app()->clientScript->registerScript(__CLASS__.'#User-tapia-form', "
+$('#User_username').val('');
+$('#User_username').change(function(){
+	$.post(
+			'". UserController::createUrl('AjaxCheckUsername')."',
+			{
+			 	username: $(this).val()
+			 }).success(
+					function(data) 
+					{ 						
+						if(data != '')
+						{
+							$('#errorMsg').text(data);
+							$('#errorMsg').animate({opacity: 'show'},2000);		
+							$('#User_username').val('');				
+						}
+						else{
+							$('#errorMsg').animate({opacity: 'hide'},2000);
+						}
+					}
+			);
+});
+");
+?>
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -5,14 +30,13 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Campos con <span class="required">*</span> son requeridos.</p>
-
-	<?php echo $form->errorSummary($model); ?>
+	<p class="note">Campos con <span class="required">*</span> son requeridos.</p>	
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'username'); ?>
 		<?php echo $form->textField($model,'username',array('size'=>60,'maxlength'=>128)); ?>
 		<?php echo $form->error($model,'username'); ?>
+		<p id="errorMsg" class="errorMessage"></p>
 	</div>
 
 	<div class="row">

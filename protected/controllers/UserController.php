@@ -150,6 +150,26 @@ class UserController extends Controller
 		));
 	}
 
+	public function actionAjaxCheckUsername()
+	{
+		$username = isset($_POST['username'])?$_POST['username']:null;
+	
+		if(isset($username))
+		{
+			$alreadyExists = false;
+			$user = User::model()->findByAttributes(array('username'=>$username));
+			if(isset($user))
+			$alreadyExists = true;
+				
+			$user = GUser::model()->findByAttributes(array('username'=>$username));
+			if(isset($user))
+			$alreadyExists = true;
+				
+			if($alreadyExists)
+			echo "Username ". $username ." already exists";
+		}
+	}
+	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
