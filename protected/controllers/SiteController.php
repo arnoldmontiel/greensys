@@ -118,6 +118,7 @@ class SiteController extends Controller
                 if ($identity->authenticate()) {
                     Yii::app()->user->login($identity);
 
+                    AuditLogin::audit();
                     // special redirect with closing popup window
                     $authIdentity->redirect();
                 }

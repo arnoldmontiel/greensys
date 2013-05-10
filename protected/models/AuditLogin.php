@@ -16,7 +16,7 @@ class AuditLogin extends TapiaActiveRecord
 	public $user_group_desc;
 	public $user_name;
 	public $user_last_name;
-	
+	public $email;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -55,7 +55,7 @@ class AuditLogin extends TapiaActiveRecord
 			array('date', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, username, date, user_group_desc, user_name, user_last_name', 'safe', 'on'=>'search'),
+			array('Id, username, date, user_group_desc, user_name, user_last_name, email', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -83,6 +83,7 @@ class AuditLogin extends TapiaActiveRecord
 			'user_group_desc'=>'Group de Usuario',
 			'user_name'=>'Nombre', 
 			'user_last_name'=>'Apellido',
+			'email'=>'Correo',
 		);
 	}
 
@@ -106,6 +107,7 @@ class AuditLogin extends TapiaActiveRecord
 		$criteria->addSearchCondition("u.last_name",$this->user_last_name);
 		$criteria->addSearchCondition("u.name",$this->user_name);
 		$criteria->addSearchCondition("u.Id_user_group",$this->user_group_desc);
+		$criteria->addSearchCondition("u.email",$this->email);
 		
 		// Create a custom sort
 		$sort=new CSort;
@@ -127,6 +129,10 @@ class AuditLogin extends TapiaActiveRecord
 					        'asc' => 'u.Id_user_group',
 					        'desc' => 'u.Id_user_group DESC',
 						),
+					  'email' => array(
+					        'asc' => 'u.email',
+					        'desc' => 'u.email DESC',
+						),		
 			'*',
 		);
 		

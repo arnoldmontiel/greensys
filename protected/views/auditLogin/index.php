@@ -13,6 +13,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'filter'=>$model,
 	'columns'=>array(
 		'username',
+		array(
+ 			'name'=>'email',
+			'value'=>'$data->user->email',
+		),
 		'date',
 		array(
  			'name'=>'user_group_desc',
