@@ -33,7 +33,7 @@ echo CHtml::openTag('div',array('class'=>'view-text-note'));
 				array('class'=>'review-text-docs'));
 			echo " - ";
 			echo CHtml::link('Adjuntar Imagenes',
-				ReviewController::createUrl('AjaxAttachImage',array('id'=>$modelMainNote->review->Id, 'idNote'=>$modelMiniNote->Id)),
+				ReviewController::createUrl('selectAttach',array('id'=>$modelMainNote->review->Id, 'idNote'=>$modelMiniNote->Id)),
 				array('class'=>'review-text-docs'));
 			if(User::useTechnicalDocs()){
 				echo " - ";

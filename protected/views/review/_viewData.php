@@ -16,7 +16,7 @@ $editable = $isAdministrator||$isOwner;
 	<div id='edit_image<?php echo $data->Id?>' class="review-edit-image div-hidden">	
 	<?php
 		echo CHtml::link('Editar Imagenes',
-			ReviewController::createUrl('AjaxAttachImage',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
+			ReviewController::createUrl('selectAttach',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
 			array('class'=>'review-edit-image')
 		);
 	?>
@@ -343,7 +343,7 @@ $editable = $isAdministrator||$isOwner;
 				echo CHtml::openTag('div', array('class'=>'review-add-images-container'));
 				if($isOwner){
 					echo CHtml::link('Adjuntar Imagenes',
-						ReviewController::createUrl('AjaxAttachImage',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
+						ReviewController::createUrl('selectAttach',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
 						array('class'=>'review-text-docs')
 					);
 				}

@@ -247,6 +247,14 @@ class ReviewController extends Controller
 		));
 	}
 	
+	public function actionSelectAttach($id, $idNote)
+	{
+		$this->render('selectAttach',array(
+								'id'=>$id,
+								'idNote'=>$idNote,								
+		));
+	}
+	
 	public function actionAjaxAttachImage($id, $idNote)
 	{
 		$model=$this->loadModel($id);
@@ -274,7 +282,32 @@ class ReviewController extends Controller
 					'model'=>$model,
 					'idNote'=>$idNote,
 					'modelMultimediaSelected'=>$modelMultimediaSelected,
-					'modelMultimedia'=>$modelMultimedia,
+					'modelMultimedia'=>$modelMultimedia,		
+		));
+	}
+	
+	public function actionUploadImages($id, $idNote)
+	{
+		$model=$this->loadModel($id);
+	
+		$modelAlbum = Album::model()->findByAttributes(array('Id_customer'=>$model->Id_customer,
+												'Id_project'=>$model->Id_project,
+												'Id_user_group_owner'=>User::getCurrentUserGroup()->Id,
+		));
+	
+		if(!isset($modelAlbum))
+		{
+			$modelAlbum = new Album();
+			$modelAlbum->Id_customer = $model->Id_customer;
+			$modelAlbum->Id_project = $model->Id_project;
+			$modelAlbum->Id_user_group_owner = User::getCurrentUserGroup()->Id;
+			$modelAlbum->save();
+		}
+	
+		$this->render('uploadImages',array(
+						'model'=>$model,
+						'idNote'=>$idNote,						
+						'modelAlbum'=>$modelAlbum,
 		));
 	}
 	

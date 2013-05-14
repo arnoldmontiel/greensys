@@ -803,7 +803,7 @@ $('#Review_description').change(function(){
 	
 $('#btnAttachImgToNote').click(function(){
 	$('#dialogProcessing').dialog('open');
-	var url = '".ReviewController::createUrl('AjaxAttachImage',array('id'=>$model->Id))."';
+	var url = '".ReviewController::createUrl('selectAttach',array('id'=>$model->Id))."';
 	window.location = url + '&idNote='+$('#Note_Id_note').val();
 	return false;
 });

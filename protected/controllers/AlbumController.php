@@ -119,6 +119,38 @@ class AlbumController extends Controller
 		));
 	}
 	
+	public function actionAjaxUploadToNote($idAlbum, $idCustomer, $idProject, $idNote)
+	{
+		$file = $_FILES['file'];
+	
+		$modelMultimedia = new TMultimedia;
+			
+		$modelMultimedia->Id_album = $idAlbum;
+		$modelMultimedia->uploadedFile = $file;
+		$modelMultimedia->Id_multimedia_type = 1;
+		$modelMultimedia->Id_customer = $idCustomer;
+		$modelMultimedia->Id_project = $idProject;
+			
+		$modelMultimedia->save();
+
+		
+		$model = MultimediaNote::model()->findByAttributes(array('Id_note'=>$idNote, 'Id_multimedia'=>$modelMultimedia->Id));
+		if(!isset($model))
+		{
+			$model = new MultimediaNote;
+			$model->Id_note = $idNote;
+			$model->Id_multimedia = $modelMultimedia->Id;		
+			$model->save();
+		}
+		
+		//$this->markAsUnread($modelNote);
+		
+		$img = "<img alt='Click to follow' src='" ."images/" . $modelMultimedia->file_name_small . "'" ;
+		$size = round($modelMultimedia->size/1024,2);
+			
+		echo json_encode(array("name" => $img,"type" => '',"size"=> $size, "id"=>$modelMultimedia->Id));
+	}
+	
 	public function actionAjaxUpload($idAlbum, $idCustomer, $idProject)
 	{
 		$file = $_FILES['file'];
@@ -262,6 +294,19 @@ class AlbumController extends Controller
 		$this->unlinkFile($model);
 		$model->delete();
 		
+	}
+	
+	public function actionAjaxRemoveImageFromNote()
+	{
+			
+		$idMultimedia = isset($_GET['IdMultimedia'])?$_GET['IdMultimedia']:null;
+		$idNote = isset($_GET['IdNote'])?$_GET['IdNote']:null;
+		
+		MultimediaNote::model()->deleteAllByAttributes(array('Id_note'=>$idNote, 'Id_multimedia'=>$idMultimedia));
+		$model = TMultimedia::model()->findByPk($idMultimedia);
+		$this->unlinkFile($model);
+		$model->delete();
+	
 	}
 	
 	

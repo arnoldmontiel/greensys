@@ -71,7 +71,7 @@ $('#publicArea_".$data->Id."').children().each(
 				{
 					echo CHtml::openTag('div', array('class'=>'review-add-images-container'));				
 					echo CHtml::link('Adjuntar Imagenes',
-						ReviewController::createUrl('AjaxAttachImage',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
+						ReviewController::createUrl('selectAttach',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
 						array('class'=>'review-text-docs')
 					);
 					echo CHtml::closeTag('div');
