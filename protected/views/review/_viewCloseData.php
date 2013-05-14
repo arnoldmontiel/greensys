@@ -306,10 +306,9 @@ $isOwner = User::isOwnerOf($data);
 		{
 			echo CHtml::openTag('div',array('class'=>'view-text-note'));
 				echo CHtml::openTag('div',array('class'=>'view-text-user'));
-					echo CHtml::encode($item->user->name.' '.$item->user->last_name);
+					echo CHtml::encode($item->creation_date . ' - '.$item->user->name.' '.$item->user->last_name);
 				echo CHtml::closeTag('div');
 				echo CHtml::openTag('div',array('class'=>'view-text-date'));
-					echo $item->creation_date;
 				echo CHtml::closeTag('div');				
 				echo CHtml::openTag('p',array('class'=>'single-formated-text'));
 					echo $item->note;
