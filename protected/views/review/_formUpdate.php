@@ -138,6 +138,7 @@ function bindEvents(item)
 	})
 
 	$(item).find('#create_note_'+idMainNote).click(function(){
+		$('#dialogProcessing').dialog('open');
 		var value = $(item).find('#note_'+idMainNote).val();
 		var chk = 0;
 		if($('#chkNoteNeedConf_'+idMainNote).is(':checked'))
@@ -155,7 +156,12 @@ function bindEvents(item)
 					{ 
 						$('#noteContainer_'+idMainNote).html(data);
 						bindEvents($('#noteContainer_'+idMainNote));
+						$('#dialogProcessing').dialog('close');
 					}
+			).error(
+				function(data){
+					$('#dialogProcessing').dialog('close');
+				}
 			);
 	});
 	    
@@ -179,25 +185,6 @@ function bindEvents(item)
  
 	});
 	
-	$(item).find('#edit_main_title_'+idMainNote).click(function(){
-		var title = $(item).find('#main_title'+idMainNote);
-		var value = $(title).val();
-		$.post(
-			'".Yii::app()->createUrl('note/AjaxUpdateNoteTitle')."',
-			{
-			 	id: idMainNote,
-				title: $(title).val()
-			 }).success(
-					function(data) 
-					{ 
-						$(item).find('#main_title'+idMainNote).removeClass('review-white');
-						$(item).find('#main_original_title'+idMainNote).val($(item).find('#main_title'+idMainNote).val());
-						$(item).find('#edit_main_title_'+idMainNote).addClass('div-hidden');
-						$(item).find('#edit_main_title_cancel_'+idMainNote).addClass('div-hidden');
-					}
-			);
- 
-	});
 	
 	$(item).find('#singleNoteContainer').find('img').each(
 		function(i, imgItem){
