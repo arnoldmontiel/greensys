@@ -85,7 +85,7 @@ return array(
                     'class' => 'CustomGoogleOAuthService',
                     'client_id' => '740580923589-mnpka332ukf9ilvtgqn0tvgfcci4v0n3.apps.googleusercontent.com',
                     'client_secret' => 'zhD-rtPm_EnLtT_fu50BIfjZ',
-                    'title' => 'Google (OAuth2)',
+                    'title' => 'Login',
                 ),
 			),
 		),
@@ -116,10 +116,10 @@ return array(
 		*/
 		// uncomment the following to use a MySQL database
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=Green',
+			'connectionString' => 'mysql:host=localhost;dbname=green',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => '',
+			'password' => 'admin',
 			'charset' => 'utf8',
 		),
 		'db2'=>array(
@@ -127,7 +127,7 @@ return array(
 					'connectionString' => 'mysql:host=localhost;dbname=tapia',
 					'emulatePrepare' => true,
 					'username' => 'root',
-					'password' => '',
+					'password' => 'admin',
 					'charset' => 'utf8',
 		),
 

@@ -9,7 +9,7 @@
 		'validateOnSubmit'=>true,
 	),
 )); ?>
-
+<div style="display: none">
 	<div class="row">
 		<?php echo $form->labelEx($model,'username'); ?>
 		<?php echo $form->textField($model,'username'); ?>
@@ -31,11 +31,13 @@
 	<div class="row buttons">
 		<?php echo CHtml::submitButton(Yii::app()->lc->t('Login')); ?>
 	</div>
-		
+</div>
+<div style="margin-top:25%;margin-left:20%">	
 <?php $this->endWidget(); ?>
 <?php 
 $this->widget('ext.eauth.EAuthWidget', array('action' => 'site/login'));
  ?>
+ </div>
 </div><!-- form -->
 </div><!-- left -->
 <div class="login-right">
