@@ -1094,31 +1094,31 @@ class ReviewController extends Controller
 			
 			if($userGroup)
 			{
-				if( in_array(User::getAdminUserGroupId(),$userGroup))
-				{
-					$model = new UserGroupNote;
-					$model->Id_note = $idNote;
-					$model->Id_customer = $idCustomer;
-					$model->Id_project = $idProject;
-					$model->Id_user_group = User::getAdminUserGroupId();
-					$model->can_feedback = 1;
-					if(isset($addressed) && in_array(User::getAdminUserGroupId(),$addressed))
-						$model->addressed = 1;
+// 				if( in_array(User::getAdminUserGroupId(),$userGroup))
+// 				{
+// 					$model = new UserGroupNote;
+// 					$model->Id_note = $idNote;
+// 					$model->Id_customer = $idCustomer;
+// 					$model->Id_project = $idProject;
+// 					$model->Id_user_group = User::getAdminUserGroupId();
+// 					$model->can_feedback = 1;
+// 					if(isset($addressed) && in_array(User::getAdminUserGroupId(),$addressed))
+// 						$model->addressed = 1;
 					
-					$model->save();
-					$userGroup = array_diff($userGroup, array(User::getAdminUserGroupId()));
+// 					$model->save();
+// 					$userGroup = array_diff($userGroup, array(User::getAdminUserGroupId()));
 	
-				}
-				elseif( ! User::isAdministartor())
-				{
-					$model = new UserGroupNote;
-					$model->Id_note = $idNote;
-					$model->Id_customer = $idCustomer;
-					$model->Id_project = $idProject;
-					$model->Id_user_group = User::getAdminUserGroupId();
-					$model->can_feedback = 1;
-					$model->save();
-				}
+// 				}
+// 				elseif( ! User::isAdministartor())
+// 				{
+// 					$model = new UserGroupNote;
+// 					$model->Id_note = $idNote;
+// 					$model->Id_customer = $idCustomer;
+// 					$model->Id_project = $idProject;
+// 					$model->Id_user_group = User::getAdminUserGroupId();
+// 					$model->can_feedback = 1;
+// 					$model->save();
+// 				}
 				
 				foreach($userGroup as $item)
 				{
