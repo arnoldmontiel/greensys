@@ -879,11 +879,19 @@ class ReviewController extends Controller
 				$transaction->commit();
 				
 				if(isset($_POST['Id_review']) && $_POST['Id_review'] != null)
-					$this->redirect(array('update','id'=>$_POST['Id_review']));
+				{
+					if(isset($_POST['Id_note']) && $_POST['Id_note'] != null)
+						$this->redirect(array('AjaxAttachDoc','id'=>$_POST['Id_review'],'idNote'=>$_POST['Id_note']));
+					else
+						$this->redirect(array('update','id'=>$_POST['Id_review']));
+						
+				}
 				else
+				{
+					
 					$this->redirect(array('index','Id_customer'=>$_POST['Id_customer'],
 												'Id_project'=>$_POST['Id_project']));
-				
+				}					
 					
 			} catch (Exception $e) {				
 				$transaction->rollback();
