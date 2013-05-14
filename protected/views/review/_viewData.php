@@ -160,7 +160,8 @@ $editable = $isAdministrator||$isOwner;
 				
 				$criteria->addCondition('t.Id <> '. User::getCurrentUserGroup()->Id);
 				
-				if($data->review->reviewType->is_internal && User::getCurrentUserGroup()->Id != User::getAdminUserGroupId())
+				//if($data->review->reviewType->is_internal && User::getCurrentUserGroup()->Id != User::getAdminUserGroupId())
+				if($data->review->reviewType->is_internal)
 					$criteria->addCondition('t.is_internal = 1');
 				
 				$modelUserGroup = UserGroup::model()->findAll($criteria);
@@ -200,8 +201,8 @@ $editable = $isAdministrator||$isOwner;
 					
 					$isAdmin = false;
 					
-					if(User::getAdminUserGroupId() == $item->Id)
-						$isAdmin = true;
+// 					if(User::getAdminUserGroupId() == $item->Id)
+// 						$isAdmin = true;
 					
 					$outOfDate = isset($modelUserGroupNoteInstance)?$modelUserGroupNoteInstance->isOutOfDate():false;
 										

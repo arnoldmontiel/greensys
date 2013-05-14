@@ -218,8 +218,8 @@ $('#publicArea_".$data->Id."').children().each(
 				
 				$isAdmin = false;
 				
-				if(User::getAdminUserGroupId() == $item->Id)
-					$isAdmin = true;
+// 				if(User::getAdminUserGroupId() == $item->Id)
+// 					$isAdmin = true;
 				
 				echo CHtml::openTag('div', array('id'=>'userGroup_'.$item->Id));
 					
