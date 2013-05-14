@@ -7,7 +7,12 @@ echo CHtml::openTag('div',array('class'=>'view-text-note'));
 		echo $modelMiniNote->creation_date . ' - ' . CHtml::encode($modelMiniNote->user->name.' '.$modelMiniNote->user->last_name);
 	echo CHtml::closeTag('div');
 	echo CHtml::openTag('div',array('class'=>'view-text-date'));
-		if($multimediasCount > 0 || $isOwner)
+		if($isOwner)
+		{
+			echo CHtml::image('images/attach_more.png','',
+			array('id'=>'attch-left-note_'.$modelMiniNote->Id.'_'.$modelMainNote->Id, 'class'=>'action-show-hide-attch', 'title'=>'Adjunto', 'style'=>'width:16px;'));				
+		}
+		elseif($multimediasCount > 0)
 		{
 			echo CHtml::image('images/attch.png','',
 			array('id'=>'attch-left-note_'.$modelMiniNote->Id.'_'.$modelMainNote->Id, 'class'=>'action-show-hide-attch', 'title'=>'Adjunto', 'style'=>'width:25px;'));
