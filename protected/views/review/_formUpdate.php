@@ -1008,9 +1008,9 @@ $('#need_reload').click(function(){
 </div>
 <?php
 	echo CHtml::openTag('div',array('class'=>'wall-action-box-btn','id'=>'btn-box'));
-		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnAlbum'));
-			echo 'Album';
-		echo CHtml::closeTag('div');	
+// 		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnAlbum'));
+// 			echo 'Album';
+// 		echo CHtml::closeTag('div');	
 		if($model->username == User::getCurrentUser()->username)
 		{
 			if(count($model->notes) > 0)
@@ -1018,12 +1018,12 @@ $('#need_reload').click(function(){
 			else
 				echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnNote'));
 			
-				echo 'Notas';
+				echo 'Nota';
 			echo CHtml::closeTag('div');	
 		}
-		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnDoc'));
-			echo 'Documentos';
-		echo CHtml::closeTag('div');
+// 		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnDoc'));
+// 			echo 'Documentos';
+// 		echo CHtml::closeTag('div');
 			echo CHtml::openTag('div',array('class'=>'review-type'));
 				echo CHtml::openTag('div',array('class'=>'review-attr-level'));		
 					echo CHtml::label('Tipo: ','Id_review_type');

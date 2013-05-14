@@ -14,7 +14,7 @@ $('#publicArea_".$data->Id."').children().each(
 	<div id='edit_image<?php echo $data->Id?>' class="review-edit-image div-hidden">
 	<?php
 		echo CHtml::link('Editar Imagenes',
-			ReviewController::createUrl('AjaxAttachImage',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
+			ReviewController::createUrl('selectAttach',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
 			array('class'=>'review-edit-image')
 		);
 	?>

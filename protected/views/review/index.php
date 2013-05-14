@@ -365,12 +365,12 @@ function getCheck(checkName)
 		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnCreate'));
 			echo 'Nuevo';
 		echo CHtml::closeTag('div');
-		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnAlbum'));
-			echo 'Album';
-		echo CHtml::closeTag('div');	
-		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnDoc'));
-			echo 'Documentos';
-		echo CHtml::closeTag('div');
+// 		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnAlbum'));
+// 			echo 'Album';
+// 		echo CHtml::closeTag('div');	
+// 		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnDoc'));
+// 			echo 'Documentos';
+// 		echo CHtml::closeTag('div');
 	echo CHtml::closeTag('div');
 ?>
 <?php endif;?>
