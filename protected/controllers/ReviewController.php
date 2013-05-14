@@ -860,7 +860,7 @@ class ReviewController extends Controller
 				$model->Id_customer = $_POST['Id_customer'];				
 				$model->Id_project = $_POST['Id_project'];
 				
-				if(isset($model->Id_document_type))
+				if(isset($model->Id_document_type)&&$model->Id_document_type!='')
 				{
 					$criteria=new CDbCriteria;
 					$criteria->addCondition('Id_document_type = '. $model->Id_document_type);
