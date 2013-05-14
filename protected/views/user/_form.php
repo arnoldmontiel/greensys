@@ -1,7 +1,7 @@
 <?php
 Yii::app()->clientScript->registerScript(__CLASS__.'#User-tapia-form', "
 
-if(".$model->isNewRecord.")
+if('".$model->isNewRecord."' == '1')
 	$('#User_username').val('');
 	
 $('#User_username').change(function(){
@@ -117,7 +117,7 @@ $('#User_username').change(function(){
 
 </div><!-- form -->
 <?php
-//Nomenclator
+//User Group
 	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 			'id'=>'CreateUserGroup',
 			// additional javascript options for the dialog plugin

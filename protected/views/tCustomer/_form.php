@@ -1,7 +1,7 @@
 <?php
 Yii::app()->clientScript->registerScript(__CLASS__.'#Customer-tapia-form', "
 
-if(".$modelCustomer->isNewRecord.")
+if('".$modelCustomer->isNewRecord."' == '1')
 	$('#User_username').val('');
 	
 $('#User_username').change(function(){
