@@ -1238,9 +1238,8 @@ img.wall-action-remove-small
 img.action-show-hide-attch
 {	
 	position:absolute;
-	top:0px;
+	top:2px;
 	right:0px;
-	width:20px;
 	cursor: pointer;
 }
 div.mini-note-attch-link
