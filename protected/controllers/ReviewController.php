@@ -890,11 +890,11 @@ class ReviewController extends Controller
 			
 			$transaction = $model->dbConnection->beginTransaction();			
 			try {
-				$isTech = isset($model->Id_document_type)&&$model->Id_document_type!='';	
 				$model->attributes = $multi;
 				$model->uploadedFile = $file;
 				$model->Id_customer = $_POST['Id_customer'];				
 				$model->Id_project = $_POST['Id_project'];
+				$isTech = isset($model->Id_document_type)&&$model->Id_document_type!='';
 				
 				if($isTech)
 				{
@@ -926,9 +926,13 @@ class ReviewController extends Controller
 					if($isFromNote)
 					{
 						if($isTech)
+						{							
 							$this->redirect(array('AjaxAttachTechDoc','id'=>$_POST['Id_review'],'idNote'=>$_POST['Id_note']));
-						else
+						}
+						else 
+						{
 							$this->redirect(array('AjaxAttachDoc','id'=>$_POST['Id_review'],'idNote'=>$_POST['Id_note']));
+						}
 					}
 					else
 						$this->redirect(array('update','id'=>$_POST['Id_review']));

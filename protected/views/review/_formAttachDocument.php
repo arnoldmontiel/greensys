@@ -44,7 +44,6 @@ $('#btnPublicDoc').click(function(){
 	}
 	$('#wall-action-doc').animate({opacity: 'hide'},240);
 	$('#loading').addClass('loading');
-	RestoreButtons();
 	$('#dialogProcessing').dialog('open');
 });
 
