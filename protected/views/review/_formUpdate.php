@@ -988,7 +988,7 @@ $('#need_reload').click(function(){
 			if(User::isAdministartor() || $model->username == User::getCurrentUser()->username)
 			{
 				echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnClose'));
-					echo 'Cerrar';
+					echo 'Finalizar Tema';
 				echo CHtml::closeTag('div');
 			}
 		?>
