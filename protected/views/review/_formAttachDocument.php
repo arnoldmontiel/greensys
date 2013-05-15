@@ -99,7 +99,7 @@ echo CHtml::hiddenField('Id_project',$Id_project,array('id'=>'Id_project'));
 	</div>
 
 	<div class="row" style="text-align: center;">
-		<?php echo CHtml::button('Publicar',array('type'=>'submit', 'class'=>'wall-action-submit-btn','id'=>'btnPublicDoc',));?>
+		<?php echo CHtml::button('Aceptar',array('type'=>'submit', 'class'=>'wall-action-submit-btn','id'=>'btnPublicDoc',));?>
 	</div>
 <?php $this->endWidget(); ?>
 
