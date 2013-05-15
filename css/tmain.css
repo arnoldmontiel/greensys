@@ -379,7 +379,7 @@ div.review-create-note
 	top: 8px;
 	font-size: 10px;
 	line-height: 18px;
-	background: none repeat scroll 0 0 rgba(244, 246, 251, 1);
+	background: none repeat scroll 0 0 #AFBAD7;
 	z-index: 20;
 	padding: 0px 5px  0px 5px;
 	cursor: pointer;	
@@ -401,7 +401,7 @@ div.review-create-note-cancel
 	top: 30px;
 	font-size: 10px;
 	line-height: 18px;
-	background: none repeat scroll 0 0 rgba(244, 246, 251, 1);
+	background: none repeat scroll 0 0 #AFBAD7;
 	z-index: 20;
 	padding: 0px 5px  0px 5px;
 	cursor: pointer;	
