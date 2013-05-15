@@ -78,7 +78,7 @@ echo CHtml::hiddenField('Id_project',$Id_project,array('id'=>'Id_project'));
 			<input id='fake-uploadFile' class="wall-action-fake-uploadFile"/>
 		</div>
 		<?php
-		if(User::useTechnicalDocs()): 
+		if(User::useTechnicalDocs()&&isset($isTech)): 
 		?>
 		<div class="review-cbo">			
 			Tipo de Documento

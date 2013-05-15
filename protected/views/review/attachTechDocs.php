@@ -41,7 +41,7 @@ $('#chkAll').change(function(){
 <div id="wall-action-doc"  class='review-update-upload-document'>
 	<?php 
 		$modelMulti = new TMultimedia;
-		$this->renderPartial('_formAttachDocument',array('model'=>$modelMulti, 'Id_review'=>$model->Id, 'Id_customer'=>$model->Id_customer, 'Id_project'=>$model->Id_project, 'Id_note'=>$idNote));
+		$this->renderPartial('_formAttachDocument',array('model'=>$modelMulti, 'Id_review'=>$model->Id, 'Id_customer'=>$model->Id_customer, 'Id_project'=>$model->Id_project, 'Id_note'=>$idNote,'isTech'=>true));
 	?>
 </div>
 
