@@ -924,6 +924,20 @@ class ReviewController extends Controller
 				$isFromNote = isset($_POST['Id_note']) && $_POST['Id_note'] != null;
 				if($isFromNote)
 				{
+					if($isTech)
+					{
+						$criteria=new CDbCriteria;
+						$criteria->join ='INNER JOIN multimedia m ON (m.Id = t.Id_multimedia)';
+						$criteria->addCondition('m.Id_document_type ='. $model->Id_document_type);
+						$criteria->addCondition('t.Id_note = '. $_POST['Id_note']);
+						
+						$moldeMultimediaNotes = MultimediaNote::model()->findAll($criteria);
+						foreach ($moldeMultimediaNotes as $item)
+						{
+							$item->delete();
+						} 
+						
+					}
 					$modelMultimediaNote = new MultimediaNote();
 					$modelMultimediaNote->Id_note = $_POST['Id_note'];
 					$modelMultimediaNote->Id_multimedia = $model->Id;
