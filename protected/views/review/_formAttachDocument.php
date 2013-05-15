@@ -43,11 +43,13 @@ $('#btnPublicDoc').click(function(){
 		return false;
 	}
 	$('#wall-action-doc').animate({opacity: 'hide'},240);
-	$('#loading').addClass('loading');
 	$('#dialogProcessing').dialog('open');
 });
 
 ");
+$this->widget('ext.processingDialog.processingDialog', array(
+		'idDialog'=>'dialogProcessing',
+));
 
 ?>
 
