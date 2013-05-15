@@ -372,10 +372,10 @@ div.view-text-user
 
 div.review-create-note
 {	
-	opacity:0.2;
-	filter:alpha(opacity=20); /* For IE8 and earlier */
+	opacity:0.7;
+	filter:alpha(opacity=70); /* For IE8 and earlier */
 	position: absolute;
-	right:15px;
+	right:-65px;
 	top: 8px;
 	font-size: 10px;
 	line-height: 18px;
@@ -393,11 +393,11 @@ div.review-create-note:HOVER
 }
 div.review-create-note-cancel
 {	
-	opacity:0.2;
-	filter:alpha(opacity=20); /* For IE8 and earlier */
+	opacity:0.7;
+	filter:alpha(opacity=70); /* For IE8 and earlier */
 	position: absolute;
 	width:50px;
-	right:15px;
+	right:-65px;
 	top: 30px;
 	font-size: 10px;
 	line-height: 18px;
@@ -415,8 +415,8 @@ div.review-create-note-cancel:HOVER
 
 div.review-create-note-btn
 {	
-	opacity:0.2;
-	filter:alpha(opacity=20); /* For IE8 and earlier */
+	opacity:0.7;
+	filter:alpha(opacity=70); /* For IE8 and earlier */
 	position: absolute;
 	font-size: 10px;
 	line-height: 18px;
@@ -443,12 +443,12 @@ div.review-create-title-btn-main-cancel
 div.review-create-note-btn-main
 {	
 	right:80px;
-	top: 180px;
+	top: 221px;
 }
 div.review-create-note-btn-main-cancel
 {	
 	right:15px;
-	top: 180px;
+	top: 221px;
 }
 
 div.review-edit-image
