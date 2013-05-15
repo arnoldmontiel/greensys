@@ -22,7 +22,6 @@ $('#btnCancelDoc').click(function(){
 	$('#uploadFile').val('');
 	$('#Multimedia_description').val('');
 	$('#fake-uploadFile').val('');
-	RestoreButtons();
 
 });
 
