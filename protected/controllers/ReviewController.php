@@ -301,7 +301,10 @@ class ReviewController extends Controller
 			$modelAlbum->Id_customer = $model->Id_customer;
 			$modelAlbum->Id_project = $model->Id_project;
 			$modelAlbum->Id_user_group_owner = User::getCurrentUserGroup()->Id;
-			$modelAlbum->save();
+			$modelAlbum->username = User::getCurrentUser()->username;
+			
+			$modelAlbum->save();			
+			
 		}
 	
 		$this->render('uploadImages',array(
