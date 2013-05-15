@@ -890,13 +890,13 @@ class ReviewController extends Controller
 			
 			$transaction = $model->dbConnection->beginTransaction();			
 			try {
-					
+				$isTech = isset($model->Id_document_type)&&$model->Id_document_type!='';	
 				$model->attributes = $multi;
 				$model->uploadedFile = $file;
 				$model->Id_customer = $_POST['Id_customer'];				
 				$model->Id_project = $_POST['Id_project'];
 				
-				if(isset($model->Id_document_type)&&$model->Id_document_type!='')
+				if($isTech)
 				{
 					$criteria=new CDbCriteria;
 					$criteria->addCondition('Id_document_type = '. $model->Id_document_type);
@@ -909,22 +909,33 @@ class ReviewController extends Controller
 					
 					$model->Id_google_drive = isset($multimediaDB)?$multimediaDB->Id_google_drive:null;
 				}
-				
 				$model->save();													
+				$isFromNote = isset($_POST['Id_note']) && $_POST['Id_note'] != null;
+				if($isFromNote)
+				{
+					$modelMultimediaNote = new MultimediaNote();
+					$modelMultimediaNote->Id_note = $_POST['Id_note'];
+					$modelMultimediaNote->Id_multimedia = $model->Id;
+					$modelMultimediaNote->save();
+				}
 				
 				$transaction->commit();
 				
 				if(isset($_POST['Id_review']) && $_POST['Id_review'] != null)
 				{
-					if(isset($_POST['Id_note']) && $_POST['Id_note'] != null)
-						$this->redirect(array('AjaxAttachDoc','id'=>$_POST['Id_review'],'idNote'=>$_POST['Id_note']));
+					if($isFromNote)
+					{
+						if($isTech)
+							$this->redirect(array('AjaxAttachTechDoc','id'=>$_POST['Id_review'],'idNote'=>$_POST['Id_note']));
+						else
+							$this->redirect(array('AjaxAttachDoc','id'=>$_POST['Id_review'],'idNote'=>$_POST['Id_note']));
+					}
 					else
 						$this->redirect(array('update','id'=>$_POST['Id_review']));
 						
 				}
 				else
-				{
-					
+				{					
 					$this->redirect(array('index','Id_customer'=>$_POST['Id_customer'],
 												'Id_project'=>$_POST['Id_project']));
 				}					
@@ -934,7 +945,7 @@ class ReviewController extends Controller
 			}
 		}		
 	}
-	
+		
 	public function actionUpdateDocuments($id)
 	{
 		
