@@ -76,9 +76,9 @@ return array(
 
 		'eauth' => array(
 	        'class' => 'ext.eauth.EAuth',
-            'popup' => true, // Use the popup window instead of redirecting.
+            'popup' => false, // Use the popup window instead of redirecting.
 			'cache' => true, // Cache component name or false to disable cache. Defaults to 'cache'.
-            'cacheExpire' => 1, // Cache lifetime. Defaults to 0 - means unlimited.
+            'cacheExpire' => 0, // Cache lifetime. Defaults to 0 - means unlimited.
             'services' => array( // You can change the providers and their classes.     
                 'google_oauth' => array(
                     // register your app here: https://code.google.com/apis/console/

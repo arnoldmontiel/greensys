@@ -35,8 +35,14 @@
 <div style="margin-top:25%;margin-left:20%">	
 <?php $this->endWidget(); ?>
 <?php 
-$this->widget('ext.eauth.EAuthWidget', array('action' => 'site/login'));
- ?>
+	$this->widget('ext.eauth.EAuthWidget', array('action' => 'site/login'));
+	if(isset($error_text))
+	{
+		echo CHtml::openTag('div',array('class'=>"errorMessage",'style'=>'width:200%'));
+		echo $error_text;
+		echo CHtml::closeTag('div');
+	}
+?>
  </div>
 </div><!-- form -->
 </div><!-- left -->

@@ -109,11 +109,11 @@ class SiteController extends Controller
         if (isset($service)) {
             $authIdentity = Yii::app()->eauth->getIdentity($service);
             $authIdentity->redirectUrl = Yii::app()->user->returnUrl;
-            $authIdentity->cancelUrl = $this->createAbsoluteUrl('site/login');
 
             if ($authIdentity->authenticate()) {
                 $identity = new EAuthUserIdentity($authIdentity);
-
+                $authIdentity->cancelUrl = $this->createAbsoluteUrl('site/login',array('error_text'=>'Invalid mail ['.$identity->getService()->email.']'));
+                
                 // successful authentication
                 if ($identity->authenticate()) {
                     Yii::app()->user->login($identity);
@@ -124,22 +124,23 @@ class SiteController extends Controller
                 }
                 else {
                     // close popup window and redirect to cancelUrl
-                    $authIdentity->cancel();
+                	Yii::app()->user->logout();
+                    $authIdentity->cancel();                    
                 }
             }
-
             // Something went wrong, redirect to login page
+            Yii::app()->user->logout();
             $this->redirect(array('site/login'));
         }
 		$this->layout='//layouts/login';
 		$model=new LoginForm;
 		
 		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
+// 		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
+// 		{
+// 			echo CActiveForm::validate($model);
+// 			Yii::app()->end();
+// 		}
 		
 		// collect user input data
 		if(isset($_POST['LoginForm']))
@@ -150,7 +151,10 @@ class SiteController extends Controller
 			$this->redirect(Yii::app()->user->returnUrl);
 		}
 		// display the login form
-		$this->render('login',array('model'=>$model));
+		if(isset($_GET['error_text']))
+			$this->render('login',array('model'=>$model,'error_text'=>$_GET['error_text']));
+		else
+			$this->render('login',array('model'=>$model));
 	}
 	
 	/**
