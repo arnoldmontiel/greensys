@@ -591,6 +591,17 @@ class ReviewController extends Controller
 	
 	}
 	
+	public function actionAjaxChangeTag()
+	{
+		$idTag = $_POST['idTag'];
+		$id = $_POST['id'];
+		TagReview::model()->deleteAllByAttributes(array('Id_review'=>$id));
+		$model = new TagReview();
+		$model->Id_review = $id;
+		$model->Id_tag = $idTag;
+		$model->save();
+	
+	}
 	public function actionAjaxAddTag()
 	{
 		$idTag = $_POST['idTag'];

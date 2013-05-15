@@ -849,7 +849,27 @@ $('#btnDoc').click(function(){
 		});
 	});
 });
-
+//$('input[type='radio']')
+$(':radio').click(
+function()
+	{
+			if($(this).attr('name')=='radiolist-tag-review')
+			{
+			$('#dialogProcessing').dialog('open');
+			$.post(
+					'".ReviewController::createUrl('AjaxChangeTag')."',
+					{
+						id: ".$model->Id.",
+						idTag:$(this).val()
+					}).success(
+						function() 
+						{ $('#dialogProcessing').dialog('close');
+			
+					}).error(function(data){
+						$('#dialogProcessing').dialog('close');
+					});
+			}			
+	});
 $(':checkbox').click(
 function()
 	{

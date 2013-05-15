@@ -15,12 +15,13 @@
 					$modelTags = $modelReviewType->tags;
 					$checkTags = CHtml::listData($modelTags, 'Id', 'description');
 						
-					$checked = array();
+					$selected=0;
 					foreach($this->modelTag->tags as $tag)
 					{
-						$checked[] = $tag->Id;
+						$selected = $tag->Id;
 					}
-					echo CHtml::checkBoxList('chklist-tag-review', $checked, $checkTags);						
+					//echo CHtml::checkBoxList('chklist-tag-review', $checked, $checkTags);						
+					echo CHtml::radioButtonList('radiolist-tag-review', $selected, $checkTags);						
 				}else{					
 					
 					echo CHtml::openTag('div',array('class'=>'review-tag-containier')); 
