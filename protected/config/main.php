@@ -28,6 +28,7 @@ return array(
 		'application.modules.apigoogle.google-api-php-client.src.contrib.*',		
 		'application.modules.apigoogle.google-api-php-client.src.service.*',
 		'application.modules.apigoogle.google-api-php-client.src.io.*',
+		'application.extensions.yii-mail.YiiMailMessage',
 	),
 	
 	'localeDataPath'=>'protected/i18n/data/',
@@ -70,6 +71,21 @@ return array(
 
 	// application components
 	'components'=>array(
+		'mail' => array(
+		 			'class' => 'ext.yii-mail.YiiMail',
+		 			//'transportType' => 'php',
+		 			'viewPath' => 'application.views.mail',
+		 			'logging' => true,
+		 			'dryRun' => false,
+		 			'transportType' => 'smtp',
+		 			'transportOptions' => array(
+		 					'host' => 'smtp.gmail.com',
+		 					'username' => 'xxxx@gruposmartliving.com',
+		 					'password' => 'xxxx',
+		 					'port' => '465',
+		 					'encryption'=>'tls',
+		 			),
+		),
 		'loid' => array(
         	'class' => 'ext.lightopenid.loid',
 		),

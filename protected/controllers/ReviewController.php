@@ -406,7 +406,7 @@ class ReviewController extends Controller
 	 * Lists all models.
 	 */
 	public function actionIndex()
-	{
+	{		
 		$modelMultimedia = new TMultimedia;
 		$modelNote = new Note;
 		
@@ -1114,8 +1114,8 @@ class ReviewController extends Controller
 // 				$message = new YiiMailMessage;
 // 				$message->view = '_noteMail';
 // 				$message->setBody(array('model'=>$user), 'text/html');
-// 				$message->addTo('arnaldomontiel@gmail.com');
-// 				$message->from = 'arnaldomontiel@gmail.com';
+// 				$message->addTo($user->email);
+//				$message->setSubject('Nueva nota');
 // 				Yii::app()->mail->send($message);				
 // 			}
 		}
