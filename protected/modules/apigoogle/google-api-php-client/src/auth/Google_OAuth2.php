@@ -53,7 +53,7 @@ class Google_OAuth2 extends Google_Auth {
    */
   public function __construct() {
     global $apiConfig;
-    
+	
     if (! empty($apiConfig['developer_key'])) {
       $this->developerKey = $apiConfig['developer_key'];
     }
@@ -69,7 +69,7 @@ class Google_OAuth2 extends Google_Auth {
     if (! empty($apiConfig['oauth2_redirect_uri'])) {
       $this->redirectUri = $apiConfig['oauth2_redirect_uri'];
     }
-    
+	
     if (! empty($apiConfig['oauth2_access_type'])) {
       $this->accessType = $apiConfig['oauth2_access_type'];
     }
