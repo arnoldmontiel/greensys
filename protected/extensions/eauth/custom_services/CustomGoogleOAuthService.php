@@ -53,7 +53,12 @@ class CustomGoogleOAuthService extends GoogleOAuthService
 	{
 		return $this->client_secret;
 	}
-		
+
+	public function getAccessType()
+	{
+		return $this->access_type;
+	}
+	
 	public function getRedirectUri()
 	{
 		return $this->getState('redirect_uri');

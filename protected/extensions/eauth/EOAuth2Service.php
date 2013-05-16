@@ -89,7 +89,7 @@ abstract class EOAuth2Service extends EAuthServiceBase implements IAuthService {
 	 */
 	protected function getCodeUrl($redirect_uri) {
 		$this->setState('redirect_uri', $redirect_uri);
-		return $this->providerOptions['authorize'].'?client_id='.$this->client_id.'&redirect_uri='.urlencode($redirect_uri).'&scope='.$this->scope.'&response_type=code';
+		return $this->providerOptions['authorize'].'?client_id='.$this->client_id.'&redirect_uri='.urlencode($redirect_uri).'&scope='.$this->scope.'&response_type=code&access_type='.$this->access_type;
 	}
 
 	/**

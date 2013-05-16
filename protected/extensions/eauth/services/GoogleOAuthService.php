@@ -24,6 +24,7 @@ class GoogleOAuthService extends EOAuth2Service {
 
 	protected $client_id = '';
 	protected $client_secret = '';
+	protected $access_type = '';
 	protected $scope = 'https://www.googleapis.com/auth/userinfo.profile';
 	protected $providerOptions = array(
 		'authorize' => 'https://accounts.google.com/o/oauth2/auth',
