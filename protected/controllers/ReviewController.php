@@ -496,7 +496,7 @@ class ReviewController extends Controller
 		if(isset($idCustomer) && isset($idProject) && $idCustomer > 0 && $idProject > 0)
 		{
 			$modelProject = Project::model()->findByPk($idProject);
-			$name = $modelProject->customer->person->last_name.' - '.$modelProject->description;
+			$name = $modelProject->customer->contact->description.' - '.$modelProject->description;
 		}	
 		echo $name;
 	}
