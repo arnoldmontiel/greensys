@@ -80,7 +80,7 @@ class SiteController extends Controller
 	/**
 	 * Displays the login page
 	 */
-	public function actionLoginOLD()
+	public function actionLoginOld()
 	{
 		$this->layout='//layouts/login';	
 		$model=new LoginForm;
@@ -101,7 +101,7 @@ class SiteController extends Controller
 				$this->redirect(Yii::app()->user->returnUrl);
 		}
 		// display the login form
-		$this->render('login',array('model'=>$model));
+		$this->render('loginOld',array('model'=>$model));
 	}
 
 	public function actionLogin() {
