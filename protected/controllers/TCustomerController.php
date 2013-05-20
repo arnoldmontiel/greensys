@@ -311,6 +311,56 @@ class TCustomerController extends Controller
 		}
 	}
 	
+	public function actionAjaxRemoveProject()
+	{
+		$idProject =  isset($_GET['IdProject'])?$_GET['IdProject']:'';
+		if(!empty($idProject))
+		{
+			$model = Project::model()->findByPk($idProject);
+			if(isset($model))
+			{
+				if(!empty($model->notes))
+				{
+					echo "El proyecto tiene notas asociadas. No puede elimiarse.";
+				}
+				elseif(!empty($model->reviews))
+				{
+					echo "El proyecto tiene temas asociados. No puede elimiarse.";
+				}
+				elseif(!empty($model->budgets))
+				{
+					echo "El proyecto tiene presupuestos asociados. No puede elimiarse.";
+				}
+				elseif (!empty($model->productItems))
+				{
+					echo "El proyecto tiene productos asociados. No puede elimiarse.";				
+				}
+				elseif(!empty($model->multimedias))
+				{
+					echo "El proyecto tiene contenido multimedia asociados. No puede elimiarse.";
+				}
+				elseif(!empty($model->albums))
+				{
+					echo "El proyecto tiene albums asociados. No puede elimiarse.";
+				}				
+				else
+				{
+					$transaction = $model->dbConnection->beginTransaction();
+					$tTransaction = TProject::model()->dbConnection->beginTransaction();
+					try {
+						UserGroupCustomer::model()->deleteAllByAttributes(array('Id_project'=>$idProject));
+						UserCustomer::model()->deleteAllByAttributes(array('Id_project'=>$idProject));
+						$model->delete();
+						$transaction->commit();
+						$tTransaction->commit();
+					} catch (Exception $e) {
+							$transaction->rollback();
+							$tTransaction->rollback();
+					}
+				}
+			}
+		}
+	}
 	public function actionAjaxRemoveUserCustomer()
 	{
 	
@@ -397,8 +447,22 @@ class TCustomerController extends Controller
 		if(Yii::app()->request->isPostRequest)
 		{
 			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
-
+			$model=Customer::model()->findByPk($id);
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				if(empty($model->projects))
+				{
+					echo $model->delete();						
+				}
+				else 
+				{
+					echo "Primero debe eliminar los proyectos asociados al Cliente";
+				}
+				
+				$transaction->commit();
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
 				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
@@ -406,7 +470,47 @@ class TCustomerController extends Controller
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
-
+	public function actionAjaxDelete()
+	{
+		// we only allow deletion via POST request
+		$id =  isset($_GET['Id'])?$_GET['Id']:'';
+		if(!empty($id))
+		{
+			$model=Customer::model()->findByPk($id);
+			if(isset($model))
+			{
+				
+				$transaction = $model->dbConnection->beginTransaction();
+				try {
+					if(!empty($model->projects))
+					{
+						echo "Primero debe eliminar los proyectos asociados al cliente";
+					}
+					elseif(!empty($model->notes))
+					{
+						echo "El proyecto tiene notas asociadas. No puede elimiarse.";
+					}				
+					elseif(!empty($model->multimedias))
+					{
+						echo "Primero debe eliminar el contenido multimedia asociados al cliente";						
+					}
+					elseif(!empty($model->albums))
+					{
+						echo "Primero debe eliminar los albums asociados al cliente";						
+					}
+					else
+					{
+						$model->delete();
+						$transaction->commit();
+					}
+				
+				} catch (Exception $e) {
+					$transaction->rollback();
+				}				
+			}
+		}
+	}
+	
 	/**
 	 * Lists all models.
 	 */
@@ -431,10 +535,6 @@ class TCustomerController extends Controller
 		$this->render('admin',array(
 			'model'=>$model,
 		));
-	}
-	public function actionAjaxRemoveProject()
-	{
-		//TODO
 	}
 	
 	public function actionAjaxSelect()

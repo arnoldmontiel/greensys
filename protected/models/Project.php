@@ -85,6 +85,12 @@ class Project extends ModelAudit
 			'customer' => array(self::BELONGS_TO, 'Customer', 'Id_customer'),
 			'contacts' => array(self::MANY_MANY, 'Contact', 'project_contact(Id_project, Id_contact)'),
 			'trackings' => array(self::HAS_MANY, 'Tracking', 'Id_project'),
+			'notes' => array(self::HAS_MANY, 'Note', 'Id_project'),
+			'multimedias' => array(self::HAS_MANY, 'TMultimedia', 'Id_project'),
+			'albums' => array(self::HAS_MANY, 'Album', 'Id_project'),
+			'reviews' => array(self::HAS_MANY, 'Review', 'Id_project'),
+				
+				
 		);
 	}
 

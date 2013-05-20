@@ -187,6 +187,17 @@ $this->widget('zii.widgets.grid.CGridView', array(
 						'buttons'=>array(
 								'delete' => array(
 										'url'=>'Yii::app()->createUrl("tCustomer/AjaxRemoveProject", array("IdProject"=>$data->Id))',
+										'click'=>'function(){
+																	$.post($(this).attr("href"), function(data) {
+										  							if(data!="")
+										  							{
+																		alert(data);
+																	}else{
+																		$.fn.yiiGridView.update("project-grid");
+																	}
+																	});
+																	return false;
+																}',
 								),'update'=>array(
 									'url'=>'Yii::app()->controller->createUrl("project/AjaxUpdate",array("id"=>$data->primaryKey))',
 									'click'=>"function(){

@@ -71,7 +71,7 @@ class TCustomer extends TapiaActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'user' => array(self::BELONGS_TO, 'User', 'username'),
-			'multimedias' => array(self::HAS_MANY, 'TMultimedia', 'customer_Id'),
+			'multimedias' => array(self::HAS_MANY, 'TMultimedia', 'Id_multimedia'),
 			'notes' => array(self::HAS_MANY, 'Note', 'Id_customer'),
 			//from green schema
 			'contact' => array(self::BELONGS_TO, 'Contact', 'Id_contact'),

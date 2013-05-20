@@ -46,7 +46,27 @@ $this->menu=array(
 		),
 		array(
 			'class'=>'CButtonColumn',
-			'template'=>'{view}{update}',
+			'template'=>'{view}{update}{delete}',
+			'buttons'=>array(
+			'delete' => array
+			(
+					'options'=>array(), //HTML options for the button tag.
+					'url'=>'Yii::app()->createUrl("tCustomer/AjaxDelete", array("Id"=>$data->Id))',
+					'click'=>'function(){							
+							$.get($(this).attr("href"), function(data) {
+  							if(data!="")
+  							{
+								alert(data);
+							}
+							else
+							{
+								$.fn.yiiGridView.update("customer-grid");
+							}
+							});
+							return false;
+						}',
+			)
+			),
 		),
 	),
 )); ?>

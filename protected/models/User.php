@@ -77,7 +77,8 @@ class User extends TapiaActiveRecord
 	protected function afterDelete()
 	{
 		parent::afterDelete();		
-		$guser = GUser::model()->deleteByPk($this->username);				
+		Assignments::model()->deleteAllByAttributes(array('userid'=>$this->username));
+		GUser::model()->deleteByPk($this->username);
 	}
 	
 
