@@ -6,7 +6,6 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Listar Clientes', 'url'=>array('index')),
-	array('label'=>'Asignacion Clientes', 'url'=>array('assign')),
 	array('label'=>'Crear Cliente', 'url'=>array('create')),
 );
 
@@ -25,6 +24,10 @@ $this->menu=array(
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
+		array(
+ 			'name'=>'contact_description',
+			'value'=>'$data->contact->description',
+		),
 		array(
  			'name'=>'name',
 			'value'=>'$data->person->name',

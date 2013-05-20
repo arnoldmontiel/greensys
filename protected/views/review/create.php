@@ -7,7 +7,7 @@ Yii::app()->clientScript->registerScript('index-review', "
 <div id="loading" class="loading-place-holder" >
 </div>
 <div id="customer" class="wall-action-ddl" >
-	<?php echo CHtml::label($modelCustomer->person->name.' '.$modelCustomer->person->last_name.' - '.$modelProject->description,'Id_customer'); ?>
+	<?php echo CHtml::label($modelCustomer->contact->description.' - '.$modelProject->description,'Id_customer'); ?>
 </div>
 
 </div>

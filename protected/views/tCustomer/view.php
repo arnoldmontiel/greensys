@@ -6,8 +6,7 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 		array('label'=>'Listar Clientes', 'url'=>array('index')),
-		array('label'=>'Crear Cliente', 'url'=>array('create')),
-		array('label'=>'Asignacion Clientes', 'url'=>array('assign')),
+		array('label'=>'Crear Cliente', 'url'=>array('create')),		
 		array('label'=>'Actualizar Cliente', 'url'=>array('update', 'id'=>$model->Id)),
 		array('label'=>'Administrar Clientes', 'url'=>array('admin')),
 );
@@ -70,6 +69,10 @@ function getIdProjectSelected()
 		'data'=>$model,
 		'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',
 		'attributes'=>array(
+				array('label'=>$modelContact->getAttributeLabel('description'),
+						'type'=>'raw',
+						'value'=>$modelContact->description
+				),
 				array('label'=>$modelPerson->getAttributeLabel('name'),
 						'type'=>'raw',
 						'value'=>$modelPerson->name
@@ -101,11 +104,7 @@ function getIdProjectSelected()
 				array('label'=>$modelContact->getAttributeLabel('telephone_2'),
 						'type'=>'raw',
 						'value'=>$modelContact->telephone_2
-				),
-				array('label'=>$modelContact->getAttributeLabel('description'),
-						'type'=>'raw',
-						'value'=>$modelContact->description
-				),
+				),				
 				array('label'=>$modelUser->getAttributeLabel('send_mail'),
 						'type'=>'raw',
 						'value'=>CHtml::checkBox("send_mail",$modelUser->send_mail,array("disabled"=>"disabled"))

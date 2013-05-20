@@ -24,6 +24,7 @@ class TCustomer extends TapiaActiveRecord
 	public $last_name;
 	public $telephone_1;
 	public $email;
+	public $contact_description;
 	
 	public $tag_description;
 	/**
@@ -57,7 +58,7 @@ class TCustomer extends TapiaActiveRecord
 			array('username', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_person, Id_contact, username, tag_description', 'safe', 'on'=>'search'),
+			array('Id, Id_person, Id_contact, username, tag_description, contact_description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -119,9 +120,10 @@ class TCustomer extends TapiaActiveRecord
 			'building_address' => 'Direcci&oacute;n de obra',
 			'phone_house' => 'Tel&eacute;fono Casa',
 			'phone_mobile' => 'Tel&eacute;fono M&oacute;vil',
-			'description'=>'Observaciones',
+			'description'=>'Designaci&oacute;n',
 			'tag_description'=>'Etapa',
 			'send_mail'=>'Recive Correo',
+			'contact_description' =>'Designaci&oacute;n',
 		);
 	}
 
@@ -147,9 +149,36 @@ class TCustomer extends TapiaActiveRecord
 		$criteria->addSearchCondition("gp.last_name",$this->last_name);
 		$criteria->addSearchCondition("gc.telephone_1",$this->telephone_1);
 		$criteria->addSearchCondition("gc.email",$this->email);
+		$criteria->addSearchCondition("gc.description",$this->contact_description);
+		
+		$sort=new CSort;
+		$sort->attributes=array(									      
+						    'name' => array(
+							        'asc' => 'gp.name',
+							        'desc' => 'gp.name DESC',
+							),							  
+							'last_name' => array(
+							        'asc' => 'gp.last_name',
+							        'desc' => 'gp.last_name DESC',
+							),
+							'telephone_1' => array(
+							        'asc' => 'gc.telephone_1',
+							        'desc' => 'gc.telephone_1 DESC',
+							),
+							'email' => array(
+							        'asc' => 'gc.email',
+							        'desc' => 'gc.email DESC',
+							),
+							'contact_description' => array(
+							        'asc' => 'gc.description',
+							        'desc' => 'gc.description DESC',
+							),
+							'*',
+			);
 		
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+											'criteria'=>$criteria,
+											'sort'=>$sort,
 		));
 	}
 	

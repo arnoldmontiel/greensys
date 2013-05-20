@@ -79,12 +79,12 @@ class Contact extends ModelAudit
 	{
 		return array(
 			'Id' => 'ID',
-			'description' => 'Description',
-			'telephone_1' => 'Telephone 1',
-			'telephone_2' => 'Telephone 2',
-			'telephone_3' => 'Telephone 3',
-			'email' => 'Email',
-			'address' => 'Address',
+			'description' => 'Designaci&oacute;n',
+			'telephone_1' => 'Tel&eacute;fono 1',
+			'telephone_2' => 'Tel&eacute;fono 2',
+			'telephone_3' => 'Tel&eacute;fono 3',
+			'email' => 'Correo',
+			'address' => 'Direcci&oacute;n',
 		);
 	}
 

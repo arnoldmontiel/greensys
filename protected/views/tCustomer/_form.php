@@ -33,6 +33,11 @@ $('#User_username').change(function(){
 	'enableAjaxValidation'=>false,
 )); ?>
 
+	<div class="row">
+		<?php echo $form->labelEx($modelContact,'description'); ?>
+		<?php echo $form->textField($modelContact,'description',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($modelContact,'description'); ?>
+	</div>
 	
 	<div class="row">
 		<?php echo $form->labelEx($modelPerson,'name'); ?>
@@ -69,13 +74,7 @@ $('#User_username').change(function(){
 		<?php echo $form->labelEx($modelPerson,'uid'); ?>
 		<?php echo $form->textField($modelPerson,'uid',array('size'=>45,'maxlength'=>45)); ?>
 		<?php echo $form->error($modelPerson,'uid'); ?>
-	</div>
-	
-	<div class="row">
-		<?php echo $form->labelEx($modelContact,'description'); ?>
-		<?php echo $form->textField($modelContact,'description',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($modelContact,'description'); ?>
-	</div>
+	</div>	
 
 	<div class="row">
 		<?php echo $form->labelEx($modelContact,'telephone_1'); ?>
