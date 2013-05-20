@@ -11,8 +11,7 @@ class CustomGoogleOAuthService extends GoogleOAuthService
 	}
 	
 	protected function getAccessToken($code) {
-				
-		//$client = new Google_Client(array('authClass'=>'CustomEOAuth2Service'));
+						
 		$client = new Google_Client();
 		$client->setClientId($this->client_id);
 		$client->setClientSecret($this->client_secret);
@@ -23,7 +22,7 @@ class CustomGoogleOAuthService extends GoogleOAuthService
 				
 		$accessToken = $client->authenticate($code);
 		$client->setAccessToken($accessToken);		
-				
+		
 		$_SESSION['GOOGLE_DRIVE_CLIENT_DATA'] = $this;
 		$_SESSION['GOOGLE_DRIVE_TOKEN'] = $accessToken;
 		return $this->parseJson($accessToken);

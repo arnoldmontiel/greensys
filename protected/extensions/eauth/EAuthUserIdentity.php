@@ -54,6 +54,20 @@ class EAuthUserIdentity extends CBaseUserIdentity {
 			if($record===null){
 				$this->errorCode = self::ERROR_NOT_AUTHENTICATED;
 			}else{
+				
+				$refreshToken = json_decode($_SESSION['GOOGLE_DRIVE_TOKEN'])->refresh_token; 
+				if(isset($refreshToken))
+				{
+					$record->refresh_token = $refreshToken;
+					$record->save();
+				}
+				else
+				{
+					$token = json_decode($_SESSION['GOOGLE_DRIVE_TOKEN'],true);
+					$token['refresh_token'] = $record->refresh_token;
+					$_SESSION['GOOGLE_DRIVE_TOKEN'] = json_encode($token);
+				}
+				
 				$this->_username=$record->username;
 				$this->id = $record->username;
 				$this->name = $this->service->getAttribute('name');
