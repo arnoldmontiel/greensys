@@ -93,7 +93,7 @@ return array(
 		'eauth' => array(
 	        'class' => 'ext.eauth.EAuth',
             'popup' => false, // Use the popup window instead of redirecting.
-			'cache' => true, // Cache component name or false to disable cache. Defaults to 'cache'.
+			'cache' => 'cache', // Cache component name or false to disable cache. Defaults to 'cache'.
             'cacheExpire' => 0, // Cache lifetime. Defaults to 0 - means unlimited.
             'services' => array( // You can change the providers and their classes.     
                 'google_oauth' => array(
@@ -101,6 +101,7 @@ return array(
                     'class' => 'CustomGoogleOAuthService',
                     'client_id' => '740580923589-mnpka332ukf9ilvtgqn0tvgfcci4v0n3.apps.googleusercontent.com',
                     'client_secret' => 'zhD-rtPm_EnLtT_fu50BIfjZ',
+                    'access_type'=>'offline',
                     'title' => 'Login',
                 ),
 			),
