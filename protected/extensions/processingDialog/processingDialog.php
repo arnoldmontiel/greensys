@@ -3,6 +3,7 @@ class processingDialog extends CWidget
 {
 	public $buttons = array();
 	public $idDialog;
+	public $imgSrc;
 	public $assets;
 	public function init()
 	{
@@ -43,12 +44,18 @@ class processingDialog extends CWidget
 				'modal'=>true,
 				'resizable'=>false,
 				'dialogClass'=>' dialog-no-body dialog-no-title',
-				'height'=>60,
-				'width'=>60,
+				'height'=>200,
+				'width'=>200,
 				),
 			));
-		 
-			echo CHtml::image($this->assets.'/ajax-loader.gif');
+			if(isset($this->imgSrc))
+			{
+				echo CHtml::image($this->imgSrc);				
+			}
+			else
+			{
+				echo CHtml::image($this->assets.'/ajax-loader.gif');				
+			}
  
 			$this->endWidget('zii.widgets.jui.CJuiDialog');
 		}

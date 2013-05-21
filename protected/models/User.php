@@ -158,7 +158,11 @@ class User extends TapiaActiveRecord
 		}
 		return self::$_user;
 	}
-
+	public function getFullnameAndMail()
+	{
+		return $this->last_name.' '.$this->name.' ('.$this->email.')';
+	}
+	
 
 	/**
 	 * @return string the associated database table name

@@ -1276,4 +1276,26 @@ class ReviewController extends Controller
 		
 		echo $response;
 	}
+	public function actionAjaxSendMail()
+	{
+		if(isset($_POST['Review'])&&isset($_POST['User']))
+		{
+			$review = Review::model()->findByPk($_POST['Review']['Id']);
+			$users = $_POST['User'];
+			if(!empty($users['username']))
+			{
+				foreach($users['username'] as $user)
+				{
+					$modelUser = User::model()->findByPk($user);
+					$message = new YiiMailMessage;
+					$message->view = '_noteMail';
+					$message->setBody(array('model'=>$modelUser,'modelReview'=>$this->loadModel($_POST['Review']['Id'])), 'text/html');
+					$message->addTo($modelUser->email);
+					$message->from = Yii::app()->params['adminEmail'];
+					$message->setSubject($review->customer->contact->description.' - '.$review->project->description.': '.$review->description);
+					Yii::app()->mail->send($message);
+				}	
+			}
+		}				
+	}	
 }
