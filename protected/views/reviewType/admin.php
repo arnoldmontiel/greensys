@@ -51,7 +51,66 @@ $this->menu=array(
 		),
 		array(
 			'class'=>'CButtonColumn',
-			'template'=>'{view}{update}',
+			'template'=>'{view}{update}{delete}',
+			'buttons'=>array(
+			'delete' => array
+			(
+					'options'=>array(), //HTML options for the button tag.					
+					'click'=>'function(){
+							jQuery("#DeleteReviewType").dialog("open"); return false;
+							$("#Id_to_delete").val($.fn.yiiGridView.getSelection("review-type-grid"));
+						}',
+					
+					'url'=>'Yii::app()->controller->createUrl("reviewType/AjaxDelete",array("id"=>$data->Id))',
+					'click'=>"function(){
+						$.post($(this).attr('href')).success(function(data){
+											
+										
+							$('#delete-review-type').html(data);
+							$('#DeleteReviewType').dialog( 'open' );
+						});
+						return false;
+					}"
+			)
+			),
 		),
 	),
 )); ?>
+
+<?php 
+
+//Project update
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'DeleteReviewType',
+// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Reemplazar tipo de agrupador',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '600',
+					'buttons'=>	array(
+							'Cancelar'=>'js:function(){jQuery("#DeleteReviewType").dialog( "close" );}',
+							'Reemplazar'=>'js:function()
+							{
+							jQuery("#waiting").dialog("open");
+							jQuery.post("'.Yii::app()->createUrl("ReviewType/AjaxReplace").'", $("#delete-reviewType-form").serialize(),
+							function(data) {	
+									//actualizar
+									$.fn.yiiGridView.update("review-type-grid")
+									jQuery("#DeleteReviewType").dialog( "close" );
+							
+							jQuery("#waiting").dialog("close");
+						},"json"
+					);
+
+				}'),
+),
+));
+
+//echo $this->renderPartial('_deletePopUp');
+echo CHtml::openTag('div',array('id'=>'delete-review-type'));
+//place holder
+echo CHtml::closeTag('div');
+
+$this->endWidget('zii.widgets.jui.CJuiDialog');
+?>

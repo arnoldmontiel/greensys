@@ -136,6 +136,67 @@ class ReviewTypeController extends Controller
 		));
 	}
 
+	public function actionAjaxDelete($id)
+	{		
+		$model=$this->loadModel($id);
+
+		$criteria=new CDbCriteria;
+		$criteria->condition='Id <> '. $id; 
+		$ddlReviewType = ReviewType::model()->findAll($criteria);
+		
+		echo $this->renderPartial('_deletePopUp', array('model'=>$model, 'ddlReviewType'=>$ddlReviewType));
+	}
+	
+	public function actionAjaxReplace()
+	{
+		$idReviewType = isset($_POST['Id-to-delete'])?$_POST['Id-to-delete']:null;
+		$newIdReviewType = isset($_POST['new-review-type'])?$_POST['new-review-type']:null;
+		
+		if(isset($idReviewType) && isset($newIdReviewType))
+		{
+			$model=$this->loadModel($idReviewType);
+			$criteria=new CDbCriteria;
+			$criteria->condition='Id_review_type = '. $idReviewType;
+			
+			$transaction = $model->dbConnection->beginTransaction();
+			try {			
+				Review::model()->updateAll(array('Id_review_type'=>$newIdReviewType),$criteria);
+				
+				$tagReviewTypes = TagReviewType::model()->findAll($criteria);
+				foreach($tagReviewTypes as $item)
+				{
+					$modelTagReviewType = TagReviewType::model()->findByAttributes(array('Id_tag'=>$item->Id_tag, 'Id_review_type'=>$newIdReviewType));
+					if(isset($modelTagReviewType))
+						$item->delete();
+					else{
+						$item->Id_review_type = $newIdReviewType;
+						$item->save();
+					}
+				}
+
+				$reviewTypeUserGroups = ReviewTypeUserGroup::model()->findAll($criteria);
+				foreach($reviewTypeUserGroups as $item)
+				{
+					$modelReviewTypeUserGroup = ReviewTypeUserGroup::model()->findByAttributes(array('Id_user_group'=>$item->Id_user_group, 'Id_review_type'=>$newIdReviewType));
+					if(isset($modelReviewTypeUserGroup))
+						$item->delete();
+					else{
+						$item->Id_review_type = $newIdReviewType;
+						$item->save();
+					}
+				}
+				$model->delete();
+				$transaction->commit();
+				return;
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
+			
+		}
+		echo "Error Reemplazando";
+		
+	}
+	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
