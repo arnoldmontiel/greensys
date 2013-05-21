@@ -64,8 +64,11 @@ class EAuthUserIdentity extends CBaseUserIdentity {
 				else
 				{
 					$token = json_decode($_SESSION['GOOGLE_DRIVE_TOKEN'],true);
-					$token['refresh_token'] = $record->refresh_token;
-					$_SESSION['GOOGLE_DRIVE_TOKEN'] = json_encode($token);
+					if(isset($record->refresh_token))
+					{
+						$token['refresh_token'] = $record->refresh_token;
+						$_SESSION['GOOGLE_DRIVE_TOKEN'] = json_encode($token);
+					}
 				}
 				
 				$this->_username=$record->username;
