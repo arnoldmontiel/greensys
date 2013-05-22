@@ -80,8 +80,8 @@ return array(
 		 			'transportType' => 'smtp',
 		 			'transportOptions' => array(
 		 					'host' => 'smtp.gmail.com',
-		 					'username' => 'xxxx@gruposmartliving.com',
-		 					'password' => 'xxxx',
+		 					'username' => 'amontiel@gruposmartliving.com',
+		 					'password' => 'Arnold01',
 		 					'port' => '465',
 		 					'encryption'=>'tls',
 		 			),
@@ -189,7 +189,7 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'webmaster@example.com',
+		'adminEmail'=>'info@gruposmartliving.com',
 		'database_format'=>array(
 					'date'=>'yyyy-MM-dd',
 					'time'=>'HH:mm:ss',
