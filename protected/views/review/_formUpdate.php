@@ -1029,8 +1029,9 @@ $('#need_reload').click(function(){
 			'idDialog'=>'dialogProcessingMail',
 			'imgSrc'=>'images/email_loading.gif'
 	));
-	
-		echo CHtml::imageButton('images/mail_blue.png',array('onclick'=>'jQuery("#SendMail").dialog("open"); return false;'));
+
+		if(count($model->notes) > 0)
+			echo CHtml::imageButton('images/mail_blue.png',array('onclick'=>'jQuery("#SendMail").dialog("open"); return false;'));
 		//mail pop up
 		$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 				'id'=>'SendMail',
