@@ -328,11 +328,13 @@ function getCheck(checkName)
 <div class="review-action-area" id="review-action-area">
 <div id="send-mail" class="send-mail" >
 	<?php
-	$this->widget('ext.processingDialog.processingDialog', array(
-			'idDialog'=>'dialogProcessingMail',
-			'imgSrc'=>'images/email_loading.gif'
-	));
-
+	if(isset($Id_project)&&$Id_project!=-1)
+	{
+		$this->widget('ext.processingDialog.processingDialog', array(
+				'idDialog'=>'dialogProcessingMail',
+				'imgSrc'=>'images/email_loading.gif'
+		));
+		
 		echo CHtml::imageButton('images/mail_blue.png',array('onclick'=>'jQuery("#SendMail").dialog("open"); return false;'));
 		//mail pop up
 		$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
@@ -358,15 +360,17 @@ function getCheck(checkName)
 											jQuery("#dialogProcessingMail").dialog("close");
 											jQuery("#SendMail").dialog( "close" );
 										}
-									);									
-								}																
+									);
+								}
 								'),
 				),
 		));
 		echo $this->renderPartial('_mail', array('model'=>Project::model()->findByPk($Id_project)));
 		
 		$this->endWidget('zii.widgets.jui.CJuiDialog');
-		?>
+		
+	}
+	?>
 </div>
 
 <div id="loading" class="loading-place-holder" >
