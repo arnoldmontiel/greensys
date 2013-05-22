@@ -1298,4 +1298,27 @@ class ReviewController extends Controller
 			}
 		}				
 	}	
+	public function actionAjaxSendProjectByMail()
+	{
+		if(isset($_POST['Project'])&&isset($_POST['User']))
+		{
+			$project = Project::model()->findByPk($_POST['Project']['Id']);
+			$reviews = $project->reviews;
+			$users = $_POST['User'];
+			if(!empty($users['username']) && isset($reviews))
+			{
+				foreach($users['username'] as $user)
+				{
+					$modelUser = User::model()->findByPk($user);
+					$message = new YiiMailMessage;
+					$message->view = '_projectMail';
+					$message->setBody(array('model'=>$modelUser,'modelProject'=>$project), 'text/html');
+					$message->addTo($modelUser->email);
+					$message->from = Yii::app()->params['adminEmail'];
+					$message->setSubject($project->customer->contact->description.' - '.$project->description);
+					Yii::app()->mail->send($message);
+				}
+			}
+		}
+	}	
 }

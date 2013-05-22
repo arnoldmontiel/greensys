@@ -326,6 +326,49 @@ function getCheck(checkName)
 ?>
 
 <div class="review-action-area" id="review-action-area">
+<div id="send-mail" class="send-mail" >
+	<?php
+	$this->widget('ext.processingDialog.processingDialog', array(
+			'idDialog'=>'dialogProcessingMail',
+			'imgSrc'=>'images/email_loading.gif'
+	));
+
+		echo CHtml::imageButton('images/mail_blue.png',array('onclick'=>'jQuery("#SendMail").dialog("open"); return false;'));
+		//mail pop up
+		$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+				'id'=>'SendMail',
+				// additional javascript options for the dialog plugin
+				'options'=>array(
+						'title'=>'Enviar Mail',
+						'autoOpen'=>false,
+						'modal'=>true,
+						'width'=> '500',
+						'buttons'=>	array(
+								'Cancelar'=>'js:function(){jQuery("#SendMail").dialog( "close" );}',
+								'Enviar'=>'js:function()
+								{
+									jQuery("#dialogProcessingMail").dialog("open");
+									jQuery.post("'.Yii::app()->createUrl("review/AjaxSendProjectByMail").'", jQuery("#mail-form").serialize(),
+										function(data) {
+											jQuery("#dialogProcessingMail").dialog("close");
+											jQuery("#SendMail").dialog( "close" );
+										},"json").error(
+										function()
+										{
+											jQuery("#dialogProcessingMail").dialog("close");
+											jQuery("#SendMail").dialog( "close" );
+										}
+									);									
+								}																
+								'),
+				),
+		));
+		echo $this->renderPartial('_mail', array('model'=>Project::model()->findByPk($Id_project)));
+		
+		$this->endWidget('zii.widgets.jui.CJuiDialog');
+		?>
+</div>
+
 <div id="loading" class="loading-place-holder" >
 </div>
 <?php echo CHtml::hiddenField('Id_customer',$Id_customer,array('id'=>'Id_customer'))?>
