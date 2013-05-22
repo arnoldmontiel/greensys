@@ -1292,7 +1292,7 @@ class ReviewController extends Controller
 					$message->setBody(array('model'=>$modelUser,'modelReview'=>$this->loadModel($_POST['Review']['Id'])), 'text/html');
 					$message->addTo($modelUser->email);
 					$message->from = Yii::app()->params['adminEmail'];
-					$message->setSubject($review->customer->contact->description.' - '.$review->project->description.': '.$review->description);
+					$message->setSubject((isset($review->tags[0])?'('.$review->tags[0]->description.') ':'').$review->customer->contact->description.' - '.$review->project->description.': '.$review->description);
 					Yii::app()->mail->send($message);
 				}	
 			}
