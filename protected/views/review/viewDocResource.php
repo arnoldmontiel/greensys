@@ -30,7 +30,7 @@ $('#files_container').find('textarea').each(
 	
 <div class="review-area-files" id="files_container">
 	<div class="review-resources-title">
-		Recursos Multimedias - Documentos Generales
+		Recursos Multimedia - Documentos Generales
 	</div>
 	<div class="review-action-area-files" >
 		<?php

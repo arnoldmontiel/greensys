@@ -66,7 +66,7 @@ $('.image-g-drive').click(function(){
 	
 <div class="review-area-files" id="files_container">
 	<div class="review-resources-title">
-		Recursos Multimedias - Documentos T&eacute;cnicos
+		Recursos Multimedia - Documentos T&eacute;cnicos
 	</div>
 	<div class="review-action-area-files" >
 		<?php

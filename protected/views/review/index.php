@@ -480,7 +480,7 @@ function getCheck(checkName)
 <?php if(isset($Id_customer) && $Id_customer > 0):?>
 <div id="resources-view" class="review-single-view">
 	<div class="review-resources-title">
-		Recursos Multimedias
+		Recursos Multimedia
 	</div>
 <?php
 		if($hasAlbum)

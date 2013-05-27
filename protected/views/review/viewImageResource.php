@@ -16,7 +16,7 @@ $('#btnBack').click(function(){
 ?>
 <div id="resources-view" class="review-single-view">
 	<div class="review-resources-title">
-		Recursos Multimedias - Imagenes
+		Recursos Multimedia - Imagenes
 	</div>
 	<?php
 	echo CHtml::openTag('div',array('class'=>'review-container-album'));
