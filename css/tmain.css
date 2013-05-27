@@ -1065,9 +1065,13 @@ div.review-permission-title
 	font-size: 11px;
 	line-height: 18px;
 	padding: 0px 5px  0px 5px;
-	width:70px;
+	width:80px;
 	text-align: left;
 	margin-left:5px;
+  	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+	
 }
 
 div.wall-action-edit-main-note
@@ -2091,9 +2095,14 @@ div.review-permission-row-first
 {
 	width: 20%;
 	display: inline-block;
+	overflow: hidden;
+	height: 13px;
 	<!--
   	display: inline;  	
   	-->
+  	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   	
 }
 .messageError
