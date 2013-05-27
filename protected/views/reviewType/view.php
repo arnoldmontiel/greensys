@@ -28,3 +28,22 @@ $this->menu=array(
 		),
 	),
 )); ?>
+
+<br>
+<?php 
+	
+	$this->widget('zii.widgets.grid.CGridView', array(
+		'id'=>'user-customer-grid',
+		'dataProvider'=>$modelReviewTypeUserGroup->search(),
+		'summaryText'=>'',
+		'columns'=>array(
+				array(
+			 		'name'=>'user_group_desc',
+					'htmlOptions'=>array('style'=>'text-align: center'),
+					'value'=>'$data->userGroup->description',
+				),
+				),
+			)
+		); 
+	?>
+

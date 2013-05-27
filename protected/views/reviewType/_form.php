@@ -39,6 +39,25 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-form', "
 		<?php echo $form->error($model,'is_for_client'); ?>
 	</div>
 
+	<div class="row">
+		<div class="check-title">	
+			Grupos de Usuarios que podr&aacute; crear
+		</div>
+		<div class="review-types">
+		<?php
+			$checked = array();
+			foreach($model->userGroups as $userGroup)
+			{
+				$checked[] = $userGroup->Id;
+			}
+		
+			$modelUserGroup = UserGroup::model()->findAll();
+			$checkUserGroup = CHtml::listData($modelUserGroup, 'Id', 'description');		
+			echo CHtml::checkBoxList('chklist-userGroup', $checked, $checkUserGroup);
+		?>
+		</div>
+	</div>
+	
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar'); ?>
 	</div>

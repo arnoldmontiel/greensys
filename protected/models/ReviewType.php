@@ -60,6 +60,7 @@ class ReviewType extends TapiaActiveRecord
 		return array(
 			'reviews' => array(self::HAS_MANY, 'Review', 'Id_review_type'),
 			'tags' => array(self::MANY_MANY, 'Tag', 'tag_review_type(Id_review_type, Id_tag)'),
+			'userGroups' => array(self::MANY_MANY, 'UserGroup', 'review_type_user_group(Id_review_type,Id_user_group)'),
 		);
 	}
 
