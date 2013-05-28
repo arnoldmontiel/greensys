@@ -973,6 +973,14 @@ div.review-text-note-add
 	width: 100%;
 	float: left;
 }
+div.review-text-note-add-progress
+{
+	font-size: 13px;
+	line-height: 18px;
+	background-color: #f4f6fb;
+	position: relative;
+	width: 100%;
+}
 
 textarea.wall-action-add-note
 {
@@ -1271,6 +1279,14 @@ img.action-show-hide-attch
 	right:0px;
 	cursor: pointer;
 }
+img.action-show-saving-note
+{	
+	position:absolute;
+	top:2px;
+	right:100px;
+	cursor: pointer;
+}
+
 div.mini-note-attch-link
 {	
 	position:absolute;	

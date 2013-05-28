@@ -844,6 +844,81 @@ class ReviewController extends Controller
 		}
 	}
 	
+	public function actionAjaxSaveChangesNoteInProgress()
+	{
+		if(isset($_POST['id'])&&isset($_POST['value']))
+		{
+			$id = $_POST['id'];
+			$note = Note::model()->findByPk($id);
+			if(isset($note))
+			{
+				$note->note = $_POST['value'];
+				$note->save();				
+			}				
+		}
+	}	
+	public function actionAjaxPublicNoteInProgress()
+	{
+		if(isset($_POST['id']))
+		{
+			$id = $_POST['id'];
+			$note = Note::model()->findByPk($id);
+			if(isset($note))
+			{
+				$note->in_progress = 0;
+				$note->save();				
+			}				
+		}
+	}	
+	public function actionAjaxDeleteNoteInProgress()
+	{
+		if(isset($_POST['id']))
+		{
+			$id = $_POST['id'];
+			NoteNote::model()->deleteAllByAttributes(array('Id_child'=>$id));
+			Note::model()->deleteByPk($id);				
+		}
+	}
+	public function actionAjaxAddNoteInProgress()
+	{
+		$id = $_POST['id'];
+		$value = $_POST['value'];
+		$idCustomer = $_POST['idCustomer'];
+		$idProject = $_POST['idProject'];
+		$chk = $_POST['chk'];
+	
+		$modelNote = new Note;
+	
+		$transaction = $modelNote->dbConnection->beginTransaction();
+		try {
+				
+			$modelNote->username = User::getCurrentUser()->username;
+			$modelNote->Id_user_group_owner = User::getCurrentUserGroup()->Id;
+			$modelNote->note = $value;
+			$modelNote->Id_customer = $idCustomer;
+			$modelNote->Id_project = $idProject;
+			$modelNote->in_progress = 1;
+			$modelNote->need_confirmation = $chk;
+			$modelNote->save();
+	
+			$modelNoteNote = new NoteNote;
+			$modelNoteNote->Id_parent = $id;
+			$modelNoteNote->Id_child = $modelNote->Id;
+			$modelNoteNote->save();
+	
+			//$this->markUnreadSubNote($id);
+				
+			$transaction->commit();
+	
+			$model = Note::model()->findByPk($id);
+			//$userGroupNote = UserGroupNote::model()->findByPk(array('Id_note'=>$id,'Id_user_group'=>$modelNote->Id_user_group_owner));
+			$this->renderPartial('_viewMiniNoteInProgress',array('modelMiniNote'=>$modelNote,'modelMainNote'=>$model));
+				
+		} catch (Exception $e) {
+			$transaction->rollback();
+		}
+	}
+	
 	private function markUnreadSubNote($idParentNote)
 	{
 		$model = Note::model()->findByPk($idParentNote);

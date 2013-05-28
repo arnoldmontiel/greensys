@@ -61,6 +61,7 @@ function bindEvents(item)
 	var idMainNote = $(item).attr('id').split('_')[1];
 	$(item).find('#note_'+idMainNote).autoResize();
 
+	$(item).find('#note_'+idMainNote).unbind('focus');												
 	$(item).find('#note_'+idMainNote).focus(function()
 	{
 		$(item).find('#create_note_'+idMainNote).removeClass('div-hidden');
@@ -68,7 +69,8 @@ function bindEvents(item)
 		$(this).addClass('review-action-add-note-focus');
 	}
 	);
-
+	
+	$(item).find('.check-last-doc').unbind('click');												
 	$(item).find('.check-last-doc').click(function()
 	{	
 		var url = $(this).attr('url');	
@@ -95,7 +97,7 @@ function bindEvents(item)
 			);
 	}
 	);
-	
+	$(item).find('#main_title'+idMainNote).unbind('focus');										
 	$(item).find('#main_title'+idMainNote).focus(function()
 	{
 		$(this).addClass('review-white');
@@ -104,6 +106,7 @@ function bindEvents(item)
 	}
 	);
 	
+	$(item).find('#main_note'+idMainNote).unbind('focus');					
 	$(item).find('#main_note'+idMainNote).focus(function()
 	{
 		$(this).addClass('review-white');
@@ -112,6 +115,7 @@ function bindEvents(item)
 	}
 	);
 
+	$(item).find('#edit_main_title_cancel_'+idMainNote).unbind('click');					
 	$(item).find('#edit_main_title_cancel_'+idMainNote).click(function(){
 		$(item).find('#main_title'+idMainNote).removeClass('review-white');
 		var title = $(item).find('#main_title'+idMainNote);
@@ -119,7 +123,8 @@ function bindEvents(item)
 		$(this).addClass('div-hidden');
 		$(title).val($(item).find('#main_original_title'+idMainNote).val());
 	})
-	
+
+	$(item).find('#edit_main_note_cancel_'+idMainNote).unbind('click');					
 	$(item).find('#edit_main_note_cancel_'+idMainNote).click(function(){
 		$(item).find('#main_note'+idMainNote).removeClass('review-white');
 		var note = $(item).find('#main_note'+idMainNote);
@@ -127,7 +132,80 @@ function bindEvents(item)
 		$(this).addClass('div-hidden');
 		$(note).val($(item).find('#main_original_note'+idMainNote).val());
 	})
-
+					
+	$(item).find('.review-create-note-cancel').unbind('click');					
+	$(item).find('.review-create-note-cancel').click(function(){
+			$('#dialogProcessing').dialog('open');
+			var idMiniNote = $(this).attr('id').split('_')[4];					
+			$.post(
+			'".ReviewController::createUrl('AjaxDeleteNoteInProgress')."',
+			{
+			 	id: idMiniNote
+			 }).success(
+					function(data) 
+					{ 
+						$(item).find('#view_text_note_'+idMiniNote).remove();						
+						$('#dialogProcessing').dialog('close');
+					}
+			).error(
+				function(data){
+					$('#dialogProcessing').dialog('close');
+				}
+			);
+	});
+					
+	$(item).find('.review-action-add-note').unbind('keyup');					
+	$(item).find('.review-action-add-note').keyup(function(){
+			var idMiniNote = $(this).attr('id').split('_')[2];
+			$(item).find('#img_saving_note_'+idMiniNote).show();
+			$(item).find('#img_saving_note_error_'+idMiniNote).hide();					
+			$(item).find('#img_saving_note_ok_'+idMiniNote).hide();					
+			var val = $(item).find('#note_mini_'+idMiniNote).val();
+			$.post(
+			'".ReviewController::createUrl('AjaxSaveChangesNoteInProgress')."',
+			{
+			 	id: idMiniNote,
+				value: val 					
+			 }).success(
+					function(data) 
+					{ 												
+						$(item).find('#img_saving_note_'+idMiniNote).hide();
+						$(item).find('#img_saving_note_ok_'+idMiniNote).show();
+					}
+			).error(
+				function(data){
+					$(item).find('#img_saving_note_'+idMiniNote).hide();
+					$(item).find('#img_saving_note_error_'+idMiniNote).show();
+					$(item).find('#img_saving_note_ok_'+idMiniNote).hide();					
+				}
+			);
+	});
+					
+					
+	$(item).find('.review-create-note').unbind('click');					
+	$(item).find('.review-create-note').click(function(){
+			$('#dialogProcessing').dialog('open');
+			var idMiniNote = $(this).attr('id').split('_')[3];					
+			$.post(
+			'".ReviewController::createUrl('AjaxPublicNoteInProgress')."',
+			{
+			 	id: idMiniNote
+			 }).success(
+					function(data) 
+					{ 						
+						$(item).find('#note_mini_'+idMiniNote).prop('disabled', true);
+						$(item).find('#create_note_cancel_mini_'+idMiniNote).remove();					
+						$(item).find('#create_note_mini_'+idMiniNote).remove();					
+						$('#dialogProcessing').dialog('close');
+					}
+			).error(
+				function(data){
+					$('#dialogProcessing').dialog('close');
+				}
+			);
+	});
+					
+	$(item).find('#create_note_cancel_'+idMainNote).unbind('click');					
 	$(item).find('#create_note_cancel_'+idMainNote).click(function(){
 		var note = $(item).find('#note_'+idMainNote);
 		$(note).height(55);
@@ -136,7 +214,45 @@ function bindEvents(item)
 		$(note).val('');
 		$(item).find('#note_'+idMainNote).removeClass('review-action-add-note-focus');
 	})
+	$(item).find('#note_'+idMainNote).unbind('click');
+	$(item).find('#note_'+idMainNote).click(function(){
+		$('#dialogProcessing').dialog('open');					
+		var value = $(item).find('#note_'+idMainNote).val();
+		var chk = 0;
+		if($('#chkNoteNeedConf_'+idMainNote).is(':checked'))
+			chk = 1;
+		$.post(
+			'".ReviewController::createUrl('AjaxAddNoteInProgress')."',
+			{
+			 	id: idMainNote,
+				value: $(item).find('#note_'+idMainNote).val(),
+				idCustomer: ".$model->Id_customer.",
+				idProject: ".$model->Id_project.",
+				chk: chk
+			 }).success(
+					function(data) 
+					{ 
+						$('.view-text-note').last().after(data);
+						//$('#singleNoteContainer').after(data);
+						bindEvents($('#noteContainer_'+idMainNote));
+						$('.view-text-note').last().find('.review-action-add-note').focus();
+						$('.review-action-add-note').removeClass('review-action-add-note-focus');
+						$('#dialogProcessing').dialog('close');
+					}
+			).error(
+				function(data){
+					$('#dialogProcessing').dialog('close');
+				}
+			);
+					
+	});
 
+	$(item).find('#note_'+idMainNote).unbind('keypress');						
+	$(item).find('#note_'+idMainNote).keypress(function(){
+					alert('crando mini nota.. '+idMainNote);
+	});
+	
+	$(item).find('#create_note_'+idMainNote).unbind('keypress');												
 	$(item).find('#create_note_'+idMainNote).click(function(){
 		$('#dialogProcessing').dialog('open');
 		var value = $(item).find('#note_'+idMainNote).val();
@@ -164,7 +280,8 @@ function bindEvents(item)
 				}
 			);
 	});
-	    
+						
+	$(item).find('#edit_main_note_'+idMainNote).unbind('click');												
 	$(item).find('#edit_main_note_'+idMainNote).click(function(){
 		var note = $(item).find('#main_note'+idMainNote);
 		var value = $(note).val();
@@ -188,7 +305,8 @@ function bindEvents(item)
 	
 	$(item).find('#singleNoteContainer').find('img').each(
 		function(i, imgItem){
-			
+
+			$(imgItem).unbind('click');												
 			$(imgItem).click(function(){
 				var id = $(imgItem).attr('id');
 				var idName = id.split('_')[0];								
@@ -219,7 +337,8 @@ function bindEvents(item)
 				}
 			});
 	});
-	
+
+	$(item).find('#delete_'+idMainNote).unbind('click');																					
 	$(item).find('#delete_'+idMainNote).click(function(){
 		$.ajax({
 				type : 'POST',
@@ -237,12 +356,13 @@ function bindEvents(item)
 				}
 		});
 	});
-	
+	$('#edit_image'+idMainNote).unbind('hover');																											
 	$('#edit_image'+idMainNote).hover(
 		function(){
 			$(this).removeClass('div-hidden');
 	});
-
+	
+	$('#review_image'+idMainNote).unbind('hover');																																	
 	$('#review_image'+idMainNote).hover(
 		function(){
 			$('#edit_image'+idMainNote).removeClass('div-hidden');
@@ -250,7 +370,8 @@ function bindEvents(item)
 		function(){
 			$('#edit_image'+idMainNote).addClass('div-hidden');
 	});
-	
+
+	$('#chkNeedConf_'+idMainNote).unbind('change');																																							
 	$('#chkNeedConf_'+idMainNote).change(function(){
 		
 		var chk = 0;
@@ -269,12 +390,12 @@ function bindEvents(item)
 				bindEvents($('#noteContainer_'+idMainNote))
 			});
 	});
-		
+	$('#editPermission_'+idMainNote).unbind('click');																																											
 	$('#editPermission_'+idMainNote).click(function(){		
 		var idMainNote = $(this).attr('id').split('_')[1];		
 		$(this).parent().parent().find('#publicArea_' + idMainNote).toggle();
 	});
-	
+	$('#confirm_note_'+idMainNote).unbind('click');	
 	$('#confirm_note_'+idMainNote).click(function(){
 		$.ajax({
 				type : 'POST',
@@ -292,6 +413,7 @@ function bindEvents(item)
 		});
 	});
 
+	$('#decline_note_'+idMainNote).unbind('click');
 	$('#decline_note_'+idMainNote).click(function(){
 		$.ajax({
 				type : 'POST',
@@ -376,6 +498,7 @@ function bindEvents(item)
 		{
 			editPermisssions = true;
 		}
+		$(this).find('#divChkUserGroup').unbind('click');
 		$(this).find('#divChkUserGroup').click(function(){
 			
 			if($(this).attr('isadmin') == 'no')
@@ -410,7 +533,7 @@ function bindEvents(item)
 				}	
 			}
 		});
-		
+		$(this).find('#divChkAddressed').unbind('click');
 		$(this).find('#divChkAddressed').click(function(){
 			if(!$(parent).find('#chkAddressed').is(':checked'))
 			{
@@ -435,7 +558,8 @@ function bindEvents(item)
 				}
 			}
 		});
-		
+
+		$(this).find('#divChkCanFeedback').unbind('click');
 		$(this).find('#divChkCanFeedback').click(function(){
 			if($(this).attr('isadmin') == 'no')
 			{
@@ -464,8 +588,10 @@ function bindEvents(item)
 			}
 		});
 		
+						
+		$(this).find('#divChkNeedConfirmation').unbind('click');
 		$(this).find('#divChkNeedConfirmation').click(function(){
-			if(!$(parent).find('#chkNeedConfirmation').is(':checked'))
+		if(!$(parent).find('#chkNeedConfirmation').is(':checked'))
 			{
 				if(editPermisssions)
 				{
@@ -491,6 +617,7 @@ function bindEvents(item)
 				
 	});
 	
+	$('#public_'+idMainNote).unbind('click');
 	$('#public_'+idMainNote).click(function(){
 		var dataUserGroup = { 'value[]' : []};
 		var dataFeedback = { 'value[]' : []};

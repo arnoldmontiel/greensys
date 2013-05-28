@@ -195,7 +195,7 @@ $editable = $isAdministrator||$isOwner;
 						echo CHtml::openTag('div', array('id'=>'userGroup_'.$item->Id));
 						
 							echo CHtml::openTag('div', array('class'=>'review-permission-row review-permission-row-first'));
-								echo CHtml::openTag('div',array('class'=>'review-permission-title'));
+								echo CHtml::openTag('div',array('class'=>'review-permission-title','title'=>$item->description));
 									echo CHtml::encode($item->description);
 								echo CHtml::closeTag('div');
 							echo CHtml::closeTag('div');
@@ -524,20 +524,25 @@ $editable = $isAdministrator||$isOwner;
 		<?php
 		foreach($notes as $item)
 		{
-			$this->renderPartial('_viewMiniNote',array('modelMiniNote'=>$item,'modelMainNote'=>$data));
+			if($item->in_progress)
+			{
+				$this->renderPartial('_viewMiniNoteInProgress',array('modelMiniNote'=>$item,'modelMainNote'=>$data));
+				
+			}else
+			{
+				$this->renderPartial('_viewMiniNote',array('modelMiniNote'=>$item,'modelMainNote'=>$data));				
+			}
 		}
 		?>
+	<?php else:?>
+		<?php 
+		echo CHtml::openTag('div',array('class'=>'view-text-note div-hidden'));
+		echo CHtml::closeTag('div');
+		?>		
 	<?php endif?>
 	</div>
 	<?php if($canDoFeeback):?>
-	<div class="review-text-note-add">
-
-		<div id='create_note_<?php echo $data->Id?>' class="review-create-note div-hidden">
-			Grabar
-		</div>
-		<div id='create_note_cancel_<?php echo $data->Id?>' class="review-create-note-cancel div-hidden">
-			Cancelar
-		</div>
+	<div class="review-text-note-add" id="mini_note_container_<?php echo $data->Id?>">
 				
 		<textarea id="note_<?php echo $data->Id?>" class="review-action-add-note" placeholder='Escriba una nota...'></textarea>
 	</div>
