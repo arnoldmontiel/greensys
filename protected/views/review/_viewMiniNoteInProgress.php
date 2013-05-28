@@ -161,6 +161,7 @@ echo CHtml::openTag('div',array('class'=>'view-text-note','style'=>'padding:18px
 // 	echo CHtml::closeTag('p');
 //echo CHtml::closeTag('div');
 
+	echo CHtml::hiddenField('hidden_note_mini',$modelMiniNote->note,array('id'=>'hidden_note_mini_'.$modelMiniNote->Id));
 ?>
 
 	<div class="review-text-note-add-progress" id="mini_note_container_<?php echo $modelMiniNote->Id?>">

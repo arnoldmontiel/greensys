@@ -544,7 +544,7 @@ $editable = $isAdministrator||$isOwner;
 	<?php if($canDoFeeback):?>
 	<div class="review-text-note-add" id="mini_note_container_<?php echo $data->Id?>">
 				
-		<textarea id="note_<?php echo $data->Id?>" class="review-action-add-note" placeholder='Escriba una nota...'></textarea>
+		<textarea id="note_<?php echo $data->Id?>" tabindex="-1" class="review-action-add-note" placeholder='Escriba una nota...'></textarea>
 	</div>
 		<?php endif;?>
 </div>

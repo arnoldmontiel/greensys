@@ -155,12 +155,17 @@ function bindEvents(item)
 	});
 					
 	$(item).find('.review-action-add-note').unbind('keyup');					
-	$(item).find('.review-action-add-note').keyup(function(){
-			var idMiniNote = $(this).attr('id').split('_')[2];
+	$(item).find('.review-action-add-note').keyup(function(e){
+		var idMiniNote = $(this).attr('id').split('_')[2];
+		var val = $(item).find('#note_mini_'+idMiniNote).val();
+		var hidden = $(item).find('#hidden_note_mini_'+idMiniNote);		
+		if($(hidden).val()!=val)
+		{
+			$(hidden).val(val);
 			$(item).find('#img_saving_note_'+idMiniNote).show();
 			$(item).find('#img_saving_note_error_'+idMiniNote).hide();					
 			$(item).find('#img_saving_note_ok_'+idMiniNote).hide();					
-			var val = $(item).find('#note_mini_'+idMiniNote).val();
+			;
 			$.post(
 			'".ReviewController::createUrl('AjaxSaveChangesNoteInProgress')."',
 			{
@@ -179,6 +184,7 @@ function bindEvents(item)
 					$(item).find('#img_saving_note_ok_'+idMiniNote).hide();					
 				}
 			);
+		}
 	});
 					
 					

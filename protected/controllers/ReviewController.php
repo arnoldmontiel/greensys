@@ -866,6 +866,7 @@ class ReviewController extends Controller
 			if(isset($note))
 			{
 				$note->in_progress = 0;
+				$this->markUnreadSubNote($note->parentNotes[0]->Id);
 				$note->save();				
 			}				
 		}
