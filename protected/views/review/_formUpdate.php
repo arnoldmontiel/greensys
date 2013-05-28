@@ -54,8 +54,8 @@ function beginBind()
 		}
 	);
 }
-
-
+		
+		
 function bindEvents(item)
 {
 	var idMainNote = $(item).attr('id').split('_')[1];
@@ -153,7 +153,7 @@ function bindEvents(item)
 				}
 			);
 	});
-					
+						
 	$(item).find('.review-action-add-note').unbind('keyup');					
 	$(item).find('.review-action-add-note').keyup(function(e){
 		var idMiniNote = $(this).attr('id').split('_')[2];
@@ -165,7 +165,6 @@ function bindEvents(item)
 			$(item).find('#img_saving_note_'+idMiniNote).show();
 			$(item).find('#img_saving_note_error_'+idMiniNote).hide();					
 			$(item).find('#img_saving_note_ok_'+idMiniNote).hide();					
-			;
 			$.post(
 			'".ReviewController::createUrl('AjaxSaveChangesNoteInProgress')."',
 			{
@@ -174,6 +173,7 @@ function bindEvents(item)
 			 }).success(
 					function(data) 
 					{ 												
+						$(item).find('#hidden_note_mini_saved_'+idMiniNote).val(val);		
 						$(item).find('#img_saving_note_'+idMiniNote).hide();
 						$(item).find('#img_saving_note_ok_'+idMiniNote).show();
 					}
@@ -1077,7 +1077,46 @@ function()
 			return false;
 		}
 	});
-	
+	setInterval(		
+function()
+		{
+				$('.view-text-note').find('.review-action-add-note').each(
+				function()
+				{
+					var idNote = $(this).attr('id').split('_')[2];
+					var val = $('#hidden_note_mini_'+idNote).val();
+					if(val!=$('#hidden_note_mini_saved_'+idNote).val())
+					{
+						$('#img_saving_note_'+idNote).show();
+						$('#img_saving_note_error_'+idNote).hide();					
+						$('#img_saving_note_ok_'+idNote).hide();
+						$.post(
+						'".ReviewController::createUrl('AjaxSaveChangesNoteInProgress')."',
+						{
+						 	id: idNote,
+							value: val 					
+						 }).success(
+								function(data) 
+								{ 												
+									$('#hidden_note_mini_saved_'+idNote).val(val);		
+									$('#img_saving_note_'+idNote).hide();
+									$('#img_saving_note_ok_'+idNote).show();
+								}
+						).error(
+							function(data){
+								$('#img_saving_note_'+idNote).hide();
+								$('#img_saving_note_error_'+idNote).show();
+								$('#img_saving_note_ok_'+idNote).hide();					
+							}
+						);
+		
+					}
+				}
+			);							
+					
+		} 
+,1000*60)
+					
 setInterval(function() {
 
 	$.post('".ReviewController::createUrl('AjaxCheckUpdate')."', 
