@@ -866,8 +866,12 @@ class ReviewController extends Controller
 			if(isset($note))
 			{
 				$note->in_progress = 0;
+				$note->creation_date = date("Y-m-d H:i:s",time());
+				$note->save();
 				$this->markUnreadSubNote($note->parentNotes[0]->Id);
-				$note->save();				
+				$result = array_merge($note->attributes,$note->user->attributes);
+				echo CJSON::encode($result);
+				//echo CJSON::encode($note->attributes).CJSON::encode($note->user->attributes);				
 			}				
 		}
 	}	
@@ -901,10 +905,11 @@ class ReviewController extends Controller
 			$modelNote->in_progress = 1;
 			$modelNote->need_confirmation = $chk;
 			$modelNote->save();
+			$modelNote->refresh();
 	
 			$modelNoteNote = new NoteNote;
 			$modelNoteNote->Id_parent = $id;
-			$modelNoteNote->Id_child = $modelNote->Id;
+			$modelNoteNote->Id_child = $modelNote->Id;			
 			$modelNoteNote->save();
 	
 			//$this->markUnreadSubNote($id);

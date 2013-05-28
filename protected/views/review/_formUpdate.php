@@ -198,16 +198,23 @@ function bindEvents(item)
 			 	id: idMiniNote
 			 }).success(
 					function(data) 
-					{ 						
-						$(item).find('#note_mini_'+idMiniNote).prop('disabled', true);
-						$(item).find('#create_note_cancel_mini_'+idMiniNote).remove();					
-						$(item).find('#create_note_mini_'+idMiniNote).remove();
-						$(item).find('#img_saving_note_'+idMiniNote).hide();					
-						$(item).find('#img_saving_note_error_'+idMiniNote).hide();					
-						$('#dialogProcessing').dialog('close');
+					{ 	
+						if(data!='')
+						{
+							data = JSON.parse(data);
+							$(item).find('#view_text_user_'+idMiniNote).html(data.creation_date+' - '+data.name+' '+data.last_name);					
+							$(item).find('#note_mini_'+idMiniNote).prop('disabled', true);
+							$(item).find('#create_note_cancel_mini_'+idMiniNote).remove();					
+							$(item).find('#create_note_mini_'+idMiniNote).remove();
+							$(item).find('#img_saving_note_'+idMiniNote).hide();					
+							$(item).find('#img_saving_note_ok_'+idMiniNote).hide();					
+							$(item).find('#img_saving_note_error_'+idMiniNote).hide();					
+							$('#dialogProcessing').dialog('close');
+						}
 					}
 			).error(
 				function(data){
+					$(item).find('#img_saving_note_ok_'+idMiniNote).hide();					
 					$(item).find('#img_saving_note_error_'+idMiniNote).show();					
 					$('#dialogProcessing').dialog('close');
 				}

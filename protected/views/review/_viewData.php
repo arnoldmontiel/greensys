@@ -528,7 +528,8 @@ $editable = $isAdministrator||$isOwner;
 			{
 				$this->renderPartial('_viewMiniNoteInProgress',array('modelMiniNote'=>$item,'modelMainNote'=>$data));
 				
-			}else
+			}
+			elseif(!$item->in_progress)
 			{
 				$this->renderPartial('_viewMiniNote',array('modelMiniNote'=>$item,'modelMainNote'=>$data));				
 			}
