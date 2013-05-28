@@ -923,21 +923,23 @@ class ReviewController extends Controller
 	private function markUnreadSubNote($idParentNote)
 	{
 		$model = Note::model()->findByPk($idParentNote);
-		$reviewUsers = ReviewUser::model()->findAllByAttributes(array('Id_review'=>$model->Id_review));
-		$modelUserGroupNotes = UserGroupNote::model()->findAllByAttributes(array('Id_note'=>$model->Id));
-		
-		foreach($modelUserGroupNotes as $item)
+		if($model->in_progress==0)
 		{
-			foreach($reviewUsers as $revItems)
+			$reviewUsers = ReviewUser::model()->findAllByAttributes(array('Id_review'=>$model->Id_review));
+			$modelUserGroupNotes = UserGroupNote::model()->findAllByAttributes(array('Id_note'=>$model->Id));
+			
+			foreach($modelUserGroupNotes as $item)
 			{
-				if($revItems->user->Id_user_group == $item->Id_user_group && $revItems->username != User::getCurrentUser()->username )
+				foreach($reviewUsers as $revItems)
 				{
-					$revItems->read = 0;
-					$revItems->save();
+					if($revItems->user->Id_user_group == $item->Id_user_group && $revItems->username != User::getCurrentUser()->username )
+					{
+						$revItems->read = 0;
+						$revItems->save();
+					}
 				}
-			}
-		}
-		
+			}				
+		}		
 	}
 	
 	public function actionAjaxRemoveSingleNote($id, $idParent)
