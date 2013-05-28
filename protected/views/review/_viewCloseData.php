@@ -23,7 +23,7 @@ $isOwner = User::isOwnerOf($data);
 				?>
 			</div>
 		</div>
-		<div class="review-single-view-actions">
+		<div class="review-single-view-actions"  style="height: 50px">
 			<div class="review-single-view-actions-need-conf">
 				<?php
 				echo CHtml::openTag('div',array('class'=>'review-note-users-groups'));								
