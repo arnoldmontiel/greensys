@@ -52,7 +52,7 @@ $('#Id_customer').change(function(){
 
 setInterval(function() {
    doFilter();
-}, 50000000)
+}, 1000*30)
 
 function doFilter()
 {
