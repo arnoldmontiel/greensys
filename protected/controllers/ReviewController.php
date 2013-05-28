@@ -139,6 +139,17 @@ class ReviewController extends Controller
 	{
 		$model=$this->loadModel($id);
 		
+		$modelReviewUser = ReviewUser::model()->findByPk(array('Id_review'=>$id,'username'=>User::getCurrentUser()->username));
+		
+		if(isset($modelReviewUser))
+		{
+			if(!$modelReviewUser->read)
+			{
+				$modelReviewUser->read = 1;
+				$modelReviewUser->save();
+			}
+		}
+		
 		$this->render('viewClose',array(
 					'model'=>$model,					
 		//'order'=>$order,deprecated
@@ -171,7 +182,7 @@ class ReviewController extends Controller
 		
 	    $modelReviewUser = ReviewUser::model()->findByPk(array('Id_review'=>$id,'username'=>User::getCurrentUser()->username));
 		
-		if($modelReviewUser)
+		if(isset($modelReviewUser))
 		{
 			if(!$modelReviewUser->read)
 			{
