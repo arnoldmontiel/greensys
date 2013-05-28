@@ -524,7 +524,7 @@ $editable = $isAdministrator||$isOwner;
 		<?php
 		foreach($notes as $item)
 		{
-			if($item->in_progress)
+			if($item->in_progress && $item->username==User::getCurrentUser()->username)
 			{
 				$this->renderPartial('_viewMiniNoteInProgress',array('modelMiniNote'=>$item,'modelMainNote'=>$data));
 				
