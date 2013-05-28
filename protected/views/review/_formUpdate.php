@@ -149,6 +149,8 @@ function bindEvents(item)
 					}
 			).error(
 				function(data){
+					$(item).find('#img_saving_note_ok_'+idMiniNote).hide();					
+					$(item).find('#img_saving_note_error_'+idMiniNote).show();										
 					$('#dialogProcessing').dialog('close');
 				}
 			);
@@ -257,7 +259,9 @@ function bindEvents(item)
 					}
 			).error(
 				function(data){
-					$('#dialogProcessing').dialog('close');
+						alert('Problemas de red. No se puede crear una nueva nota.');
+						$('.review-action-add-note').removeClass('review-action-add-note-focus');
+						$('#dialogProcessing').dialog('close');
 				}
 			);
 					
