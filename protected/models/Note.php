@@ -29,10 +29,26 @@
  */
 class Note extends TapiaActiveRecord
 {	
-	public function beforeSave()
+	public function afterSave()
 	{		
-		$this->change_date = date("Y-m-d H:i:s",time());
-		return parent::beforeSave();
+		parent::afterSave();
+		if($this->in_progress==0)
+		{
+			$modelReview = $this->review;
+			if(isset($modelReview))
+			{
+				$modelReview->save();
+			}
+			else
+			{
+				$parents = $this->parentNotes;//shold be only one
+				foreach($parents as $parent)
+				{
+					if($parent->review)
+						$parent->review->save();
+				}
+			}				
+		}
 	}
 	
 	/**
@@ -65,6 +81,10 @@ class Note extends TapiaActiveRecord
 			array('Id_customer, Id_review, in_progress, need_confirmation, confirmed, Id_user_group_owner', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('note, creation_date,change_date', 'safe'),
+			array('change_date','default',
+					'value'=>new CDbExpression('NOW()'),
+					'setOnEmpty'=>false,'on'=>'insert,update'),
+				
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, note, creation_date, change_date, Id_customer, Id_review, in_progress, need_confirmation, confirmed, username, Id_user_group_owner, title', 'safe', 'on'=>'search'),

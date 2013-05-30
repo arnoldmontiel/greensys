@@ -672,7 +672,7 @@ class ReviewController extends Controller
 			$criteria->order = 'max_date DESC';				
 
 			
-			if(isset($arrFilters['customerNameFilter']))
+			if(isset($arrFilters['customerNameFilter'])&&$arrFilters['customerNameFilter']!='')
 			{
  				$criteria->addSearchCondition('gp.name', $arrFilters['customerNameFilter'],true);				
  				$criteria->addSearchCondition('gp.last_name', $arrFilters['customerNameFilter'],true,'OR');
@@ -1392,6 +1392,53 @@ class ReviewController extends Controller
 			}
 		}				
 	}	
+	public function actionGenerateTextPlainSummary()
+	{
+		if(isset($_GET['Id_project']))
+		{
+			$modelProject = Project::model()->findByPk($_GET['Id_project']);				
+			header("Content-type: text/plain");			
+			header('Content-Disposition: attachment; filename="'.$modelProject->customer->contact->description.' - '.$modelProject->description.' ('.date("Y-m-d H:i",time()).').txt"');
+			echo $modelProject->customer->contact->description.' - '.$modelProject->description;
+			echo PHP_EOL;
+			$criteria = new CDbCriteria();
+			$criteria->addCondition('Id_project = '. $modelProject->Id);
+			$criteria->order = 'change_date DESC';
+				
+			$reviews = Review::model()->findAll($criteria);;
+			foreach ($reviews as $modelReview)
+			{
+				echo $modelReview->description . (isset($modelReview->tags[0])?' ('.$modelReview->tags[0]->description.') ':'');
+				echo PHP_EOL;
+				$notes = $modelReview->notes;
+				if(isset($notes))
+				{
+					foreach ($notes as $note){
+						echo $note->creation_date.' '.$note->user->last_name.' '.$note->user->name.': '.$note->note;
+						echo PHP_EOL;
+						$criteria = new CDbCriteria();
+						$criteria->addCondition('Id_parent = '. $note->Id);
+						$criteria->select ='t.*, n.creation_date';
+						$criteria->join='LEFT OUTER JOIN tapia.note n on (t.Id_child = n.Id)';
+						$criteria->order = 'n.creation_date DESC';
+						try {
+							$noteNotes = NoteNote::model()->findAll($criteria);
+								
+						} catch (Exception $e) {
+							echo $e.message;
+						}
+						foreach ($noteNotes as $noteNote){
+							$litleNote = $noteNote->child;
+							echo $litleNote->creation_date.' '.$litleNote->user->last_name.' '.$litleNote->user->name.': '.$litleNote->note;
+							echo PHP_EOL;
+							//echo CHtml::closeTag('br');
+						}
+					}
+				}
+			
+			}				
+		}
+	}
 	public function actionAjaxSendProjectByMail()
 	{
 		if(isset($_POST['Project'])&&isset($_POST['User']))

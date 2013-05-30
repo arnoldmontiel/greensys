@@ -1216,8 +1216,10 @@ $('#need_reload').click(function(){
 			'imgSrc'=>'images/email_loading.gif'
 	));
 
-		if(count($model->notes) > 0)
-			echo CHtml::imageButton('images/mail_blue.png',array('onclick'=>'jQuery("#SendMail").dialog("open"); return false;'));
+		if(User::isAdministartor()&&count($model->notes) > 0)
+		{
+			//echo CHtml::imageButton('images/mail_blue.png',array('onclick'=>'jQuery("#SendMail").dialog("open"); return false;'));				
+		}
 		//mail pop up
 		$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 				'id'=>'SendMail',

@@ -237,7 +237,7 @@ class Review extends TapiaActiveRecord
 		$criteria=new CDbCriteria;
 	
 		if($arrFilters['tagFilter'])
-		$criteria->addCondition('t.Id IN(select Id_review from tag_review where Id_tag IN ('. $arrFilters['tagFilter'].'))');
+			$criteria->addCondition('t.Id IN(select Id_review from tag_review where Id_tag IN ('. $arrFilters['tagFilter'].'))');
 	
 		if($arrFilters['typeFilter'])
 		{
@@ -251,18 +251,18 @@ class Review extends TapiaActiveRecord
 										and m.Id_multimedia_type IN ( ".$arrFilters['typeFilter'] . "))");
 		}
 	
-		if($arrFilters['reviewTypeFilter'])
+		if(isset($arrFilters['reviewTypeFilter'])&&$arrFilters['reviewTypeFilter']!='')
 		{
 			$criteria->addCondition('t.Id_review_type IN ('. $arrFilters['reviewTypeFilter'].')');
 		}
 	
 		
-		if($arrFilters['dateFromFilter'])
+		if(isset($arrFilters['dateFromFilter'])&&$arrFilters['dateFromFilter']!='')
 		{
 			$criteria->addCondition('t.creation_date >= "'. date("Y-m-d H:i:s",strtotime($arrFilters['dateFromFilter'])) . '"');
 		}
 	
-		if($arrFilters['dateToFilter'])
+		if(isset($arrFilters['dateToFilter'])&&$arrFilters['dateToFilter']!='')
 		{
 			$criteria->addCondition('t.creation_date <= "'. date("Y-m-d H:i:s",strtotime($arrFilters['dateToFilter'] . " + 1 day")) . '"');
 		}

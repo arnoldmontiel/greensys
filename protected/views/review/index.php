@@ -328,14 +328,23 @@ function getCheck(checkName)
 <div class="review-action-area" id="review-action-area">
 <div id="send-mail" class="send-mail" >
 	<?php
-	if(isset($Id_project)&&$Id_project!=-1)
+	if(User::isAdministartor()&&isset($Id_project)&&$Id_project!=-1)
 	{
 		$this->widget('ext.processingDialog.processingDialog', array(
 				'idDialog'=>'dialogProcessingMail',
 				'imgSrc'=>'images/email_loading.gif'
 		));
+		$image = CHtml::image('images/export_plain_text.png','Export',
+			array(				
+				'style'=>'width:25px;margin-top:25px;'
+			)
+		);
+		echo CHtml::link($image,
+			ReviewController::createUrl('generateTextPlainSummary',array('Id_project'=>$Id_project)),
+			array('title'=>'Exportar')
+			);
 		
-		echo CHtml::imageButton('images/mail_blue.png',array('onclick'=>'jQuery("#SendMail").dialog("open"); return false;'));
+		//echo CHtml::imageButton('images/mail_blue.png',array('onclick'=>'jQuery("#SendMail").dialog("open"); return false;'));
 		//mail pop up
 		$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 				'id'=>'SendMail',

@@ -15,7 +15,8 @@ class NoteNote extends TapiaActiveRecord
 {
 	public function afterSave()
 	{
-		$this->parent->save();
+		//Esto genera que al grabar una NOTITA sin publicar se actualice create_date de la review, no deberia pasar.
+		//$this->parent->save();
 		return parent::afterSave();
 	}
 	
