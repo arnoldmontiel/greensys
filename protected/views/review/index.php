@@ -20,6 +20,25 @@ function loadPage()
 					$('#linkCustomers').text(data);
 				else
 					$('#linkCustomers').text('Buscar');
+					
+				$('#typeFilter').val('');
+				$('#typeFilter').val(getCheck('chklist-type[]'));
+				
+				$('#reviewTypeFilter').val('');
+				$('#reviewTypeFilter').val(getCheck('chklist-reviewType[]'));
+				
+				$('#tagFilter').val('');
+				$('#tagFilter').val(getCheck('chklist-tag[]'));
+				
+				$('#isCloseFilter').val('');
+				if($('#chkClose').attr('checked') !=undefined && $('#chkClose').attr('checked') == 'checked')
+					$('#isCloseFilter').val(1);
+		
+				$('#dateFromFilter').val('');
+				$('#dateFromFilter').val($('#dateFrom').val());
+				
+				$('#dateToFilter').val('');
+				$('#dateToFilter').val($('#dateTo').val());	
 				doFilter();
 			});
 
@@ -67,6 +86,7 @@ function doFilter()
 		$.post('".ReviewController::createUrl('AjaxFillInbox')."', 
 		{
 			tagFilter: $('#tagFilter').val(),
+			isCloseFilter: $('#isCloseFilter').val(),
 			Id_customer: $('#Id_customer').val(),
 			Id_project: $('#Id_project').val(),
 			typeFilter: $('#typeFilter').val(),
@@ -96,6 +116,10 @@ $('#btn-filter').click(function(){
 	
 	$('#tagFilter').val('');
 	$('#tagFilter').val(getCheck('chklist-tag[]'));
+	
+	$('#isCloseFilter').val('');
+	if($('#chkClose').attr('checked') !=undefined && $('#chkClose').attr('checked') == 'checked')
+		$('#isCloseFilter').val(1);
 	
 	$('#dateFromFilter').val('');
 	$('#dateFromFilter').val($('#dateFrom').val());
@@ -477,7 +501,8 @@ function getCheck(checkName)
 
 
 <?php
-	echo CHtml::hiddenField('tagFilter','',array('id'=>'tagFilter'));	
+	echo CHtml::hiddenField('tagFilter','',array('id'=>'tagFilter'));
+	echo CHtml::hiddenField('isCloseFilter','',array('id'=>'isCloseFilter'));	
 	echo CHtml::hiddenField('typeFilter','',array('id'=>'typeFilter'));
 	echo CHtml::hiddenField('reviewTypeFilter','',array('id'=>'reviewTypeFilter'));
 	echo CHtml::hiddenField('dateFromFilter','',array('id'=>'dateFromFilter'));
