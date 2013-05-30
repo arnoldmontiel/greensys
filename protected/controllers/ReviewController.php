@@ -1429,7 +1429,7 @@ class ReviewController extends Controller
 						}
 						foreach ($noteNotes as $noteNote){
 							$litleNote = $noteNote->child;
-							echo $litleNote->creation_date.' '.$litleNote->user->last_name.' '.$litleNote->user->name.': '.$litleNote->note;
+							echo $litleNote->creation_date.' '.$litleNote->user->last_name.' '.$litleNote->user->name.': '.str_replace(array("\n"),"\r\n",$litleNote->note);
 							echo "\r\n";
 							//echo CHtml::closeTag('br');
 						}
