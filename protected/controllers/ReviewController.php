@@ -1414,7 +1414,7 @@ class ReviewController extends Controller
 				if(isset($notes))
 				{
 					foreach ($notes as $note){
-						echo $note->creation_date.' '.$note->user->last_name.' '.$note->user->name.': '.$note->note;
+						echo $note->creation_date.' '.$note->user->last_name.' '.$note->user->name.': '.str_replace(array("\n"),"\r\n",$note->note);
 						echo "\r\n";
 						$criteria = new CDbCriteria();
 						$criteria->addCondition('Id_parent = '. $note->Id);
