@@ -719,6 +719,7 @@ class ReviewController extends Controller
 		if(isset($_POST['Id_customer']))
 		{
 			$arrFilters = array('tagFilter'=>$_POST['tagFilter'], 
+							 'isCloseFilter'=>$_POST['isCloseFilter'],
 							 'typeFilter'=>$_POST['typeFilter'],
 							 'reviewTypeFilter'=>$_POST['reviewTypeFilter'],
 							 'dateFromFilter'=>$_POST['dateFromFilter'],

@@ -174,8 +174,13 @@ class Review extends TapiaActiveRecord
 	
 		$criteria=new CDbCriteria;
 		
-		if($arrFilters['tagFilter'])
+		if($arrFilters['tagFilter']){
 			$criteria->addCondition('t.Id IN(select Id_review from tag_review where Id_tag IN ('. $arrFilters['tagFilter'].'))');
+			if(!$arrFilters['isCloseFilter'])
+			{
+				$criteria->addCondition('t.is_open = 1');
+			}
+		}
 		
 		if($arrFilters['typeFilter'])
 		{
@@ -205,7 +210,10 @@ class Review extends TapiaActiveRecord
 		}
 		
 		
-		
+		if($arrFilters['isCloseFilter'] && !$arrFilters['tagFilter'])
+		{
+			$criteria->addCondition('t.is_open = 0');
+		}
 		
 		
 		if(!User::getCurrentUserGroup()->is_administrator )

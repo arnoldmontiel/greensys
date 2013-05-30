@@ -45,8 +45,14 @@
 			<div class="search-box-list">
 			<?php
 				$modelTags = Tag::model()->findAll();
-				$checkTags = CHtml::listData($modelTags, 'Id', 'description');		
-				echo CHtml::checkBoxList('chklist-tag', '', $checkTags);
+				$checkTags = CHtml::listData($modelTags, 'Id', 'description');	
+				$selectd = array(1=>true);
+				echo CHtml::checkBoxList('chklist-tag', $selectd, $checkTags);
+				echo "<br>";
+				echo CHtml::openTag('span',array('id'=>'chkclose-span'));
+				echo CHtml::checkBox('chkClose','',array('id'=>'chkClose'));
+				echo "<label> Cerrado</label>";
+				echo CHtml::closeTag('span');
 			?>
 			</div>
 		</div>
