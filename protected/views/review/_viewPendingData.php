@@ -180,6 +180,7 @@ $('#publicArea_".$data->Id."').children().each(
 			if($data->review->reviewType->is_internal )
 				$criteria->addCondition('t.is_internal = 1');
 			
+			$criteria->addCondition('t.Id <> 3');
 			$userGroups = UserGroup::model()->findAll($criteria);
 		
 			echo CHtml::openTag('div', array('id'=>'publicArea_'.$data->Id, 'class'=>'review-public-permission-area'));

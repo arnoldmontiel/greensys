@@ -147,6 +147,7 @@ $editable = $isAdministrator||$isOwner;
 				//if($data->review->reviewType->is_internal && User::getCurrentUserGroup()->Id != User::getAdminUserGroupId())
 				if($data->review->reviewType->is_internal)
 					$criteria->addCondition('t.is_internal = 1');
+				$criteria->addCondition('t.Id <> 3');
 				
 				$modelUserGroup = UserGroup::model()->findAll($criteria);
 			
