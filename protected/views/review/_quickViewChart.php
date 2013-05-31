@@ -14,6 +14,7 @@ if(User::isAdministartor())
 		elseif(isset($review->tags[0]))
 		{
 			$tag = $review->tags[0];
+			if($tag->Id==4) continue;
 			$dataChart[$tag->description]=isset($dataChart[$tag->description])?$dataChart[$tag->description]+1:1;
 		}
 	}
@@ -33,6 +34,7 @@ if(User::isAdministartor())
 			);
 	foreach ($tags as $tag)
 	{
+		if($tag->Id==4) continue;
 		$color="#CCCCCC";
 		if($tag->description=="Stand By")
 		{
