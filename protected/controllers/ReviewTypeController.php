@@ -63,6 +63,9 @@ class ReviewTypeController extends Controller
 			$model->attributes=$_POST['ReviewType'];
 			if($model->save())
 			{
+				if(isset($_POST['radiolist-tag-type']))
+					$this->createTagRelagion($model->Id, $_POST['radiolist-tag-type']);
+				
 				if(isset($_POST['chklist-userGroup']))
 					$this->createUserGroupRelation($model->Id, $_POST['chklist-userGroup']);
 				
@@ -72,8 +75,28 @@ class ReviewTypeController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
+			'tagTypeSelect'=>1,
 		));
 	}
+	
+	private function createTagRelagion($id, $tagType)
+	{
+		$tags = null;
+		
+		if($tagType == '1')
+			$tags = array(1,2,3);
+		else
+			$tags = array(4);
+		
+		foreach ($tags as $i => $value) {
+			$modelTagReviewType = new TagReviewType();
+			$modelTagReviewType->Id_review_type = $id;
+			$modelTagReviewType->Id_tag = $value;
+			$modelTagReviewType->save();
+		}
+
+	}
+	
 	private function createUserGroupRelation($id, $checks)
 	{
 		if(isset($checks))
@@ -105,6 +128,10 @@ class ReviewTypeController extends Controller
 			$model->attributes=$_POST['ReviewType'];
 			if($model->save())
 			{
+				TagReviewType::model()->deleteAllByAttributes(array('Id_review_type'=>$model->Id));
+				if(isset($_POST['radiolist-tag-type']))
+					$this->createTagRelagion($model->Id, $_POST['radiolist-tag-type']);
+				
 				ReviewTypeUserGroup::model()->deleteAllByAttributes(array('Id_review_type'=>$model->Id));
 				if(isset($_POST['chklist-userGroup']))
 					$this->createUserGroupRelation($model->Id, $_POST['chklist-userGroup']);
@@ -114,8 +141,11 @@ class ReviewTypeController extends Controller
 			}
 		}
 
+		$tagTypeSelect = ( TagReviewType::model()->countByAttributes(array('Id_review_type'=>$id))>1)?1:2;
+		
 		$this->render('update',array(
 			'model'=>$model,
+			'tagTypeSelect'=>$tagTypeSelect,
 		));
 	}
 

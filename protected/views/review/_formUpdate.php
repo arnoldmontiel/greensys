@@ -210,7 +210,9 @@ function bindEvents(item)
 							$(item).find('#create_note_mini_'+idMiniNote).remove();
 							$(item).find('#img_saving_note_'+idMiniNote).hide();					
 							$(item).find('#img_saving_note_ok_'+idMiniNote).hide();					
-							$(item).find('#img_saving_note_error_'+idMiniNote).hide();					
+							$(item).find('#img_saving_note_error_'+idMiniNote).hide();
+							var filter = data.Id_tag;
+							$('#radiolist-tag-review :radio[value='+filter+']').attr('checked','checked');					
 							$('#dialogProcessing').dialog('close');
 						}
 					}

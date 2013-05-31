@@ -111,9 +111,14 @@ class ReviewController extends Controller
 	private function autoTagAssign($model)
 	{
 		$modelTagReview = new TagReview;
-		
+
 		$modelTagReview->Id_review = $model->Id;
-		$modelTagReview->Id_tag = 3;//Stand By
+		
+		if(TagReviewType::model()->countByAttributes(array('Id_review_type'=>$model->Id_review_type))>1)
+			$modelTagReview->Id_tag = 1;//Pendiente
+		else
+			$modelTagReview->Id_tag = 4;//Sin seguimiento
+		
 		$modelTagReview->save();
 	}
 	
@@ -882,6 +887,17 @@ class ReviewController extends Controller
 				$note->save();
 				$this->markUnreadSubNote($note->parentNotes[0]->Id);
 				$result = array_merge($note->attributes,$note->user->attributes);
+				
+				$parents = $note->parentNotes;//shold be only one
+				foreach($parents as $parent)
+				{
+					if($parent->review)
+					{
+						if(isset($parent->review->tags[0]))
+							$result['Id_tag'] = $parent->review->tags[0]->Id;
+					}
+				}
+								
 				echo CJSON::encode($result);
 				//echo CJSON::encode($note->attributes).CJSON::encode($note->user->attributes);				
 			}				

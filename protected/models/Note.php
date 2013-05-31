@@ -45,7 +45,16 @@ class Note extends TapiaActiveRecord
 				foreach($parents as $parent)
 				{
 					if($parent->review)
+					{
+						if(TagReviewType::model()->countByAttributes(array('Id_review_type'=>$parent->review->Id_review_type))>1)
+						{
+							$modelTagReview = TagReview::model()->findByAttributes(array('Id_review'=>$parent->review->Id));
+							$modelTagReview->Id_tag = 2; //Ejecucion
+							$modelTagReview->save();
+						}							
+							
 						$parent->review->save();
+					}
 				}
 			}				
 		}

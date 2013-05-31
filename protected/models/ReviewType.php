@@ -73,7 +73,7 @@ class ReviewType extends TapiaActiveRecord
 			'Id' => 'ID',
 			'description' => 'Descripci&oacute;n',
 			'is_internal' => 'Es interno',
-			'is_for_client'=> 'Es para cliente',
+			'is_for_client'=> 'Es para cliente',			
 		);
 	}
 
