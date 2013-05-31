@@ -77,16 +77,13 @@ if(User::isAdministartor())
 							'spacingBottom'=> 0,
 							'spacingLeft'=> 0,
 							'spacingRight'=> 0,
-							"plotBackgroundColor"=> null,
-							"plotBorderWidth"=> null,
-							"plotShadow"=> false
 					),
 					'credits' => array('enabled' => false),
 					'ajax'=>1,
 					'title' => array('text' => null),
 					'plotOptions'=>
 					array('pie'=>
-							array('size'=>'80%','allowPointSelect'=> true,
+							array('size'=>'80%',
 									"dataLabels"=> array("enabled"=> false))),
 					'series' => array(
 							array("type"=> "pie",'name' => 'Cantidad', 'data' => $finalData),
