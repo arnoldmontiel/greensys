@@ -175,9 +175,12 @@ class Review extends TapiaActiveRecord
 		$criteria=new CDbCriteria;
 		
 		if($arrFilters['tagFilter']){
-			$criteria->addCondition('t.Id IN(select Id_review from tag_review where Id_tag IN ('. $arrFilters['tagFilter'].'))');
-			if(!$arrFilters['isCloseFilter'])
+			if($arrFilters['isCloseFilter'])
 			{
+				$criteria->addCondition('t.is_open = 0 or t.Id IN(select Id_review from tag_review where Id_tag IN ('. $arrFilters['tagFilter'].'))');
+			}
+			else{
+				$criteria->addCondition('t.Id IN(select Id_review from tag_review where Id_tag IN ('. $arrFilters['tagFilter'].'))');
 				$criteria->addCondition('t.is_open = 1');
 			}
 		}

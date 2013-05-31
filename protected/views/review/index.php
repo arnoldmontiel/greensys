@@ -135,6 +135,8 @@ $('#btn-clear-filter').click(function(){
 	
 	$('#tagFilter').val('');
 	
+	$('#isCloseFilter').val('');
+	
 	$('#reviewTypeFilter').val('');
 	
 	$('input:checked').attr('checked', false);
