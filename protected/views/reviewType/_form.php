@@ -39,6 +39,17 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-form', "
 		<?php echo $form->error($model,'is_for_client'); ?>
 	</div>
 
+	<div class="row">	
+		<div class="check-title">
+			Seleccione el tipo de etapa
+		</div>
+		<div class="review-types">
+		<?php 
+		$tagTypes = array('1'=>'Con Seguimiento','2'=>'Sin Seguimiento');
+		echo CHtml::radioButtonList('radiolist-tag-type', $tagTypeSelect, $tagTypes);	 ?>
+		</div>
+	</div>
+	<br>
 	<div class="row">
 		<div class="check-title">	
 			Grupos de Usuarios que podr&aacute; crear

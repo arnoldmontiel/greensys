@@ -26,6 +26,10 @@ $this->menu=array(
 				'type'=>'raw',
 				'value'=>CHtml::checkBox("is_for_client",$model->is_for_client,array("disabled"=>"disabled"))
 		),
+		array('label'=>$model->getAttributeLabel('Con Seguimiento'),
+				'type'=>'raw',
+				'value'=>CHtml::checkBox("tagType",( TagReviewType::model()->countByAttributes(array('Id_review_type'=>$model->Id))>1)?true:false,array("disabled"=>"disabled"))
+		),
 	),
 )); ?>
 
