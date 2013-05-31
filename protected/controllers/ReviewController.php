@@ -1404,7 +1404,10 @@ class ReviewController extends Controller
 			echo $modelProject->customer->contact->description.' - '.$modelProject->description;
 			echo "\r\n";
 			
-			echo $modelReview->description . (isset($modelReview->tags[0])?' ('.$modelReview->tags[0]->description.') ':'');
+			$state = (isset($modelReview->tags[0])?' ('.$modelReview->tags[0]->description.') ':'');
+			if(!$modelReview->is_open) $state = ' (Finalizada) ';
+				
+			echo $modelReview->description . $state;
 			echo "\r\n";
 			$notes = $modelReview->notes;
 			if(isset($notes))
@@ -1445,7 +1448,9 @@ class ReviewController extends Controller
 			$reviews = Review::model()->findAll($criteria);;
 			foreach ($reviews as $modelReview)
 			{
-				echo $modelReview->description . (isset($modelReview->tags[0])?' ('.$modelReview->tags[0]->description.') ':'');
+				$state = (isset($modelReview->tags[0])?' ('.$modelReview->tags[0]->description.') ':'');
+				if(!$modelReview->is_open) $state = ' (Finalizada) ';
+				echo $modelReview->description . $state;
 				echo "\r\n";
 				$notes = $modelReview->notes;
 				if(isset($notes))
