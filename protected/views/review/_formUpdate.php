@@ -211,8 +211,11 @@ function bindEvents(item)
 							$(item).find('#img_saving_note_'+idMiniNote).hide();					
 							$(item).find('#img_saving_note_ok_'+idMiniNote).hide();					
 							$(item).find('#img_saving_note_error_'+idMiniNote).hide();
-							var filter = data.Id_tag;
-							$('#radiolist-tag-review :radio[value='+filter+']').attr('checked','checked');					
+							if(data.Id_tag != null)
+							{
+								var filter = data.Id_tag;							
+								$('#radiolist-tag-review :radio[value='+filter+']').attr('checked','checked');
+							}					
 							$('#dialogProcessing').dialog('close');
 						}
 					}
