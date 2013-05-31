@@ -1395,7 +1395,43 @@ class ReviewController extends Controller
 	}	
 	public function actionGenerateTextPlainSummary()
 	{
-		if(isset($_GET['Id_project']))
+		if(isset($_GET['Id_review']))
+		{
+			$modelReview = Review::model()->findByPk($_GET['Id_review']);;
+			$modelProject = $modelReview->project;
+			header("Content-type: text/plain");
+			header('Content-Disposition: attachment; filename="'.$modelProject->customer->contact->description.' - '.$modelProject->description.' - '.$modelReview->description.' ('.date("Y-m-d H:i",time()).').txt"');
+			echo $modelProject->customer->contact->description.' - '.$modelProject->description;
+			echo "\r\n";
+			
+			echo $modelReview->description . (isset($modelReview->tags[0])?' ('.$modelReview->tags[0]->description.') ':'');
+			echo "\r\n";
+			$notes = $modelReview->notes;
+			if(isset($notes))
+			{
+				foreach ($notes as $note){
+					echo $note->creation_date.' '.$note->user->last_name.' '.$note->user->name.': '.str_replace(array("\n"),"\r\n",$note->note);
+					echo "\r\n";
+					$criteria = new CDbCriteria();
+					$criteria->addCondition('Id_parent = '. $note->Id);
+					$criteria->select ='t.*, n.creation_date';
+					$criteria->join='LEFT OUTER JOIN tapia.note n on (t.Id_child = n.Id)';
+					$criteria->order = 'n.creation_date DESC';
+					try {
+						$noteNotes = NoteNote::model()->findAll($criteria);
+		
+					} catch (Exception $e) {
+						echo $e.message;
+					}
+					foreach ($noteNotes as $noteNote){
+						$litleNote = $noteNote->child;
+						echo $litleNote->creation_date.' '.$litleNote->user->last_name.' '.$litleNote->user->name.': '.str_replace(array("\n"),"\r\n",$litleNote->note);
+						echo "\r\n";
+					}
+				}
+			}					
+		}
+		elseif(isset($_GET['Id_project']))
 		{
 			$modelProject = Project::model()->findByPk($_GET['Id_project']);				
 			header("Content-type: text/plain");			

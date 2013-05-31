@@ -1218,6 +1218,16 @@ $('#need_reload').click(function(){
 
 		if(User::isAdministartor()&&count($model->notes) > 0)
 		{
+			$image = CHtml::image('images/export_plain_text.png','Export',
+					array(
+							'style'=>'width:25px;margin-top:15px;'
+					)
+			);
+			echo CHtml::link($image,
+					ReviewController::createUrl('generateTextPlainSummary',array('Id_review'=>$model->Id)),
+					array('title'=>'Exportar')
+			);
+				
 			//echo CHtml::imageButton('images/mail_blue.png',array('onclick'=>'jQuery("#SendMail").dialog("open"); return false;'));				
 		}
 		//mail pop up
