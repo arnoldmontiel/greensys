@@ -4,7 +4,7 @@ if(!$data->isOpen())
 	$route = 'viewClose';
 ?>
 <a href="<?php echo ReviewController::createUrl($route,array('id'=>$data->Id))?>" class="index-review-single-link">
-<div class="index-review-single" id='review_<?php echo $data->Id; ?>'>
+<div class="index-review-single" id='review_<?php echo $data->Id; ?>' <?php echo (isset($width)?" style='width:".$width."' " :""); ?>>
 	<div class="index-review-single-container">		
 	<?php
 		$classStyle = 'index-review-summary-unread';

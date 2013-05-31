@@ -71,7 +71,7 @@ $('#Id_customer').change(function(){
 
 setInterval(function() {
    doFilter();
-}, 1000*30)
+}, 1000*300)
 
 function doFilter()
 {
@@ -352,8 +352,10 @@ function getCheck(checkName)
 ?>
 
 <div class="review-action-area" id="review-action-area">
+
 <div id="send-mail" class="send-mail" >
-	<?php
+
+<?php
 	if(User::isAdministartor()&&isset($Id_project)&&$Id_project!=-1)
 	{
 		$this->widget('ext.processingDialog.processingDialog', array(
@@ -557,8 +559,8 @@ function getCheck(checkName)
 ?>
 </div>
 <?php endif;?>
-
 <?php
+
 $this->widget('ext.processingDialog.processingDialog', array(
 		'idDialog'=>'dialogProcessing',
 ));

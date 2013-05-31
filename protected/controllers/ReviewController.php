@@ -650,7 +650,7 @@ class ReviewController extends Controller
 			$data = $dataProvider->getData();
 				
 			foreach ($data as $item){
-				$this->renderPartial('_view',array('data'=>$item));
+				$this->renderPartial('_view',array('data'=>$item,'width'=>'95%'));
 			}
 		}
 		else

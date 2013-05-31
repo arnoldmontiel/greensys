@@ -13,7 +13,10 @@
 </div>
 <?php 
 foreach ($data as $item){
-	$this->renderPartial('_view',array('data'=>$item));
+	if(User::isAdministartor())
+		$this->renderPartial('_view',array('data'=>$item));
+	else
+		$this->renderPartial('_view',array('data'=>$item,'width'=>'95%'));
 }
 
 if(count($data) == 0)
