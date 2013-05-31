@@ -27,7 +27,7 @@
 					echo CHtml::openTag('div',array('class'=>'review-tag-containier')); 
 					foreach($this->modelTag->tags as $tag)
 					{
-						echo CHtml::openTag('div',array('class'=>'review-single-tag')); 
+						echo CHtml::openTag('div',array('id'=>'single-tag', 'class'=>'review-single-tag')); 
 						echo CHtml::encode($tag->description);
 						echo CHtml::closeTag('div');
 					}

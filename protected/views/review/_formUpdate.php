@@ -215,6 +215,7 @@ function bindEvents(item)
 							{
 								var filter = data.Id_tag;							
 								$('#radiolist-tag-review :radio[value='+filter+']').attr('checked','checked');
+								$('#single-tag').text(data.tag_description);
 							}					
 							$('#dialogProcessing').dialog('close');
 						}

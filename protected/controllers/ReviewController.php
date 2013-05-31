@@ -893,8 +893,10 @@ class ReviewController extends Controller
 				{
 					if($parent->review)
 					{
-						if(isset($parent->review->tags[0]))
+						if(isset($parent->review->tags[0])){
 							$result['Id_tag'] = $parent->review->tags[0]->Id;
+							$result['tag_description'] = $parent->review->tags[0]->description;
+						}
 					}
 				}
 								
