@@ -2,6 +2,7 @@
 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
+Yii::setPathOfAlias('highcharts', dirname(__FILE__).'/../extensions/highcharts');
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
@@ -10,7 +11,7 @@ return array(
 	'name'=>'G r E e N',
 
 	// preloading 'log' component
-	'preload'=>array('log'),
+	'preload'=>array('log','highcharts'),
 
 	// autoloading model and component classes
 	'import'=>array(
@@ -71,6 +72,7 @@ return array(
 
 	// application components
 	'components'=>array(
+		'highcharts' => array('class' => 'highcharts.components.Highcharts'),
 		'mail' => array(
 		 			'class' => 'ext.yii-mail.YiiMail',
 		 			//'transportType' => 'php',

@@ -1,4 +1,7 @@
 <div class="index-review-quick-view">
+<?php
+	echo $this->renderPartial('_quickViewChart', array('project'=>$project));
+?>
 <div class="review-action-customer" >
 	<?php 
 		//echo CHtml::link($customer->person->name.' '.$customer->person->last_name. ' - ' . $customer->tagDesc,
