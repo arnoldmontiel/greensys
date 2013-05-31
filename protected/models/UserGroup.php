@@ -107,6 +107,7 @@ class UserGroup extends TapiaActiveRecord
 		$criteria->compare('is_internal',$this->is_internal);
 		$criteria->compare('is_administrator',$this->is_administrator);
 
+		$criteria->addCondition('Id <> 3');
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

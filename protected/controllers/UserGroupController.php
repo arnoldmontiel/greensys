@@ -165,7 +165,9 @@ class UserGroupController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('UserGroup');
+		$criteria=new CDbCriteria;
+		$criteria->addCondition('Id <> 3');
+		$dataProvider=new CActiveDataProvider('UserGroup',array('criteria'=>$criteria));
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
