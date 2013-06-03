@@ -6,6 +6,10 @@
  * The followings are the available columns in table 'setting':
  * @property integer $Id
  * @property integer $due_days
+ * @property string $g_drive_client_id
+ * @property string $g_drive_client_secret
+ * @property string $g_drive_scope
+ * @property integer $change_tag_state_days
  */
 class TSetting extends TapiaActiveRecord
 {
@@ -45,6 +49,12 @@ class TSetting extends TapiaActiveRecord
 		return $model->due_days;
 	}
 	
+	public static function getChangeTagStateDays()
+	{
+		$model = TSetting::model()->findByPk('1');
+		return $model->change_tag_state_days;
+	}
+	
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -53,10 +63,11 @@ class TSetting extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('due_days', 'numerical', 'integerOnly'=>true),
+			array('due_days, change_tag_state_days', 'numerical', 'integerOnly'=>true),
+			array('g_drive_client_id, g_drive_client_secret, g_drive_scope', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, due_days', 'safe', 'on'=>'search'),
+			array('Id, due_days, change_tag_state_days', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -79,6 +90,10 @@ class TSetting extends TapiaActiveRecord
 		return array(
 			'Id' => 'ID',
 			'due_days' => 'Due Days',
+			'g_drive_client_id' => 'G Drive Client',
+			'g_drive_client_secret' => 'G Drive Client Secret',
+			'g_drive_scope' => 'G Drive Scope',
+			'change_tag_state_days' => 'Change Tag State Days',
 		);
 	}
 
