@@ -45,14 +45,14 @@ class TSetting extends TapiaActiveRecord
 
 	public static function getDueDays()
 	{
-		$model = TSetting::model()->findByPk('1');
-		return $model->due_days;
+		$setting = self::getInstance();
+		return $setting->due_days;
 	}
 	
 	public static function getChangeTagStateDays()
 	{
-		$model = TSetting::model()->findByPk('1');
-		return $model->change_tag_state_days;
+		$setting = self::getInstance();
+		return $setting->change_tag_state_days;
 	}
 	
 	/**
