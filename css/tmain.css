@@ -2455,9 +2455,9 @@ img.image-g-drive
 }
 div.chart-container
 {
-	margin-top: 50px;
+	margin-top: 0px;
     width: 150px;
-    height: 150px;
+    height: 240px;
 	float:right;
 	display: inline-block;
 	vertical-align: top	
