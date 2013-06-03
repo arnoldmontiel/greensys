@@ -89,6 +89,11 @@ if(User::isAdministartor())
 					),
 					'credits' => array('enabled' => false),
 					'ajax'=>1,
+					"tooltip"=> array(
+						"enabled"=> true,
+						"pointFormat"=> '',
+						"percentageDecimals"=> "1"
+					),
 					'title' => array('text' => null),
 					'plotOptions'=>
 					array('pie'=>
