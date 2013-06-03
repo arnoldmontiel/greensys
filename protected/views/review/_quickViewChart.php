@@ -68,13 +68,20 @@ if(User::isAdministartor())
 					"color"=>$color);
 		}
 	}
-
+	
+	$datas= array();
+	foreach ($finalData as $data)
+	{
+		$data["name"] = $data["name"].": ".$data["y"];
+		$datas[] =$data;
+	}
+	
 	$this->Widget('ext.highcharts.HighchartsWidget', array(
 			'htmlOptions'=>array(),
 			'options'=>array(
 					'chart'=> array(
 							'renderTo'=> 'chart-container_'.$project->Id,
-							'margin'=> array(0, 0, 0, 0),
+							'margin'=> array(-50, 0, 0, 0),
 							'spacingTop'=> 0,
 							'spacingBottom'=> 0,
 							'spacingLeft'=> 0,
@@ -86,9 +93,18 @@ if(User::isAdministartor())
 					'plotOptions'=>
 					array('pie'=>
 							array('size'=>'80%',
-									"dataLabels"=> array("enabled"=> false))),
+									"showInLegend"=> true,
+									"dataLabels"=> array(
+											
+											"enabled"=> false,
+											"color"=> "#000000",
+											"connectorColor"=> "#000000",
+											"formatter"=> "js:function() {
+												return '<b>'+ this.point.name +'</b>: '+ this.point.y ;
+											}",
+											))),
 					'series' => array(
-							array("type"=> "pie",'name' => 'Cantidad', 'data' => $finalData),
+							array("type"=> "pie",'name' => 'Cantidad', 'data' => $datas),
 							//array('name' => 'John', 'data' => array(5, 7, 3))
 					)
 			)
