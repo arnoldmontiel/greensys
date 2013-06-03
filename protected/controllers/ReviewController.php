@@ -894,8 +894,20 @@ class ReviewController extends Controller
 					if($parent->review)
 					{
 						if(isset($parent->review->tags[0])){
-							$result['Id_tag'] = $parent->review->tags[0]->Id;
+							$idTag = $parent->review->tags[0]->Id;
+							$result['Id_tag'] = $idTag;
 							$result['tag_description'] = $parent->review->tags[0]->description;
+							
+							$options = "";
+							if($idTag==1)
+								$options='background-color: #CC3300;color: white';//rojo
+							else if($idTag==2)
+								$options='background-color: #66FF66';//verde
+							else if($idTag==3)
+								$options='background-color: #FFFF99';//amarillo
+							else if($idTag==4)
+								$options='background-color: #FFCC66';//naranja
+							$result['tag_style'] = $options;
 						}
 					}
 				}

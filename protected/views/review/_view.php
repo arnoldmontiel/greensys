@@ -26,13 +26,13 @@ if(!$data->isOpen())
 			{
 				$options = array('class'=>'index-review-single-tag');
 				if($tag->Id==1)
-				$options['style']='background-color: #CC3300;color: white';//rojo
+					$options['style']='background-color: #CC3300;color: white';//rojo
 				else if($tag->Id==2)
-				$options['style']='background-color: #66FF66';//verde
+					$options['style']='background-color: #66FF66';//verde
 				else if($tag->Id==3)
-				$options['style']='background-color: #FFFF99';//amarillo
+					$options['style']='background-color: #FFFF99';//amarillo
 				else if($tag->Id==4)
-				$options['style']='background-color: #FFCC66';//amarillo
+					$options['style']='background-color: #FFCC66';//amarillo
 				
 				echo CHtml::openTag('div',$options);
 				echo $tag->description;

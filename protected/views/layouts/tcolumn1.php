@@ -4,35 +4,31 @@
 	<?php if($this->modelTag):?>			
 		<div class="search-box">
 			<div class="search-box-title">
-			Etapas
+			Etapa
 			</div>
 			<div class="search-box-list">
 			<?php
 				$modelUser = User::getCurrentUser();
-				if(User::isAdministartor() || $modelUser->username == $this->modelTag->username)
-				{
-					$modelReviewType = $this->modelTag->reviewType;
-					$modelTags = $modelReviewType->tags;
-					$checkTags = CHtml::listData($modelTags, 'Id', 'description');
-						
-					$selected=0;
-					foreach($this->modelTag->tags as $tag)
-					{
-						$selected = $tag->Id;
-					}
-					//echo CHtml::checkBoxList('chklist-tag-review', $checked, $checkTags);						
-					echo CHtml::radioButtonList('radiolist-tag-review', $selected, $checkTags);						
-				}else{					
 					
-					echo CHtml::openTag('div',array('class'=>'review-tag-containier')); 
-					foreach($this->modelTag->tags as $tag)
-					{
-						echo CHtml::openTag('div',array('id'=>'single-tag', 'class'=>'review-single-tag')); 
-						echo CHtml::encode($tag->description);
-						echo CHtml::closeTag('div');
-					}
+				echo CHtml::openTag('div',array('class'=>'review-tag-containier')); 
+				foreach($this->modelTag->tags as $tag)
+				{
+					$options = array('class'=>'index-review-single-tag','id'=>'single-tag');
+					if($tag->Id==1)
+					$options['style']='background-color: #CC3300;color: white';//rojo
+					else if($tag->Id==2)
+					$options['style']='background-color: #66FF66';//verde
+					else if($tag->Id==3)
+					$options['style']='background-color: #FFFF99';//amarillo
+					else if($tag->Id==4)
+					$options['style']='background-color: #FFCC66';//amarillo
+											
+					echo CHtml::openTag('div',$options); 
+					echo CHtml::encode($tag->description);
 					echo CHtml::closeTag('div');
 				}
+				echo CHtml::closeTag('div');
+				
 			?>
 			</div>
 		</div>

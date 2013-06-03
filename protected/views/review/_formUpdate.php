@@ -214,8 +214,9 @@ function bindEvents(item)
 							if(data.Id_tag != null)
 							{
 								var filter = data.Id_tag;							
-								$('#radiolist-tag-review :radio[value='+filter+']').attr('checked','checked');
+								//$('#radiolist-tag-review :radio[value='+filter+']').attr('checked','checked');
 								$('#single-tag').text(data.tag_description);
+								$('#single-tag').attr('style',data.tag_style);								
 							}					
 							$('#dialogProcessing').dialog('close');
 						}
