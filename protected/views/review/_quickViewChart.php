@@ -23,12 +23,12 @@ if(User::isAdministartor())
 	$finalData[]=isset($dataChart['Finalizado'])?
 	array("name"=>'Finalizado',
 			"y"=>$dataChart['Finalizado'],
-			"sliced"=> true,
+			"sliced"=> false,
 			"selected"=> false,
 			"color"=>"#CCCCCC"):
 			array("name"=>'Finalizado',
 					"y"=>0,
-					"sliced"=> true,
+					"sliced"=> false,
 					"selected"=> false,
 					"color"=>"#CCCCCC"
 			);
@@ -54,7 +54,7 @@ if(User::isAdministartor())
 			$finalData[]=array(
 					"name"=>$tag->description,
 					"y"=>$dataChart[$tag->description],
-					"sliced"=> true,
+					"sliced"=> false,
 					"selected"=> false,
 					"color"=>$color);
 		}
@@ -63,7 +63,7 @@ if(User::isAdministartor())
 			$finalData[]=array(
 					"name"=>$tag->description,
 					"y"=>0,
-					"sliced"=> true,
+					"sliced"=> false,
 					"selected"=> false,
 					"color"=>$color);
 		}
@@ -98,6 +98,7 @@ if(User::isAdministartor())
 					'plotOptions'=>
 					array('pie'=>
 							array('size'=>'80%',
+									"allowPointSelect"=>true,
 									"showInLegend"=> true,
 									"dataLabels"=> array(
 											
