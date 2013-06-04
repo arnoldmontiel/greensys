@@ -62,7 +62,9 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-form', "
 				$checked[] = $userGroup->Id;
 			}
 		
-			$modelUserGroup = UserGroup::model()->findAll();
+			$criteria = new CDbCriteria();
+			$criteria->addCondition('Id <> 3');
+			$modelUserGroup = UserGroup::model()->findAll($criteria);
 			$checkUserGroup = CHtml::listData($modelUserGroup, 'Id', 'description');		
 			echo CHtml::checkBoxList('chklist-userGroup', $checked, $checkUserGroup);
 		?>
