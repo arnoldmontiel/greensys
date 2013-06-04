@@ -1366,6 +1366,7 @@ class ReviewController extends Controller
 		{				
 			$model->in_progress = 0;
 			$model->save();
+			$model->refresh();
 			echo CHtml::openTag('div', array('class'=>'review-container-single-view','id'=>'noteContainer_'.$id));
 			$this->renderPartial('_viewPendingData',array('data'=>$model));
 			echo CHtml::closeTag('div');
