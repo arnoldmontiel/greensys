@@ -211,6 +211,14 @@ function bindEvents(item)
 							$(item).find('#img_saving_note_'+idMiniNote).hide();					
 							$(item).find('#img_saving_note_ok_'+idMiniNote).hide();					
 							$(item).find('#img_saving_note_error_'+idMiniNote).hide();
+														
+							var paragraph = $('<p></p>');
+							$(paragraph).addClass('single-formated-text');
+							$(paragraph).text(data.note);
+							$(item).find('#mini_note_container_'+idMiniNote).after(paragraph);
+							$(item).find('#mini_note_container_'+idMiniNote).hide();
+							$(item).find('#view_text_note_'+idMiniNote).attr('style','');
+							
 							if(data.Id_tag != null)
 							{
 								var filter = data.Id_tag;							
