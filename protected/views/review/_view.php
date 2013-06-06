@@ -122,15 +122,37 @@ if(!$data->isOpen())
 // 				echo CHtml::closeTag('div');
 // 			}
 // 			echo CHtml::closeTag('div');
-			$criteria = new CDbCriteria();
-			$criteria->join = 'inner join review r on (t.change_date = r.change_date)';
-			$criteria->addCondition('r.Id = '. $data->Id);
+// 			$criteria = new CDbCriteria();
+// 			$criteria->join = 'inner join review r on (t.change_date = r.change_date)';
+// 			$criteria->addCondition('r.Id = '. $data->Id);
 			
-			$modelLastNote = Note::model()->find($criteria);
+			$notes = $modelReview->notes;
+			
+			if(isset($notes[0]))
+			{
+				$note = $notes[0];
+				$modelLastNote = $note;
+				$criteria = new CDbCriteria();
+				$criteria->addCondition('Id_parent = '. $note->Id);
+				$criteria->select ='t.*, n.creation_date';
+				$criteria->join='LEFT OUTER JOIN tapia.note n on (t.Id_child = n.Id)';
+				$criteria->order = 'n.creation_date DESC';
+				$criteria->limit = 1;
+				try {
+					$noteNote = NoteNote::model()->find($criteria);
+					$litleNote = $noteNote->child;
+					if(isset($litleNote))
+						$modelLastNote = $litleNote;
+				
+				} catch (Exception $e) {
+					echo $e.message;
+				}
+				
+				
+			}
+				
 			if(isset($modelLastNote))
 			{
-				if($modelLastNote->username != User::getCurrentUser()->username)
-				{
 					echo CHtml::openTag('div',array('class'=>'index-users'));
 						echo CHtml::openTag('div',array('class'=>'index-text-user-read'));
 						echo CHtml::closeTag('div');
@@ -141,7 +163,6 @@ if(!$data->isOpen())
 						echo CHtml::closeTag('div');
 						
 					echo CHtml::closeTag('div');
-				}
 			}
 		//} 		
 		?>
