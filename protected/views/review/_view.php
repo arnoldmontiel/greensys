@@ -136,6 +136,7 @@ if(!$data->isOpen())
 				$criteria->addCondition('Id_parent = '. $note->Id);
 				$criteria->select ='t.*, n.creation_date';
 				$criteria->join='LEFT OUTER JOIN tapia.note n on (t.Id_child = n.Id)';
+				$criteria->addCondition('n.in_progress=0');
 				$criteria->order = 'n.creation_date DESC';
 				$criteria->limit = 1;
 				try {
