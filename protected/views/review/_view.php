@@ -141,14 +141,16 @@ if(!$data->isOpen())
 				$criteria->limit = 1;
 				try {
 					$noteNote = NoteNote::model()->find($criteria);
-					$litleNote = $noteNote->child;
-					if(isset($litleNote))
-						$modelLastNote = $litleNote;
+					if(isset($noteNote))
+					{
+						$litleNote = $noteNote->child;
+						if(isset($litleNote))
+							$modelLastNote = $litleNote;						
+					}
 				
 				} catch (Exception $e) {
 					echo $e.message;
-				}
-				
+				}				
 				
 			}
 				
