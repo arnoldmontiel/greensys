@@ -1088,7 +1088,7 @@ div.note-preview
 	font-size: 11px;
 	line-height: 18px;
 	padding: 0px 5px  0px 5px;
-	width:200px;
+	width:100%;
 	text-align: left;
 	margin-left:5px;
   	overflow: hidden;
@@ -1662,12 +1662,18 @@ div.search-box-list
 }
 div.index-review-summary
 {
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;	
 	float: left;
 	position:relative;
 	width: 50%;
 }
 div.index-review-summary-unread
 {
+  	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 	float: left;
 	font-weight:bold;
 	position:relative;
@@ -1725,6 +1731,11 @@ div.index-review-type-box
 	font-size: 12px;
 	border: 1px solid white;
 	background-color: #96CDCD;
+	max-width: 100px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;	
+	
 }
 div.index-review-close-box
 {
@@ -2192,6 +2203,7 @@ div.index-users
 	padding-left:26px;
 	display: inline-block;
 	float: left;
+	width: 70%;
 }
 div.index-text-user
 {
@@ -2202,9 +2214,11 @@ div.index-text-user
 }
 div.index-text-user-read
 {
+	display:inline-block;
 	font-size: 11px;
 	line-height: 18px;
 	float: left;
+	width: 100%;
 }
 
 div.index-review-single-container

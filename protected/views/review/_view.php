@@ -40,7 +40,7 @@ if(!$data->isOpen())
 			}
 			echo CHtml::closeTag('div');				
 		}	
-		echo CHtml::openTag('div',array('class'=>'index-review-type-box'));
+		echo CHtml::openTag('div',array('class'=>'index-review-type-box','title'=>$data->reviewType->description));
 			echo $data->reviewType->description;
 		echo CHtml::closeTag('div');
 	?>
@@ -133,10 +133,10 @@ if(!$data->isOpen())
 				{
 					echo CHtml::openTag('div',array('class'=>'index-users'));
 						echo CHtml::openTag('div',array('class'=>'index-text-user-read'));
-						$name = $modelLastNote->change_date . ' - ' . $modelLastNote->user->name.' '.$modelLastNote->user->last_name;
-						echo ($modelLastNote->note != '')?$name.':':$name;						
 						echo CHtml::closeTag('div');
 						echo CHtml::openTag('div',array('class'=>'note-preview'));
+						$name = $modelLastNote->change_date . ' - ' . $modelLastNote->user->name.' '.$modelLastNote->user->last_name;
+						echo ($modelLastNote->note != '')?$name.': ':$name;						
 						echo $modelLastNote->note;
 						echo CHtml::closeTag('div');
 						
