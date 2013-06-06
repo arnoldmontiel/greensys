@@ -258,6 +258,7 @@ class Review extends TapiaActiveRecord
 			$criteria->addCondition("mn.Id_note IN(
 										select ugn.Id_note from user_group_note ugn
 										where ugn.Id_note IN (select n.Id from note n where n.Id_review = t.Id
+										and n.in_progress=0 
 										and ugn.Id_user_group = ". User::getCurrentUserGroup()->Id .")
 										and m.Id_multimedia_type IN ( ".$arrFilters['typeFilter'] . "))");
 		}
@@ -288,6 +289,7 @@ class Review extends TapiaActiveRecord
 									LEFT OUTER JOIN `user_group_note` `ugn` ON (`ugn`.`Id_note`=`n`.`Id`)';
 			$criteria->addCondition('ugn.Id_user_group = '.User::getCurrentUserGroup()->Id);
 			$criteria->addCondition('t.username = "'. User::getCurrentUser()->username . '"','OR');
+			$criteria->addCondition('n.in_progress=0');
 		}
 	
 		$criteria->addCondition('t.Id_customer = '. $this->Id_customer);
@@ -299,7 +301,7 @@ class Review extends TapiaActiveRecord
 		
 		$criteria->join .= 'inner join note on(note.change_date = t.change_date)';
 		$criteria->addCondition('note.username <> "'.User::getCurrentUser()->username.'"');
-		
+		$criteria->addCondition('note.in_progress=0');
 		return new CActiveDataProvider($this, array(
 					'criteria'=>$criteria,
 		));
