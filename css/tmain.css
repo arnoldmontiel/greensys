@@ -1082,6 +1082,20 @@ div.review-permission-title
 	
 }
 
+div.note-preview
+{
+	display: inline-block;
+	font-size: 11px;
+	line-height: 18px;
+	padding: 0px 5px  0px 5px;
+	width:200px;
+	text-align: left;
+	margin-left:5px;
+  	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+	
+}
 div.wall-action-edit-main-note
 {
 	z-index:10;

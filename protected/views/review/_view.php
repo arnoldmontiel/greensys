@@ -103,26 +103,47 @@ if(!$data->isOpen())
 		?>
 	</div>
 	<?php
-		if(User::isAdministartor())
-		{
-			echo CHtml::openTag('div',array('class'=>'index-users'));
-			$first = true;
-			foreach ($data->reviewUsers as $item)
+// 		if(User::isAdministartor())
+// 		{
+// 			echo CHtml::openTag('div',array('class'=>'index-users'));
+// 			$first = true;
+// 			foreach ($data->reviewUsers as $item)
+// 			{
+// 				if($item->username == User::getCurrentUser()->username)
+// 					continue;
+// 				echo CHtml::openTag('div',array('class'=>$item->read?'index-text-user-read':'index-text-user'));
+// 				$name = '';
+// 				if(!$first)
+// 				$name.=', ';
+// 				if($first)
+// 				$first = false;
+// 				$name.=$item->user->name.' '.$item->user->last_name;
+// 				echo $name;
+// 				echo CHtml::closeTag('div');
+// 			}
+// 			echo CHtml::closeTag('div');
+			$criteria = new CDbCriteria();
+			$criteria->join = 'inner join review r on (t.change_date = r.change_date)';
+			$criteria->addCondition('r.Id = '. $data->Id);
+			
+			$modelLastNote = Note::model()->find($criteria);
+			if(isset($modelLastNote))
 			{
-				if($item->username == User::getCurrentUser()->username)
-					continue;
-				echo CHtml::openTag('div',array('class'=>$item->read?'index-text-user-read':'index-text-user'));
-				$name = '';
-				if(!$first)
-				$name.=', ';
-				if($first)
-				$first = false;
-				$name.=$item->user->name.' '.$item->user->last_name;
-				echo $name;
-				echo CHtml::closeTag('div');
+				if($modelLastNote->username != User::getCurrentUser()->username)
+				{
+					echo CHtml::openTag('div',array('class'=>'index-users'));
+						echo CHtml::openTag('div',array('class'=>'index-text-user-read'));
+						$name = $modelLastNote->change_date . ' - ' . $modelLastNote->user->name.' '.$modelLastNote->user->last_name;
+						echo ($modelLastNote->note != '')?$name.':':$name;						
+						echo CHtml::closeTag('div');
+						echo CHtml::openTag('div',array('class'=>'note-preview'));
+						echo $modelLastNote->note;
+						echo CHtml::closeTag('div');
+						
+					echo CHtml::closeTag('div');
+				}
 			}
-			echo CHtml::closeTag('div');				
-		} 		
+		//} 		
 		?>
 		<div>
 		

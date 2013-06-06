@@ -296,7 +296,10 @@ class Review extends TapiaActiveRecord
 
 		$criteria->order = 't.Id_project, t.Id_customer, t.change_date DESC, t.review DESC';
 		$criteria->limit = 4;
-			
+		
+		$criteria->join .= 'inner join note on(note.change_date = t.change_date)';
+		$criteria->addCondition('note.username <> "'.User::getCurrentUser()->username.'"');
+		
 		return new CActiveDataProvider($this, array(
 					'criteria'=>$criteria,
 		));
