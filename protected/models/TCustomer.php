@@ -152,6 +152,7 @@ class TCustomer extends TapiaActiveRecord
 		$criteria->addSearchCondition("gc.description",$this->contact_description);
 		
 		$sort=new CSort;
+		$sort->defaultOrder=array("gc.description ASC");
 		$sort->attributes=array(									      
 						    'name' => array(
 							        'asc' => 'gp.name',
