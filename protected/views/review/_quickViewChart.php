@@ -1,5 +1,5 @@
 <?php
-if(User::isAdministartor())
+if(true)//User::isAdministartor()
 {
 	//echo CHtml::openTag('div',array('style'=>'float:left'));
 	echo "<div class='chart-container' id='chart-container_".$project->Id."'>";

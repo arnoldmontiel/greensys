@@ -1,6 +1,9 @@
 <div class="index-review-quick-view">
 <?php
-	echo $this->renderPartial('_quickViewChart', array('project'=>$project));
+	if(!empty($project->reviews))
+	{
+		echo $this->renderPartial('_quickViewChart', array('project'=>$project));		
+	}
 ?>
 <div class="review-action-customer" >
 	<?php 
