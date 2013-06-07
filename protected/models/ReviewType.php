@@ -92,9 +92,11 @@ class ReviewType extends TapiaActiveRecord
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('is_internal',$this->is_internal);
 		$criteria->compare('is_for_client',$this->is_for_client);
-
+		$sort=new CSort;
+		$sort->defaultOrder ="description ASC";
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+				'sort'=>$sort,
 		));
 	}
 }

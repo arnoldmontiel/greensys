@@ -316,6 +316,8 @@ class User extends TapiaActiveRecord
 
 
 		$sort=new CSort;
+		$sort->defaultOrder ="username ASC";
+		
 		$sort->attributes=array(
 				// For each relational attribute, create a 'virtual attribute' using the public variable name
 				'username',

@@ -108,8 +108,12 @@ class UserGroup extends TapiaActiveRecord
 		$criteria->compare('is_administrator',$this->is_administrator);
 
 		$criteria->addCondition('Id <> 3');
+		$sort=new CSort;		
+		$sort->defaultOrder ="description ASC";
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>$sort,				
 		));
 	}
 }

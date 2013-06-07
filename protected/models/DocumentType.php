@@ -85,9 +85,12 @@ class DocumentType extends TapiaActiveRecord
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('description',$this->description,true);
-
+		$sort=new CSort;		
+		$sort->defaultOrder ="name ASC";
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>$sort,				
 		));
-	}
+		}
 }
