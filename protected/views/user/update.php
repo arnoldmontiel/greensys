@@ -6,7 +6,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Listar Usuarios', 'url'=>array('index')),
 	array('label'=>'Crear Usuario', 'url'=>array('create')),
 	array('label'=>'Ver Usuario', 'url'=>array('view', 'id'=>$model->username)),
 	array('label'=>'Administrar Usuarios', 'url'=>array('admin')),

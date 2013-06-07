@@ -165,11 +165,19 @@ class UserGroupController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$criteria=new CDbCriteria;
-		$criteria->addCondition('Id <> 3');
-		$dataProvider=new CActiveDataProvider('UserGroup',array('criteria'=>$criteria));
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+// 		$criteria=new CDbCriteria;
+// 		$criteria->addCondition('Id <> 3');
+// 		$dataProvider=new CActiveDataProvider('UserGroup',array('criteria'=>$criteria));
+// 		$this->render('index',array(
+// 			'dataProvider'=>$dataProvider,
+// 		));
+		$model=new UserGroup('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['UserGroup']))
+		$model->attributes=$_GET['UserGroup'];
+		
+		$this->render('admin',array(
+					'model'=>$model,
 		));
 	}
 

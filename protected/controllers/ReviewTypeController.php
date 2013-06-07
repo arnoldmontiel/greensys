@@ -174,9 +174,17 @@ class ReviewTypeController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('ReviewType');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+// 		$dataProvider=new CActiveDataProvider('ReviewType');
+// 		$this->render('index',array(
+// 			'dataProvider'=>$dataProvider,
+// 		));
+		$model=new ReviewType('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['ReviewType']))
+		$model->attributes=$_GET['ReviewType'];
+		
+		$this->render('admin',array(
+					'model'=>$model,
 		));
 	}
 

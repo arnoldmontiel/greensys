@@ -4,8 +4,7 @@ $this->breadcrumbs=array(
 		$model->person->name,
 );
 
-$this->menu=array(
-		array('label'=>'Listar Clientes', 'url'=>array('index')),
+$this->menu=array(		
 		array('label'=>'Crear Cliente', 'url'=>array('create')),		
 		array('label'=>'Actualizar Cliente', 'url'=>array('update', 'id'=>$model->Id)),
 		array('label'=>'Administrar Clientes', 'url'=>array('admin')),

@@ -4,8 +4,7 @@ $this->breadcrumbs=array(
 	'Create',
 );
 
-$this->menu=array(
-	array('label'=>'Listar Clientes', 'url'=>array('index')),	
+$this->menu=array(	
 	array('label'=>'Administrar Clientes', 'url'=>array('admin')),
 );
 ?>

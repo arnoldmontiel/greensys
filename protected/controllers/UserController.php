@@ -123,15 +123,23 @@ class UserController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$criteria=new CDbCriteria;
-		$criteria->condition='t.Id_user_group <> 3'; // clients
+// 		$criteria=new CDbCriteria;
+// 		$criteria->condition='t.Id_user_group <> 3'; // clients
 		
-		$dataProvider=new CActiveDataProvider('User', array(
-			'criteria'=>$criteria,
-		));
+// 		$dataProvider=new CActiveDataProvider('User', array(
+// 			'criteria'=>$criteria,
+// 		));
 		
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+// 		$this->render('index',array(
+// 			'dataProvider'=>$dataProvider,
+// 		));
+		$model=new User('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['User']))
+		$model->attributes=$_GET['User'];
+		
+		$this->render('admin',array(
+					'model'=>$model,
 		));
 	}
 

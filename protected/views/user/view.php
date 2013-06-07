@@ -5,7 +5,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Listar Usuario', 'url'=>array('index')),
 	array('label'=>'Crear Usuario', 'url'=>array('create')),
 	array('label'=>'Actualizar Usuario', 'url'=>array('update', 'id'=>$model->username)),
 	array('label'=>'Administrar Usuario', 'url'=>array('admin')),
@@ -19,7 +18,7 @@ $this->menu=array(
 	'attributes'=>array(
 		array('label'=>$model->getAttributeLabel('username'),
 			'type'=>'raw',
-			'value'=>$model->username . ' ( ' . CHtml::link('Asignar permisos', Yii::app()->createUrl('srbac/authitem/assign'),array('id'=>'linkPermission')) . ' )'
+			'value'=>$model->username
 		),
 		'password',
 		array('label'=>$model->getAttributeLabel('Grupo de Usuario'),

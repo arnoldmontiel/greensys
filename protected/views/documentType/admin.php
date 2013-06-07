@@ -5,7 +5,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Listar Tipo de Documentos', 'url'=>array('index')),
 	array('label'=>'Crear Tipo de Documentos', 'url'=>array('create')),
 );
 ?>

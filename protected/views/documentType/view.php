@@ -1,7 +1,6 @@
 <?php
 
 $this->menu=array(
-	array('label'=>'Listar Tipo de Documentos', 'url'=>array('index')),
 	array('label'=>'Crear Tipo de Documentos', 'url'=>array('create')),
 	array('label'=>'Actualizar Tipo de Documentos', 'url'=>array('update', 'id'=>$model->Id)),	
 	array('label'=>'Administrar Tipo de Documentos', 'url'=>array('admin')),

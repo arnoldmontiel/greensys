@@ -5,7 +5,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Listar Etapas', 'url'=>array('index')),
 	array('label'=>'Crear Etapas', 'url'=>array('create')),
 );
 

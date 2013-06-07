@@ -516,10 +516,18 @@ class TCustomerController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$customer = new TCustomer();
-		$dataProvider=$customer->search();
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+// 		$customer = new TCustomer();
+// 		$dataProvider=$customer->search();
+// 		$this->render('index',array(
+// 			'dataProvider'=>$dataProvider,
+// 		));
+		$model=new TCustomer('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['TCustomer']))
+		$model->attributes=$_GET['TCustomer'];
+		
+		$this->render('admin',array(
+					'model'=>$model,
 		));
 	}
 

@@ -119,9 +119,17 @@ class TagController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Tag');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+// 		$dataProvider=new CActiveDataProvider('Tag');
+// 		$this->render('index',array(
+// 			'dataProvider'=>$dataProvider,
+// 		));
+		$model=new Tag('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Tag']))
+		$model->attributes=$_GET['Tag'];
+		
+		$this->render('admin',array(
+					'model'=>$model,
 		));
 	}
 

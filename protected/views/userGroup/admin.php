@@ -5,7 +5,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Listar Grupo de Usuario', 'url'=>array('index')),
 	array('label'=>'Crear Grupo de Usuario', 'url'=>array('create')),
 );
 

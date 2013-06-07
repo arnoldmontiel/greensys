@@ -5,7 +5,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Listar Agrupadores', 'url'=>array('index')),
 	array('label'=>'Crear Agrupador', 'url'=>array('create')),
 	array('label'=>'Actualizar Agrupador', 'url'=>array('update', 'id'=>$model->Id)),
 	array('label'=>'Administrar Agrupadores', 'url'=>array('admin')),

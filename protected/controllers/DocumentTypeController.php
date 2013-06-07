@@ -115,9 +115,17 @@ class DocumentTypeController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('DocumentType');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+// 		$dataProvider=new CActiveDataProvider('DocumentType');
+// 		$this->render('index',array(
+// 			'dataProvider'=>$dataProvider,
+// 		));
+		$model=new DocumentType('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['DocumentType']))
+		$model->attributes=$_GET['DocumentType'];
+		
+		$this->render('admin',array(
+					'model'=>$model,
 		));
 	}
 
