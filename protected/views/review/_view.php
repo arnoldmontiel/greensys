@@ -161,8 +161,7 @@ if(!$data->isOpen())
 						echo CHtml::closeTag('div');
 						echo CHtml::openTag('div',array('class'=>'note-preview'));
 						$name = $modelLastNote->change_date . ' - ' . $modelLastNote->user->name.' '.$modelLastNote->user->last_name;
-						echo ($modelLastNote->note != '')?$name.': ':$name;						
-						echo $modelLastNote->note;
+						echo $name;						
 						echo CHtml::closeTag('div');
 						
 					echo CHtml::closeTag('div');
