@@ -2490,3 +2490,8 @@ div.chart-container
 	display: inline-block;
 	vertical-align: top	
 }
+#page ul.yiiPager .first,
+#page ul.yiiPager .last
+{
+        display: inline;
+}
