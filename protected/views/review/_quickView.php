@@ -16,7 +16,7 @@
 </div>
 <?php 
 foreach ($data as $item){
-		$this->renderPartial('_view',array('data'=>$item,'width'=>'95%'));
+		$this->renderPartial('_view',array('data'=>$item));
 }
 
 if(count($data) == 0)
