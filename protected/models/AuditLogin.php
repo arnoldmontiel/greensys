@@ -108,6 +108,7 @@ class AuditLogin extends TapiaActiveRecord
 		$criteria->addSearchCondition("u.name",$this->user_name);
 		$criteria->addSearchCondition("u.Id_user_group",$this->user_group_desc);
 		$criteria->addSearchCondition("u.email",$this->email);
+		$criteria->order ="date DESC";
 		
 		// Create a custom sort
 		$sort=new CSort;
@@ -139,6 +140,7 @@ class AuditLogin extends TapiaActiveRecord
 		return new CActiveDataProvider($this, array(
 											'criteria'=>$criteria,
 											'sort'=>$sort,
+											'pagination' => array('pageSize' => 20,)
 		));
 		
 	}

@@ -6,18 +6,18 @@
 <?php 
 $userGroup = UserGroup::model()->findAll();
 $userGroupList = CHtml::listData($userGroup,'Id','description');
-
+$dataProvider = $model->search();
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'audit-login-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$dataProvider,
 	'filter'=>$model,
 	'columns'=>array(
+		'date',
 		'username',
 		array(
  			'name'=>'email',
 			'value'=>'$data->user->email',
 		),
-		'date',
 		array(
  			'name'=>'user_group_desc',
 			'value'=>'$data->user->userGroup->description',
