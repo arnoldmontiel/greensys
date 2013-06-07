@@ -152,7 +152,7 @@ class TCustomer extends TapiaActiveRecord
 		$criteria->addSearchCondition("gc.description",$this->contact_description);
 		
 		$sort=new CSort;
-		$sort->defaultOrder=array("gc.description ASC");
+		$sort->defaultOrder="gc.description ASC";
 		$sort->attributes=array(									      
 						    'name' => array(
 							        'asc' => 'gp.name',
@@ -191,14 +191,18 @@ class TCustomer extends TapiaActiveRecord
 		$criteria=new CDbCriteria;
 	
 		$criteria->compare('Id',$this->Id);
-		$criteria->with[]='person';
-		$criteria->addSearchCondition("person.name",$this->name);
-		$criteria->addSearchCondition("person.last_name",$this->last_name);
+		$criteria->addSearchCondition("gp.name",$this->name);
+		$criteria->addSearchCondition("gp.last_name",$this->last_name);
+		$criteria->addSearchCondition("gc.telephone_1",$this->telephone_1);
+		$criteria->addSearchCondition("gc.email",$this->email);
+		$criteria->addSearchCondition("gc.description",$this->contact_description);
 		$criteria->compare('t.username',$this->username,true);
 		$criteria->compare('building_address',$this->building_address,true);
 	
 		$criteria->join =	" LEFT JOIN review r on (t.Id = r.Id_customer)
-								LEFT JOIN (select max(Id) Id from review group by Id_customer) r2 on (r2.Id = r.Id)
+										LEFT JOIN green.person gp on (t.Id_person = gp.Id)
+										LEFT JOIN green.contact gc on (t.Id_contact = gc.Id)
+										LEFT JOIN (select max(Id) Id from review group by Id_customer) r2 on (r2.Id = r.Id)
 										LEFT JOIN review_type rt on (r.Id_review_type = rt.Id)
 										LEFT JOIN tag_review_type trt on (trt.Id_review_type = rt.Id)
 										LEFT JOIN tag_review tr on (tr.Id_tag = trt.Id_tag AND tr.Id_review = r.Id)
@@ -207,6 +211,7 @@ class TCustomer extends TapiaActiveRecord
 		$criteria->distinct = true;
 		// Create a custom sort
 		$sort=new CSort;
+		$sort->defaultOrder="gc.description ASC";
 		$sort->attributes=array(
 							      'name',
 							      'last_name',
@@ -236,14 +241,22 @@ class TCustomer extends TapiaActiveRecord
 		$criteria=new CDbCriteria;
 	
 		$criteria->compare('Id',$this->Id);
-		$criteria->compare('name',$this->person->name,true);
-		$criteria->compare('last_name',$this->last_name,true);
+
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('building_address',$this->building_address,true);
-	
+		
+		$criteria->addSearchCondition("gp.name",$this->name);
+		$criteria->addSearchCondition("gp.last_name",$this->last_name);
+		$criteria->addSearchCondition("gc.telephone_1",$this->telephone_1);
+		$criteria->addSearchCondition("gc.email",$this->email);
+		$criteria->addSearchCondition("gc.description",$this->contact_description);
+		
 		$criteria->addCondition('t.Id IN(select Id_customer from user_customer where username = "'. User::getCurrentUser()->username.'")');
 		
 		$criteria->join =	" LEFT JOIN review r on (t.Id = r.Id_customer)
+										LEFT JOIN green.person gp on (t.Id_person = gp.Id)
+										LEFT JOIN green.contact gc on (t.Id_contact = gc.Id)
+				
 										LEFT JOIN (select max(Id) Id from review group by Id_customer) r2 on (r2.Id = r.Id)
 												LEFT JOIN review_type rt on (r.Id_review_type = rt.Id)
 												LEFT JOIN tag_review_type trt on (trt.Id_review_type = rt.Id)
@@ -255,6 +268,7 @@ class TCustomer extends TapiaActiveRecord
 		
 		// Create a custom sort
 		$sort=new CSort;
+		$sort->defaultOrder="gc.description ASC";
 		$sort->attributes=array(
 									      'name',
 									      'last_name',

@@ -516,7 +516,8 @@ class TCustomerController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('TCustomer');
+		$customer = new TCustomer();
+		$dataProvider=$customer->search();
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
