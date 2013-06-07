@@ -98,9 +98,9 @@ class AuditLogin extends TapiaActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('Id',$this->Id);
-		$criteria->compare('username',$this->username,true);
-		$criteria->compare('date',$this->date,true);
+		$criteria->compare('t.Id',$this->Id);
+		$criteria->compare('t.date',$this->date,true);
+		$criteria->compare('t.username',$this->username,true);
 		
 		$criteria->join =	" INNER JOIN user u on (t.username = u.username)";
 		
@@ -108,13 +108,14 @@ class AuditLogin extends TapiaActiveRecord
 		$criteria->addSearchCondition("u.name",$this->user_name);
 		$criteria->addSearchCondition("u.Id_user_group",$this->user_group_desc);
 		$criteria->addSearchCondition("u.email",$this->email);
-		$criteria->order ="date DESC";
+		//$criteria->order ="t.date DESC";
 		
 		// Create a custom sort
 		$sort=new CSort;
-		$sort->attributes=array(									      
-				      'date',
-				      'username' => array(
+		$sort->defaultOrder = 't.date DESC';
+		$sort->attributes=array(
+				      't.date',
+				      't.username' => array(
 					        'asc' => 't.username',
 					        'desc' => 't.username DESC',
 						),
