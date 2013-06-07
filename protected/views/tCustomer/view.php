@@ -83,7 +83,7 @@ function getIdProjectSelected()
 				),
 				array('label'=>$modelUser->getAttributeLabel('username'),
 						'type'=>'raw',
-						'value'=>$modelUser->username . ' ( ' . CHtml::link('Asignar permisos', Yii::app()->createUrl('srbac/authitem/assign'),array('id'=>'linkPermission')) . ' )'
+						'value'=>$modelUser->username
 				),
 				array('label'=>$modelUser->getAttributeLabel('password'),
 						'type'=>'raw',
