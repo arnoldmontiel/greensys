@@ -11,7 +11,7 @@ return array(
 	'name'=>'G r E e N',
 
 	// preloading 'log' component
-	'preload'=>array('log','highcharts'),
+	'preload'=>array('log','highcharts','bootstrap'),
 
 	// autoloading model and component classes
 	'import'=>array(
@@ -41,6 +41,9 @@ return array(
 			'password'=>'Arnold',
 		 	// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
+			'generatorPaths' => array(
+						          'bootstrap.gii'
+			),
 		),
 
 		'srbac' => array(
@@ -73,6 +76,10 @@ return array(
 	// application components
 	'components'=>array(
 		'highcharts' => array('class' => 'highcharts.components.Highcharts'),
+		'bootstrap' => array(
+					    'class' => 'ext.bootstrap.components.Bootstrap',
+					    'responsiveCss' => true,
+		),
 		'mail' => array(
 		 			'class' => 'ext.yii-mail.YiiMail',
 		 			//'transportType' => 'php',
