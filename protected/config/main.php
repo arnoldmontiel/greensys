@@ -11,7 +11,7 @@ return array(
 	'name'=>'G r E e N',
 
 	// preloading 'log' component
-	'preload'=>array('log','highcharts','bootstrap'),
+	'preload'=>array('log','highcharts'),
 
 	// autoloading model and component classes
 	'import'=>array(
