@@ -1422,7 +1422,7 @@ class ReviewController extends Controller
 					$state = isset($review->tags[0])?' ('.$review->tags[0]->description.') ':'';
 					if(!$modelReview->is_open) $state = ' (Finalizada) ';
 						
-					$message->setSubject($review->customer->contact->description.' - '.$review->project->description.': '.$review->description.$state);
+					$message->setSubject(utf8_decode($review->customer->contact->description).' - '.utf8_decode($review->project->description).': '.utf8_decode($review->description).utf8_decode($state));
 					Yii::app()->mail->send($message);
 				}	
 			}
@@ -1435,20 +1435,20 @@ class ReviewController extends Controller
 			$modelReview = Review::model()->findByPk($_GET['Id_review']);;
 			$modelProject = $modelReview->project;
 			header("Content-type: text/plain");
-			header('Content-Disposition: attachment; filename="'.$modelProject->customer->contact->description.' - '.$modelProject->description.' - '.$modelReview->description.' ('.date("Y-m-d H:i",time()).').txt"');
-			echo $modelProject->customer->contact->description.' - '.$modelProject->description;
+			header('Content-Disposition: attachment; filename="'.utf8_decode($modelProject->customer->contact->description).' - '.utf8_decode($modelProject->description).' - '.utf8_decode($modelReview->description).' ('.date("Y-m-d H:i",time()).').txt"');
+			echo utf8_decode($modelProject->customer->contact->description).' - '.utf8_decode($modelProject->description);
 			echo "\r\n";
 			
 			$state = (isset($modelReview->tags[0])?' ('.$modelReview->tags[0]->description.') ':'');
 			if(!$modelReview->is_open) $state = ' (Finalizada) ';
 				
-			echo $modelReview->description . $state;
+			echo $modelReview->description . utf8_decode($state);
 			echo "\r\n";
 			$notes = $modelReview->notes;
 			if(isset($notes))
 			{
 				foreach ($notes as $note){
-					echo $note->creation_date.' '.$note->user->last_name.' '.$note->user->name.': '.str_replace(array("\n"),"\r\n",$note->note);
+					echo $note->creation_date.' '.$note->user->last_name.' '.$note->user->name.': '.utf8_decode(str_replace(array("\n"),"\r\n",$note->note));
 					echo "\r\n";
 					$criteria = new CDbCriteria();
 					$criteria->addCondition('Id_parent = '. $note->Id);
@@ -1463,7 +1463,7 @@ class ReviewController extends Controller
 					}
 					foreach ($noteNotes as $noteNote){
 						$litleNote = $noteNote->child;
-						echo $litleNote->creation_date.' '.$litleNote->user->last_name.' '.$litleNote->user->name.': '.str_replace(array("\n"),"\r\n",$litleNote->note);
+						echo $litleNote->creation_date.' '.$litleNote->user->last_name.' '.$litleNote->user->name.': '.utf8_decode(str_replace(array("\n"),"\r\n",$litleNote->note));
 						echo "\r\n";
 					}
 				}
@@ -1472,9 +1472,9 @@ class ReviewController extends Controller
 		elseif(isset($_GET['Id_project']))
 		{
 			$modelProject = Project::model()->findByPk($_GET['Id_project']);				
-			header("Content-type: text/plain");			
-			header('Content-Disposition: attachment; filename="'.$modelProject->customer->contact->description.' - '.$modelProject->description.' ('.date("Y-m-d H:i",time()).').txt"');
-			echo $modelProject->customer->contact->description.' - '.$modelProject->description;
+			header("Content-type: text/plain;charset=utf-8");			
+			header('Content-Disposition: attachment; filename="'.utf8_decode($modelProject->customer->contact->description).' - '.utf8_decode($modelProject->description).' ('.date("Y-m-d H:i",time()).').txt"');
+			echo utf8_decode($modelProject->customer->contact->description).' - '.utf8_decode($modelProject->description);
 			echo "\r\n";
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('Id_project = '. $modelProject->Id);
@@ -1485,13 +1485,13 @@ class ReviewController extends Controller
 			{
 				$state = (isset($modelReview->tags[0])?' ('.$modelReview->tags[0]->description.') ':'');
 				if(!$modelReview->is_open) $state = ' (Finalizada) ';
-				echo $modelReview->description . $state;
+				echo $modelReview->description . utf8_decode($state);
 				echo "\r\n";
 				$notes = $modelReview->notes;
 				if(isset($notes))
 				{
 					foreach ($notes as $note){
-						echo $note->creation_date.' '.$note->user->last_name.' '.$note->user->name.': '.str_replace(array("\n"),"\r\n",$note->note);
+						echo $note->creation_date.' '.$note->user->last_name.' '.$note->user->name.': '.utf8_decode(str_replace(array("\n"),"\r\n",$note->note));
 						echo "\r\n";
 						$criteria = new CDbCriteria();
 						$criteria->addCondition('Id_parent = '. $note->Id);
@@ -1507,13 +1507,49 @@ class ReviewController extends Controller
 						}
 						foreach ($noteNotes as $noteNote){
 							$litleNote = $noteNote->child;
-							echo $litleNote->creation_date.' '.$litleNote->user->last_name.' '.$litleNote->user->name.': '.str_replace(array("\n"),"\r\n",$litleNote->note);
+							echo $litleNote->creation_date.' '.$litleNote->user->last_name.' '.$litleNote->user->name.': '.utf8_decode(str_replace(array("\n"),"\r\n",$litleNote->note));
 							echo "\r\n";
 							//echo CHtml::closeTag('br');
 						}
 					}
 				}
 			
+			}				
+		}
+	}
+	public function actionAjaxGenerateTechnicalReport()
+	{
+		if(isset($_GET['Id_project'])&&isset($_GET['dateToReport']))
+		{
+			$dateFrom = $_GET['dateToReport'].' 00:00:00';
+			$dateTo = $_GET['dateToReport'].' 23:59:59';
+			$modelProject = Project::model()->findByPk($_GET['Id_project']);				
+			header("Content-type: text/plain; charset=utf-8");			
+			header('Content-Disposition: attachment; filename="'.utf8_decode($modelProject->customer->contact->description).' - '.utf8_decode($modelProject->description).' '.$_GET['dateToReport'].' ('.date("Y-m-d H:i",time()).').txt"');
+			echo utf8_decode($modelProject->customer->contact->description).' - '.utf8_decode($modelProject->description);
+			echo "\r\n";
+			echo "Servicio del día ".$_GET['dateToReport'];
+			echo "\r\n";
+			echo "\r\n";
+			$criteria = new CDbCriteria();
+			$criteria->addCondition('Id_project = '. $modelProject->Id);
+			$criteria->addCondition('Id_review is null');
+			$criteria->addCondition('in_progress = 0');
+			$criteria->addBetweenCondition('change_date', $dateFrom, $dateTo);
+			//$criteria->order = 'change_date DESC';
+				
+			$notes = Note::model()->findAll($criteria);;
+			foreach ($notes as $modelNote)
+			{
+				$parentNotes = $modelNote->parentNotes;
+				$modelReview=$parentNotes[0]->review; 
+				echo utf8_decode($modelReview->description) ;
+				echo "\r\n";
+				echo $modelNote->user->last_name.' '.$modelNote->user->name.' '.date("Y-m-d H:i",strtotime($modelNote->creation_date));
+				echo "\r\n";
+				echo utf8_decode(str_replace(array("\n"),"\r\n",$modelNote->note));
+				echo "\r\n";
+				echo "\r\n";
 			}				
 		}
 	}
@@ -1534,7 +1570,7 @@ class ReviewController extends Controller
 					$message->setBody(array('model'=>$modelUser,'modelProject'=>$project), 'text/html');
 					$message->addTo($modelUser->email);
 					$message->from = Yii::app()->params['adminEmail'];
-					$message->setSubject($project->customer->contact->description.' - '.$project->description);
+					$message->setSubject(utf8_decode($project->customer->contact->description).' - '.utf8_decode($project->description));
 					Yii::app()->mail->send($message);
 				}
 			}

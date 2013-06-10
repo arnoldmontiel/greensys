@@ -358,10 +358,12 @@ function getCheck(checkName)
 <?php
 	if(User::isAdministartor()&&isset($Id_project)&&$Id_project!=-1)
 	{
-		$this->widget('ext.processingDialog.processingDialog', array(
-				'idDialog'=>'dialogProcessingMail',
-				'imgSrc'=>'images/email_loading.gif'
-		));
+// 		$this->widget('ext.processingDialog.processingDialog', array(
+// 				'idDialog'=>'dialogProcessingMail',
+// 				'imgSrc'=>'images/email_loading.gif'
+// 		));
+
+
 		$image = CHtml::image('images/export_plain_text.png','Export',
 			array(				
 				'style'=>'width:25px;margin-top:25px;'
@@ -369,44 +371,100 @@ function getCheck(checkName)
 		);
 		echo CHtml::link($image,
 			ReviewController::createUrl('generateTextPlainSummary',array('Id_project'=>$Id_project)),
-			array('title'=>'Exportar')
+			array('title'=>'Exportar todo')
 			);
 		
 		//echo CHtml::imageButton('images/mail_blue.png',array('onclick'=>'jQuery("#SendMail").dialog("open"); return false;'));
-		//mail pop up
+// 		//mail pop up
+// 		$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+// 				'id'=>'SendMail',
+// 				// additional javascript options for the dialog plugin
+// 				'options'=>array(
+// 						'title'=>'Enviar Mail',
+// 						'autoOpen'=>false,
+// 						'modal'=>true,
+// 						'width'=> '500',
+// 						'buttons'=>	array(
+// 								'Cancelar'=>'js:function(){jQuery("#SendMail").dialog( "close" );}',
+// 								'Enviar'=>'js:function()
+// 								{
+// 									jQuery("#dialogProcessingMail").dialog("open");
+// 									jQuery.post("'.Yii::app()->createUrl("review/AjaxSendProjectByMail").'", jQuery("#mail-form").serialize(),
+// 										function(data) {
+// 											jQuery("#dialogProcessingMail").dialog("close");
+// 											jQuery("#SendMail").dialog( "close" );
+// 										},"json").error(
+// 										function()
+// 										{
+// 											jQuery("#dialogProcessingMail").dialog("close");
+// 											jQuery("#SendMail").dialog( "close" );
+// 										}
+// 									);
+// 								}
+// 								'),
+// 				),
+// 		));
+// 		echo $this->renderPartial('_mail', array('model'=>Project::model()->findByPk($Id_project)));
+		
+// 		$this->endWidget('zii.widgets.jui.CJuiDialog');
+		
+		//mail pop up END
+		//techReport pop up
+		$image = CHtml::image('images/export_a_day.png','Export',
+		array(
+				'style'=>'width:25px;margin-top:25px;'
+			)
+		);
+		echo CHtml::link($image,
+				'#',
+				array(
+				'title'=>'Exportar',
+				'onclick'=>'jQuery("#TechnicalReport").dialog("open"); return false;',
+				'style'=>'margin-left:5px;',
+		));
+
+//		echo CHtml::imageButton('images/mail_blue.png',array('title'=>'','onclick'=>'jQuery("#TechnicalReport").dialog("open"); return false;'));
 		$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
-				'id'=>'SendMail',
+				'id'=>'TechnicalReport',
 				// additional javascript options for the dialog plugin
 				'options'=>array(
-						'title'=>'Enviar Mail',
+						'title'=>'Informe t&eacutecnico de visita',
 						'autoOpen'=>false,
 						'modal'=>true,
-						'width'=> '500',
+						'width'=> '400',
 						'buttons'=>	array(
-								'Cancelar'=>'js:function(){jQuery("#SendMail").dialog( "close" );}',
-								'Enviar'=>'js:function()
+								'Cancelar'=>'js:function(){jQuery("#TechnicalReport").dialog( "close" );}',
+								'Descargar'=>'js:function()
 								{
-									jQuery("#dialogProcessingMail").dialog("open");
-									jQuery.post("'.Yii::app()->createUrl("review/AjaxSendProjectByMail").'", jQuery("#mail-form").serialize(),
-										function(data) {
-											jQuery("#dialogProcessingMail").dialog("close");
-											jQuery("#SendMail").dialog( "close" );
-										},"json").error(
-										function()
-										{
-											jQuery("#dialogProcessingMail").dialog("close");
-											jQuery("#SendMail").dialog( "close" );
-										}
-									);
+									window.location.href="'.
+										ReviewController::createUrl('AjaxGenerateTechnicalReport',
+										array('Id_project'=>$Id_project))
+									.'&dateToReport="+$("#dateToReport").val();
+									jQuery("#TechnicalReport").dialog( "close" );
 								}
 								'),
 				),
 		));
-		echo $this->renderPartial('_mail', array('model'=>Project::model()->findByPk($Id_project)));
+		echo "<div class='row'>";
+		echo CHtml::label('Fecha: ', 'dateToReport');
+		$this->widget('zii.widgets.jui.CJuiDatePicker',array(
+			'id'=>'dateToReport',			
+			'name'=>'publishDate',
+			'value'=>date("Y-m-d"),
+			// additional javascript options for the date picker plugin
+			'options'=>array(
+					'showAnim'=>'fold',
+					'dateFormat'=>'yy-mm-dd',
+			),
+			'htmlOptions'=>array(					
+					'style'=>'height:20px;'
+			),
+		));
 		
-		$this->endWidget('zii.widgets.jui.CJuiDialog');
-		
+		$this->endWidget('zii.widgets.jui.CJuiDialog');	
+		echo "</div>";
 	}
+	//techReport pop up END
 	?>
 </div>
 
