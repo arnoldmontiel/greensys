@@ -22,66 +22,42 @@
 	
 </head>
 
-<body>
+<body>	
+		<?php 
+		$params = User::getCustomer()?array('Id_customer'=>User::getCustomer()->Id):array();
+		$items = array();			
+		$items[] = array('label'=>'Home', 'url'=>Yii::app()->createUrl('review/index',$params));
+		
+		if(Yii::app()->user->checkAccess('ProductIndex'))
+			$items[] = array('label'=>'Clientes', 'url'=>Yii::app()->createUrl('tCustomer/index'));
+		if(Yii::app()->user->checkAccess('ProductIndex'))
+			$items[] = array('label'=>'Etapas', 'url'=>Yii::app()->createUrl('tag/index'));
+		if(Yii::app()->user->checkAccess('ProductIndex'))
+			$items[] = array('label'=>'Agrupadores', 'url'=>Yii::app()->createUrl('reviewType/index'));
+		if(Yii::app()->user->checkAccess('ProductIndex'))
+			$items[] = array('label'=>'Usuarios', 'url'=>Yii::app()->createUrl('user/index'));
+		if(Yii::app()->user->checkAccess('ProductIndex'))
+			$items[] = array('label'=>'Grupos', 'url'=>Yii::app()->createUrl('userGroup/index'));
+		if(Yii::app()->user->checkAccess('ProductIndex'))
+			$items[] = array('label'=>'Docs', 'url'=>Yii::app()->createUrl('documentType/index'));
+		if(Yii::app()->user->checkAccess('ProductIndex'))
+			$items[] = array('label'=>'Auditoria', 'url'=>Yii::app()->createUrl('auditLogin/index'));
+		
+		$items[] = array('label'=>'Salir '.' ('.Yii::app()->user->name.')', 'url'=>Yii::app()->createUrl('site/logout'));
+		
+		$this->widget('bootstrap.widgets.TbNavbar', array(
+			'brand' => 'Tapia',
+			'collapse'=>true, // requires bootstrap-responsive.css
+			'items' => array(
+				array(
+						'class' => 'bootstrap.widgets.TbMenu',
+						'items' => $items,
+					)
+				)
+		));
+?>
 
 <div class="container" id="page">
-
-	<div id="header">
-		<div class="header-menu" >
-			<div class="header-menu-item">
-				<?php $params = User::getCustomer()?array('Id_customer'=>User::getCustomer()->Id):array(); ?>
-				<?php echo CHtml::link(CHtml::encode("Tapia"),Yii::app()->createUrl('review/index',$params),array('class'=>'header-menu-item')); ?>
-			</div>
-			<div class="header-menu-item">
-				<?php echo CHtml::link('Clientes',Yii::app()->createUrl('tCustomer/index'),array('class'=>(Yii::app()->user->checkAccess('TCustomerIndex'))?'header-menu-item':'header-menu-item-hidden')); ?>
-			</div>
-			<div class="header-menu-item">
-				<?php echo CHtml::link('Etapas',Yii::app()->createUrl('tag/index'),array('class'=>(Yii::app()->user->checkAccess('TagIndex'))?'header-menu-item':'header-menu-item-hidden')); ?>
-			</div>
-			<div class="header-menu-item">
-				<?php echo CHtml::link('Agrupadores',Yii::app()->createUrl('reviewType/index'),array('class'=>(Yii::app()->user->checkAccess('ReviewTypeIndex'))?'header-menu-item':'header-menu-item-hidden')); ?>
-			</div>
-			<div class="header-menu-item">
-				<?php echo CHtml::link('Usuarios',Yii::app()->createUrl('user/index'),array('class'=>(Yii::app()->user->checkAccess('UserIndex'))?'header-menu-item':'header-menu-item-hidden')); ?>
-			</div>
-			<div class="header-menu-item">
-				<?php echo CHtml::link('Grupos',Yii::app()->createUrl('userGroup/index'),array('class'=>(Yii::app()->user->checkAccess('UserGroupIndex'))?'header-menu-item':'header-menu-item-hidden')); ?>
-			</div>
-			<div class="header-menu-item">
-				<?php echo CHtml::link('Docs',Yii::app()->createUrl('documentType/index'),array('class'=>(Yii::app()->user->checkAccess('DocumentTypeIndex'))?'header-menu-item':'header-menu-item-hidden')); ?>
-			</div>
-			<div class="header-menu-item">
-				<?php echo CHtml::link('Auditoria',Yii::app()->createUrl('auditLogin/index'),array('class'=>(Yii::app()->user->checkAccess('AuditLoginIndex'))?'header-menu-item':'header-menu-item-hidden')); ?>
-			</div>
-			<div class="header-menu-item" >
-				<?php echo CHtml::link('Salir '.' ('.Yii::app()->user->name.')',Yii::app()->createUrl('site/logout'),array('class'=>'header-menu-item')); ?>
-			</div>
-		
-		</div>
-		<div id="header-container" style='display: none;'>
-			<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-			<ul class="nav">
-				<?php if(Yii::app()->user->checkAccess('SiteIndex')):?>
-					<li class="nav">
-						<?php echo CHtml::link('Inicio ',Yii::app()->createUrl('site/index')); ?>
-					</li>
-				<?php endif?>
-				<?php if(Yii::app()->user->checkAccess('WallIndex')):?>
-					<li class="nav">
-					<?php echo CHtml::link('Administrar ',Yii::app()->createUrl('wall/index')); ?>
-					</li>
-				<?php endif?>
-				<li class="nav">
-					<?php echo CHtml::link('Salir '.' ('.Yii::app()->user->name.')',Yii::app()->createUrl('site/logout')); ?>
-				</li>
-			</ul>
-			<div class="search">
-				<div class="search-icon"></div>
-					<input id="q" type="text" x-webkit-speech="" placeholder="Buscar" name="q">
-			</div>			
-		</div><!-- header-container -->
-	</div><!-- header -->
-
 
 	<?php echo $content; ?>
 
