@@ -1541,7 +1541,7 @@ class ReviewController extends Controller
 			$notesProcessed = array();
 			foreach ($notes as $modelNote)
 			{
-				if(array_search($modelNote->Id,$notesProcessed))	continue;
+				if(array_search($modelNote->Id,$notesProcessed)!=false)	continue;
 				
 				$parentNotes = $modelNote->parentNotes;
 				$parentNote = $parentNotes[0]; 
@@ -1565,8 +1565,8 @@ class ReviewController extends Controller
 				echo "\r\n";
 				foreach ($noteNotes as $noteNote)
 				{
-					$notesProcessed[]=$modelNoteChild->Id;
 					$modelNoteChild = $noteNote->child; 
+					$notesProcessed[]=$modelNoteChild->Id;
 					echo $modelNoteChild->user->last_name.' '.$modelNoteChild->user->name.' '.date("Y-m-d H:i",strtotime($modelNoteChild->creation_date));
 					echo "\r\n";
 					echo utf8_decode(str_replace(array("\n"),"\r\n",$modelNoteChild->note));
