@@ -1530,7 +1530,6 @@ class ReviewController extends Controller
 			echo "\r\n";
 			echo "Servicio del día ".$_GET['dateToReport'];
 			echo "\r\n";
-			echo "\r\n";
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('Id_project = '. $modelProject->Id);
 			$criteria->addCondition('Id_review is null');
@@ -1538,18 +1537,41 @@ class ReviewController extends Controller
 			$criteria->addBetweenCondition('change_date', $dateFrom, $dateTo);
 			//$criteria->order = 'change_date DESC';
 				
-			$notes = Note::model()->findAll($criteria);;
+			$notes = Note::model()->findAll($criteria);
+			$notesProcessed = array();
 			foreach ($notes as $modelNote)
 			{
+				if(array_search($modelNote->Id,$notesProcessed))	continue;
+				
 				$parentNotes = $modelNote->parentNotes;
-				$modelReview=$parentNotes[0]->review; 
+				$parentNote = $parentNotes[0]; 
+				$modelReview= $parentNote->review;
+				
+				$criteria = new CDbCriteria();
+				$criteria->addCondition('Id_parent = '. $parentNote->Id);
+				$criteria->select ='t.*, n.creation_date';
+				$criteria->join='LEFT OUTER JOIN tapia.note n on (t.Id_child = n.Id)';
+				$criteria->addCondition('n.in_progress=0');
+				$criteria->addBetweenCondition('n.change_date', $dateFrom, $dateTo);
+				$criteria->order = 'n.creation_date DESC';
+				try {
+					$noteNotes = NoteNote::model()->findAll($criteria);
+				
+				} catch (Exception $e) {
+					echo $e.message;
+				}
+				echo "\r\n";
 				echo utf8_decode($modelReview->description) ;
 				echo "\r\n";
-				echo $modelNote->user->last_name.' '.$modelNote->user->name.' '.date("Y-m-d H:i",strtotime($modelNote->creation_date));
-				echo "\r\n";
-				echo utf8_decode(str_replace(array("\n"),"\r\n",$modelNote->note));
-				echo "\r\n";
-				echo "\r\n";
+				foreach ($noteNotes as $noteNote)
+				{
+					$notesProcessed[]=$modelNoteChild->Id;
+					$modelNoteChild = $noteNote->child; 
+					echo $modelNoteChild->user->last_name.' '.$modelNoteChild->user->name.' '.date("Y-m-d H:i",strtotime($modelNoteChild->creation_date));
+					echo "\r\n";
+					echo utf8_decode(str_replace(array("\n"),"\r\n",$modelNoteChild->note));
+					echo "\r\n";
+				}
 			}				
 		}
 	}
