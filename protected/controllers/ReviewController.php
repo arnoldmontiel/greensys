@@ -1541,7 +1541,7 @@ class ReviewController extends Controller
 			$notesProcessed = array();
 			foreach ($notes as $modelNote)
 			{
-				if(array_search($modelNote->Id,$notesProcessed)!=false)	continue;
+				if(array_search($modelNote->Id,$notesProcessed)!==false)	continue;
 				
 				$parentNotes = $modelNote->parentNotes;
 				$parentNote = $parentNotes[0]; 
