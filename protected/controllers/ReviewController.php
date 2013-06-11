@@ -1442,7 +1442,7 @@ class ReviewController extends Controller
 			$state = (isset($modelReview->tags[0])?' ('.$modelReview->tags[0]->description.') ':'');
 			if(!$modelReview->is_open) $state = ' (Finalizada) ';
 				
-			echo $modelReview->description . utf8_decode($state);
+			echo utf8_decode($modelReview->description) . utf8_decode($state);
 			echo "\r\n";
 			$notes = $modelReview->notes;
 			if(isset($notes))
@@ -1485,7 +1485,7 @@ class ReviewController extends Controller
 			{
 				$state = (isset($modelReview->tags[0])?' ('.$modelReview->tags[0]->description.') ':'');
 				if(!$modelReview->is_open) $state = ' (Finalizada) ';
-				echo $modelReview->description . utf8_decode($state);
+				echo utf8_decode($modelReview->description) . utf8_decode($state);
 				echo "\r\n";
 				$notes = $modelReview->notes;
 				if(isset($notes))
