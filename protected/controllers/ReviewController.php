@@ -694,9 +694,10 @@ class ReviewController extends Controller
 	
 				$dataProvider->pagination->pageSize= 4;
 	
-				$data = $dataProvider->getData();				
-				$this->renderPartial('_quickView',array('data'=>$data, 'customer'=>$project->customer,'project'=>$project,'collpased'=>array_search($project->Id, $collapsed)));
-
+				$data = $dataProvider->getData();
+				$isCollapsed = array_search($project->Id, $collapsed);
+				$this->renderPartial('_quickView',array('data'=>$data, 'customer'=>$project->customer,'project'=>$project,'collapsed'=>$isCollapsed));
+				
 			}
 					
 // 			$customers = TCustomer::model()->findAll($criteria);
@@ -1528,7 +1529,7 @@ class ReviewController extends Controller
 			header('Content-Disposition: attachment; filename="'.utf8_decode($modelProject->customer->contact->description).' - '.utf8_decode($modelProject->description).' '.$_GET['dateToReport'].' ('.date("Y-m-d H:i",time()).').txt"');
 			echo utf8_decode($modelProject->customer->contact->description).' - '.utf8_decode($modelProject->description);
 			echo "\r\n";
-			echo "Servicio del día ".$_GET['dateToReport'];
+			echo "Servicio del dï¿½a ".$_GET['dateToReport'];
 			echo "\r\n";
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('Id_project = '. $modelProject->Id);
