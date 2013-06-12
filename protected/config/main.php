@@ -11,7 +11,7 @@ return array(
 	'name'=>'G r E e N',
 
 	// preloading 'log' component
-	'preload'=>array('log','highcharts'),
+	'preload'=>array('log','highcharts','bootstrap'),
 
 	// autoloading model and component classes
 	'import'=>array(
@@ -79,6 +79,7 @@ return array(
 		'bootstrap' => array(
 					    'class' => 'ext.bootstrap.components.Bootstrap',
 					    'responsiveCss' => true,
+					    'coreCss'=>false,
 		),
 		'mail' => array(
 		 			'class' => 'ext.yii-mail.YiiMail',
@@ -145,7 +146,7 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=green',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'admin',
+			'password' => '',
 			'charset' => 'utf8',
 		),
 		'db2'=>array(
@@ -153,7 +154,7 @@ return array(
 					'connectionString' => 'mysql:host=localhost;dbname=tapia',
 					'emulatePrepare' => true,
 					'username' => 'root',
-					'password' => 'admin',
+					'password' => '',
 					'charset' => 'utf8',
 		),
 
