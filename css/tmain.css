@@ -2489,6 +2489,15 @@ div.chart-container
 	display: inline-block;
 	vertical-align: top	
 }
+img.collapser
+{
+	float:left;width:20px;margin-left:-40px;margin-top:3px;
+}
+div.index-review-quick-view-collapsable
+{
+	float: left;
+	width: 100%;
+}
 #page ul.yiiPager .first,
 #page ul.yiiPager .last
 {

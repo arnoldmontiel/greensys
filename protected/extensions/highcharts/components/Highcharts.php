@@ -21,7 +21,7 @@ class Highcharts extends CApplicationComponent
         $cs->registerCoreScript('jquery');
         $jsFilename = YII_DEBUG ? '/highcharts.src.js' : '/highcharts.js';
         $jsFilenameMore = YII_DEBUG ? '/highcharts-more.src.js' : '/highcharts-more.js';
-        $jsFilenameTheme = '/themes/dark-skies.js';
+        //$jsFilenameTheme = '/themes/dark-skies.js';
         
 
         $cs->registerScriptFile($this->getAssetsUrl().$jsFilename, CClientScript::POS_HEAD);

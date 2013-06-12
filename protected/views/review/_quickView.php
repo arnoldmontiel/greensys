@@ -1,19 +1,28 @@
+
 <div class="index-review-quick-view">
-<?php
-	if(!empty($project->reviews))
-	{
-		echo $this->renderPartial('_quickViewChart', array('project'=>$project));		
-	}
-?>
 <div class="review-action-customer" >
-	<?php 
+	<?php
 		//echo CHtml::link($customer->person->name.' '.$customer->person->last_name. ' - ' . $customer->tagDesc,
-	echo CHtml::link($customer->contact->description.' - '.$project->description,
+		if(isset($collapsed)&& $collapsed)
+		{
+			echo CHtml::image('images/expand_blue.png','colapsar',array('id'=>'collapse_'.$project->Id,'class'=>'collapser'));				
+		}else {
+			echo CHtml::image('images/collapse_blue.png','colapsar',array('id'=>'collapse_'.$project->Id,'class'=>'collapser'));				
+		}
+		echo CHtml::link($customer->contact->description.' - '.$project->description,
 		ReviewController::createUrl('index',array('Id_customer'=>$customer->Id,'Id_project'=>$project->Id)),
 		array('class'=>'index-review-single-link')
 		);
 	 ?>
 </div>
+
+<div class="index-review-quick-view-collapsable" <?php if(isset($collapsed)&& $collapsed!==false) echo 'style=" display:none;"'; ?> id='collapseble_<?php echo $project->Id?>'>
+<?php echo $collapsed;
+	if(!empty($project->reviews))
+	{
+		echo $this->renderPartial('_quickViewChart', array('project'=>$project));		
+	}
+?>
 <?php 
 foreach ($data as $item){
 		$this->renderPartial('_view',array('data'=>$item));
@@ -22,5 +31,5 @@ foreach ($data as $item){
 if(count($data) == 0)
 	echo '<div  class="index-review-customer-separator"></div>'; 
 ?>
-
+</div>
 </div>

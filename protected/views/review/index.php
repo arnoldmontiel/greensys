@@ -6,6 +6,7 @@ loadPage();
 function loadPage()
 {
 
+	
 	var id_customer =".$Id_customer."; 
 	
 		$('#Id_customer').val(id_customer);
@@ -73,6 +74,7 @@ setInterval(function() {
    doFilter();
 }, 1000*30)
 
+var collapsed = new Array();
 function doFilter()
 {
 
@@ -93,7 +95,8 @@ function doFilter()
 			reviewTypeFilter: $('#reviewTypeFilter').val(),
 			dateFromFilter: $('#dateFromFilter').val(),
 			dateToFilter: $('#dateToFilter').val(),
-			customerNameFilter: searchTextCust
+			customerNameFilter: searchTextCust,
+			collapsed: collapsed,
 			
 		}	
 		).success(
@@ -101,6 +104,23 @@ function doFilter()
 			$('#review-area').removeClass('div-hidden');
 			$('#loading').removeClass('loading');
 			$('#review-area').html(data);
+
+			$('.collapser').click(function()
+			{
+				var idProject = $(this).attr('id').split('_')[1];
+				$('#collapseble_'+idProject).toggle('blind', { to: { width: 200, height: 60 } }, 1000 );
+				if($('#collapse_'+idProject).attr('src')=='images/collapse_blue.png')
+				{
+					collapsed.push(idProject);
+					$('#collapse_'+idProject).attr('src','images/expand_blue.png');
+				}
+				else
+				{
+					var index = collapsed.indexOf(idProject);
+					collapsed.splice(index, 1);
+					$('#collapse_'+idProject).attr('src','images/collapse_blue.png');
+				}
+			});						
 			$('#review-area').animate({opacity: 'show'},240);
 		});		
 

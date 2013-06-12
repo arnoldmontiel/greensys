@@ -639,7 +639,7 @@ class ReviewController extends Controller
 	
 	}
 	
-	private function fillIndex($Id_customer,$Id_project, $arrFilters)
+	private function fillIndex($Id_customer,$Id_project, $arrFilters,$collapsed)
 	{
 		
 		$review = new Review;
@@ -694,9 +694,8 @@ class ReviewController extends Controller
 	
 				$dataProvider->pagination->pageSize= 4;
 	
-				$data = $dataProvider->getData();
-
-				$this->renderPartial('_quickView',array('data'=>$data, 'customer'=>$project->customer,'project'=>$project));
+				$data = $dataProvider->getData();				
+				$this->renderPartial('_quickView',array('data'=>$data, 'customer'=>$project->customer,'project'=>$project,'collpased'=>array_search($project->Id, $collapsed)));
 
 			}
 					
@@ -730,8 +729,9 @@ class ReviewController extends Controller
 							 'dateFromFilter'=>$_POST['dateFromFilter'],
 							 'dateToFilter'=>$_POST['dateToFilter'],
 							 'customerNameFilter'=>$_POST['customerNameFilter']);
-			
-			$this->fillIndex($_POST['Id_customer'],$_POST['Id_project'], $arrFilters);
+			$collapsed = array();
+			if(isset($_POST['collapsed'])) $collapsed =$_POST['collapsed'];
+			$this->fillIndex($_POST['Id_customer'],$_POST['Id_project'], $arrFilters,$collapsed);
 		}		
 	}
 	
