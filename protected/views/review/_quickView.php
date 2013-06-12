@@ -3,9 +3,9 @@
 <div class="review-action-customer" >
 	<?php
 		//echo CHtml::link($customer->person->name.' '.$customer->person->last_name. ' - ' . $customer->tagDesc,
-		if(isset($collapsed)&& $collapsed)
+		if(isset($collapsed)&& $collapsed!==false)
 		{
-			echo CHtml::image('images/expand_blue.png','colapsar',array('id'=>'collapse_'.$project->Id,'class'=>'collapser'));				
+			echo CHtml::image('images/expand_blue.png','expandir',array('id'=>'collapse_'.$project->Id,'class'=>'collapser'));				
 		}else {
 			echo CHtml::image('images/collapse_blue.png','colapsar',array('id'=>'collapse_'.$project->Id,'class'=>'collapser'));				
 		}
@@ -15,9 +15,13 @@
 		);
 	 ?>
 </div>
-
-<div class="index-review-quick-view-collapsable" <?php if(isset($collapsed)&& $collapsed!==false) echo 'style=" display:none;"'; ?> id='collapseble_<?php echo $project->Id?>'>
-<?php echo $collapsed;
+<?php 
+	$style =" ";
+	if(isset($collapsed)&& $collapsed!==false) 
+		$style= 'style=" display:none;" '; 
+?>
+<div class="index-review-quick-view-collapsable" <?php echo $style;?> id='collapseble_<?php echo $project->Id?>'>
+<?php 
 	if(!empty($project->reviews))
 	{
 		echo $this->renderPartial('_quickViewChart', array('project'=>$project));		
