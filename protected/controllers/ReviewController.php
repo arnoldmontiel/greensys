@@ -75,7 +75,8 @@ class ReviewController extends Controller
 		
 		
 		$dllReviewTypeUserGroup = ReviewTypeUserGroup::model()->findAllByAttributes(
-								array('Id_user_group'=>User::getCurrentUserGroup()->Id));
+								array('Id_user_group'=>User::getCurrentUserGroup()->Id,
+										'can_create'=>1));
 		
 		$modelReviewType = array();
 		if($dllReviewTypeUserGroup)
@@ -1255,44 +1256,36 @@ class ReviewController extends Controller
 	
 	public function actionAjaxPublicNote()
 	{
-		$userGroup = (isset($_POST['userGroup'])?$_POST['userGroup']:null);
-		$canFeedback = (isset($_POST['canFeedback'])?$_POST['canFeedback']:null);
-		$addressed = (isset($_POST['addressed'])?$_POST['addressed']:null);
-		$needConf = (isset($_POST['needConf'])?$_POST['needConf']:null);
+
 		$idNote = (isset($_POST['idNote'])?$_POST['idNote']:null);
 		$idCustomer = (isset($_POST['idCustomer'])?$_POST['idCustomer']:null);
 		$idProject = (isset($_POST['idProject'])?$_POST['idProject']:null);
+		$idReviewType = (isset($_POST['idReviewType'])?$_POST['idReviewType']:null);
 		
 		$model = new UserGroupNote;
 		$transaction = $model->dbConnection->beginTransaction();
 		try {
 			
 			UserGroupNote::model()->deleteAllByAttributes(array('Id_note'=>$idNote, 'confirmed'=>0, 'declined'=>0));
+			//-----------------------------------------------
+			$arrReviewTypeUsrGroup = ReviewTypeUserGroup::model()->findAllByAttributes(
+													array('can_read'=>1,
+															'Id_review_type'=>$idReviewType,
+												));
 			
-			$arrUserGroupNote = UserGroupNote::model()->findAllByAttributes(array('Id_note'=>$idNote));
-			
-			foreach ($arrUserGroupNote as $userGroupItem)
+			foreach($arrReviewTypeUsrGroup as $modelReviewTypeUserGroup)
 			{
-				if(isset($canFeedback) && in_array($userGroupItem->Id_user_group,$canFeedback))
-					$userGroupItem->can_feedback = 1;
+				$model = new UserGroupNote;
 				
-				if(isset($addressed) && in_array($userGroupItem->Id_user_group,$addressed))
-					$userGroupItem->addressed = 1;
-					
-				if(isset($needConf) && in_array($userGroupItem->Id_user_group,$needConf))
-					$userGroupItem->need_confirmation = 1;
-					
-				$userGroupItem->save();
-				
-				$userGroup = array_diff($userGroup, array($userGroupItem->Id_user_group));
+				$model->Id_note = $idNote;
+				$model->Id_customer = $idCustomer;
+				$model->Id_project = $idProject;
+				$model->Id_user_group = $modelReviewTypeUserGroup->Id_user_group;
+								
+				$model->can_feedback = $modelReviewTypeUserGroup->can_feedback;
+				$model->addressed = $modelReviewTypeUserGroup->can_mail;
+				$model->save();
 			}
-			
-			$model->Id_note = $idNote;
-			$model->Id_customer = $idCustomer;
-			$model->Id_project = $idProject;
-			$model->Id_user_group = User::getCurrentUserGroup()->Id;
-			$model->can_feedback = 1;
-			$model->save();
 			
 			//review-user First insert
 			$modelNote = Note::model()->findByPk($idNote);
@@ -1304,57 +1297,7 @@ class ReviewController extends Controller
 				$modelReviewUser->username = User::getCurrentUser()->username;
 				$modelReviewUser->save();
 			}
-			
-			
-			if($userGroup)
-			{
-// 				if( in_array(User::getAdminUserGroupId(),$userGroup))
-// 				{
-// 					$model = new UserGroupNote;
-// 					$model->Id_note = $idNote;
-// 					$model->Id_customer = $idCustomer;
-// 					$model->Id_project = $idProject;
-// 					$model->Id_user_group = User::getAdminUserGroupId();
-// 					$model->can_feedback = 1;
-// 					if(isset($addressed) && in_array(User::getAdminUserGroupId(),$addressed))
-// 						$model->addressed = 1;
-					
-// 					$model->save();
-// 					$userGroup = array_diff($userGroup, array(User::getAdminUserGroupId()));
-	
-// 				}
-// 				elseif( ! User::isAdministartor())
-// 				{
-// 					$model = new UserGroupNote;
-// 					$model->Id_note = $idNote;
-// 					$model->Id_customer = $idCustomer;
-// 					$model->Id_project = $idProject;
-// 					$model->Id_user_group = User::getAdminUserGroupId();
-// 					$model->can_feedback = 1;
-// 					$model->save();
-// 				}
-				
-				foreach($userGroup as $item)
-				{
-					$model = new UserGroupNote;
-		
-					$model->Id_note = $idNote;
-					$model->Id_customer = $idCustomer;
-					$model->Id_project = $idProject;						
-					$model->Id_user_group = $item;
-					
-					if(isset($canFeedback) && in_array($item,$canFeedback))
-						$model->can_feedback = 1;
-						
-					if(isset($addressed) && in_array($item,$addressed))
-						$model->addressed = 1;
-					
-					if(isset($needConf) && in_array($item,$needConf))
-						$model->need_confirmation = 1;
-					
-					$model->save();
-				}
-			}
+
 			$transaction->commit();
 			GDriveHelper::shareFilesByNote($idNote);
 		} catch (Exception $e) {
