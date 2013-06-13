@@ -20,16 +20,17 @@ $('#btnCancel').click(function(){
 ?>
  
 <div style="height:200px">
-	<div style="position:absolute;top:20%;left:30%;margin-top:-25px;margin-left:-25px;">
+	<div class="row" style="text-align: center;">
 		<div class="review-action-back" id="btnUploadImage">
 		Subir Imagenes
 		</div>
+	</div>
+	<div class="row" style="text-align: center;">
 		<div class="review-action-back" id="btnSelectImage">
 		Imagenes ya subidas
 		</div>
-		
-		<div class="row" style="text-align: center;">	
-			<?php echo CHtml::button('Cancelar',array('class'=>'wall-action-submit-btn','id'=>'btnCancel',));?>
-		</div>
 	</div>	
+	<div class="row" style="text-align: center;">	
+		<?php echo CHtml::button('Cancelar',array('class'=>'wall-action-submit-btn','id'=>'btnCancel',));?>
+	</div>
 </div>
