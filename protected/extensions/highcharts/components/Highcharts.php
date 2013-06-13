@@ -26,7 +26,7 @@ class Highcharts extends CApplicationComponent
 
         $cs->registerScriptFile($this->getAssetsUrl().$jsFilename, CClientScript::POS_HEAD);
         $cs->registerScriptFile($this->getAssetsUrl().$jsFilenameMore, CClientScript::POS_HEAD);
-        $cs->registerScriptFile($this->getAssetsUrl().$jsFilenameTheme, CClientScript::POS_HEAD);
+        //$cs->registerScriptFile($this->getAssetsUrl().$jsFilenameTheme, CClientScript::POS_HEAD);
         
     }
 
