@@ -72,7 +72,7 @@ caption {background:#eee;}
 .highlight {background:#ff0;}
 .added {background:#060;color:#fff;}
 .removed {background:#900;color:#fff;}
-.first {margin-left:0;padding-left:0;}
+.first {margin-left:0;padding-left:0;width:16%;}
 .last {margin-right:0;padding-right:0;}
 .top {margin-top:0;padding-top:0;}
 .bottom {margin-bottom:0;padding-bottom:0;}
@@ -80,12 +80,12 @@ caption {background:#eee;}
 /* grid.css */
 .container {width:1340px;margin:0 auto;}
 .column, .span-1, .span-2, .span-3, .span-4, .span-5, .span-6, .span-7, .span-8, .span-9, .span-10, .span-11, .span-12, .span-13, .span-14, .span-15, .span-16, .span-17, .span-18, .span-19, .span-20, .span-21, .span-22, .span-23, .span-24 {float:left;margin-right:10px;}
-.last {margin-right:0;}
+.last {margin-right:0;width:14%;}
 .span-1 {width:30px;}
 .span-2 {width:70px;}
 .span-3 {width:110px;}
 .span-4 {width:150px;}
-.span-5 {width:190px;}
+.span-5 {margin-top:40px;}
 .span-6 {width:230px;}
 .span-7 {width:270px;}
 .span-8 {width:310px;}
