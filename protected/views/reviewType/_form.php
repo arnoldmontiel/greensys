@@ -7,7 +7,9 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-form', "
 	$('#ReviewType_is_internal').change(function(){
 		$('#ReviewType_is_for_client').attr('checked',false);
 	});
-	
+	$('#btnSave').click(function(){
+		$('#dialogProcessing').dialog('open');
+	});
 	$('.btn-group a').click(function(){
 	
     	var fieldId = $(this).data('field');
@@ -23,12 +25,29 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-form', "
     	switch (fieldId) {
     		case 'create':
     			obj[id].create = value;
+    			if(value == 1)
+    			{
+    				$(this).parent().find('#chkCanRead').addClass('active');
+    				$(this).parent().find('#chkCanFeedback').addClass('active');
+    				obj[id].read = value;
+    				obj[id].feedback = value;
+    			}
     		break;
     		case 'read':
     			obj[id].read = value;
+    			if(value == 0)
+    			{
+    				$(this).parent().find('#chkCanFeedback').removeClass('active');    				
+    				obj[id].feedback = value;    				
+    			}
     		break;
     		case 'feedback':
     			obj[id].feedback = value;
+    			if(value == 1)
+    			{
+    				$(this).parent().find('#chkCanRead').addClass('active');    				
+    				obj[id].read = value;    				
+    			}
     		break;
     		case 'mail':
     			obj[id].mail = value;
@@ -50,7 +69,11 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-form', "
 	'id'=>'review-type-form',
 	'enableAjaxValidation'=>false,
 )); ?>
-
+<?php
+$this->widget('ext.processingDialog.processingDialog', array(
+		'idDialog'=>'dialogProcessing',
+));
+?>	
 	<p class="note">Campos con <span class="required">*</span> son requeridos.</p>
 
 	<?php echo $form->errorSummary($model); ?>
@@ -161,7 +184,7 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-form', "
 	</div>
 	
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar',array('id'=>'hola')); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar',array('id'=>'btnSave')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

@@ -465,67 +465,7 @@ function bindEvents(item)
 				}
 		});
 	});
-	function CheckPermission(parent,caller,check)
-	{
-		$(parent).find(check).attr('checked',true);	
-		$(parent).find('#chkUserGroup').attr('checked',true);	
-		$(parent).find('#divChkUserGroup').addClass('review-permission-chk-decoration-chk');
-		$(caller).addClass('review-permission-chk-decoration-chk');
-	}
-	function UncheckPermission(parent,caller,check)
-	{
-		$(parent).find(check).attr('checked',false);	
-		$(caller).removeClass('review-permission-chk-decoration-chk');
-	}
-	function SavePermissionsChanges(type,value,idUserGroup,idNote,parent,caller,check)
-	{
-		//alert('Grabando '+type+' '+value+' '+idUserGroup);
-		$('#dialogProcessing').dialog('open');		
-		$.ajax({
-				type : 'POST',
-				data : {type:type,value:value,idUserGroup:idUserGroup,idNote:idNote,idCustomer: ".$model->Id_customer.",idProject: ".$model->Id_project."},
-				url : '" . ReviewController::createUrl('AjaxSavePermissions') ."',
-				beforeSend : function(){
-								},
-				error: function(data){				$('#dialogProcessing').dialog('close');},
-				success : function(data)
-				{
-				$('#dialogProcessing').dialog('close');
-				
-					if(data=='ok')
-					{
-						if(type=='canSee')
-						{
-							if(value==false)
-							{
-								$(parent).find(':checkbox').attr('checked',false);
-								$(caller).removeClass('review-permission-chk-decoration-chk');
-								$(parent).find('#divChkAddressed').removeClass('review-permission-chk-decoration-chk');
-								$(parent).find('#divChkCanFeedback').removeClass('review-permission-chk-decoration-chk');
-								$(parent).find('#divChkNeedConfirmation').removeClass('review-permission-chk-decoration-chk');
-							}else
-							{
-								$(parent).find('#chkUserGroup').attr('checked',true);
-								$(caller).addClass('review-permission-chk-decoration-chk');
-							}
-						}
-						else
-						{
-							if(value==true)
-							{
-								CheckPermission(parent,caller,check);
-							}
-							else
-							{
-								UncheckPermission(parent,caller,check);
-							}
-						}
-					}
-				}
-		});
-
-	}
-
+	
 	$('#publicArea_'+idMainNote).children().each(function(){
 		var parent = $(this);
 		var editPermisssions = false;
@@ -533,149 +473,12 @@ function bindEvents(item)
 		{
 			editPermisssions = true;
 		}
-		$(this).find('#divChkUserGroup').unbind('click');
-		$(this).find('#divChkUserGroup').click(function(){
-			
-			if($(this).attr('isadmin') == 'no')
-			{
-				if(!$(parent).find('#chkUserGroup').is(':checked'))
-				{
-					if(editPermisssions)
-					{				
-						SavePermissionsChanges('canSee',true,$(parent).find('#chkUserGroup').attr('value'),idMainNote,parent,this);
-					}
-					else
-					{	
-						$(parent).find('#chkUserGroup').attr('checked',true);
-						$(this).addClass('review-permission-chk-decoration-chk');
-					}
 						
-				}
-				else
-				{
-					if(editPermisssions)
-					{
-						SavePermissionsChanges('canSee',false,$(parent).find('#chkUserGroup').attr('value'),idMainNote,parent,this);
-					}
-					else
-					{
-						$(parent).find(':checkbox').attr('checked',false);
-						$(this).removeClass('review-permission-chk-decoration-chk');
-						$(parent).find('#divChkAddressed').removeClass('review-permission-chk-decoration-chk');
-						$(parent).find('#divChkCanFeedback').removeClass('review-permission-chk-decoration-chk');
-						$(parent).find('#divChkNeedConfirmation').removeClass('review-permission-chk-decoration-chk');
-					}
-				}	
-			}
-		});
-		$(this).find('#divChkAddressed').unbind('click');
-		$(this).find('#divChkAddressed').click(function(){
-			if(!$(parent).find('#chkAddressed').is(':checked'))
-			{
-				if(editPermisssions)
-				{
-					SavePermissionsChanges('addressed',true,$(parent).find('#chkUserGroup').attr('value'),idMainNote,parent,this,'#chkAddressed');
-				}
-				else
-				{
-					CheckPermission(parent,this,'#chkAddressed');
-				}
-			}
-			else
-			{
-				if(editPermisssions)
-				{
-					SavePermissionsChanges('addressed',false,$(parent).find('#chkUserGroup').attr('value'),idMainNote,parent,this,'#chkAddressed');
-				}
-				else
-				{
-					UncheckPermission(parent,this,'#chkAddressed');
-				}
-			}
-		});
-
-		$(this).find('#divChkCanFeedback').unbind('click');
-		$(this).find('#divChkCanFeedback').click(function(){
-			if($(this).attr('isadmin') == 'no')
-			{
-				if(!$(parent).find('#chkCanFeedback').is(':checked'))
-				{
-					if(editPermisssions)
-					{
-						SavePermissionsChanges('canFeedback',true,$(parent).find('#chkUserGroup').attr('value'),idMainNote,parent,this,'#chkCanFeedback');
-					}
-					else
-					{
-						CheckPermission(parent,this,'#chkCanFeedback');
-					}
-				}
-				else
-				{
-					if(editPermisssions)
-					{
-						SavePermissionsChanges('canFeedback',false,$(parent).find('#chkUserGroup').attr('value'),idMainNote,parent,this,'#chkCanFeedback');
-					}
-					else
-					{
-						UncheckPermission(parent,this,'#chkCanFeedback');
-					}
-				}
-			}
-		});
-		
-						
-		$(this).find('#divChkNeedConfirmation').unbind('click');
-		$(this).find('#divChkNeedConfirmation').click(function(){
-		if(!$(parent).find('#chkNeedConfirmation').is(':checked'))
-			{
-				if(editPermisssions)
-				{
-					SavePermissionsChanges('needConfirmation',true,$(parent).find('#chkUserGroup').attr('value'),idMainNote,parent,this,'#chkNeedConfirmation');
-				}
-				else
-				{
-					CheckPermission(parent,this,'#chkNeedConfirmation');
-				}
-			}
-			else
-			{
-				if(editPermisssions)
-				{
-					SavePermissionsChanges('needConfirmation',false,$(parent).find('#chkUserGroup').attr('value'),idMainNote,parent,this,'#chkNeedConfirmation');
-				}
-				else
-				{
-					UncheckPermission(parent,this,'#chkNeedConfirmation');
-				}
-			}
-		});
 				
 	});
 	
 	$('#public_'+idMainNote).unbind('click');
 	$('#public_'+idMainNote).click(function(){
-		var dataUserGroup = { 'value[]' : []};
-		var dataFeedback = { 'value[]' : []};
-		var dataAddressed = { 'value[]' : []};
-		var dataNeedConf = { 'value[]' : []};
-		
-		$('#publicArea_'+idMainNote).children().each(function(){
-			var chkGroup = $(this).find('#chkUserGroup');
-			if($(chkGroup).is(':checked'))
-				dataUserGroup['value[]'].push($(chkGroup).val());
-				
-			var chkFeedback = $(this).find('#chkCanFeedback');
-			if($(chkFeedback).is(':checked'))
-				dataFeedback['value[]'].push($(chkFeedback).val());
-				
-			var chkAddress = $(this).find('#chkAddressed');
-			if($(chkAddress).is(':checked'))
-				dataAddressed['value[]'].push($(chkAddress).val());
-			
-			var chkNeedConf = $(this).find('#chkNeedConfirmation');
-			if($(chkNeedConf).is(':checked'))
-				dataNeedConf['value[]'].push($(chkNeedConf).val());
-		});
 		
 			$('#dialogProcessing').dialog('open');		
 			$.post('".ReviewController::createUrl('AjaxPublicNote')."', 
@@ -683,10 +486,7 @@ function bindEvents(item)
 				idNote: idMainNote,
 				idCustomer: ".$model->Id_customer.",
 				idProject: ".$model->Id_project.",
-				userGroup: dataUserGroup['value[]'],
-				canFeedback: dataFeedback['value[]'],
-				addressed: dataAddressed['value[]'],
-				needConf: dataNeedConf['value[]']
+				idReviewType: ".$model->Id_review_type."
 			}
 			).success(
 			function(data){
