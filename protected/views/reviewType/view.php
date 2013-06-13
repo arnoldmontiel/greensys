@@ -9,6 +9,13 @@ $this->menu=array(
 	array('label'=>'Actualizar Agrupador', 'url'=>array('update', 'id'=>$model->Id)),
 	array('label'=>'Administrar Agrupadores', 'url'=>array('admin')),
 );
+
+Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-view', "
+	
+	$('.btn-group a').click(function(){
+		return false;
+   });
+");
 ?>
 
 <h1>Vista Agrupador</h1>
@@ -33,20 +40,74 @@ $this->menu=array(
 )); ?>
 
 <br>
-<?php 
-	
-	$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'user-customer-grid',
-		'dataProvider'=>$modelReviewTypeUserGroup->search(),
-		'summaryText'=>'',
-		'columns'=>array(
-				array(
-			 		'name'=>'user_group_desc',
-					'htmlOptions'=>array('style'=>'text-align: center'),
-					'value'=>'$data->userGroup->description',
-				),
-				),
-			)
-		); 
-	?>
 
+<?php
+		$modelUserGroup = UserGroup::model()->findAll();	
+		foreach($modelUserGroup as $item)
+		{
+			$canCreate = false;
+			$canRead = false;
+			$canFeedback = false;
+			$canMail = false;
+			$canClose = false;
+			
+			$modelReviewTypeUsrGrup =  ReviewTypeUserGroup::model()->findByAttributes(array('Id_review_type'=>$model->Id, 'Id_user_group'=>$item->Id));
+			if(isset($modelReviewTypeUsrGrup))
+			{					
+				$canCreate = ($modelReviewTypeUsrGrup->can_create == 1)?true:false;
+				$canRead = ($modelReviewTypeUsrGrup->can_read == 1)?true:false;
+				$canFeedback = ($modelReviewTypeUsrGrup->can_feedback == 1)?true:false;
+				$canMail = ($modelReviewTypeUsrGrup->can_mail == 1)?true:false;
+				$canClose = ($modelReviewTypeUsrGrup->can_close == 1)?true:false;
+			}
+			
+			echo CHtml::openTag('div', array('id'=>'userGroup_'.$item->Id));
+			
+				echo CHtml::openTag('div', array('class'=>'user-group-first'));
+					$this->widget('bootstrap.widgets.TbLabel', array(
+					     'type'=>'success', // 'success', 'warning', 'important', 'info' or 'inverse'
+					     'label'=>CHtml::encode($item->description),
+					));
+				echo CHtml::closeTag('div');
+				
+				$this->widget('bootstrap.widgets.TbButtonGroup', array(
+				    'type' => 'secondary',
+				    'toggle' => 'checkbox',
+				    'buttons' => array(
+								array('label'=>'Crear','active' => $canCreate,
+														'htmlOptions'=>array('id'=>'chkCanCreate',
+																			'data-id'    => $item->Id,
+								 											'data-field' => 'create',
+                    														)
+                    				 ),
+								array('label'=>'Leer','active' => $canRead,
+														'htmlOptions'=>array('id'=>'chkCanRead',
+																			'data-id'    => $item->Id,
+								 											'data-field' => 'read',
+                    														)
+                    				 ),
+								array('label'=>'Responde','active' => $canFeedback,
+														'htmlOptions'=>array('id'=>'chkCanFeedback',
+																			'data-id'    => $item->Id,
+								 											'data-field' => 'feedback',
+                    														)
+                    				 ),
+								array('label'=>'Correo','active' => $canMail,
+														'htmlOptions'=>array('id'=>'chkCanMail',
+																			'data-id'    => $item->Id,
+								 											'data-field' => 'mail',
+                    														)
+                    				 ),
+								array('label'=>'Cerrar','active' => $canClose,
+														'htmlOptions'=>array('id'=>'chkCanClose',
+																			'data-id'    => $item->Id,
+								 											'data-field' => 'close',
+                    														)
+                    				 ),
+						),
+				));
+			
+			echo CHtml::closeTag('div');
+							
+		}
+?>
