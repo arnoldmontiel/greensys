@@ -72,7 +72,7 @@ $('#Id_customer').change(function(){
 
 setInterval(function() {
    doFilter();
-}, 1000*15)
+}, 1000*30)
 
 var collapsed = new Array();
 
