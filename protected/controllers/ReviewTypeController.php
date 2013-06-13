@@ -64,10 +64,10 @@ class ReviewTypeController extends Controller
 			if($model->save())
 			{
 				if(isset($_POST['radiolist-tag-type']))
-					$this->createTagRelagion($model->Id, $_POST['radiolist-tag-type']);
+					$this->createTagRelation($model->Id, $_POST['radiolist-tag-type']);
 				
-				if(isset($_POST['chklist-userGroup']))
-					$this->createUserGroupRelation($model->Id, $_POST['chklist-userGroup']);
+				if(isset($_POST['hidden-user-group-chk']))
+					$this->createUserGroupRelation($model->Id, $_POST['hidden-user-group-chk']);
 				
 				$this->redirect(array('view','id'=>$model->Id));				
 			}
@@ -79,7 +79,7 @@ class ReviewTypeController extends Controller
 		));
 	}
 	
-	private function createTagRelagion($id, $tagType)
+	private function createTagRelation($id, $tagType)
 	{
 		$tags = null;
 		
@@ -97,15 +97,22 @@ class ReviewTypeController extends Controller
 
 	}
 	
-	private function createUserGroupRelation($id, $checks)
+	private function createUserGroupRelation($id, $chkList)
 	{
-		if(isset($checks))
+		$json = json_decode($chkList);
+		
+		foreach ($json as $key => $obj)
 		{
-			foreach($checks as $item)
+			if(isset($obj))
 			{
 				$modelReviewTypeUserGroup = new ReviewTypeUserGroup;
-				$modelReviewTypeUserGroup->Id_user_group =  $item;
+				$modelReviewTypeUserGroup->Id_user_group =  $key;
 				$modelReviewTypeUserGroup->Id_review_type = $id;
+				$modelReviewTypeUserGroup->can_create = $obj->create;
+				$modelReviewTypeUserGroup->can_read = $obj->read;
+				$modelReviewTypeUserGroup->can_feedback = $obj->feedback;
+				$modelReviewTypeUserGroup->can_mail = $obj->mail;
+				$modelReviewTypeUserGroup->can_close = $obj->close;
 				$modelReviewTypeUserGroup->save();
 			}
 		}
@@ -130,11 +137,11 @@ class ReviewTypeController extends Controller
 			{
 				TagReviewType::model()->deleteAllByAttributes(array('Id_review_type'=>$model->Id));
 				if(isset($_POST['radiolist-tag-type']))
-					$this->createTagRelagion($model->Id, $_POST['radiolist-tag-type']);
+					$this->createTagRelation($model->Id, $_POST['radiolist-tag-type']);
 				
 				ReviewTypeUserGroup::model()->deleteAllByAttributes(array('Id_review_type'=>$model->Id));
-				if(isset($_POST['chklist-userGroup']))
-					$this->createUserGroupRelation($model->Id, $_POST['chklist-userGroup']);
+				if(isset($_POST['hidden-user-group-chk']))
+					$this->createUserGroupRelation($model->Id, $_POST['hidden-user-group-chk']);
 				
 				$this->redirect(array('view','id'=>$model->Id));
 				
