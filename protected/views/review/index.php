@@ -113,12 +113,14 @@ function doFilter()
 				{
 					collapsed.push(idProject);
 					$('#collapse_'+idProject).attr('src','images/expand_blue.png');
+					$('#collapse_'+idProject).attr('title','expandir');
 				}
 				else
 				{
 					var index = collapsed.indexOf(idProject);
 					collapsed.splice(index, 1);
 					$('#collapse_'+idProject).attr('src','images/collapse_blue.png');
+					$('#collapse_'+idProject).attr('title','colapsar');
 				}
 			});						
 			$('#review-area').animate({opacity: 'show'},240);
