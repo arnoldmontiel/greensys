@@ -1,4 +1,29 @@
 <?php $this->beginContent('//layouts/main'); ?>
+<?php if(isset($this->showSideBar)&&$this->showSideBar==true):?>
+<div class="span-5 first">
+<div id="sidebar" style="float:left;width: 150px;background:#ccc;padding:20px; position: absolute; display:none;opacity: 1">
+	<ul id='sidebarTitle'>	
+     </ul>
+	<ul id='sidebarText'>
+	</ul>
+</div>
+<?php Yii::app()->clientScript-> registerScript('sidebarController', "
+var offset = $('#sidebar').offset();
+var topPadding = 15;
+$(window).scroll(function() {
+	if ($('#sidebar').height() < $(window).height() && $(window).scrollTop() > offset.top) {
+		$('#sidebar').stop().animate({
+			marginTop: $(window).scrollTop() - offset.top + topPadding
+		});
+	} else {
+		$('#sidebar').stop().animate({
+			marginTop: 0
+		});
+	};
+});")
+?>
+</div>
+<?php endif?>
 <div class="span-19">
 	<div id="content">
 		<?php echo $content; ?>

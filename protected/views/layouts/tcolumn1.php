@@ -1,5 +1,6 @@
 <?php $this->beginContent('//layouts/tmain'); ?>
 
+<?php if($this->showFilter || $this->modelTag):?>
 <div class="span-5 first">
 	<?php if($this->modelTag):?>			
 		<div class="search-box">
@@ -100,7 +101,7 @@
 				                }",
 					    ),
 					    'htmlOptions'=>array(
-					        'style'=>'height:20px;'
+					        'style'=>'height:20px;width:100px;'
 					    ),
 					));
 				?>
@@ -121,7 +122,7 @@
 					                }",
 					    ),
 					    'htmlOptions'=>array(
-					        'style'=>'height:20px;'
+					        'style'=>'height:20px;width:100px;'
 					    ),
 					));
 				?>
@@ -141,10 +142,14 @@
 		</div>		
 	<?php endif?>
 </div>
-
-
-		
-<div id="content">
+	<div id="content-2">
 	<?php echo $content; ?>
-</div><!-- content -->
+	</div><!-- content -->
+<?php else:?>
+	<div id="content">
+	<?php echo $content; ?>
+	</div><!-- content -->
+<?php endif?>
+
+
 <?php $this->endContent(); ?>
