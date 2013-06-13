@@ -72,9 +72,10 @@ $('#Id_customer').change(function(){
 
 setInterval(function() {
    doFilter();
-}, 1000*30)
+}, 1000*15)
 
 var collapsed = new Array();
+
 function doFilter()
 {
 
@@ -104,24 +105,42 @@ function doFilter()
 			$('#review-area').removeClass('div-hidden');
 			$('#loading').removeClass('loading');
 			$('#review-area').html(data);
-
+			//tiene que tener al menos un elemento luego de la primer carga para mantener el estado
+// 			if(collapsed.indexOf(0)==-1)
+// 			{
+// 				collapsed.push(0);
+// 			}
+			collapsed = [];
+			$('.index-review-quick-view-collapsable').each(
+				function()
+				{ 
+					var idProject = $(this).attr('id').split('_')[1];
+					if($(this).is(':hidden'))
+					{
+						collapsed.push(idProject);
+					}
+				}
+			);
 			$('.collapser').click(function()
 			{
 				var idProject = $(this).attr('id').split('_')[1];
-				$('#collapseble_'+idProject).toggle('blind', { to: { width: 200, height: 60 } }, 1000 );
-				if($('#collapse_'+idProject).attr('src')=='images/collapse_blue.png')
-				{
-					collapsed.push(idProject);
-					$('#collapse_'+idProject).attr('src','images/expand_blue.png');
-					$('#collapse_'+idProject).attr('title','expandir');
-				}
-				else
-				{
-					var index = collapsed.indexOf(idProject);
-					collapsed.splice(index, 1);
-					$('#collapse_'+idProject).attr('src','images/collapse_blue.png');
-					$('#collapse_'+idProject).attr('title','colapsar');
-				}
+				$('#collapseble_'+idProject).toggle('blind', { to: { width: 200, height: 60 } }, 1000 ,
+				function(){
+					if($('#collapseble_'+idProject).is(':hidden'))
+					{
+						collapsed.push(idProject);
+						$('#collapse_'+idProject).attr('src','images/expand_blue.png');
+						$('#collapse_'+idProject).attr('title','expandir');
+					}
+					else
+					{
+						var index = collapsed.indexOf(idProject);
+						collapsed.splice(index, 1);
+						$('#collapse_'+idProject).attr('src','images/collapse_blue.png');
+						$('#collapse_'+idProject).attr('title','colapsar');
+					}
+				
+				});
 			});						
 			$('#review-area').animate({opacity: 'show'},240);
 		});		

@@ -685,7 +685,7 @@ class ReviewController extends Controller
 			}			
 			
 			$projects = Project::model()->findAll($criteria);
-	
+			$count = 0;	
 			foreach ($projects as $project){
 				$review->Id_customer = $project->customer->Id;
 				$review->Id_project = $project->Id;
@@ -696,7 +696,11 @@ class ReviewController extends Controller
 	
 				$data = $dataProvider->getData();
 				$isCollapsed = array_search($project->Id, $collapsed);
+				if($count>2)
+					if(empty($collapsed))
+						$isCollapsed = true;
 				$this->renderPartial('_quickView',array('data'=>$data, 'customer'=>$project->customer,'project'=>$project,'collapsed'=>$isCollapsed));
+				$count++;
 				
 			}
 					

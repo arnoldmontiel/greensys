@@ -5,7 +5,7 @@
 		//echo CHtml::link($customer->person->name.' '.$customer->person->last_name. ' - ' . $customer->tagDesc,
 		if(isset($collapsed)&& $collapsed!==false)
 		{
-			echo CHtml::image('images/expand_blue.png','expandir',array('id'=>'collapse_'.$project->Id,'class'=>'collapser','title'=>'expandir'));				
+			echo CHtml::image('images/expand_blue.png','expandir',array('id'=>'collapse_'.$project->Id,'class'=>'collapser','title'=>'expandir'));
 		}else {
 			echo CHtml::image('images/collapse_blue.png','colapsar',array('id'=>'collapse_'.$project->Id,'class'=>'collapser','title'=>'colapsar'));				
 		}
