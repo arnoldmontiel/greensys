@@ -38,6 +38,12 @@ padding: 0;	margin: 0;
 	margin: 0;
 -->
 }
+div.reduce
+{
+	width: 85%;
+	float:right;
+}
+
 #content
 {
 	width: 100%;
@@ -790,6 +796,14 @@ div.review-action-back
 	font-weight: bold; 
 	z-index: 9;	
 	background-color: #e5ecfb;
+}
+div.review-action-filters
+{
+	float: left;
+	margin:5px 5px 5px 5px;
+	position: relative;	
+	height:20px;	
+	text-align: left;
 }
 div.review-action-customer
 {
@@ -2570,13 +2584,9 @@ div.index-review-quick-view-chart
 div.filter-panel
 {
 	float: left;
-	width: 100%;
 	margin-top: 40px;
-}
-div.filter-panel
-{
 	width: 15%;
-	display: inline-block;
+	display: none;
 }
 div.whrapper
 {

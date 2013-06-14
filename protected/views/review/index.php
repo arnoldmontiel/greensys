@@ -72,7 +72,7 @@ $('#Id_customer').change(function(){
 
 setInterval(function() {
    doFilter();
-}, 1000*30)
+}, 1000*300)
 
 var collapsed = new Array();
 
@@ -394,6 +394,35 @@ function getCheck(checkName)
 
 <div class="review-action-area" id="review-action-area">
 
+<div  class="review-action-filters" >
+	<?php
+	if(isset($Id_customer)&&$Id_customer !=-1)
+	{
+		$this->widget('zii.widgets.jui.CJuiButton', array(
+				'name'=>'submit',
+				'caption'=>'Filtros',
+				'htmlOptions' => array('class'=>'btn btn-navbar'),
+				'onclick'=>new CJavaScriptExpression('function(){
+				if(jQuery("#filter-panel").is(":hidden"))
+				{
+					$( "#content" ).effect( "size", {
+					    to: { width: "85%"}
+					  }, 1000 ,function(){$("#filter-panel").toggle("blind",{ direction: "left" },1000)});
+				}
+				else
+				{
+					$("#filter-panel").toggle("blind",{ direction: "left" },1000,function(){$( "#content" ).effect( "size", {
+					    to: { width: "100%"}
+					  }, 1000 );})
+			
+					}
+				}'
+				),
+		));
+		
+	}
+	?>
+</div>
 <div id="send-mail" class="send-mail" >
 
 <?php
