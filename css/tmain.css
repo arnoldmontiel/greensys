@@ -263,6 +263,17 @@ div.review-container-single-view
 }
 div.review-single-view
 {
+	padding: 20px 0px 10px 0px;
+	margin: 0px 0px 0px 1%;
+	width: 98%;
+	float: left;
+	display: block;
+	z-index: 4;
+	position: relative;
+	background-color: #FCFDFF;
+}
+div.review-single-view-multimedia
+{
 	padding: 0px;
 	margin: 0px 0px 0px 1%;
 	width: 98%;
@@ -271,6 +282,7 @@ div.review-single-view
 	z-index: 4;
 	position: relative;
 }
+
 div.view-text-note
 {
 	font-size: 13px;
@@ -684,13 +696,13 @@ div.wall-action-area
 {
 	position:relative;
 	display: inline-block;
-	padding:18px 10px 10px 10px;
+	padding:18px 0px 10px 0px;
 	border-top: 1px solid white;
 	border-bottom: 1px solid white;
 	background-color: #f4f6fb;
-	width: 840px;	
+	width: 98%;	
 	height: 45px;	
-	margin-left: 15px;
+	margin-left: 1%;
 	margin-top: 0px;
 }
 div.review-action-area
@@ -1499,17 +1511,19 @@ a.index-review-single-link
 	color: #666666;
 	text-decoration: none;
 }
+
 div.review-update-data
 {
 	position:relative;
+	vertical-align: baseline;
 	display: inline-block;
-	padding:5px 10px 10px 10px;
+	padding:5px 0px 10px 0px;
 	border-top: 1px solid white;
 	border-bottom: 1px solid white;
 	background-color: #f4f6fb;
-	width: 840px;	
+	width: 98%;	
 	height: 35px;	
-	margin-left: 15px;
+	margin-left: 1%;
 	margin-top: 0px;
 	
 }
@@ -1625,13 +1639,10 @@ div.review-update-data-info-descr
 }
 div.review-close-review
 {	
-	margin-top: 5px;
-	<!--
 	margin-top: 0px;
-	-->
-	margin-right: 5px;
+	margin-right: 1%;
 	display: inline-block;
-	float: left;	
+	float: right;	
 }
 div.review-update-data-info-descr-text
 {
@@ -1693,6 +1704,7 @@ div.search-box
 	border-top: 1px solid white;
 	border-bottom: 1px solid white;
 	background-color: #f4f6fb;
+	width: 170px;
 }
 div.search-box-title
 {

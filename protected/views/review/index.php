@@ -644,7 +644,7 @@ function getCheck(checkName)
 </div>
 
 <?php if(isset($Id_customer) && $Id_customer > 0):?>
-<div id="resources-view" class="review-single-view">
+<div id="resources-view" class="review-single-view-multimedia">
 	<div class="review-resources-title">
 		<div class="review-resources-title-text">
 			Recursos Multimedia
