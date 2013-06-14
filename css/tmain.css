@@ -1187,7 +1187,7 @@ div.wall-action-edit-main-note
 	font-size: 13px;
 	line-height: 18px;
 	width: 540px;
-	height: 150px;
+	height: 250px;
 	font: inherit;
 	color: inherit;
 	margin: 0px;
@@ -1910,7 +1910,7 @@ div.review-multimedia-conteiner
 	position:relative;
 	display: inline;
 	float: left;
-	width: 50%;
+	width: 30%;
 }
 
 div.review-add-images-container
