@@ -20,7 +20,7 @@ function RestoreButtons()
 
 function SelectAButton(btnSelected)
 {
-	$('#btn-box').children().addClass('wall-action-btn-disable');
+	//$('#btn-box').children().addClass('wall-action-btn-disable');
 	$(btnSelected).removeClass('wall-action-btn-disable');
 	$(btnSelected).addClass('wall-action-btn-selected');
 }
@@ -970,7 +970,36 @@ $('#need_reload').click(function(){
 	Hay novedades, click para actualizar
 </div>
 <div class="review-update-data">
+<?php 
+if($model->is_open)
+{
+	$tags = $model->tags;
+	echo CHtml::openTag('div',array('class'=>'index-review-tag-box',"style"=>"margin-top:10px;"));
+	foreach($tags as $tag)
+	{
+		$options = array('class'=>'index-review-single-tag');
+		
+		if($tag->Id==1)
+			$options['style']='background-color: #CC3300;color: white;max-width:none';//rojo
+		else if($tag->Id==2)
+			$options['style']='background-color: #66FF66;max-width:none';//verde
+		else if($tag->Id==3)
+			$options['style']='background-color: #FFFF99;max-width:none';//amarillo
+		else if($tag->Id==4)
+			$options['style']='background-color: #FFCC66;max-width:none';//amarillo
+			
+		$options['title']=$tag->description;
+		echo CHtml::openTag('div',$options);
+		echo $tag->description;
+		echo CHtml::closeTag('div');
+	}
+	echo CHtml::closeTag('div');
+	echo CHtml::openTag('div',array('class'=>'index-review-type-box','title'=>$model->reviewType->description,"style"=>"margin-top:10px;max-width:none;"));
+	echo $model->reviewType->description;
+	echo CHtml::closeTag('div');						
+}
 
+?>
 	<div class="review-update-data-info">
 		<?php 
 			if(User::canCreate() && $model->username == User::getCurrentUser()->username)
@@ -980,9 +1009,8 @@ $('#need_reload').click(function(){
 			}
 			else
 			{
-				echo CHtml::openTag('div',array('class'=>'review-update-data-info-descr-number'));				
-				echo CHtml::encode($model->review.' -');				
-				echo CHtml::closeTag('div');				
+				$review_text= "#".CHtml::encode($model->review);
+					
 			} 
 		?>
 	</div>
@@ -993,7 +1021,7 @@ $('#need_reload').click(function(){
 			else
 			{
 				echo CHtml::openTag('div',array('class'=>'review-update-data-info-descr-text'));				
-				echo CHtml::encode($model->description);				
+				echo CHtml::encode($review_text. ': '.$model->description);				
 				echo CHtml::closeTag('div');				
 			} 
 			echo CHtml::image('images/reload.png','',array('class'=>'review-need-update', 'id'=>'need_reload','title'=>'Recargar'));
@@ -1109,7 +1137,7 @@ $('#need_reload').click(function(){
 <!-- *************** NOTE ******************************* -->
 
 <div id="wall-action-note"  class='wall-action-area-note' style="display:none">
-	<div class="review-action-area-dialog" style="left: 310px;">
+	<div class="review-action-area-dialog" style="left: 245px;">
 	</div>
 	<?php 
 		

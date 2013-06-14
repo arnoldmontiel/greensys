@@ -48,6 +48,7 @@ class ReviewController extends Controller
 	 */
 	public function actionCreate()
 	{
+		$this->layout='//layouts/tcolumn2';
 		$model=new Review;
 		$modelCustomer=new TCustomer;
 		$modelProject=new Project;
@@ -266,6 +267,7 @@ class ReviewController extends Controller
 	
 	public function actionSelectAttach($id, $idNote)
 	{
+		$this->layout='//layouts/tcolumn2';
 		$this->render('selectAttach',array(
 								'id'=>$id,
 								'idNote'=>$idNote,								
@@ -274,6 +276,7 @@ class ReviewController extends Controller
 	
 	public function actionAjaxAttachImage($id, $idNote)
 	{
+		
 		$model=$this->loadModel($id);
 		
 		$criteria=new CDbCriteria;
@@ -333,6 +336,7 @@ class ReviewController extends Controller
 	
 	public function actionAjaxAttachDoc($id, $idNote)
 	{
+		$this->layout='//layouts/tcolumn2';
 		$model=$this->loadModel($id);
 	
 		$criteria=new CDbCriteria;
@@ -368,6 +372,7 @@ class ReviewController extends Controller
 	
 	public function actionAjaxAttachTechDoc($id, $idNote)
 	{
+		$this->layout='//layouts/tcolumn2';
 		$model=$this->loadModel($id);
 	
 		$criteria=new CDbCriteria;

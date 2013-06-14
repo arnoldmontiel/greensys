@@ -38,7 +38,7 @@ $this->widget('ext.processingDialog.processingDialog', array(
 
 	<div class="row">
 		<?php echo CHtml::label('N&uacute;mero de Revisi&oacute;n', 'Review[review]'); ?>
-		<?php echo $form->textField($model,'review'); ?>
+		<?php echo $form->textField($model,'review',array('style'=>'width:25px;text-align:center;')); ?>
 		<?php echo $form->error($model,'review'); ?>
 	</div>
 
@@ -53,7 +53,7 @@ $this->widget('ext.processingDialog.processingDialog', array(
 	
 	<div class="row">
 		<?php echo CHtml::label('Asunto', 'Review[description]'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50,'style'=>'resize:none;')); ?>
+		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>100,'style'=>'resize:none;width:50%;')); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
 

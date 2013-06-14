@@ -94,7 +94,7 @@ echo CHtml::hiddenField('Id_project',$Id_project,array('id'=>'Id_project'));
 	</div>
 	
 	<div class="row">
-		<?php echo $formDocument->textArea($model,'description',array('rows'=>2, 'cols'=>100,'class'=>'wall-action-upload-file-description', 'placeholder'=>'Escriba un comentario...')); ?>
+		<?php echo $formDocument->textArea($model,'description',array('rows'=>2, 'cols'=>100,'class'=>'wall-action-upload-file-description','style'=>'margin-left:1%;', 'placeholder'=>'Escriba un comentario...')); ?>
 		<?php echo $formDocument->error($model,'description'); ?>
 	</div>
 

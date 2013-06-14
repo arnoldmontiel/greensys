@@ -787,6 +787,12 @@ div.review-action-btn:hover
 {
 	background-color: white;
 }
+div.review-attr-text
+{
+	font-weight: bold;
+	float: left;
+	margin-left: 5px; 
+}
 
 div.wall-action-ddl
 {
@@ -859,27 +865,39 @@ div.wall-action-area-note
 {
 	font-size: 13px;
 	line-height: 18px;
-	padding:18px 10px 10px 10px;
+	padding:18px 0px 10px 0px;
 	border-top: 1px solid white;
 	border-bottom: 1px solid white;
 	background-color: #f4f6fb;
 	position: relative;
-	width: 840px;	
-	margin-left: 15px;
+	width: 98%;	
+	margin-left: 1%;
 	margin-bottom: 15px;
 	float: left;	
+}
+div.review-update-documents
+{
+	float: left;
+	position: relative;
+	width: 98%;
+	margin-left: 1%;
+}
+div.review-update-documents-items
+{
+	float: left;
+	width: 100%;	
 }
 div.review-update-upload-document
 {
 	font-size: 13px;
 	line-height: 18px;
-	padding:18px 10px 10px 10px;
+	padding:18px 0px 10px 0px;
 	border-top: 1px solid white;
 	border-bottom: 1px solid white;
 	background-color: #f4f6fb;
 	position: relative;
-	width: 840px;	
-	margin-left: 0px;
+	width: 98%;	
+	margin-left: 1%;
 	margin-bottom: 15px;
 	float: left;	
 }
@@ -1013,6 +1031,8 @@ textarea.wall-action-upload-file-description
 	font-size: 13px;
 	line-height: 18px;
 	resize: none;
+	width: 95%;
+	margin-left: 1%;
 }
 div.view-text-note-add
 {
@@ -1432,6 +1452,7 @@ div.album-action-area-images
 }
 div.review-area-files
 {
+	width:100%;
 	position: relative;
 	display: inline-block;	
 }
@@ -1444,9 +1465,9 @@ div.review-action-area-files
     font-size: 13px;
     line-height: 18px;
     margin-bottom: 15px;
-    padding: 18px 10px 10px;
+    padding: 18px 0px 10px 0px;
     position: relative;
-    width: 840px;
+    width: 100%;
 }
 div.review-area-single-files
 {
@@ -1659,7 +1680,7 @@ div.review-update-data-info-descr
 	margin-right: 5px;
 	display: inline-block;
 	float: left;
-	width: 670px;
+	width: 50%;
 }
 div.review-close-review
 {	
@@ -1671,6 +1692,7 @@ div.review-close-review
 div.review-update-data-info-descr-text
 {
 	margin-top: 5px;
+	font-size: 16px;
 	<!--
 	margin-top: 10px;
 	-->
@@ -1813,7 +1835,7 @@ div.index-review-type-box
 	position:relative;
 	display: inline-block;
 	font-size: 12px;
-	border: 1px solid white;
+	
 	background-color: #96CDCD;
 	max-width: 100px;
 	overflow: hidden;
@@ -2040,12 +2062,6 @@ div.review-attr-level
 	margin-top: 5px;
 	-->
 }
-div.review-attr-text
-{
-	font-weight: bold;
-	float: left;
-	margin-left: 5px; 
-}
 div.review-type
 {
 	float:left;
@@ -2055,9 +2071,9 @@ div.review-type
 div.review-cbo
 {
 	float:left;
-	margin-top: 10px;
+	margin-top: 5px;
 	margin-left: 10px;
-	background-color: #d7ddeb;
+	background-color: #F4F6FB;
 	cursor: default;
 }
 div.order-info
