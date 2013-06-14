@@ -2,7 +2,7 @@
 $multimediasCount = count($modelMiniNote->multimedias);
 $isOwner = User::isOwnerOf($modelMiniNote);
 
-echo CHtml::openTag('div',array('class'=>'view-text-note','style'=>'padding:18px 0px 10px','id'=>'view_text_note_'.$modelMiniNote->Id));
+echo CHtml::openTag('div',array('class'=>'view-text-note','style'=>'padding:22px 0px 25px','id'=>'view_text_note_'.$modelMiniNote->Id));
 	echo CHtml::openTag('div',array('class'=>'view-text-user','id'=>'view_text_user_'.$modelMiniNote->Id));
 		echo $modelMiniNote->creation_date . ' - ' . CHtml::encode($modelMiniNote->user->name.' '.$modelMiniNote->user->last_name);
 	echo CHtml::closeTag('div');
@@ -165,17 +165,15 @@ echo CHtml::openTag('div',array('class'=>'view-text-note','style'=>'padding:18px
 	echo CHtml::hiddenField('hidden_note_mini',$modelMiniNote->note,array('id'=>'hidden_note_mini_saved_'.$modelMiniNote->Id));	
 ?>
 
-	<div class="review-text-note-add-progress" id="mini_note_container_<?php echo $modelMiniNote->Id?>">
-
-		<div id='create_note_mini_<?php echo $modelMiniNote->Id?>' class="review-create-note">
-			Publicar
-		</div>
+	<div class="review-text-note-add-progress" id="mini_note_container_<?php echo $modelMiniNote->Id?>">				
+		<textarea id="note_mini_<?php echo $modelMiniNote->Id?>" class="review-action-add-note" placeholder='Escriba una nota...'><?php echo $modelMiniNote->note?></textarea>
 		<div id='create_note_cancel_mini_<?php echo $modelMiniNote->Id?>' class="review-create-note-cancel">
 			Cancelar
 		</div>
-				
-		<textarea id="note_mini_<?php echo $modelMiniNote->Id?>" class="review-action-add-note" placeholder='Escriba una nota...'><?php echo $modelMiniNote->note?></textarea>
-	</div>
+		<div id='create_note_mini_<?php echo $modelMiniNote->Id?>' class="review-create-note">
+			Publicar
+		</div>
+		</div>
 <?php 
 echo CHtml::closeTag('div');
 ?>

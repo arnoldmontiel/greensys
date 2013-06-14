@@ -281,11 +281,6 @@ function bindEvents(item)
 			);
 					
 	});
-
-	$(item).find('#note_'+idMainNote).unbind('keypress');						
-	$(item).find('#note_'+idMainNote).keypress(function(){
-					alert('crando mini nota.. '+idMainNote);
-	});
 	
 	$(item).find('#create_note_'+idMainNote).unbind('keypress');												
 	$(item).find('#create_note_'+idMainNote).click(function(){

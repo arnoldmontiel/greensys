@@ -423,9 +423,8 @@ div.view-text-user
 div.review-create-note
 {	
 	opacity:0.7;
-	filter:alpha(opacity=70); /* For IE8 and earlier */
-	position: absolute;
-	right:-65px;
+	filter:alpha(opacity=70); /* For IE8 and earlier */	
+	right:1%;
 	top: 8px;
 	font-size: 10px;
 	line-height: 18px;
@@ -435,6 +434,9 @@ div.review-create-note
 	cursor: pointer;	
 	width:50px;
 	text-align: center;
+	float:right;
+	margin-right: 1%;
+	margin-top: 2px;
 }
 div.review-create-note:HOVER
 {
@@ -445,9 +447,8 @@ div.review-create-note-cancel
 {	
 	opacity:0.7;
 	filter:alpha(opacity=70); /* For IE8 and earlier */
-	position: absolute;
 	width:50px;
-	right:-65px;
+	right:1%;
 	top: 30px;
 	font-size: 10px;
 	line-height: 18px;
@@ -456,6 +457,9 @@ div.review-create-note-cancel
 	padding: 0px 5px  0px 5px;
 	cursor: pointer;	
 	text-align: center;
+	float: right;
+	margin-right: 2%;
+	margin-top: 2px;
 }
 div.review-create-note-cancel:HOVER
 {
@@ -1027,8 +1031,9 @@ div.review-text-note-add
 	border-bottom: 1px solid #D2D9E7;
 	background-color: #f4f6fb;
 	position: relative;
-	width: 100%;
+	width: 98%;
 	float: left;
+	margin: 0px 1%;
 }
 div.review-text-note-add-progress
 {
@@ -1061,17 +1066,35 @@ textarea.review-action-add-note
 {
 	z-index:10;
 	position: relative;
-	padding: 5px 10px 5px;
+	padding: 1% 2% 1%;
 	outline: none;
 	background-color: #f4f6fb;
 	border: 1px solid #f4f6fb;
 	font-size: 13px;
 	line-height: 18px;
 	resize: none;
-	width: 97%;
+	width: 93%;
 	height: 180px;
+	margin-left:1%; 
+	margin-right:1%; 
+	margin-bottom: 2px;
 }
-
+textarea.review-action-add-note-holder
+{
+	z-index:10;
+	position: relative;
+	padding: 1% 2% 1%;
+	outline: none;
+	background-color: #f4f6fb;
+	border: 1px solid #f4f6fb;
+	font-size: 13px;
+	line-height: 18px;
+	resize: none;
+	width: 93%;
+	height: 100px;
+	margin-left:1%; 
+	margin-right:1%; 
+}
 textarea.review-action-add-note:focus
 {
 	background-color: white;	
@@ -1862,7 +1885,8 @@ div.singles-notes-container
 	display: block;
 	position: relative;
 	float: left;
-	width: 100%;
+	width: 98%;
+	margin: 0 1%;
 }
 div.singles-notes-confirmations
 {
@@ -1886,7 +1910,7 @@ div.review-multimedia-conteiner
 	position:relative;
 	display: inline;
 	float: left;
-	width: 30%;
+	width: 50%;
 }
 
 div.review-add-images-container
