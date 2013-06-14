@@ -72,7 +72,7 @@ $('#Id_customer').change(function(){
 
 setInterval(function() {
    doFilter();
-}, 1000*30)
+}, 1000*300)
 
 var collapsed = new Array();
 
@@ -617,7 +617,9 @@ function getCheck(checkName)
 <?php if(isset($Id_customer) && $Id_customer > 0):?>
 <div id="resources-view" class="review-single-view">
 	<div class="review-resources-title">
-		Recursos Multimedia
+		<div class="review-resources-title-text">
+			Recursos Multimedia
+		</div>
 	</div>
 <?php
 		if($hasAlbum)

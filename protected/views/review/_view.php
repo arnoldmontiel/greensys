@@ -34,6 +34,7 @@ if(!$data->isOpen())
 				else if($tag->Id==4)
 					$options['style']='background-color: #FFCC66';//amarillo
 				
+				$options['title']=$tag->description;
 				echo CHtml::openTag('div',$options);
 				echo $tag->description;
 				echo CHtml::closeTag('div');

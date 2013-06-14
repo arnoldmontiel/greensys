@@ -21,19 +21,23 @@
 		$style= 'style=" display:none;" '; 
 ?>
 <div class="index-review-quick-view-collapsable" <?php echo $style;?> id='collapseble_<?php echo $project->Id?>'>
+<div class="index-review-quick-view-items" >
 <?php 
-	if(!empty($project->reviews))
-	{
-		echo $this->renderPartial('_quickViewChart', array('project'=>$project));		
+	foreach ($data as $item){
+			$this->renderPartial('_view',array('data'=>$item));
 	}
-?>
-<?php 
-foreach ($data as $item){
-		$this->renderPartial('_view',array('data'=>$item));
-}
-
-if(count($data) == 0)
-	echo '<div  class="index-review-customer-separator"></div>'; 
-?>
+	
+	if(count($data) == 0)
+		echo '<div  class="index-review-customer-separator"></div>'; 
+	?>
+</div>
+<div class="index-review-quick-view-chart" >
+	<?php 
+		if(!empty($project->reviews))
+		{
+			echo $this->renderPartial('_quickViewChart', array('project'=>$project));		
+		}
+	?>
+</div>
 </div>
 </div>

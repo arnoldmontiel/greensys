@@ -40,9 +40,10 @@ padding: 0;	margin: 0;
 }
 #content
 {
+	width: 100%;
+	float:left;
 	margin: 0 auto;
-	padding: 20px;	
-	width: 80%;
+	padding-top: 20px;	
 	margin-top:40px;	
 <!--
 	padding-left: 0px;	
@@ -238,10 +239,9 @@ div.review-container-single-view
 }
 div.review-single-view
 {
-	background-color: #FCFDFF;
-	padding: 20px 5px 5px 10px;
-	margin: 5px 0px 5px 15px;
-	width: 840px;
+	padding: 0px;
+	margin: 0px 0px 0px 1%;
+	width: 98%;
 	float: left;
 	display: block;
 	z-index: 4;
@@ -674,13 +674,13 @@ div.review-action-area
 	position:relative;
 	vertical-align: baseline;
 	display: block;
-	padding:10px 10px 5px 5px;
+	padding:10px 0px 5px 0px;
 	border-top: 1px solid white;
 	border-bottom: 1px solid white;
 	background-color: #f4f6fb;
-	width: 100%;	
+	width: 98%;	
 	height: 45px;	
-	margin-left: 15px;
+	margin-left: 1%;
 	margin-top: 0px;
 }
 
@@ -761,15 +761,14 @@ div.review-action-back
 {
 	float: left;
 	margin:5px 5px 5px 5px;
-	padding:5px 5px 5px 20px;
+	padding:5px 20px 5px 20px;
 	position: relative;
-	width: 350px;
 	height:20px;	
 	cursor:pointer;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
-	text-align: left;
+	text-align: center;
 	font-weight: bold; 
 	z-index: 9;	
 	background-color: #e5ecfb;
@@ -1428,9 +1427,9 @@ div.index-review-area
 	display: inline-block;
 	border: 1px solid #f4f6fb;
 	position: relative;
-	width: 100%;	
-	margin: 10px 10px 10px 10px;
-	padding:10px 10px 10px 10px;
+	width: 98%;	
+	margin: 10px 0% 10px 1%;
+	padding:10px 0px 10px 0px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
@@ -1451,12 +1450,12 @@ div.index-review-customer-separator
 
 div.index-review-quick-view
 {	
-	margin: 5px;
+	margin: 10px;
 	padding:5px;
 	position: relative;
 	float:left;
 	display: inline-block;
-	width: 100%;
+	width: 98%;
 }
 
 div.div-hidden
@@ -1623,7 +1622,7 @@ div.index-review-single
 	padding: 10px 5px 5px 10px;
 	margin: 5px 10px;
 	border: 1px solid #9ad7f5;
-	width: 80%;
+	width: 100%;
 	float: left;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -1706,6 +1705,10 @@ div.index-review-single-tag
 	float:left;
     font-size: 12px;
 	background-color: #9AD7F5;
+	max-width: 60px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;	
 }
 div.review-tag-containier
 {
@@ -1876,12 +1879,17 @@ div.review-container-documents
 }
 div.review-resources-title
 {
-	width: 95%;
+	width: 100%;
 	height: 40px;
-	background-color: #F4F6FB;
 	margin-bottom: 30px;
-	padding: 18px 5px 0px 20px;
+	padding: 18px 0px 0px 0px;
 	font-size: 18px;
+	float: left;
+	background-color: #F4F6FB;
+}
+div.review-resources-title-text
+{
+	margin-left: 10px;
 }
 div.customer-assign-title
 {
@@ -2525,8 +2533,20 @@ div.index-review-quick-view-collapsable
 	float: left;
 	width: 100%;
 }
+div.index-review-quick-view-items
+{
+	float: left;
+	width: 80%;	
+}
+div.index-review-quick-view-chart
+{
+	float: left;
+	width: 20%;
+	min-width: 100px;	
+}
 #page ul.yiiPager .first,
 #page ul.yiiPager .last
 {
         display: inline;
 }
+.container,.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container{ width:100% !important; max-width:100% !important; min-width:800px !important;}

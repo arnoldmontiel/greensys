@@ -1,7 +1,7 @@
 <?php $this->beginContent('//layouts/tmain'); ?>
 
 <?php if($this->showFilter || $this->modelTag):?>
-<div class="span-5 first">
+<div class="span-5 first" style="display:true">
 	<?php if($this->modelTag):?>			
 		<div class="search-box">
 			<div class="search-box-title">
@@ -142,7 +142,7 @@
 		</div>		
 	<?php endif?>
 </div>
-	<div id="content-2">
+	<div id="content">
 	<?php echo $content; ?>
 	</div><!-- content -->
 <?php else:?>
