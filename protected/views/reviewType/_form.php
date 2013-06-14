@@ -4,12 +4,15 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-form', "
 	$('#ReviewType_is_for_client').change(function(){
 		$('#ReviewType_is_internal').attr('checked',false);
 	});
+	
 	$('#ReviewType_is_internal').change(function(){
 		$('#ReviewType_is_for_client').attr('checked',false);
 	});
+	
 	$('#btnSave').click(function(){
 		$('#dialogProcessing').dialog('open');
 	});
+	
 	$('.checkbox-group label').click(function(){
 		var fieldId = $(this).data('field');
 		var id = $(this).data('id');
@@ -38,8 +41,8 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-form', "
     			obj[id].read = value;
     			if(value == 0)
     			{
-    				$(this).parent().parent().find('#lblCanFeedback_'+id).removeClass('ui-state-active');
-    				$(this).parent().parent().find('#chkCanFeedback_'+id).attr('checked','checked');    				
+    				$(this).parent().parent().find('#lblCanFeedback_'+id).removeClass('ui-state-active');					
+    				$(this).parent().parent().find('#chkCanFeedback_'+id).removeAttr('checked');    				
     				obj[id].feedback = value;    				
     			}
     		break;
