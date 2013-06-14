@@ -1,5 +1,11 @@
 <?php 
 Yii::app()->clientScript->registerScript(__CLASS__.'#review-view-pending-data'.$data->Id, "
+		function(){
+			$('#optionsAttachImages').toggle('blind');
+				return false;	
+			}		
+		)
+		
 $('#publicArea_".$data->Id."').children().each(
 	function(index, item){
 
@@ -69,11 +75,21 @@ $('#publicArea_".$data->Id."').children().each(
 			<?php 
 				if(sizeof($images)==0)
 				{
-					echo CHtml::openTag('div', array('class'=>'review-add-images-container'));				
-					echo CHtml::link('Adjuntar Imagenes',
-						ReviewController::createUrl('selectAttach',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
-						array('class'=>'review-text-docs')
-					);
+					echo CHtml::openTag('div', array('class'=>'review-add-images-container'));
+						echo CHtml::link('Adjuntar Imagenes',"#",
+								array('class'=>'review-text-docs','id'=>'linkAttachImages')
+						);
+						echo CHtml::openTag('div',array('id'=>'optionsAttachImages','style'=>'margin-left:10px;display:none;'));
+						echo CHtml::openTag('br');
+						echo CHtml::link('Subir nuevas imagenes',
+								ReviewController::createUrl('uploadImages',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
+								array('class'=>'review-text-docs')
+						);
+						echo CHtml::openTag('br');
+						echo CHtml::link('Imagenes existentes',
+								ReviewController::createUrl('AjaxattachImage',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
+								array('class'=>'review-text-docs')
+						);
 					echo CHtml::closeTag('div');
 				}
 				foreach($data->multimedias as $item)

@@ -1,13 +1,21 @@
 <?php 
 Yii::app()->clientScript->registerScript(__CLASS__.'#review-view-data'.$data->Id, "
-");
+$('#linkAttachImages').click(
+		function(){
+			$('#optionsAttachImages').toggle('blind');
+		return false;	
+		}		
+		)
+		");
 $canDoFeeback = $dataUserGroupNote->can_feedback;
 $needConfirmation = $dataUserGroupNote->need_confirmation;
 $confirmed = $dataUserGroupNote->confirmed;
 $declined = $dataUserGroupNote->declined;
 $isAdministrator = User::isAdministartor();
 $isOwner = User::isOwnerOf($data);
-$editable = $isAdministrator||$isOwner; 
+$editable = $isAdministrator||$isOwner;
+
+
 ?>
 
 <div class="review-single-view" id="<?php echo $data->Id?>" >
@@ -174,10 +182,21 @@ $editable = $isAdministrator||$isOwner;
 			{
 				echo CHtml::openTag('div', array('class'=>'review-add-images-container'));
 				if($isOwner){
-					echo CHtml::link('Adjuntar Imagenes',
-						ReviewController::createUrl('selectAttach',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
-						array('class'=>'review-text-docs')
+					echo CHtml::link('Adjuntar Imagenes',"#",
+						array('class'=>'review-text-docs','id'=>'linkAttachImages')
 					);
+					echo CHtml::openTag('div',array('id'=>'optionsAttachImages','style'=>'margin-left:10px;display:none;'));
+						echo CHtml::openTag('br');
+						echo CHtml::link('Subir nuevas imagenes',
+								ReviewController::createUrl('uploadImages',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
+								array('class'=>'review-text-docs')
+						);
+						echo CHtml::openTag('br');
+						echo CHtml::link('Imagenes existentes',
+								ReviewController::createUrl('AjaxattachImage',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
+								array('class'=>'review-text-docs')
+						);
+					echo CHtml::closeTag('div');
 				}
 				echo CHtml::closeTag('div');
 			}

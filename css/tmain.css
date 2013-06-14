@@ -497,12 +497,12 @@ div.review-create-title-btn-main-cancel
 div.review-create-note-btn-main
 {	
 	right:80px;
-	top: 221px;
+	top: 320px;
 }
 div.review-create-note-btn-main-cancel
 {	
 	right:15px;
-	top: 221px;
+	top: 320px;
 }
 
 div.review-edit-image
@@ -1227,7 +1227,7 @@ textarea.wall-action-edit-main-note
 	line-height: 18px;
 	resize: none;
 	width: 540px;
-	height: 150px;
+	height: 250px;
 	font: inherit;
 	color: inherit;
 	margin: 0px;
@@ -1567,12 +1567,12 @@ div.review-close-area
 input.review-update-data-number
 {	
 	color:#666666;	
-	background-color: #f4f6fb;
+	background-color: #F4F6FB;
 	border: 1px solid #f4f6fb;
 	width: 25px;
 	text-align: center;
 	font-weight: bold;
-	margin-top: 5px;
+	margin-left: 1%;
 }
 input.review-update-data-number:HOVER
 {
@@ -1642,11 +1642,12 @@ textarea.review-update-album-descr:focus
 
 div.review-update-data-info
 {
-	margin-top: 7px;
+	margin-top: 5px;
 	margin-right: 5px;
 	display: inline-block;
 	float: left;
 	font-weight: bold;
+	margin-left: 1%;
 	
 }
 div.review-update-data-info-descr

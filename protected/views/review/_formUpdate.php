@@ -269,13 +269,13 @@ function bindEvents(item)
 						//$('#singleNoteContainer').after(data);
 						bindEvents($('#noteContainer_'+idMainNote));
 						$('.view-text-note').last().find('.review-action-add-note').focus();
-						$('.review-action-add-note').removeClass('review-action-add-note-focus');
+						$('.review-action-add-note-holder').removeClass('review-action-add-note-focus');
 						$('#dialogProcessing').dialog('close');
 					}
 			).error(
 				function(data){
 						alert('Problemas de red. No se puede crear una nueva nota.');
-						$('.review-action-add-note').removeClass('review-action-add-note-focus');
+						$('.review-action-add-note-holder').removeClass('review-action-add-note-focus');
 						$('#dialogProcessing').dialog('close');
 				}
 			);
