@@ -154,7 +154,7 @@ echo CHtml::checkBoxList('chklist-tags', $selectd, $checkTags);
 	<?php endif?>
 </div>
 
-	<div id="content-center">
+	<div id="content">
 	<?php echo $content; ?>
 	</div><!-- content -->
 

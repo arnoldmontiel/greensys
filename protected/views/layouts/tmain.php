@@ -63,7 +63,9 @@
 	
 	</div> <!-- mainmenu -->	
 	<div class="row-fluid">
-		<?php echo $content; ?>
+		<div class="whrapper">
+			<?php echo $content; ?>
+		</div>
 	</div>
 	<div class="line"></div>
 
