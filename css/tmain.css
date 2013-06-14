@@ -2221,6 +2221,7 @@ div.user-group-first
 	width: 20%;
 	display: inline-block;
 	height: 16px;
+	float:left;
 	<!--
   	display: inline;  	
   	-->
@@ -2605,5 +2606,11 @@ div.whrapper
 	float: left;
 	width: 100%;
 	
+}
+div.checkbox-group
+{
+	display:inline-block;
+	position: relative;
+	text-align: center;
 }
 .container,.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container{ width:100% !important; max-width:100% !important; min-width:900px !important;}
