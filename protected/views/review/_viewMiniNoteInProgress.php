@@ -6,7 +6,7 @@ echo CHtml::openTag('div',array('class'=>'view-text-note','style'=>'padding:22px
 	echo CHtml::openTag('div',array('class'=>'view-text-user','id'=>'view_text_user_'.$modelMiniNote->Id));
 		echo $modelMiniNote->creation_date . ' - ' . CHtml::encode($modelMiniNote->user->name.' '.$modelMiniNote->user->last_name);
 	echo CHtml::closeTag('div');
-	echo CHtml::openTag('div',array('class'=>'view-text-date'));
+	echo CHtml::openTag('div',array('class'=>'view-text-note-actions'));
 		echo CHtml::image('images/saving_note.gif','saving',array('id'=>'img_saving_note_'.$modelMiniNote->Id,'style'=>'display:none;','title'=>'Grabando','class'=>'action-show-saving-note'));
 		echo CHtml::image('images/saving_note_error.png','error',array('id'=>'img_saving_note_error_'.$modelMiniNote->Id,'style'=>'display:none;width:14px;','title'=>'Problemas al grabar','class'=>'action-show-saving-note'));
 		echo CHtml::image('images/saving_note_ok.png','error',array('id'=>'img_saving_note_ok_'.$modelMiniNote->Id,'style'=>'display:none;width:14px;','title'=>'Grabado','class'=>'action-show-saving-note'));

@@ -373,28 +373,29 @@ $editable = $isAdministrator||$isOwner;
 	<?php $notes=$data->notes;?>
 	<?php if (!empty($notes)):?>
 		<?php
+		$noNotes= true;
 		foreach($notes as $item)
-		{
+		{			
 			if($item->in_progress && $item->username==User::getCurrentUser()->username)
 			{
+				$noNotes = false;
 				$this->renderPartial('_viewMiniNoteInProgress',array('modelMiniNote'=>$item,'modelMainNote'=>$data));
-				
 			}
 			elseif(!$item->in_progress)
 			{
+				$noNotes = false;
 				$this->renderPartial('_viewMiniNote',array('modelMiniNote'=>$item,'modelMainNote'=>$data));				
 			}
-			else
-			{
-				echo CHtml::openTag('div',array('class'=>'view-text-note div-hidden'));
-				echo CHtml::closeTag('div');
-			}
+		}
+		if($noNotes)
+		{
+			echo CHtml::openTag('div',array('class'=>'view-text-note div-hidden'));
+			echo CHtml::closeTag('div');	
 		}
 		?>
 	<?php else:?>
 		<?php 
 		echo CHtml::openTag('div',array('class'=>'view-text-note div-hidden'));
-		echo hola;
 		echo CHtml::closeTag('div');
 		?>		
 	<?php endif?>
