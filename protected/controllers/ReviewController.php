@@ -221,6 +221,7 @@ class ReviewController extends Controller
 
 	public function actionAjaxViewImageResource($Id_customer,$Id_project)
 	{
+		$this->layout='//layouts/tcolumn2';
 		$modelAlbum = Album::model()->findAllByAttributes(array('Id_customer'=>$Id_customer,'Id_project'=>$Id_project,
 								'Id_user_group_owner'=>User::getCurrentUserGroup()->Id ));
 		
@@ -276,7 +277,7 @@ class ReviewController extends Controller
 	
 	public function actionAjaxAttachImage($id, $idNote)
 	{
-		
+		$this->layout='//layouts/tcolumn2';
 		$model=$this->loadModel($id);
 		
 		$criteria=new CDbCriteria;
@@ -308,6 +309,7 @@ class ReviewController extends Controller
 	
 	public function actionUploadImages($id, $idNote)
 	{
+		$this->layout='//layouts/tcolumn2';
 		$model=$this->loadModel($id);
 	
 		$modelAlbum = Album::model()->findByAttributes(array('Id_customer'=>$model->Id_customer,

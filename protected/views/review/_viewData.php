@@ -384,11 +384,17 @@ $editable = $isAdministrator||$isOwner;
 			{
 				$this->renderPartial('_viewMiniNote',array('modelMiniNote'=>$item,'modelMainNote'=>$data));				
 			}
+			else
+			{
+				echo CHtml::openTag('div',array('class'=>'view-text-note div-hidden'));
+				echo CHtml::closeTag('div');
+			}
 		}
 		?>
 	<?php else:?>
 		<?php 
 		echo CHtml::openTag('div',array('class'=>'view-text-note div-hidden'));
+		echo hola;
 		echo CHtml::closeTag('div');
 		?>		
 	<?php endif?>
