@@ -15,6 +15,8 @@
  */
 class ReviewType extends TapiaActiveRecord
 {
+	public $with_tag_tracking;
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -46,7 +48,7 @@ class ReviewType extends TapiaActiveRecord
 			array('description', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description, is_internal, is_for_client', 'safe', 'on'=>'search'),
+			array('Id, description, is_internal, is_for_client, with_tag_tracking', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -73,7 +75,8 @@ class ReviewType extends TapiaActiveRecord
 			'Id' => 'ID',
 			'description' => 'Descripci&oacute;n',
 			'is_internal' => 'Es interno',
-			'is_for_client'=> 'Es para cliente',			
+			'is_for_client'=> 'Es para cliente',
+			'with_tag_tracking'=> 'Con Seguimiento',			
 		);
 	}
 
@@ -91,7 +94,17 @@ class ReviewType extends TapiaActiveRecord
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('is_internal',$this->is_internal);
-		$criteria->compare('is_for_client',$this->is_for_client);
+		$criteria->compare('is_for_client',$this->is_for_client);	
+		
+		if(isset($this->with_tag_tracking) && !empty($this->with_tag_tracking))
+		{
+			$compare = ($this->with_tag_tracking == 2)?'>':'=';
+			
+			$criteria->addCondition('t.Id IN (
+			SELECT Id_review_type FROM tag_review_type
+			group by Id_review_type
+			having count(*)'.$compare.'1)');
+		}
 		$sort=new CSort;
 		$sort->defaultOrder ="description ASC";
 		return new CActiveDataProvider($this, array(
