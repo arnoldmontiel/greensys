@@ -43,18 +43,25 @@ $('.check-last-doc').click(function()
 ");
 ?>
 <div class="review-update-data">
+<?php 
+	echo CHtml::openTag('div',array('class'=>'index-review-tag-box',"style"=>"margin-top:10px;"));
+	$options = array('class'=>'index-review-close-box');
+	$options['title']='Cerrado';
+	echo CHtml::openTag('div',$options);
+	echo 'Cerrado';
+	echo CHtml::closeTag('div');
+	echo CHtml::closeTag('div');
+	echo CHtml::openTag('div',array('class'=>'index-review-type-box','title'=>$model->reviewType->description,"style"=>"margin-top:10px;max-width:none;"));
+	echo $model->reviewType->description;
+	echo CHtml::closeTag('div');						
 
-	<div class="review-update-data-info">
-		<?php 			
-			echo CHtml::openTag('div',array('class'=>'review-update-data-info-descr-number'));				
-			echo CHtml::encode($model->review.' -');				
-			echo CHtml::closeTag('div');				
-		?>
-	</div>
+?>
+<div class="review-update-data-info">
+</div>
 	<div class="review-update-data-info-descr">
 		<?php 
 			echo CHtml::openTag('div',array('class'=>'review-update-data-info-descr-text'));				
-			echo CHtml::encode($model->description);				
+			echo "#".CHtml::encode($model->review).': '.CHtml::encode($model->description);				
 			echo CHtml::closeTag('div');				 
 			echo CHtml::image('images/reload.png','',array('class'=>'review-need-update', 'id'=>'need_reload','title'=>'Recargar'));
 		?>
@@ -81,10 +88,10 @@ $('.check-last-doc').click(function()
 	
 		echo CHtml::openTag('div',array('class'=>'review-type'));
 			echo CHtml::openTag('div',array('class'=>'review-attr-level'));		
-				echo CHtml::label('Tipo: ','Id_review_type');
+				//echo CHtml::label('Tipo: ','Id_review_type');
 			echo CHtml::closeTag('div');
 			echo CHtml::openTag('div',array('class'=>'review-attr-text'));		
-				echo CHtml::encode($model->reviewType->description);
+				//echo CHtml::encode($model->reviewType->description);
 			echo CHtml::closeTag('div');
 		echo CHtml::closeTag('div');
 	echo CHtml::closeTag('div');

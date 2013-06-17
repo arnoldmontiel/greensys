@@ -1583,13 +1583,13 @@ div.review-close-area
 {
 	position:relative;
 	display: inline-block;
-	padding:5px 10px 10px 10px;
+	padding:5px 0px 10px 1%;
 	border-top: 1px solid white;
 	border-bottom: 1px solid white;
 	background-color: #cccccc;
-	width: 840px;	
+	width: 97%;	
 	height: 35px;	
-	margin-left: 15px;
+	margin-left: 1%;
 	margin-top: 0px;
 	
 }
@@ -1859,7 +1859,6 @@ div.index-review-close-box
 	position:relative;
 	display: inline-block;
 	font-size: 12px;
-	border: 1px solid white;
 	background-color: #cccccc;
 }
 

@@ -1124,10 +1124,10 @@ if($model->is_open)
 // 		echo CHtml::closeTag('div');
 			echo CHtml::openTag('div',array('class'=>'review-type'));
 				echo CHtml::openTag('div',array('class'=>'review-attr-level'));		
-					echo CHtml::label('Tipo: ','Id_review_type');
+					//echo CHtml::label('Tipo: ','Id_review_type');
 				echo CHtml::closeTag('div');
 				echo CHtml::openTag('div',array('class'=>'review-attr-text'));		
-					echo CHtml::encode($model->reviewType->description);
+					//echo CHtml::encode($model->reviewType->description);
 				echo CHtml::closeTag('div');
 			echo CHtml::closeTag('div');
 	echo CHtml::closeTag('div');	
