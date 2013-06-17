@@ -6,12 +6,12 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Crear Agrupador', 'url'=>array('create')),
-	array('label'=>'Ver Agrupador', 'url'=>array('view', 'id'=>$model->Id)),
-	array('label'=>'Administrar Agrupadores', 'url'=>array('admin')),
+	array('label'=>'Crear Formulario', 'url'=>array('create')),
+	array('label'=>'Ver Formulario', 'url'=>array('view', 'id'=>$model->Id)),
+	array('label'=>'Administrar Formularios', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Actualizar Agrupador</h1>
+<h1>Actualizar Formulario</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model,'tagTypeSelect'=>$tagTypeSelect)); ?>

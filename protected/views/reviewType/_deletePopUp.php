@@ -5,7 +5,7 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-<p class="note">Seleccione un agrupador de la lista para reemplazar "<?php echo $model->description; ?>"</p>
+<p class="note">Seleccione un formulario de la lista para reemplazar "<?php echo $model->description; ?>"</p>
 <?php echo CHtml::hiddenField('Id-to-delete',$model->Id,array('id'=>'Id-to-delete')); ?>
 	<div class="row" >
 		<?php 

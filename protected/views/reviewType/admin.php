@@ -5,12 +5,12 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Crear Agrupador', 'url'=>array('create')),
+	array('label'=>'Crear Formulario', 'url'=>array('create')),
 );
 
 ?>
 
-<h1>Administrar Agrupadores</h1>
+<h1>Administrar Formularios</h1>
 
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
@@ -23,27 +23,15 @@ $this->menu=array(
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		'description',
+		'description',		
 		array(
- 			'name'=>"is_internal",
+ 			'name'=>"with_tag_tracking",
  			'type'=>'raw',
- 			'value'=>'CHtml::checkBox("is_internal",$data->is_internal,array("disabled"=>"disabled"))',
+ 			'value'=>'CHtml::checkBox("with_tag_tracking",( TagReviewType::model()->countByAttributes(array("Id_review_type"=>$data->Id))>1)?true:false,array("disabled"=>"disabled"))',
 	 			'filter'=>CHtml::listData(
 					array(
-						array('id'=>'0','value'=>'No'),
-						array('id'=>'1','value'=>'Si')
-					)
-			,'id','value'
-			),
-		),
-		array(
- 			'name'=>"is_for_client",
- 			'type'=>'raw',
- 			'value'=>'CHtml::checkBox("is_for_client",$data->is_for_client,array("disabled"=>"disabled"))',
-	 			'filter'=>CHtml::listData(
-					array(
-						array('id'=>'0','value'=>'No'),
-						array('id'=>'1','value'=>'Si')
+						array('id'=>'1','value'=>'No'),
+						array('id'=>'2','value'=>'Si')
 					)
 			,'id','value'
 			),
@@ -83,12 +71,12 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 			'id'=>'DeleteReviewType',
 // additional javascript options for the dialog plugin
 			'options'=>array(
-					'title'=>'Reemplazar tipo de agrupador',
+					'title'=>'Reemplazar tipo de formulario',
 					'autoOpen'=>false,
 					'modal'=>true,
 					'width'=> '600',
 					'buttons'=>	array(
-							'Cancelar'=>'js:function(){jQuery("#DeleteReviewType").dialog( "close" );}',
+							
 							'Reemplazar'=>'js:function()
 							{
 							jQuery("#waiting").dialog("open");
@@ -102,7 +90,8 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 						},"json"
 					);
 
-				}'),
+				}',
+				'Cancelar'=>'js:function(){jQuery("#DeleteReviewType").dialog( "close" );}'),
 ),
 ));
 

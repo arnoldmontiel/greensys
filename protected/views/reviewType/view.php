@@ -5,9 +5,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Crear Agrupador', 'url'=>array('create')),
-	array('label'=>'Actualizar Agrupador', 'url'=>array('update', 'id'=>$model->Id)),
-	array('label'=>'Administrar Agrupadores', 'url'=>array('admin')),
+	array('label'=>'Crear Formulario', 'url'=>array('create')),
+	array('label'=>'Actualizar Formulario', 'url'=>array('update', 'id'=>$model->Id)),
+	array('label'=>'Administrar Formularios', 'url'=>array('admin')),
 );
 
 Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-view', "
@@ -18,20 +18,12 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-view', "
 ");
 ?>
 
-<h1>Vista Agrupador</h1>
+<h1>Vista Formulario</h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'description',
-		array('label'=>$model->getAttributeLabel('is_internal'),
-				'type'=>'raw',
-				'value'=>CHtml::checkBox("is_internal",$model->is_internal,array("disabled"=>"disabled"))
-		),
-		array('label'=>$model->getAttributeLabel('is_for_client'),
-				'type'=>'raw',
-				'value'=>CHtml::checkBox("is_for_client",$model->is_for_client,array("disabled"=>"disabled"))
-		),
 		array('label'=>$model->getAttributeLabel('Con Seguimiento'),
 				'type'=>'raw',
 				'value'=>CHtml::checkBox("tagType",( TagReviewType::model()->countByAttributes(array('Id_review_type'=>$model->Id))>1)?true:false,array("disabled"=>"disabled"))

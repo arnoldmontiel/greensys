@@ -5,10 +5,10 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Administrar Agrupadores', 'url'=>array('admin')),
+	array('label'=>'Administrar Formularios', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Crear Agrupador</h1>
+<h1>Crear Formulario</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model,'tagTypeSelect'=>$tagTypeSelect)); ?>
