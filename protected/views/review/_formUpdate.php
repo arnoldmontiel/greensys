@@ -1027,16 +1027,6 @@ if($model->is_open)
 			echo CHtml::image('images/reload.png','',array('class'=>'review-need-update', 'id'=>'need_reload','title'=>'Recargar'));
 		?>
 	</div>
-	<div class="review-close-review">
-		<?php
-			if(User::isAdministartor() || $model->username == User::getCurrentUser()->username)
-			{
-				echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnClose'));
-					echo 'Finalizar Tema';
-				echo CHtml::closeTag('div');
-			}
-		?>
-	</div>
 </div>
 
 <div class="wall-action-area" id="wall-action-area">
@@ -1047,12 +1037,23 @@ if($model->is_open)
 		);
 	 ?>
 </div>
+	<div class="review-close-review">
+		<?php
+			if(User::isAdministartor() || $model->username == User::getCurrentUser()->username)
+			{
+				echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnClose'));
+					echo 'Finalizar Tema';
+				echo CHtml::closeTag('div');
+			}
+		?>
+	</div>
+
 <div id="send-mail" class="send-mail" >
 	<?php
-	$this->widget('ext.processingDialog.processingDialog', array(
-			'idDialog'=>'dialogProcessingMail',
-			'imgSrc'=>'images/email_loading.gif'
-	));
+// 	$this->widget('ext.processingDialog.processingDialog', array(
+// 			'idDialog'=>'dialogProcessingMail',
+// 			'imgSrc'=>'images/email_loading.gif'
+// 	));
 
 		if(User::isAdministartor()&&count($model->notes) > 0)
 		{
@@ -1097,7 +1098,7 @@ if($model->is_open)
 								'),
 				),
 		));
-		echo $this->renderPartial('_mail', array('model'=>$model));
+		//echo $this->renderPartial('_mail', array('model'=>$model));
 		
 		$this->endWidget('zii.widgets.jui.CJuiDialog');
 		?>

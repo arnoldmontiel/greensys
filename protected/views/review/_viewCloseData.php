@@ -8,12 +8,6 @@ $isOwner = User::isOwnerOf($data);
 ?>
 
 <div class="review-single-view" id="<?php echo $data->Id?>" >
-	<div class="view-note-title">
-	
-		<div class="wall-action-edit-main-title" >
-		<p class="single-formated-text"><?php echo $data->title;?></p>
-		</div>
-	</div>
 	<div class="view-text-date"><?php echo $data->change_date;?></div>
 	<div class="review-text-simple-note">
 		<div class="review-single-view-actions">

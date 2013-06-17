@@ -708,26 +708,27 @@ div.wall-action-area
 {
 	position:relative;
 	display: inline-block;
-	padding:18px 0px 10px 0px;
+	padding:10px 0px 10px 0px;
 	border-top: 1px solid white;
 	border-bottom: 1px solid white;
 	background-color: #f4f6fb;
 	width: 98%;	
-	height: 45px;	
+	height: auto;	
 	margin-left: 1%;
 	margin-top: 0px;
 }
 div.review-action-area
 {
 	position:relative;
+	float: left;
 	vertical-align: baseline;
 	display: block;
-	padding:10px 0px 5px 0px;
+	padding:10px 0px 10px 0px;
 	border-top: 1px solid white;
 	border-bottom: 1px solid white;
 	background-color: #f4f6fb;
 	width: 98%;	
-	height: 45px;	
+	height: auto;	
 	margin-left: 1%;
 	margin-top: 0px;
 }
@@ -1326,9 +1327,8 @@ div.loading-place-holder
 div.send-mail
 {
 	float: right;
-	position: absolute;
-	right:50px;
-	bottom:55px;
+	position: relative;
+	bottom:12px;
 	height: 16px;
 }
 
@@ -1573,7 +1573,7 @@ div.review-update-data
 	border-bottom: 1px solid white;
 	background-color: #f4f6fb;
 	width: 98%;	
-	height: 35px;	
+	height: auto;	
 	margin-left: 1%;
 	margin-top: 0px;
 	
@@ -1587,7 +1587,7 @@ div.review-close-area
 	border-bottom: 1px solid white;
 	background-color: #cccccc;
 	width: 97%;	
-	height: 35px;	
+	height: auto;	
 	margin-left: 1%;
 	margin-top: 0px;
 	
@@ -2094,9 +2094,11 @@ div.review-single-view-actions
 {
 	width: 97%;
 	margin: 0px;
-	height: 30px;
+	height: auto;
 	background-color: #D7DDEB;
-	padding: 0px 1% 0px 1%;
+	padding: 5px 1% 5px 1%;
+	position: relative;
+	float: left;
 }
 div.review-single-view-actions-need-conf
 {
@@ -2108,11 +2110,12 @@ div.review-single-view-actions-need-conf
 }
 div.review-single-view-autor
 {
+	position: relative;
 	float:left;
-	margin-top: 10px;
 	padding-left: 15px;
 	display: inline-block;
 	font-weight: bold;
+	height: auto;
 }
 
 div.review-single-view-actions-conf
@@ -2676,17 +2679,24 @@ div.review-simple-note-container
 .container,.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container{ width:100% !important; max-width:100% !important; min-width:400px !important;}
 div.wall-action-edit-main-note{height: auto;}
 }
-@media (max-width: 480px) {
-body{padding-left: 0px  !important;padding-right: 0px  !important;} .container,.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container{ width:100% !important; max-width:100% !important; min-width:400px !important;margin-left: 0px;margin-right: 0px;}
-.brand{margin-left: 10px  !important;}
-div.wall-action-edit-main-note{height: auto;}
-}
-@media (max-width: 480px) {
+
+@media (max-width: 768px) {
 body{padding-left: 0px  !important;padding-right: 0px  !important;} .container,.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container{ width:100% !important; max-width:100% !important; min-width:480px !important;margin-left: 0px;margin-right: 0px;}
 .brand{margin-left: 10px  !important;}
 div.wall-action-edit-main-note{height: auto;}
+div.index-review-quick-view-chart
+{
+	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+  	float:none;
 }
-@media (max-width: 768px) {
+div.index-review-quick-view-items
+{
+	width: 98%;
+}
+}
+@media (max-width: 480px) {
 body{padding-left: 0px  !important;padding-right: 0px  !important;} .container,.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container{ width:100% !important; max-width:100% !important; min-width:480px !important;margin-left: 0px;margin-right: 0px;}
 .brand{margin-left: 10px  !important;}
 div.wall-action-edit-main-note{height: auto;}
