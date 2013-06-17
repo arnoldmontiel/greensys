@@ -907,20 +907,25 @@ class ReviewController extends Controller
 				{
 					if($parent->review)
 					{
-						if(isset($parent->review->tags[0])){
-							$idTag = $parent->review->tags[0]->Id;
+						$criteria = new CDbCriteria();
+						$criteria->addCondition('date in (select max(date) from tag_review where Id_review ='.$parent->review->Id.')');
+						
+						$modelTagReview = TagReview::model()->find($criteria);
+						
+						if(isset($modelTagReview)){
+							$idTag = $modelTagReview->Id_tag;
 							$result['Id_tag'] = $idTag;
-							$result['tag_description'] = $parent->review->tags[0]->description;
+							$result['tag_description'] = $modelTagReview->tag->description;
 							
 							$options = "";
 							if($idTag==1)
-								$options='background-color: #CC3300;color: white';//rojo
+								$options='background-color: #CC3300;color: white;max-width:none';//rojo
 							else if($idTag==2)
-								$options='background-color: #66FF66';//verde
+								$options='background-color: #66FF66;max-width:none';//verde
 							else if($idTag==3)
-								$options='background-color: #FFFF99';//amarillo
+								$options='background-color: #FFFF99;max-width:none';//amarillo
 							else if($idTag==4)
-								$options='background-color: #FFCC66';//naranja
+								$options='background-color: #FFCC66;max-width:none';//naranja
 							$result['tag_style'] = $options;
 						}
 					}
