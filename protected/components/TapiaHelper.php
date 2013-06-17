@@ -18,7 +18,7 @@ class TapiaHelper
 			{
 				$criteria = new CDbCriteria();
 				$criteria->addCondition('date in (select max(date) from tag_review where Id_review ='.$modelReview->Id.')');
-				
+				$criteria->addCondition('t.Id_review = '.$modelReview->Id);
 				$modelTagReviewDb = TagReview::model()->find($criteria);
 								
 				if(isset($modelTagReviewDb))
