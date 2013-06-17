@@ -67,7 +67,7 @@ class ReviewTypeUserGroup extends TapiaActiveRecord
 		return array(
 			'Id_review_type' => 'Id Review Type',
 			'Id_user_group' => 'Id User Group',
-			'review_type_desc'=>'Agrupadores asignados',
+			'review_type_desc'=>'Formularios asignados',
 			'user_group_desc'=>'Grupos asignados',
 		);
 	}

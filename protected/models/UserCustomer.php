@@ -113,7 +113,7 @@ class UserCustomer extends TapiaActiveRecord
 			'email'=>'Correo',
 			'phone_house' => 'Tel&eacute;fono Casa',
 			'phone_mobile' => 'Tel&eacute;fono M&oacute;vil',
-			'Id_user_group' => 'Grupo',
+			'Id_user_group' => 'Perfil',
 				
 		);
 	}
