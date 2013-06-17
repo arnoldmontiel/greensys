@@ -234,6 +234,7 @@ class ReviewController extends Controller
 	
 	public function actionAjaxViewDocResource($Id_customer,$Id_project)
 	{
+		$this->layout='//layouts/tcolumn2';		
 		$criteria=new CDbCriteria;
 		$criteria->addCondition('Id_document_type is null');
 		$criteria->addCondition('Id_user_group = '. User::getCurrentUserGroup()->Id);
