@@ -72,7 +72,7 @@ $('#Id_customer').change(function(){
 
 setInterval(function() {
    doFilter();
-}, 1000*300)
+}, 1000*60)
 
 var collapsed = new Array();
 
@@ -167,6 +167,8 @@ $('#btn-filter').click(function(){
 	
 	$('#dateToFilter').val('');
 	$('#dateToFilter').val($('#dateTo').val());
+	$('#filter-panel').toggle('blind');
+	$('#showFilters').removeClass('active');				
 	
 	doFilter();
 });
@@ -399,21 +401,26 @@ function getCheck(checkName)
 	if(isset($Id_customer)&&$Id_customer !=-1)
 	{
 		$this->widget('zii.widgets.jui.CJuiButton', array(
+				'id'=>'showFilters',
 				'name'=>'submit',
 				'caption'=>'Filtros',
 				'htmlOptions' => array('class'=>'btn btn-navbar'),
 				'onclick'=>new CJavaScriptExpression('function(){
+				$(this).addClass("active");
 				if(jQuery("#filter-panel").is(":hidden"))
 				{
-					$( "#content" ).effect( "size", {
-					    to: { width: "85%"}
-					  }, 1000 ,function(){$("#filter-panel").toggle("blind",{ direction: "left" },1000)});
+// 					$( "#content" ).effect( "size", {
+// 					    to: { width: "85%"}
+// 					  }, 1000 ,);
+					$("#filter-panel").toggle("blind",{ direction: "left" },1000);
 				}
 				else
 				{
-					$("#filter-panel").toggle("blind",{ direction: "left" },1000,function(){$( "#content" ).effect( "size", {
-					    to: { width: "100%"}
-					  }, 1000 );})
+					$(this).removeClass("active");
+					$("#filter-panel").toggle("blind",{ direction: "left" },1000);
+// 					,function(){$( "#content" ).effect( "size", {
+// 										    to: { width: "100%"}
+// 										  }, 1000 );}
 			
 					}
 				}'
@@ -436,7 +443,7 @@ function getCheck(checkName)
 
 		$image = CHtml::image('images/export_plain_text.png','Export',
 			array(				
-				'style'=>'width:25px;margin-top:25px;'
+				'style'=>'width:25px;margin-top:15px;'
 			)
 		);
 		echo CHtml::link($image,
@@ -482,7 +489,7 @@ function getCheck(checkName)
 		//techReport pop up
 		$image = CHtml::image('images/export_a_day.png','Export',
 		array(
-				'style'=>'width:25px;margin-top:25px;'
+				'style'=>'width:25px;margin-top:22px;'
 			)
 		);
 		echo CHtml::link($image,

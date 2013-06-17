@@ -54,9 +54,7 @@
 				echo CHtml::closeTag('span');				
 			?>
 			</div>
-		</div>
 		
-		<div class="search-box">
 			<div class="search-box-title">
 			Documentos
 			</div>
@@ -68,8 +66,8 @@
 			?>
 			</div>
 		</div>
-		
 		<div class="search-box">
+		
 			<div class="search-box-title">
 			Tipo de formulario
 			</div>
@@ -81,8 +79,8 @@
 			?>
 			</div>
 		</div>
-		
 		<div class="search-box">
+		
 			<div class="search-box-title">
 				Fecha de creacion
 			</div>
@@ -129,21 +127,20 @@
 					));
 				?>
 			</div>
-		</div>
 		
-		<div class="search-box">
 			<?php
+				echo CHtml::openTag('div',array('class'=>'row-fluid'));	
 				echo CHtml::openTag('div',array('class'=>'wall-action-box-btn','id'=>'filter-btn-box'));	
 				echo CHtml::link('Filtrar','',array('id'=>'btn-filter','class'=>'submit-btn'));
 				echo CHtml::closeTag('div');	
-				echo '<br>';
 				echo CHtml::openTag('div',array('class'=>'wall-action-box-btn','id'=>'clear-filter-btn-box'));
 				echo CHtml::link('Limpiar filtros','',array('id'=>'btn-clear-filter','class'=>'submit-btn'));
 				echo CHtml::closeTag('div');
-			?>
-		</div>		
+				echo CHtml::closeTag('div');
+				?>
 	<?php endif?>
-</div>
+		</div>
+	</div>
 
 	<div id="content">
 	<?php echo $content; ?>

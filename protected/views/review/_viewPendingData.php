@@ -27,7 +27,7 @@ $('#attch-left-note').click(
 	?>
 	</div>
 	<?php
-	echo CHtml::openTag('div',array('class'=>'view-text-note-actions', 'style'=>'right:12%'));
+	echo CHtml::openTag('div',array('class'=>'view-text-note-actions', 'style'=>'right:25%'));
 	echo CHtml::image('images/attch.png','',
 	array('id'=>'attch-left-note', 'class'=>'action-show-hide-attch', 'title'=>'Adjunto', 'style'=>'width:20px;'));				
 	echo CHtml::closeTag('div');

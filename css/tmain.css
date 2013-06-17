@@ -736,7 +736,9 @@ div.review-action-area
 
 div.wall-action-box-btn
 {
-	
+	width: auto;
+	float: left;
+	margin-right: 10px;
 }
 
 div.wall-action-btn
@@ -1731,6 +1733,7 @@ div.index-review-single
 	position: relative;
 	cursor: pointer;		
 }
+
 div.index-review-single-item
 {
 }
@@ -1756,11 +1759,12 @@ a.submit-btn:HOVER
 div.search-box
 {
 	padding:18px 10px 10px 10px;
-	margin: 20px 0px 0px 10px;
-	border-top: 1px solid white;
-	border-bottom: 1px solid white;
-	background-color: #f4f6fb;
-	min-width: 100px;
+	margin: 0px 0px 0px 0px;
+	min-width: 200px;
+	max-width: 320px;
+	display: inline-block;
+	float: left;
+	
 }
 div.search-box-title
 {
@@ -2652,12 +2656,19 @@ div.index-review-quick-view-chart
 }
 div.filter-panel
 {
+	position:absolute;
 	display: none;
-	margin-top: 100px;
-	width: 15%;
-	right: 0px;
-	left: 0px;
+	margin-top: 110px;	
+	margin-left: 1%;	
 	z-index: 10;
+	background-color: #F4F6FB;
+	padding: 10px 1% 10px 1%;
+	border: 1px solid #9ad7f5;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	min-height: 100%;
+
 }
 div.whrapper
 {
@@ -2703,6 +2714,11 @@ div.review-simple-note-container
 	{
 		width: 98%;
 	}
+	div.filter-panel
+	{
+		width: 96% !important;
+		margin-left: 1% !important;
+	}
 }
 
 @media (max-width: 480px) {
@@ -2722,5 +2738,11 @@ div.review-simple-note-container
 	{
 		width: 98%;
 	}
-	div.filter-panel{width: 98%;}
+	div.filter-panel
+	{
+		width: 96% !important;
+		min-width: 465px !important;
+		margin-left: 1% !important;
+		margin-top: 70px;
+	}
 }
