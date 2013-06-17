@@ -29,7 +29,6 @@
 		<?php 
 		$params = User::getCustomer()?array('Id_customer'=>User::getCustomer()->Id):array();
 		$items = array();			
-		$items[] = array('label'=>'Home', 'url'=>Yii::app()->createUrl('review/index',$params));
 		
 		if(Yii::app()->user->checkAccess('CustomerIndex'))
 			$items[] = array('label'=>'Clientes', 'url'=>Yii::app()->createUrl('tCustomer/index'));
