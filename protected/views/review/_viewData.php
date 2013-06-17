@@ -64,7 +64,7 @@ $editable = $isAdministrator||$isOwner;
 			?>
 		
 		</div>
-		<div class="review-single-view-actions">
+		<div class="review-single-view-actions" style="padding-top: 0px;">
 			<div class="review-single-view-actions-need-conf">
 				<?php
 				echo CHtml::openTag('div',array('class'=>'review-note-users-groups'));								
