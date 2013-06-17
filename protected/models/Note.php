@@ -50,6 +50,7 @@ class Note extends TapiaActiveRecord
 						{
 							$criteria = new CDbCriteria();
 							$criteria->addCondition('date in (select max(date) from tag_review where Id_review ='.$parent->review->Id.')');
+							$criteria->addCondition('t.Id_review = '.$parent->review->Id);
 							
 							$modelTagReviewDb = TagReview::model()->find($criteria);
 							
