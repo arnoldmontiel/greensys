@@ -81,25 +81,30 @@ class ReviewTypeController extends Controller
 	
 	private function createTagRelation($id, $tagType)
 	{
-		$tags = null;
-		
+		$tags = null;	
+
 		if($tagType == '1')//con seguimiento
-		{
-			$modelTagReviews = TagReview::model()->findAllByAttributes(array('Id_review'=>$id));
-			foreach($modelTagReviews as $modelTagReview)
-			{
-				$modelTagReview->Id_tag = 1; //lo dejo en pendiente
-				$modelTagReview->save();
-			}
-			
+		{			
 			$tags = array(1,2,3);
+			$newTag = 1; //pendiente
 		}
 		else 
-		{
-			TagReview::model()->deleteAllByAttributes(array('Id_review'=>$id));
+		{								
 			$tags = array(4);
+			$newTag = 4; //sin seguimiento
+		}
+
+		$modelReviews = Review::model()->findAllByAttributes(array('Id_review_type'=>$id));
+		foreach($modelReviews as $modelReview)
+		{
+			TagReview::model()->deleteAllByAttributes(array('Id_review'=>$modelReview->Id));
+			$modelTagReview = new TagReview();
+			$modelTagReview->Id_review = $modelReview->Id;
+			$modelTagReview->Id_tag = $newTag;
+			$modelTagReview->save();
 		}
 		
+		TagReviewType::model()->deleteAllByAttributes(array('Id_review_type'=>$id));
 		foreach ($tags as $i => $value) {
 			$modelTagReviewType = new TagReviewType();
 			$modelTagReviewType->Id_review_type = $id;
@@ -193,8 +198,7 @@ class ReviewTypeController extends Controller
 		{
 			$model->attributes=$_POST['ReviewType'];
 			if($model->save())
-			{
-				TagReviewType::model()->deleteAllByAttributes(array('Id_review_type'=>$model->Id));
+			{				
 				if(isset($_POST['radiolist-tag-type']))
 					$this->createTagRelation($model->Id, $_POST['radiolist-tag-type']);
 				
