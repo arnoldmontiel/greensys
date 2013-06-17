@@ -5,12 +5,12 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Crear Grupo de Usuario', 'url'=>array('create')),
+	array('label'=>'Crear Perfil', 'url'=>array('create')),
 );
 
 ?>
 
-<h1>Administrar Grupo de Usuarios</h1>
+<h1>Administrar Perfiles</h1>
 
 
 <div class="search-form" style="display:none">

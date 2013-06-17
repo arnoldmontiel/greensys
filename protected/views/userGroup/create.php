@@ -5,10 +5,10 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Administrar Grupo de Usuario', 'url'=>array('admin')),
+	array('label'=>'Administrar Perfil', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Crear Grupo de Usuario</h1>
+<h1>Crear Perfil</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

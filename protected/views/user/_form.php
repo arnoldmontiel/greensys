@@ -63,7 +63,7 @@ $('#User_username').change(function(){
 			<?php echo $form->error($model,'Id_user_group'); ?>
 		</div>
 		<div style="display: inline-block;">
-			<?php echo CHtml::link( 'Agregar Nuevo Grupo de Usuarios','#',array('onclick'=>'jQuery("#CreateUserGroup").dialog("open"); return false;'));?>
+			<?php echo CHtml::link( 'Agregar Nuevo Perfil','#',array('onclick'=>'jQuery("#CreateUserGroup").dialog("open"); return false;'));?>
 		</div>
 	</div>
 	
@@ -126,8 +126,7 @@ $('#User_username').change(function(){
 					'autoOpen'=>false,
 					'modal'=>true,
 					'width'=> '500',
-					'buttons'=>	array(
-							'Cancelar'=>'js:function(){jQuery("#CreateUserGroup").dialog( "close" );}',
+					'buttons'=>	array(							
 							'Grabar'=>'js:function()
 							{
 							jQuery("#wating").dialog("open");
@@ -144,7 +143,8 @@ $('#User_username').change(function(){
 						},"json"
 					);
 	
-	}'),
+	}',
+	'Cancelar'=>'js:function(){jQuery("#CreateUserGroup").dialog( "close" );}'),
 			),
 	));
 	$modelUserGroup = new UserGroup();

@@ -6,12 +6,12 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Crear Grupo de Usuario', 'url'=>array('create')),
-	array('label'=>'Ver Grupo de Usuario', 'url'=>array('view', 'id'=>$model->Id)),
-	array('label'=>'Administrar Grupo de Usuario', 'url'=>array('admin')),
+	array('label'=>'Crear Perfil', 'url'=>array('create')),
+	array('label'=>'Ver Perfil', 'url'=>array('view', 'id'=>$model->Id)),
+	array('label'=>'Administrar Perfiles', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Actualizar Grupo de Usuario</h1>
+<h1>Actualizar Perfil</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

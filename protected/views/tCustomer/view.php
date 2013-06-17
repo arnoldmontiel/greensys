@@ -336,8 +336,7 @@ echo CHtml::button('Nuevo Usuario', array('class'=>'customer-new-user',
 					'autoOpen'=>false,
 					'modal'=>true,
 					'width'=> '500',
-					'buttons'=>	array(
-							'Cancelar'=>'js:function(){jQuery("#CreateUser").dialog( "close" );}',
+					'buttons'=>	array(							
 							'Grabar'=>'js:function()
 							{
 							jQuery("#wating").dialog("open");
@@ -359,7 +358,8 @@ echo CHtml::button('Nuevo Usuario', array('class'=>'customer-new-user',
 }
 					);
 
-}'),
+}',
+						'Cancelar'=>'js:function(){jQuery("#CreateUser").dialog( "close" );}'),
 			),
 	));
 	$modelUserCreate = new User;
@@ -434,7 +434,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 ?>
 
 <div class="customer-assign-title">
-	Permisos por grupo de usuario
+	Permisos por perfil
 	<div class="customer-button-box">
 		<?php echo CHtml::submitButton('Actualizar',array('id'=>'btnUpdateGrid')); ?>
 	</div>
@@ -473,7 +473,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 }',
 		'columns'=>array(
 				array(
-						'name'=>'Grupo de Usuario',
+						'name'=>'Perfil',
 						'value'=>'$data->userGroup->description',
 				),
 				array(
@@ -502,8 +502,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 					'autoOpen'=>false,
 					'modal'=>true,
 					'width'=> '600',
-					'buttons'=>	array(
-							'Cancelar'=>'js:function(){jQuery("#CreateProject").dialog( "close" );}',
+					'buttons'=>	array(							
 							'Grabar'=>'js:function()
 							{
 							jQuery("#waiting").dialog("open");
@@ -519,7 +518,8 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 						},"json"
 					);
 
-				}'),
+				}',
+				'Cancelar'=>'js:function(){jQuery("#CreateProject").dialog( "close" );}'),
 ),
 ));
 $modelProjectPopUp = new Project;
@@ -536,8 +536,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 					'autoOpen'=>false,
 					'modal'=>true,
 					'width'=> '600',
-					'buttons'=>	array(
-							'Cancelar'=>'js:function(){jQuery("#UpdateProject").dialog( "close" );}',
+					'buttons'=>	array(							
 							'Grabar'=>'js:function()
 							{
 							jQuery("#waiting").dialog("open");
@@ -553,7 +552,8 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 						},"json"
 					);
 
-				}'),
+				}',
+				'Cancelar'=>'js:function(){jQuery("#UpdateProject").dialog( "close" );}'),
 ),
 ));
 $modelProjectPopUp = new Project;

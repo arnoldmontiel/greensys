@@ -5,13 +5,13 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Crear Grupo de Usuario', 'url'=>array('create')),
-	array('label'=>'Actualizar Grupo de Usuario', 'url'=>array('update', 'id'=>$model->Id)),
-	array('label'=>'Administrar Grupo de Usuario', 'url'=>array('admin')),
+	array('label'=>'Crear Perfil', 'url'=>array('create')),
+	array('label'=>'Actualizar Perfil', 'url'=>array('update', 'id'=>$model->Id)),
+	array('label'=>'Administrar Perfiles', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Vista Individual</h1>
+<h1>Vista Perfil</h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,

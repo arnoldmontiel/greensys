@@ -21,7 +21,7 @@ $this->menu=array(
 			'value'=>$model->username
 		),
 		'password',
-		array('label'=>$model->getAttributeLabel('Grupo de Usuario'),
+		array('label'=>$model->getAttributeLabel('userGroupDescription'),
 			'type'=>'raw',
 			'value'=>$model->userGroup->description
 		),
