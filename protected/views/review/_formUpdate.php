@@ -1144,15 +1144,17 @@ if($model->is_open)
 		$modelNote = (isset($idNote))? Note::model()->findByPk($idNote):new Note;
 		$this->renderPartial('_formNote',array('model'=>$modelNote));
 	?>		
-	<div class="row" style="text-align: center;">
-		<?php echo CHtml::button('Guardar',array('class'=>'wall-action-submit-btn','id'=>'btnSaveNote'));?>
-		<?php echo CHtml::button('Adjuntar Imagen',array('class'=>'wall-action-submit-btn','id'=>'btnAttachImgToNote', 'style'=>'width:150px'));?>
-		<?php echo CHtml::button('Adjuntar Docs',array('class'=>'wall-action-submit-btn','id'=>'btnAttachDocToNote', 'style'=>'width:150px'));?>
+	<div class="row-fluid" style="text-align: center; margin-bottom: 10px;">
+		<?php echo CHtml::button('Guardar',array('class'=>'wall-action-submit-btn','id'=>'btnSaveNote', 'style'=>'width:auto'));?>
+		<?php echo CHtml::button('Cancelar',array('class'=>'wall-action-submit-btn','id'=>'btnCancelNote', 'style'=>'width:auto'));?>
+	</div>
+	<div class="row-fluid" style="text-align: center;">
+		<?php echo CHtml::button('Adjuntar Imagen',array('class'=>'wall-action-submit-btn','id'=>'btnAttachImgToNote', 'style'=>'width:auto'));?>
+		<?php echo CHtml::button('Adjuntar Docs',array('class'=>'wall-action-submit-btn','id'=>'btnAttachDocToNote', 'style'=>'width:auto'));?>
 		<?php 
 			if(User::useTechnicalDocs())
-				echo CHtml::button('Adjuntar Tec Docs',array('class'=>'wall-action-submit-btn','id'=>'btnAttachTechDocToNote', 'style'=>'width:150px'));
+				echo CHtml::button('Adjuntar Tec Docs',array('class'=>'wall-action-submit-btn','id'=>'btnAttachTechDocToNote', 'style'=>'width:auto'));
 		?>
-		<?php echo CHtml::button('Cancelar',array('class'=>'wall-action-submit-btn','id'=>'btnCancelNote'));?>
 	</div>
 </div>
 
