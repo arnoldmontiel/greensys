@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<div id="page-wrap" class="container" style="width: 1340px">
+<div id="page-wrap" class="container">
 <div class="container" id="page">
 
 	<div id="header">

@@ -20,7 +20,7 @@
 </head>
 
 <body>
-<div id="page-wrap" class="container" style="width: 1340px">
+<div id="page-wrap" class="container">
 <div class="container" id="page">
 
 	<div id="header">
@@ -33,7 +33,7 @@
 			'links'=>$this->breadcrumbs,
 		)); ?><!-- breadcrumbs -->
 	<?php endif?>
-		<div id="language" class="language">
+		<div id="language" class="language" style="display:none">
 			<?php
 			$data = Yii::app()->lc->getAvalaibleLanguages();
 			$returnArr = array();

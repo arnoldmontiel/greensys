@@ -48,7 +48,7 @@
 </div><!-- left -->
 <div class="login-right">
 	<div class="login-text-logo">
-	Welcome to Green
+	Green
 	</div>	
 </div><!-- right -->
 </div>

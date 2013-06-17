@@ -32,7 +32,12 @@
 		<?php echo CHtml::submitButton(Yii::app()->lc->t('Login')); ?>
 	</div>
 </div>
-<div style="margin-top:25%;margin-left:20%">	
+</div><!-- form -->
+</div><!-- left -->
+<div class="login-text-logo">
+	Green
+	</div>	
+<div class="login-right">
 <?php $this->endWidget(); ?>
 <?php 
 	$this->widget('ext.eauth.EAuthWidget', array('action' => 'site/login'));
@@ -44,12 +49,5 @@
 		echo "<iframe id='logoutframe' src='https://accounts.google.com/logout' style='display: none'></iframe>";
 	}
 ?>
- </div>
-</div><!-- form -->
-</div><!-- left -->
-<div class="login-right">
-	<div class="login-text-logo">
-	Welcome to Green
-	</div>	
 </div><!-- right -->
 </div>
