@@ -83,10 +83,22 @@ class ReviewTypeController extends Controller
 	{
 		$tags = null;
 		
-		if($tagType == '1')
+		if($tagType == '1')//con seguimiento
+		{
+			$modelTagReviews = TagReview::model()->findAllByAttributes(array('Id_review'=>$id));
+			foreach($modelTagReviews as $modelTagReview)
+			{
+				$modelTagReview->Id_tag = 1; //lo dejo en pendiente
+				$modelTagReview->save();
+			}
+			
 			$tags = array(1,2,3);
-		else
+		}
+		else 
+		{
+			TagReview::model()->deleteAllByAttributes(array('Id_review'=>$id));
 			$tags = array(4);
+		}
 		
 		foreach ($tags as $i => $value) {
 			$modelTagReviewType = new TagReviewType();

@@ -909,6 +909,7 @@ class ReviewController extends Controller
 					{
 						$criteria = new CDbCriteria();
 						$criteria->addCondition('date in (select max(date) from tag_review where Id_review ='.$parent->review->Id.')');
+						$criteria->addCondition('t.Id_review = '.$parent->review->Id);
 						
 						$modelTagReview = TagReview::model()->find($criteria);
 						
