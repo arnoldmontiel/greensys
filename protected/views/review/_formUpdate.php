@@ -224,7 +224,7 @@ function bindEvents(item)
 								var filter = data.Id_tag;			
 									
 								$('#single-tag-desc').text(data.tag_description);
-								$('#single-tag-desc').tooltip().text(data.tag_description);
+								$('#single-tag-desc').attr('title', data.tag_description);
 								$('#single-tag-desc').attr('style',data.tag_style);								
 							}					
 							$('#dialogProcessing').dialog('close');
