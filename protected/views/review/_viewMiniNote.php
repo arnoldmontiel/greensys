@@ -6,7 +6,7 @@ echo CHtml::openTag('div',array('class'=>'view-text-note'));
 	echo CHtml::openTag('div',array('class'=>'view-text-user'));
 		echo $modelMiniNote->creation_date . ' - ' . CHtml::encode($modelMiniNote->user->name.' '.$modelMiniNote->user->last_name);
 	echo CHtml::closeTag('div');
-	echo CHtml::openTag('div',array('class'=>'view-text-date'));
+	echo CHtml::openTag('div',array('class'=>'view-text-note-actions'));
 		if($isOwner)
 		{
 			echo CHtml::image('images/attach_more.png','',
