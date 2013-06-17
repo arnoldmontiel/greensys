@@ -1005,7 +1005,6 @@ if($model->is_open)
 			if(User::canCreate() && $model->username == User::getCurrentUser()->username)
 			{
 				echo CHtml::activeTextField($model,'review',array('class'=>'review-update-data-number'));
-				echo CHtml::encode(' - ');				
 			}
 			else
 			{

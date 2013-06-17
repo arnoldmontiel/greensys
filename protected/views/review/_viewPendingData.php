@@ -1,17 +1,18 @@
 <?php 
 Yii::app()->clientScript->registerScript(__CLASS__.'#review-view-pending-data'.$data->Id, "
+$('#linkAttachImages').click(
 		function(){
 			$('#optionsAttachImages').toggle('blind');
-				return false;	
-			}		
+		return false;	
+		}		
 		)
+$('#attch-left-note').click(
+	function(){
+		$('.review-multimedia-conteiner').toggle('blind');
+	return false;	
+	}		
+)		
 		
-$('#publicArea_".$data->Id."').children().each(
-	function(index, item){
-
-	}
-);
-
 ");
 ?>
 
@@ -26,14 +27,21 @@ $('#publicArea_".$data->Id."').children().each(
 	?>
 	</div>
 	<?php
+	echo CHtml::openTag('div',array('class'=>'view-text-note-actions', 'style'=>'right:12%'));
+	echo CHtml::image('images/attch.png','',
+	array('id'=>'attch-left-note', 'class'=>'action-show-hide-attch', 'title'=>'Adjunto', 'style'=>'width:20px;'));				
+	echo CHtml::closeTag('div');
+	?>
+	
+	<?php
 	 echo CHtml::image('images/remove.png','',
 			array('id'=>'delete_'.$data->Id, 'class'=>'wall-action-remove', 'title'=>'Eliminar'));
 	?>
-	<div class="review-text-simple-note">
-		<div id='edit_main_note_<?php echo $data->Id?>' class="review-create-note-btn review-create-note-btn-main div-hidden" style="top:120px">
+	<div class="review-text-simple-note" style="height:280px;">
+		<div id='edit_main_note_<?php echo $data->Id?>' class="review-create-note-btn review-create-note-btn-main div-hidden" style="top:265px">
 			Grabar
 		</div>
-		<div id='edit_main_note_cancel_<?php echo $data->Id?>' class="review-create-note-btn review-create-note-btn-main-cancel div-hidden" style="top:120px">
+		<div id='edit_main_note_cancel_<?php echo $data->Id?>' class="review-create-note-btn review-create-note-btn-main-cancel div-hidden" style="top:265px">
 			Cancelar
 		</div>
 	
@@ -187,7 +195,7 @@ $('#publicArea_".$data->Id."').children().each(
 		</div>
 		<?php endif;?>		
 	</div>
-	<div>
+	</div>
 		<?php
 			echo CHtml::openTag('div', array('id'=>'publicArea_'.$data->Id, 'class'=>'review-public-permission-area'));
 			
@@ -199,7 +207,5 @@ $('#publicArea_".$data->Id."').children().each(
 			echo CHtml::closeTag('div');
 				
 		?>
-	</div>
-</div>
 
 

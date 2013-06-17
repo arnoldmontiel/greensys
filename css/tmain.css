@@ -324,6 +324,7 @@ div.review-text-simple-note
 	margin-left: 0px;
 	-->
 	margin-bottom: 5px;
+	height: auto;
 }
 
 div.review-text-images
@@ -516,8 +517,8 @@ div.review-create-note-btn-main-cancel
 div.review-edit-image
 {
 	position: absolute;
-	right:35px;
-	top: 45px;
+	left:35px;
+	top: 360px;
 	font-size: 10px;
 	line-height: 18px;
 	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
@@ -1137,13 +1138,15 @@ textarea.review-action-add-note-focus
 div.review-public-permission-area
 {
 	position: relative;
-	padding: 5px 10px 5px;
+	padding: 5px 1% 5px 1%;
 	background-color: #f4f6fb;
 	border: 1px solid #f4f6fb;
 	font-size: 13px;
+	height: auto;
 	line-height: 18px;
-	width: 540px;
-	margin-left: 5px;
+	width: 96%;
+	margin-top: 10px;
+	margin-left: 1%;
 	<!-- 
 	margin-left: 0px;
 	-->
@@ -2649,10 +2652,12 @@ div.index-review-quick-view-chart
 }
 div.filter-panel
 {
-	float: left;
-	margin-top: 40px;
-	width: 15%;
 	display: none;
+	margin-top: 100px;
+	width: 15%;
+	right: 0px;
+	left: 0px;
+	z-index: 10;
 }
 div.whrapper
 {
@@ -2717,4 +2722,5 @@ div.review-simple-note-container
 	{
 		width: 98%;
 	}
+	div.filter-panel{width: 98%;}
 }
