@@ -40,7 +40,7 @@
 		if(Yii::app()->user->checkAccess('UserIndex'))
 			$items[] = array('label'=>'Usuarios', 'url'=>Yii::app()->createUrl('user/index'));
 		if(Yii::app()->user->checkAccess('UserGroupIndex'))
-			$items[] = array('label'=>'Grupos', 'url'=>Yii::app()->createUrl('userGroup/index'));
+			$items[] = array('label'=>'Perfiles', 'url'=>Yii::app()->createUrl('userGroup/index'));
 		if(Yii::app()->user->checkAccess('DocumentTypeIndex'))
 			$items[] = array('label'=>'Docs', 'url'=>Yii::app()->createUrl('documentType/index'));
 		if(Yii::app()->user->checkAccess('AuditLoginIndex'))
