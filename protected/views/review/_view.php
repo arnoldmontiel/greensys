@@ -178,7 +178,7 @@ if(!$data->isOpen())
 		    CHtml::image('images/remove.png','',
 						array('id'=>'removeReview'.$data->Id, 'class'=>'review-action-remove-small','title'=>'Eliminar')),
 			array( 'delete','id'=>$data->Id),
-			array('onclick' => 'return confirm("\u00BFEsta seguro que desea borrar este agrupador?")')
+			array('onclick' => 'return confirm("\u00BFEsta seguro que desea borrar este formulario?")')
 		);
 	}
 		

@@ -71,7 +71,7 @@
 		
 		<div class="search-box">
 			<div class="search-box-title">
-			Tipo de agrupador
+			Tipo de formulario
 			</div>
 			<div class="search-box-list">
 			<?php

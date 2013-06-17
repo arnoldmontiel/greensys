@@ -36,7 +36,7 @@
 		if(Yii::app()->user->checkAccess('TagIndex'))
 			$items[] = array('label'=>'Etapas', 'url'=>Yii::app()->createUrl('tag/index'));
 		if(Yii::app()->user->checkAccess('ReviewTypeIndex'))
-			$items[] = array('label'=>'Agrupadores', 'url'=>Yii::app()->createUrl('reviewType/index'));
+			$items[] = array('label'=>'Formularios', 'url'=>Yii::app()->createUrl('reviewType/index'));
 		if(Yii::app()->user->checkAccess('UserIndex'))
 			$items[] = array('label'=>'Usuarios', 'url'=>Yii::app()->createUrl('user/index'));
 		if(Yii::app()->user->checkAccess('UserGroupIndex'))
