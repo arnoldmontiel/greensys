@@ -317,9 +317,9 @@ div.review-text-simple-note
 	font-size: 13px;
 	line-height: 18px;
 	position: relative;
-	width: 562px;
+	width: 99%;
 	float:left;
-	margin-left: 5px;
+	margin-left: 1%;
 	<!--
 	margin-left: 0px;
 	-->
@@ -343,7 +343,7 @@ div.review-text-docs
 	position: relative;
 	width: 90%;
 	float:left;
-	margin-left: 20px;
+	margin-left: 0px;
 	margin-bottom: 5px;
 	margin-top: 15px;
 	text-decoration: none;
@@ -1208,17 +1208,16 @@ div.wall-action-edit-main-note
 {
 	z-index:10;
 	position: relative;
-	padding: 5px 10px 5px;
+	padding: 5px 1% 5px 1%;
 	outline: none;
 	background-color: #f4f6fb;
-	border: 1px solid #f4f6fb;
 	font-size: 13px;
 	line-height: 18px;
-	width: 540px;
+	width: 97%;
 	height: 250px;
 	font: inherit;
 	color: inherit;
-	margin: 0px;
+	margin: 0px 0px 0px 0px;
 	overflow: auto;
 }
 
@@ -1247,14 +1246,14 @@ textarea.wall-action-edit-main-note
 {
 	z-index:10;
 	position: relative;
-	padding: 5px 10px 5px;
+	padding: 5px 1% 5px 1%;
 	outline: none;
 	background-color: #f4f6fb;
 	border: 1px solid #f4f6fb;
 	font-size: 13px;
 	line-height: 18px;
 	resize: none;
-	width: 540px;
+	width: 97%;
 	height: 250px;
 	font: inherit;
 	color: inherit;
@@ -1938,9 +1937,11 @@ p.single-formated-text
 div.review-multimedia-conteiner
 {
 	position:relative;
-	display: inline;
+	display: inline-block;
 	float: left;
-	width: 30%;
+	width: 99%;
+	margin-left:1%;
+	display: none;
 }
 
 div.review-add-images-container
@@ -2091,10 +2092,11 @@ div.order-info
 }
 div.review-single-view-actions
 {
-	width: 562px;
+	width: 97%;
 	margin: 0px;
 	height: 30px;
 	background-color: #D7DDEB;
+	padding: 0px 1% 0px 1%;
 }
 div.review-single-view-actions-need-conf
 {
@@ -2660,5 +2662,11 @@ div.checkbox-group
 	display:inline-block;
 	position: relative;
 	text-align: center;
+}
+div.review-simple-note-container
+{
+	position: relative;
+	float: left;
+	width: 100%;
 }
 .container,.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container{ width:100% !important; max-width:100% !important; min-width:900px !important;}

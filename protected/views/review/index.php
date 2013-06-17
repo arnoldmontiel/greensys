@@ -502,8 +502,7 @@ function getCheck(checkName)
 						'autoOpen'=>false,
 						'modal'=>true,
 						'width'=> '400',
-						'buttons'=>	array(
-								'Cancelar'=>'js:function(){jQuery("#TechnicalReport").dialog( "close" );}',
+						'buttons'=>	array(								
 								'Descargar'=>'js:function()
 								{
 									window.location.href="'.
@@ -512,10 +511,12 @@ function getCheck(checkName)
 									.'&dateToReport="+$("#dateToReport").val();
 									jQuery("#TechnicalReport").dialog( "close" );
 								}
-								'),
+								',
+								'Cancelar'=>'js:function(){jQuery("#TechnicalReport").dialog( "close" );}',
+							),
 				),
 		));
-		echo "<div class='row'>";
+		echo "<div class='row-fluid'>";
 		echo CHtml::label('Fecha: ', 'dateToReport');
 		$this->widget('zii.widgets.jui.CJuiDatePicker',array(
 			'id'=>'dateToReport',			

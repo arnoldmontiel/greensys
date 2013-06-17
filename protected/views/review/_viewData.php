@@ -6,6 +6,12 @@ $('#linkAttachImages').click(
 		return false;	
 		}		
 		)
+$('#attch-left-note').click(
+	function(){
+		$('.review-multimedia-conteiner').toggle('blind');
+	return false;	
+	}		
+)		
 		");
 $canDoFeeback = $dataUserGroupNote->can_feedback;
 $needConfirmation = $dataUserGroupNote->need_confirmation;
@@ -34,6 +40,7 @@ $editable = $isAdministrator||$isOwner;
 			array('id'=>'delete_'.$data->Id, 'class'=>'wall-action-remove', 'title'=>'Eliminar'));
 	?>
 	<?php endif;?>
+	<div class="review-simple-note-container">
 	<div class="review-text-simple-note">
 		<div class="review-single-view-actions">
 			<div class="review-single-view-autor">
@@ -41,6 +48,21 @@ $editable = $isAdministrator||$isOwner;
 				echo CHtml::encode($data->user->name.' '.$data->user->last_name);								
 				?>
 			</div>
+			<?php
+			echo CHtml::openTag('div',array('class'=>'view-text-note-actions'));
+			if($isOwner)
+			{
+				echo CHtml::image('images/attach_more.png','',
+				array('id'=>'attch-left-note', 'class'=>'action-show-hide-attch', 'title'=>'Adjunto', 'style'=>'width:16px;'));				
+			}
+			elseif(count($data->multimedias)>0)
+			{
+				echo CHtml::image('images/attch.png','',
+				array('id'=>'attch-left-note', 'class'=>'action-show-hide-attch', 'title'=>'Adjunto', 'style'=>'width:25px;'));
+			}					
+			echo CHtml::closeTag('div');
+			?>
+		
 		</div>
 		<div class="review-single-view-actions" style="height: 50px">
 			<div class="review-single-view-actions-need-conf">
@@ -246,7 +268,6 @@ $editable = $isAdministrator||$isOwner;
 			echo CHtml::closeTag('div');
 				
 		?>
-	</div>
 	
 	<div class="review-text-docs">
 	<?php
@@ -301,7 +322,9 @@ $editable = $isAdministrator||$isOwner;
 		echo CHtml::closeTag('div');
 	?>
 	</div>
+	</div>
 	
+	</div>
 	</div>
 	<div class="singles-notes-confirmations">
 		<?php if ($needConfirmation):?>
