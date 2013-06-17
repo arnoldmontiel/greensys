@@ -221,10 +221,11 @@ function bindEvents(item)
 							
 							if(data.Id_tag != null)
 							{
-								var filter = data.Id_tag;							
-								//$('#radiolist-tag-review :radio[value='+filter+']').attr('checked','checked');
-								$('#single-tag').text(data.tag_description);
-								$('#single-tag').attr('style',data.tag_style);								
+								var filter = data.Id_tag;			
+									
+								$('#single-tag-desc').text(data.tag_description);
+								$('#single-tag-desc').tooltip().text(data.tag_description);
+								$('#single-tag-desc').attr('style',data.tag_style);								
 							}					
 							$('#dialogProcessing').dialog('close');
 						}
@@ -973,27 +974,34 @@ $('#need_reload').click(function(){
 <?php 
 if($model->is_open)
 {
-	$tags = $model->tags;
-	echo CHtml::openTag('div',array('class'=>'index-review-tag-box',"style"=>"margin-top:10px;"));
-	foreach($tags as $tag)
+	$criteria = new CDbCriteria();
+	$criteria->addCondition('date in (select max(date) from tag_review where Id_review ='.$model->Id.')');
+	
+	$modelTagReview = TagReview::model()->find($criteria);
+
+	if(isset($modelTagReview))
 	{
-		$options = array('class'=>'index-review-single-tag');
+		$tag = $modelTagReview->tag;
+		echo CHtml::openTag('div',array('class'=>'index-review-tag-box',"style"=>"margin-top:10px;"));
 		
-		if($tag->Id==1)
-			$options['style']='background-color: #CC3300;color: white;max-width:none';//rojo
-		else if($tag->Id==2)
-			$options['style']='background-color: #66FF66;max-width:none';//verde
-		else if($tag->Id==3)
-			$options['style']='background-color: #FFFF99;max-width:none';//amarillo
-		else if($tag->Id==4)
-			$options['style']='background-color: #FFCC66;max-width:none';//amarillo
+			$options = array('class'=>'index-review-single-tag', 'id'=>'single-tag-desc');
 			
-		$options['title']=$tag->description;
-		echo CHtml::openTag('div',$options);
-		echo $tag->description;
+			if($tag->Id==1)
+				$options['style']='background-color: #CC3300;color: white;max-width:none';//rojo
+			else if($tag->Id==2)
+				$options['style']='background-color: #66FF66;max-width:none';//verde
+			else if($tag->Id==3)
+				$options['style']='background-color: #FFFF99;max-width:none';//amarillo
+			else if($tag->Id==4)
+				$options['style']='background-color: #FFCC66;max-width:none';//amarillo
+				
+			$options['title']=$tag->description;
+			echo CHtml::openTag('div',$options);
+			echo $tag->description;
+			echo CHtml::closeTag('div');
+	
 		echo CHtml::closeTag('div');
 	}
-	echo CHtml::closeTag('div');
 	echo CHtml::openTag('div',array('class'=>'index-review-type-box','title'=>$model->reviewType->description,"style"=>"margin-top:10px;max-width:none;"));
 	echo $model->reviewType->description;
 	echo CHtml::closeTag('div');						
