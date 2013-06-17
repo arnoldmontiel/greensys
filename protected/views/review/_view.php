@@ -24,6 +24,7 @@ if(!$data->isOpen())
 			
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('date in (select max(date) from tag_review where Id_review ='.$data->Id.')');
+			$criteria->addCondition('t.Id_review = '.$data->Id);
 			
 			$modelTagReviewDb = TagReview::model()->find($criteria);
 			
@@ -31,7 +32,7 @@ if(!$data->isOpen())
 			{
 				$tag = $modelTagReviewDb->tag;
 				echo CHtml::openTag('div',array('class'=>'index-review-tag-box'));
-		
+
 					$options = array('class'=>'index-review-single-tag');
 					if($tag->Id==1)
 					$options['style']='background-color: #CC3300;color: white;max-width:none';//rojo

@@ -976,6 +976,7 @@ if($model->is_open)
 {
 	$criteria = new CDbCriteria();
 	$criteria->addCondition('date in (select max(date) from tag_review where Id_review ='.$model->Id.')');
+	$criteria->addCondition('t.Id_review = '.$model->Id);
 	
 	$modelTagReview = TagReview::model()->find($criteria);
 
