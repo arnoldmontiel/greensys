@@ -31,10 +31,6 @@ $this->menu=array(
 		'address',
 		'phone_house',
 		'phone_mobile',
-		'description',
-		array('label'=>$model->getAttributeLabel('send_mail'),
-				'type'=>'raw',
-				'value'=>CHtml::checkBox("send_mail",$model->send_mail,array("disabled"=>"disabled"))
-		),
+		'description',		
 	),
 )); ?>
