@@ -51,16 +51,7 @@
 				echo CHtml::openTag('span',array('id'=>'chkclose-span'));
 				echo CHtml::checkBox('chkClose','',array('id'=>'chkClose'));
 				echo "<label> Cerrado</label>";
-				echo CHtml::closeTag('span');
-				
-				 $radio = $this->beginWidget('zii.widgets.jui.CJuiButton', array(
-						'name'=>'btnradio',
-						'buttonType'=>'buttonset'
-				)); 
-echo CHtml::checkBoxList('chklist-tags', $selectd, $checkTags);
-
-				
-				$this->endWidget();
+				echo CHtml::closeTag('span');				
 			?>
 			</div>
 		</div>
