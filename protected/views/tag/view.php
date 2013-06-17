@@ -29,7 +29,7 @@ $this->menu=array(
 		'summaryText'=>'',
 		'columns'=>array(
 				array(
-			 		'name'=>'Agrupadores Asociados',
+			 		'name'=>'Formularios Asociados',
 					'htmlOptions'=>array('style'=>'text-align: center'),
 					'value'=>'$data->reviewType->description',
 				),
