@@ -48,9 +48,18 @@ class Note extends TapiaActiveRecord
 					{
 						if(TagReviewType::model()->countByAttributes(array('Id_review_type'=>$parent->review->Id_review_type))>1)
 						{
-							$modelTagReview = TagReview::model()->findByAttributes(array('Id_review'=>$parent->review->Id));
-							$modelTagReview->Id_tag = 2; //Ejecucion
-							$modelTagReview->save();
+							$criteria = new CDbCriteria();
+							$criteria->addCondition('date in (select max(date) from tag_review where Id_review ='.$parent->review->Id.')');
+							
+							$modelTagReviewDb = TagReview::model()->find($criteria);
+							
+							if(isset($modelTagReviewDb) && $modelTagReviewDb->Id_tag != 2)
+							{
+								$modelTagReview = new TagReview();
+								$modelTagReview->Id_review = $parent->review->Id;
+								$modelTagReview->Id_tag = 2; //Ejecucion
+								$modelTagReview->save();
+							}
 						}							
 							
 						$parent->review->save();
