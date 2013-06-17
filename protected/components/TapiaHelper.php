@@ -16,11 +16,17 @@ class TapiaHelper
 		try {
 			foreach($reviews as $modelReview)
 			{
-				$modelTagReview = TagReview::model()->findByAttributes(array('Id_review'=>$modelReview->Id));
-				if(isset($modelTagReview))
+				$criteria = new CDbCriteria();
+				$criteria->addCondition('date in (select max(date) from tag_review where Id_review ='.$modelReview->Id.')');
+				
+				$modelTagReviewDb = TagReview::model()->find($criteria);
+								
+				if(isset($modelTagReviewDb))
 				{
-					if($modelTagReview->Id_tag == 2) // si estaba en ejecucion
+					if($modelTagReviewDb->Id_tag == 1 || $modelTagReviewDb->Id_tag == 2) // si es pendiente o en ejecucion
 					{
+						$modelTagReview = new TagReview();
+						$modelTagReview->Id_review = $modelReview->Id;
 						$modelTagReview->Id_tag = 3; // pasarlo a stand-by
 						$modelTagReview->save();
 						$ids = $ids . $modelReview->Id . ', ';
