@@ -34,7 +34,7 @@
 	
 	<div class="row">
 		<div class="check-title">	
-			Tipos de Agrupadores que podr&aacute; crear
+			Tipos de Formularios que podr&aacute; crear
 		</div>
 		<div class="review-types">
 		<?php
