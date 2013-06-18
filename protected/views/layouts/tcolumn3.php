@@ -46,11 +46,16 @@
 				$modelTags = Tag::model()->findAll();
 				$checkTags = CHtml::listData($modelTags, 'Id', 'description');	
 				$selectd = array(1=>true);
-				echo CHtml::checkBoxList('chklist-tag', $selectd, $checkTags);
+				echo CHtml::checkBoxList('chklist-tag', $selectd, $checkTags,
+					array(
+							'template'=>'<div class="filter-chk-list">{input}&nbsp;<div class="filter-chk-list">{label}</div></div>'
+					)
+					);
 				echo "<br>";
 				echo CHtml::openTag('span',array('id'=>'chkclose-span'));
+				echo '<div class="filter-chk-list">';
 				echo CHtml::checkBox('chkClose','',array('id'=>'chkClose'));
-				echo "<label> Cerrado</label>";
+				echo '&nbsp;<div class="filter-chk-list"> Cerrado</div></div>';
 				echo CHtml::closeTag('span');				
 			?>
 			</div>
@@ -62,7 +67,11 @@
 			<?php
 				$modelType = MultimediaType::model()->findAll();
 				$checkType = CHtml::listData($modelType, 'Id', 'description');		
-				echo CHtml::checkBoxList('chklist-type', '', $checkType);
+				echo CHtml::checkBoxList('chklist-type', '', $checkType,
+					array(
+							'template'=>'<div class="filter-chk-list">{input}&nbsp;<div class="filter-chk-list">{label}</div></div>'
+					)
+				);
 			?>
 			</div>
 		</div>
@@ -77,7 +86,7 @@
 				$checkReviewType = CHtml::listData($modelReviewType, 'Id', 'description');		
 				echo CHtml::checkBoxList('chklist-reviewType', '', $checkReviewType,
           				array(            					
-            						'template'=>'<div class="aaa">{input}&nbsp;<div class="aaa">{label}</div></div>'
+            						'template'=>'<div class="filter-chk-list">{input}&nbsp;<div class="filter-chk-list">{label}</div></div>'
             					)
         					);      
 			?>
