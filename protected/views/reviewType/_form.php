@@ -107,7 +107,7 @@ $this->widget('ext.processingDialog.processingDialog', array(
 	<br>
 	<div class="row">
 		<div class="check-title">	
-			Actividades por grupo de usuario
+			Actividades por perfil
 		</div>		
 <?php
 		$modelUserGroup = UserGroup::model()->findAll();
