@@ -27,8 +27,9 @@
 <div class="container" id="page">
 	<div >
 		<?php 
-		$params = User::getCustomer()?array('Id_customer'=>User::getCustomer()->Id):array();
 		$items = array();			
+				
+		$items[] = array('label'=>'Monitor', 'url'=>Yii::app()->createUrl('review/index'));
 		
 		if(Yii::app()->user->checkAccess('CustomerIndex'))
 			$items[] = array('label'=>'Clientes', 'url'=>Yii::app()->createUrl('tCustomer/index'));
