@@ -118,78 +118,85 @@ class ReviewTypeController extends Controller
 	{
 		//itero por perfil.
 		$json = json_decode($chkList);
-		foreach ($json as $key => $obj)
-		{
-			if(isset($obj))
-			{ 				
-				
-				$modelReviewTypeUserGroup = ReviewTypeUserGroup::model()->findByAttributes(array('Id_review_type'=>$id, 'Id_user_group'=>$key));
-				if(isset($modelReviewTypeUserGroup))
-				{						
-					$criteria = new CDbCriteria();
-					$criteria->distinct = true;
-					$criteria->select = 't.Id_note, t.Id_customer, t.Id_project';
-					$criteria->join = 'INNER JOIN note n on (t.Id_note = n.Id) 
-					inner join review r on (r.Id = n.Id_review)';
-					$criteria->addCondition('n.Id_review is not null');
-					$criteria->addCondition('r.Id_review_type = '.$id );
-
-					//obtengo los Id_note que tienen publicaciones
-					$arrResult = UserGroupNote::model()->findAll($criteria);
+		
+		$transaction = ReviewTypeUserGroup::model()->dbConnection->beginTransaction();
+		try {
+			foreach ($json as $key => $obj)
+			{
+				if(isset($obj))
+				{ 				
 					
-					foreach($arrResult as $item)
-					{
-						if(!$obj->read)
+					$modelReviewTypeUserGroup = ReviewTypeUserGroup::model()->findByAttributes(array('Id_review_type'=>$id, 'Id_user_group'=>$key));
+					if(isset($modelReviewTypeUserGroup))
+					{						
+						$criteria = new CDbCriteria();
+						$criteria->distinct = true;
+						$criteria->select = 't.Id_note, t.Id_customer, t.Id_project';
+						$criteria->join = 'INNER JOIN note n on (t.Id_note = n.Id) 
+						inner join review r on (r.Id = n.Id_review)';
+						$criteria->addCondition('n.Id_review is not null');
+						$criteria->addCondition('r.Id_review_type = '.$id );
+	
+						//obtengo los Id_note que tienen publicaciones
+						$arrResult = UserGroupNote::model()->findAll($criteria);
+						
+						foreach($arrResult as $item)
 						{
-							UserGroupNote::model()->deleteAllByAttributes(array(
-																			'Id_note'=>$item->Id_note,
-																			'Id_user_group'=>$key
-																			));
-						}
-						else 
-						{
-							$modelUserGroupNote = UserGroupNote::model()->findByAttributes(
-																	array('Id_note'=>$item->Id_note,
-																		'Id_user_group'=>$key
-																	));
-							if(isset($modelUserGroupNote))
-							{							
-								$modelUserGroupNote->can_feedback = $obj->feedback;
-								$modelUserGroupNote->addressed = $obj->mail;
-								$modelUserGroupNote->save();
+							if(!$obj->read)
+							{
+								UserGroupNote::model()->deleteAllByAttributes(array(
+																				'Id_note'=>$item->Id_note,
+																				'Id_user_group'=>$key
+																				));
 							}
 							else 
 							{
-								if($obj->read)
-								{
-									$modelUserGroupNote = new UserGroupNote();
-									$modelUserGroupNote->Id_note = $item->Id_note;
-									$modelUserGroupNote->Id_customer = $item->Id_customer;
-									$modelUserGroupNote->Id_project = $item->Id_project;
-									$modelUserGroupNote->Id_user_group = $key;
-									
+								$modelUserGroupNote = UserGroupNote::model()->findByAttributes(
+																		array('Id_note'=>$item->Id_note,
+																			'Id_user_group'=>$key
+																		));
+								if(isset($modelUserGroupNote))
+								{							
 									$modelUserGroupNote->can_feedback = $obj->feedback;
 									$modelUserGroupNote->addressed = $obj->mail;
 									$modelUserGroupNote->save();
 								}
+								else 
+								{
+									if($obj->read)
+									{
+										$modelUserGroupNote = new UserGroupNote();
+										$modelUserGroupNote->Id_note = $item->Id_note;
+										$modelUserGroupNote->Id_customer = $item->Id_customer;
+										$modelUserGroupNote->Id_project = $item->Id_project;
+										$modelUserGroupNote->Id_user_group = $key;
+										
+										$modelUserGroupNote->can_feedback = $obj->feedback;
+										$modelUserGroupNote->addressed = $obj->mail;
+										$modelUserGroupNote->save();
+									}
+								}
 							}
 						}
 					}
+					else 
+					{
+						$modelReviewTypeUserGroup = new ReviewTypeUserGroup;
+						$modelReviewTypeUserGroup->Id_user_group =  $key;
+						$modelReviewTypeUserGroup->Id_review_type = $id;					
+					}
+					
+					$modelReviewTypeUserGroup->can_create = $obj->create;
+					$modelReviewTypeUserGroup->can_read = $obj->read;
+					$modelReviewTypeUserGroup->can_feedback = $obj->feedback;
+					$modelReviewTypeUserGroup->can_mail = $obj->mail;
+					$modelReviewTypeUserGroup->can_close = $obj->close;
+					$modelReviewTypeUserGroup->save();
 				}
-				else 
-				{
-					$modelReviewTypeUserGroup = new ReviewTypeUserGroup;
-					$modelReviewTypeUserGroup->Id_user_group =  $key;
-					$modelReviewTypeUserGroup->Id_review_type = $id;					
-				}
-				
-				$modelReviewTypeUserGroup->can_create = $obj->create;
-				$modelReviewTypeUserGroup->can_read = $obj->read;
-				$modelReviewTypeUserGroup->can_feedback = $obj->feedback;
-				$modelReviewTypeUserGroup->can_mail = $obj->mail;
-				$modelReviewTypeUserGroup->can_close = $obj->close;
-				$modelReviewTypeUserGroup->save();
 			}
+			$transaction->commit();
+		} catch (Exception $e) {
+			$transaction->rollback();
 		}
 	}
 	
