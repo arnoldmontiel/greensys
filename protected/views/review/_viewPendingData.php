@@ -18,14 +18,6 @@ $('#attch-left-note').click(
 
 <div class="review-single-view" id="<?php echo $data->Id?>" >	
 	<div class="view-text-date"><?php echo $data->change_date;?></div>
-	<div id='edit_image<?php echo $data->Id?>' class="review-edit-image div-hidden">
-	<?php
-		echo CHtml::link('Editar Imagenes',
-			ReviewController::createUrl('selectAttach',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
-			array('class'=>'review-edit-image')
-		);
-	?>
-	</div>	
 	<?php
 	 echo CHtml::image('images/remove.png','',
 			array('id'=>'delete_'.$data->Id, 'class'=>'wall-action-remove', 'title'=>'Eliminar'));
@@ -80,13 +72,13 @@ $('#attch-left-note').click(
 		</div>
 		<div class="review-text-docs">
 			<?php 
-				if(sizeof($images)==0)
+				if(true)
 				{
 					echo CHtml::openTag('div', array('class'=>'review-add-images-container'));
 						echo CHtml::link('Adjuntar Imagenes',"#",
 								array('class'=>'review-text-docs','id'=>'linkAttachImages')
 						);
-						echo CHtml::openTag('div',array('id'=>'optionsAttachImages','style'=>'margin-left:10px;display:none;'));
+						echo CHtml::openTag('div',array('id'=>'optionsAttachImages','style'=>'margin-left:10px;display:none; margin-bottom:10px;'));
 						echo CHtml::openTag('br');
 						echo CHtml::link('Subir nuevas imagenes',
 								ReviewController::createUrl('uploadImages',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
