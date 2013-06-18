@@ -2683,7 +2683,9 @@ div.filter-panel
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
-	min-height: 100%;
+	
+	height: auto;
+	max-width: 600px;
 
 }
 div.filter-chk-list
@@ -2764,7 +2766,7 @@ div.review-simple-note-container
 	div.filter-panel
 	{
 		width: 96% !important;
-		min-width: 465px !important;
+		min-width: 460px !important;
 		margin-left: 1% !important;
 		margin-top: 70px;
 	}

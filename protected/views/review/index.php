@@ -167,7 +167,7 @@ $('#btn-filter').click(function(){
 	
 	$('#dateToFilter').val('');
 	$('#dateToFilter').val($('#dateTo').val());
-	$('#filter-panel').toggle('blind');
+	$('#filter-panel').toggle('blind',{duration:100});
 	$('#showFilters').removeClass('active');				
 	
 	doFilter();
@@ -412,12 +412,12 @@ function getCheck(checkName)
 // 					$( "#content" ).effect( "size", {
 // 					    to: { width: "85%"}
 // 					  }, 1000 ,);
-					$("#filter-panel").toggle("blind",{ direction: "left" },1000);
+					$("#filter-panel").toggle("blind",{ direction: "left" },50);
 				}
 				else
 				{
 					$(this).removeClass("active");
-					$("#filter-panel").toggle("blind",{ direction: "left" },1000);
+					$("#filter-panel").toggle("blind",{ direction: "left" },50);
 // 					,function(){$( "#content" ).effect( "size", {
 // 										    to: { width: "100%"}
 // 										  }, 1000 );}
