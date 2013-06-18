@@ -75,7 +75,11 @@
 			<?php
 				$modelReviewType = ReviewType::model()->findAll();
 				$checkReviewType = CHtml::listData($modelReviewType, 'Id', 'description');		
-				echo CHtml::checkBoxList('chklist-reviewType', '', $checkReviewType);
+				echo CHtml::checkBoxList('chklist-reviewType', '', $checkReviewType,
+          				array(            					
+            						'template'=>'<div class="aaa">{input}&nbsp;<div class="aaa">{label}</div></div>'
+            					)
+        					);      
 			?>
 			</div>
 		</div>

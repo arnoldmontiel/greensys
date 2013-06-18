@@ -2670,6 +2670,10 @@ div.filter-panel
 	min-height: 100%;
 
 }
+div.aaa
+{
+	display: inline-block;
+}
 div.whrapper
 {
 	float: left;
