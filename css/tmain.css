@@ -2786,7 +2786,7 @@ div.review-simple-note-container
 	div.filter-panel
 	{
 		width: 96% !important;
-		min-width: 620px !important;
+		min-width: 500px !important;
 		margin-left: 1% !important;
 		margin-top: 70px;
 	}
