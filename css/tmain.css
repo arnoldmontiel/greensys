@@ -410,6 +410,15 @@ div.view-text-note-actions
 	height: 18px;
 	width: 20%;
 }
+div.view-pending-note-actions-attch
+{
+	float: left;
+	display: inline-block;
+	width: 10%;
+	margin-left: 1%;
+	height: auto;
+	
+}
 div.view-note-title
 {
 	background-color: #E5ECFB;
@@ -1405,6 +1414,12 @@ img.action-show-hide-attch
 	right:0px;
 	cursor: pointer;
 }
+img.view-pending-note-show-attcha
+{	
+	position:absolute;
+	cursor: pointer;
+}
+
 img.action-show-saving-note
 {	
 	position:absolute;

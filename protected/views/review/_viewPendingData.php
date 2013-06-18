@@ -5,13 +5,13 @@ $('#linkAttachImages').click(
 			$('#optionsAttachImages').toggle('blind');
 		return false;	
 		}		
-		)
+		);
 $('#attch-left-note').click(
 	function(){
 		$('.review-multimedia-conteiner').toggle('blind');
 	return false;	
 	}		
-)		
+);
 		
 ");
 ?>
@@ -25,14 +25,7 @@ $('#attch-left-note').click(
 			array('class'=>'review-edit-image')
 		);
 	?>
-	</div>
-	<?php
-	echo CHtml::openTag('div',array('class'=>'view-text-note-actions', 'style'=>'right:25%'));
-	echo CHtml::image('images/attch.png','',
-	array('id'=>'attch-left-note', 'class'=>'action-show-hide-attch', 'title'=>'Adjunto', 'style'=>'width:20px;'));				
-	echo CHtml::closeTag('div');
-	?>
-	
+	</div>	
 	<?php
 	 echo CHtml::image('images/remove.png','',
 			array('id'=>'delete_'.$data->Id, 'class'=>'wall-action-remove', 'title'=>'Eliminar'));
@@ -48,7 +41,13 @@ $('#attch-left-note').click(
 	<textarea id='main_note<?php echo $data->Id?>' class="wall-action-edit-main-note" placeholder='Escriba una nota...'><?php echo $data->note;?></textarea>
 	<textarea id='main_original_note<?php echo $data->Id?>' class="wall-action-edit-main-note" style="display: none;" placeholder='Escriba una nota...'><?php echo $data->note;?></textarea>
 	</div>		
-	<div class="review-multimedia-conteiner">
+	<?php
+	echo CHtml::openTag('div',array('class'=>'view-pending-note-actions-attch'));
+	echo CHtml::image('images/attch.png','',
+	array('id'=>'attch-left-note', 'class'=>'view-pending-note-show-attcha', 'title'=>'Adjunto', 'style'=>'width:20px;'));				
+	echo CHtml::closeTag('div');
+	?>
+	<div class="review-multimedia-conteiner" style="display: inline-block">
 		<div id='review_image<?php echo $data->Id?>' class="review-text-images">
 				
 		<?php
