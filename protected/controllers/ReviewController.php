@@ -48,7 +48,7 @@ class ReviewController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$this->layout='//layouts/tcolumn2';
+		//$this->layout='//layouts/tcolumn2';
 		$model=new Review;
 		$modelCustomer=new TCustomer;
 		$modelProject=new Project;
@@ -221,7 +221,7 @@ class ReviewController extends Controller
 
 	public function actionAjaxViewImageResource($Id_customer,$Id_project)
 	{
-		$this->layout='//layouts/tcolumn2';
+		//$this->layout='//layouts/tcolumn2';
 		$modelAlbum = Album::model()->findAllByAttributes(array('Id_customer'=>$Id_customer,'Id_project'=>$Id_project,
 								'Id_user_group_owner'=>User::getCurrentUserGroup()->Id ));
 		
@@ -234,7 +234,7 @@ class ReviewController extends Controller
 	
 	public function actionAjaxViewDocResource($Id_customer,$Id_project)
 	{
-		$this->layout='//layouts/tcolumn2';		
+		//$this->layout='//layouts/tcolumn2';		
 		$criteria=new CDbCriteria;
 		$criteria->addCondition('Id_document_type is null');
 		$criteria->addCondition('Id_user_group = '. User::getCurrentUserGroup()->Id);
@@ -269,7 +269,7 @@ class ReviewController extends Controller
 	
 	public function actionSelectAttach($id, $idNote)
 	{
-		$this->layout='//layouts/tcolumn2';
+		//$this->layout='//layouts/tcolumn2';
 		$this->render('selectAttach',array(
 								'id'=>$id,
 								'idNote'=>$idNote,								
@@ -278,7 +278,7 @@ class ReviewController extends Controller
 	
 	public function actionAjaxAttachImage($id, $idNote)
 	{
-		$this->layout='//layouts/tcolumn2';
+		//$this->layout='//layouts/tcolumn2';
 		$model=$this->loadModel($id);
 		
 		$criteria=new CDbCriteria;
@@ -310,7 +310,7 @@ class ReviewController extends Controller
 	
 	public function actionUploadImages($id, $idNote)
 	{
-		$this->layout='//layouts/tcolumn2';
+		//$this->layout='//layouts/tcolumn2';
 		$model=$this->loadModel($id);
 	
 		$modelAlbum = Album::model()->findByAttributes(array('Id_customer'=>$model->Id_customer,
@@ -339,7 +339,7 @@ class ReviewController extends Controller
 	
 	public function actionAjaxAttachDoc($id, $idNote)
 	{
-		$this->layout='//layouts/tcolumn2';
+		//$this->layout='//layouts/tcolumn2';
 		$model=$this->loadModel($id);
 	
 		$criteria=new CDbCriteria;
@@ -375,7 +375,7 @@ class ReviewController extends Controller
 	
 	public function actionAjaxAttachTechDoc($id, $idNote)
 	{
-		$this->layout='//layouts/tcolumn2';
+		//$this->layout='//layouts/tcolumn2';
 		$model=$this->loadModel($id);
 	
 		$criteria=new CDbCriteria;

@@ -37,7 +37,7 @@
 		</div>
 	<?php endif?>
 	<?php if($this->showFilter):?>
-		<div class="search-box">
+		<div class="search-box-short">
 			<div class="search-box-title">
 			Etapas
 			</div>
@@ -92,7 +92,7 @@
 			?>
 			</div>
 		</div>
-		<div class="search-box">
+		<div class="search-box-footer">
 		
 			<div class="search-box-title">
 				Fecha de creacion

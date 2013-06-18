@@ -545,13 +545,20 @@ function getCheck(checkName)
 	//techReport pop up END
 	?>
 </div>
+<?php if(User::canCreate() && $Id_customer == -1):?>
+
+<?php
+	echo CHtml::openTag('div',array('class'=>'review-action-box-btn div-hidden','id'=>'btn-actions-box'));
+		echo CHtml::textField('txtSearchCustomer','',array('Id'=>'txtSearchCustomer'));			
+	echo CHtml::closeTag('div');	
+?>
+<?php endif;?>
 
 <div id="loading" class="loading-place-holder" >
 </div>
 <?php echo CHtml::hiddenField('Id_customer',$Id_customer,array('id'=>'Id_customer'))?>
 <?php echo CHtml::hiddenField('Id_project',$Id_project,array('id'=>'Id_project'))?>
 <?php if(User::getCustomer()):?>
-
 
 <div id="customer" class="review-action-back" >
 	<?php echo CHtml::link(User::getCustomer()->person->name.' '.User::getCustomer()->person->last_name,
@@ -561,6 +568,7 @@ function getCheck(checkName)
 	 ?>
 </div>
 <?php else:?>
+
 <div id="customer" class="review-action-back" >
 	<?php echo CHtml::link('Clientes',
 		'',
@@ -592,15 +600,6 @@ function getCheck(checkName)
 // 			echo 'Documentos';
 // 		echo CHtml::closeTag('div');
 	echo CHtml::closeTag('div');
-?>
-<?php endif;?>
-
-<?php if(User::canCreate() && $Id_customer == -1):?>
-
-<?php
-	echo CHtml::openTag('div',array('class'=>'review-action-box-btn div-hidden','id'=>'btn-actions-box'));
-		echo CHtml::textField('txtSearchCustomer','',array('Id'=>'txtSearchCustomer'));			
-	echo CHtml::closeTag('div');	
 ?>
 <?php endif;?>
 

@@ -1050,7 +1050,7 @@ if($model->is_open)
 			if(User::isAdministartor() || $model->username == User::getCurrentUser()->username)
 			{
 				echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnClose'));
-					echo 'Finalizar Tema';
+					echo 'Finalizar';
 				echo CHtml::closeTag('div');
 			}
 		?>
