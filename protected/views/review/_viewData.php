@@ -72,7 +72,8 @@ $editable = $isAdministrator||$isOwner;
 				echo CHtml::closeTag('div');								
 				$first = true;
 				foreach ($data->userGroupNotes as $item){
-					if($item->addressed){
+					//si esta en userGroupNote es que lo puede ver (segun la grilla de permisos de formularios)
+					//if($item->addressed){ 
 						if(!$first)
 						{
 							echo CHtml::openTag('div',array('class'=>'review-note-users-groups'));								
@@ -95,7 +96,7 @@ $editable = $isAdministrator||$isOwner;
 								echo CHtml::encode(' '.$item->userGroup->description);								
 							echo CHtml::closeTag('div');								
 						}
-					}
+					//}
 				}
 				?>
 			</div>
