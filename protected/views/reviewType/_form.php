@@ -43,10 +43,10 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-form', "
     			{
     				$(this).parent().parent().find('#lblCanFeedback_'+id).removeClass('ui-state-active');					
     				$(this).parent().parent().find('#chkCanFeedback_'+id).removeAttr('checked');
-    				$(this).parent().parent().find('#lblCanRead_'+id).removeClass('ui-state-active');					
-    				$(this).parent().parent().find('#chkCanRead_'+id).removeAttr('checked');
+    				$(this).parent().parent().find('#lblCanCreate_'+id).removeClass('ui-state-active');					
+    				$(this).parent().parent().find('#chkCanCreate_'+id).removeAttr('checked');
     				obj[id].feedback = value;
-    				obj[id].read = value;    				
+    				obj[id].create = value;    				
     			}
     		break;
     		case 'feedback':
