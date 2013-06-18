@@ -7,13 +7,19 @@ if(true)//User::isAdministartor()
 	$dataChart= array();
 	foreach ($reviews as $review)
 	{
+		$criteria = new CDbCriteria();
+		$criteria->addCondition('date in (select max(date) from tag_review where Id_review ='.$review->Id.')');
+		$criteria->addCondition('t.Id_review = '.$review->Id);
+		
+		$modelTagReview = TagReview::model()->find($criteria);
+		$tag = $modelTagReview->tag;
+		
 		if(!$review->is_open)
 		{
 			$dataChart['Finalizado']=isset($dataChart['Finalizado'])?$dataChart['Finalizado']+1:1;
 		}
-		elseif(isset($review->tags[0]))
+		elseif(isset($tag))
 		{
-			$tag = $review->tags[0];
 			if($tag->Id==4) continue;
 			$dataChart[$tag->description]=isset($dataChart[$tag->description])?$dataChart[$tag->description]+1:1;
 		}
