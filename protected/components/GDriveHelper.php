@@ -146,8 +146,7 @@ class GDriveHelper
 	*/
 	static public function shareFilesByNote($Id_note, $role = 'reader')
 	{
-		$service = self::getService();
-	
+		
 		$criteria=new CDbCriteria;
 		$criteria->select = 't.Id_user_group, t.Id_project, m.Id_google_drive as Id_google_drive';
 		$criteria->join =  	"INNER JOIN multimedia_note mn on t.Id_note = mn.Id_note
@@ -160,6 +159,9 @@ class GDriveHelper
 		
 		$userGroupNotes = UserGroupNote::model()->findAll($criteria);
 	
+		if(!empty($userGroupNotes))
+			$service = self::getService();
+		
 		foreach($userGroupNotes as $modelUserGroup)
 		{
 			$criteria=new CDbCriteria;
