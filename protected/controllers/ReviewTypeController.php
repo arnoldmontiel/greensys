@@ -127,14 +127,8 @@ class ReviewTypeController extends Controller
 						
 						foreach($arrResult as $item)
 						{
-							if(!$obj->read)
-							{
-								UserGroupNote::model()->deleteAllByAttributes(array(
-																				'Id_note'=>$item->Id_note,
-																				'Id_user_group'=>$key
-																				));
-							}
-							else 
+							
+							if(true)
 							{
 								$modelUserGroupNote = UserGroupNote::model()->findByAttributes(
 																		array('Id_note'=>$item->Id_note,
@@ -144,25 +138,33 @@ class ReviewTypeController extends Controller
 								$id_customer = $item->Id_customer;
 								$id_project = $item->Id_project;
 								if(isset($modelUserGroupNote))
-								{							
+								{	
+									if(!$obj->read)
+									{
+										$modelUserGroupNote->delete();
+									}
+									else
+									{
+										$sql="UPDATE user_group_note SET can_feedback=:can_feedback , addressed=:addressed WHERE Id_note=:Id_note and Id_user_group=:Id_user_group";
+										$command=Yii::app()->db2->createCommand($sql);
+										$command->bindParam(":Id_user_group",$key,PDO::PARAM_INT);
+										$command->bindParam(":can_feedback",$obj->feedback,PDO::PARAM_BOOL);
+										$command->bindParam(":addressed",$obj->mail,PDO::PARAM_BOOL);
+										$command->bindValue(":Id_note",$id_note,PDO::PARAM_INT);
+										$command->execute();
+										
+									}						
 // 									$modelUserGroupNote->can_feedback = $obj->feedback;
 // 									$modelUserGroupNote->addressed = $obj->mail;
 // 									$modelUserGroupNote->save();
 									
-									$sql="UPDATE user_group_note SET can_feedback=:can_feedback , addressed=:addressed WHERE Id_note=:Id_note and Id_user_group=:Id_user_group";
-									$command=Yii::app()->db2->createCommand($sql);
-									$command->bindParam(":Id_user_group",$key,PDO::PARAM_INT);
-									$command->bindParam(":can_feedback",$obj->feedback,PDO::PARAM_BOOL);
-									$command->bindParam(":addressed",$obj->mail,PDO::PARAM_BOOL);
-									$command->bindValue(":Id_note",$id_note,PDO::PARAM_INT);
-									$command->execute();
 								}
 								else 
 								{
 									if($obj->read)
 									{
 										$sql="INSERT INTO user_group_note (Id_note,Id_customer,Id_project_Id_user_group ,can_feedback, addressed) VALUES(:can_feedback,:addressed)";
-										$command=ReviewTypeUserGroup::model()->dbConnection->createCommand($sql);
+										$command=Yii::app()->db2->createCommand($sql);
 										$command->bindParam(":Id_note",$id_note,PDO::PARAM_INT);
 										$command->bindParam(":Id_customer",$id_customer,PDO::PARAM_INT);
 										$command->bindParam(":Id_project",$id_project,PDO::PARAM_INT);
@@ -194,7 +196,7 @@ class ReviewTypeController extends Controller
 					if($exist)
 					{
 						$sql="UPDATE review_type_user_group SET can_feedback=:can_feedback, can_mail=:can_mail,can_close=:can_close,can_create=:can_create,can_read=:can_read WHERE Id_user_group=:Id_user_group AND Id_review_type=:Id_review_type";
-						$command=ReviewTypeUserGroup::model()->dbConnection->createCommand($sql);
+						$command=Yii::app()->db2->createCommand($sql);
 						$command->bindParam(":Id_user_group",$key,PDO::PARAM_INT);
 						$command->bindParam(":Id_review_type",$id,PDO::PARAM_INT);
 						$command->bindParam(":can_feedback",$obj->feedback,PDO::PARAM_BOOL);
@@ -207,7 +209,7 @@ class ReviewTypeController extends Controller
 					else
 					{
 						$sql="INSERT INTO review_type_user_group (Id_user_group,Id_review_type,can_feedback,can_mail,can_close,can_create,can_read) VALUES(:Id_user_group,:Id_review_type,:can_feedback,:can_mail,:can_close,:can_create,:can_read)";
-						$command=ReviewTypeUserGroup::model()->dbConnection->createCommand($sql);
+						$command=Yii::app()->db2->createCommand($sql);
 						$command->bindParam(":Id_user_group",$key,PDO::PARAM_INT);
 						$command->bindParam(":Id_review_type",$id,PDO::PARAM_INT);
 						$command->bindParam(":can_feedback",$obj->feedback,PDO::PARAM_BOOL);
