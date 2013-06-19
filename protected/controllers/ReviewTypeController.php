@@ -124,11 +124,13 @@ class ReviewTypeController extends Controller
 			foreach ($json as $key => $obj)
 			{
 				if(isset($obj))
-				{ 				
+				{
+					$exist= true; 				
 					
 					$modelReviewTypeUserGroup = ReviewTypeUserGroup::model()->findByAttributes(array('Id_review_type'=>$id, 'Id_user_group'=>$key));
 					if(isset($modelReviewTypeUserGroup))
 					{						
+						$exist= true; 				
 						$criteria = new CDbCriteria();
 						$criteria->distinct = true;
 						$criteria->select = 't.Id_note, t.Id_customer, t.Id_project';
@@ -157,23 +159,40 @@ class ReviewTypeController extends Controller
 																		));
 								if(isset($modelUserGroupNote))
 								{							
-									$modelUserGroupNote->can_feedback = $obj->feedback;
-									$modelUserGroupNote->addressed = $obj->mail;
-									$modelUserGroupNote->save();
+// 									$modelUserGroupNote->can_feedback = $obj->feedback;
+// 									$modelUserGroupNote->addressed = $obj->mail;
+// 									$modelUserGroupNote->save();
+									
+									$sql="UPDATE user_group_note SET can_feedback=:can_feedback , addressed=:addressed WHERE Id_note=:Id_note and Id_user_group=:Id_user_group";
+									$command=$ReviewTypeUserGroup::model()->dbConnection->createCommand($sql);
+									$command->bindParam(":Id_note",$item->Id_note,PDO::PARAM_INT);
+									$command->bindParam(":Id_user_group",$key,PDO::PARAM_INT);
+									$command->bindParam(":can_feedback",$can_feedback,PDO::PARAM_BOOL);
+									$command->bindParam(":addressed",$obj->mail,PDO::PARAM_BOOL);
+									$command->execute();
 								}
 								else 
 								{
 									if($obj->read)
 									{
-										$modelUserGroupNote = new UserGroupNote();
-										$modelUserGroupNote->Id_note = $item->Id_note;
-										$modelUserGroupNote->Id_customer = $item->Id_customer;
-										$modelUserGroupNote->Id_project = $item->Id_project;
-										$modelUserGroupNote->Id_user_group = $key;
+										$sql="INSERT INTO user_group_note (Id_note,Id_customer,Id_project_Id_user_group ,can_feedback, addressed) VALUES(:can_feedback,:addressed)";
+										$command=$ReviewTypeUserGroup::model()->dbConnection->createCommand($sql);
+										$command->bindParam(":Id_note",$item->Id_note,PDO::PARAM_INT);
+										$command->bindParam(":Id_customer",$item->Id_customer,PDO::PARAM_INT);
+										$command->bindParam(":Id_project",$item->Id_project,PDO::PARAM_INT);
+										$command->bindParam(":Id_user_group",$key,PDO::PARAM_INT);
+										$command->bindParam(":can_feedback",$obj->feedback,PDO::PARAM_BOOL);
+										$command->bindParam(":addressed",$obj->mail,PDO::PARAM_BOOL);
+										$command->execute();
+// 										$modelUserGroupNote = new UserGroupNote();
+// 										$modelUserGroupNote->Id_note = $item->Id_note;
+// 										$modelUserGroupNote->Id_customer = $item->Id_customer;
+// 										$modelUserGroupNote->Id_project = $item->Id_project;
+// 										$modelUserGroupNote->Id_user_group = $key;
 										
-										$modelUserGroupNote->can_feedback = $obj->feedback;
-										$modelUserGroupNote->addressed = $obj->mail;
-										$modelUserGroupNote->save();
+// 										$modelUserGroupNote->can_feedback = $obj->feedback;
+// 										$modelUserGroupNote->addressed = $obj->mail;
+// 										$modelUserGroupNote->save();
 									}
 								}
 							}
@@ -181,17 +200,41 @@ class ReviewTypeController extends Controller
 					}
 					else 
 					{
-						$modelReviewTypeUserGroup = new ReviewTypeUserGroup;
-						$modelReviewTypeUserGroup->Id_user_group =  $key;
-						$modelReviewTypeUserGroup->Id_review_type = $id;					
+						$exist = false;
+// 						$modelReviewTypeUserGroup = new ReviewTypeUserGroup;
+// 						$modelReviewTypeUserGroup->Id_user_group =  $key;
+// 						$modelReviewTypeUserGroup->Id_review_type = $id;					
 					}
-					
-					$modelReviewTypeUserGroup->can_create = $obj->create;
-					$modelReviewTypeUserGroup->can_read = $obj->read;
-					$modelReviewTypeUserGroup->can_feedback = $obj->feedback;
-					$modelReviewTypeUserGroup->can_mail = $obj->mail;
-					$modelReviewTypeUserGroup->can_close = $obj->close;
-					$modelReviewTypeUserGroup->save();
+					if(exist)
+					{
+						$sql="UPDATE review_type_user_group SET can_feedback=:can_feedback, can_mail=:can_mail,can_close=:can_close,can_create=:can_create,can_read=:can_read WHERE Id_user_group=:Id_user_group AND Id_review_type=:Id_review_type";
+						$command->bindParam(":can_feedback",$obj->feedback,PDO::PARAM_BOOL);
+						$command->bindParam(":can_mail",$obj->mail,PDO::PARAM_BOOL);
+						$command->bindParam(":can_close",$obj->close,PDO::PARAM_BOOL);
+						$command->bindParam(":can_create",$obj->create,PDO::PARAM_BOOL);
+						$command->bindParam(":can_read",$obj->read,PDO::PARAM_BOOL);
+						$command->execute();						
+					}
+					else
+					{
+						$sql="INSERT INTO review_type_user_group (Id_user_group,Id_review_type,can_feedback,can_mail,can_close,can_create,can_read) VALUES(:Id_user_group,:Id_review_type,:can_feedback,:can_mail,:can_close,:can_create,:can_read)";
+						$command=$ReviewTypeUserGroup::model()->dbConnection->createCommand($sql);
+						$command->bindParam(":Id_user_group",$key,PDO::PARAM_INT);
+						$command->bindParam(":Id_review_type",$id,PDO::PARAM_INT);
+						$command->bindParam(":can_feedback",$obj->feedback,PDO::PARAM_BOOL);
+						$command->bindParam(":can_mail",$obj->mail,PDO::PARAM_BOOL);
+						$command->bindParam(":can_close",$obj->close,PDO::PARAM_BOOL);
+						$command->bindParam(":can_create",$obj->create,PDO::PARAM_BOOL);
+						$command->bindParam(":can_read",$obj->read,PDO::PARAM_BOOL);
+						$command->execute();												
+					}
+						
+// 					$modelReviewTypeUserGroup->can_create = $obj->create;
+// 					$modelReviewTypeUserGroup->can_read = $obj->read;
+// 					$modelReviewTypeUserGroup->can_feedback = $obj->feedback;
+// 					$modelReviewTypeUserGroup->can_mail = $obj->mail;
+// 					$modelReviewTypeUserGroup->can_close = $obj->close;
+// 					$modelReviewTypeUserGroup->save();
 				}
 			}
 			$transaction->commit();
