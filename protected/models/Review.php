@@ -219,15 +219,14 @@ class Review extends TapiaActiveRecord
 		}
 		
 		
-		if(!User::getCurrentUserGroup()->is_administrator )
-		{
-			//$criteria->join .= ' INNER JOIN `review_user` `reviewUsers` ON (`reviewUsers`.`Id_review`=`t`.`Id`)';
-			//$criteria->addCondition('reviewUsers.username = "'.User::getCurrentUser()->username.'"');				
-			$criteria->join .= ' LEFT OUTER JOIN `note` `n` ON (`n`.`Id_review`=`t`.`Id`) 
-								LEFT OUTER JOIN `user_group_note` `ugn` ON (`ugn`.`Id_note`=`n`.`Id`)';
-			$criteria->addCondition('ugn.Id_user_group = '.User::getCurrentUserGroup()->Id);				
-			$criteria->addCondition('t.username = "'. User::getCurrentUser()->username . '"','OR');
-		}
+		
+		//Esto antes era un if para que acote el query si no era Administrador	
+		$criteria->join .= ' LEFT OUTER JOIN `note` `n` ON (`n`.`Id_review`=`t`.`Id`) 
+							LEFT OUTER JOIN `user_group_note` `ugn` ON (`ugn`.`Id_note`=`n`.`Id`)';
+		$criteria->addCondition('ugn.Id_user_group = '.User::getCurrentUserGroup()->Id);				
+		$criteria->addCondition('t.username = "'. User::getCurrentUser()->username . '"','OR');
+		$criteria->addCondition('n.in_progress=0');
+		//---------------------------------------------------
 		
 		$criteria->addCondition('t.Id_customer = '. $this->Id_customer);
 		$criteria->addCondition('t.Id_project = '. $this->Id_project);
@@ -281,16 +280,14 @@ class Review extends TapiaActiveRecord
 	
 		
 			
-		if(!User::getCurrentUserGroup()->is_administrator )
-		{
-			//$criteria->join .= ' INNER JOIN `review_user` `reviewUsers` ON (`reviewUsers`.`Id_review`=`t`.`Id`)';
-			//$criteria->addCondition('reviewUsers.username = "'.User::getCurrentUser()->username.'"');
-			$criteria->join .= ' LEFT OUTER JOIN `note` `n` ON (`n`.`Id_review`=`t`.`Id`)
-									LEFT OUTER JOIN `user_group_note` `ugn` ON (`ugn`.`Id_note`=`n`.`Id`)';
-			$criteria->addCondition('ugn.Id_user_group = '.User::getCurrentUserGroup()->Id);
-			$criteria->addCondition('t.username = "'. User::getCurrentUser()->username . '"','OR');
-			$criteria->addCondition('n.in_progress=0');
-		}
+			
+		//Esto antes era un if para que acote el query si no era Administrador
+		$criteria->join .= ' LEFT OUTER JOIN `note` `n` ON (`n`.`Id_review`=`t`.`Id`)
+								LEFT OUTER JOIN `user_group_note` `ugn` ON (`ugn`.`Id_note`=`n`.`Id`)';
+		$criteria->addCondition('ugn.Id_user_group = '.User::getCurrentUserGroup()->Id);
+		$criteria->addCondition('t.username = "'. User::getCurrentUser()->username . '"','OR');
+		$criteria->addCondition('n.in_progress=0');
+		//---------------------------------------------------
 	
 		$criteria->addCondition('t.Id_customer = '. $this->Id_customer);
 		$criteria->addCondition('t.Id_project = '. $this->Id_project);
