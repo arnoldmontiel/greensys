@@ -14,7 +14,28 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-view', "
 	
 	$('.btn-group a').click(function(){
 		return false;
-   });
+	});
+	
+	$('input:radio').change(function(){
+		var value = $(this).val();
+		var confirmMsg = 'Este tipo de formulario pasar\u00e1 a ser Sin Seguimiento';
+		
+		if(value == 1){ //Con seguimiento
+			confirmMsg = 'Este tipo de formulario pasar\u00e1 a ser Con Seguimiento';
+		}
+			
+		if(confirm(confirmMsg)) {
+       		$.post('".ReviewTypeController::createUrl('AjaxChangeTagType')."', 
+				{
+					idRadio: value,					
+					idReviewType: ".$model->Id."
+				}
+				).success(
+				function(data){					
+			});
+   		}
+		
+	});
 ");
 ?>
 
@@ -23,13 +44,21 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-view', "
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
-		'description',
-		array('label'=>$model->getAttributeLabel('Con Seguimiento'),
-				'type'=>'raw',
-				'value'=>CHtml::checkBox("tagType",( TagReviewType::model()->countByAttributes(array('Id_review_type'=>$model->Id))>1)?true:false,array("disabled"=>"disabled"))
-		),
+		'description',		
 	),
 )); ?>
+
+<div>	
+	<div class="check-title">
+		Tipo de etapa
+	</div>
+	<div class="review-types">
+		<?php 
+		$tagTypeSelect = ( TagReviewType::model()->countByAttributes(array('Id_review_type'=>$model->Id))>1)?1:2;
+		$tagTypes = array('1'=>'Con Seguimiento','2'=>'Sin Seguimiento');
+		echo CHtml::radioButtonList('radiolist-tag-type', $tagTypeSelect, $tagTypes);	 ?>
+	</div>
+</div>
 
 <br>
 

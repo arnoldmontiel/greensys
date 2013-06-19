@@ -94,6 +94,8 @@ $this->widget('ext.processingDialog.processingDialog', array(
 		<?php echo $form->error($model,'description'); ?>
 	</div>
 	
+	
+	<?php if($model->isNewRecord): ?>
 	<div class="row">	
 		<div class="check-title">
 			Seleccione el tipo de etapa
@@ -104,6 +106,7 @@ $this->widget('ext.processingDialog.processingDialog', array(
 		echo CHtml::radioButtonList('radiolist-tag-type', $tagTypeSelect, $tagTypes);	 ?>
 		</div>
 	</div>
+	<?php endif; ?>
 	<br>
 	<div class="row">
 		<div class="check-title">	

@@ -64,7 +64,7 @@ class ReviewTypeController extends Controller
 			if($model->save())
 			{
 				if(isset($_POST['radiolist-tag-type']))
-					$this->createTagRelation($model->Id, $_POST['radiolist-tag-type']);
+					$this->createNewTagRelation($model->Id, $_POST['radiolist-tag-type']);
 				
 				if(isset($_POST['hidden-user-group-chk']))
 					$this->createUserGroupRelation($model->Id, $_POST['hidden-user-group-chk']);
@@ -79,32 +79,15 @@ class ReviewTypeController extends Controller
 		));
 	}
 	
-	private function createTagRelation($id, $tagType)
+	private function createNewTagRelation($id, $tagType)
 	{
 		$tags = null;	
 
-		if($tagType == '1')//con seguimiento
-		{			
+		if($tagType == '1')//con seguimiento	
 			$tags = array(1,2,3);
-			$newTag = 1; //pendiente
-		}
-		else 
-		{								
+		else 				
 			$tags = array(4);
-			$newTag = 4; //sin seguimiento
-		}
-
-		$modelReviews = Review::model()->findAllByAttributes(array('Id_review_type'=>$id));
-		foreach($modelReviews as $modelReview)
-		{
-			TagReview::model()->deleteAllByAttributes(array('Id_review'=>$modelReview->Id));
-			$modelTagReview = new TagReview();
-			$modelTagReview->Id_review = $modelReview->Id;
-			$modelTagReview->Id_tag = $newTag;
-			$modelTagReview->save();
-		}
-		
-		TagReviewType::model()->deleteAllByAttributes(array('Id_review_type'=>$id));
+	
 		foreach ($tags as $i => $value) {
 			$modelTagReviewType = new TagReviewType();
 			$modelTagReviewType->Id_review_type = $id;
@@ -259,10 +242,7 @@ class ReviewTypeController extends Controller
 		{
 			$model->attributes=$_POST['ReviewType'];
 			if($model->save())
-			{				
-				if(isset($_POST['radiolist-tag-type']))
-					$this->createTagRelation($model->Id, $_POST['radiolist-tag-type']);
-				
+			{												
 				if(isset($_POST['hidden-user-group-chk']))
 					$this->createUserGroupRelation($model->Id, $_POST['hidden-user-group-chk']);
 				
@@ -279,6 +259,46 @@ class ReviewTypeController extends Controller
 		));
 	}
 
+	public function actionAjaxChangeTagType()
+	{
+		$idRadio = (isset($_POST['idRadio'])?$_POST['idRadio']:null);		
+		$id = (isset($_POST['idReviewType'])?$_POST['idReviewType']:null);
+		
+		$tags = null;
+		
+		if(isset($idRadio) && isset($id))
+		{
+			if($idRadio == '1')//con seguimiento
+			{
+				$tags = array(1,2,3);
+				$newTag = 1; //pendiente
+			}
+			else
+			{
+				$tags = array(4);
+				$newTag = 4; //sin seguimiento
+			}
+			
+			$modelReviews = Review::model()->findAllByAttributes(array('Id_review_type'=>$id));
+			foreach($modelReviews as $modelReview)
+			{
+				TagReview::model()->deleteAllByAttributes(array('Id_review'=>$modelReview->Id));
+				$modelTagReview = new TagReview();
+				$modelTagReview->Id_review = $modelReview->Id;
+				$modelTagReview->Id_tag = $newTag;
+				$modelTagReview->save();
+			}
+			
+			TagReviewType::model()->deleteAllByAttributes(array('Id_review_type'=>$id));
+			foreach ($tags as $i => $value) {
+				$modelTagReviewType = new TagReviewType();
+				$modelTagReviewType->Id_review_type = $id;
+				$modelTagReviewType->Id_tag = $value;
+				$modelTagReviewType->save();
+			}
+		}
+	}
+	
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
