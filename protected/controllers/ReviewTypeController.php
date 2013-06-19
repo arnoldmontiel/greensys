@@ -127,12 +127,16 @@ class ReviewTypeController extends Controller
 						
 						foreach($arrResult as $item)
 						{
-							if(!$obj->read)
+							if($obj->read==0)
 							{
 								UserGroupNote::model()->deleteAllByAttributes(array(
 																				'Id_note'=>$item->Id_note,
 																				'Id_user_group'=>$key
 																				));
+								$criteria = new CDbCriteria();								
+								$criteria->addCondition('username IN (select u.username from user u where
+															u.Id_user_group = '.$key.' )');								
+								ReviewUser::model()->deleteAll($criteria);
 							}
 							else 
 							{
@@ -159,7 +163,7 @@ class ReviewTypeController extends Controller
 								}
 								else 
 								{
-									if($obj->read)
+									if($obj->read==1)
 									{
 										$sql="INSERT INTO user_group_note (Id_note,Id_customer,Id_project,Id_user_group ,can_feedback, addressed) VALUES(:Id_note,:Id_customer,:Id_project,:Id_user_group ,:can_feedback,:addressed)";
 										$command=ReviewTypeUserGroup::model()->dbConnection->createCommand($sql);
@@ -170,6 +174,27 @@ class ReviewTypeController extends Controller
 										$command->bindParam(":can_feedback",$obj->feedback,PDO::PARAM_BOOL);
 										$command->bindParam(":addressed",$obj->mail,PDO::PARAM_BOOL);
 										$command->execute();
+										
+										$id_review = $item->note->Id_review;
+										$criteria = new CDbCriteria();
+										$criteria->addCondition('Id_user_group='.$key);
+										$criteria->join = 'INNER JOIN user_customer uc ON (uc.username = t.username)';								
+										$criteria->addCondition('uc.Id_project='.$id_project);
+										$users = User::model()->findAll($criteria);
+										foreach ($users as $user)
+										{
+											$username = $user->username;
+											$reviewUser = ReviewUser::model()->findByAttributes(array('username'=>$username,'Id_review'=>$id_review));
+											if(!isset($reviewUser))
+											{
+												$sql="INSERT INTO review_user (Id_review,username) VALUES(:Id_review,:username)";
+												$command=ReviewTypeUserGroup::model()->dbConnection->createCommand($sql);
+												$command->bindParam(":Id_review",$id_review,PDO::PARAM_INT);
+												$command->bindParam(":username",$username,PDO::PARAM_INT);
+												$command->execute();
+											}												
+										}
+										
 // 										$modelUserGroupNote = new UserGroupNote();
 // 										$modelUserGroupNote->Id_note = $item->Id_note;
 // 										$modelUserGroupNote->Id_customer = $item->Id_customer;
