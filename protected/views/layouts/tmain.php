@@ -29,22 +29,22 @@
 		<?php 
 		$items = array();			
 				
-		$items[] = array('label'=>'Monitor', 'url'=>Yii::app()->createUrl('review/index'));
+		$items[] = array('label'=>'Monitor', 'url'=>Yii::app()->createUrl('review/index'),'active'=>$this->uniqueid=='review');
 		
-		if(Yii::app()->user->checkAccess('CustomerIndex'))
-			$items[] = array('label'=>'Clientes', 'url'=>Yii::app()->createUrl('tCustomer/index'));
+		if(Yii::app()->user->checkAccess('CustomerIndex'))			
+			$items[] = array('label'=>'Clientes', 'url'=>Yii::app()->createUrl('tCustomer/index'),'active'=>$this->uniqueid=='tCustomer');
 		if(Yii::app()->user->checkAccess('TagIndex'))
-			$items[] = array('label'=>'Etapas', 'url'=>Yii::app()->createUrl('tag/index'));
+			$items[] = array('label'=>'Etapas', 'url'=>Yii::app()->createUrl('tag/index'),'active'=>$this->uniqueid=='tag');
 		if(Yii::app()->user->checkAccess('ReviewTypeIndex'))
-			$items[] = array('label'=>'Formularios', 'url'=>Yii::app()->createUrl('reviewType/index'));
+			$items[] = array('label'=>'Formularios', 'url'=>Yii::app()->createUrl('reviewType/index'),'active'=>$this->uniqueid=='reviewType');
 		if(Yii::app()->user->checkAccess('UserIndex'))
-			$items[] = array('label'=>'Usuarios', 'url'=>Yii::app()->createUrl('user/index'));
+			$items[] = array('label'=>'Usuarios', 'url'=>Yii::app()->createUrl('user/index'),'active'=>$this->uniqueid=='user');
 		if(Yii::app()->user->checkAccess('UserGroupIndex'))
-			$items[] = array('label'=>'Perfiles', 'url'=>Yii::app()->createUrl('userGroup/index'));
+			$items[] = array('label'=>'Perfiles', 'url'=>Yii::app()->createUrl('userGroup/index'),'active'=>$this->uniqueid=='userGroup');
 		if(Yii::app()->user->checkAccess('DocumentTypeIndex'))
-			$items[] = array('label'=>'Docs', 'url'=>Yii::app()->createUrl('documentType/index'));
+			$items[] = array('label'=>'Docs', 'url'=>Yii::app()->createUrl('documentType/index'),'active'=>$this->uniqueid=='documentType');
 		if(Yii::app()->user->checkAccess('AuditLoginIndex'))
-			$items[] = array('label'=>'Auditoria', 'url'=>Yii::app()->createUrl('auditLogin/index'));
+			$items[] = array('label'=>'Auditoria', 'url'=>Yii::app()->createUrl('auditLogin/index'),'active'=>$this->uniqueid=='auditLogin');
 		
 		$items[] = array('label'=>'Salir '.' ('.Yii::app()->user->name.')', 'url'=>Yii::app()->createUrl('site/logout'));
 		
