@@ -223,11 +223,11 @@ class Review extends TapiaActiveRecord
 		//Esto antes era un if para que acote el query si no era Administrador	
 		$criteria->join .= ' LEFT OUTER JOIN `note` `n` ON (`n`.`Id_review`=`t`.`Id`) 
 							LEFT OUTER JOIN `user_group_note` `ugn` ON (`ugn`.`Id_note`=`n`.`Id`)
-							INNER JOIN review_user ru ON (ru.username = t.username AND t.Id = ru.Id_review)';
+							LEFT OUTER JOIN review_user ru ON (ru.username = t.username AND t.Id = ru.Id_review)';
 		
 		$criteria->addCondition('ugn.Id_user_group = '.User::getCurrentUserGroup()->Id);				
 		$criteria->addCondition('t.username = "'. User::getCurrentUser()->username . '"','OR');
-		$criteria->addCondition('n.in_progress=0');
+		//$criteria->addCondition('n.in_progress=0');
 		//---------------------------------------------------
 		
 		$criteria->addCondition('t.Id_customer = '. $this->Id_customer);
@@ -286,7 +286,7 @@ class Review extends TapiaActiveRecord
 		//Esto antes era un if para que acote el query si no era Administrador
 		$criteria->join .= ' LEFT OUTER JOIN `note` `n` ON (`n`.`Id_review`=`t`.`Id`)
 								LEFT OUTER JOIN `user_group_note` `ugn` ON (`ugn`.`Id_note`=`n`.`Id`)
-							INNER JOIN review_user ru ON (ru.username = t.username AND t.Id = ru.Id_review)';
+								LEFT OUTER JOIN review_user ru ON (ru.username = t.username AND t.Id = ru.Id_review)';
 		$criteria->addCondition('ugn.Id_user_group = '.User::getCurrentUserGroup()->Id);
 		$criteria->addCondition('t.username = "'. User::getCurrentUser()->username . '"','OR');
 		$criteria->addCondition('n.in_progress=0');

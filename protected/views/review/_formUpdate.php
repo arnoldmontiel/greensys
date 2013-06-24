@@ -1121,7 +1121,7 @@ if($model->is_open)
 		if($model->username == User::getCurrentUser()->username)
 		{
 			if(count($model->notes) > 0)
-				echo CHtml::openTag('div',array('class'=>'wall-action-btn wall-action-btn-disable','id'=>'btnNote'));
+				echo CHtml::openTag('div',array('class'=>'wall-action-btn div-hidden','id'=>'btnNote'));
 			else
 				echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnNote'));
 			

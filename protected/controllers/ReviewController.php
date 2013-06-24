@@ -69,6 +69,7 @@ class ReviewController extends Controller
 			if($model->save())
 			{
 				$this->autoTagAssign($model);
+				$this->createNote($model);
 				$this->redirect(array('update','id'=>$model->Id));
 			}
 		}
@@ -109,7 +110,17 @@ class ReviewController extends Controller
 			'modelReviewType'=>$modelReviewType,
 		));
 	}
-
+	private function createNote($model)
+	{		
+		$modelNote = new Note;
+			
+		$modelNote->Id_customer = $model->Id_customer;
+		$modelNote->Id_review = $model->Id;
+		$modelNote->Id_project = $model->Id_project;
+		$modelNote->username = User::getCurrentUser()->username;
+		$modelNote->Id_user_group_owner = User::getCurrentUserGroup()->Id;
+		$modelNote->save();		
+	}
 	private function autoTagAssign($model)
 	{
 		$modelTagReview = new TagReview;
@@ -659,7 +670,7 @@ class ReviewController extends Controller
 				
 			$dataProvider = $review->searchSummary($arrFilters);
 			
-			$dataProvider->pagination->pageSize= 20;
+			$dataProvider->pagination->pageSize= 60;
 			
 			$data = $dataProvider->getData();
 				
