@@ -72,7 +72,7 @@ $('#Id_customer').change(function(){
 
 setInterval(function() {
    doFilter();
-}, 1000*60)
+}, 1000*90)
 
 var collapsed = new Array();
 
@@ -124,7 +124,7 @@ function doFilter()
 			$('.collapser').click(function()
 			{
 				var idProject = $(this).attr('id').split('_')[1];
-				$('#collapseble_'+idProject).toggle('blind', { to: { width: 200, height: 60 } }, 1000 ,
+				$('#collapseble_'+idProject).toggle('blind', { to: { width: 200, height: 60 } }, 100 ,
 				function(){
 					if($('#collapseble_'+idProject).is(':hidden'))
 					{
