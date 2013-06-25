@@ -834,10 +834,7 @@ class ProductController extends Controller
 			{
 				GreenHelper::importFromExcel($model);
 				
-				$dataProvider=new CActiveDataProvider('Product');
-				$this->render('index',array(
-							'dataProvider'=>$dataProvider,
-				));
+				$this->redirect(array('index'));				
 			}
 		}
 		
