@@ -58,43 +58,61 @@ class GreenHelper
 			while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
 			{
 
-				$description_customer = self::getDataValue($data, '"Short Description"', $arrFields);
-				$description_supplier = self::getDataValue($data, '"Long Description"', $arrFields);
+				$short_description = self::getDataValue($data, '"Short Description"', $arrFields);
+				$manufacturer = self::getDataValue($data, '"Manufacturer"', $arrFields);
 				
-				$modelProduct = Product::model()->findByAttributes(array('description_customer'=>$description_customer,
-														'description_supplier'=>$description_supplier));
+				$criteria = new CDbCriteria();
+				$criteria->with[]='brand';
+				$criteria->addCondition("brand.description = '". $manufacturer."'");
+				$criteria->addCondition("t.short_description = '". $short_description."'");
+				
+				$modelProduct = Product::model()->find($criteria);
 				if(!isset($modelProduct))
 				{
 					$modelProduct = new Product();
 					
 					$transaction = $modelProduct->dbConnection->beginTransaction();
 					try {
+												
+						$modelProduct->description_supplier = $short_description;
+						$modelProduct->discontinued = self::getDataValue($data, '"Discontinued"', $arrFields, 'boolean');
+						$modelProduct->height = self::getDataValue($data, '"Height"', $arrFields,'int');
+						$modelProduct->width = self::getDataValue($data, '"Width"', $arrFields,'int');
+						$modelProduct->length = self::getDataValue($data, '"Depth"', $arrFields,'int');
+						$modelProduct->weight = self::getDataValue($data, '"Weight"', $arrFields,'int');
+						$modelProduct->msrp = self::getDataValue($data, '"MSRP"', $arrFields);
+						$modelProduct->time_instalation = self::getDataValue($data, '"Labor Hours"', $arrFields);
+						$modelProduct->unit_rack = self::getDataValue($data, '"Rack Units"', $arrFields,'int');
+						$modelProduct->need_rack = ($modelProduct->unit_rack>0)?1:0;
+						$modelProduct->current = self::getDataValue($data, '"Amps"', $arrFields,'int');
+						$modelProduct->power = self::getDataValue($data, '"Watts"', $arrFields,'int');
 						
-						$discontinued = self::getDataValue($data, '"Discontinued"', $arrFields, 'boolean');
-						$height = self::getDataValue($data, '"Height"', $arrFields,'int');
-						$width = self::getDataValue($data, '"Width"', $arrFields,'int');
-						$lenght = self::getDataValue($data, '"Depth"', $arrFields,'int');
-						$weight = self::getDataValue($data, '"Weight"', $arrFields,'int');						
-						$msrp = self::getDataValue($data, '"MSRP"', $arrFields);
-						$time_instalation = self::getDataValue($data, '"Labor Hours"', $arrFields);						
-						$unit_rack = self::getDataValue($data, '"Rack Units"', $arrFields,'int');
-						$need_rack = ($unit_rack>0)?1:0;
-						$current = self::getDataValue($data, '"Amps"', $arrFields,'int');					
-						$power = self::getDataValue($data, '"Watts"', $arrFields,'int');
-						
-						$modelProduct->description_customer = $description_customer;
-						$modelProduct->description_supplier = $description_supplier;
-						$modelProduct->discontinued = $discontinued;
-						$modelProduct->height = $height;
-						$modelProduct->width = $width;
-						$modelProduct->length = $lenght;
-						$modelProduct->weight = $weight;
-						$modelProduct->msrp = $msrp;
-						$modelProduct->time_instalation = $time_instalation;
-						$modelProduct->unit_rack = $unit_rack;
-						$modelProduct->need_rack = $need_rack;
-						$modelProduct->current = $current;
-						$modelProduct->power = $power;
+						$modelProduct->long_description =  self::getDataValue($data, '"Long Description"', $arrFields);
+						$modelProduct->short_description = $short_description;
+						$modelProduct->part_number = self::getDataValue($data, '"Part Number"', $arrFields);
+						$modelProduct->url = self::getDataValue($data, '"URL"', $arrFields);
+						$modelProduct->tags = self::getDataValue($data, '"Tags"', $arrFields);
+						$modelProduct->phase = self::getDataValue($data, '"Phase"', $arrFields);
+						$modelProduct->accounting_item_name = self::getDataValue($data, '"Accounting Item Name"', $arrFields);
+						$modelProduct->unit_cost_A = self::getDataValue($data, '"Unit Cost A"', $arrFields);
+						$modelProduct->unit_price_A = self::getDataValue($data, '"Unit Price A"', $arrFields);
+						$modelProduct->unit_cost_B = self::getDataValue($data, '"Unit Cost B"', $arrFields);
+						$modelProduct->unit_price_B = self::getDataValue($data, '"Unit Price B"', $arrFields);
+						$modelProduct->unit_cost_C = self::getDataValue($data, '"Unit Cost C"', $arrFields);
+						$modelProduct->unit_price_C = self::getDataValue($data, '"Unit Price C"', $arrFields);
+						$modelProduct->taxable = self::getDataValue($data, '"Taxable"', $arrFields, 'boolean');
+						$modelProduct->btu = self::getDataValue($data, '"BTU"', $arrFields,'int');
+						$modelProduct->summarize = self::getDataValue($data, '"Summarize"', $arrFields);
+						$modelProduct->sales_tax = self::getDataValue($data, '"Sales Tax"', $arrFields);
+						$modelProduct->labor_sales_tax = self::getDataValue($data, '"Labor Sales Tax"', $arrFields);
+						$modelProduct->dispersion = self::getDataValue($data, '"Dispersion"', $arrFields);
+						$modelProduct->bulk_wire = self::getDataValue($data, '"Bulk Wire"', $arrFields);
+						$modelProduct->input_terminals = self::getDataValue($data, '"Input Terminals"', $arrFields);
+						$modelProduct->input_signals = self::getDataValue($data, '"Input Signals"', $arrFields);
+						$modelProduct->input_labels = self::getDataValue($data, '"Input Labels"', $arrFields);
+						$modelProduct->output_terminals = self::getDataValue($data, '"Output Terminals"', $arrFields);
+						$modelProduct->output_terminals = self::getDataValue($data, '"Output Terminals"', $arrFields);
+						$modelProduct->output_terminals = self::getDataValue($data, '"Output Terminals"', $arrFields);
 						
 						//BEGIN NOMENCLATOR-------------------------------------------------
 						$modelNomenclator = Nomenclator::model()->findByAttributes(array('description'=>'Dtools'));
@@ -161,8 +179,7 @@ class GreenHelper
 						$modelProduct->Id_volts = $modelVolts->Id;
 						//END VOLTS-------------------------------------------------
 						
-						//BEGIN BRAND-------------------------------------------------
-						$manufacturer = self::getDataValue($data, '"Manufacturer"', $arrFields);
+						//BEGIN BRAND-------------------------------------------------						
 						$modelBrand = Brand::model()->findByAttributes(array('description'=>$manufacturer));
 						if(!isset($modelBrand))
 						{
