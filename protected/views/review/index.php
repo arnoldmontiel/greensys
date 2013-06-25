@@ -85,7 +85,6 @@ function doFilter()
 		var searchTextCust = '';
 		if (typeof($('#txtSearchCustomer').val()) != 'undefined')
 			searchTextCust = $('#txtSearchCustomer').val();
-			
 		$.post('".ReviewController::createUrl('AjaxFillInbox')."', 
 		{
 			tagFilter: $('#tagFilter').val(),
@@ -106,19 +105,54 @@ function doFilter()
 			$('#loading').removeClass('loading');
 			$('#review-area').html(data);
 			//tiene que tener al menos un elemento luego de la primer carga para mantener el estado
-// 			if(collapsed.indexOf(0)==-1)
-// 			{
-// 				collapsed.push(0);
-// 			}
 			collapsed = [];
-			$('.index-review-quick-view-collapsable').each(
-				function()
-				{ 
+			if(collapsed.indexOf(0)==-1)
+			{
+				collapsed.push(0);
+			}
+			$('.index-review-quick-view-collapsable:hidden').each(
+				function(){
 					var idProject = $(this).attr('id').split('_')[1];
-					if($(this).is(':hidden'))
-					{
-						collapsed.push(idProject);
-					}
+					collapsed.push(idProject);
+				}
+				);
+				
+			$('#collapserAll').click(function()
+				{
+				if($(this).attr('src')=='images/collapse_blue.png')
+				{
+					$(this).attr('title','Expandir/Colapsar todo');
+					$(this).attr('src','images/expand_blue.png');
+					var target='.index-review-quick-view-collapsable';
+				}else
+				{
+					$(this).attr('title','Expandir/Colapsar todo');
+					$(this).attr('src','images/collapse_blue.png')
+					var target='.index-review-quick-view-collapsable:hidden';				
+				}
+				$(target).each(
+				function(){
+						$(this).toggle('blind', 100 ,
+							function(){
+								var idProject = $(this).attr('id').split('_')[1];
+								if($(this).is(':hidden'))
+								{
+									collapsed.push(idProject);
+									$('#collapse_'+idProject).attr('src','images/expand_blue.png');
+									$('#collapse_'+idProject).attr('title','expandir');
+								}
+								else
+								{
+									var index = collapsed.indexOf(idProject);
+									collapsed.splice(index, 1);
+									$('#collapse_'+idProject).attr('src','images/collapse_blue.png');
+									$('#collapse_'+idProject).attr('title','colapsar');
+								}
+							
+							}
+						);
+				}
+					)
 				}
 			);
 			$('.collapser').click(function()
@@ -548,6 +582,7 @@ function getCheck(checkName)
 <?php if(User::canCreate() && $Id_customer == -1):?>
 
 <?php
+	echo CHtml::image('images/expand_blue.png','expandir',array('id'=>'collapserAll','class'=>'collapserAll','title'=>'Expandir/Colapsar todo'));
 	echo CHtml::openTag('div',array('class'=>'review-action-box-btn div-hidden','id'=>'btn-actions-box'));
 		echo CHtml::textField('txtSearchCustomer','',array('Id'=>'txtSearchCustomer'));			
 	echo CHtml::closeTag('div');	
@@ -561,7 +596,9 @@ function getCheck(checkName)
 <?php if(User::getCustomer()):?>
 
 <div id="customer" class="review-action-back" >
-	<?php echo CHtml::link(User::getCustomer()->person->name.' '.User::getCustomer()->person->last_name,
+
+	<?php	
+	echo CHtml::link(User::getCustomer()->person->name.' '.User::getCustomer()->person->last_name,
 		ReviewController::createUrl('index',array('Id_customer'=>User::getCustomer()->Id)),
 		array('class'=>'index-review-single-link')
 		);
@@ -570,10 +607,12 @@ function getCheck(checkName)
 <?php else:?>
 
 <div id="customer" class="review-action-back" >
-	<?php echo CHtml::link('Clientes',
-		'',
-		array('class'=>'index-review-single-link', 'id'=>'linkCustomers')
-		);
+
+	<?php
+		echo CHtml::link('Clientes',
+			'',
+			array('class'=>'index-review-single-link', 'id'=>'linkCustomers')
+			);
 	 ?>
 	
 	<?php 

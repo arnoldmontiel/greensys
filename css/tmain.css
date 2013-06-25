@@ -2668,6 +2668,12 @@ img.collapser
 {
 	float:left;width:20px;margin-left:-40px;margin-top:3px;
 }
+img.collapserAll
+{
+	float:left;width:20px;margin-left:0px;margin-right:5px;margin-top:13px;
+	cursor: pointer;
+}
+
 div.index-review-quick-view-collapsable
 {
 	float: left;
