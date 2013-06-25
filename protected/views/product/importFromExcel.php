@@ -5,12 +5,15 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#UploadSubtitle', "
 ");
 
 $this->menu=array(
-	array('label'=>'List Nzb', 'url'=>array('index')),
-	array('label'=>'Manage Nzb', 'url'=>array('admin')),
+	array('label'=>'List Product', 'url'=>array('index')),
+	array('label'=>'Create Product', 'url'=>array('create')),
+	array('label'=>'Manage Product', 'url'=>array('admin')),
+	array('label'=>'Assign Groups', 'url'=>array('productGroup')),
+	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
 );
 ?>
 
-<h1>Upload subtitle</h1>
+<h1>Import products from SIX</h1>
 
 <div class="form">
 
@@ -26,13 +29,13 @@ $this->menu=array(
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'file  *.srt'); ?>
+		<?php echo $form->labelEx($model,'file  *.csv'); ?>
 		<?php echo $form->fileField($model,'file'); ?>
 		<?php echo $form->error($model,'file'); ?>
 	</div>
 
 	<div style="width:50%;float:left">
-		<?php echo CHtml::submitButton('Upload',array('id'=>'Upload','name'=>'Upload')); ?>
+		<?php echo CHtml::submitButton('Import',array('id'=>'Upload','name'=>'Upload')); ?>
 	</div><!-- div button save -->
 	<div style="width:50%;float:right;position:relative">
 	<?php
