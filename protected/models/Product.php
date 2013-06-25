@@ -36,7 +36,34 @@
  * @property integer $unit_fan
  * @property integer $Id_multimedia
  * @property integer $Id_volts
+ * @property string $date_creation
  * @property integer $from_dtools
+ * @property string $long_description
+ * @property string $short_description
+ * @property string $part_number
+ * @property string $url
+ * @property string $tags
+ * @property string $phase
+ * @property string $accounting_item_name
+ * @property string $unit_cost_A
+ * @property string $unit_price_A
+ * @property string $unit_cost_B
+ * @property string $unit_price_B
+ * @property string $unit_cost_C
+ * @property string $unit_price_C
+ * @property integer $taxable
+ * @property double $btu
+ * @property string $summarize
+ * @property string $sales_tax
+ * @property string $labor_sales_tax
+ * @property string $dispersion
+ * @property string $bulk_wire
+ * @property string $input_terminals
+ * @property string $input_signals
+ * @property string $input_labels
+ * @property string $output_terminals
+ * @property string $output_signals
+ * @property string $output_labels
  * 
  * The followings are the available model relations:
  * @property BudgetItem[] $budgetItems
@@ -116,9 +143,12 @@ class Product extends ModelAudit
 		return array(
 			array('Id_brand, Id_category, Id_nomenclator, Id_product_type, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, Id_category, Id_sub_category', 'required'),
 			array('Id_volts,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, power, current, need_rack, unit_rack, unit_fan, from_dtools', 'numerical', 'integerOnly'=>true),
-			array('description_customer, description_supplier', 'length', 'max'=>255),
+			array('description_customer, description_supplier, short_description, part_number, url, tags, 
+				accounting_item_name, summarize, sales_tax, labor_sales_tax, dispersion, bulk_wire, input_terminals, 
+				input_signals, input_labels, output_terminals, output_signals, output_labels', 'length', 'max'=>255),
 			array('code, code_supplier, color, other', 'length', 'max'=>45),
 			array('length, width, height, profit_rate, msrp, weight, dealer_cost', 'length', 'max'=>10),
+			array('phase', 'length', 'max'=>100),
 			array('Id_volts, time_instalation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, Id_sub_category', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
