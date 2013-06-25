@@ -824,6 +824,27 @@ class ProductController extends Controller
 		}
 	}
 	
+	public function actionImportFromExcel()
+	{
+		$model=new UploadCsv();
+		if(isset($_POST['UploadCsv']))
+		{
+			$model->attributes=$_POST['UploadCsv'];
+			if($model->validate())
+			{
+				GreenHelper::importFromExcel($model);
+				
+				$dataProvider=new CActiveDataProvider('Product');
+				$this->render('index',array(
+							'dataProvider'=>$dataProvider,
+				));
+			}
+		}
+		
+		$this->render('importFromExcel',array('model'=>$model,				
+		));
+	}
+	
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated
