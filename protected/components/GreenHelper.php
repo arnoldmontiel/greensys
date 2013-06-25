@@ -45,17 +45,31 @@ class GreenHelper
 		return $returnValue;
 	}
 	
+	/**
+	 * 
+	 * Imports a csv file to database
+	 * @param UploadCsv $modelUpload
+	 * @return int Id from ImportLog
+	 */
 	static public function importFromExcel($modelUpload)
-	{
+	{	
+		$importLogId = null;	
+		$successRows = "";
+		$errorRows = "";
+		$existRows = "";		
+		$fileName = "";
+		
 		$file=CUploadedFile::getInstance($modelUpload,'file');
-			
+		
+		$fileName = $file->name;
+		$importCode = uniqid();
 		$handle = fopen($file->tempName, "r");
 		if ($handle) {
-			
+			$row = 2; //porque el 1 contiene el nombre de los campos
 			$firstLine = fgets($handle, 4096);
 			$arrFields=  explode( ',',$firstLine);
 			
-			while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
+			while (($data = fgetcsv($handle, 4096, ",")) !== FALSE)
 			{
 
 				$short_description = self::getDataValue($data, '"Short Description"', $arrFields);
@@ -247,20 +261,44 @@ class GreenHelper
 						
 						$modelProduct->from_dtools = 1;
 						$modelProduct->hide = 0;
+						$modelProduct->import_code = $importCode;
 						
 						if($modelProduct->save())
+						{
 							$transaction->commit();
+							$successRows = $successRows . $row. ', ';
+						}
 						else
-							$transaction->rollback();
+						{
+							$transaction->rollback();							
+							$errorRows = $errorRows . $row. ', ';
+						}
 						
 					} catch (Exception $e) {
 						$transaction->rollback();
+						$errorRows = $errorRows . $row. ', ';						
 					}
-				}
+				} //end if (product already exists)
+				else
+					$existRows = $existRows . $row. ', ';
 				
-			}
+				$row++;
+			} //end while
 			
 			fclose($handle);
-		}
+			
+			$modelImportLog = new ImportLog();
+			$modelImportLog->file_name = $fileName;
+			$modelImportLog->already_exist_rows = rtrim($existRows, ", ");
+			$modelImportLog->insert_rows = rtrim($successRows, ", ");
+			$modelImportLog->error_rows = rtrim($errorRows, ", ");
+			$modelImportLog->import_code = $importCode;
+			$modelImportLog->total_rows = $row - 1;
+			$modelImportLog->save();
+			
+			$importLogId = $modelImportLog->Id;
+		} //end if(handle)
+		
+		return $importLogId;
 	}
 }

@@ -64,6 +64,7 @@
  * @property string $output_terminals
  * @property string $output_signals
  * @property string $output_labels
+ * @property string $import_code
  * 
  * The followings are the available model relations:
  * @property BudgetItem[] $budgetItems
@@ -144,8 +145,7 @@ class Product extends ModelAudit
 			array('Id_brand, Id_category, Id_nomenclator, Id_product_type, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, Id_category, Id_sub_category', 'required'),
 			array('Id_volts,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, power, current, need_rack, unit_rack, unit_fan, from_dtools', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier, short_description, part_number, url, tags, 
-				accounting_item_name, summarize, sales_tax, labor_sales_tax, dispersion, bulk_wire, input_terminals, 
-				input_signals, input_labels, output_terminals, output_signals, output_labels', 'length', 'max'=>255),
+				accounting_item_name, summarize, sales_tax, labor_sales_tax, dispersion, bulk_wire', 'length', 'max'=>255),
 			array('code, code_supplier, color, other', 'length', 'max'=>45),
 			array('length, width, height, profit_rate, msrp, weight, dealer_cost', 'length', 'max'=>10),
 			array('phase', 'length', 'max'=>100),

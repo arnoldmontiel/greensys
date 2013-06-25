@@ -832,13 +832,20 @@ class ProductController extends Controller
 			$model->attributes=$_POST['UploadCsv'];
 			if($model->validate())
 			{
-				GreenHelper::importFromExcel($model);
+				$idLog = GreenHelper::importFromExcel($model);
 				
-				$this->redirect(array('index'));				
+				if(isset($idLog))
+					$this->redirect(array('importResults', 'id'=>$idLog ));
 			}
 		}
 		
-		$this->render('importFromExcel',array('model'=>$model,				
+		$this->render('importFromExcel',array('model'=>$model,));
+	}
+	
+	public function actionImportResults($id)
+	{
+		$model = ImportLog::model()->findByPk($id);
+		$this->render('importResults',array('model'=>$model,
 		));
 	}
 	
