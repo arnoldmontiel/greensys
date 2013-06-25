@@ -116,14 +116,14 @@ function doFilter()
 					collapsed.push(idProject);
 				}
 				);
-				
+			$('#collapserAll').unbind('click');	
 			$('#collapserAll').click(function()
 				{
 				if($(this).attr('src')=='images/collapse_blue.png')
 				{
 					$(this).attr('title','Expandir/Colapsar todo');
 					$(this).attr('src','images/expand_blue.png');
-					var target='.index-review-quick-view-collapsable';
+					var target='.index-review-quick-view-collapsable:visible';
 				}else
 				{
 					$(this).attr('title','Expandir/Colapsar todo');
@@ -155,6 +155,7 @@ function doFilter()
 					)
 				}
 			);
+			$('.collapser').unbind('click');
 			$('.collapser').click(function()
 			{
 				var idProject = $(this).attr('id').split('_')[1];
