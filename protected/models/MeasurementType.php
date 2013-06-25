@@ -38,7 +38,6 @@ class MeasurementType extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id', 'required'),
 			array('Id', 'numerical', 'integerOnly'=>true),
 			array('description', 'length', 'max'=>45),
 			// The following rule is used by search().

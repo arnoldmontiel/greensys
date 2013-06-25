@@ -19,6 +19,7 @@ $this->menu=array(
 	array('label'=>'Manage Product', 'url'=>array('admin')),
 	array('label'=>'Assign Groups', 'url'=>array('productGroup','Product'=>array('Id'=>$model->Id))),
 	array('label'=>'Assign Requirements', 'url'=>array('productRequirement','Product'=>array('Id'=>$model->Id))),
+	array('label'=>'Import From Excel', 'url'=>array('importFromExcel')),
 );
 ?>
 <h1>View Product <?php

@@ -8,7 +8,7 @@ $this->menu=array(
 	array('label'=>'Manage Product', 'url'=>array('admin')),
 	array('label'=>'Assign Groups', 'url'=>array('productGroup')),
 	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
-
+	array('label'=>'Import From Excel', 'url'=>array('importFromExcel')),
 );
 ?>
 

@@ -44,7 +44,7 @@ class MeasurementUnit extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id, Id_measurement_type', 'required'),
+			array('Id_measurement_type', 'required'),
 			array('Id, Id_measurement_type', 'numerical', 'integerOnly'=>true),
 			array('description', 'length', 'max'=>45),
 			array('short_description', 'length', 'max'=>10),
