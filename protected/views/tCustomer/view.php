@@ -19,6 +19,15 @@ function getIdProjectSelected()
 		id_project = '';
 	return id_project;
 }
+
+$('#link-export-employee-list').click(function(){
+	var href = $(this).attr('bk-href');
+	var idProject = $(this).attr('id-project');
+		
+	href = href + '&Id_project='+ idProject;
+	$(this).attr('href',href);
+	
+});
 ");
 
 Yii::app()->clientScript->registerScript('viewTapiaCustomer', "
@@ -145,6 +154,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				id_project = id_project[0];
 			else
 				id_project = "";
+							
 			$.fn.yiiGridView.update("user-customer-grid", {data: 
 				{				
 					Project: {Id:id_project}
@@ -163,11 +173,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			if(id_project!="")
 			{			
 				jQuery(".customer-project-assign-area").animate({opacity: "show"},1000);
+				$("#link-export-employee-list").attr("id-project",id_project);
 			}
 			else
 			{
 				jQuery(".customer-project-assign-area").animate({opacity: "hide"},1000);
-			}
+			}			
 
 		}',
 		'summaryText'=>'',
@@ -216,9 +227,24 @@ $this->widget('zii.widgets.grid.CGridView', array(
 ?>
 <div class="customer-project-assign-area" style="display: none">
 <div class="customer-assign-title">
-	Usuarios Asignados
+	Usuarios Asignados	
+	<div class="send-mail">
+	<?php
+	$image = CHtml::image('images/export_plain_text.png','Export',
+					array(
+							'style'=>'width:25px;margin-top:15px;'
+					)
+			);
+	$url = ReviewController::createUrl('GenerateEmployeeList',array('Id_customer'=>$model->Id));
+	echo CHtml::link($image,
+			$url,
+			array('title'=>'Exportar N&oacute;mina empleados','id'=>'link-export-employee-list',
+			'bk-href'=>$url)
+	);
+	?>		
+	</div>
 	<div class="customer-button-box">
-		<?php echo CHtml::button('Asignar Usuarios',array('id'=>'btn-assign-user',
+	<?php echo CHtml::button('Asignar Usuarios',array('id'=>'btn-assign-user',
 				'onclick'=>
 				'
 				if(jQuery(this).val()=="Terminar")

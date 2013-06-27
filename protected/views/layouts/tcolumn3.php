@@ -55,7 +55,7 @@
 				echo CHtml::openTag('span',array('id'=>'chkclose-span'));
 				echo '<div class="filter-chk-list">';
 				echo CHtml::checkBox('chkClose','',array('id'=>'chkClose'));
-				echo '&nbsp;<div class="filter-chk-list"> Cerrado</div></div>';
+				echo '&nbsp;<div class="filter-chk-list"> Finalizado</div></div>';
 				echo CHtml::closeTag('span');				
 			?>
 			</div>

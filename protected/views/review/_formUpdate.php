@@ -782,7 +782,7 @@ $('#btnAttachTechDocToNote').click(function(){
 
 $('#btnClose').click(function(){
 	
-	if(confirm('Si cierra el tema, todas las notas con confirmaciones pendientes se autoconfirmar\u00e1n'))
+	if(confirm('Si finaliza el tema, todas las notas con confirmaciones pendientes se autoconfirmar\u00e1n'))
 		jQuery('#ClosingReviewDialog').dialog('open'); 
 		
 	return false;
@@ -1255,15 +1255,12 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 			'id'=>'ClosingReviewDialog',
 // additional javascript options for the dialog plugin
 			'options'=>array(
-					'title'=>'Cierre de Tema',
+					'title'=>'Finalización de Tema',
 					'autoOpen'=>false,
 					'modal'=>true,
 					'width'=> '500',
 					'buttons'=>	array(
-							'Cancelar'=>'js:function(){
-										jQuery("#ClosingReviewDialog").dialog( "close" );
-										$("#Review_closing_description").val(null);
-							}',
+							
 							'Guardar'=>'js:function()
 							{
 							jQuery("#wating").dialog("open");			
@@ -1279,7 +1276,10 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 							}
 					);
 	
-			}'),
+			}','Cancelar'=>'js:function(){
+										jQuery("#ClosingReviewDialog").dialog( "close" );
+										$("#Review_closing_description").val(null);
+							}',),
 ),
 ));
 

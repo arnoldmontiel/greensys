@@ -16,7 +16,7 @@ if(!$data->isOpen())
 		if(!$data->is_open)
 		{
 			echo CHtml::openTag('div',array('class'=>'index-review-close-box','title'=>$data->closing_description));
-				echo "Cerrado";
+				echo "Finalizado";
 			echo CHtml::closeTag('div');
 		}else
 		{

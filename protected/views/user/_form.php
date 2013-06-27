@@ -96,6 +96,18 @@ $('#User_username').change(function(){
 		<?php echo $form->textField($model,'phone_mobile',array('size'=>45,'maxlength'=>45)); ?>
 		<?php echo $form->error($model,'phone_mobile'); ?>
 	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'dni'); ?>
+		<?php echo $form->textField($model,'dni',array('size'=>20,'maxlength'=>20)); ?>
+		<?php echo $form->error($model,'dni'); ?>
+	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'cuil'); ?>
+		<?php echo $form->textField($model,'cuil',array('size'=>20,'maxlength'=>20)); ?>
+		<?php echo $form->error($model,'cuil'); ?>
+	</div>
 			
 	<div class="row">
 		<?php echo $form->labelEx($model,'description'); ?>

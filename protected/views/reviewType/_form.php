@@ -29,7 +29,7 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-form', "
 		}
 		if(hasClose == false)
 		{
-			alert('Al menos un perfil debe poder CERRAR el formulario.');
+			alert('Al menos un perfil debe poder FINALIZAR el formulario.');
 			return false;
 		}		
 		$('#dialogProcessing').dialog('open');

@@ -46,9 +46,9 @@ $('.check-last-doc').click(function()
 <?php 
 	echo CHtml::openTag('div',array('class'=>'index-review-tag-box',"style"=>"margin-top:10px;"));
 	$options = array('class'=>'index-review-close-box');
-	$options['title']='Cerrado';
+	$options['title']='Finalizado';
 	echo CHtml::openTag('div',$options);
-	echo 'Cerrado';
+	echo 'Finalizado';
 	echo CHtml::closeTag('div');
 	echo CHtml::closeTag('div');
 	echo CHtml::openTag('div',array('class'=>'index-review-type-box','title'=>$model->reviewType->description,"style"=>"margin-top:10px;max-width:none;"));

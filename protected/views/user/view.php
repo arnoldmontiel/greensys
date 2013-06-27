@@ -31,6 +31,8 @@ $this->menu=array(
 		'address',
 		'phone_house',
 		'phone_mobile',
-		'description',		
+		'description',
+		'dni',
+		'cuil',		
 	),
 )); ?>
