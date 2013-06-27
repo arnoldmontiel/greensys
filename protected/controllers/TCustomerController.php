@@ -579,6 +579,47 @@ class TCustomerController extends Controller
 		}		
 	}
 	
+	public function actionGenerateEmployeeList()
+	{
+		$idCustomer = (isset($_GET['Id_customer']))?$_GET['Id_customer']:null;
+		$idProject = (isset($_GET['Id_project']))?$_GET['Id_project']:null;
+		
+		if(isset($idCustomer) && isset($idProject))
+		{
+			$modelProject = Project::model()->findByPk($idProject);
+			$criteria = new CDbCriteria();
+			$criteria->join = 'inner join user_customer uc ON (uc.username = t.username)';
+			$criteria->addCondition('Id_customer = '.$idCustomer);
+			$criteria->addCondition('Id_project = '.$idProject);
+			
+			$users = User::model()->findAll($criteria);
+			
+			header("Content-type: text/plain");
+			if(isset($modelProject)){
+				header('Content-Disposition: attachment; filename="'.utf8_decode($modelProject->customer->contact->description).' - '.utf8_decode($modelProject->description).' ('.date("Y-m-d H:i",time()).').txt"');
+				echo utf8_decode($modelProject->customer->contact->description).' - '.utf8_decode($modelProject->description);
+			}else{
+				header('Content-Disposition: attachment; filename="'.utf8_decode('Cliente').' - '.utf8_decode('Obra').' ('.date("Y-m-d H:i",time()).').txt"');
+				echo utf8_decode('Cliente').' - '.utf8_decode('Obra');
+			}			
+			
+			echo "\r\n";			
+			if(isset($users))
+			{
+				foreach ($users as $user){
+					echo "\r\n";
+					echo 'Nombre: '. $user->name. "\r\n";
+					echo 'Apellido: '. $user->last_name. "\r\n";
+					echo 'Celular: '. $user->phone_mobile. "\r\n";
+					echo 'DNI: '. $user->dni. "\r\n";
+					echo 'CUIL: '. $user->cuil. "\r\n";					
+					echo "-------------------------------------------";
+				}
+			}
+		}
+
+	}
+	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
