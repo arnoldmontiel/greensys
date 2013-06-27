@@ -61,21 +61,26 @@ class ReviewTypeController extends Controller
 		if(isset($_POST['ReviewType']))
 		{
 			$model->attributes=$_POST['ReviewType'];
+			
+			$tagType = 1; // con seguimiento
+			if(isset($_POST['radiolist-tag-type']))
+				$tagType = $_POST['radiolist-tag-type'];
+			
+			$model->has_tag_tracking = ($tagType == 1)?1:0;
+			
 			if($model->save())
-			{
-				if(isset($_POST['radiolist-tag-type']))
-					$this->createNewTagRelation($model->Id, $_POST['radiolist-tag-type']);
+			{				
+				$this->createNewTagRelation($model->Id, $tagType);
 				
 				if(isset($_POST['hidden-user-group-chk']))
 					$this->createUserGroupRelation($model->Id, $_POST['hidden-user-group-chk']);
 				
-				$this->redirect(array('view','id'=>$model->Id));				
+				$this->redirect(array('admin'));				
 			}
 		}
 
 		$this->render('create',array(
-			'model'=>$model,
-			'tagTypeSelect'=>1,
+			'model'=>$model
 		));
 	}
 	
@@ -277,16 +282,13 @@ class ReviewTypeController extends Controller
 				if(isset($_POST['hidden-user-group-chk']))
 					$this->createUserGroupRelation($model->Id, $_POST['hidden-user-group-chk']);
 				
-				$this->redirect(array('view','id'=>$model->Id));
+				$this->redirect(array('admin'));
 				
 			}
-		}
-
-		$tagTypeSelect = ( TagReviewType::model()->countByAttributes(array('Id_review_type'=>$id))>1)?1:2;
+		}		
 		
 		$this->render('update',array(
-			'model'=>$model,
-			'tagTypeSelect'=>$tagTypeSelect,
+			'model'=>$model,			
 		));
 	}
 
@@ -386,13 +388,17 @@ class ReviewTypeController extends Controller
 
 	public function actionAjaxDelete($id)
 	{		
-		$model=$this->loadModel($id);
-
+		$model=$this->loadModel($id);		
+		
 		$criteria=new CDbCriteria;
-		$criteria->condition='Id <> '. $id; 
+		$criteria->condition='Id <> '. $id;
+		$criteria->addCondition('has_tag_tracking ='.$model->has_tag_tracking); 
 		$ddlReviewType = ReviewType::model()->findAll($criteria);
 		
-		echo $this->renderPartial('_deletePopUp', array('model'=>$model, 'ddlReviewType'=>$ddlReviewType));
+		if(count($ddlReviewType)>0)
+			echo $this->renderPartial('_deletePopUp', array('model'=>$model, 'ddlReviewType'=>$ddlReviewType));
+		else
+			echo '';
 	}
 	
 	public function actionAjaxReplace()

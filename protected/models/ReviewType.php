@@ -8,6 +8,8 @@
  * @property string $description
  * @property integer $is_internal
  * @property integer $is_for_client
+ * @property string $long_description
+ * @property integer $has_tag_tracking
  *
  * The followings are the available model relations:
  * @property Review[] $reviews
@@ -46,9 +48,10 @@ class ReviewType extends TapiaActiveRecord
 			array('description', 'required'),
 			array('is_internal, is_for_client', 'numerical', 'integerOnly'=>true),
 			array('description', 'length', 'max'=>255),
+			array('long_description', 'length', 'max'=>512),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description, is_internal, is_for_client, with_tag_tracking', 'safe', 'on'=>'search'),
+			array('Id, description, is_internal, is_for_client, with_tag_tracking, has_tag_tracking', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -73,10 +76,12 @@ class ReviewType extends TapiaActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
-			'description' => 'Descripci&oacute;n',
+			'description' => 'Nombre',
+			'long_description' => 'Descripci&oacute;n',
 			'is_internal' => 'Es interno',
 			'is_for_client'=> 'Es para cliente',
-			'with_tag_tracking'=> 'Con Seguimiento',			
+			'with_tag_tracking'=> 'Con Seguimiento',
+			'has_tag_tracking'=> 'Con Seguimiento',
 		);
 	}
 
@@ -93,18 +98,17 @@ class ReviewType extends TapiaActiveRecord
 
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('description',$this->description,true);
-		$criteria->compare('is_internal',$this->is_internal);
-		$criteria->compare('is_for_client',$this->is_for_client);	
-		
-		if(isset($this->with_tag_tracking) && !empty($this->with_tag_tracking))
-		{
-			$compare = ($this->with_tag_tracking == 2)?'>':'=';
+		$criteria->compare('long_description',$this->long_description,true);
+		$criteria->compare('has_tag_tracking',$this->has_tag_tracking);
+// 		if(isset($this->with_tag_tracking) && !empty($this->with_tag_tracking))
+// 		{
+// 			$compare = ($this->with_tag_tracking == 2)?'>':'=';
 			
-			$criteria->addCondition('t.Id IN (
-			SELECT Id_review_type FROM tag_review_type
-			group by Id_review_type
-			having count(*)'.$compare.'1)');
-		}
+// 			$criteria->addCondition('t.Id IN (
+// 			SELECT Id_review_type FROM tag_review_type
+// 			group by Id_review_type
+// 			having count(*)'.$compare.'1)');
+// 		}
 		$sort=new CSort;
 		$sort->defaultOrder ="description ASC";
 		return new CActiveDataProvider($this, array(
