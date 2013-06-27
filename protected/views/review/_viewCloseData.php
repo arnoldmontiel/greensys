@@ -224,7 +224,7 @@ $isOwner = User::isOwnerOf($data);
 	</div>
 	<?php endif;?>
 	</div>
-	<div class="singles-notes-confirmations">
+	<div class="singles-notes-confirmations" style="display:none;">
 		<?php if ($needConfirmation || $isOwner):?>
 		<div class="singles-notes-confirmations-title">
 			<?php 
