@@ -756,7 +756,6 @@ class ReviewController extends Controller
 			$criteria->addCondition('n.username <> "'. User::getCurrentUser()->username.'"');
 			$criteria->group = 't.Id';
 			$criteria->order = 'max_date DESC';				
-
 			
 			if(isset($arrFilters['customerNameFilter'])&&$arrFilters['customerNameFilter']!='')
 			{
