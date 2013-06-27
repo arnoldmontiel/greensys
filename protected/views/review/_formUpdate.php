@@ -1047,7 +1047,7 @@ if($model->is_open)
 </div>
 	<div class="review-close-review">
 		<?php
-			if(User::isAdministartor() || $model->username == User::getCurrentUser()->username)
+			if(User::canClose($model))
 			{
 				echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnClose'));
 					echo 'Finalizar';

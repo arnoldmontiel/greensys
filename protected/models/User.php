@@ -115,7 +115,17 @@ class User extends TapiaActiveRecord
 	{
 		return self::getCurrentUserGroup()->Id==$modelNote->Id_user_group_owner;
 	}
-
+	public static function canClose($modelReview)
+	{
+		$userGroup = self::getCurrentUserGroup(); 
+		$model = ReviewTypeUserGroup::model()->findByPk(array('Id_review_type'=>$modelReview->Id_review_type,'Id_user_group'=>$userGroup->Id));
+		if(isset($model))
+		{
+			return $model->can_close;				
+		}
+		return false;
+	}
+	
 	public static function canCreate()
 	{
 		return (ReviewTypeUserGroup::model()->countByAttributes(

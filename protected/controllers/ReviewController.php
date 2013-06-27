@@ -480,10 +480,11 @@ class ReviewController extends Controller
 	{
 		$model = $this->loadModel($id);
 		$idCustomer = $model->Id_customer; 
+		$idProject = $model->Id_project;
 		
 		$model->delete();
 		
-		$this->redirect(array('index','Id_customer'=>$idCustomer));
+		$this->redirect(array('index','Id_customer'=>$idCustomer,'Id_project'=>$idProject));
 	
 	}
 
