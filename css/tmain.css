@@ -739,11 +739,11 @@ div.review-action-area
 	float: left;
 	vertical-align: baseline;
 	display: block;
-	padding:10px 0px 10px 0px;
+	padding:10px 1% 10px 0px;
 	border-top: 1px solid white;
 	border-bottom: 1px solid white;
 	background-color: #f4f6fb;
-	width: 98%;	
+	width: 97%;	
 	height: auto;	
 	margin-left: 1%;
 	margin-top: 0px;

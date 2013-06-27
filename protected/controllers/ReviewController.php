@@ -753,6 +753,7 @@ class ReviewController extends Controller
           			LEFT OUTER JOIN tapia.user_group_note ugn on (u.Id_user_group = ugn.Id_user_group)
 				";
 			$criteria->addCondition('uc.username = "'. User::getCurrentUser()->username.'"');
+			$criteria->addCondition('n.username <> "'. User::getCurrentUser()->username.'"');
 			$criteria->group = 't.Id';
 			$criteria->order = 'max_date DESC';				
 
