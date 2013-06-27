@@ -41,7 +41,43 @@ class ReviewController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
+	private function publicNote($idNote,$idCustomer,$idProject,$idReviewType)
+	{
+		$model = new UserGroupNote;
+		UserGroupNote::model()->deleteAllByAttributes(array('Id_note'=>$idNote, 'confirmed'=>0, 'declined'=>0));
+		//-----------------------------------------------
+		$arrReviewTypeUsrGroup = ReviewTypeUserGroup::model()->findAllByAttributes(
+				array('can_read'=>1,
+						'Id_review_type'=>$idReviewType,
+				));
 
+		foreach($arrReviewTypeUsrGroup as $modelReviewTypeUserGroup)
+		{
+			$model = new UserGroupNote;
+
+			$model->Id_note = $idNote;
+			$model->Id_customer = $idCustomer;
+			$model->Id_project = $idProject;
+			$model->Id_user_group = $modelReviewTypeUserGroup->Id_user_group;
+
+			$model->can_feedback = $modelReviewTypeUserGroup->can_feedback;
+			$model->addressed = $modelReviewTypeUserGroup->can_mail;
+			$model->save();
+		}
+
+		//review-user First insert
+		$modelNote = Note::model()->findByPk($idNote);
+		$modelReviewUserDb = ReviewUser::model()->findByPk(array('Id_review'=>$modelNote->Id_review,'username'=>User::getCurrentUser()->username));
+		if(!$modelReviewUserDb)
+		{
+			$modelReviewUser = new ReviewUser;
+			$modelReviewUser->Id_review = $modelNote->Id_review;
+			$modelReviewUser->username = User::getCurrentUser()->username;
+			$modelReviewUser->save();
+		}
+		GDriveHelper::shareFilesByNote($idNote);
+	}
+	
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
@@ -49,12 +85,15 @@ class ReviewController extends Controller
 	public function actionCreate()
 	{
 		//$this->layout='//layouts/tcolumn2';
-		$model=new Review;
+		$model=new Review('creation');
+		$model->setScenario('creation');
+		$modelNote=new Note('reviewCreation');
+		$modelNote->setScenario('reviewCreation');
 		$modelCustomer=new TCustomer;
 		$modelProject=new Project;
 		
 		// Uncomment the following line if AJAX validation is needed
-		$this->performAjaxValidation($model);
+		$this->performAjaxValidationNote($model,$modelNote);
 		
 		if(isset($_GET['Id_project']))
 		{
@@ -66,16 +105,22 @@ class ReviewController extends Controller
 		if(isset($_POST['Review']))
 		{
 			$model->attributes=$_POST['Review'];
-			if($model->save())
-			{
-				$this->autoTagAssign($model);
-				$this->createNote($model);
-				$this->redirect(array('update','id'=>$model->Id));
+			$transaction = $modelNote->dbConnection->beginTransaction();
+			try {
+				if($model->save())
+				{
+					$this->autoTagAssign($model);
+					if($this->createNote($model,$modelNote))
+					{
+						$this->publicNote($modelNote->Id,$model->Id_customer,$model->Id_project,$model->Id_review_type);
+						$transaction->commit();
+						$this->redirect(array('update','id'=>$model->Id));						
+					}
+				}				
+			} catch (Exception $e) {
+				$transaction->rollback();
 			}
 		}
-
-		
-		
 		$dllReviewTypeUserGroup = ReviewTypeUserGroup::model()->findAllByAttributes(
 								array('Id_user_group'=>User::getCurrentUserGroup()->Id,
 										'can_create'=>1));
@@ -108,18 +153,22 @@ class ReviewController extends Controller
 			'modelCustomer'=>$modelCustomer,
 			'modelProject'=>$modelProject,
 			'modelReviewType'=>$modelReviewType,
+			'modelNote'=>$modelNote,
 		));
 	}
-	private function createNote($model)
+	private function createNote($model,&$modelNote)
 	{		
-		$modelNote = new Note;
-			
+		if(isset($_POST['Note']))
+		{
+			$modelNote->attributes = $_POST['Note'];
+		}
 		$modelNote->Id_customer = $model->Id_customer;
 		$modelNote->Id_review = $model->Id;
 		$modelNote->Id_project = $model->Id_project;
 		$modelNote->username = User::getCurrentUser()->username;
 		$modelNote->Id_user_group_owner = User::getCurrentUserGroup()->Id;
-		$modelNote->save();		
+		$modelNote->in_progress = 0;
+		return $modelNote->save();		
 	}
 	private function autoTagAssign($model)
 	{
@@ -569,11 +618,21 @@ class ReviewController extends Controller
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated
 	 */
-	protected function performAjaxValidation($model)
+	protected function performAjaxValidation($model,$modelNote)
 	{
 		if(isset($_POST['ajax']) && $_POST['ajax']==='review-form')
 		{
 			echo CActiveForm::validate($model);
+			echo CActiveForm::validate($modelNote);			
+			Yii::app()->end();
+		}
+	}
+	protected function performAjaxValidationNote($model,$modelNote)
+	{
+		if(isset($_POST['ajax']) && $_POST['ajax']==='review-form')
+		{
+			echo CActiveForm::validate(array($modelNote,$model));
+			//echo CActiveForm::validate();
 			Yii::app()->end();
 		}
 	}
@@ -1281,50 +1340,14 @@ class ReviewController extends Controller
 	
 	public function actionAjaxPublicNote()
 	{
-
 		$idNote = (isset($_POST['idNote'])?$_POST['idNote']:null);
 		$idCustomer = (isset($_POST['idCustomer'])?$_POST['idCustomer']:null);
 		$idProject = (isset($_POST['idProject'])?$_POST['idProject']:null);
 		$idReviewType = (isset($_POST['idReviewType'])?$_POST['idReviewType']:null);
-		
-		$model = new UserGroupNote;
-		$transaction = $model->dbConnection->beginTransaction();
+		$transaction =  Yii::app()->db->beginTransaction();
 		try {
-			
-			UserGroupNote::model()->deleteAllByAttributes(array('Id_note'=>$idNote, 'confirmed'=>0, 'declined'=>0));
-			//-----------------------------------------------
-			$arrReviewTypeUsrGroup = ReviewTypeUserGroup::model()->findAllByAttributes(
-													array('can_read'=>1,
-															'Id_review_type'=>$idReviewType,
-												));
-			
-			foreach($arrReviewTypeUsrGroup as $modelReviewTypeUserGroup)
-			{
-				$model = new UserGroupNote;
-				
-				$model->Id_note = $idNote;
-				$model->Id_customer = $idCustomer;
-				$model->Id_project = $idProject;
-				$model->Id_user_group = $modelReviewTypeUserGroup->Id_user_group;
-								
-				$model->can_feedback = $modelReviewTypeUserGroup->can_feedback;
-				$model->addressed = $modelReviewTypeUserGroup->can_mail;
-				$model->save();
-			}
-			
-			//review-user First insert
-			$modelNote = Note::model()->findByPk($idNote);
-			$modelReviewUserDb = ReviewUser::model()->findByPk(array('Id_review'=>$modelNote->Id_review,'username'=>User::getCurrentUser()->username));
-			if(!$modelReviewUserDb)
-			{
-				$modelReviewUser = new ReviewUser;
-				$modelReviewUser->Id_review = $modelNote->Id_review;
-				$modelReviewUser->username = User::getCurrentUser()->username;
-				$modelReviewUser->save();
-			}
-
-			$transaction->commit();
-			GDriveHelper::shareFilesByNote($idNote);
+			$this->publicNote($idNote,$idCustomer,$idProject,$idReviewType);
+			$transaction->commit();				
 		} catch (Exception $e) {
 			$transaction->rollback();
 		}		

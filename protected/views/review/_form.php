@@ -31,11 +31,13 @@ $this->widget('ext.processingDialog.processingDialog', array(
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'review-form',
-	'enableAjaxValidation'=>false,
+	'enableAjaxValidation'=>true,
+	'focus'=>array($model,'description')
+		
 )); ?>
 
-	<?php echo $form->errorSummary($model); ?>
-
+	<?php echo $form->errorSummary(array($model,$modelNote)); ?>
+	
 	<div class="row">
 		<?php echo CHtml::label('N&uacute;mero de Revisi&oacute;n', 'Review[review]'); ?>
 		<?php echo $form->textField($model,'review',array('style'=>'width:25px;text-align:center;')); ?>
@@ -52,11 +54,18 @@ $this->widget('ext.processingDialog.processingDialog', array(
 	</div>
 	
 	<div class="row">
-		<?php echo CHtml::label('Asunto', 'Review[description]'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>100,'style'=>'resize:none;width:50%;')); ?>
+		<?php echo $form->labelEx($model,'description'); ?>
+		<?php // echo CHtml::label('Asunto', 'Review[description]'); ?>
+		<?php echo $form->textField($model,'description',array('rows'=>1, 'cols'=>140,'maxlength'=>100,'style'=>'resize:none;width:60%;')); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
-
+	<div class="row-fluid">
+		<?php echo $form->labelEx($modelNote,'note'); ?>
+		<?php //echo $form->label('Nota', 'Note[note]'); ?>
+		<?php echo $form->textArea($modelNote,'note',array('rows'=>10, 'cols'=>100,'style'=>'resize:none;width:97%;')); ?>
+		<?php echo $form->error($modelNote,'note'); ?>
+	</div>
+	
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('id'=>'save')); ?>
 		<?php echo CHtml::submitButton('Cancelar',array('id'=>'btnCancel')); ?>		

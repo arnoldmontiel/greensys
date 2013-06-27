@@ -1,4 +1,4 @@
-<?php 
+<?php
 Yii::app()->clientScript->registerScript(__CLASS__.'#review-view-data'.$data->Id, "
 $('#linkAttachImages').click(
 		function(){
@@ -25,9 +25,9 @@ $editable = $isAdministrator||$isOwner;
 ?>
 
 <div class="review-single-view" id="<?php echo $data->Id?>" >
-	<div class="view-text-date"><?php echo $data->change_date;?></div>
+	<div class="view-text-date" style="display:none;"><?php echo $data->change_date;?></div>
 	<?php if($isOwner):?>
-	<div id='edit_image<?php echo $data->Id?>' class="review-edit-image div-hidden">	
+	<div id='edit_image<?php echo $data->Id?>' class="review-edit-image div-hidden" style="display:none;">	
 	<?php
 		echo CHtml::link('Editar Imagenes',
 			ReviewController::createUrl('selectAttach',array('id'=>$data->review->Id, 'idNote'=>$data->Id)),
@@ -37,10 +37,10 @@ $editable = $isAdministrator||$isOwner;
 	</div>
 	<?php
 	 echo CHtml::image('images/remove.png','',
-			array('id'=>'delete_'.$data->Id, 'class'=>'wall-action-remove', 'title'=>'Eliminar'));
+			array('id'=>'delete_'.$data->Id, 'class'=>'wall-action-remove',"style"=>"display:none;", 'title'=>'Eliminar'));
 	?>
 	<?php endif;?>
-	<div class="review-simple-note-container">
+	<div class="review-simple-note-container" style="display:none;">
 	<div class="review-text-simple-note">
 		<div class="review-single-view-actions">
 			<div class="review-single-view-autor">
@@ -327,7 +327,7 @@ $editable = $isAdministrator||$isOwner;
 	
 	</div>
 	</div>
-	<div class="singles-notes-confirmations">
+	<div class="singles-notes-confirmations" style="display:none;">
 		<?php if ($needConfirmation):?>
 		<div class="singles-notes-confirmations-title">
 			<?php 
@@ -394,7 +394,9 @@ $editable = $isAdministrator||$isOwner;
 		<?php endif;?>		
 	</div>
 	<div id="singleNoteContainer" class="singles-notes-container">
-	<?php $notes=$data->notes;?>
+	<?php $notes=$data->notes;
+		array_unshift($notes,$data);
+	?>	
 	<?php if (!empty($notes)):?>
 		<?php
 		$noNotes= true;

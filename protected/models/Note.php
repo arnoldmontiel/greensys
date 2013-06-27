@@ -96,6 +96,7 @@ class Note extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('note', 'required','on'=>'reviewCreation'),
 			array('Id_customer, username, Id_user_group_owner', 'required'),
 			array('Id_customer, Id_review, in_progress, need_confirmation, confirmed, Id_user_group_owner', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
@@ -139,7 +140,7 @@ class Note extends TapiaActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
-			'note' => 'Note',
+			'note' => 'Nota',
 			'creation_date' => 'Creation Date',
 			'change_date'=>'Change Date',
 			'Id_customer' => 'Id Customer',

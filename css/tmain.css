@@ -264,7 +264,7 @@ div.review-container-single-view
 }
 div.review-single-view
 {
-	padding: 20px 0px 10px 0px;
+	padding: 0px 0px 10px 0px;
 	margin: 0px 0px 0px 1%;
 	width: 98%;
 	float: left;
@@ -294,6 +294,11 @@ div.view-text-note
 	background-color: #f4f6fb;
 	position: relative;
 }
+div.view-text-note-owner
+{
+	background-color: #E5ECFB;
+}
+
 div.mini-note-attch-zone
 {
 	font-size: 13px;
@@ -1081,7 +1086,7 @@ div.review-text-note-add-progress
 {
 	font-size: 13px;
 	line-height: 18px;
-	background-color: #f4f6fb;
+	background-color: #E5ECFB;
 	position: relative;
 	width: 100%;
 }

@@ -8,8 +8,8 @@ $isOwner = User::isOwnerOf($data);
 ?>
 
 <div class="review-single-view" id="<?php echo $data->Id?>" >
-	<div class="view-text-date"><?php echo $data->change_date;?></div>
-	<div class="review-text-simple-note">
+	<div class="view-text-date" style="display:none;"><?php echo $data->change_date;?></div>
+	<div class="review-text-simple-note" style="display:none;">
 		<div class="review-single-view-actions">
 			<div class="review-single-view-autor">
 				<?php
@@ -94,8 +94,8 @@ $isOwner = User::isOwnerOf($data);
 			<p class="single-formated-text"><?php echo $data->note;?></p>
 			</div>
 	</div>		
-	<div class="review-multimedia-conteiner">
-	<div id='review_image<?php echo $data->Id?>' class="review-text-images">
+	<div class="review-multimedia-conteiner" style="display:none;">
+	<div id='review_image<?php echo $data->Id?>' class="review-text-images" style="display:none;">
 			
 	<?php
 	
@@ -293,12 +293,21 @@ $isOwner = User::isOwnerOf($data);
 		<?php endif;?>		
 	</div>
 	<div id="singleNoteContainer" class="singles-notes-container">
-	<?php $notes=$data->notes;?>
+	<?php 
+		$notes=$data->notes;
+		array_unshift($notes,$data);		
+	?>
 	<?php if (!empty($notes)):?>
 		<?php 
 		foreach($notes as $item)
 		{
-			echo CHtml::openTag('div',array('class'=>'view-text-note'));
+			$class = array('class'=>'view-text-note');
+			if(User::isOwnerOf($item))
+			{
+				$class = array('class'=>'view-text-note view-text-note-owner');
+			}				
+			
+			echo CHtml::openTag('div',$class);
 				echo CHtml::openTag('div',array('class'=>'view-text-user'));
 					echo CHtml::encode($item->creation_date . ' - '.$item->user->name.' '.$item->user->last_name);
 				echo CHtml::closeTag('div');

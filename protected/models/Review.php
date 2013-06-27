@@ -73,6 +73,7 @@ class Review extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('description', 'required', 'on'=> 'creation'),
 			array('Id_customer,Id_review_type,Id_project', 'required'),
 			array('review, Id_customer, read, Id_review_type, is_open,Id_project', 'numerical', 'integerOnly'=>true),
 			array('description, creation_date, change_date, closing_description, closing_date', 'safe'),		
@@ -115,7 +116,7 @@ class Review extends TapiaActiveRecord
 			'Id' => 'ID',
 			'review' => 'Revisión',
 			'Id_customer' => 'Id Customer',
-			'description' => 'Descripción',
+			'description' => 'Asunto',
 			'creation_date' => 'Creation Date',
 			'change_date' => 'Change Date',
 			'read' => 'Read',

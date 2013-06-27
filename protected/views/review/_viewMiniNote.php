@@ -1,8 +1,12 @@
 <?php
 $multimediasCount = count($modelMiniNote->multimedias);
 $isOwner = User::isOwnerOf($modelMiniNote);
-
-echo CHtml::openTag('div',array('class'=>'view-text-note'));
+$class = array('class'=>'view-text-note');
+if($isOwner)
+{
+	$class = array('class'=>'view-text-note view-text-note-owner');	
+}
+echo CHtml::openTag('div',$class);
 	echo CHtml::openTag('div',array('class'=>'view-text-user'));
 		echo $modelMiniNote->creation_date . ' - ' . CHtml::encode($modelMiniNote->user->name.' '.$modelMiniNote->user->last_name);
 	echo CHtml::closeTag('div');
