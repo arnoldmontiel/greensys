@@ -59,21 +59,7 @@
 				echo CHtml::closeTag('span');				
 			?>
 			</div>
-		
-			<div class="search-box-title">
-			Documentos
-			</div>
-			<div class="search-box-list">
-			<?php
-				$modelType = MultimediaType::model()->findAll();
-				$checkType = CHtml::listData($modelType, 'Id', 'description');		
-				echo CHtml::checkBoxList('chklist-type', '', $checkType,
-					array(
-							'template'=>'<div class="filter-chk-list">{input}&nbsp;<div class="filter-chk-list">{label}</div></div>'
-					)
-				);
-			?>
-			</div>
+					
 		</div>
 		<div class="search-box">
 		
@@ -95,7 +81,7 @@
 		<div class="search-box-footer">
 		
 			<div class="search-box-title">
-				Fecha de creacion
+				Fecha de novedad
 			</div>
 			<div class="search-box-list">
 				Desde

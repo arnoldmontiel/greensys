@@ -178,10 +178,20 @@ class Review extends TapiaActiveRecord
 		if($arrFilters['tagFilter']){
 			if($arrFilters['isCloseFilter'])
 			{
-				$criteria->addCondition('t.is_open = 0 or t.Id IN(select Id_review from tag_review where Id_tag IN ('. $arrFilters['tagFilter'].'))');
+				$criteria->addCondition('t.is_open = 0 or t.Id IN(select r.Id from review r
+				inner join tag_review tr on (r.Id = tr.Id_review)
+				where
+				tr.date in (select max(date) date from tag_review where Id_review =r.Id)
+				and tr.Id_tag IN ('. $arrFilters['tagFilter'].'))');
 			}
 			else{
-				$criteria->addCondition('t.Id IN(select Id_review from tag_review where Id_tag IN ('. $arrFilters['tagFilter'].'))');
+				
+				$criteria->addCondition('t.Id IN(
+				select r.Id from review r
+				inner join tag_review tr on (r.Id = tr.Id_review)
+				where
+				tr.date in (select max(date) date from tag_review where Id_review =r.Id)
+				and tr.Id_tag IN('. $arrFilters['tagFilter'].'))');
 				$criteria->addCondition('t.is_open = 1');
 			}
 		}
@@ -205,12 +215,12 @@ class Review extends TapiaActiveRecord
 		
 		if($arrFilters['dateFromFilter'])
 		{
-			$criteria->addCondition('t.creation_date >= "'. date("Y-m-d H:i:s",strtotime($arrFilters['dateFromFilter'])) . '"');
+			$criteria->addCondition('t.change_date >= "'. date("Y-m-d H:i:s",strtotime($arrFilters['dateFromFilter'])) . '"');
 		}
 
 		if($arrFilters['dateToFilter'])
 		{
-			$criteria->addCondition('t.creation_date <= "'. date("Y-m-d H:i:s",strtotime($arrFilters['dateToFilter'] . " + 1 day")) . '"');
+			$criteria->addCondition('t.change_date <= "'. date("Y-m-d H:i:s",strtotime($arrFilters['dateToFilter'] . " + 1 day")) . '"');
 		}
 		
 		
@@ -273,12 +283,12 @@ class Review extends TapiaActiveRecord
 		
 		if(isset($arrFilters['dateFromFilter'])&&$arrFilters['dateFromFilter']!='')
 		{
-			$criteria->addCondition('t.creation_date >= "'. date("Y-m-d H:i:s",strtotime($arrFilters['dateFromFilter'])) . '"');
+			$criteria->addCondition('t.change_date >= "'. date("Y-m-d H:i:s",strtotime($arrFilters['dateFromFilter'])) . '"');
 		}
 	
 		if(isset($arrFilters['dateToFilter'])&&$arrFilters['dateToFilter']!='')
 		{
-			$criteria->addCondition('t.creation_date <= "'. date("Y-m-d H:i:s",strtotime($arrFilters['dateToFilter'] . " + 1 day")) . '"');
+			$criteria->addCondition('t.change_date <= "'. date("Y-m-d H:i:s",strtotime($arrFilters['dateToFilter'] . " + 1 day")) . '"');
 		}
 	
 		
