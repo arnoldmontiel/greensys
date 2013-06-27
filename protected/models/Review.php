@@ -121,7 +121,7 @@ class Review extends TapiaActiveRecord
 			'change_date' => 'Change Date',
 			'read' => 'Read',
 			'Id_review_type' => 'Id Review Type',
-			'closing_description' => 'Descripción de Cierre',			
+			'closing_description' => 'Descripción de Finalización',			
 		);
 	}
 
