@@ -16,6 +16,8 @@
  * @property string $description
  * @property integer $send_mail
  * @property string $refresh_token
+ * @property string $dni
+ * @property string $cuil
  *
  * The followings are the available model relations:
  * @property Album[] $albums
@@ -69,9 +71,12 @@ class User extends TapiaActiveRecord
 		else 
 		{
 			$guser = GUser::model()->findByPk($this->username);
-			$guser->password = $this->password;
-			$guser->email = $this->email;
-			$guser->save();				
+			if(isset($guser))
+			{
+				$guser->password = $this->password;
+				$guser->email = $this->email;
+				$guser->save();
+			}				
 		}
 	}
 	protected function afterDelete()
@@ -183,13 +188,14 @@ class User extends TapiaActiveRecord
 				array('username, password, Id_user_group, email', 'required'),
 				array('Id_user_group, send_mail', 'numerical', 'integerOnly'=>true),
 				array('username, password, email', 'length', 'max'=>128),
+				array('dni,cuil', 'length', 'max'=>20),
 				array('name, last_name, address', 'length', 'max'=>100),
 				array('phone_house, phone_mobile', 'length', 'max'=>45),
 				array('description, refresh_token', 'length', 'max'=>255),
 				array('email', 'email', 'allowEmpty'=>true),
 				// The following rule is used by search().
 				// Please remove those attributes that should not be searched.
-				array('username, password, email, Id_user_group, userGroupDescription, phone_house, phone_mobile, building_address, description, send_mail, refresh_token', 'safe', 'on'=>'search'),
+				array('username, password, email, Id_user_group, userGroupDescription, phone_house, phone_mobile, building_address, description, send_mail, refresh_token,dni,cuil', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -228,6 +234,8 @@ class User extends TapiaActiveRecord
 				'description'=>'Observaciones',
 				'send_mail'=>'Recive Correo',
 				'refresh_token' => 'Refresh Token',
+				'dni'=>'DNI',
+				'cuil'=>'CUIL',
 		);
 	}
 
