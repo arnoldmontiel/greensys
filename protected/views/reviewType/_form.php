@@ -9,7 +9,29 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-form', "
 		$('#ReviewType_is_for_client').attr('checked',false);
 	});
 	
-	$('#btnSave').click(function(){
+	$('#btnSave').click(function(){	
+		var hiddenValue = $('#hidden-user-group-chk').val();
+    	var obj = jQuery.parseJSON(hiddenValue);    	
+    	var hasClose = false;
+    	var hasCreate = false;    	
+		$.each(obj, function(i, item) {		
+    		if(item.create == 1)
+    			hasCreate = true;
+    		if(item.close == 1)
+    			hasClose = true;
+    		if(hasClose == true && hasCreate == true)
+    			return false;
+		});
+		if(hasCreate == false)
+		{
+			alert('Al menos un perfil debe poder CREAR el formulario.');
+			return false;
+		}
+		if(hasClose == false)
+		{
+			alert('Al menos un perfil debe poder CERRAR el formulario.');
+			return false;
+		}		
 		$('#dialogProcessing').dialog('open');
 	});
 	
@@ -94,6 +116,11 @@ $this->widget('ext.processingDialog.processingDialog', array(
 		<?php echo $form->error($model,'description'); ?>
 	</div>
 	
+	<div class="row">
+		<?php echo $form->labelEx($model,'long_description'); ?>
+		<?php echo $form->textArea($model, 'long_description', array('maxlength' => 512, 'rows' => 6)); ?>
+		<?php echo $form->error($model,'long_description'); ?>
+	</div>
 	
 	<?php if($model->isNewRecord): ?>
 	<div class="row">	
@@ -103,8 +130,15 @@ $this->widget('ext.processingDialog.processingDialog', array(
 		<div class="review-types">
 		<?php 
 		$tagTypes = array('1'=>'Con Seguimiento','2'=>'Sin Seguimiento');
-		echo CHtml::radioButtonList('radiolist-tag-type', $tagTypeSelect, $tagTypes);	 ?>
+		echo CHtml::radioButtonList('radiolist-tag-type', 1, $tagTypes);	 ?>
 		</div>
+	</div>
+	<?php else: ?>
+	<div class="row">
+		<div class="check-title">
+			<?php echo ($model->has_tag_tracking == 1)?'Con Seguimiento':'Sin Seguimiento'; ?>
+		</div>
+	
 	</div>
 	<?php endif; ?>
 	<br>
@@ -173,7 +207,7 @@ $this->widget('ext.processingDialog.processingDialog', array(
 					echo CHtml::closeTag('div');
 					echo CHtml::openTag('div',array('style'=>'float:left'));
 					echo CHtml::checkBox('chkCanFeedback_'.$item->Id, $canFeedback,array('id'=>'chkCanFeedback_'.$item->Id));
-					echo CHtml::label('Responde', 'chkCanFeedback_'.$item->Id, array('data-field'=>'feedback',
+					echo CHtml::label('Responder', 'chkCanFeedback_'.$item->Id, array('data-field'=>'feedback',
 																			'data-id'=>$item->Id,
 																			'id'=>'lblCanFeedback_'.$item->Id));
 					echo CHtml::closeTag('div');
@@ -185,7 +219,7 @@ $this->widget('ext.processingDialog.processingDialog', array(
 					echo CHtml::closeTag('div');
 					echo CHtml::openTag('div',array('style'=>'float:left'));
 					echo CHtml::checkBox('chkCanClose_'.$item->Id, $canClose,array('id'=>'chkCanClose_'.$item->Id));
-					echo CHtml::label('Cerrar', 'chkCanClose_'.$item->Id, array('data-field'=>'close',
+					echo CHtml::label('Finalizar', 'chkCanClose_'.$item->Id, array('data-field'=>'close',
 																			'data-id'=>$item->Id,
 																			'id'=>'lblCanClose_'.$item->Id));
 					echo CHtml::closeTag('div');

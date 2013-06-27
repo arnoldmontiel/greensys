@@ -16,7 +16,7 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-view', "
 		return false;
 	});
 	
-	$('input:radio').change(function(){
+	$('input:radio').change(function(){	
 		var value = $(this).val();
 		var confirmMsg = 'Este tipo de formulario pasar\u00e1 a ser Sin Seguimiento';
 		
@@ -44,7 +44,8 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-view', "
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
-		'description',		
+		'description',
+		'long_description',		
 	),
 )); ?>
 
@@ -54,9 +55,9 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-view', "
 	</div>
 	<div class="review-types">
 		<?php 
-		$tagTypeSelect = ( TagReviewType::model()->countByAttributes(array('Id_review_type'=>$model->Id))>1)?1:2;
+		$tagTypeSelect = ( $model->has_tag_tracking == 1)?1:2;
 		$tagTypes = array('1'=>'Con Seguimiento','2'=>'Sin Seguimiento');
-		echo CHtml::radioButtonList('radiolist-tag-type', $tagTypeSelect, $tagTypes);	 ?>
+		echo CHtml::radioButtonList('radiolist-tag-type', $tagTypeSelect, $tagTypes, array('disabled'=>'disabled'));	 ?>
 	</div>
 </div>
 
@@ -107,7 +108,7 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-view', "
 								 											'data-field' => 'read',
                     														)
                     				 ),
-								array('label'=>'Responde','active' => $canFeedback,
+								array('label'=>'Responder','active' => $canFeedback,
 														'htmlOptions'=>array('id'=>'chkCanFeedback',
 																			'data-id'    => $item->Id,
 								 											'data-field' => 'feedback',
@@ -119,7 +120,7 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-view', "
 								 											'data-field' => 'mail',
                     														)
                     				 ),
-								array('label'=>'Cerrar','active' => $canClose,
+								array('label'=>'Finalizar','active' => $canClose,
 														'htmlOptions'=>array('id'=>'chkCanClose',
 																			'data-id'    => $item->Id,
 								 											'data-field' => 'close',

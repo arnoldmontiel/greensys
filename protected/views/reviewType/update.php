@@ -14,4 +14,4 @@ $this->menu=array(
 
 <h1>Actualizar Formulario</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model,'tagTypeSelect'=>$tagTypeSelect)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

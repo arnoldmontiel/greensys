@@ -23,18 +23,23 @@ $this->menu=array(
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		'description',		
+		'description',
 		array(
- 			'name'=>"with_tag_tracking",
- 			'type'=>'raw',
- 			'value'=>'CHtml::checkBox("with_tag_tracking",( TagReviewType::model()->countByAttributes(array("Id_review_type"=>$data->Id))>1)?true:false,array("disabled"=>"disabled"))',
+		    'name'=>'long_description',
+		    'value'=>'$data->long_description',
+		    'htmlOptions'=>array('width'=>'60%'),
+		),
+		array(
+ 			'name'=>"has_tag_tracking",
+	 			'type'=>'raw',
+	 			'value'=>'CHtml::checkBox("has_tag_tracking",$data->has_tag_tracking,array("disabled"=>"disabled"))',
 	 			'filter'=>CHtml::listData(
 					array(
-						array('id'=>'1','value'=>'No'),
-						array('id'=>'2','value'=>'Si')
+						array('id'=>'0','value'=>'No'),
+						array('id'=>'1','value'=>'Si')
 					)
-			,'id','value'
-			),
+					,'id','value'
+				),
 		),
 		array(
 			'class'=>'CButtonColumn',
@@ -52,9 +57,13 @@ $this->menu=array(
 					'click'=>"function(){
 						$.post($(this).attr('href')).success(function(data){
 											
-										
-							$('#delete-review-type').html(data);
-							$('#DeleteReviewType').dialog( 'open' );
+							if(data != '')
+							{			
+								$('#delete-review-type').html(data);
+								$('#DeleteReviewType').dialog( 'open' );
+							}
+							else
+								alert('Para eliminar un formulario es necesario tener al menos uno del mismo tipo (Con Seguimiento / Sin Seguimiento)')
 						});
 						return false;
 					}"
