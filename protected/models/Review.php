@@ -104,6 +104,7 @@ class Review extends TapiaActiveRecord
 			'tags' => array(self::MANY_MANY, 'Tag', 'tag_review(Id_review, Id_tag)'),
 			'walls' => array(self::HAS_MANY, 'Wall', 'Id_review'),
 			'reviewUsers' => array(self::HAS_MANY, 'ReviewUser', 'Id_review'),
+			'reviewTypeUserGroups' => array(self::HAS_MANY, 'ReviewTypeUserGroup', 'Id_review_type'),
 		);
 	}
 

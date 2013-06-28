@@ -79,7 +79,6 @@ return array(
 		'bootstrap' => array(
 					    'class' => 'ext.bootstrap.components.Bootstrap',
 					    'responsiveCss' => true,
-					    'coreCss'=>false,
 		),
 		'mail' => array(
 		 			'class' => 'ext.yii-mail.YiiMail',
@@ -146,7 +145,7 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=green',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => '',
+			'password' => 'admin',
 			'charset' => 'utf8',
 		),
 		'db2'=>array(
@@ -154,7 +153,7 @@ return array(
 					'connectionString' => 'mysql:host=localhost;dbname=tapia',
 					'emulatePrepare' => true,
 					'username' => 'root',
-					'password' => '',
+					'password' => 'admin',
 					'charset' => 'utf8',
 		),
 
@@ -199,6 +198,7 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
+		'hostname'=>'http://localhost/',
 		'adminEmail'=>'info@gruposmartliving.com',
 		'database_format'=>array(
 					'date'=>'yyyy-MM-dd',

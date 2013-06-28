@@ -114,6 +114,7 @@ class ReviewController extends Controller
 					{
 						$this->publicNote($modelNote->Id,$model->Id_customer,$model->Id_project,$model->Id_review_type);
 						$transaction->commit();
+						$this->sendMailNote($modelNote->Id);
 						$this->redirect(array('update','id'=>$model->Id));						
 					}
 				}				
@@ -1036,6 +1037,7 @@ class ReviewController extends Controller
 				}
 								
 				echo CJSON::encode($result);
+				$this->sendMailNote($id);
 				//echo CJSON::encode($note->attributes).CJSON::encode($note->user->attributes);				
 			}				
 		}
@@ -1435,6 +1437,61 @@ class ReviewController extends Controller
 		
 		echo $response;
 	}
+	public function sendMailNote($idNote)
+	{
+		$modelNote = Note::model()->findByPk($idNote);
+		$modelReview = $modelNote->review;
+		if(!isset($modelReview))
+		{
+			$modelReview = $modelNote->parentNotes[0]->review;
+		}
+		$userCustomers = UserCustomer::model()->findAllByAttributes(array('Id_project'=>$modelNote->Id_project));
+		foreach ($userCustomers as $userCustomer)
+		{
+			$modelUser = $userCustomer->user;
+			$reviewTypeUserGroup = ReviewTypeUserGroup::model()->findByAttributes(array('Id_user_group'=>$modelUser->Id_user_group,'Id_review_type'=>$modelReview->Id_review_type));
+			if($reviewTypeUserGroup->can_mail)
+			{
+				$message = new YiiMailMessage;
+				$message->view = '_noteMail';
+				$message->setBody(array('model'=>$modelUser,'modelReview'=>$modelReview,'modelNote'=>$modelNote), 'text/html');
+				$message->addTo($modelUser->email);
+				$message->from = Yii::app()->params['adminEmail'];
+				
+				//$state = isset($review->tags[0])?' ('.$review->tags[0]->description.') ':'';
+				//if(!$modelReview->is_open) $state = ' (Finalizada) ';
+				
+				$message->setSubject(utf8_decode($modelReview->customer->contact->description).' - '.utf8_decode($modelReview->project->description).': '.utf8_decode($modelReview->description));
+				Yii::app()->mail->send($message);				
+			}				
+		}
+
+		
+		if(isset($_POST['Review'])&&isset($_POST['User']))
+		{
+			$review = Review::model()->findByPk($_POST['Review']['Id']);
+			$users = $_POST['User'];
+			if(!empty($users['username']))
+			{
+				foreach($users['username'] as $user)
+				{
+					$modelUser = User::model()->findByPk($user);
+					$message = new YiiMailMessage;
+					$message->view = '_noteMail';
+					$message->setBody(array('model'=>$modelUser,'modelReview'=>$this->loadModel($_POST['Review']['Id'])), 'text/html');
+					$message->addTo($modelUser->email);
+					$message->from = Yii::app()->params['adminEmail'];
+						
+					$state = isset($review->tags[0])?' ('.$review->tags[0]->description.') ':'';
+					if(!$modelReview->is_open) $state = ' (Finalizada) ';
+	
+					$message->setSubject(utf8_decode($review->customer->contact->description).' - '.utf8_decode($review->project->description).': '.utf8_decode($review->description).utf8_decode($state));
+					Yii::app()->mail->send($message);
+				}
+			}
+		}
+	}
+	
 	public function actionAjaxSendMail()
 	{
 		if(isset($_POST['Review'])&&isset($_POST['User']))
