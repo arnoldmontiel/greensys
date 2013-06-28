@@ -260,33 +260,76 @@ class Review extends TapiaActiveRecord
 		$criteria=new CDbCriteria;
 	
 		//Esto antes era un if para que acote el query si no era Administrador
-		$criteria->join = ' LEFT OUTER JOIN `note` `n` ON (`n`.`Id_review`=`t`.`Id`)
-								LEFT OUTER JOIN `user_group_note` `ugn` ON (`ugn`.`Id_note`=`n`.`Id`)
-								LEFT OUTER JOIN review_user ru ON (ru.username = t.username AND t.Id = ru.Id_review)';
-		$criteria->addCondition('ugn.Id_user_group = '.User::getCurrentUserGroup()->Id);
-		$criteria->addCondition('t.username = "'. User::getCurrentUser()->username . '"','OR');
-		//---------------------------------------------------
-	
-		$criteria->addCondition('t.Id_customer = '. $this->Id_customer);
-		$criteria->addCondition('t.Id_project = '. $this->Id_project);
 		$criteria->distinct = true;
-
-		$criteria->order = 't.Id_project, t.Id_customer, t.change_date DESC, t.review DESC';
+		
+// 		$criteria->join = ' LEFT OUTER JOIN `note` `n` ON (`n`.`Id_review`=`t`.`Id`)
+// 								LEFT OUTER JOIN `user_group_note` `ugn` ON (`ugn`.`Id_note`=`n`.`Id`)
+// 								LEFT OUTER JOIN review_user ru ON (ru.username = t.username AND t.Id = ru.Id_review)';
+// 		$criteria->join .= 'INNER join note_note nn on (nn.Id_parent = n.Id)
+// 							INNER join note nchild on (nn.Id_child = nchild.Id) ';
+		
+// 		$criteria->addCondition('ugn.Id_user_group = '.User::getCurrentUserGroup()->Id);
+// 		$criteria->addCondition('t.username = "'. User::getCurrentUser()->username . '"','OR');
+// 		$criteria->addCondition('t.Id_customer = '. $this->Id_customer);
+// 		$criteria->addCondition('t.Id_project = '. $this->Id_project);
+// 		$criteria->addCondition('nchild.username <> "'.User::getCurrentUser()->username.'"');
+// 		$criteria->addCondition('nchild.in_progress=0');
+// 		$criteria->addCondition('nchild.change_date in(
+// 			select max(note.change_date) from note
+// 			inner join note_note nn on (note.Id = nn.Id_child)
+// 			inner join note n on (n.Id= nn.Id_parent)
+// 			where note.Id_project =  '.$this->Id_project.' and note.Id_customer = '.$this->Id_customer.'
+// 			and note.in_progress= 0
+// 			and n.Id_review = t.Id
+// 			)'
+// 		);
+		$criteria->addCondition('
+		Id in (SELECT distinct `t`.Id FROM `review` `t`
+			LEFT OUTER JOIN `note` `n` ON (`n`.`Id_review`=`t`.`Id`)
+			LEFT OUTER JOIN `user_group_note` `ugn` ON (`ugn`.`Id_note`=`n`.`Id`)
+			LEFT OUTER JOIN review_user ru ON (ru.username = t.username AND t.Id = ru.Id_review)
+			LEFT join note_note nn on (nn.Id_parent = n.Id)
+			LEFT join note nchild on (nn.Id_child = nchild.Id  AND (nchild.in_progress=0) and
+				nchild.change_date =(
+				select max(note.change_date) from note
+				inner join note_note nn on (note.Id = nn.Id_child)
+				inner join note n on (n.Id= nn.Id_parent)
+				where note.Id_project =  '.$this->Id_project.'
+				and note.Id_customer = '.$this->Id_customer.'
+				and note.in_progress= 0
+				and n.Id_review = t.Id
+				)
+			)
+		WHERE (((((ugn.Id_user_group = '.User::getCurrentUserGroup()->Id.')
+			OR (t.username = "'.User::getCurrentUser()->username.'"))
+			AND (t.Id_customer = '.$this->Id_customer.'))
+			AND (t.Id_project = '.$this->Id_project.'))		
+		)
+		and (nchild.username <> "'.User::getCurrentUser()->username.'"))
+		or Id in(
+			SELECT distinct `t`.Id  FROM `review` `t`
+			LEFT OUTER JOIN `note` `n` ON (`n`.`Id_review`=`t`.`Id` and n.Id not in
+				(
+				select distinct note.Id from note
+				inner join note_note nn on (note.Id = nn.Id_parent)
+				inner join note n on (n.Id= nn.Id_child)
+				where note.Id_project =  '.$this->Id_project.'
+				and note.Id_customer = '.$this->Id_customer.'
+				)
+			)
+			LEFT OUTER JOIN `user_group_note` `ugn` ON (`ugn`.`Id_note`=`n`.`Id`)
+			LEFT OUTER JOIN review_user ru ON (ru.username = t.username AND t.Id = ru.Id_review)
+				WHERE (((((ugn.Id_user_group = '.User::getCurrentUserGroup()->Id.')
+				OR (t.username = "'.User::getCurrentUser()->username.'"))
+				AND (t.Id_customer = '.$this->Id_customer.'))
+				AND (t.Id_project = '.$this->Id_project.'))			
+			)
+			and n.username <> "'.User::getCurrentUser()->username.'"
+		)');
+		
+		$criteria->order = 't.change_date DESC, t.review DESC';
 		$criteria->limit = 4;
 		
-		$criteria->join .= 'INNER join note_note nn on (nn.Id_parent = n.Id) 
-							INNER join note nchild on (nn.Id_child = nchild.Id) ';
-		$criteria->addCondition('nchild.username <> "'.User::getCurrentUser()->username.'"');
-		$criteria->addCondition('nchild.in_progress=0');
-		$criteria->addCondition('nchild.change_date in(
-			select max(note.change_date) from note 
-			inner join note_note nn on (note.Id = nn.Id_child)
-			inner join note n on (n.Id= nn.Id_parent)
-			where note.Id_project =  '.$this->Id_project.' and note.Id_customer = '.$this->Id_customer.'
-			and note.in_progress= 0
-			and n.Id_review = t.Id
-			)'
-		);
 		return new CActiveDataProvider($this, array(
 					'criteria'=>$criteria,
 		));
