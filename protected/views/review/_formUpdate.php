@@ -352,13 +352,23 @@ function bindEvents(item)
 							type : 'GET',
 							url : '" . ReviewController::createUrl('AjaxRemoveSingleNote') ."' + getParam,
 							beforeSend : function(){
-										if(!confirm('\u00BFSeguro que quiere borrar esta nota?')) 
+										if(!confirm('\u00BFSeguro que quiere borrar esta novedad?')) 
 											return false;
 											},
 							success : function(data)
 							{
-								$('#noteContainer_'+idParent).html(data);
-								bindEvents($('#noteContainer_'+idParent))
+								//$('#noteContainer_'+idParent).html(data);
+								//bindEvents($('#noteContainer_'+idParent))
+								if(data==idNote)
+								{
+									$('#view_text_note_'+idNote).toggle('slide',function(){
+										$('#view_text_note_'+idNote).remove();
+										}
+									);
+								}else
+								{
+									alert('La novedad no puede ser borrada ya que tiene novedades posteriores')
+								}	
 							}
 					});					
 				}

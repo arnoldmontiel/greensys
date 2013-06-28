@@ -6,6 +6,7 @@ if($isOwner)
 {
 	$class = array('class'=>'view-text-note view-text-note-owner');	
 }
+$class['id'] = "view_text_note_".$modelMiniNote->Id;
 echo CHtml::openTag('div',$class);
 	echo CHtml::openTag('div',array('class'=>'view-text-user'));
 		echo $modelMiniNote->creation_date . ' - ' . CHtml::encode($modelMiniNote->user->name.' '.$modelMiniNote->user->last_name);
@@ -22,7 +23,7 @@ echo CHtml::openTag('div',$class);
 			array('id'=>'attch-left-note_'.$modelMiniNote->Id.'_'.$modelMainNote->Id, 'class'=>'action-show-hide-attch', 'title'=>'Adjunto', 'style'=>'width:25px;'));
 		}					
 	echo CHtml::closeTag('div');
-	if($isOwner)
+	if($isOwner&&!isset($modelMiniNote->Id_review))//es dueño y es no es nota principal
 	{
 		echo CHtml::image('images/remove.png','',
 		array('id'=>'left-note_'.$modelMiniNote->Id.'_'.$modelMainNote->Id, 'class'=>'wall-action-remove-small','title'=>'Eliminar'));						

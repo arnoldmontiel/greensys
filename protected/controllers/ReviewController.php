@@ -471,6 +471,23 @@ class ReviewController extends Controller
 		));
 	}
 	
+	public function actionAjaxDelete()
+	{
+		if(isset($_POST['id']))
+		{
+			$id = $_POST['id'];
+			$model = $this->loadModel($id);
+			if($this->canDelete($model))
+			{
+				$model->delete();
+				echo $id;
+				return;
+			}				
+		}
+		echo "0";
+		return;		
+	}
+	
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
@@ -479,13 +496,28 @@ class ReviewController extends Controller
 	public function actionDelete($id)
 	{
 		$model = $this->loadModel($id);
-		$idCustomer = $model->Id_customer; 
+		if($this->canDelete($model))
+		{			
+			$model->delete();
+		}
+		$idCustomer = $model->Id_customer;
 		$idProject = $model->Id_project;
 		
-		$model->delete();
-		
 		$this->redirect(array('index','Id_customer'=>$idCustomer,'Id_project'=>$idProject));
-	
+		
+	}
+	private function canDelete($model)
+	{
+		$notes = $model->notes;
+		foreach ($notes as $note)
+		{
+			$litleNotes = $note->notes;
+			if(!empty($litleNotes))
+			{
+				return false;
+			}			
+		}
+		return true;  
 	}
 
 	/**
@@ -1084,20 +1116,24 @@ class ReviewController extends Controller
 	{
 	
 		$model = Note::model()->findByPk($idParent);
-		
-		$transaction = $model->dbConnection->beginTransaction();
-		try {
-			NoteNote::model()->deleteAllByAttributes(array('Id_child'=>$id));
-			Note::model()->deleteByPk($id);
-			$transaction->commit();
-			
-			$userGroupNote = UserGroupNote::model()->findByPk(array('Id_note'=>$model->Id,'Id_user_group'=>$model->Id_user_group_owner));
-			$this->renderPartial('_viewData',array('data'=>$model,'dataUserGroupNote'=>$userGroupNote));
-			
-		} catch (Exception $e) {
-			$transaction->rollback();
-		}
-	
+		$notes = $model->notes;
+		$lastNote = $notes[count($notes)-1];
+		if($lastNote->Id==$id)
+		{
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				NoteNote::model()->deleteAllByAttributes(array('Id_child'=>$id));
+				Note::model()->deleteByPk($id);
+				$transaction->commit();
+					
+				//$userGroupNote = UserGroupNote::model()->findByPk(array('Id_note'=>$model->Id,'Id_user_group'=>$model->Id_user_group_owner));
+				//$this->renderPartial('_viewData',array('data'=>$model,'dataUserGroupNote'=>$userGroupNote));
+				echo $id;
+					
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}				
+		}			
 	}
 	
 	public function actionAjaxShareDocument()

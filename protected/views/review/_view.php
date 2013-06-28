@@ -3,7 +3,7 @@ $route = 'update';
 if(!$data->isOpen())
 	$route = 'viewClose';
 ?>
-<a href="<?php echo ReviewController::createUrl($route,array('id'=>$data->Id))?>" class="index-review-single-link">
+<a href="<?php echo ReviewController::createUrl($route,array('id'=>$data->Id))?>" class="index-review-single-link" id='a_review_<?php echo $data->Id; ?>'>
 <div class="index-review-single" id='review_<?php echo $data->Id; ?>' <?php echo (isset($width)?" style='width:".$width."' " :""); ?>>
 	<div class="index-review-single-container">		
 	<?php
@@ -189,7 +189,30 @@ if(!$data->isOpen())
 		    CHtml::image('images/remove.png','',
 						array('id'=>'removeReview'.$data->Id, 'class'=>'review-action-remove-small','title'=>'Eliminar')),
 			array( 'delete','id'=>$data->Id),
-			array('onclick' => 'return confirm("\u00BFEsta seguro que desea borrar este formulario?")')
+			array('onclick' =>
+				'
+				if(confirm("\u00BFEstá seguro que desea borrar este formulario?"))
+				{
+					jQuery.post(
+						"'.ReviewController::createUrl('AjaxDelete').'",
+						{
+							id: '.$data->Id.'
+				 		}).success(
+						function(data) 
+						{ 
+							if(data=='.$data->Id.')
+							{
+								jQuery("#review_'.$data->Id.'").toggle("slide",function(){jQuery("#review_'.$data->Id.'").remove();jQuery("#a_review_'.$data->Id.'").remove();});								
+							}else{
+								alert("El formulario contiene novedades y ya no puede ser borrado");
+							}	
+						}
+					);
+					return false;
+				}
+				return false;
+			'
+			)
 		);
 	}
 		
@@ -197,5 +220,4 @@ if(!$data->isOpen())
 		
 	</div>
 </div>
-
 </a>

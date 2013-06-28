@@ -123,7 +123,9 @@ class Note extends TapiaActiveRecord
 			'multimedias' => array(self::MANY_MANY, 'TMultimedia', 'multimedia_note(Id_note, Id_multimedia)'),
 			'idCustomer' => array(self::BELONGS_TO, 'TCustomer', 'Id_customer'),
 			'walls' => array(self::HAS_MANY, 'Wall', 'Id_note'),
+			//no cambiar el "order", si se necesita otra order, crear un nuevo item en el array con el orden requerido
 			'notes' => array(self::MANY_MANY, 'Note', 'note_note(Id_parent, Id_child)','order'=>'notes.change_date ASC'),
+			//
 			'parentNotes' => array(self::MANY_MANY, 'Note', 'note_note(Id_child, Id_parent)'),
 			'review' => array(self::BELONGS_TO, 'Review', 'Id_review'),
 			'userGroupOwner' => array(self::BELONGS_TO, 'UserGroup', 'Id_user_group_owner'),
