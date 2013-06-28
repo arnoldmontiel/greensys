@@ -58,7 +58,7 @@ class TCustomer extends TapiaActiveRecord
 			array('username', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_person, Id_contact, username, tag_description, contact_description', 'safe', 'on'=>'search'),
+			array('Id, Id_person, Id_contact, username, tag_description, contact_description,name,last_name,telephone_1,email', 'safe', 'on'=>'search'),
 		);
 	}
 
