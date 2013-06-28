@@ -2043,7 +2043,7 @@ div.customer-assign-title
 	height: 40px;
 	background-color: #F4F6FB;
 	margin-bottom: 10px;
-	padding: 18px 5px 0px 20px;
+	padding: 18px 1% 0px 1%;
 	font-size: 18px;
 }
 div.review-update-files-name
@@ -2535,6 +2535,7 @@ div.customer-button-box
 {
 	position: relative;
 	float: right;
+	margin-right: 1%;
 }
 .google-permission-zone
 {

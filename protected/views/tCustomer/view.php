@@ -232,7 +232,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	<?php
 	$image = CHtml::image('images/export_plain_text.png','Export',
 					array(
-							'style'=>'width:25px;margin-top:15px;'
+							'style'=>'width:25px;margin-top:6px;'
 					)
 			);
 	$url = ReviewController::createUrl('GenerateEmployeeList',array('Id_customer'=>$model->Id));
