@@ -1116,8 +1116,8 @@ class ReviewController extends Controller
 	{
 	
 		$model = Note::model()->findByPk($idParent);
-		$notes = $model->notes;
-		$lastNote = $notes[count($notes)-1];
+		$notes = $model->notesDESC;
+		$lastNote = $notes[0];
 		if($lastNote->Id==$id)
 		{
 			$transaction = $model->dbConnection->beginTransaction();

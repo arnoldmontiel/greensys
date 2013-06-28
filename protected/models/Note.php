@@ -125,6 +125,7 @@ class Note extends TapiaActiveRecord
 			'walls' => array(self::HAS_MANY, 'Wall', 'Id_note'),
 			//no cambiar el "order", si se necesita otra order, crear un nuevo item en el array con el orden requerido
 			'notes' => array(self::MANY_MANY, 'Note', 'note_note(Id_parent, Id_child)','order'=>'notes.change_date ASC'),
+			'notesDESC' => array(self::MANY_MANY, 'Note', 'note_note(Id_parent, Id_child)','order'=>'notesDESC.change_date DESC'),
 			//
 			'parentNotes' => array(self::MANY_MANY, 'Note', 'note_note(Id_child, Id_parent)'),
 			'review' => array(self::BELONGS_TO, 'Review', 'Id_review'),
