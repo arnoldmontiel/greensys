@@ -11,5 +11,5 @@ echo CHtml::openTag('div');
 	echo CHtml::closeTag('p');
 echo CHtml::closeTag('div');
 
-echo CHtml::link('Ver mas...',Yii::app()->params['hostname'].ReviewController::createUrl('review/update',array('id'=>$modelReview->Id))."#BOTTOM");
+echo CHtml::link('Ver mas...',Yii::app()->params['hostname'].ReviewController::createUrl('review/update',array('id'=>$modelReview->Id,'newIdNote'=>$modelNote->Id))."#BOTTOM");
 echo CHtml::closeTag('div');

@@ -12,7 +12,7 @@ $('#attch-left-note').click(
 	return false;	
 	}		
 )		
-		");
+");
 $canDoFeeback = $dataUserGroupNote->can_feedback;
 $needConfirmation = $dataUserGroupNote->need_confirmation;
 $confirmed = $dataUserGroupNote->confirmed;

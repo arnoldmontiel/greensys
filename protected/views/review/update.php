@@ -4,6 +4,7 @@
 													'ddlReviewType'=>$ddlReviewType, 
 													'modelMultimedia'=>$modelMultimedia,
 													'modelAlbum'=>$modelAlbum,
+													'newIdNote'=>$newIdNote,
 		//											'order'=>$order //deprecated
 		)); ?>
 		

@@ -229,7 +229,7 @@ class ReviewController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id=null, $order=null)
+	public function actionUpdate($id=null, $newIdNote=null ,$order=null)
 	{				
 		$model=$this->loadModel($id);
 		$this->modelTag = $model;
@@ -276,6 +276,7 @@ class ReviewController extends Controller
 			'ddlReviewType'=>$ddlReviewType,
 			'modelMultimedia'=>$modelMultimedia,
 			'modelAlbum'=>$modelAlbum,
+			'newIdNote'=>$newIdNote,
 			//'order'=>$order,deprecated 
 		));
 	}

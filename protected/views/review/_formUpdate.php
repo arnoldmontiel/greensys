@@ -11,6 +11,19 @@ if($browser['browser']=='IE')
 	$cs->registerCssFile(Yii::app()->request->baseUrl.'/css/uploadify.css');
 }
 
+if (isset($newIdNote))
+{
+	Yii::app()->clientScript->registerScript(__CLASS__.'#review_update_note_effect'.$model->Id, "
+			var options = {};
+			$( '#view_text_note_".$newIdNote."' ).effect( 'shake', options, 1000);
+			function callback() {
+			setTimeout(function() {
+        		$( '#view_text_note_".$newIdNote."' ).removeAttr( 'style' ).hide().fadeIn();
+      		}, 1000 );
+    		};			
+		");
+	
+}
 Yii::app()->clientScript->registerScript(__CLASS__.'#review_update'.$model->Id, "
 function RestoreButtons()
 {

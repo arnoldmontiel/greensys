@@ -198,7 +198,7 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'hostname'=>'http://localhost/',
+		'hostname'=>'http://localhost',
 		'adminEmail'=>'info@gruposmartliving.com',
 		'database_format'=>array(
 					'date'=>'yyyy-MM-dd',
