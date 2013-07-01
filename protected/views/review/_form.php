@@ -91,7 +91,7 @@ $this->widget('ext.processingDialog.processingDialog', array(
 	</div>
 	
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('id'=>'save')); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar',array('id'=>'save')); ?>
 		<?php echo CHtml::submitButton('Cancelar',array('id'=>'btnCancel')); ?>		
 	</div>
 
