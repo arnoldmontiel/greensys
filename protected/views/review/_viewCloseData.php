@@ -306,7 +306,8 @@ $isOwner = User::isOwnerOf($data);
 			{
 				$class = array('class'=>'view-text-note view-text-note-owner');
 			}				
-			
+			$class['id'] = "view_text_note_".$item->Id;
+				
 			echo CHtml::openTag('div',$class);
 				echo CHtml::openTag('div',array('class'=>'view-text-user'));
 					echo CHtml::encode($item->creation_date . ' - '.$item->user->name.' '.$item->user->last_name);

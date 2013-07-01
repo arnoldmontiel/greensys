@@ -204,7 +204,7 @@ class ReviewController extends Controller
 		echo $modelMax->maxReview + 1;
 	}
 	
-	public function actionViewClose($id, $order=null)
+	public function actionViewClose($id, $newIdNote=null,$order=null)
 	{
 		$model=$this->loadModel($id);
 		
@@ -220,7 +220,8 @@ class ReviewController extends Controller
 		}
 		
 		$this->render('viewClose',array(
-					'model'=>$model,					
+					'model'=>$model,
+					'newIdNote'=>$newIdNote,
 		//'order'=>$order,deprecated
 		));
 	}
@@ -932,13 +933,41 @@ class ReviewController extends Controller
 	{
 		$id = $_POST['id'];
 		$closingDescription = $_POST['closingDescription'];
-		
 		$model=$this->loadModel($id);
-		$model->closing_description = $closingDescription;
-		$model->is_open = 0;
-		$model->closing_date = new CDbExpression('NOW()');
-		$model->save();		
-		
+		$transaction =  $model->dbConnection->beginTransaction();
+		try {
+			if($model->is_open==0){ 
+				echo 'Ya esta cerrada';
+				return;
+			}
+			$model->closing_description = $closingDescription;
+			$model->is_open = 0;
+			$model->closing_date = new CDbExpression('NOW()');
+			$model->save();
+			
+			$modelNote = new Note();
+			$modelNote->note = $closingDescription;
+			$modelNote->Id_customer = $model->Id_customer;
+			$modelNote->Id_project = $model->Id_project;
+			$modelNote->username = User::getCurrentUser()->username;
+			$modelNote->Id_user_group_owner = User::getCurrentUserGroup()->Id;
+			$modelNote->in_progress = 0;
+			$modelNote->save();
+			$modelNoteNote = new NoteNote();
+			$modelNoteNote->Id_child = $modelNote->Id;
+			$modelNoteParent = Note::model()->findByAttributes(array('Id_review'=>$model->Id));
+			if(isset($modelNoteParent ))
+			{
+				$modelNoteNote->Id_parent = $modelNoteParent->Id;
+				$modelNoteNote->save();
+			}
+					
+			$transaction->commit();
+			$this->sendMailNote($modelNote->Id);
+				
+		} catch (Exception $e) {
+			$transaction->rollback();
+		}
 	}
 	
 	public function actionAjaxAddNote()
@@ -1385,7 +1414,7 @@ class ReviewController extends Controller
 		$idCustomer = (isset($_POST['idCustomer'])?$_POST['idCustomer']:null);
 		$idProject = (isset($_POST['idProject'])?$_POST['idProject']:null);
 		$idReviewType = (isset($_POST['idReviewType'])?$_POST['idReviewType']:null);
-		$transaction =  Yii::app()->db->beginTransaction();
+		$transaction =  Yii::app()->db2->beginTransaction();
 		try {
 			$this->publicNote($idNote,$idCustomer,$idProject,$idReviewType);
 			$transaction->commit();				

@@ -1,4 +1,18 @@
 <?php
+if (isset($newIdNote))
+{
+	Yii::app()->clientScript->registerScript(__CLASS__.'#review_view_note_effect'.$model->Id, "
+			var options = { easing: 'linear'};
+			$( '#view_text_note_".$newIdNote."' ).effect( 'shake', options, 500);
+			function callback() {
+			setTimeout(function() {
+        		$( '#view_text_note_".$newIdNote."' ).removeAttr( 'style' ).hide().fadeIn();
+      		}, 1000 );
+    		};
+		");
+
+}
+
 $browser = get_browser(null, true);
 
 $cs = Yii::app()->getClientScript();

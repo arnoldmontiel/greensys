@@ -1270,6 +1270,11 @@ if($model->is_open)
 
 <?php
 $this->widget('ext.processingDialog.processingDialog', array(
+		'buttons'=>array('Guardar'),
+		'idDialog'=>'wating',
+));
+
+$this->widget('ext.processingDialog.processingDialog', array(
 		'idDialog'=>'dialogProcessing',
 ));
 
@@ -1295,9 +1300,10 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 								},
 							function(data) {
 								jQuery("#ClosingReviewDialog").dialog( "close" );
+								jQuery("#wating").dialog("close");
 								window.location = "'.ReviewController::createUrl('index',array('Id_customer'=>$model->Id_customer,'Id_project'=>$model->Id_project)) .'";
 							}
-					);
+							).error(function(){jQuery("#wating").dialog("close");});
 	
 			}','Cancelar'=>'js:function(){
 										jQuery("#ClosingReviewDialog").dialog( "close" );

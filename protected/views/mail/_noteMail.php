@@ -10,8 +10,11 @@ echo CHtml::openTag('div');
 		echo $modelNote->note;
 	echo CHtml::closeTag('p');
 echo CHtml::closeTag('div');
+$action = 'review/update';
+if(!$modelReview->is_open)
+	$action = 'review/viewClose';
 
-echo CHtml::link('Ver mas...',Yii::app()->params['hostname'].ReviewController::createUrl('review/update',array('id'=>$modelReview->Id,'newIdNote'=>$modelNote->Id))."#BOTTOM");
+echo CHtml::link('Ver mas...',Yii::app()->params['hostname'].ReviewController::createUrl($action,array('id'=>$modelReview->Id,'newIdNote'=>$modelNote->Id))."#BOTTOM");
 echo CHtml::closeTag('div');
 echo CHtml::openTag('br');
 echo CHtml::openTag('br');
