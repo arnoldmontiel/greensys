@@ -14,8 +14,8 @@ if($browser['browser']=='IE')
 if (isset($newIdNote))
 {
 	Yii::app()->clientScript->registerScript(__CLASS__.'#review_update_note_effect'.$model->Id, "
-			var options = {};
-			$( '#view_text_note_".$newIdNote."' ).effect( 'shake', options, 1000);
+			var options = { easing: 'linear'};
+			$( '#view_text_note_".$newIdNote."' ).effect( 'shake', options, 500);
 			function callback() {
 			setTimeout(function() {
         		$( '#view_text_note_".$newIdNote."' ).removeAttr( 'style' ).hide().fadeIn();

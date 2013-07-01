@@ -12,8 +12,18 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-form-create', "
 		{
 			$('#Review_review').val(data);
 		});
+
+	$.post(
+			'".ReviewController::createUrl('AjaxReviewTypeLongDescription')."',
+		{
+		idReviewType:$(this).val()
+	}).success(
+		function(data)
+		{
+			$('#Review_type_long_description').html(data);
+		});
 	});
-	
+					
 	$('#btnCancel').click(function(){
 		window.location = '".ReviewController::createUrl('index',array('Id_customer'=>$model->Id_customer,'Id_project'=>$model->Id_project))."';
 		return false;
@@ -51,6 +61,20 @@ $this->widget('ext.processingDialog.processingDialog', array(
 		echo $form->dropDownList($model, 'Id_review_type', $reviewTypes);
 		?>
 		<?php echo $form->error($model,'Id_review_type'); ?>
+	</div>
+	<div class="row">
+		<?php echo CHtml::openTag('p',array('id'=>'Review_type_long_description'))?>
+		<?php
+			foreach ($modelReviewType as $item)
+			{
+				if(isset($item))
+				{
+					echo $item['long_description'];
+					break;						
+				}
+			} 
+		?>
+		<?php echo CHtml::closeTag('p'); ?>
 	</div>
 	
 	<div class="row">

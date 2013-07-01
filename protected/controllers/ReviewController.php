@@ -133,6 +133,7 @@ class ReviewController extends Controller
 			{
 				$item['Id'] = $itemReviewType->Id_review_type;
 				$item['description'] = $itemReviewType->reviewType->description;
+				$item['long_description'] = $itemReviewType->reviewType->long_description;
 				$modelReviewType[$itemReviewType->Id_review_type] = $item;
 			}
 		}
@@ -1408,7 +1409,14 @@ class ReviewController extends Controller
 			echo CHtml::closeTag('div');
 		}
 	}
-	
+	public function actionAjaxReviewTypeLongDescription()
+	{
+		if(isset($_POST['idReviewType']))
+		{
+			$reviewType = ReviewType::model()->findByPk($_POST['idReviewType']);
+			echo $reviewType->long_description;
+		}		
+	}
 	public function actionAjaxShareFile()
 	{
 		$Id_google_drive = ($_POST['Id_google_drive'])?$_POST['Id_google_drive']:null;
