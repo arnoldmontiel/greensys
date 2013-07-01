@@ -118,7 +118,7 @@ $this->widget('ext.processingDialog.processingDialog', array(
 	
 	<div class="row">
 		<?php echo $form->labelEx($model,'long_description'); ?>
-		<?php echo $form->textArea($model, 'long_description', array('maxlength' => 512, 'rows' => 6)); ?>
+		<?php echo $form->textArea($model, 'long_description', array('maxlength' => 512, 'rows' => 6,'style'=>'resize:none;width:60%;')); ?>
 		<?php echo $form->error($model,'long_description'); ?>
 	</div>
 	
