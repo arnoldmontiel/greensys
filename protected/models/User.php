@@ -242,7 +242,7 @@ class User extends TapiaActiveRecord
 				'phone_house' => 'Tel&eacute;fono Casa',
 				'phone_mobile' => 'Tel&eacute;fono M&oacute;vil',
 				'description'=>'Observaciones',
-				'send_mail'=>'Recive Correo',
+				'send_mail'=>'Recibe Correo',
 				'refresh_token' => 'Refresh Token',
 				'dni'=>'DNI',
 				'cuil'=>'CUIL',

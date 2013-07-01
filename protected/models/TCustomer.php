@@ -122,7 +122,7 @@ class TCustomer extends TapiaActiveRecord
 			'phone_mobile' => 'Tel&eacute;fono M&oacute;vil',
 			'description'=>'Designaci&oacute;n',
 			'tag_description'=>'Etapa',
-			'send_mail'=>'Recive Correo',
+			'send_mail'=>'Recibe Correo',
 			'contact_description' =>'Designaci&oacute;n',
 		);
 	}
