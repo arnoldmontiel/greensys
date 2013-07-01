@@ -1048,7 +1048,7 @@ if($model->is_open)
 	<div class="review-update-data-info-descr">
 		<?php 
 			if(User::canCreate() && $model->username == User::getCurrentUser()->username) 
-				echo CHtml::activeTextArea($model,'description',array('class'=>'review-update-data-text','rows'=>2, 'cols'=>70)); 
+				echo CHtml::activeTextArea($model,'description',array('class'=>'review-update-data-text','rows'=>2, 'cols'=>70, 'maxlength'=>100)); 
 			else
 			{
 				echo CHtml::openTag('div',array('class'=>'review-update-data-info-descr-text'));				
