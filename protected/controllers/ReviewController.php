@@ -265,6 +265,14 @@ class ReviewController extends Controller
 				 $modelReviewUser->save();
 			}
 		}
+		else
+		{
+			$modelReviewUser = new ReviewUser();
+			$modelReviewUser->read = 1;
+			$modelReviewUser->Id_review = $id;
+			$modelReviewUser->username = User::getCurrentUser()->username;
+			$modelReviewUser->save();
+		}
 		
 		
 		$modelNote = Note::model()->findByAttributes(array('in_progress'=>1, 'Id_review'=>$id, 'username'=>User::getCurrentUser()->username ));
