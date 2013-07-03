@@ -242,7 +242,8 @@ class GreenHelper
 						
 						//BEGIN SUPPLIER-------------------------------------------------
 						$supplier = self::getDataValue($data, '"Vendor"', $arrFields);
-						$modelSupplier = Supplier::model()->findByAttributes(array('business_name'=>$supplier));
+						//$modelSupplier = Supplier::model()->findByAttributes(array('business_name'=>$supplier));
+						$modelSupplier = Supplier::model()->findByAttributes(array('business_name'=>''));
 						if(!isset($modelSupplier))
 						{
 							$modelContact = new Contact();
@@ -252,7 +253,8 @@ class GreenHelper
 							$modelContact->save();
 							
 							$modelSupplier = new Supplier();
-							$modelSupplier->business_name = $manufacturer;
+							//$modelSupplier->business_name = $supplier;
+							$modelSupplier->business_name = '';
 							$modelSupplier->Id_contact = $modelContact->Id;
 							$modelSupplier->save();
 						}
