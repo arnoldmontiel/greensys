@@ -1,4 +1,33 @@
+	<?php // Yii::app()->clientScript->registerCoreScript('jquery');?>
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/js/photoswipe/photoswipe.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/js/photoswipe/styles.css" />
+	
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl."/js/photoswipe/lib/klass.min.js");?>
+	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl."/js/photoswipe/code.photoswipe.jquery-3.0.5.js");?>
+	
 <?php
+
+Yii::app()->clientScript->registerScript(__CLASS__.'#_miniNote'.$modelMiniNote->Id, "
+		
+	$(document).ready(function()
+		{ 
+			var myPhotoSwipe = $('#Gallery_".$modelMiniNote->Id." a').photoSwipe({ enableMouseWheel: false , enableKeyboard: true }); 
+		});
+// function(window, PhotoSwipe){
+		
+// 			document.addEventListener('DOMContentLoaded', function(){
+			
+// 				var
+// 					options = {},
+// 					instance = PhotoSwipe.attach( window.document.querySelectorAll('#Gallery a'), options );
+			
+// 			}, false);
+			
+			
+// 		}(window, window.Code.PhotoSwipe)
+		
+		");
+
 $multimediasCount = count($modelMiniNote->multimedias);
 $isOwner = User::isOwnerOf($modelMiniNote);
 $class = array('class'=>'view-text-note');
@@ -68,11 +97,23 @@ echo CHtml::openTag('div',$class);
 		}
 		if(sizeof($images)>0)
 		{
-			$this->widget('ext.highslide.highslide', array(
-														'images'=>$images,
-														'Id'=>$modelMiniNote->Id,
-														'height'=>$height,
-			));
+			echo CHtml::openTag('ul',array('id'=>'Gallery_'.$modelMiniNote->Id,'class'=>'gallery'));
+			foreach ($images as $image)
+			{
+				echo CHtml::openTag('li');
+				echo CHtml::openTag('a',array('href'=>$image['image']));
+				echo CHtml::openTag('img',array('src'=>$image['small_image'],'alt'=>$image['caption']));
+				echo CHtml::closeTag('a');
+				echo CHtml::closeTag('li');
+				
+			}
+			echo CHtml::closeTag('ul');
+				
+// 			$this->widget('ext.highslide.highslide', array(
+// 														'images'=>$images,
+// 														'Id'=>$modelMiniNote->Id,
+// 														'height'=>$height,
+// 			));
 		}
 		echo CHtml::closeTag('div');
 		/***************************DOCUMENT*********************************************/

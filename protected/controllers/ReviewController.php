@@ -234,6 +234,11 @@ class ReviewController extends Controller
 	public function actionUpdate($id=null, $newIdNote=null ,$order=null)
 	{				
 		$model=$this->loadModel($id);
+		if(!$model->is_open)
+		{
+			$this->actionViewClose($id,$newIdNote,$order);
+			return;
+		}
 		$this->modelTag = $model;
 		
 		$dllReviewTypeUserGroup = ReviewTypeUserGroup::model()->findAllByAttributes(

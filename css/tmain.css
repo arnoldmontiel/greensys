@@ -304,8 +304,6 @@ div.mini-note-attch-zone
 	font-size: 13px;
 	line-height: 18px;
 	padding:18px 10px 10px 10px;
-	border-top: 1px solid white;
-	border-bottom: 1px solid #D2D9E7;
 	background-color: #E5ECFB;
 	position: relative;	
 	display:none;
@@ -1443,7 +1441,7 @@ div.mini-note-attch-link
 }
 div.mini-note-images
 {	
-	width: 50%;
+	width: 100%;
 	margin-top :10px;
 	top:2px;
 	display:inline-block;	

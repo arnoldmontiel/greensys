@@ -2,9 +2,9 @@
 $browser = get_browser(null, true);
 
 $cs = Yii::app()->getClientScript();
-$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/highslide-with-gallery.js',CClientScript::POS_HEAD);
-$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/highslide-exe.js',CClientScript::POS_HEAD);
-$cs->registerCssFile(Yii::app()->request->baseUrl.'/js/highslide.css');
+// $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/highslide-with-gallery.js',CClientScript::POS_HEAD);
+// $cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/highslide-exe.js',CClientScript::POS_HEAD);
+// $cs->registerCssFile(Yii::app()->request->baseUrl.'/js/highslide.css');
 if($browser['browser']=='IE')
 {
 	$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.uploadify-3.1.js',CClientScript::POS_HEAD);
