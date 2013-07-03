@@ -14,7 +14,8 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#_body_scripting'.$Id, "
 	{
 		if(isset($image['image'])&&isset($image['small_image']))
 		{
-			echo CHtml::openTag('li');
+			$class = isset($li_class)?array('class'=>'full-width'):array();
+			echo CHtml::openTag('li', $class );
 			echo CHtml::openTag('a',array('href'=>$image['image']));
 			echo CHtml::openTag('img',array('src'=>$image['small_image'],'alt'=>$image['caption']));
 			echo CHtml::closeTag('a');

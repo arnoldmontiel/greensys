@@ -1,9 +1,4 @@
 <?php
-$cs = Yii::app()->getClientScript();
-$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/highslide-with-gallery.js',CClientScript::POS_HEAD);
-$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/highslide-exe.js',CClientScript::POS_HEAD);
-$cs->registerCssFile(Yii::app()->request->baseUrl.'/js/highslide.css');
-
 Yii::app()->clientScript->registerScript('updateAlbum-review', "
 $('#Album_description').autoResize();
 $('#Album_title').change(function(){
@@ -84,6 +79,7 @@ echo CHtml::imageButton(
 		                                'images/remove.png',
 								array(
 		                                'class'=>'album-action-remove',
+										'style'=>'width:25px;',
 		                                'title'=>'Borrar Album',
 										'id'=>'delete_'.$model->Id,
 		                                	'ajax'=> array(
@@ -145,15 +141,26 @@ echo CHtml::imageButton(
 		 
 			);
 		echo CHtml::openTag('div',array('class'=>'review-update-image'));
-		$this->widget('ext.highslide.highslide', array(
-								'smallImage'=>"images/".$item->file_name_small,
-								'image'=>"images/".$item->file_name,
-								'caption'=>'',
-								'Id'=>$item->Id,
-								'small_width'=>240,
-								'small_height'=>180,
+		$images= array();
+		$image['image']="images/".$item->file_name;
+		$image['small_image']="images/".$item->file_name_small;
+		$image['caption']="";
+		$images[]=$image;
+		$this->widget('ext.photoswipe.photoswipe', array(
+				'images'=>$images,
+				'Id'=>$item->Id,
+				'li_class'=>'full-width'
+		));
 		
-		)); 
+// 		$this->widget('ext.highslide.highslide', array(
+// 								'smallImage'=>"images/".$item->file_name_small,
+// 								'image'=>"images/".$item->file_name,
+// 								'caption'=>'',
+// 								'Id'=>$item->Id,
+// 								'small_width'=>240,
+// 								'small_height'=>180,
+		
+// 		)); 
 		echo CHtml::closeTag('div');
 		echo CHtml::openTag('div',array());
 		echo CHtml::textArea('photo_description',$item->description,

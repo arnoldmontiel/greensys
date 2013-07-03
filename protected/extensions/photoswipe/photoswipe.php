@@ -3,7 +3,7 @@ class photoswipe extends CWidget
 {
 	public $images = array();
 	public $Id;
-	public $smallImage;
+	public $li_class;
 	public function init()
 	{
 		$assetsDir = dirname(__FILE__).'/assets';
@@ -24,6 +24,7 @@ class photoswipe extends CWidget
 			$this->render("body", array(
 						'images'=>$this->images,
 						'Id'=>$this->Id,
+						'li_class'=>$this->li_class,
 			));
 		}
 		

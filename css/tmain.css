@@ -1393,6 +1393,7 @@ input.album-action-remove
 	right:0px;
 	width:25px;
 	cursor: pointer;
+	width: 10px;
 }
 img.wall-action-remove
 {	
@@ -2003,13 +2004,13 @@ textarea.review-white
 }
 div.review-container-album
 {
-	width: 45%;
+	width: 100%;
 	float: left;
 	position: relative;
 }
 div.review-container-single-album
 {
-	width: 90%;
+	width: 100%;
 	float: left;
 	position: relative;
 	display: inline;
@@ -2023,10 +2024,11 @@ div.review-container-documents
 }
 div.review-resources-title
 {
-	width: 100%;
+	margin-left: 1%;
+	width: 97%;
 	height: 40px;
-	margin-bottom: 30px;
-	padding: 18px 0px 0px 0px;
+	margin-bottom: 15px;
+	padding: 18px 1% 0px 0;
 	font-size: 18px;
 	float: left;
 	background-color: #F4F6FB;

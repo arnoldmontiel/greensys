@@ -36,3 +36,7 @@ a { color: #444340; }
 @media (max-width: 480px) {
 .gallery li { float: left; width: 100%; }
 }
+li.full-width
+{
+	width: 100%;
+}

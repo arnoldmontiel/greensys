@@ -1,10 +1,5 @@
 <?php
 $browser = get_browser(null, true);
-$cs = Yii::app()->getClientScript();
-$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/highslide-with-gallery.js',CClientScript::POS_HEAD);
-$cs->registerScriptFile(Yii::app()->request->baseUrl.'/js/highslide-exe.js',CClientScript::POS_HEAD);
-$cs->registerCssFile(Yii::app()->request->baseUrl.'/js/highslide.css');
-
 
 Yii::app()->clientScript->registerScript('viewImageResource', "
 $('#btnBack').click(function(){
@@ -14,10 +9,11 @@ $('#btnBack').click(function(){
 
 ");
 ?>
-<div id="resources-view" class="review-single-view">
 	<div class="review-resources-title">
-		Recursos Multimedia - Imagenes
+		&nbsp&nbspRecursos Multimedia - Imagenes
 	</div>
+
+<div id="resources-view" class="review-single-view">
 	<?php
 	echo CHtml::openTag('div',array('class'=>'review-container-album'));
 		foreach($modelAlbum as $item)
@@ -44,16 +40,11 @@ $('#btnBack').click(function(){
 				$image['image'] = "images/".$multi_item->file_name;
 				$image['small_image'] = "images/".$multi_item->file_name_small;
 				$image['caption'] = $multi_item->description;
-				if($multi_item->height_small>$height)
-				{
-					$height = $multi_item->height_small;
-				}
 				$images[]=$image;
 			}
-			$this->widget('ext.highslide.highslide', array(
+			$this->widget('ext.photoswipe.photoswipe', array(
 											'images'=>$images,
-											'Id'=>$item->Id,
-											'height'=>$height,
+											'Id'=>$item->Id
 			));
 						
 			echo CHtml::openTag('div',array('style'=>'margin-top:10px;font-weight:bold;'));
