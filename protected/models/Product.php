@@ -65,6 +65,7 @@
  * @property string $output_signals
  * @property string $output_labels
  * @property string $import_code
+ * @property integer $verified
  * 
  * The followings are the available model relations:
  * @property BudgetItem[] $budgetItems
@@ -143,7 +144,7 @@ class Product extends ModelAudit
 		// will receive user inputs.
 		return array(
 			array('Id_brand, Id_category, Id_nomenclator, Id_product_type, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, Id_category, Id_sub_category', 'required'),
-			array('Id_volts,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, power, current, need_rack, unit_rack, unit_fan, from_dtools', 'numerical', 'integerOnly'=>true),
+			array('Id_volts,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, power, current, need_rack, unit_rack, unit_fan, from_dtools, verified', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier, short_description, part_number, url, tags, 
 				accounting_item_name, summarize, sales_tax, labor_sales_tax, dispersion, bulk_wire', 'length', 'max'=>255),
 			array('code, code_supplier, color, other', 'length', 'max'=>45),
@@ -152,7 +153,7 @@ class Product extends ModelAudit
 			array('Id_volts, time_instalation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, Id_sub_category', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_brand, Id_category, Id_nomenclator, Id_product_type, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color, other, Id_category, power, current, need_rack, unit_rack, from_dtools', 'safe', 'on'=>'search'),
+			array('Id, Id_brand, Id_category, Id_nomenclator, Id_product_type, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color, other, Id_category, power, current, need_rack, unit_rack, from_dtools, verified', 'safe', 'on'=>'search'),
 		
 			
 		);
