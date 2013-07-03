@@ -1,31 +1,7 @@
-	<?php // Yii::app()->clientScript->registerCoreScript('jquery');?>
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/js/photoswipe/photoswipe.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/js/photoswipe/styles.css" />
-	
-	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl."/js/photoswipe/lib/klass.min.js");?>
-	<?php Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl."/js/photoswipe/code.photoswipe.jquery-3.0.5.js");?>
-	
 <?php
 
 Yii::app()->clientScript->registerScript(__CLASS__.'#_miniNote'.$modelMiniNote->Id, "
-		
-	$(document).ready(function()
-		{ 
-			var myPhotoSwipe = $('#Gallery_".$modelMiniNote->Id." a').photoSwipe({ enableMouseWheel: false , enableKeyboard: true }); 
-		});
-// function(window, PhotoSwipe){
-		
-// 			document.addEventListener('DOMContentLoaded', function(){
-			
-// 				var
-// 					options = {},
-// 					instance = PhotoSwipe.attach( window.document.querySelectorAll('#Gallery a'), options );
-			
-// 			}, false);
-			
-			
-// 		}(window, window.Code.PhotoSwipe)
-		
+				
 		");
 
 $multimediasCount = count($modelMiniNote->multimedias);
@@ -49,7 +25,7 @@ echo CHtml::openTag('div',$class);
 		elseif($multimediasCount > 0)
 		{
 			echo CHtml::image('images/attch.png','',
-			array('id'=>'attch-left-note_'.$modelMiniNote->Id.'_'.$modelMainNote->Id, 'class'=>'action-show-hide-attch', 'title'=>'Adjunto', 'style'=>'width:25px;'));
+			array('id'=>'attch-left-note_'.$modelMiniNote->Id.'_'.$modelMainNote->Id, 'class'=>'action-show-hide-attch', 'title'=>'Adjunto', 'style'=>'width:25px;top:-5px;'));
 		}					
 	echo CHtml::closeTag('div');
 	if($isOwner&&!isset($modelMiniNote->Id_review))//es dueño y es no es nota principal
@@ -89,26 +65,26 @@ echo CHtml::openTag('div',$class);
 			$image['image'] = "images/".$item->file_name;
 			$image['small_image'] = "images/".$item->file_name_small;
 			$image['caption'] = $item->description;
-			if($item->height_small>$height)
-			{
-				$height = $item->height_small;
-			}
 			$images[]=$image;
 		}
 		if(sizeof($images)>0)
 		{
-			echo CHtml::openTag('ul',array('id'=>'Gallery_'.$modelMiniNote->Id,'class'=>'gallery'));
-			foreach ($images as $image)
-			{
-				echo CHtml::openTag('li');
-				echo CHtml::openTag('a',array('href'=>$image['image']));
-				echo CHtml::openTag('img',array('src'=>$image['small_image'],'alt'=>$image['caption']));
-				echo CHtml::closeTag('a');
-				echo CHtml::closeTag('li');
+// 			echo CHtml::openTag('ul',array('id'=>'Gallery_'.$modelMiniNote->Id,'class'=>'gallery'));
+// 			foreach ($images as $image)
+// 			{
+// 				echo CHtml::openTag('li');
+// 				echo CHtml::openTag('a',array('href'=>$image['image']));
+// 				echo CHtml::openTag('img',array('src'=>$image['small_image'],'alt'=>$image['caption']));
+// 				echo CHtml::closeTag('a');
+// 				echo CHtml::closeTag('li');
 				
-			}
-			echo CHtml::closeTag('ul');
-				
+// 			}
+// 			echo CHtml::closeTag('ul');
+			$this->widget('ext.photoswipe.photoswipe', array(
+														'images'=>$images,
+														'Id'=>$modelMiniNote->Id,
+			));
+					
 // 			$this->widget('ext.highslide.highslide', array(
 // 														'images'=>$images,
 // 														'Id'=>$modelMiniNote->Id,

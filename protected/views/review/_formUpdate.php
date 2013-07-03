@@ -347,7 +347,49 @@ function bindEvents(item)
 	});
 	
 	
-	$(item).find('#singleNoteContainer').find('img').each(
+			$('.action-show-hide-attch').unbind('click');
+			$('.action-show-hide-attch').click(function(){
+				$(this).parent().parent().find('.mini-note-attch-zone').toggle();					
+			});
+					
+					
+			$('.wall-action-remove-small').unbind('click');												
+			$('.wall-action-remove-small').click(function(){
+				var id = $(this).attr('id');
+				var idName = id.split('_')[0];								
+				var idNote = id.split('_')[1];
+				var idParent = id.split('_')[2];
+				
+				var getParam = '&id='+idNote+'&idParent='+idParent;
+												
+				$.ajax({
+						type : 'GET',
+						url : '" . ReviewController::createUrl('AjaxRemoveSingleNote') ."' + getParam,
+						beforeSend : function(){
+									if(!confirm('\u00BFSeguro que quiere borrar esta novedad?')) 
+										return false;
+										},
+						success : function(data)
+						{
+							//$('#noteContainer_'+idParent).html(data);
+							//bindEvents($('#noteContainer_'+idParent))
+							if(data==idNote)
+							{
+								$('#view_text_note_'+idNote).toggle('slide',function(){
+									$('#view_text_note_'+idNote).remove();
+									}
+								);
+							}else
+							{
+								alert('La novedad no puede ser borrada ya que tiene novedades posteriores')
+							}	
+						}
+				});					
+			});
+					
+					
+					
+	$(item).find('#singleNoteContaine').find('img').each(
 		function(i, imgItem){
 
 			$(imgItem).unbind('click');												

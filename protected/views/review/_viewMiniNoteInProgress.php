@@ -25,7 +25,7 @@ echo CHtml::openTag('div',$class);
 		elseif($multimediasCount > 0)
 		{
 			echo CHtml::image('images/attch.png','',
-			array('id'=>'attch-left-note_'.$modelMiniNote->Id.'_'.$modelMainNote->Id, 'class'=>'action-show-hide-attch', 'title'=>'Adjunto', 'style'=>'width:25px;'));
+			array('id'=>'attch-left-note_'.$modelMiniNote->Id.'_'.$modelMainNote->Id, 'class'=>'action-show-hide-attch', 'title'=>'Adjunto', 'style'=>'width:25px;top:-5px;'));
 		}					
 	echo CHtml::closeTag('div');
 	if($isOwner)
