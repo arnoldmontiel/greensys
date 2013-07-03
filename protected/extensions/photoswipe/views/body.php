@@ -5,7 +5,7 @@
 Yii::app()->clientScript->registerScript(__CLASS__.'#_body_scripting'.$Id, "
 	$(document).ready(function()
 	{ 
-		var myPhotoSwipe = $('#Gallery_".$Id." a').photoSwipe({ allowUserZoom: true }); 
+		var myPhotoSwipe = $('#Gallery_".$Id." a').photoSwipe({ allowUserZoom: true, allowRotationOnUserZoom: true , loop : false}); 
 	});
 ");
 
