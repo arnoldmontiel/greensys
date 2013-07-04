@@ -69,27 +69,10 @@ echo CHtml::openTag('div',$class);
 		}
 		if(sizeof($images)>0)
 		{
-// 			echo CHtml::openTag('ul',array('id'=>'Gallery_'.$modelMiniNote->Id,'class'=>'gallery'));
-// 			foreach ($images as $image)
-// 			{
-// 				echo CHtml::openTag('li');
-// 				echo CHtml::openTag('a',array('href'=>$image['image']));
-// 				echo CHtml::openTag('img',array('src'=>$image['small_image'],'alt'=>$image['caption']));
-// 				echo CHtml::closeTag('a');
-// 				echo CHtml::closeTag('li');
-				
-// 			}
-// 			echo CHtml::closeTag('ul');
 			$this->widget('ext.photoswipe.photoswipe', array(
 														'images'=>$images,
 														'Id'=>$modelMiniNote->Id,
 			));
-					
-// 			$this->widget('ext.highslide.highslide', array(
-// 														'images'=>$images,
-// 														'Id'=>$modelMiniNote->Id,
-// 														'height'=>$height,
-// 			));
 		}
 		echo CHtml::closeTag('div');
 		/***************************DOCUMENT*********************************************/

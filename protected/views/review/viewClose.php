@@ -8,10 +8,15 @@ if (isset($newIdNote))
 			setTimeout(function() {
         		$( '#view_text_note_".$newIdNote."' ).removeAttr( 'style' ).hide().fadeIn();
       		}, 1000 );
-    		};
+    		};        				
 		");
 
 }
+Yii::app()->clientScript->registerScript(__CLASS__.'#review_view_note'.$model->Id, "
+$('.action-show-hide-attch').click(function(){
+	$(this).parent().parent().find('.mini-note-attch-zone').toggle();
+});
+");
 
 $browser = get_browser(null, true);
 

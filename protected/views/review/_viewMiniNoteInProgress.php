@@ -65,18 +65,13 @@ echo CHtml::openTag('div',$class);
 			$image['image'] = "images/".$item->file_name;
 			$image['small_image'] = "images/".$item->file_name_small;
 			$image['caption'] = $item->description;
-			if($item->height_small>$height)
-			{
-				$height = $item->height_small;
-			}
 			$images[]=$image;
 		}
 		if(sizeof($images)>0)
 		{
-			$this->widget('ext.highslide.highslide', array(
+			$this->widget('ext.photoswipe.photoswipe', array(
 														'images'=>$images,
 														'Id'=>$modelMiniNote->Id,
-														'height'=>$height,
 			));
 		}
 		echo CHtml::closeTag('div');

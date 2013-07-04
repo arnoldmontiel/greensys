@@ -1848,7 +1848,7 @@ div.index-review-single-tag
 	float:left;
     font-size: 12px;
 	background-color: #9AD7F5;
-	max-width: 60px;
+	max-width: 120px;
 	overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;	
@@ -1905,6 +1905,12 @@ div.index-review-close-box
 	display: inline-block;
 	font-size: 12px;
 	background-color: #cccccc;
+}
+div.review-resources-items
+{
+	width:30%;
+	display:inline-block;
+	float: left;	
 }
 
 div.index-review-resource-box
@@ -2379,7 +2385,7 @@ div.review-note-users-names
 }
 div.index-users
 {
-	padding-left:26px;
+	padding-left:1%;
 	display: inline-block;
 	float: left;
 	width: 70%;
@@ -2777,6 +2783,10 @@ div.review-simple-note-container
 		width: 96% !important;
 		margin-left: 1% !important;
 	}
+	div.index-review-single-tag
+	{
+		max-width: 60px;
+	}
 }
 @media (max-width: 640px) {
 	body{padding-left: 0px  !important;padding-right: 0px  !important;} .container,.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container{ width:100% !important; max-width:100% !important;}
@@ -2801,6 +2811,14 @@ div.review-simple-note-container
 		min-width: 500px !important;
 		margin-left: 1% !important;
 		margin-top: 70px;
+	}
+	div.review-resources-items
+	{
+		width: 100%;
+	}	
+	div.index-review-date
+	{
+	display: none;
 	}
 }
 
@@ -2891,7 +2909,6 @@ div.review-simple-note-container
 	{
 		margin-right: 0px;
 	}
-	
 }
 
 @media (max-width: 320px) {
