@@ -13,8 +13,13 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 		'dataProvider'=>$dataProvider,
 		'filter'=>$model,
 		'pager'=>array(
-				'header'         => '',
+				'hiddenPageCssClass'=>'disabled',
+				'selectedPageCssClass'=>'active',
+				'cssFile'=>'css/bootstrap-combined.no-icons.min.css',
+				'header'         => '',				
 				'firstPageLabel' => '&lt;&lt;',
+				'prevPageLabel' => '←',
+				'nextPageLabel' => '→',
 				'lastPageLabel'  => '&gt;&gt;',
 		),
 		
