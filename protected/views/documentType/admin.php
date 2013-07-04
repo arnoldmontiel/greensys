@@ -17,16 +17,19 @@ $this->menu=array(
 )); ?>
 </div><!-- search-form -->
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'document-type-grid',
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
-	'columns'=>array(		
-		'name',
+<?php
+$this->widget('bootstrap.widgets.TbGridView', array(
+		'type'=>'bordered',
+		'dataProvider'=>$model->search(),
+		'filter'=>$model,
+		'template'=>'{items}{pager}',
+		'columns'=>array(		
+		array('name'=>'name', 'htmlOptions'=>array('style'=>'width: 180px')),
 		'description',
 		array(
-			'class'=>'CButtonColumn',
-			'template'=>'{view}{update}',
+			'htmlOptions' => array('nowrap'=>'nowrap'),
+			'class'=>'bootstrap.widgets.TbButtonColumn',	'template'=>'{view}  {update}',	
 		),
 	),
-)); ?>
+)); 
+ ?>

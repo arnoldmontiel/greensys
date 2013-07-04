@@ -7,12 +7,20 @@
 $userGroup = UserGroup::model()->findAll();
 $userGroupList = CHtml::listData($userGroup,'Id','description');
 $dataProvider = $model->search();
-$this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'audit-login-grid',
-	'dataProvider'=>$dataProvider,
-	'filter'=>$model,
+
+$this->widget('bootstrap.widgets.TbGridView', array(
+		'type'=>'bordered',
+		'dataProvider'=>$dataProvider,
+		'filter'=>$model,
+		'pager'=>array(
+				'header'         => '',
+				'firstPageLabel' => '&lt;&lt;',
+				'lastPageLabel'  => '&gt;&gt;',
+		),
+		
+		'template'=>'{items}{pager}',
 	'columns'=>array(
-		'date',
+		array('name'=>'date', 'htmlOptions'=>array('style'=>'width: 140px')),
 		'username',
 		array(
  			'name'=>'email',
@@ -22,6 +30,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
  			'name'=>'user_group_desc',
 			'value'=>'$data->user->userGroup->description',
 			'filter'=>$userGroupList,
+			'htmlOptions' => array('style'=>'min-width: 90px')
 		),
 		array(
  			'name'=>'user_name',
@@ -32,4 +41,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			'value'=>'$data->user->last_name',
 		),
 	),
-)); ?>
+		));
+
+?>

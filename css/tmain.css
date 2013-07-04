@@ -62,7 +62,7 @@ div.reduce
 	width: 75%;
 	padding-top: 20px;	
 	margin-top:40px;
-	margin-left: 12%;
+	margin-left: 0%;
 	float:left;
 <!--
 	padding-left: 0px;	
@@ -75,10 +75,10 @@ div.reduce
 #sidebar
 {
 	
-	width: 10%;
+	max-width: 20%;
 	float: left;
 	display: inline-block;
-	margin-top: 11%;
+	margin-top: 14%;
 	margin-left: 1%;
 }
 
