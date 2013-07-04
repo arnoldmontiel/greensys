@@ -67,8 +67,7 @@
 		</div>
 	</div>
 	<div class="line"></div>
-	<A name="BOTTOM">
-	</A>
+	<section id='BOTTOM'></section>
 	<div id="footer">
 		Copyright &copy; <?php echo date('Y'); ?> by SmartLiving.<br/>
 		All Rights Reserved.<br/>
