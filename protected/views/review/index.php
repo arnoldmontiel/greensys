@@ -430,41 +430,94 @@ function getCheck(checkName)
 ?>
 
 <div class="review-action-area" id="review-action-area">
+<div class="review-action-area-first">
+<?php if(User::canCreate() && $Id_customer == -1):?>
 
-<div  class="review-action-filters" >
-	<?php
-	if(isset($Id_customer)&&$Id_customer !=-1)
-	{
-		$this->widget('zii.widgets.jui.CJuiButton', array(
-				'id'=>'showFilters',
-				'name'=>'submit',
-				'caption'=>'Filtros',
-				'htmlOptions' => array('class'=>'btn btn-navbar'),
-				'onclick'=>new CJavaScriptExpression('function(){
-				$(this).addClass("active");
-				if(jQuery("#filter-panel").is(":hidden"))
-				{
-// 					$( "#content" ).effect( "size", {
-// 					    to: { width: "85%"}
-// 					  }, 1000 ,);
-					$("#filter-panel").toggle("blind",{ direction: "left" },50);
-				}
-				else
-				{
-					$(this).removeClass("active");
-					$("#filter-panel").toggle("blind",{ direction: "left" },50);
-// 					,function(){$( "#content" ).effect( "size", {
-// 										    to: { width: "100%"}
-// 										  }, 1000 );}
-			
+<?php
+	echo CHtml::image('images/expand_blue.png','expandir',array('id'=>'collapserAll','class'=>'collapserAll','title'=>'Expandir/Colapsar todo'));
+	echo CHtml::openTag('div',array('class'=>'review-action-box-btn div-hidden','id'=>'btn-actions-box'));
+		echo CHtml::textField('txtSearchCustomer','',array('Id'=>'txtSearchCustomer'));			
+	echo CHtml::closeTag('div');	
+?>
+<?php endif;?>
+
+	<div  class="review-action-filters" >
+		<?php
+		if(isset($Id_customer)&&$Id_customer !=-1)
+		{
+			$this->widget('zii.widgets.jui.CJuiButton', array(
+					'id'=>'showFilters',
+					'name'=>'submit',
+					'caption'=>'Filtros',
+					'htmlOptions' => array('class'=>'btn btn-navbar'),
+					'onclick'=>new CJavaScriptExpression('function(){
+					$(this).addClass("active");
+					if(jQuery("#filter-panel").is(":hidden"))
+					{
+						$("#filter-panel").toggle("blind",{ direction: "left" },50);
 					}
-				}'
-				),
-		));
+					else
+					{
+						$(this).removeClass("active");
+						$("#filter-panel").toggle("blind",{ direction: "left" },50);
+				
+						}
+					}'
+					),
+			));
+			
+		}
+		?>
+	</div>
+	<?php if(User::getCustomer()):?>
+
+	<div id="customer" class="review-action-back" >
+	
+		<?php	
+		echo CHtml::link(User::getCustomer()->person->name.' '.User::getCustomer()->person->last_name,
+			ReviewController::createUrl('index',array('Id_customer'=>User::getCustomer()->Id)),
+			array('class'=>'index-review-single-link')
+			);
+		 ?>
+	</div>
+	<?php else:?>
+	
+	<div id="customer" class="review-action-back" >
+	
+		<?php
+			echo CHtml::link('Clientes',
+				'',
+				array('class'=>'index-review-single-link', 'id'=>'linkCustomers')
+				);
+		 ?>
 		
-	}
-	?>
+		<?php 
+		$this->widget('ext.processingDialog.processingDialog', array(
+				'buttons'=>array('save'),
+				'idDialog'=>'wating',
+		));
+		?>
+	</div>
+	<?php endif;?>	
 </div>
+<div class="review-action-area-second">
+<?php if(User::canCreate() && isset($Id_customer) && $Id_customer > 0):?>
+
+<?php
+	echo CHtml::openTag('div',array('class'=>'wall-action-box-btn','id'=>'btn-box'));
+		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnCreate'));
+			echo 'Nuevo';
+		echo CHtml::closeTag('div');
+// 		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnAlbum'));
+// 			echo 'Album';
+// 		echo CHtml::closeTag('div');	
+// 		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnDoc'));
+// 			echo 'Documentos';
+// 		echo CHtml::closeTag('div');
+	echo CHtml::closeTag('div');
+?>
+<?php endif;?>
+
 <div id="send-mail" class="send-mail" >
 
 <?php
@@ -580,70 +633,15 @@ function getCheck(checkName)
 	//techReport pop up END
 	?>
 </div>
-<?php if(User::canCreate() && $Id_customer == -1):?>
-
-<?php
-	echo CHtml::image('images/expand_blue.png','expandir',array('id'=>'collapserAll','class'=>'collapserAll','title'=>'Expandir/Colapsar todo'));
-	echo CHtml::openTag('div',array('class'=>'review-action-box-btn div-hidden','id'=>'btn-actions-box'));
-		echo CHtml::textField('txtSearchCustomer','',array('Id'=>'txtSearchCustomer'));			
-	echo CHtml::closeTag('div');	
-?>
-<?php endif;?>
-
-<div id="loading" class="loading-place-holder" >
-</div>
 <?php echo CHtml::hiddenField('Id_customer',$Id_customer,array('id'=>'Id_customer'))?>
 <?php echo CHtml::hiddenField('Id_project',$Id_project,array('id'=>'Id_project'))?>
-<?php if(User::getCustomer()):?>
-
-<div id="customer" class="review-action-back" >
-
-	<?php	
-	echo CHtml::link(User::getCustomer()->person->name.' '.User::getCustomer()->person->last_name,
-		ReviewController::createUrl('index',array('Id_customer'=>User::getCustomer()->Id)),
-		array('class'=>'index-review-single-link')
-		);
-	 ?>
-</div>
-<?php else:?>
-
-<div id="customer" class="review-action-back" >
-
-	<?php
-		echo CHtml::link('Clientes',
-			'',
-			array('class'=>'index-review-single-link', 'id'=>'linkCustomers')
-			);
-	 ?>
-	
-	<?php 
-
-	
-	$this->widget('ext.processingDialog.processingDialog', array(
-			'buttons'=>array('save'),
-			'idDialog'=>'wating',
-	));
-	?>
-</div>
-<?php endif;?>
-<?php if(User::canCreate() && isset($Id_customer) && $Id_customer > 0):?>
-
-<?php
-	echo CHtml::openTag('div',array('class'=>'wall-action-box-btn','id'=>'btn-box'));
-		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnCreate'));
-			echo 'Nuevo';
-		echo CHtml::closeTag('div');
-// 		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnAlbum'));
-// 			echo 'Album';
-// 		echo CHtml::closeTag('div');	
-// 		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnDoc'));
-// 			echo 'Documentos';
-// 		echo CHtml::closeTag('div');
-	echo CHtml::closeTag('div');
-?>
-<?php endif;?>
 
 </div>
+<div id="loading" class="loading-place-holder" >
+</div>
+
+</div>
+
 <!-- *************** ALBUM ******************************* -->
 
 <div id="wall-action-album"  class='wall-action-area-note' style="display:none">

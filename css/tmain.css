@@ -746,7 +746,21 @@ div.review-action-area
 	margin-left: 1%;
 	margin-top: 0px;
 }
-
+div.review-action-area-first
+{
+	position:relative;
+	float: left;
+	display: inline-block;
+	margin-left: 1%;
+	
+}
+div.review-action-area-second
+{
+	position:relative;
+	float: left;
+	display: inline-block;	
+	margin-left: 1%;
+}
 div.wall-action-box-btn
 {
 	width: auto;
@@ -2682,7 +2696,11 @@ img.collapser
 }
 img.collapserAll
 {
-	float:left;width:20px;margin-left:0px;margin-right:5px;margin-top:13px;
+	float:left;
+	width:20px;
+	margin-left:0%;
+	margin-right:5px;
+	margin-top:13px;
 	cursor: pointer;
 }
 
