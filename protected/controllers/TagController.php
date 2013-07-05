@@ -7,21 +7,6 @@ class TagController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/tcolumn2';
-	protected function beforeAction(CAction $action)
-	{
-		$this->menu=array(
-				array('label'=>'Administrar Etapas', 'url'=>array('admin')),
-				array('label'=>'Crear Etapa', 'url'=>array('create')),
-		);
-	
-		if(isset($_GET['id']))
-		{
-			$this->menu[]=array('label'=>'Actualizar Etapa', 'url'=>array('update', 'id'=>$_GET['id']));
-			$this->menu[]=array('label'=>'Ver Etapa', 'url'=>array('view', 'id'=>$_GET['id']));
-		}
-		return parent::beforeAction($action);
-	}
-	
 	/**
 	 * @return array action filters
 	 */
