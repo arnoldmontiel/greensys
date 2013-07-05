@@ -13,45 +13,54 @@ $this->menu=array(
 <h1>Administrar Perfiles</h1>
 
 
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'user-group-grid',
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
-	'columns'=>array(
+<?php 
+$columns =array(
 		'description',
-			array(
-	 			'name'=>"is_administrator",
-	 			'type'=>'raw',
-	 			'value'=>'CHtml::checkBox("is_administrator",$data->is_administrator,array("disabled"=>"disabled"))',
-	 			'filter'=>CHtml::listData(
-					array(
-						array('id'=>'0','value'=>'No'),
-						array('id'=>'1','value'=>'Si')
-					)
-					,'id','value'
-				),
-			),
-			array(
-	 			'name'=>"is_internal",
-	 			'type'=>'raw',
-	 			'value'=>'CHtml::checkBox("is_internal",$data->is_internal,array("disabled"=>"disabled"))',
-	 			'filter'=>CHtml::listData(
-					array(
-						array('id'=>'0','value'=>'No'),
-						array('id'=>'1','value'=>'Si')
-					)
-				,'id','value'
+		array(
+				'name'=>"is_administrator",
+				'type'=>'raw',
+				'value'=>'CHtml::checkBox("is_administrator",$data->is_administrator,array("disabled"=>"disabled"))',
+				'filter'=>CHtml::listData(
+						array(
+								array('id'=>'0','value'=>'No'),
+								array('id'=>'1','value'=>'Si')
+						)
+						,'id','value'
 				),
 		),
 		array(
-			'class'=>'CButtonColumn',
-			'template'=>'{view}{update}',
+				'name'=>"is_internal",
+				'type'=>'raw',
+				'value'=>'CHtml::checkBox("is_internal",$data->is_internal,array("disabled"=>"disabled"))',
+				'filter'=>CHtml::listData(
+						array(
+								array('id'=>'0','value'=>'No'),
+								array('id'=>'1','value'=>'Si')
+						)
+						,'id','value'
+				),
 		),
-	),
-)); ?>
+		array(
+				'class'=>'bootstrap.widgets.TbButtonColumn',
+				'template'=>'{view} {update}',
+		),
+);
+$this->widget('bootstrap.widgets.TbGridView', array(
+		'type'=>'bordered',
+		'dataProvider'=>$model->search(),
+		'filter'=>$model,
+		'template'=>'{items}{pager}',
+		'pager'=>array(
+				'hiddenPageCssClass'=>'disabled',
+				'selectedPageCssClass'=>'active',
+				'cssFile'=>'css/bootstrap-combined.no-icons.min.css',
+				'header'         => '',
+				'firstPageLabel' => '&lt;&lt;',
+				'prevPageLabel' => '←',
+				'nextPageLabel' => '→',
+				'lastPageLabel'  => '&gt;&gt;',
+		),
+		'columns'=>$columns,
+));
+ ?>

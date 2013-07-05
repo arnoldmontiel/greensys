@@ -8,6 +8,21 @@ class TCustomerController extends Controller
 	 */
 	public $layout='//layouts/tcolumn2';
 	
+	protected function beforeAction(CAction $action)
+	{
+		$this->menu=array(
+				array('label'=>'Administrar Clientes', 'url'=>array('admin')),
+				array('label'=>'Crear Cliente', 'url'=>array('create')),
+		);
+
+		if(isset($_GET['id']))
+		{
+			$this->menu[]=array('label'=>'Actualizar Cliente', 'url'=>array('update', 'id'=>$_GET['id']));
+			$this->menu[]=array('label'=>'Ver Cliente', 'url'=>array('view', 'id'=>$_GET['id']));			
+		}
+		return parent::beforeAction($action);
+		
+	}
 	public function getEntityType()
 	{
 		return EntityType::model()->findByAttributes(array('name'=>get_class(Customer::model())))->Id;

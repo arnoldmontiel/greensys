@@ -17,6 +17,14 @@
 		$menu[]='';
 		foreach ($this->menu as $item)
 		{
+			if(CController::getAction()->id==$item['url'][0])
+			{
+				$item['itemOptions']=array('class'=>'active');
+			}
+			elseif(CController::getAction()->id=='index'&&$item['url'][0]=='admin')
+			{
+				$item['itemOptions']=array('class'=>'active');
+			}
 			$menu[] = $item;			
 		}
 		

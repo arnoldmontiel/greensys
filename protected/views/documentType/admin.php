@@ -23,12 +23,21 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 		'dataProvider'=>$model->search(),
 		'filter'=>$model,
 		'template'=>'{items}{pager}',
+		'pager'=>array(
+				'hiddenPageCssClass'=>'disabled',
+				'selectedPageCssClass'=>'active',
+				'cssFile'=>'css/bootstrap-combined.no-icons.min.css',
+				'header'         => '',
+				'firstPageLabel' => '&lt;&lt;',
+				'prevPageLabel' => '←',
+				'nextPageLabel' => '→',
+				'lastPageLabel'  => '&gt;&gt;',
+		),		
 		'columns'=>array(		
 		array('name'=>'name', 'htmlOptions'=>array('style'=>'width: 180px')),
 		'description',
-		array(
-			'htmlOptions' => array('nowrap'=>'nowrap'),
-			'class'=>'bootstrap.widgets.TbButtonColumn',	'template'=>'{view}  {update}',	
+		array(			
+			'class'=>'bootstrap.widgets.TbButtonColumn',	'template'=>'{view} {update}',	
 		),
 	),
 )); 

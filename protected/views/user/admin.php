@@ -12,17 +12,8 @@ $this->menu=array(
 
 <h1>Administrar Usuarios</h1>
 
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
-
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'user-grid',
-	'dataProvider'=>$model->searchAdmin(),
-	'filter'=>$model,
-	'columns'=>array(
+<?php 
+$columns = array(
 		'username',
 		'password',
 		'email',
@@ -33,8 +24,26 @@ $this->menu=array(
 			'value'=>'$data->userGroup->description',
 		),
 		array(
-			'class'=>'CButtonColumn',
-			'template'=>'{view}{update}',
+			'class'=>'bootstrap.widgets.TbButtonColumn',
+			'template'=>'{view} {update}',
 		),
-	),
-)); ?>
+	);
+$this->widget('bootstrap.widgets.TbGridView', array(
+		'type'=>'bordered',
+		'dataProvider'=>$model->searchAdmin(),
+		'filter'=>$model,
+		'template'=>'{items}{pager}',
+		'pager'=>array(
+				'hiddenPageCssClass'=>'disabled',
+				'selectedPageCssClass'=>'active',
+				'cssFile'=>'css/bootstrap-combined.no-icons.min.css',
+				'header'         => '',
+				'firstPageLabel' => '&lt;&lt;',
+				'prevPageLabel' => '←',
+				'nextPageLabel' => '→',
+				'lastPageLabel'  => '&gt;&gt;',
+		),
+		'columns'=>$columns,
+));
+
+?>

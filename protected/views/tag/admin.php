@@ -13,21 +13,29 @@ $this->menu=array(
 
 <h1>Administrar Etapas</h1>
 
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
-
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'tag-grid',
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
-	'columns'=>array(
+<?php
+$columns = array(
 		'description',
 		array(
-			'class'=>'CButtonColumn',
-			'template'=>'{view}{update}',
+				'class'=>'bootstrap.widgets.TbButtonColumn',
+				'template'=>'{view} {update}',
 		),
-	),
-)); ?>
+); 
+$this->widget('bootstrap.widgets.TbGridView', array(
+		'type'=>'bordered',
+		'dataProvider'=>$model->search(),
+		'filter'=>$model,
+		'template'=>'{items}{pager}',
+		'pager'=>array(
+				'hiddenPageCssClass'=>'disabled',
+				'selectedPageCssClass'=>'active',
+				'cssFile'=>'css/bootstrap-combined.no-icons.min.css',
+				'header'         => '',
+				'firstPageLabel' => '&lt;&lt;',
+				'prevPageLabel' => '←',
+				'nextPageLabel' => '→',
+				'lastPageLabel'  => '&gt;&gt;',
+		),
+		'columns'=>$columns,
+));
+?>

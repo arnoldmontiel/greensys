@@ -22,7 +22,6 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 				'nextPageLabel' => '→',
 				'lastPageLabel'  => '&gt;&gt;',
 		),
-		
 		'template'=>'{items}{pager}',
 	'columns'=>array(
 		array('name'=>'date', 'htmlOptions'=>array('style'=>'width: 140px')),

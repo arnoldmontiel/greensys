@@ -12,25 +12,17 @@ $this->menu=array(
 
 <h1>Administrar Formularios</h1>
 
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
-
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'review-type-grid',
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
-	'columns'=>array(
-		'description',
+<?php
+$columns =array(
+		array('name'=>'description','htmlOptions' => array('style'=>'width:180px;')),
 		array(
 		    'name'=>'long_description',
 		    'value'=>'$data->long_description',
-		    'htmlOptions'=>array('width'=>'60%'),
+		    'htmlOptions'=>array(),
 		),
 		array(
  			'name'=>"has_tag_tracking",
+				'htmlOptions' => array('style'=>'width:100px;'),
 	 			'type'=>'raw',
 	 			'value'=>'CHtml::checkBox("has_tag_tracking",$data->has_tag_tracking,array("disabled"=>"disabled"))',
 	 			'filter'=>CHtml::listData(
@@ -42,8 +34,8 @@ $this->menu=array(
 				),
 		),
 		array(
-			'class'=>'CButtonColumn',
-			'template'=>'{view}{update}{delete}',
+			'class'=>'bootstrap.widgets.TbButtonColumn',
+			'template'=>'{view} {update} {delete}',
 			'buttons'=>array(
 			'delete' => array
 			(
@@ -70,8 +62,28 @@ $this->menu=array(
 			)
 			),
 		),
-	),
-)); ?>
+	);
+$this->widget('bootstrap.widgets.TbGridView', array(
+		'id'=>'review-type-grid',
+		'type'=>'bordered',
+		'dataProvider'=>$model->search(),
+		'filter'=>$model,
+		'template'=>'{items}{pager}',
+		'pager'=>array(
+				'hiddenPageCssClass'=>'disabled',
+				'selectedPageCssClass'=>'active',
+				'cssFile'=>'css/bootstrap-combined.no-icons.min.css',
+				'header'         => '',
+				'firstPageLabel' => '&lt;&lt;',
+				'prevPageLabel' => '←',
+				'nextPageLabel' => '→',
+				'lastPageLabel'  => '&gt;&gt;',
+		),
+		'columns'=>$columns,
+));
+
+
+?>
 
 <?php 
 

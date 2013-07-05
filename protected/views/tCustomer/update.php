@@ -3,11 +3,6 @@ $this->breadcrumbs=array(
 	'Customers'=>array('index'),
 	'Update',
 );
-
-$this->menu=array(
-	array('label'=>'Crear Cliente', 'url'=>array('create')),
-	array('label'=>'Administrar Clientes', 'url'=>array('admin')),
-);
 ?>
 
 <h1>Actualizar Cliente</h1>
