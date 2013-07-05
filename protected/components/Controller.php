@@ -65,4 +65,18 @@ class Controller extends SBaseController
 	{
 		return Setting::model()->findByPk('1');
 	}
+	protected function beforeAction(CAction $action)
+	{
+		$this->menu=array(
+				array('label'=>'Administrar', 'url'=>array('admin')),
+				array('label'=>'Crear', 'url'=>array('create')),
+		);
+	
+		if(isset($_GET['id']))
+		{
+			$this->menu[]=array('label'=>'Actualizar', 'url'=>array('update', 'id'=>$_GET['id']));
+			$this->menu[]=array('label'=>'Ver', 'url'=>array('view', 'id'=>$_GET['id']));
+		}
+		return parent::beforeAction($action);
+	}	
 }
