@@ -125,12 +125,32 @@ class AuditLoginController extends Controller
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['AuditLogin']))
 			$model->attributes=$_GET['AuditLogin'];
-
+		
 		$this->render('index',array(
 			'model'=>$model,
 		));
 	}
 
+	public function actionGdrive()
+	{
+		$model=new AuditLogin('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['AuditLogin']))
+			$model->attributes=$_GET['AuditLogin'];
+		$response = GDriveHelper::getFiles();
+		
+		$this->render('gdrive',array(
+					'response'=>$response,
+		));
+	}
+	
+	public function actionAjaxGetFiles()
+	{
+		$id = $_POST['id'];
+		$response = GDriveHelper::getFiles($id);
+		$this->renderPartial('_gdrive',array('response'=>$response));		
+	}
+	
 	/**
 	 * Manages all models.
 	 */
@@ -141,6 +161,7 @@ class AuditLoginController extends Controller
 		if(isset($_GET['AuditLogin']))
 			$model->attributes=$_GET['AuditLogin'];
 
+		GDriveHelper::hola();
 		$this->render('admin',array(
 			'model'=>$model,
 		));

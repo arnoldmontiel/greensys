@@ -3,6 +3,47 @@ class GDriveHelper
 {
 	/**
 	 * 
+	 * Get files (images) and folders from Google Drive
+	 *  @param string $parentId
+	 *  @return array() with GoogleDrive objets
+	 */
+	static public function getFiles($parentId = "root")
+	{
+		$response = array();
+		
+		$condition = "'".$parentId."' in parents and trashed = false";
+		
+		$service = self::getService();
+		
+		$list = $service->files->listFiles(array('q'=>$condition));
+				
+		foreach($list['items'] as $item)
+		{
+			if($item['mimeType'] == "application/vnd.google-apps.folder" || $item['mimeType'] == "image/jpeg")
+			{
+				$modelGoogleDrive = new GoogleDrive();
+				$modelGoogleDrive->Id = $item['id'];
+				$modelGoogleDrive->title = $item['title']; 
+				$modelGoogleDrive->iconLink = $item['iconLink'];
+				$modelGoogleDrive->webContentLink = $item['webContentLink'];
+				$modelGoogleDrive->thumbnailLink = $item['thumbnailLink'];
+				$modelGoogleDrive->mimeType = $item['mimeType'];
+				
+				if($item['mimeType'] == "image/jpeg")
+					$modelGoogleDrive->isImage = true;
+				else
+					$modelGoogleDrive->isImage = false;
+				
+				$response[] = $modelGoogleDrive;
+				
+			}
+		}
+		return $response;
+		
+	}
+	
+	/**
+	 * 
 	 * Insert or update a file in GoogleDrive
 	 * @param TMultimedia $modelMultimedia
 	 * @return Id_google_drive
