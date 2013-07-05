@@ -26,20 +26,3 @@ $this->breadcrumbs=array(
 		),
 	),
 )); ?>
-<br>
-<?php 
-	
-	$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'user-customer-grid',
-		'dataProvider'=>$modelReviewTypeUserGroup->search(),
-		'summaryText'=>'',
-		'columns'=>array(
-				array(
-			 		'name'=>'review_type_desc',
-					'htmlOptions'=>array('style'=>'text-align: center'),
-					'value'=>'$data->reviewType->description',
-				),
-				),
-			)
-		); 
-	?>

@@ -31,26 +31,7 @@
 		<?php echo $form->checkBox($model,'use_technical_docs'); ?>
 		<?php echo $form->error($model,'use_technical_docs'); ?>
 	</div>
-	
-	<div class="row">
-		<div class="check-title">	
-			Tipos de Formularios que podr&aacute; crear
-		</div>
-		<div class="review-types">
-		<?php
-			$checked = array();
-			foreach($model->reviewTypes as $reviewType)
-			{
-				$checked[] = $reviewType->Id;
-			}
 		
-			$modelReviewType = ReviewType::model()->findAll();
-			$checkReviewType = CHtml::listData($modelReviewType, 'Id', 'description');		
-			echo CHtml::checkBoxList('chklist-reviewType', $checked, $checkReviewType);
-		?>
-		</div>
-	</div>
-	
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar'); ?>
 	</div>
