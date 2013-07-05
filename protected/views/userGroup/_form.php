@@ -3,6 +3,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		'id'=>'user-group-form',
 		'type'=>'horizontal',
 		'enableAjaxValidation'=>true,
+		'focus'=>'input:visible:enabled:first'
 )); 
 ?>
 

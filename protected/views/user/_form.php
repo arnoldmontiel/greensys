@@ -1,127 +1,47 @@
 <?php
 Yii::app()->clientScript->registerScript(__CLASS__.'#User-tapia-form', "
 
-if('".$model->isNewRecord."' == '1')
-	$('#User_username').val('');
-	
-$('#User_username').change(function(){
-	$.post(
-			'". UserController::createUrl('AjaxCheckUsername')."',
-			{
-			 	username: $(this).val()
-			 }).success(
-					function(data) 
-					{ 						
-						if(data != '')
-						{
-							$('#errorMsg').text(data);
-							$('#errorMsg').animate({opacity: 'show'},2000);		
-							$('#User_username').val('');				
-						}
-						else{
-							$('#errorMsg').animate({opacity: 'hide'},2000);
-						}
-					}
-			);
-});
 ");
 ?>
-<div class="form">
-
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'user-form',
-	'enableAjaxValidation'=>false,
-)); ?>
-
-	<p class="note">Campos con <span class="required">*</span> son requeridos.</p>	
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'username'); ?>
-		<?php echo $form->textField($model,'username',array('size'=>60,'maxlength'=>128,'disabled'=>$model->isNewRecord ? false : true)); ?>
-		<?php echo $form->error($model,'username'); ?>
-		<p id="errorMsg" class="errorMessage"></p>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($model,'password'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'email'); ?>
-		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($model,'email'); ?>
-	</div>
-
-	<div class="row">
-		<div style="display: inline-block;">
-			<?php echo $form->labelEx($model,'Id_user_group'); ?>
-			<?php 
-				$userGroups = CHtml::listData($ddlUserGroup, 'Id', 'description');
-				echo $form->dropDownList($model,'Id_user_group',$userGroups); ?>
-			<?php echo $form->error($model,'Id_user_group'); ?>
-		</div>
-		<div style="display: inline-block;">
-			<?php echo CHtml::link( 'Agregar Nuevo Perfil','#',array('onclick'=>'jQuery("#CreateUserGroup").dialog("open"); return false;'));?>
-		</div>
-	</div>
+<?php
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+		'id'=>'user-form',
+		'type'=>'horizontal',
+		'enableAjaxValidation'=>true,
+		'focus'=>'input:visible:enabled:first'
+));
+?>
+<fieldset>
+		<?php echo $form->textFieldRow($model,'username',array('size'=>60,'maxlength'=>128,'disabled'=>$model->isNewRecord ? false : true)); ?>
+		<?php echo $form->passwordFieldRow($model,'password',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->textFieldRow($model,'email',array('size'=>60,'maxlength'=>128)); ?>
+		<?php 
+			$userGroups = CHtml::listData($ddlUserGroup, 'Id', 'description');
+			echo $form->dropDownListRow(
+				$model,'Id_user_group',$userGroups,
+					array(
+						'hint'=>CHtml::link( 'Agregar Nuevo Perfil','#',array('onclick'=>'jQuery("#CreateUserGroup").dialog("open"); return false;')
+					)
+				)
+			); 
+		?>
+				
+		<?php echo $form->textFieldRow($model,'name',array('size'=>60,'maxlength'=>100)); ?>
+		<?php echo $form->textFieldRow($model,'last_name',array('size'=>60,'maxlength'=>100)); ?>
+		<?php echo $form->textFieldRow($model,'address',array('size'=>60,'maxlength'=>100)); ?>
+		<?php echo $form->textFieldRow($model,'phone_house',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->textFieldRow($model,'phone_mobile',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->textFieldRow($model,'dni',array('size'=>20,'maxlength'=>20)); ?>
+		<?php echo $form->textFieldRow($model,'cuil',array('size'=>20,'maxlength'=>20)); ?>
+		<?php echo $form->textAreaRow($model,'description',array('size'=>255,'maxlength'=>255,'cols'=>80)); ?>
+</fieldset>			
+	<div class="form-actions">
+        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>$model->isNewRecord ? 'Crear' : 'Guardar')); ?>
+        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Reset')); ?>
+    </div>
 	
-	<div class="row">
-		<?php echo $form->labelEx($model,'name'); ?>
-		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>100)); ?>
-		<?php echo $form->error($model,'name'); ?>
-	</div>
-			
-	<div class="row">
-		<?php echo $form->labelEx($model,'last_name'); ?>
-		<?php echo $form->textField($model,'last_name',array('size'=>60,'maxlength'=>100)); ?>
-		<?php echo $form->error($model,'last_name'); ?>
-	</div>
-	
-	<div class="row">
-		<?php echo $form->labelEx($model,'address'); ?>
-		<?php echo $form->textField($model,'address',array('size'=>60,'maxlength'=>100)); ?>
-		<?php echo $form->error($model,'address'); ?>
-	</div>
-	
-	<div class="row">
-		<?php echo $form->labelEx($model,'phone_house'); ?>
-		<?php echo $form->textField($model,'phone_house',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'phone_house'); ?>
-	</div>
-	
-	<div class="row">
-		<?php echo $form->labelEx($model,'phone_mobile'); ?>
-		<?php echo $form->textField($model,'phone_mobile',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'phone_mobile'); ?>
-	</div>
-	
-	<div class="row">
-		<?php echo $form->labelEx($model,'dni'); ?>
-		<?php echo $form->textField($model,'dni',array('size'=>20,'maxlength'=>20)); ?>
-		<?php echo $form->error($model,'dni'); ?>
-	</div>
-	
-	<div class="row">
-		<?php echo $form->labelEx($model,'cuil'); ?>
-		<?php echo $form->textField($model,'cuil',array('size'=>20,'maxlength'=>20)); ?>
-		<?php echo $form->error($model,'cuil'); ?>
-	</div>
-			
-	<div class="row">
-		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('size'=>255,'maxlength'=>255,'cols'=>80)); ?>
-		<?php echo $form->error($model,'description'); ?>
-	</div>	
-			
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar'); ?>
-	</div>
-
 <?php $this->endWidget(); ?>
 
-</div><!-- form -->
 <?php
 //User Group
 	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(

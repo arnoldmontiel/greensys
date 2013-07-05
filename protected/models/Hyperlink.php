@@ -70,7 +70,7 @@ class Hyperlink extends CActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
-			'description' => 'Description',
+			'description' => 'URL',
 			'Id_entity_type' => 'Id Entity Type',
 			'Id_product' => 'Id Product',
 		);

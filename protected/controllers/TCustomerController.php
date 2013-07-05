@@ -163,7 +163,7 @@ class TCustomerController extends Controller
 		$modelHyperlink = new Hyperlink;
 		
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation(array($modelCustomer,$modelContact,$modelUser,$modelPerson));
 		
 		$modelCustomer->Id_user_group = 3; // cliente
 		
@@ -196,7 +196,11 @@ class TCustomerController extends Controller
 					$valid = false;
 				
 				Hyperlink::model()->deleteAllByAttributes(array('Id_contact'=>$modelCustomer->Id_contact));
-				GreenHelper::saveLinks($_POST['links'], $modelCustomer->Id_contact, $this->getEntityType(),'Id_contact');
+				if(isset($_POST['Hyperlink']))
+				{
+					$links=explode(",", $_POST['Hyperlink']['description']);
+					GreenHelper::saveLinks($links, $modelCustomer->Id_contact, $this->getEntityType(),'Id_contact');
+				}								
 				
 				$transaction->commit();
 				$transactionTapia->commit();
@@ -391,7 +395,7 @@ class TCustomerController extends Controller
 		
 		
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation(array($modelCustomer,$modelContact,$modelUser,$modelPerson));
 		
 		if(isset($_POST['User'])&&isset($_POST['Person'])&&isset($_POST['Contact']))
 		{
@@ -412,7 +416,11 @@ class TCustomerController extends Controller
 				$saveOk &= $modelCustomer->save();
 				
 				Hyperlink::model()->deleteAllByAttributes(array('Id_contact'=>$modelCustomer->Id_contact));
-				GreenHelper::saveLinks($_POST['links'], $modelCustomer->Id_contact, $this->getEntityType(),'Id_contact');
+				if(isset($_POST['Hyperlink']))
+				{
+					$links=explode(",", $_POST['Hyperlink']['description']);					
+					GreenHelper::saveLinks($links, $modelCustomer->Id_contact, $this->getEntityType(),'Id_contact');						
+				}
 
 				$transaction->commit();
 		

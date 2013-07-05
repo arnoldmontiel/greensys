@@ -51,7 +51,7 @@ class UserController extends Controller
 		$model=new User;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		$criteria=new CDbCriteria;
 		$criteria->condition='Id <> 3'; // clients

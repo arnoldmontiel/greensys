@@ -48,6 +48,7 @@ class Contact extends ModelAudit
 		return array(
 			array('description, address', 'length', 'max'=>100),
 			array('telephone_1, description, email', 'required'),
+			array('email', 'unique'),				
 			array('telephone_1, telephone_2, telephone_3, email', 'length', 'max'=>45),
 			array('email', 'email', 'allowEmpty'=>true),
 			// The following rule is used by search().

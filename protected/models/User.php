@@ -196,6 +196,7 @@ class User extends TapiaActiveRecord
 		// will receive user inputs.
 		return array(
 				array('username, password, Id_user_group, email', 'required'),
+				array('username, email', 'unique'),
 				array('Id_user_group, send_mail', 'numerical', 'integerOnly'=>true),
 				array('username, password, email', 'length', 'max'=>128),
 				array('dni,cuil', 'length', 'max'=>20),

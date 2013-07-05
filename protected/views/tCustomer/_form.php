@@ -3,140 +3,77 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#Customer-tapia-form', "
 
 if('".$modelCustomer->isNewRecord."' == '1')
 	$('#User_username').val('');
-	
-$('#User_username').change(function(){
-	$.post(
-			'". TCustomerController::createUrl('AjaxCheckUsername')."',
-			{
-			 	username: $(this).val()
-			 }).success(
-					function(data) 
-					{ 						
-						if(data != '')
-						{
-							$('#errorMsg').text(data);
-							$('#errorMsg').animate({opacity: 'show'},2000);		
-							$('#User_username').val('');				
-						}
-						else{
-							$('#errorMsg').animate({opacity: 'hide'},2000);
-						}
-					}
-			);
-});
+		
 ");
 ?>
-<div class="form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'customer-form',
-	'enableAjaxValidation'=>false,
-)); ?>
+<?php 
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+		'id'=>'customer-form',
+		'type'=>'horizontal',
+		'enableAjaxValidation'=>true,
+		'focus'=>'input:visible:enabled:first'
+));
+?>
+<fieldset>
 
-	<div class="row">
-		<?php echo $form->labelEx($modelContact,'description'); ?>
-		<?php echo $form->textField($modelContact,'description',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($modelContact,'description'); ?>
-	</div>
-	
-	<div class="row">
-		<?php echo $form->labelEx($modelPerson,'name'); ?>
-		<?php echo $form->textField($modelPerson,'name',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($modelPerson,'name'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($modelPerson,'last_name'); ?>
-		<?php echo $form->textField($modelPerson,'last_name',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($modelPerson,'last_name'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($modelPerson,'date_birth'); ?>
- 		<?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-	     // additional javascript options for the date picker plugin
- 		'language'=>'es',
- 		'model'=>$modelPerson, 		
- 		'attribute'=>'date_birth',
- 		'options'=>array(
-	         'showAnim'=>'fold',
- 			 'yearRange'=>'1930',
-	         'changeYear'=>'true'
-	     ),
-	     'htmlOptions'=>array(
-	         'style'=>'height:20px;'
-	    ),
-		));?>
-		<?php echo $form->error($modelPerson,'date_birth'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($modelPerson,'uid'); ?>
-		<?php echo $form->textField($modelPerson,'uid',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($modelPerson,'uid'); ?>
-	</div>	
-
-	<div class="row">
-		<?php echo $form->labelEx($modelContact,'telephone_1'); ?>
-		<?php echo $form->textField($modelContact,'telephone_1',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($modelContact,'telephone_1'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($modelContact,'telephone_2'); ?>
-		<?php echo $form->textField($modelContact,'telephone_2',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($modelContact,'telephone_2'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($modelContact,'telephone_3'); ?>
-		<?php echo $form->textField($modelContact,'telephone_3',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($modelContact,'telephone_3'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($modelContact,'email'); ?>
-		<?php echo $form->textField($modelContact,'email',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($modelContact,'email'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($modelContact,'address'); ?>
-		<?php echo $form->textField($modelContact,'address',array('size'=>60,'maxlength'=>100)); ?>
-		<?php echo $form->error($modelContact,'address'); ?>
-	</div>
-	<?php
-	$hyperLinks = CHtml::listData($modelHyperlink, 'Id','description');
-	
-	$this->widget('ext.linkcontainer.linkcontainer', array(
-		'id'=>'linkContainer',	// default is class="ui-sortable" id="yw0"
-		'items'=>$hyperLinks,
-				));
-	?>
-
-	<div class="row">
-		<?php echo $form->labelEx($modelUser,'username'); ?>
-		<?php echo $form->textField($modelUser,'username',array('size'=>60,'maxlength'=>128,'disabled'=>$modelCustomer->isNewRecord ? false : true)); ?>
-		<?php echo $form->error($modelUser,'username'); ?>
-		<p id="errorMsg" class="errorMessage"></p>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($modelUser,'password'); ?>
-		<?php echo $form->passwordField($modelUser,'password',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($modelUser,'password'); ?>
-	</div>
+		<?php echo $form->textFieldRow($modelContact,'description',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->textFieldRow($modelPerson,'name',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->textFieldRow($modelPerson,'last_name',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->datepickerRow($modelPerson, 'date_birth',
+        array('hint'=>'Click para seleccionar la fecha.',
+        'prepend'=>'<i class="icon-calendar"></i>','options'=>array('language'=>'es','format' => 'dd/mm/yyyy')));?>
+		<?php echo $form->textFieldRow($modelPerson,'uid',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->textFieldRow($modelContact,'telephone_1',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->textFieldRow($modelContact,'telephone_2',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->textFieldRow($modelContact,'telephone_3',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->textFieldRow($modelContact,'email',array('size'=>60,'maxlength'=>128,'prepend'=>'@')); ?>
+		<?php echo $form->textFieldRow($modelContact,'address',array('size'=>60,'maxlength'=>100)); ?>
+		<?php
+			$hyperLinks = array();
+			$hyperDesc="";
+			if(!$modelCustomer->isNewRecord)
+			{
+				$first = true;
+				foreach ($modelHyperlink as $link)
+				{
+					$hyperLinks[] =$link->description;
+					if($first)
+					{
+						$first= false;
+						$hyperDesc.=$link->description;
+					}
+					else 
+					{
+						$hyperDesc.=",".$link->description;
+					}
+				}				
+			}
 		
-	<div class="row">	
-		<?php echo $form->labelEx($modelUser,'send_mail'); ?>
-		<?php echo $form->checkBox($modelUser,'send_mail', array('checked','checked')); ?>
-		<?php echo $form->error($modelUser,'send_mail'); ?>
-	</div>
+		?>
+        <?php
+        $modelHolder = new Hyperlink();
+        $modelHolder->description=$hyperDesc;
+        echo $form->select2Row($modelHolder, 'description',
+        	 array('asDropDownList' => false,
+			'options' => array(
+        	'tags' => $hyperLinks,
+        	'placeholder' => 'Escriba una URL.',
+        	'width' => '40%',
+        	'tokenSeparators' => array(',', ' '),
+			
+        )));
+		?>
+		
+		<?php echo $form->textFieldRow($modelUser,'username',array('size'=>60,'maxlength'=>128,'disabled'=>$modelCustomer->isNewRecord ? false : true)); ?>
+		<?php echo $form->passwordFieldRow($modelUser,'password',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->checkBoxRow($modelUser,'send_mail', array('checked','checked')); ?>
+</fieldset>
 	
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($modelCustomer->isNewRecord ? 'Crear' : 'Guardar'); ?>
-	</div>
+	<div class="form-actions">
+        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>$modelCustomer->isNewRecord ? 'Crear' : 'Guardar')); ?>
+        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Reset')); ?>
+    </div>
 
 <?php $this->endWidget(); ?>
 
-</div><!-- form -->
