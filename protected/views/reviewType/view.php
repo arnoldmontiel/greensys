@@ -32,8 +32,9 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-view', "
 	});
 ");
 ?>
-
-<h1>Vista Formulario</h1>
+<div class="well well-small">
+<h4>Vista Formulario</h4>
+</div>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,

@@ -3,8 +3,9 @@ $this->breadcrumbs=array(
 	'User Groups',
 );
 ?>
-
-<h1>Grupo de usuarios</h1>
+<div class="well well-small">
+<h4>Grupo de usuarios</h4>
+</div>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

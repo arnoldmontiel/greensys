@@ -5,10 +5,9 @@ $this->breadcrumbs=array(
 );
 
 ?>
-
-<h1>Administrar Perfiles</h1>
-
-
+<div class="well well-small">
+<h4>Administrar Perfiles</h4>
+</div>
 
 <?php 
 $columns =array(

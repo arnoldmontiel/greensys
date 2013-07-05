@@ -5,7 +5,8 @@ $this->breadcrumbs=array(
 	'Update',
 );
 ?>
-
-<h1>Actualizar Tipo de Documento</h1>
+<div class="well well-small">
+<h4>Actualizar Tipo de Documento</h4>
+</div>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

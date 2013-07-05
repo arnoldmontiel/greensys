@@ -4,8 +4,9 @@ $this->breadcrumbs=array(
 	'Manage',
 );
 ?>
-
-<h1>Administrar Tipo de Documentos</h1>
+<div class="well well-small">
+<h4>Administrar Tipo de Documentos</h4>
+</div>
 
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(

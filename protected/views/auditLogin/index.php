@@ -1,7 +1,6 @@
-<h1>Auditoria de Logueo</h1>
-
-<div class="search-form" style="display:none">
-</div><!-- search-form -->
+<div class="well well-small">
+<h4>Auditoria de Logueo</h4>
+</div>
 
 <?php 
 $userGroup = UserGroup::model()->findAll();

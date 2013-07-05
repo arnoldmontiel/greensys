@@ -4,8 +4,9 @@ $this->breadcrumbs=array(
 	$model->Id,
 );
 ?>
-
-<h1>Vista Perfil</h1>
+<div class="well well-small">
+<h4>Vista Perfil</h4>
+</div>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,

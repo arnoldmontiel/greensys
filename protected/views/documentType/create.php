@@ -4,7 +4,8 @@ $this->breadcrumbs=array(
 	'Create',
 );
 ?>
-
-<h1>Crear Tipo de Documento</h1>
+<div class="well well-small">
+<h4>Crear Tipo de Documento</h4>
+</div>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

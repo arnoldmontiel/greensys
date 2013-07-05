@@ -5,8 +5,9 @@ $this->breadcrumbs=array(
 );
 
 ?>
-
-<h1>Administrar Formularios</h1>
+<div class="well well-small">
+<h4>Administrar Formularios</h4>
+</div>
 
 <?php
 $columns =array(

@@ -5,8 +5,9 @@ $this->breadcrumbs=array(
 );
 
 ?>
-
-<h1>Vista Etapa</h1>
+<div class="well well-small">
+<h4>Vista Etapa</h4>
+</div>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,

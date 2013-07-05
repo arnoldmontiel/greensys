@@ -4,7 +4,8 @@ $this->breadcrumbs=array(
 	'Create',
 );
 ?>
-
-<h1>Crear Formulario</h1>
+<div class="well well-small">
+<h4>Crear Formulario</h4>
+</div>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

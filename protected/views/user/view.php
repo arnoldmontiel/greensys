@@ -4,8 +4,9 @@ $this->breadcrumbs=array(
 	$model->username,
 );
 ?>
-
-<h1>Vista Usuario</h1>
+<div class="well well-small">
+<h4>Vista Usuario</h4>
+</div>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,

@@ -4,8 +4,9 @@ $this->breadcrumbs=array(
 	'Manage',
 );
 ?>
-
-<h1>Administrar Usuarios</h1>
+<div class="well well-small">
+<h4>Administrar Usuarios</h4>
+</div>
 
 <?php 
 $columns = array(

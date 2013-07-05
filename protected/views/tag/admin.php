@@ -6,8 +6,9 @@ $this->breadcrumbs=array(
 
 
 ?>
-
-<h1>Administrar Etapas</h1>
+<div class="well well-small">
+<h4>Administrar Etapas</h4>
+</div>
 
 <?php
 $columns = array(
