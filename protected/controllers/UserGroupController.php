@@ -56,7 +56,7 @@ class UserGroupController extends Controller
 		$model=new UserGroup;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['UserGroup']))
 		{
@@ -128,9 +128,9 @@ class UserGroupController extends Controller
 			$model->attributes=$_POST['UserGroup'];
 			if($model->save())
 			{
-				ReviewTypeUserGroup::model()->deleteAllByAttributes(array('Id_user_group'=>$model->Id));				
-				if(isset($_POST['chklist-reviewType']))
-					$this->createReviewTypeRelation($model->Id, $_POST['chklist-reviewType']);
+// 				ReviewTypeUserGroup::model()->deleteAllByAttributes(array('Id_user_group'=>$model->Id));				
+// 				if(isset($_POST['chklist-reviewType']))
+// 					$this->createReviewTypeRelation($model->Id, $_POST['chklist-reviewType']);
 				$this->redirect(array('view','id'=>$model->Id));
 			}
 		}

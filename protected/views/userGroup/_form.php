@@ -1,41 +1,23 @@
-<div class="form">
+<div class="">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'user-group-form',
-	'enableAjaxValidation'=>false,
-)); ?>
+<?php
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+		'id'=>'user-group-form',
+		'type'=>'horizontal',
+		'enableAjaxValidation'=>true,
+)); 
+?>
 
-
-	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textField($model,'description',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'description'); ?>
-	</div>
-
-	<div class="row">	
-		<?php echo $form->labelEx($model,'is_internal'); ?>
-		<?php echo $form->checkBox($model,'is_internal'); ?>
-		<?php echo $form->error($model,'is_internal'); ?>
-	</div>
-	
-	<div class="row">	
-		<?php echo $form->labelEx($model,'is_administrator'); ?>
-		<?php echo $form->checkBox($model,'is_administrator'); ?>
-		<?php echo $form->error($model,'is_administrator'); ?>
-	</div>
-	
-	<div class="row">	
-		<?php echo $form->labelEx($model,'use_technical_docs'); ?>
-		<?php echo $form->checkBox($model,'use_technical_docs'); ?>
-		<?php echo $form->error($model,'use_technical_docs'); ?>
-	</div>
-		
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar'); ?>
-	</div>
-
+<fieldset>
+		<?php echo $form->textFieldRow($model,'description',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->checkBoxRow($model,'is_internal'); ?>
+		<?php echo $form->checkBoxRow($model,'is_administrator'); ?>
+		<?php echo $form->checkBoxRow($model,'use_technical_docs'); ?>
+</fieldset>
+	<div class="form-actions">
+        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>$model->isNewRecord ? 'Crear' : 'Guardar')); ?>
+        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Reset')); ?>
+    </div>
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
