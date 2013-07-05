@@ -3,10 +3,6 @@ $this->breadcrumbs=array(
 	'User Groups'=>array('index'),
 	'Create',
 );
-
-$this->menu=array(
-	array('label'=>'Administrar Perfil', 'url'=>array('admin')),
-);
 ?>
 
 <h1>Crear Perfil</h1>

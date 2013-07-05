@@ -4,12 +4,6 @@ $this->breadcrumbs=array(
 	$model->Id,
 );
 
-$this->menu=array(
-	array('label'=>'Crear Formulario', 'url'=>array('create')),
-	array('label'=>'Actualizar Formulario', 'url'=>array('update', 'id'=>$model->Id)),
-	array('label'=>'Administrar Formularios', 'url'=>array('admin')),
-);
-
 Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-view', "
 	
 	$('.btn-group a').click(function(){

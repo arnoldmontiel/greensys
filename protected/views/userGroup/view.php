@@ -3,12 +3,6 @@ $this->breadcrumbs=array(
 	'User Groups'=>array('index'),
 	$model->Id,
 );
-
-$this->menu=array(
-	array('label'=>'Crear Perfil', 'url'=>array('create')),
-	array('label'=>'Actualizar Perfil', 'url'=>array('update', 'id'=>$model->Id)),
-	array('label'=>'Administrar Perfiles', 'url'=>array('admin')),
-);
 ?>
 
 <h1>Vista Perfil</h1>

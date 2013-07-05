@@ -3,10 +3,6 @@ $this->breadcrumbs=array(
 	'Document Types'=>array('index'),
 	'Manage',
 );
-
-$this->menu=array(
-	array('label'=>'Crear Tipo de Documentos', 'url'=>array('create')),
-);
 ?>
 
 <h1>Administrar Tipo de Documentos</h1>

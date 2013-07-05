@@ -3,11 +3,6 @@ $this->breadcrumbs=array(
 	'Users'=>array('index'),
 	'Manage',
 );
-
-$this->menu=array(
-	array('label'=>'Crear Usuario', 'url'=>array('create')),
-);
-
 ?>
 
 <h1>Administrar Usuarios</h1>

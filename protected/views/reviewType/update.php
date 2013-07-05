@@ -4,12 +4,6 @@ $this->breadcrumbs=array(
 	$model->Id=>array('view','id'=>$model->Id),
 	'Update',
 );
-
-$this->menu=array(
-	array('label'=>'Crear Formulario', 'url'=>array('create')),
-	array('label'=>'Ver Formulario', 'url'=>array('view', 'id'=>$model->Id)),
-	array('label'=>'Administrar Formularios', 'url'=>array('admin')),
-);
 ?>
 
 <h1>Actualizar Formulario</h1>

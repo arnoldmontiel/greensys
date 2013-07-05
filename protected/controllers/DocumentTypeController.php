@@ -7,7 +7,21 @@ class DocumentTypeController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/tcolumn2';
-
+	protected function beforeAction(CAction $action)
+	{
+		$this->menu=array(
+				array('label'=>'Administrar T. de Docs', 'url'=>array('admin')),
+				array('label'=>'Crear T. de Doc', 'url'=>array('create')),
+		);
+	
+		if(isset($_GET['id']))
+		{
+			$this->menu[]=array('label'=>'Actualizar T. de Doc', 'url'=>array('update', 'id'=>$_GET['id']));
+			$this->menu[]=array('label'=>'Ver T. de Doc', 'url'=>array('view', 'id'=>$_GET['id']));
+		}
+		return parent::beforeAction($action);
+	}
+	
 	/**
 	 * @return array action filters
 	 */

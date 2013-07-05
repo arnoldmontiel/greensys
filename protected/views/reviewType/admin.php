@@ -4,10 +4,6 @@ $this->breadcrumbs=array(
 	'Manage',
 );
 
-$this->menu=array(
-	array('label'=>'Crear Formulario', 'url'=>array('create')),
-);
-
 ?>
 
 <h1>Administrar Formularios</h1>

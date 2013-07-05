@@ -4,9 +4,6 @@ $this->breadcrumbs=array(
 	'Create',
 );
 
-$this->menu=array(
-	array('label'=>'Administrar Etapas', 'url'=>array('admin')),
-);
 ?>
 
 <h1>Crear Etapas</h1>

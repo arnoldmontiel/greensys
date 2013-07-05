@@ -4,11 +4,6 @@ $this->breadcrumbs=array(
 	$model->Id,
 );
 
-$this->menu=array(
-	array('label'=>'Crear Etapa', 'url'=>array('create')),
-	array('label'=>'Actualizar Etapa', 'url'=>array('update', 'id'=>$model->Id)),
-	array('label'=>'Administrar Etapas', 'url'=>array('admin')),
-);
 ?>
 
 <h1>Vista Etapa</h1>

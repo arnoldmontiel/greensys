@@ -2,11 +2,6 @@
 $this->breadcrumbs=array(
 	'Review Types',
 );
-
-$this->menu=array(
-	array('label'=>'Crear Formulario', 'url'=>array('create')),
-	array('label'=>'Administrar Formularios', 'url'=>array('admin')),
-);
 ?>
 
 <h1>Tipos de Formulario</h1>
