@@ -65,8 +65,9 @@ function getIdProjectSelected()
 
 		",CClientScript::POS_LOAD);
 ?>
-
-<h1>Cliente</h1>
+<div class="well well-small">
+<h4>Cliente</h4>
+</div>
 <div class="left"style="margin-left:1px; width: 48%; ">
 <?php $this->widget('zii.widgets.CDetailView', array(
 		'data'=>$model,

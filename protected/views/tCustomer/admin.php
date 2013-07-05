@@ -5,9 +5,9 @@ $this->breadcrumbs=array(
 );
 
 ?>
-
-<h1>Administrar Clientes</h1>
-
+<div class="well well-small">
+<h4>Administrar Clientes</h4>
+</div>
 
 <?php
 $columns=array(
