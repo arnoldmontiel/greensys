@@ -10,7 +10,7 @@ class AuditLoginController extends Controller
 	protected function beforeAction(CAction $action)
 	{
 		$result = parent::beforeAction($action);
-		$this->menu=array();
+		$this->menu=array(array('label'=>'Administrar', 'url'=>array('index')),);
 		return $result;
 	}
 	
