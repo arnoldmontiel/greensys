@@ -201,7 +201,7 @@ return array(
 		'hostname'=>'http://localhost',
 		'adminEmail'=>'info@gruposmartliving.com',
 		'database_format'=>array(
-					'date'=>'yyyy-MM-dd',
+					'date'=>'yyyy-mm-dd',
 					'time'=>'HH:mm:ss',
 					'dateTimeFormat'=>'{1} {0}',
 		),

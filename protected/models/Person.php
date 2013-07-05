@@ -20,6 +20,11 @@ class Person extends ModelAudit
 		$this->date_birth = Yii::app()->lc->toDatabase($this->date_birth,'date','small','date',null);//date('Y-m-d',strtotime($this->date_validity));
 		return parent::beforeSave();
 	}
+	public function afterFind()
+	{		
+		$this->date_birth = Yii::app()->lc->toLocal($this->date_birth, 'date', 'small');
+		return parent::afterFind();
+	}
 	
 	/**
 	 * Returns the static model of the specified AR class.

@@ -11,7 +11,7 @@ return CMap::mergeArray(
 	require(dirname($GLOBALS['yii']).'/i18n/data/'.basename(__FILE__)),
 	array(
 		'dateFormats' => array(
-			'small'=>'dd/MM/yyyy',          // format used for input
+			'small'=>'dd/mm/yyyy',          // format used for input
 			'calendar_small'=>'dd/mm/yy',   // format used for input with calendar widget
 			'database'=>Yii::app()->params['database_format']['date'], // yyyy-MM-dd
 		),
