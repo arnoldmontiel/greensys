@@ -1,5 +1,3 @@
-<div class="">
-
 <?php
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		'id'=>'user-group-form',
@@ -19,5 +17,3 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Reset')); ?>
     </div>
 <?php $this->endWidget(); ?>
-
-</div><!-- form -->
