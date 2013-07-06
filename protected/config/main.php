@@ -9,7 +9,7 @@ Yii::setPathOfAlias('highcharts', dirname(__FILE__).'/../extensions/highcharts')
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'G r E e N',
-
+	'language' => 'es_ar',
 	// preloading 'log' component
 	'preload'=>array('log','highcharts','bootstrap'),
 
@@ -201,7 +201,7 @@ return array(
 		'hostname'=>'http://localhost',
 		'adminEmail'=>'info@gruposmartliving.com',
 		'database_format'=>array(
-					'date'=>'yyyy-mm-dd',
+					'date'=>'yyyy-MM-dd',
 					'time'=>'HH:mm:ss',
 					'dateTimeFormat'=>'{1} {0}',
 		),

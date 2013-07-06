@@ -11,12 +11,14 @@ return CMap::mergeArray(
 	require(dirname($GLOBALS['yii']).'/i18n/data/'.basename(__FILE__)),
 	array(
 		'dateFormats' => array(
-			'small'=>'dd/mm/yyyy',          // format used for input
-			'calendar_small'=>'dd/mm/yy',   // format used for input with calendar widget
+			'small'=>'dd/MM/yyyy',          // format used for input
+			'medium'=>'dd/MM/yyyy',          // format used for input
+			'calendar_small'=>'dd/mm/yyyy',   // format used for input with calendar widget
 			'database'=>Yii::app()->params['database_format']['date'], // yyyy-MM-dd
 		),
 		'timeFormats' => array(
 			'small'=>'HH:mm:ss',          // format used for input
+			'medium'=>'HH:mm:ss',          // format used for input
 			'database'=>Yii::app()->params['database_format']['time'], // HH:mm:ss
 		)
 	)

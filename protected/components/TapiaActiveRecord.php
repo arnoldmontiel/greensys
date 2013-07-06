@@ -7,7 +7,46 @@ abstract class TapiaActiveRecord extends CActiveRecord
 //     const HAS_MANY='CHasManyRelation';
 //     const MANY_MANY='CManyManyRelation';
 //     const STAT='CStatRelation';
- 
+	protected function beforeSave()
+	{
+		foreach($this->metadata->tableSchema->columns as $columnName => $column){
+			if ($column->dbType == 'date'){
+				$this->$columnName = Yii::app()->lc->toDatabase($this->$columnName,'date','small','date',null);
+			}elseif ($column->dbType == 'datetime'){
+				$this->$columnName = Yii::app()->lc->toDatabase($this->$columnName,'datetime','small','datetime',null);
+			}elseif($column->dbType == 'timestamp'){
+				$this->$columnName = Yii::app()->lc->toDatabase($this->$columnName,'datetime','small','datetime',null);
+			}
+		}
+		return parent::beforeSave();
+	}
+	protected function afterSave()
+	{
+		foreach($this->metadata->tableSchema->columns as $columnName => $column){
+			if ($column->dbType == 'date'){
+				$this->$columnName = Yii::app()->lc->toLocal($this->$columnName, 'date', 'small');
+			}elseif ($column->dbType == 'datetime'){
+				$this->$columnName = Yii::app()->lc->toLocal($this->$columnName, 'datetime', 'small');
+			}elseif ($column->dbType == 'timestamp'){
+				$this->$columnName = Yii::app()->lc->toLocal($this->$columnName, 'datetime', 'small');
+			}
+		}
+		return parent::afterSave();
+	}
+	protected function afterFind()
+	{
+		foreach($this->metadata->tableSchema->columns as $columnName => $column){
+			if ($column->dbType == 'date'){
+				$this->$columnName = Yii::app()->lc->toLocal($this->$columnName, 'date', 'small');
+			}elseif ($column->dbType == 'datetime'){
+				$this->$columnName = Yii::app()->lc->toLocal($this->$columnName, 'datetime', 'small');
+			}elseif ($column->dbType == 'timestamp'){
+				$this->$columnName = Yii::app()->lc->toLocal($this->$columnName, 'datetime', 'small');
+			}
+		}
+		return parent::afterFind();
+	}
+	
     /**
      * @var CDbConnection the default database connection for all active record classes.
      * By default, this is the 'db' application component.

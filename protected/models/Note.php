@@ -29,6 +29,7 @@
  */
 class Note extends TapiaActiveRecord
 {	
+	
 	public function afterSave()
 	{		
 		parent::afterSave();
