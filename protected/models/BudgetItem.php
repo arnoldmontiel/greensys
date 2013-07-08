@@ -70,7 +70,7 @@ class BudgetItem extends ModelAudit
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_product, Id_budget, version_number, Id_area', 'required'),
+			array('Id_product, Id_budget, version_number, Id_area', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type, Id_area, quantity, is_included', 'numerical', 'integerOnly'=>true),
 			array('price', 'length', 'max'=>10),
 			// The following rule is used by search().

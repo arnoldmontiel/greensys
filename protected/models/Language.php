@@ -36,7 +36,7 @@ class Language extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('language, region', 'required'),
+			array('language, region', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('lang', 'length', 'max'=>5),
 			array('language, region', 'length', 'max'=>45),
 			// The following rule is used by search().

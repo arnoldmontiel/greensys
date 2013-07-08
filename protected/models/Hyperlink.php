@@ -40,7 +40,7 @@ class Hyperlink extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_entity_type', 'required'),
+			array('Id_entity_type', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_entity_type, Id_product, Id_contact', 'numerical', 'integerOnly'=>true),
 			array('description', 'length', 'max'=>200),
 			// The following rule is used by search().

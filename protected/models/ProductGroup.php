@@ -47,7 +47,7 @@ class ProductGroup extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_product_parent, Id_product_child', 'required'),
+			array('Id_product_parent, Id_product_child', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_product_parent, Id_product_child, quantity', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

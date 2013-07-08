@@ -39,7 +39,7 @@ class TagReviewType extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_tag, Id_review_type', 'required'),
+			array('Id_tag, Id_review_type', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_tag, Id_review_type', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

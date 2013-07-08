@@ -50,7 +50,7 @@ class AuditLogin extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username', 'required'),
+			array('username', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('username', 'length', 'max'=>128),
 			array('date', 'safe'),
 			// The following rule is used by search().

@@ -45,7 +45,7 @@ class ReviewType extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('description', 'required'),
+			array('description', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('is_internal, is_for_client', 'numerical', 'integerOnly'=>true),
 			array('description', 'length', 'max'=>255),
 			array('long_description', 'length', 'max'=>512),

@@ -1,24 +1,18 @@
-<div class="form">
+<?php 
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+		'id'=>'tag-form',
+		'type'=>'horizontal',
+		'enableAjaxValidation'=>true,
+		'focus'=>'input:visible:enabled:first'
+));
+?>
+<fieldset>
+		<?php echo $form->textFieldRow($model,'description',array('size'=>60,'maxlength'=>255)); ?>
+</fieldset>
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'tag-form',
-	'enableAjaxValidation'=>false,
-)); ?>
-
-	<p class="note">Campos con <span class="required">*</span> son requeridos.</p>
-
-	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textField($model,'description',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'description'); ?>
-	</div>
+	<div class="form-actions">
+        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>$model->isNewRecord ? 'Crear' : 'Guardar')); ?>
+        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Reset')); ?>
+    </div>
 	
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar'); ?>
-	</div>
-
 <?php $this->endWidget(); ?>
-
-</div><!-- form -->

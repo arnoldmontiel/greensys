@@ -44,7 +44,7 @@ class Supplier extends ModelAudit
 		// will receive user inputs.
 		return array(
 			array('business_name', 'length', 'max'=>45),
-			array('business_name', 'required'),
+			array('business_name', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, business_name, telephone_1, email, description', 'safe', 'on'=>'search'),

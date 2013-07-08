@@ -53,7 +53,7 @@ class GNote extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_entity_type', 'required'),
+			array('Id_entity_type', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_entity_type, Id_product_requirement_product_requirement_product_item, Id_product_item_product_requirement_product_item, budget_Id, budget_version_number, Id_tracking, Id_product', 'numerical', 'integerOnly'=>false),
 			array('creation_date','default',
 		              'value'=>new CDbExpression('NOW()'),

@@ -38,7 +38,7 @@ class Nomenclator extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('description', 'length', 'max'=>45),
-			array('description', 'required'),
+			array('description', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 				// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, description', 'safe', 'on'=>'search'),

@@ -54,23 +54,17 @@ class ReviewTypeController extends Controller
 	public function actionCreate()
 	{
 		$model=new ReviewType;
-
+		$model->has_tag_tracking = true;
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['ReviewType']))
 		{
 			$model->attributes=$_POST['ReviewType'];
 			
-			$tagType = 1; // con seguimiento
-			if(isset($_POST['radiolist-tag-type']))
-				$tagType = $_POST['radiolist-tag-type'];
-			
-			$model->has_tag_tracking = ($tagType == 1)?1:0;
-			
 			if($model->save())
 			{				
-				$this->createNewTagRelation($model->Id, $tagType);
+				$this->createNewTagRelation($model->Id, $model->has_tag_tracking);
 				
 				if(isset($_POST['hidden-user-group-chk']))
 					$this->createUserGroupRelation($model->Id, $_POST['hidden-user-group-chk']);
@@ -88,7 +82,7 @@ class ReviewTypeController extends Controller
 	{
 		$tags = null;	
 
-		if($tagType == '1')//con seguimiento	
+		if($tagType)//con seguimiento	
 			$tags = array(1,2,3);
 		else 				
 			$tags = array(4);
@@ -272,7 +266,7 @@ class ReviewTypeController extends Controller
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['ReviewType']))
 		{

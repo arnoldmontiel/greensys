@@ -52,7 +52,7 @@ class DocumentTypeController extends Controller
 		$model=new DocumentType;
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['DocumentType']))
 		{
@@ -76,7 +76,7 @@ class DocumentTypeController extends Controller
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$this->performAjaxValidation($model);
 
 		if(isset($_POST['DocumentType']))
 		{

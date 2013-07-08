@@ -50,7 +50,7 @@ class Album extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_customer, username, Id_user_group_owner', 'required'),
+			array('Id_customer, username, Id_user_group_owner', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_customer, Id_review', 'numerical', 'integerOnly'=>true),
 			array('title, username', 'length', 'max'=>45),
 			array('creation_date, description', 'safe'),

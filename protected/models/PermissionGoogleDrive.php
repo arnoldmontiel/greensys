@@ -41,7 +41,7 @@ class PermissionGoogleDrive extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_permission, username', 'required'),
+			array('Id_permission, username', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_permission, Id_google_drive', 'length', 'max'=>255),
 			array('username', 'length', 'max'=>128),
 			array('role', 'length', 'max'=>100),

@@ -61,7 +61,7 @@ class Project extends ModelAudit
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_customer', 'required'),
+			array('Id_customer', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_customer', 'numerical', 'integerOnly'=>true),
 			array('description', 'length', 'max'=>45),
 			array('address', 'length', 'max'=>100),

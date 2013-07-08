@@ -49,7 +49,7 @@ class ReviewUser extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_review, username', 'required'),
+			array('Id_review, username', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_review, read', 'numerical', 'integerOnly'=>true),
 			array('username', 'length', 'max'=>128),
 			// The following rule is used by search().

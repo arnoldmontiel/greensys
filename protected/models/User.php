@@ -195,7 +195,7 @@ class User extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-				array('username, password, Id_user_group, email', 'required'),
+				array('username, password, Id_user_group, email', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 				array('username, email', 'unique'),
 				array('Id_user_group, send_mail', 'numerical', 'integerOnly'=>true),
 				array('username, password, email', 'length', 'max'=>128),

@@ -37,7 +37,7 @@ class Assignments extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('itemname, userid', 'required'),
+			array('itemname, userid', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('itemname, userid', 'length', 'max'=>64),
 			array('bizrule, data', 'safe'),
 			// The following rule is used by search().

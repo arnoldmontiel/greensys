@@ -39,7 +39,7 @@ class Currency extends ModelAudit
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id, description, short_description', 'required'),
+			array('Id, description, short_description', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id', 'numerical', 'integerOnly'=>true),
 			array('description', 'length', 'max'=>255),
 			array('short_description', 'length', 'max'=>45),

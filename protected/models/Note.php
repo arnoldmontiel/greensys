@@ -97,8 +97,8 @@ class Note extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('note', 'required','on'=>'reviewCreation'),
-			array('Id_customer, username, Id_user_group_owner', 'required'),
+			array('note', 'required','on'=>'reviewCreation','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
+			array('Id_customer, username, Id_user_group_owner', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_customer, Id_review, in_progress, need_confirmation, confirmed, Id_user_group_owner', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('note, creation_date,change_date', 'safe'),

@@ -54,7 +54,7 @@ class PriceListItem extends ModelAudit
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_product, Id_price_list', 'required'),
+			array('Id_product, Id_price_list', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_product, Id_price_list', 'numerical', 'integerOnly'=>true),
 			array('msrp, dealer_cost, profit_rate, maritime_cost,air_cost', 'length', 'max'=>10),
 			// The following rule is used by search().

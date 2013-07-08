@@ -45,7 +45,7 @@ class ShippingParameter extends ModelAudit
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_importer, Id_shipping_parameter_air, Id_shipping_parameter_maritime', 'required'),
+			array('Id_importer, Id_shipping_parameter_air, Id_shipping_parameter_maritime', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_importer, Id_shipping_parameter_air, Id_shipping_parameter_maritime, current', 'numerical', 'integerOnly'=>true),
 			array('description', 'length', 'max'=>45),
 			// The following rule is used by search().

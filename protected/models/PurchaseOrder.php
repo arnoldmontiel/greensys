@@ -67,7 +67,7 @@ class PurchaseOrder extends ModelAudit
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_supplier, Id_purchase_order_state', 'required'),
+			array('Id_supplier, Id_purchase_order_state', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_supplier, Id_shipping_parameter, Id_purchase_order_state, Id_importer, Id_shipping_type', 'numerical', 'integerOnly'=>true),
 			array('code', 'length', 'max'=>45),				
 			array('date_creation', 'safe'),

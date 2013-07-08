@@ -2,7 +2,7 @@
 <?php
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		'id'=>'user-group-form',
-		'type'=>'horizontal',
+		'type'=>'vertical',
 		'enableAjaxValidation'=>true,
 		'action'=>Yii::app()->createUrl("userGroup/ajaxCreate"),
 ));

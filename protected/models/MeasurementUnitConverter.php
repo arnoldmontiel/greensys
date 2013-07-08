@@ -41,7 +41,7 @@ class MeasurementUnitConverter extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id, Id_measurement_from, Id_measurement_to', 'required'),
+			array('Id, Id_measurement_from, Id_measurement_to', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id, Id_measurement_from, Id_measurement_to', 'numerical', 'integerOnly'=>true),
 			array('factor', 'length', 'max'=>20),
 			// The following rule is used by search().

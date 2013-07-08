@@ -95,58 +95,32 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-type-form', "
 
 ?>
 
-<div class="form">
-
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'review-type-form',
-	'enableAjaxValidation'=>false,
-)); ?>
+<?php 
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+		'id'=>'review-type-form',
+		'type'=>'horizontal',
+		'enableAjaxValidation'=>true,
+		'focus'=>'input:visible:enabled:first'
+));
+?>
 <?php
 $this->widget('ext.processingDialog.processingDialog', array(
 		'idDialog'=>'dialogProcessing',
 ));
 ?>	
-	<p class="note">Campos con <span class="required">*</span> son requeridos.</p>
+<fieldset>
 
-	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textField($model,'description',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'description'); ?>
-	</div>
+	<?php echo $form->textFieldRow($model,'description',array('size'=>60,'maxlength'=>255)); ?>
+	<?php echo $form->textAreaRow($model, 'long_description', array('maxlength' => 512, 'rows' => 6,'style'=>'resize:none;width:60%;')); ?>
 	
-	<div class="row">
-		<?php echo $form->labelEx($model,'long_description'); ?>
-		<?php echo $form->textArea($model, 'long_description', array('maxlength' => 512, 'rows' => 6,'style'=>'resize:none;width:60%;')); ?>
-		<?php echo $form->error($model,'long_description'); ?>
-	</div>
-	
-	<?php if($model->isNewRecord): ?>
-	<div class="row">	
-		<div class="check-title">
-			Seleccione el tipo de etapa
-		</div>
-		<div class="review-types">
-		<?php 
-		$tagTypes = array('1'=>'Con Seguimiento','2'=>'Sin Seguimiento');
-		echo CHtml::radioButtonList('radiolist-tag-type', 1, $tagTypes);	 ?>
-		</div>
-	</div>
-	<?php else: ?>
-	<div class="row">
-		<div class="check-title">
-			<?php echo ($model->has_tag_tracking == 1)?'Con Seguimiento':'Sin Seguimiento'; ?>
-		</div>
-	
-	</div>
-	<?php endif; ?>
+	<?php echo $form->checkBoxRow($model, 'has_tag_tracking',array('disabled'=>$model->isNewRecord ? false : true)); ?>
 	<br>
-	<div class="row">
-		<div class="check-title">	
-			Actividades por perfil
-		</div>		
-<?php
+	<div class="control-group success">
+		<label class="control-label" style="color: black;">	
+		Actividades por perfil
+		</label>		
+		<div class="controls">	
+		<?php
 		$modelUserGroup = UserGroup::model()->findAll();
 		$container = array();
 		$checkbox = array('create'=>0,'read'=>0,'feedback'=>0,'mail'=>0,'close'=>0);
@@ -268,12 +242,14 @@ $this->widget('ext.processingDialog.processingDialog', array(
 		}
 		echo CHtml::hiddenField('hidden-user-group-chk', json_encode($container) ,array('id'=>'hidden-user-group-chk'));
 ?>
+		</div>		
 	</div>
+</fieldset>
 	
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar',array('id'=>'btnSave')); ?>
-	</div>
+	<div class="form-actions">
+        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit','id'=>'btnSave', 'type'=>'primary', 'label'=>$model->isNewRecord ? 'Crear' : 'Guardar')); ?>
+        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Reset')); ?>
+    </div>
 
 <?php $this->endWidget(); ?>
 
-</div><!-- form -->

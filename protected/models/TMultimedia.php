@@ -227,7 +227,7 @@ class TMultimedia extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_customer', 'required'),
+			array('Id_customer', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_multimedia_type, Id_customer, Id_album, width, height, width_small, height_small, Id_review, Id_user_group, Id_document_type', 'numerical', 'integerOnly'=>true),
 			array('size, size_small', 'numerical'),
 			array('username', 'length', 'max'=>128),

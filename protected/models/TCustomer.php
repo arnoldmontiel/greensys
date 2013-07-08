@@ -53,7 +53,7 @@ class TCustomer extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id,Id_person, Id_contact', 'required'),
+			array('Id,Id_person, Id_contact', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id, Id_person, Id_contact', 'numerical', 'integerOnly'=>true),		
 			array('username', 'length', 'max'=>128),
 			// The following rule is used by search().

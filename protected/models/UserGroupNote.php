@@ -169,7 +169,7 @@ class UserGroupNote extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_user_group, Id_note, Id_customer', 'required'),
+			array('Id_user_group, Id_note, Id_customer', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('confirmation_date, request_confirmation_date', 'safe'),
 			array('Id_user_group, Id_note, Id_customer, can_read, can_feedback,addressed, need_confirmation, confirmed, declined', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().

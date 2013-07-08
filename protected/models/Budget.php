@@ -80,7 +80,7 @@ class Budget extends ModelAudit
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id, Id_project, Id_budget_state, version_number', 'required'),
+			array('Id, Id_project, Id_budget_state, version_number', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_project, Id_budget_state, version_number', 'numerical', 'integerOnly'=>true),
 			array('percent_discount', 'length', 'max'=>10),
 			array('date_creation, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, totPrice', 'safe'),

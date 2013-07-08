@@ -38,7 +38,7 @@ class ReviewTypeUserGroup extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_review_type, Id_user_group', 'required'),
+			array('Id_review_type, Id_user_group', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_review_type, Id_user_group', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

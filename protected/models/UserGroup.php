@@ -48,7 +48,7 @@ class UserGroup extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('description', 'required'),
+			array('description', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('is_internal, is_administrator, can_read, addressed, need_confirmation, can_feedback, use_technical_docs', 'numerical', 'integerOnly'=>true),
 			array('description', 'length', 'max'=>255),
 			// The following rule is used by search().

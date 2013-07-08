@@ -37,7 +37,7 @@ class UserGroupCustomer extends TapiaActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_user_group, Id_customer, Id_interest_power, Id_project', 'required'),
+			array('Id_user_group, Id_customer, Id_interest_power, Id_project', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_user_group, Id_customer, Id_interest_power, Id_project', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

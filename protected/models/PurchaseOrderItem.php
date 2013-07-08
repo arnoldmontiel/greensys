@@ -48,7 +48,7 @@ class PurchaseOrderItem extends ModelAudit
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_purchase_order, Id_product', 'required'),
+			array('Id_purchase_order, Id_product', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_purchase_order, Id_product,quantity', 'numerical', 'integerOnly'=>true),
 			array('price_shipping, price_purchase,price_total', 'length', 'max'=>10),
 			// The following rule is used by search().
