@@ -4,10 +4,12 @@
 <h4>Vista Tipo de Documento</h4>
 </div>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
+<?php 
+$this->widget('bootstrap.widgets.TbDetailView', array(
+		'data'=>$model,
 	'attributes'=>array(
 		'name',
 		'description',
 	),
-)); ?>
+));
+?>

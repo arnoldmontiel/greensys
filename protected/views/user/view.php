@@ -7,9 +7,9 @@ $this->breadcrumbs=array(
 <div class="well well-small">
 <h4>Vista Usuario</h4>
 </div>
-
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
+<?php 
+$this->widget('bootstrap.widgets.TbDetailView', array(
+		'data'=>$model,
 	'attributes'=>array(
 		array('label'=>$model->getAttributeLabel('username'),
 			'type'=>'raw',
@@ -30,4 +30,6 @@ $this->breadcrumbs=array(
 		'dni',
 		'cuil',		
 	),
-)); ?>
+));
+?>
+
