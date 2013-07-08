@@ -1461,11 +1461,18 @@ img.action-show-saving-note
 
 div.mini-note-attch-link
 {	
-	position:absolute;	
+	position:relative;	
 	top:0px;
 	right:2px;
 	margin-right: 2px;
-	height:25px;		
+	height:auto;	
+	float: right;	
+}
+div.mini-note-attch-link-item
+{
+	position: relative;
+	float: left;
+	width: 190px;
 }
 div.mini-note-images
 {	

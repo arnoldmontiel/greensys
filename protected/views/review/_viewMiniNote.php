@@ -47,19 +47,24 @@ echo CHtml::openTag('div',$class);
 		if($isOwner)
 		{
 			echo CHtml::openTag('div',array('class'=>'mini-note-attch-link'));
-			echo CHtml::link('Adjuntar Documentos',
-				ReviewController::createUrl('AjaxAttachDoc',array('id'=>$modelMainNote->review->Id, 'idNote'=>$modelMiniNote->Id)),
-				array('class'=>'review-text-docs'));
-			echo " - ";
-			echo CHtml::link('Adjuntar Imagenes',
-				ReviewController::createUrl('selectAttach',array('id'=>$modelMainNote->review->Id, 'idNote'=>$modelMiniNote->Id)),
+			echo CHtml::openTag('div',array('class'=>'mini-note-attch-link-item', 'style'=>'width: 140px;'));
+				echo CHtml::link('Adjuntar Documentos',
+					ReviewController::createUrl('AjaxAttachDoc',array('id'=>$modelMainNote->review->Id, 'idNote'=>$modelMiniNote->Id)),
+					array('class'=>'review-text-docs'));
+			echo CHtml::closeTag('div');
+			echo CHtml::openTag('div',array('class'=>'mini-note-attch-link-item', 'style'=>'width: 120px;'));
+				echo CHtml::link('Adjuntar Imagenes',
+					ReviewController::createUrl('selectAttach',array('id'=>$modelMainNote->review->Id, 'idNote'=>$modelMiniNote->Id)),
 				array('class'=>'review-text-images','id'=>'selectAttachImages_'.$modelMiniNote->Id));
-			if(User::useTechnicalDocs()){
-				echo " - ";
-				echo CHtml::link('Adjuntar Documentos Tecnicos',
-				ReviewController::createUrl('AjaxAttachTechDoc',array('id'=>$modelMainNote->review->Id, 'idNote'=>$modelMiniNote->Id)),
-				array('class'=>'review-text-docs'));
-			}
+			echo CHtml::closeTag('div');
+			echo CHtml::openTag('div',array('class'=>'mini-note-attch-link-item'));
+				
+				if(User::useTechnicalDocs()){
+					echo CHtml::link('Adjuntar Documentos Tecnicos',
+					ReviewController::createUrl('AjaxAttachTechDoc',array('id'=>$modelMainNote->review->Id, 'idNote'=>$modelMiniNote->Id)),
+					array('class'=>'review-text-docs'));
+				}
+			echo CHtml::closeTag('div');
 			echo CHtml::closeTag('div');
 		}
 		
