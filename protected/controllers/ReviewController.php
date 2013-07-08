@@ -1739,4 +1739,53 @@ class ReviewController extends Controller
 			}
 		}
 	}	
+	
+	public function actionUploadGDriveImage()
+	{
+		
+		$files = GDriveHelper::getFiles();
+	
+		$path = array('root'=>'Inicio');
+		$this->render('uploadGDriveImage',array(
+						'files'=>$files,
+						'path'=>$path,
+		));
+	}
+	
+	public function actionAjaxGetFiles()
+	{
+		$id = $_POST['id'];
+		$text = $_POST['text'];
+		$path = $_POST['path'];
+	
+		$newPath = array();
+		$jsonPath = json_decode($path);
+		foreach ($jsonPath as $key => $val)
+		{
+			$newPath[$key] = $val;
+		}
+	
+		$newPath[$id] = $text;
+	
+		$files = GDriveHelper::getFiles($id);
+		$this->renderPartial('_uploadGDriveImage',array('files'=>$files,'path'=>$newPath));
+	}
+	
+	public function actionAjaxGetFilesFromPath()
+	{
+		$id = $_POST['id'];
+		$path = $_POST['path'];
+	
+		$newPath = array();
+		$jsonPath = json_decode($path);
+		foreach ($jsonPath as $key => $val)
+		{
+			$newPath[$key] = $val;
+			if($id == $key)
+			break;
+		}
+	
+		$files = GDriveHelper::getFiles($id);
+		$this->renderPartial('_uploadGDriveImage',array('files'=>$files,'path'=>$newPath));
+	}
 }

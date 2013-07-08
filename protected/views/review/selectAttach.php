@@ -16,6 +16,10 @@ $('#btnCancel').click(function(){
 		return false;
 });
 
+$('#btnUploadGdriveImage').click(function(){
+		window.location = '".ReviewController::createUrl('uploadGDriveImage',array('id'=>$id, 'idNote'=>$idNote))."';
+		return false;
+});
 ");
 ?>
  
@@ -28,6 +32,11 @@ $('#btnCancel').click(function(){
 	<div class="row" style="text-align: center;">
 		<div class="review-action-back" id="btnSelectImage">
 		Imagenes ya subidas
+		</div>
+	</div>
+	<div class="row" style="text-align: center;">
+		<div class="review-action-back" id="btnUploadGdriveImage">
+		Subir Imagen desde Google Drive
 		</div>
 	</div>	
 	<div class="row" style="text-align: center;">	
