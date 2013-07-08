@@ -34,11 +34,13 @@ $('#btnUploadGdriveImage').click(function(){
 		Imagenes ya subidas
 		</div>
 	</div>
+	<!-- 
 	<div class="row" style="text-align: center;">
 		<div class="review-action-back" id="btnUploadGdriveImage">
 		Subir Imagen desde Google Drive
 		</div>
-	</div>	
+	</div>
+	 -->	
 	<div class="row" style="text-align: center;">	
 		<?php echo CHtml::button('Cancelar',array('class'=>'wall-action-submit-btn','id'=>'btnCancel',));?>
 	</div>
