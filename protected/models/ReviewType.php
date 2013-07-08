@@ -80,8 +80,8 @@ class ReviewType extends TapiaActiveRecord
 			'long_description' => 'Descripci&oacute;n',
 			'is_internal' => 'Es interno',
 			'is_for_client'=> 'Es para cliente',
-			'with_tag_tracking'=> 'Con Seguimiento',
-			'has_tag_tracking'=> 'Con Seguimiento',
+			'with_tag_tracking'=> 'Con seguimiento',
+			'has_tag_tracking'=> 'Con seguimiento',
 		);
 	}
 
