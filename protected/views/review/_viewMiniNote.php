@@ -1,11 +1,13 @@
 <?php
 
+$link1 ="'<a style=\'cursor: pointer;\' href=\'".ReviewController::createUrl('uploadImages',array('id'=>$modelMainNote->review->Id, 'idNote'=>$modelMiniNote->Id))."\'>Nueva imagen</a>'";
+$link2 ="'<a style=\'cursor: pointer;\' href=\'".ReviewController::createUrl('AjaxattachImage',array('id'=>$modelMainNote->review->Id, 'idNote'=>$modelMiniNote->Id))."\'>Imagenes existentes</a>'"; 
 Yii::app()->clientScript->registerScript(__CLASS__.'#_miniNote'.$modelMiniNote->Id, "
 	$('.review-text-images').click(function(){
  		return false;
  	});
 	var options = 
-		{content:'<a style=\'cursor: pointer;\' href=\'".ReviewController::createUrl('uploadImages',array('id'=>$modelMainNote->review->Id, 'idNote'=>$modelMiniNote->Id))."\'>Nueva imagen</a><br><a style=\'cursor: pointer;\' href=\'".ReviewController::createUrl('AjaxattachImage',array('id'=>$modelMainNote->review->Id, 'idNote'=>$modelMiniNote->Id))."\'>Imagenes existentes</a>'
+		{content:".$link1."+'<br>'+".$link2."
 		,html:true
 		,placement:'bottom'}; 
 	$('#selectAttachImages_".$modelMiniNote->Id."').popover(options);
