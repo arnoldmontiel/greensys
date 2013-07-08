@@ -36,7 +36,6 @@ function getIdProjectSelected()
 	return id_project;
 }
 
-		jQuery.fn.yiiGridView.update('userGroup-customer-grid');
 
 		jQuery('#btnUpdateGrid').click(function(){
 		
@@ -54,11 +53,6 @@ function getIdProjectSelected()
 			}).success(
 				function()
 				{
-		 			jQuery.fn.yiiGridView.update('userGroup-customer-grid', {data: 
-						{				
-							UserGroupCustomer: {Id_project:getIdProjectSelected()}
-						}
-					});			
 				});
 			return false;
 		});
@@ -69,9 +63,9 @@ function getIdProjectSelected()
 <h4>Cliente</h4>
 </div>
 <div class="left"style="margin-left:1px; width: 48%; ">
-<?php $this->widget('zii.widgets.CDetailView', array(
+<?php 
+$this->widget('bootstrap.widgets.TbDetailView', array(
 		'data'=>$model,
-		'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',
 		'attributes'=>array(
 				array('label'=>$modelContact->getAttributeLabel('description'),
 						'type'=>'raw',
@@ -114,7 +108,8 @@ function getIdProjectSelected()
 						'value'=>CHtml::checkBox("send_mail",$modelUser->send_mail,array("disabled"=>"disabled"))
 				),
 		),
-)); ?>
+));
+?>
 </div>
 <div class="right" style="margin-left:1px; width: 48%; ">
 	<?php
@@ -127,9 +122,7 @@ function getIdProjectSelected()
 	));
 	?>
 
-<br>
 </div>
-<br>
 <div class="customer-assign-title"style="float:left">
 		<div style="display: inline-block;">
 			Proyectos
@@ -138,11 +131,13 @@ function getIdProjectSelected()
 			<?php echo CHtml::link( 'Nuevo','#',array('onclick'=>'jQuery("#CreateProject").dialog("open"); return false;'));?>
 		</div>
 </div>
-<?php 
-$this->widget('zii.widgets.grid.CGridView', array(
+<?php
+$this->widget('bootstrap.widgets.TbGridView', array(
 		'id'=>'project-grid',
+		'type'=>'bordered',
 		'dataProvider'=>$modelProject->search(),
 		'filter'=>$modelProject,
+		'template'=>'{items}{pager}',
 		'afterAjaxUpdate'=>'js:function(){$.fn.yiiGridView.update("user-group-grid");}',
 		'selectionChanged'=>'js:function(id){
 			var id_project = jQuery("#project-grid").yiiGridView("getSelection");
@@ -150,76 +145,80 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				id_project = id_project[0];
 			else
 				id_project = "";
-							
-			$.fn.yiiGridView.update("user-customer-grid", {data: 
-				{				
+				
+			$.fn.yiiGridView.update("user-customer-grid", {data:
+				{
 					Project: {Id:id_project}
 				}
 			});
- 			$.fn.yiiGridView.update("user-group-grid", {data: 
-				{				
+ 			$.fn.yiiGridView.update("user-group-grid", {data:
+				{
 					Project: {Id:id_project}
 				}
 			});
- 			$.fn.yiiGridView.update("userGroup-customer-grid", {data: 
-				{				
-					Project: {Id:id_project}
-				}
-			});			
 			if(id_project!="")
-			{			
+			{
 				jQuery(".customer-project-assign-area").animate({opacity: "show"},1000);
 				$("#link-export-employee-list").attr("id-project",id_project);
 			}
 			else
 			{
 				jQuery(".customer-project-assign-area").animate({opacity: "hide"},1000);
-			}			
+			}
 
 		}',
-		'summaryText'=>'',
-		'columns'=>array(
-				array(
-			 		'name'=>'description',
-						'value'=>'$data->description',
-				),
-				array(
-			 		'name'=>'address',
-						'value'=>'$data->address',
-				),
-				array(
-						'class'=>'CButtonColumn',
-						'template'=>'{delete}{update}',
-						'buttons'=>array(
-								'delete' => array(
-										'url'=>'Yii::app()->createUrl("tCustomer/AjaxRemoveProject", array("IdProject"=>$data->Id))',
-										'click'=>'function(){
-																	$.post($(this).attr("href"), function(data) {
-										  							if(data!="")
-										  							{
-																		alert(data);
-																	}else{
-																		$.fn.yiiGridView.update("project-grid");
-																	}
-																	});
-																	return false;
-																}',
-								),'update'=>array(
-									'url'=>'Yii::app()->controller->createUrl("project/AjaxUpdate",array("id"=>$data->primaryKey))',
-									'click'=>"function(){
-										$.post($(this).attr('href')).success(function(data){
-											$('#update-project').html(data);
-											$('#UpdateProject').dialog( 'open' );
-										});
-										return false;
-									}"
-								),
-						),
-				),
-
+		'pager'=>array(
+				'hiddenPageCssClass'=>'disabled',
+				'selectedPageCssClass'=>'active',
+				'cssFile'=>'css/bootstrap-combined.no-icons.min.css',
+				'header'         => '',
+				'firstPageLabel' => '&lt;&lt;',
+				'prevPageLabel' => '←',
+				'nextPageLabel' => '→',
+				'lastPageLabel'  => '&gt;&gt;',
 		),
-)
-);
+		'columns'=>array(
+			array(
+		 		'name'=>'description',
+					'value'=>'$data->description',
+			),
+			array(
+		 		'name'=>'address',
+					'value'=>'$data->address',
+			),
+			array(
+					'class'=>'bootstrap.widgets.TbButtonColumn',
+					'template'=>'{delete} {update}',
+					'buttons'=>array(
+							'delete' => array(
+									'url'=>'Yii::app()->createUrl("tCustomer/AjaxRemoveProject", array("IdProject"=>$data->Id))',
+									'click'=>'function(){
+																$.post($(this).attr("href"), function(data) {
+									  							if(data!="")
+									  							{
+																	alert(data);
+																}else{
+																	$.fn.yiiGridView.update("project-grid");
+																}
+																});
+																return false;
+															}',
+							),'update'=>array(
+								'url'=>'Yii::app()->controller->createUrl("project/AjaxUpdate",array("id"=>$data->primaryKey))',
+								'click'=>"function(){
+									$.post($(this).attr('href')).success(function(data){
+										$('#update-project').html(data);
+										$('#UpdateProject').dialog( 'open' );
+									});
+									return false;
+								}"
+							),
+					),
+			),
+
+	),
+));
+
 ?>
 <div class="customer-project-assign-area" style="display: none">
 <div class="customer-assign-title">
@@ -257,7 +256,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	)); ?>
 	</div>
 </div>
-<br>
+
 <div id="customer-assign-area" style="display: none">
 
 <div class="customer-assign-title">
@@ -285,18 +284,29 @@ echo CHtml::button('Nuevo Usuario', array('class'=>'customer-new-user',
 	$creteria->addNotInCondition('Id', array('1','3'));
 	$userGroup = UserGroup::model()->findAll($creteria);
 	$userGroupList = CHtml::listData($userGroup,'Id','description');
-	$this->widget('zii.widgets.grid.CGridView', array(
+	$this->widget('bootstrap.widgets.TbGridView', array(
 			'id'=>'user-group-grid',
+			'type'=>'bordered',
 			'dataProvider'=>$modelUserGrid->searchUnassigned(),
 			'filter'=>$modelUserGrid,
-			'summaryText'=>'',
-			'selectionChanged'=>'js:function(id){
+			'template'=>'{items}{pager}',
+			'pager'=>array(
+					'hiddenPageCssClass'=>'disabled',
+					'selectedPageCssClass'=>'active',
+					'cssFile'=>'css/bootstrap-combined.no-icons.min.css',
+					'header'         => '',
+					'firstPageLabel' => '&lt;&lt;',
+					'prevPageLabel' => '←',
+					'nextPageLabel' => '→',
+					'lastPageLabel'  => '&gt;&gt;',
+			),
+'selectionChanged'=>'js:function(id){
 			var id_project = jQuery("#project-grid").yiiGridView("getSelection");
 			if(id_project.length>0)
 				id_project = id_project[0];
 			else
 				id_project = "";
-	
+
 			$.get(	"'.TCustomerController::createUrl('AjaxAddUserCustomer').'",
 			{
 			IdCustomer:'.$model->Id.',
@@ -314,7 +324,7 @@ echo CHtml::button('Nuevo Usuario', array('class'=>'customer-new-user',
 					//data: $(this).serialize()
 					data:{ Project: {Id:id_project}}
 				});
-			
+		
 				$.fn.yiiGridView.update("user-customer-grid", {
 					data:{ Project: {Id:id_project}}
 				});
@@ -327,21 +337,21 @@ echo CHtml::button('Nuevo Usuario', array('class'=>'customer-new-user',
 			$(".messageError").animate({opacity: "hide"},2000);
 });
 }',
-			'columns'=>array(
-				array(
-		 			'name'=>"Id_user_group",
-		 			'type'=>'raw',
-		 			'value'=>'$data->userGroup->description',
-		 			'filter'=>$userGroupList,
-				),
-				'name',
-	 			'last_name',
-					'email',
-					'phone_house',
-					'phone_mobile',
-			),
-	)
-	);
+'columns'=>array(
+		array(
+				'name'=>"Id_user_group",
+				'type'=>'raw',
+				'value'=>'$data->userGroup->description',
+				'filter'=>$userGroupList,
+		),
+		'name',
+		'last_name',
+		'email',
+		'phone_house',
+		'phone_mobile',
+),
+	));
+	
 	?>
 
 
@@ -394,11 +404,22 @@ echo CHtml::button('Nuevo Usuario', array('class'=>'customer-new-user',
 	?>
 </div>
 <?php 
-
-$this->widget('zii.widgets.grid.CGridView', array(
+$this->widget('bootstrap.widgets.TbGridView', array(
 		'id'=>'user-customer-grid',
+		'type'=>'bordered',
 		'dataProvider'=>$modelUserCustomer->search(),
 		'filter'=>$modelUserCustomer,
+		'template'=>'{items}{pager}',
+		'pager'=>array(
+				'hiddenPageCssClass'=>'disabled',
+				'selectedPageCssClass'=>'active',
+				'cssFile'=>'css/bootstrap-combined.no-icons.min.css',
+				'header'         => '',
+				'firstPageLabel' => '&lt;&lt;',
+				'prevPageLabel' => '←',
+				'nextPageLabel' => '→',
+				'lastPageLabel'  => '&gt;&gt;',
+		),
 		'afterAjaxUpdate'=>'js:function(){
 			var id_project = jQuery("#project-grid").yiiGridView("getSelection");
 			if(id_project.length>0)
@@ -412,107 +433,48 @@ $this->widget('zii.widgets.grid.CGridView', array(
 
 			//$.fn.yiiGridView.update("user-group-grid");
 		}',
-		'summaryText'=>'',
-		'columns'=>array(
-				array(
-		 			'name'=>"Id_user_group",
-		 			'type'=>'raw',
-		 			'value'=>'$data->user->userGroup->description',
-		 			'filter'=>$userGroupList,
-				),
-				array(
-			 		'name'=>'name',
-						'value'=>'$data->user->name',
-				),
-				array(
-			 		'name'=>'last_name',
-						'value'=>'$data->user->last_name',
-				),
-				array(
-			 		'name'=>'email',
-						'value'=>'$data->user->email',
-				),
-				array(
-			 		'name'=>'phone_house',
-						'value'=>'$data->user->phone_house',
-				),
-				array(
-			 		'name'=>'phone_mobile',
-						'value'=>'$data->user->phone_mobile',
-				),
-				array(
-						'class'=>'CButtonColumn',
-						'template'=>'{delete}',
-						'buttons'=>array(
-								'delete' => array(
-										'url'=>'Yii::app()->createUrl("tCustomer/AjaxRemoveUserCustomer", array("IdCustomer"=>$data->Id_customer,"username"=>$data->username))',
-								),
+
+'columns'=>array(
+		array(
+				'name'=>"Id_user_group",
+				'type'=>'raw',
+				'value'=>'$data->user->userGroup->description',
+				'filter'=>$userGroupList,
+		),
+		array(
+				'name'=>'name',
+				'value'=>'$data->user->name',
+		),
+		array(
+				'name'=>'last_name',
+				'value'=>'$data->user->last_name',
+		),
+		array(
+				'name'=>'email',
+				'value'=>'$data->user->email',
+		),
+		array(
+				'name'=>'phone_house',
+				'value'=>'$data->user->phone_house',
+		),
+		array(
+				'name'=>'phone_mobile',
+				'value'=>'$data->user->phone_mobile',
+		),
+		array(
+				'class'=>'bootstrap.widgets.TbButtonColumn',
+				'template'=>'{delete}',
+				'buttons'=>array(
+						'delete' => array(
+								'url'=>'Yii::app()->createUrl("tCustomer/AjaxRemoveUserCustomer", array("IdCustomer"=>$data->Id_customer,"username"=>$data->username))',
 						),
 				),
-
 		),
-)
-);
+
+),
+));
 ?>
 
-<div class="customer-assign-title">
-	Permisos por perfil
-	<div class="customer-button-box">
-		<?php echo CHtml::submitButton('Actualizar',array('id'=>'btnUpdateGrid')); ?>
-	</div>
-</div>
-
-<?php 
-
-$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'userGroup-customer-grid',
-		'dataProvider'=>$modelUserGroupCustomer->search(),
-		'summaryText'=>'',
-		'afterAjaxUpdate'=>'function(id, data){
-		$("#userGroup-customer-grid").find("select[name = ddlInterestPower]").each(
-		function(index, item){
-		$(item).change(function(){
-		var id_project = jQuery("#project-grid").yiiGridView("getSelection");
-		if(id_project.length>0)
-			id_project = id_project[0];
-		else
-			id_project = "";
-
-		$.post(
-		"'.TCustomerController::createUrl('AjaxUpdatePermission').'",
-		{
-		idUserGroup: $(this).attr("id"),
-		idInterestPower: $(this).val(),
-		idCustomer: "'.$model->Id.'",
-		idProject: id_project
-}).success(
-		function()
-		{
-
-});
-});
-});
-}',
-		'columns'=>array(
-				array(
-						'name'=>'Perfil',
-						'value'=>'$data->userGroup->description',
-				),
-				array(
-						'name'=>'Interes/Poder',
-						'value'=>'CHtml::dropDownList("ddlInterestPower",
-						$data->Id_interest_power,
-						CHtml::listData(InterestPower::model()->findAll(), "Id", "description"),
-						array(
-						"id"=>$data->Id_user_group)
-				)',
-						'type'=>'raw',
-						'htmlOptions'=>array('style'=>'text-align: center'),
-				),
-		),
-)
-);
-?>
 </div>
 <?php 
 //Project create

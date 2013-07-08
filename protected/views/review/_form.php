@@ -10,7 +10,6 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-form-create', "
 	}).success(
 		function(data)
 		{
-			$('#Review_review').val(data);
 		});
 
 	$.post(
@@ -20,7 +19,7 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-form-create', "
 	}).success(
 		function(data)
 		{
-			$('#Review_type_long_description').html(data);
+			$('#Review_Id_review_type').parent().find('p').html(data);
 		});
 	});
 					
@@ -38,65 +37,42 @@ $this->widget('ext.processingDialog.processingDialog', array(
 ?>
 
 
-<div class="form">
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'review-form',
-	'enableAjaxValidation'=>true,
-	'focus'=>array($model,'description')
-		
-)); ?>
+<?php 
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+		'id'=>'review-form',
+		'type'=>'horizontal',
+		'enableAjaxValidation'=>true,
+		'focus'=>array($model,'Id_review_type') 
+));
 
-	<?php echo $form->errorSummary(array($model,$modelNote)); ?>
-	
-	<div class="row">
-		<?php echo CHtml::label('N&uacute;mero de Revisi&oacute;n', 'Review[review]'); ?>
-		<?php echo $form->textField($model,'review',array('style'=>'width:25px;text-align:center;')); ?>
-		<?php echo $form->error($model,'review'); ?>
-	</div>
+?>
+<fieldset>
+		<?php echo $form->textFieldRow($model,'review',array('style'=>'width:25px;text-align:center;')); ?>
 
-	<div class="row">
-		<?php echo CHtml::label('Tipo', 'Review_Id_review_type'); ?>
-		<?php 
-		$reviewTypes = CHtml::listData($modelReviewType, 'Id', 'description');
-		echo $form->dropDownList($model, 'Id_review_type', $reviewTypes);
-		?>
-		<?php echo $form->error($model,'Id_review_type'); ?>
-	</div>
-	<div class="row">
-		<?php echo CHtml::openTag('p',array('id'=>'Review_type_long_description'))?>
 		<?php
 			foreach ($modelReviewType as $item)
 			{
 				if(isset($item))
 				{
-					echo $item['long_description'];
+					$longDescription= $item['long_description'];
 					break;						
 				}
 			} 
 		?>
-		<?php echo CHtml::closeTag('p'); ?>
-	</div>
+
+		<?php 
+			$reviewTypes = CHtml::listData($modelReviewType, 'Id', 'description');
+			echo $form->dropDownListRow($model, 'Id_review_type', $reviewTypes,array('hint'=>$longDescription));
+		?>
 	
-	<div class="row">
-		<?php echo $form->labelEx($model,'description'); ?>
-		<?php // echo CHtml::label('Asunto', 'Review[description]'); ?>
-		<?php echo $form->textField($model,'description',array('rows'=>1, 'cols'=>140,'maxlength'=>100,'style'=>'resize:none;width:60%;')); ?>
-		<?php echo $form->error($model,'description'); ?>
-	</div>
-	<div class="row-fluid">
-		<?php echo $form->labelEx($modelNote,'note'); ?>
-		<?php //echo $form->label('Nota', 'Note[note]'); ?>
-		<?php echo $form->textArea($modelNote,'note',array('rows'=>10, 'cols'=>100,'style'=>'resize:none;width:97%;')); ?>
-		<?php echo $form->error($modelNote,'note'); ?>
-	</div>
-	
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar',array('id'=>'save')); ?>
-		<?php echo CHtml::submitButton('Cancelar',array('id'=>'btnCancel')); ?>		
+		<?php echo $form->textFieldRow($model,'description',array('rows'=>1, 'cols'=>140,'maxlength'=>100,'style'=>'resize:none;width:60%;')); ?>
+		<?php echo $form->textAreaRow($modelNote,'note',array('rows'=>10, 'cols'=>100,'style'=>'resize:none;width:97%;')); ?>
+</fieldset>
+		
+	<div class="form-actions">
+        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>$model->isNewRecord ? 'Crear' : 'Guardar')); ?>
+        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Reset')); ?>
+        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'Cancel','id'=>'btnCancel', 'label'=>'Cancelar')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
-
-</div><!-- form -->
-<?php 
-?>
