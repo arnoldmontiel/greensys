@@ -242,16 +242,15 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 	<?php echo CHtml::button('Asignar Usuarios',array('id'=>'btn-assign-user',
 				'onclick'=>
 				'
-				if(jQuery(this).val()=="Terminar")
+				jQuery("#customer-assign-area").toggle();
+				if(jQuery("#customer-assign-area").is(":hidden"))
 				{
-				jQuery("#customer-assign-area").animate({opacity: "hide"},100);
-		 	jQuery(this).val("Asignar Usuarios");
-}
+					jQuery(this).val("Asignar Usuarios");
+				}
 				else
 				{
-				jQuery("#customer-assign-area").animate({opacity: "show"},2000);
-		 	jQuery(this).val("Terminar");
-}
+					jQuery(this).val("Terminar");			
+				}
 				return false;',
 	)); ?>
 	</div>
@@ -262,13 +261,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 <div class="customer-assign-title">
 Usuarios Disponibles
 <div class="customer-button-box">
-<?php echo CHtml::button('Terminar',array(
-					'onclick'=>
-					'
-					jQuery("#customer-assign-area").animate({opacity: "hide"},100);
-					jQuery("#btn-assign-user").val("Asignar Usuarios");
-					return false;',
-));
+<?php 
 echo CHtml::button('Nuevo Usuario', array('class'=>'customer-new-user',
 					'onclick'=>'jQuery("#CreateUser").dialog("open"); return false;',
 ));
