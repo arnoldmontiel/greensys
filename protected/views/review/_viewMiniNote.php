@@ -1,8 +1,15 @@
 <?php
 
 Yii::app()->clientScript->registerScript(__CLASS__.'#_miniNote'.$modelMiniNote->Id, "
-				
-		");
+	$('.review-text-images').click(function(){
+ 		return false;
+ 	});
+	var options = 
+		{content:'<a style=\'cursor: pointer;\' href=\'".ReviewController::createUrl('uploadImages',array('id'=>$modelMainNote->review->Id, 'idNote'=>$modelMiniNote->Id))."\'>Nueva imagen</a><br><a style=\'cursor: pointer;\' href=\'".ReviewController::createUrl('AjaxattachImage',array('id'=>$modelMainNote->review->Id, 'idNote'=>$modelMiniNote->Id))."\'>Imagenes existentes</a>'
+		,html:true
+		,placement:'bottom'}; 
+	$('#selectAttachImages_".$modelMiniNote->Id."').popover(options);
+");
 
 $multimediasCount = count($modelMiniNote->multimedias);
 $isOwner = User::isOwnerOf($modelMiniNote);
@@ -44,7 +51,7 @@ echo CHtml::openTag('div',$class);
 			echo " - ";
 			echo CHtml::link('Adjuntar Imagenes',
 				ReviewController::createUrl('selectAttach',array('id'=>$modelMainNote->review->Id, 'idNote'=>$modelMiniNote->Id)),
-				array('class'=>'review-text-docs'));
+				array('class'=>'review-text-images','id'=>'selectAttachImages_'.$modelMiniNote->Id));
 			if(User::useTechnicalDocs()){
 				echo " - ";
 				echo CHtml::link('Adjuntar Documentos Tecnicos',

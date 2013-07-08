@@ -353,6 +353,19 @@ div.review-text-docs
 	margin-top: 0px;
 	text-decoration: none;
 }
+div.review-text-images
+{
+	font-size: 13px;
+	line-height: 18px;
+	position: relative;
+	width: 90%;
+	float:left;
+	margin-left: 0px;
+	margin-bottom: 5px;
+	margin-top: 0px;
+	text-decoration: none;
+}
+
 a.review-text-docs
 {
 	text-decoration: none;
