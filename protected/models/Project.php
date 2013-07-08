@@ -101,9 +101,9 @@ class Project extends ModelAudit
 	{
 		return array(
 			'Id' => 'ID',
-			'Id_customer' => 'Customer',
-			'description' => 'Description',
-			'address' => 'Address',
+			'Id_customer' => 'Cliente',
+			'description' => 'Descripción',
+			'address' => 'Dirección',
 		);
 	}
 
