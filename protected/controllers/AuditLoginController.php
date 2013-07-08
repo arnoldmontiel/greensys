@@ -137,18 +137,50 @@ class AuditLoginController extends Controller
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['AuditLogin']))
 			$model->attributes=$_GET['AuditLogin'];
-		$response = GDriveHelper::getFiles();
+		$files = GDriveHelper::getFiles();
 		
+		$path = array('root'=>'Inicio');
 		$this->render('gdrive',array(
-					'response'=>$response,
+					'files'=>$files,
+					'path'=>$path,
 		));
 	}
 	
 	public function actionAjaxGetFiles()
 	{
 		$id = $_POST['id'];
-		$response = GDriveHelper::getFiles($id);
-		$this->renderPartial('_gdrive',array('response'=>$response));		
+		$text = $_POST['text'];
+		$path = $_POST['path'];
+		
+		$newPath = array();
+		$jsonPath = json_decode($path);		
+		foreach ($jsonPath as $key => $val)
+		{
+			$newPath[$key] = $val;
+		}
+		
+		$newPath[$id] = $text;
+		
+		$files = GDriveHelper::getFiles($id);
+		$this->renderPartial('_gdrive',array('files'=>$files,'path'=>$newPath));		
+	}
+	
+	public function actionAjaxGetFilesFromPath()
+	{
+		$id = $_POST['id'];
+		$path = $_POST['path'];
+		
+		$newPath = array();
+		$jsonPath = json_decode($path);
+		foreach ($jsonPath as $key => $val)
+		{
+			$newPath[$key] = $val;
+			if($id == $key)
+				break;
+		}
+		
+		$files = GDriveHelper::getFiles($id);
+		$this->renderPartial('_gdrive',array('files'=>$files,'path'=>$newPath));
 	}
 	
 	/**
