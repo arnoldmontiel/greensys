@@ -1,6 +1,13 @@
 <?php
 class GDriveHelper
 {
+	static public function getTheService($url)
+	{
+		$request = new Google_HttpRequest($url, 'GET', null, null);
+		$httpRequest = Google_Client::$io->authenticatedRequest($request);
+		return $httpRequest; 
+	}
+	
 	/**
 	 * 
 	 * Get files (images) and folders from Google Drive
@@ -28,9 +35,12 @@ class GDriveHelper
 				$modelGoogleDrive->webContentLink = $item['webContentLink'];
 				$modelGoogleDrive->thumbnailLink = $item['thumbnailLink'];
 				$modelGoogleDrive->mimeType = $item['mimeType'];
+								
 				
-				if($item['mimeType'] == "image/jpeg")
+				if($item['mimeType'] == "image/jpeg"){
 					$modelGoogleDrive->isImage = true;
+					$modelGoogleDrive->downloadUrl = $item['downloadUrl'];
+				}
 				else
 					$modelGoogleDrive->isImage = false;
 				

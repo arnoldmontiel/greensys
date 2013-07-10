@@ -1740,15 +1740,89 @@ class ReviewController extends Controller
 		}
 	}	
 	
-	public function actionUploadGDriveImage()
+	public function actionAjaxGetGDriveImagen()
 	{
+		$selectedImgs = $_POST['selectedImgs'];
+		$idAlbum = $_POST['idAlbum'];
+		$idCustomer = $_POST['idCustomer'];
+		$idProject = $_POST['idProject'];
+		$idNote = $_POST['idNote'];
+		
+		$images = json_decode($selectedImgs);
+		
+		foreach ($images as $key => $imgUrl)
+		{			
+			
+			
+			//$httpRequest = Google_Client::$io->authenticatedRequest($request);
+			$httpRequest = GDriveHelper::getTheService($imgUrl);
+						
+			if ($httpRequest !== false) {
+				//$setting = Setting::getInstance();
+				$file = fopen('images/temp.jpg', 'w');
+				fwrite($file,$httpRequest->getResponseBody());
+				fclose($file);				
+			} else {
+				// an error happened
+			}
+			
+			//$httpRequest->getResponseBody()
+			$file = array('name'=>$key.'.jpg','tmp_name'=>'images/temp.jpg');
+			
+			$modelMultimedia = new TMultimedia;
+				
+			$modelMultimedia->Id_album = $idAlbum;
+			$modelMultimedia->uploadedFile = $file;
+			$modelMultimedia->Id_multimedia_type = 1;
+			$modelMultimedia->Id_customer = $idCustomer;
+			$modelMultimedia->Id_project = $idProject;
+				
+			$modelMultimedia->save();
+			
+			
+			$model = MultimediaNote::model()->findByAttributes(array('Id_note'=>$idNote, 'Id_multimedia'=>$modelMultimedia->Id));
+			if(!isset($model))
+			{
+				$model = new MultimediaNote;
+				$model->Id_note = $idNote;
+				$model->Id_multimedia = $modelMultimedia->Id;
+				$model->save();
+			}
+		}
+	}
+	
+	public function actionUploadGDriveImage($id, $idNote)
+	{
+						
+		$model=$this->loadModel($id);
+		
+		$modelAlbum = Album::model()->findByAttributes(array('Id_customer'=>$model->Id_customer,
+														'Id_project'=>$model->Id_project,
+														'Id_user_group_owner'=>User::getCurrentUserGroup()->Id,
+		));
+		
+		if(!isset($modelAlbum))
+		{
+			$modelAlbum = new Album();
+			$modelAlbum->Id_customer = $model->Id_customer;
+			$modelAlbum->Id_project = $model->Id_project;
+			$modelAlbum->Id_user_group_owner = User::getCurrentUserGroup()->Id;
+			$modelAlbum->username = User::getCurrentUser()->username;
+				
+			$modelAlbum->save();
+				
+		}
 		
 		$files = GDriveHelper::getFiles();
 	
 		$path = array('root'=>'Inicio');
+
 		$this->render('uploadGDriveImage',array(
 						'files'=>$files,
 						'path'=>$path,
+						'model'=>$model,
+						'idNote'=>$idNote,
+						'modelAlbum'=>$modelAlbum,
 		));
 	}
 	

@@ -10,6 +10,7 @@
  * @property string $webContentLink
  * @property string $mimeType
  * @property string $thumbnailLink
+ * @property string $downloadUrl
  * @property boolean $isImage
  *
  * The followings are the available model relations:
