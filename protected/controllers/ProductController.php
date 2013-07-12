@@ -566,7 +566,7 @@ class ProductController extends Controller
 			$height = $_POST['Product']['height'];
 			$length = $_POST['Product']['length'];
 			$measureLinear = MeasurementUnit::model()->findByPk($_POST['Product']['Id_measurement_unit_linear']);
-			if($measureLinear->short_description=='ml')
+			if($measureLinear->short_description=='ml' || $measureLinear->short_description=='mm')
 			{
 				$cubicFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'m3'));
 			}

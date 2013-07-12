@@ -258,7 +258,7 @@ class Product extends ModelAudit
 		$height = $this->height;
 		$length = $this->length;
 		$measureLinear = MeasurementUnit::model()->findByPk($this->Id_measurement_unit_linear);
-		if($measureLinear->short_description=='ml')
+		if($measureLinear->short_description=='ml' || $measureLinear->short_description=='mm')
 		{
 			$cubicFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'m3'));
 		}
