@@ -1,5 +1,8 @@
 <?php 
 Yii::app()->clientScript->registerScript(__CLASS__.'#review-form-create', "
+	$(window).bind('beforeunload', function() {
+		if($.active>0)	return true;
+    });
 	function  AutoSave()
 	{
 		$('.errors').hide();
@@ -10,6 +13,11 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-form-create', "
 		).success(
 		function(data)
 		{
+			var response = $.parseJSON(data);
+			if($('#note_note_hidden')!=response.note)
+			{
+				$('#note_note_hidden').val(response.note);
+			}
 			$('.errors').hide();
 			$('.saving').hide();
 			$('.saved').show();
@@ -20,7 +28,14 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-form-create', "
 		});		
 	}
 	$('input').keyup(function(){AutoSave()});
-	$('textarea').keyup(function(){AutoSave()});
+	$('textarea').keyup(function()
+		{
+			if($('#note_note_hidden').val()!=$(this).val())
+			{
+				AutoSave();
+			}
+		}
+	);
 					
 	$('#Review_Id_review_type').change(function(){
 		$.post(
@@ -48,14 +63,7 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#review-form-create', "
 	});
 					
 	$('#btnCancel').click(function(){
-					
-		$.post(
-			'".ReviewController::createUrl('AjaxDelete')."',{id:$('#Review_Id').val()}
-		).success(
-		function(data)
-		{
-			window.location = '".ReviewController::createUrl('index',array('Id_customer'=>$model->Id_customer,'Id_project'=>$model->Id_project))."';					
-		});		
+		window.location = '".ReviewController::createUrl('delete',array('id'=>$model->Id))."';					
 		return false;
 	});
 ");
@@ -104,6 +112,8 @@ echo CHtml::closeTag('div');
 		?>
 	
 		<?php echo $form->textFieldRow($model,'description',array('rows'=>1, 'cols'=>140,'maxlength'=>100,'style'=>'resize:none;width:60%;')); ?>
+		<?php echo CHtml::hiddenField('note_note_hidden',$modelNote->note,array('id'=>'note_note_hidden')); ?>
+		
 		<?php echo $form->textAreaRow($modelNote,'note',array('rows'=>10, 'cols'=>100,'style'=>'resize:none;width:97%;')); ?>
 </fieldset>
 		

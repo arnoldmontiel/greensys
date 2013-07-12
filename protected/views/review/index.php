@@ -506,7 +506,19 @@ function getCheck(checkName)
 <?php
 	echo CHtml::openTag('div',array('class'=>'wall-action-box-btn','id'=>'btn-box'));
 		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnCreate'));
-			echo 'Nuevo';
+		$criteria = new CDbCriteria;
+		$criteria->compare('Id_project',$Id_project);
+		$criteria->addCondition('Id_review IS NOT NULL');
+		$criteria->addCondition('t.Id NOT IN(select Id_note from user_group_note)');
+		$modelNote = Note::model()->find($criteria);
+		if(isset($modelNote))
+		{
+			echo 'Borrador';				
+		} 
+		else
+		{
+			echo 'Nuevo';				
+		}
 		echo CHtml::closeTag('div');
 // 		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnAlbum'));
 // 			echo 'Album';

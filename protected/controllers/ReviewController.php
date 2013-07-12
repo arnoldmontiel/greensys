@@ -207,7 +207,7 @@ class ReviewController extends Controller
 			$modelNote->Id_review = $modelReview->Id;
 			$modelReview->save();
 			$modelNote->save();
-			echo CJSON::encode(array($modelReview->attributes,$modelNote->attributes));
+			echo CJSON::encode(array_merge($modelReview->attributes,$modelNote->attributes));
 		}
 	}
 	private function fillNote($model,&$modelNote)
