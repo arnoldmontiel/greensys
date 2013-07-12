@@ -72,13 +72,13 @@ class GreenHelper
 			while (($data = fgetcsv($handle, 4096, ",")) !== FALSE)
 			{
 
-				$short_description = self::getDataValue($data, '"Short Description"', $arrFields);
+				$modelField = self::getDataValue($data, '"Model"', $arrFields);
 				$manufacturer = self::getDataValue($data, '"Manufacturer"', $arrFields);
 				
 				$criteria = new CDbCriteria();
 				$criteria->with[]='brand';
 				$criteria->addCondition("brand.description = '". $manufacturer."'");
-				$criteria->addCondition("t.short_description = '". $short_description."'");
+				$criteria->addCondition("t.model = '". $modelField."'");
 				
 				$modelProduct = Product::model()->find($criteria);
 				if(!isset($modelProduct))
@@ -87,8 +87,7 @@ class GreenHelper
 					
 					$transaction = $modelProduct->dbConnection->beginTransaction();
 					try {
-												
-						$modelProduct->description_supplier = $short_description;
+																		
 						$modelProduct->discontinued = self::getDataValue($data, '"Discontinued"', $arrFields, 'boolean');
 						$modelProduct->height = self::getDataValue($data, '"Height"', $arrFields,'int');
 						$modelProduct->width = self::getDataValue($data, '"Width"', $arrFields,'int');
@@ -100,9 +99,11 @@ class GreenHelper
 						$modelProduct->need_rack = ($modelProduct->unit_rack>0)?1:0;
 						$modelProduct->current = self::getDataValue($data, '"Amps"', $arrFields,'int');
 						$modelProduct->power = self::getDataValue($data, '"Watts"', $arrFields,'int');
-						
+												
+						$modelProduct->model = $modelField;
+						$modelProduct->vendor = self::getDataValue($data, '"Vendor"', $arrFields);
 						$modelProduct->long_description =  self::getDataValue($data, '"Long Description"', $arrFields);
-						$modelProduct->short_description = $short_description;
+						$modelProduct->short_description = self::getDataValue($data, '"Short Description"', $arrFields);
 						$modelProduct->part_number = self::getDataValue($data, '"Part Number"', $arrFields);
 						$modelProduct->url = self::getDataValue($data, '"URL"', $arrFields);
 						$modelProduct->tags = self::getDataValue($data, '"Tags"', $arrFields);
@@ -228,21 +229,18 @@ class GreenHelper
 						$modelProduct->Id_sub_category = $modelSubCategory->Id;
 						//END SUB-CATEGORY-------------------------------------------------
 						
-						//BEGIN PRODUCT-TYPE-------------------------------------------------
-						$productType = self::getDataValue($data, '"Model"', $arrFields);
-						$modelProductType = ProductType::model()->findByAttributes(array('description'=>$productType));
+						//BEGIN PRODUCT-TYPE-------------------------------------------------						
+						$modelProductType = ProductType::model()->findByAttributes(array('description'=>'--'));
 						if(!isset($modelProductType))
 						{
 							$modelProductType = new ProductType();
-							$modelProductType->description = $productType;
+							$modelProductType->description = '--';
 							$modelProductType->save();
 						}
 						$modelProduct->Id_product_type = $modelProductType->Id;
 						//END PRODUCT-TYPE-------------------------------------------------
 						
-						//BEGIN SUPPLIER-------------------------------------------------
-						$supplier = self::getDataValue($data, '"Vendor"', $arrFields);
-						//$modelSupplier = Supplier::model()->findByAttributes(array('business_name'=>$supplier));
+						//BEGIN SUPPLIER-------------------------------------------------						
 						$modelSupplier = Supplier::model()->findByAttributes(array('business_name'=>'--'));
 						if(!isset($modelSupplier))
 						{
@@ -253,7 +251,6 @@ class GreenHelper
 							$modelContact->save();
 							
 							$modelSupplier = new Supplier();
-							//$modelSupplier->business_name = $supplier;
 							$modelSupplier->business_name = '--';
 							$modelSupplier->Id_contact = $modelContact->Id;
 							$modelSupplier->save();
