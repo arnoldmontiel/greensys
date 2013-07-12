@@ -84,49 +84,18 @@ class ReviewController extends Controller
 	 */
 	public function actionCreate()
 	{
-		//$this->layout='//layouts/tcolumn2';
 		$model=new Review('creation');
-		$model->setScenario('creation');
 		$modelNote=new Note('reviewCreation');
-		$modelNote->setScenario('reviewCreation');
 		$modelCustomer=new TCustomer;
 		$modelProject=new Project;
+		$modelReviewType = array();
 		
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidationNote($model,$modelNote);
 		
-		if(isset($_GET['Id_project']))
-		{
-			$model->Id_project=$_GET['Id_project'];
-			$modelProject = Project::model()->findByPk($model->Id_project);
-			$modelCustomer = TCustomer::model()->findByPk($modelProject->Id_customer);
-			$model->Id_customer=$modelCustomer->Id;
-		}
-		if(isset($_POST['Review']))
-		{
-			$model->attributes=$_POST['Review'];
-			$transaction = $modelNote->dbConnection->beginTransaction();
-			try {
-				if($model->save())
-				{
-					$this->autoTagAssign($model);
-					if($this->createNote($model,$modelNote))
-					{
-						$this->publicNote($modelNote->Id,$model->Id_customer,$model->Id_project,$model->Id_review_type);
-						$transaction->commit();
-						$this->sendMailNote($modelNote->Id);
-						$this->redirect(array('update','id'=>$model->Id));						
-					}
-				}				
-			} catch (Exception $e) {
-				$transaction->rollback();
-			}
-		}
 		$dllReviewTypeUserGroup = ReviewTypeUserGroup::model()->findAllByAttributes(
-								array('Id_user_group'=>User::getCurrentUserGroup()->Id,
-										'can_create'=>1));
-		
-		$modelReviewType = array();
+				array('Id_user_group'=>User::getCurrentUserGroup()->Id,
+						'can_create'=>1));
 		if($dllReviewTypeUserGroup)
 		{
 			foreach($dllReviewTypeUserGroup as $itemReviewType)
@@ -138,17 +107,86 @@ class ReviewController extends Controller
 			}
 		}
 		
-		//set next review
-		$criteria=new CDbCriteria;
-		
-		$criteria->select='MAX(review) as maxReview';
-		$criteria->condition='Id_customer = '.$model->Id_customer . ' AND Id_review_type = '. key($modelReviewType);
-		$criteria->condition='Id_project = '.$model->Id_project;
-		
-		$modelMax = Review::model()->find($criteria);
-		
-		$model->review = $modelMax->maxReview + 1;
-		//------------------
+		if(isset($_GET['Id_project']))
+		{
+			$model->Id_project=$_GET['Id_project'];
+			$modelProject = Project::model()->findByPk($model->Id_project);
+			$modelCustomer = TCustomer::model()->findByPk($modelProject->Id_customer);
+			$model->Id_customer=$modelCustomer->Id;
+		}
+		if(isset($_POST['Review']))
+		{
+			$model = $this->loadModel($_POST['Review']['Id']);
+			$model->setScenario('creation');
+			$model->attributes=$_POST['Review'];
+			$transaction = $modelNote->dbConnection->beginTransaction();
+			try {
+				$this->fillNote($model,$modelNote);
+				if($model->save())
+				{
+					$this->autoTagAssign($model);
+					$modelNote->setScenario('reviewCreation');
+					if($modelNote->save())
+					{
+						$this->publicNote($modelNote->Id,$model->Id_customer,$model->Id_project,$model->Id_review_type);
+						$transaction->commit();
+						$this->sendMailNote($modelNote->Id);
+						$this->redirect(array('update','id'=>$model->Id));						
+					}
+				}				
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
+		}
+		else 
+		{
+			if(isset($_GET['Id_project']))
+			{
+				//notas que no tengan usergroup
+				$criteria = new CDbCriteria;
+				$criteria->compare('Id_project',$_GET['Id_project']);
+				$criteria->addCondition('Id_review IS NOT NULL');
+				$criteria->addCondition('t.Id NOT IN(select Id_note from user_group_note)');
+				
+				$modelNote = Note::model()->find($criteria);
+				if(isset($modelNote))
+				{
+					$model=Review::model()->findByPk($modelNote->Id_review);
+				}
+				else
+				{
+					$modelNote=new Note;						
+					$model->setScenario('insert');
+					//set next review
+					$criteria=new CDbCriteria;
+					
+					$criteria->select='MAX(review) as maxReview';
+					$criteria->condition='Id_customer = '.$model->Id_customer . ' AND Id_review_type = '. key($modelReviewType);
+					$criteria->condition='Id_project = '.$model->Id_project;
+						
+					$modelMax = Review::model()->find($criteria);
+					
+					$model->review = $modelMax->maxReview + 1;
+					//------------------
+					$reviewType = current($modelReviewType);
+					$model->Id_review_type = $reviewType['Id'];
+					$modelNote->setScenario('insert');
+					try {
+						
+						if($model->save())//new review
+						{
+							$this->autoTagAssign($model);
+							$this->fillNote($model,$modelNote);
+							$modelNote->save();
+								
+						}						
+					} catch (Exception $e) {
+					}
+				}
+			}				
+		}
+		$model->setScenario('creation');
+		$modelNote->setScenario('reviewCreation');
 		
 		$this->render('create',array(
 			'model'=>$model,
@@ -157,9 +195,27 @@ class ReviewController extends Controller
 			'modelReviewType'=>$modelReviewType,
 			'modelNote'=>$modelNote,
 		));
+	}	
+	public function actionAjaxAutoSave()
+	{
+		if(isset($_POST['Review'])&&isset($_POST['Note']))
+		{
+			$modelReview = $this->loadModel($_POST['Review']['Id']);
+			$modelNote = Note::model()->findByPk($_POST['Note']['Id']);
+			$modelNote->attributes = $_POST['Note'];
+			$modelReview->attributes = $_POST['Review'];
+			$modelNote->Id_review = $modelReview->Id;
+			$modelReview->save();
+			$modelNote->save();
+			echo CJSON::encode(array($modelReview->attributes,$modelNote->attributes));
+		}
 	}
-	private function createNote($model,&$modelNote)
+	private function fillNote($model,&$modelNote)
 	{		
+		if(isset($_POST['Note']['Id']))
+		{
+			$modelNote = Note::model()->findByPk($_POST['Note']['Id']);				
+		}
 		if(isset($_POST['Note']))
 		{
 			$modelNote->attributes = $_POST['Note'];
@@ -170,7 +226,6 @@ class ReviewController extends Controller
 		$modelNote->username = User::getCurrentUser()->username;
 		$modelNote->Id_user_group_owner = User::getCurrentUserGroup()->Id;
 		$modelNote->in_progress = 0;
-		return $modelNote->save();		
 	}
 	private function autoTagAssign($model)
 	{
@@ -195,8 +250,8 @@ class ReviewController extends Controller
 		$criteria=new CDbCriteria;
 		
 		$criteria->select='MAX(review) as maxReview';
-		$criteria->condition='Id_customer = '.$idCustomer ;
-		$criteria->condition='Id_project = '.$idProject ;
+		$criteria->addCondition('Id_customer = '.$idCustomer);
+		$criteria->addCondition('Id_project = '.$idProject);
 		$criteria->addCondition('Id_review_type = '.$idReviewType);
 		
 		$modelMax = Review::model()->find($criteria);

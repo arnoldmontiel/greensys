@@ -32,8 +32,8 @@ class GDriveHelper
 				$modelGoogleDrive->Id = $item['id'];
 				$modelGoogleDrive->title = $item['title']; 
 				$modelGoogleDrive->iconLink = $item['iconLink'];
-				$modelGoogleDrive->webContentLink = $item['webContentLink'];
-				$modelGoogleDrive->thumbnailLink = $item['thumbnailLink'];
+				$modelGoogleDrive->webContentLink = isset($item['webContentLink'])?$item['webContentLink']:'';
+				$modelGoogleDrive->thumbnailLink = isset($item['thumbnailLink'])?$item['thumbnailLink']:'';
 				$modelGoogleDrive->mimeType = $item['mimeType'];
 								
 				
