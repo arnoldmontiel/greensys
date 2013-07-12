@@ -34,7 +34,7 @@ if(isset($model->multimedia))
 $settings = new Settings();
 $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
-	'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',
+	'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',	
 	'attributes'=>array(
 		'code',
 		'code_supplier',
@@ -62,6 +62,8 @@ $this->widget('zii.widgets.CDetailView', array(
 			'type'=>'raw',
 			'value'=>$model->nomenclator->description
 		),
+		'model',
+		'vendor',
 		'description_customer',
 		'description_supplier',
 		array('label'=>$model->getAttributeLabel('discontinued'),
@@ -117,6 +119,69 @@ $this->widget('zii.widgets.CDetailView', array(
 			'type'=>'raw',
 			'value'=>CHtml::checkBox("hide",$model->hide,array("disabled"=>"disabled"))
 		),
+		'short_description',
+		array('label'=>$model->getAttributeLabel('long_description'),	
+			'type'=>'raw',
+			'value'=>CHtml::textArea('long_description',$model->long_description,array(																				
+																						'style'=>'height:100%;overflow: hidden;',
+																						'readonly'=>true)),			
+		),
+		'part_number',
+		'url',
+		'tags',
+		'phase',
+		'accounting_item_name',
+		'unit_cost_A',
+		'unit_price_A',
+		'unit_cost_B',
+		'unit_price_B',
+		'unit_cost_C',
+		'unit_price_C',
+		'taxable',
+		'btu',
+		'summarize',
+		'sales_tax',
+		'labor_sales_tax',
+		'dispersion',
+		'bulk_wire',
+		array('label'=>$model->getAttributeLabel('input_terminals'),
+			'type'=>'raw',
+			'value'=>CHtml::textArea('input_terminals',$model->input_terminals,array(
+																						'style'=>'height:100%;overflow: hidden;',
+																						'readonly'=>true)),
+		),
+		array('label'=>$model->getAttributeLabel('input_signals'),
+			'type'=>'raw',
+			'value'=>CHtml::textArea('input_signals',$model->input_signals,array(
+																						'style'=>'height:100%;overflow: hidden;',
+																						'readonly'=>true)),
+		),
+		array('label'=>$model->getAttributeLabel('input_labels'),
+			'type'=>'raw',
+			'value'=>CHtml::textArea('input_labels',$model->input_labels,array(
+																						'style'=>'height:100%;overflow: hidden;',
+																						'readonly'=>true)),
+		),
+		
+		array('label'=>$model->getAttributeLabel('output_terminals'),
+			'type'=>'raw',
+			'value'=>CHtml::textArea('output_terminals',$model->output_terminals,array(
+																						'style'=>'height:100%;overflow: hidden;',
+																						'readonly'=>true)),
+		),
+		array('label'=>$model->getAttributeLabel('output_signals'),
+			'type'=>'raw',
+			'value'=>CHtml::textArea('output_signals',$model->output_signals,array(
+																						'style'=>'height:100%;overflow: hidden;',
+																						'readonly'=>true)),
+		),
+		array('label'=>$model->getAttributeLabel('output_labels'),
+			'type'=>'raw',
+			'value'=>CHtml::textArea('output_labels',$model->output_labels,array(
+																						'style'=>'height:100%;overflow: hidden;',
+																						'readonly'=>true)),
+		),
+
 	),
 )); 
 ?>
