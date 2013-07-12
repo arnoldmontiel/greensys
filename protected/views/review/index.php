@@ -508,6 +508,7 @@ function getCheck(checkName)
 		echo CHtml::openTag('div',array('class'=>'wall-action-btn','id'=>'btnCreate'));
 		$criteria = new CDbCriteria;
 		$criteria->compare('Id_project',$Id_project);
+		$criteria->compare('username',User::getCurrentUser()->username);
 		$criteria->addCondition('Id_review IS NOT NULL');
 		$criteria->addCondition('t.Id NOT IN(select Id_note from user_group_note)');
 		$modelNote = Note::model()->find($criteria);

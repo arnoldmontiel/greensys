@@ -145,6 +145,7 @@ class ReviewController extends Controller
 				//notas que no tengan usergroup
 				$criteria = new CDbCriteria;
 				$criteria->compare('Id_project',$_GET['Id_project']);
+				$criteria->compare('username',User::getCurrentUser()->username);
 				$criteria->addCondition('Id_review IS NOT NULL');
 				$criteria->addCondition('t.Id NOT IN(select Id_note from user_group_note)');
 				
