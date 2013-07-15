@@ -113,7 +113,7 @@ $this->widget('ext.processingDialog.processingDialog', array(
 	<?php echo $form->textFieldRow($model,'description',array('size'=>60,'maxlength'=>255)); ?>
 	<?php echo $form->textAreaRow($model, 'long_description', array('maxlength' => 512, 'rows' => 6,'style'=>'resize:none;width:60%;')); ?>
 	
-	<?php echo $form->checkBoxRow($model, 'has_tag_tracking',array('disabled'=>$model->isNewRecord ? false : true)); ?>
+	<?php echo $form->checkBoxRow($model, 'has_tag_tracking'); ?>
 	<br>
 	<div class="control-group success">
 		<label class="control-label" style="color: black;">	

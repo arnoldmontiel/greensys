@@ -29,7 +29,9 @@
 		<?php 
 		$items = array();			
 				
-		$items[] = array('label'=>'Monitor', 'url'=>Yii::app()->createUrl('review/index'),'active'=>$this->uniqueid=='review');
+		$items[] = array('label'=>'Monitor', 'url'=>Yii::app()->createUrl('review/index'),'active'=>$this->uniqueid=='review' && $this->action->id == 'index');
+
+		$items[] = array('label'=>'General', 'url'=>Yii::app()->createUrl('review/crossView'),'active'=>$this->uniqueid=='review' && $this->action->id == 'crossView');
 		
 		if(Yii::app()->user->checkAccess('CustomerIndex'))			
 			$items[] = array('label'=>'Clientes', 'url'=>Yii::app()->createUrl('tCustomer/index'),'active'=>$this->uniqueid=='tCustomer');

@@ -337,4 +337,83 @@ class Review extends TapiaActiveRecord
 					'criteria'=>$criteria,
 		));
 	}
+	
+	public function searchCrossView($arrFilters)
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		if($arrFilters['tagFilter']){
+			if($arrFilters['isCloseFilter'])
+			{
+				$criteria->addCondition('t.is_open = 0 or t.Id IN(select r.Id from review r
+					inner join tag_review tr on (r.Id = tr.Id_review)
+					where
+					tr.date in (select max(date) date from tag_review where Id_review =r.Id)
+					and tr.Id_tag IN ('. $arrFilters['tagFilter'].'))');
+			}
+			else{
+	
+				$criteria->addCondition('t.Id IN(
+					select r.Id from review r
+					inner join tag_review tr on (r.Id = tr.Id_review)
+					where
+					tr.date in (select max(date) date from tag_review where Id_review =r.Id)
+					and tr.Id_tag IN('. $arrFilters['tagFilter'].'))');
+				$criteria->addCondition('t.is_open = 1');
+			}
+		}
+	
+		if($arrFilters['typeFilter'])
+		{
+	
+			$criteria->join =  	"LEFT OUTER JOIN multimedia m ON (m.Id_review=t.Id)
+									inner join multimedia_note mn ON (mn.Id_multimedia = m.Id)";
+			$criteria->addCondition("mn.Id_note IN(
+										select ugn.Id_note from user_group_note ugn
+										where ugn.Id_note IN (select n.Id from note n where n.Id_review = t.Id
+										and ugn.Id_user_group = ". User::getCurrentUserGroup()->Id .")
+										and m.Id_multimedia_type IN ( ".$arrFilters['typeFilter'] . "))");
+		}
+	
+		if($arrFilters['reviewTypeFilter'])
+		{
+			$criteria->addCondition('t.Id_review_type IN ('. $arrFilters['reviewTypeFilter'].')');
+		}
+	
+		if($arrFilters['dateFromFilter'])
+		{
+			$criteria->addCondition('t.change_date >= "'. date("Y-m-d H:i:s",strtotime($arrFilters['dateFromFilter'])) . '"');
+		}
+	
+		if($arrFilters['dateToFilter'])
+		{
+			$criteria->addCondition('t.change_date <= "'. date("Y-m-d H:i:s",strtotime($arrFilters['dateToFilter'] . " + 1 day")) . '"');
+		}
+	
+	
+		if($arrFilters['isCloseFilter'] && !$arrFilters['tagFilter'])
+		{
+			$criteria->addCondition('t.is_open = 0');
+		}
+	
+	
+	
+		//Esto antes era un if para que acote el query si no era Administrador
+		$criteria->join .= '  LEFT OUTER JOIN `note` `n` ON (`n`.`Id_review`=`t`.`Id`)
+								LEFT OUTER JOIN `user_group_note` `ugn` ON (`ugn`.`Id_note`=`n`.`Id`)
+								LEFT OUTER JOIN review_user ru ON (ru.username = t.username AND t.Id = ru.Id_review)';
+	
+		$criteria->addCondition('ugn.Id_user_group = '.User::getCurrentUserGroup()->Id);
+	
+		$criteria->distinct = true;
+	
+		$criteria->order = 't.change_date DESC, t.review DESC';
+				
+		return new CActiveDataProvider($this, array(
+		'criteria'=>$criteria,
+		));
+	}
 }
