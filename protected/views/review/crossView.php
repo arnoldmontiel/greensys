@@ -63,10 +63,13 @@ $('#btn-clear-filter').click(function(){
 	$('input:checked').attr('checked', false);
 	
 	$('#dateFromFilter').val('');
-	$('#dateFrom').val('')
+	$('#dateFrom').val('');
 	
 	$('#dateToFilter').val('');
-	$('#dateTo').val('')
+	$('#dateTo').val('');
+	
+	$('#filter-panel').toggle('blind',{duration:100});
+	$('#showFilters').removeClass('active');
 	
 	doFilter();
 });
@@ -90,6 +93,7 @@ $('#btn-filter').click(function(){
 	
 	$('#dateToFilter').val('');
 	$('#dateToFilter').val($('#dateTo').val());
+	
 	$('#filter-panel').toggle('blind',{duration:100});
 	$('#showFilters').removeClass('active');				
 	
