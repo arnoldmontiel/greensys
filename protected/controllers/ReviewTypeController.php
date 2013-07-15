@@ -64,7 +64,7 @@ class ReviewTypeController extends Controller
 			
 			if($model->save())
 			{				
-				$this->createNewTagRelation($model->Id, $model->has_tag_tracking);
+				$this->createNewTagRelation($model->Id, $model->has_tag_tracking, true);
 				
 				if(isset($_POST['hidden-user-group-chk']))
 					$this->createUserGroupRelation($model->Id, $_POST['hidden-user-group-chk']);
@@ -78,14 +78,56 @@ class ReviewTypeController extends Controller
 		));
 	}
 	
-	private function createNewTagRelation($id, $tagType)
+	private function createNewTagRelation($id, $tagType, $isNew = true)
 	{
-		$tags = null;	
-
-		if($tagType)//con seguimiento	
+		$tags = null;
+		
+		if($tagType == 1)//con seguimiento
 			$tags = array(1,2,3);
-		else 				
+		else
 			$tags = array(4);
+		
+		if(!$isNew)
+		{
+			TagReviewType::model()->deleteAllByAttributes(array('Id_review_type'=>$id));
+			$reviews = Review::model()->findAllByAttributes(array('Id_review_type'=>$id));			
+			
+			//agrego el review_type en cada review asociado (historial)
+			foreach($reviews as $review)
+			{
+				if($tagType == 1)// con seguimiento
+				{
+					$criteria = new CDbCriteria();
+					$criteria->join = 'INNER JOIN note_note nn on (t.Id = nn.Id_parent)';
+					$criteria->addCondition('t.Id_review = '.$review->Id);
+					$notesCount = Note::model()->count($criteria);
+					
+					if($notesCount == 0)
+					{
+						$newTagId = 1; //pendiente
+					}
+					else
+					{	
+						$reviewChangeDate = date("Y-m-d H:i:s", strtotime($review->change_date));
+						$limitDate = date("Y-m-d H:i:s",strtotime(" - ".TSetting::getChangeTagStateDays()." days"));
+						if($reviewChangeDate >= $limitDate)
+							$newTagId = 2; //en ejecucion
+						else
+							$newTagId = 3; //stand-by
+					}	
+				}
+				else
+				{
+					$newTagId = 4; //sin seg
+				}
+				
+				
+				$modelTagReview = new TagReview();
+				$modelTagReview->Id_review = $review->Id;				
+				$modelTagReview->Id_tag = $newTagId;
+				$modelTagReview->save();
+			}
+		}		
 	
 		foreach ($tags as $i => $value) {
 			$modelTagReviewType = new TagReviewType();
@@ -93,7 +135,6 @@ class ReviewTypeController extends Controller
 			$modelTagReviewType->Id_tag = $value;
 			$modelTagReviewType->save();
 		}
-
 	}
 	
 	private function createUserGroupRelation($id, $chkList)
@@ -270,9 +311,16 @@ class ReviewTypeController extends Controller
 
 		if(isset($_POST['ReviewType']))
 		{
+			$tagTypeChange = false;
+			if($_POST['ReviewType']['has_tag_tracking'] != $model->has_tag_tracking )
+				$tagTypeChange = true;
+			
 			$model->attributes=$_POST['ReviewType'];
 			if($model->save())
-			{												
+			{					
+				if($tagTypeChange)					
+					$this->createNewTagRelation($model->Id, $model->has_tag_tracking, false);
+				
 				if(isset($_POST['hidden-user-group-chk']))
 					$this->createUserGroupRelation($model->Id, $_POST['hidden-user-group-chk']);
 				
