@@ -654,6 +654,15 @@ class ReviewController extends Controller
 		);
 	}
 
+	public function actionCrossView()
+	{	
+	
+		$this->showFilter = true;
+	
+	
+		$this->render('crossView');
+	}
+	
 	public function actionAjaxCheckLastDoc()
 	{
 		$idMultimedia = $_POST['idMultimedia'];
@@ -824,6 +833,23 @@ class ReviewController extends Controller
 	
 	}
 	
+	private function fillCrossView($arrFilters)
+	{
+	
+		$review = new Review;
+		
+		$dataProvider = $review->searchCrossView($arrFilters);
+			
+		$dataProvider->pagination->pageSize= 60;
+			
+		$data = $dataProvider->getData();
+
+		foreach ($data as $item){
+			$this->renderPartial('_crossView',array('data'=>$item,'width'=>'95%'));
+		}
+		
+	}
+	
 	private function fillIndex($Id_customer,$Id_project, $arrFilters,$collapsed)
 	{
 		
@@ -923,6 +949,19 @@ class ReviewController extends Controller
 			if(isset($_POST['collapsed'])) $collapsed =$_POST['collapsed'];
 			$this->fillIndex($_POST['Id_customer'],$_POST['Id_project'], $arrFilters,$collapsed);
 		}		
+	}
+	
+	public function actionAjaxFillCrossView()
+	{
+		
+		$arrFilters = array('tagFilter'=>$_POST['tagFilter'],
+							 'isCloseFilter'=>$_POST['isCloseFilter'],
+							 'typeFilter'=>$_POST['typeFilter'],
+							 'reviewTypeFilter'=>$_POST['reviewTypeFilter'],
+							 'dateFromFilter'=>$_POST['dateFromFilter'],
+							 'dateToFilter'=>$_POST['dateToFilter']);
+				
+		$this->fillCrossView($arrFilters);		
 	}
 	
 	public function actionAjaxUpdateNoteNeedConf()
