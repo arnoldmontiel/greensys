@@ -885,15 +885,16 @@ class ReviewController extends Controller
           			LEFT OUTER JOIN tapia.user_group_note ugn on (u.Id_user_group = ugn.Id_user_group)
 				";
 			$criteria->addCondition('uc.username = "'. User::getCurrentUser()->username.'"');
-			$criteria->addCondition('n.username <> "'. User::getCurrentUser()->username.'"');
+			//$criteria->addCondition('n.username <> "'. User::getCurrentUser()->username.'"');
 			$criteria->group = 't.Id';
 			$criteria->order = 'max_date DESC';				
 			
 			if(isset($arrFilters['customerNameFilter'])&&$arrFilters['customerNameFilter']!='')
 			{
- 				$criteria->addSearchCondition('gc.description', $arrFilters['customerNameFilter'],true);
- 				$criteria->addSearchCondition('t.description', $arrFilters['customerNameFilter'],true,'OR');
-				$criteria->addSearchCondition('CONCAT(CONCAT(gc.description," - "),t.description)', $arrFilters['customerNameFilter'],true,'OR');				
+ 				$criteria->addCondition('gc.description like "%'. $arrFilters['customerNameFilter'].'%" OR 
+ 										t.description like "%'. $arrFilters['customerNameFilter'].'%" OR 
+ 										CONCAT(CONCAT(gc.description," - "),t.description) like "%'. $arrFilters['customerNameFilter'].'%"'
+ 										);
 			}			
 			
 			$projects = Project::model()->findAll($criteria);
