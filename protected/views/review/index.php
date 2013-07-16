@@ -429,6 +429,17 @@ function getCheck(checkName)
 	return data['value[]'];
 }
 
+$(document).keypress(function(e) {
+    if(e.keyCode == 13) 
+    {
+    	if($('*:focus').attr('id') == 'txtSearchCustomer')
+    	{
+    		$('#linkCustomers').click();
+    		return false;
+    	}    	
+		return false; 
+    }
+});
 
 ");
 ?>

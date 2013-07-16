@@ -878,6 +878,7 @@ class ReviewController extends Controller
 			$criteria->join =  	" 
 					JOIN tapia.customer cus on (t.Id_customer = cus.Id)
 					LEFT OUTER JOIN green.person gp on (cus.Id_person = gp.Id)
+					LEFT OUTER JOIN green.contact gc on (cus.Id_contact = gc.Id)
 					LEFT OUTER JOIN tapia.user_customer uc on (t.Id = uc.Id_project)
 					LEFT OUTER JOIN tapia.user u on (u.username = uc.username)
           			LEFT OUTER JOIN tapia.note n ON ( n.Id_project = uc.Id_project)
@@ -890,9 +891,9 @@ class ReviewController extends Controller
 			
 			if(isset($arrFilters['customerNameFilter'])&&$arrFilters['customerNameFilter']!='')
 			{
- 				$criteria->addSearchCondition('gp.name', $arrFilters['customerNameFilter'],true);				
- 				$criteria->addSearchCondition('gp.last_name', $arrFilters['customerNameFilter'],true,'OR');
-				$criteria->addSearchCondition('CONCAT(CONCAT(gp.name," "),gp.last_name)', $arrFilters['customerNameFilter'],true,'OR');				
+ 				$criteria->addSearchCondition('gc.description', $arrFilters['customerNameFilter'],true);
+ 				$criteria->addSearchCondition('t.description', $arrFilters['customerNameFilter'],true,'OR');
+				$criteria->addSearchCondition('CONCAT(CONCAT(gc.description," - "),t.description)', $arrFilters['customerNameFilter'],true,'OR');				
 			}			
 			
 			$projects = Project::model()->findAll($criteria);
