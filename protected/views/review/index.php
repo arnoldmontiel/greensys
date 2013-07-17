@@ -644,11 +644,12 @@ $(document).keypress(function(e) {
 		$this->widget('zii.widgets.jui.CJuiDatePicker',array(
 			'id'=>'dateToReport',			
 			'name'=>'publishDate',
-			'value'=>date("Y-m-d"),
+			'value'=>date( 'd/m/Y'),
 			// additional javascript options for the date picker plugin
 			'options'=>array(
 					'showAnim'=>'fold',
-					'dateFormat'=>'yy-mm-dd',
+					'language'=>'es',
+					'dateFormat'=>'dd/mm/yy',//Yii::app()->locale->getDateFormat('calendar_small'),
 			),
 			'htmlOptions'=>array(					
 					'style'=>'height:20px;'

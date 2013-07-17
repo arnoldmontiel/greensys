@@ -1762,13 +1762,16 @@ class ReviewController extends Controller
 		if(isset($_GET['Id_project'])&&isset($_GET['dateToReport']))
 		{
 			$dateFrom = $_GET['dateToReport'].' 00:00:00';
+			$dateFrom = Yii::app()->lc->toDatabase($dateFrom,'datetime','small','datetime',null);
 			$dateTo = $_GET['dateToReport'].' 23:59:59';
+			$dateTo = Yii::app()->lc->toDatabase($dateTo,'datetime','small','datetime',null);
 			$modelProject = Project::model()->findByPk($_GET['Id_project']);				
-			header("Content-type: text/plain; charset=utf-8");			
-			header('Content-Disposition: attachment; filename="'.utf8_decode($modelProject->customer->contact->description).' - '.utf8_decode($modelProject->description).' '.$_GET['dateToReport'].' ('.date("Y-m-d H:i",time()).').txt"');
+ 			header("Content-type: text/plain; charset=utf-8");			
+ 			header('Content-Disposition: attachment; filename="'.utf8_decode($modelProject->customer->contact->description).' - '.utf8_decode($modelProject->description).' '.$_GET['dateToReport'].' ('.date("d-m-Y H:i",time()).').txt"');
+				
 			echo utf8_decode($modelProject->customer->contact->description).' - '.utf8_decode($modelProject->description);
 			echo "\r\n";
-			echo "Servicio del d�a ".$_GET['dateToReport'];
+			echo utf8_decode("Servicio del día ".$_GET['dateToReport']);
 			echo "\r\n";
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('Id_project = '. $modelProject->Id);
@@ -1803,11 +1806,12 @@ class ReviewController extends Controller
 				echo "\r\n";
 				echo utf8_decode($modelReview->description) ;
 				echo "\r\n";
+				echo "\r\n";				
 				foreach ($noteNotes as $noteNote)
 				{
 					$modelNoteChild = $noteNote->child; 
 					$notesProcessed[]=$modelNoteChild->Id;
-					echo $modelNoteChild->user->last_name.' '.$modelNoteChild->user->name.' '.date("Y-m-d H:i",strtotime($modelNoteChild->creation_date));
+					echo $modelNoteChild->user->last_name.' '.$modelNoteChild->user->name.' '.date("H:i",strtotime($modelNoteChild->creation_date));
 					echo "\r\n";
 					echo utf8_decode(str_replace(array("\n"),"\r\n",$modelNoteChild->note));
 					echo "\r\n";
