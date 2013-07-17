@@ -1810,8 +1810,8 @@ class ReviewController extends Controller
 				foreach ($noteNotes as $noteNote)
 				{
 					$modelNoteChild = $noteNote->child; 
-					$notesProcessed[]=$modelNoteChild->Id;
-					echo $modelNoteChild->user->last_name.' '.$modelNoteChild->user->name.' '.date("H:i",strtotime($modelNoteChild->creation_date));
+					$notesProcessed[]=$modelNoteChild->Id;						
+					echo $modelNoteChild->user->last_name.' '.$modelNoteChild->user->name.' '.date("H:i",strtotime(Yii::app()->lc->toDatabase($modelNoteChild->creation_date,'datetime','small','datetime',null)));
 					echo "\r\n";
 					echo utf8_decode(str_replace(array("\n"),"\r\n",$modelNoteChild->note));
 					echo "\r\n";
