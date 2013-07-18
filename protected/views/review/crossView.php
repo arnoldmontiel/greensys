@@ -25,6 +25,10 @@ function loadPage()
 		doFilter();
 }
 
+setInterval(function() {
+   doFilter();
+}, 1000*90)
+
 function doFilter()
 {
 
