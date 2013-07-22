@@ -615,8 +615,7 @@ class TCustomerController extends Controller
 			{
 				foreach ($users as $user){
 					echo "\r\n";
-					echo 'Nombre: '. $user->name. " (". $user->userGroup->description .") \r\n";
-					echo 'Apellido: '. $user->last_name. "\r\n";
+					echo $user->name. " ". $user->last_name. " (". $user->userGroup->description .") \r\n";
 					echo 'Celular: '. $user->phone_mobile. "\r\n";
 					echo 'DNI: '. $user->dni. "\r\n";
 					echo 'CUIL: '. $user->cuil. "\r\n";					
