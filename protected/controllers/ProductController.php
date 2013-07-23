@@ -845,7 +845,34 @@ class ProductController extends Controller
 	public function actionImportResults($id)
 	{
 		$model = ImportLog::model()->findByPk($id);
+		
+		$modelProduct = new Product('search');
+		$modelProduct->unsetAttributes();  // clear any default values
+		if(isset($_GET['Product']))
+			$modelProduct->attributes=$_GET['Product'];
+		
 		$this->render('importResults',array('model'=>$model,
+		'modelProduct'=>$modelProduct,
+		));
+	}
+	
+	public function actionMergeProduct($id)
+	{
+		$modelNew = Product::model()->findByPk($id);
+		$model = Product::model()->findByPk($modelNew->Id_product);		
+	
+		$differences = array();
+		
+		foreach($model->attributes as $key => $value) {
+			if($model->$key != $modelNew->$key)
+				$differences[$key] = array(
+		            'old' => $model->$key,
+		            'new' => $modelNew->$key);
+		}
+		
+		
+		$this->render('mergeProduct',array('model'=>$model,
+										'differences'=>$differences,
 		));
 	}
 	
