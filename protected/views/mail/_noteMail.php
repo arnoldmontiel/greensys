@@ -27,7 +27,7 @@ echo CHtml::closeTag('span');
 echo CHtml::closeTag('b');
 echo CHtml::openTag('b',array('style'=>'color:rgb(136,136,136);font-size:small;font-family:arial'));
 echo CHtml::openTag('span',array('lang'=>'ES','style'=>'color:rgb(136,136,136);font-size:small;font-family:arial'));
-echo 'GrupoSmartLiving.';
+echo 'Grupo Smartliving.';
 echo CHtml::openTag('br');
 echo CHtml::closeTag('span');
 echo CHtml::closeTag('b');

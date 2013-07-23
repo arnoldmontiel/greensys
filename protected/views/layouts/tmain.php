@@ -72,7 +72,7 @@
 	<div class="line"></div>
 	<section id='BOTTOM'></section>
 	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by SmartLiving.<br/>
+		Copyright &copy; <?php echo date('Y'); ?> by Grupo Smartliving.<br/>
 		All Rights Reserved.<br/>
 		Powered by Oneken
 	</div><!-- footer -->
