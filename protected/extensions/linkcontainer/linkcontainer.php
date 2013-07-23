@@ -2,7 +2,7 @@
 /* linkcontainer class file.
 *
 * @author Pablo Pedraza <wensel84@gmail.com>
-* @copyright Copyright &copy; 2011- SmartLiving
+* @copyright Copyright &copy; 2011- Grupo Smartliving
 */
 
 Yii::import('zii.widgets.jui.CJuiWidget');
