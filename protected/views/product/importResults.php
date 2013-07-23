@@ -1,4 +1,15 @@
 <?php
+/* @var $this AutoRipperController */
+/* @var $model AutoRipper */
+Yii::app()->clientScript->registerScript('admin-import-results', "
+
+$('.btn-merge-product').click(function(){
+	var id = $(this).attr('id');
+	window.location = '".ProductController::createUrl('mergeProduct')."' + '&id='+id;
+	return false;
+});
+");
+
 $this->menu=array(
 	array('label'=>'List Product', 'url'=>array('index')),
 	array('label'=>'Create Product', 'url'=>array('create')),
@@ -21,5 +32,47 @@ $this->menu=array(
 		'error_rows',
 		'import_code',
 		'date',		
+	),
+)); ?>
+
+<?php $this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'product-grid',
+	'summaryText'=>'',
+	'afterAjaxUpdate'=>'js:function(){
+				$("#product-grid").find(".btn-merge-product").each(
+						function(index, item){
+							$(item).click(function(){
+								var id = $(this).attr("id");
+								window.location = "'.ProductController::createUrl('mergeProduct').'" + "&id="+id;
+								return false;								
+															
+							});
+						});
+
+			}',
+	'dataProvider'=>$modelProduct->searchDuplicade(),
+	'filter'=>$modelProduct,
+	'columns'=>array(
+			array(
+		 		'name'=>'code',
+				'value'=>'$data->code',
+			),			
+			array(
+		 		'name'=>'model',
+				'value'=>'$data->model',
+			),					
+			array(
+	 			'name'=>'brand_description',
+				'value'=>'$data->brand->description',
+			),
+			array(
+		 		'name'=>'category_description',
+				'value'=>'$data->category->description',
+			),
+			array(				
+				'htmlOptions' => array('style'=>'width:100px;'),
+			 	'type'=>'raw',
+			 	'value'=>'CHtml::button("Unificar datos",array("id"=>$data->Id, "class"=>"btn-merge-product"))',			 			
+			),	
 	),
 )); ?>
