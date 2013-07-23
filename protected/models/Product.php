@@ -68,6 +68,7 @@
  * @property integer $verified
  * @property string $model
  * @property string $vendor
+ * @property integer $Id_product
  * 
  * The followings are the available model relations:
  * @property BudgetItem[] $budgetItems
@@ -146,7 +147,7 @@ class Product extends ModelAudit
 		// will receive user inputs.
 		return array(
 			array('Id_brand, Id_category, Id_nomenclator, Id_product_type, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, Id_category, Id_sub_category', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
-			array('Id_volts,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, power, current, need_rack, unit_rack, unit_fan, from_dtools, verified', 'numerical', 'integerOnly'=>true),
+			array('Id_volts,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, power, current, need_rack, unit_rack, unit_fan, from_dtools, verified, Id_product', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier, short_description, part_number, url, tags, 
 				accounting_item_name, summarize, sales_tax, labor_sales_tax, dispersion, bulk_wire, model, vendor', 'length', 'max'=>255),
 			array('code, code_supplier, color, other', 'length', 'max'=>45),
@@ -155,7 +156,7 @@ class Product extends ModelAudit
 			array('Id_volts, time_instalation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, Id_sub_category', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_brand, Id_category, Id_nomenclator, Id_product_type, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color, other, Id_category, power, current, need_rack, unit_rack, from_dtools, verified, model, vendor', 'safe', 'on'=>'search'),
+			array('Id, Id_brand, Id_category, Id_nomenclator, Id_product_type, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color, other, Id_category, power, current, need_rack, unit_rack, from_dtools, verified, model, vendor, Id_product', 'safe', 'on'=>'search'),
 		
 			
 		);
@@ -186,6 +187,7 @@ class Product extends ModelAudit
 			'productGroupsChild' => array(self::HAS_MANY, 'ProductGroup', 'Id_product_child'),
 			'productGroupsParent' => array(self::HAS_MANY, 'ProductGroup', 'Id_product_parent'),
 			'productItems' => array(self::HAS_MANY, 'ProductItem', 'Id_product'),
+			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
 			'productRequirements' => array(self::MANY_MANY, 'ProductRequirement', 'product_requirement_product(Id_product, Id_product_requirement)'),
 			'supplier' => array(self::BELONGS_TO, 'Supplier', 'Id_supplier'),
 			'measurementUnitWeight' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_weight'),
@@ -400,6 +402,87 @@ class Product extends ModelAudit
 						'sort'=>$sort,
 		));
 		
+	}
+	
+	
+	public function searchDuplicade()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('Id',$this->Id);
+		$criteria->compare('Id_brand',$this->Id_brand);
+		$criteria->compare('Id_category',$this->Id_category);
+		$criteria->compare('Id_nomenclator',$this->Id_nomenclator);
+		$criteria->compare('Id_product_type',$this->Id_product_type);
+		$criteria->compare('Id_supplier',$this->Id_supplier);
+		$criteria->compare('description_customer',$this->description_customer,true);
+		$criteria->compare('description_supplier',$this->description_supplier,true);
+		$criteria->compare('code',$this->code,true);
+		$criteria->compare('code_supplier',$this->code_supplier,true);
+		$criteria->compare('discontinued',$this->discontinued);
+		$criteria->compare('length',$this->length,true);
+		$criteria->compare('width',$this->width,true);
+		$criteria->compare('height',$this->height,true);
+		$criteria->compare('profit_rate',$this->profit_rate,true);
+		$criteria->compare('msrp',$this->msrp,true);
+		$criteria->compare('time_instalation',$this->time_instalation,true);
+		$criteria->compare('hide',$this->hide);
+		$criteria->compare('weight',$this->weight,true);
+		$criteria->compare('color',$this->color,true);
+		$criteria->compare('color',$this->other,true);
+		$criteria->compare('Id_sub_category',$this->Id_sub_category);
+		$criteria->compare('power',$this->power);
+		$criteria->compare('current',$this->current);
+		$criteria->compare('need_rack',$this->need_rack);
+		$criteria->compare('unit_rack',$this->unit_rack);
+		$criteria->compare('unit_fan',$this->unit_fan);
+		$criteria->compare('model',$this->model,true);
+		$criteria->addCondition('Id_product is not null');
+		
+		$criteria->with[]='brand';
+		$criteria->addSearchCondition("brand.description",$this->brand_description);
+	
+		$criteria->with[]='category';
+		$criteria->addSearchCondition("category.description",$this->category_description);
+	
+		$criteria->with[]='nomenclator';
+		$criteria->addSearchCondition("nomenclator.description",$this->nomenclator_description);
+	
+		$criteria->with[]='supplier';
+		$criteria->addSearchCondition("supplier.business_name",$this->supplier_description);
+	
+	
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+					      'code',
+					      'brand_description' => array(
+					        'asc' => 'brand.description',
+					        'desc' => 'brand.description DESC',
+		),
+					      'category_description' => array(
+					        'asc' => 'category.description',
+					        'desc' => 'category.description DESC',
+		),
+					      'nomenclator_description' => array(
+					        'asc' => 'nomenclator.description',
+					        'desc' => 'nomenclator.description DESC',
+		),
+						  'supplier_description' => array(
+							        'asc' => 'supplier.business_name',
+							        'desc' => 'supplier.business_name DESC',
+		),
+					      '*',
+		);
+	
+		return new CActiveDataProvider($this, array(
+							'criteria'=>$criteria,
+							'sort'=>$sort,
+		));
+	
 	}
 	
 	public function searchByProduct()
