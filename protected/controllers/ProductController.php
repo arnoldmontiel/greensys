@@ -863,11 +863,18 @@ class ProductController extends Controller
 	
 		$differences = array();
 		
-		foreach($model->attributes as $key => $value) {
-			if($model->$key != $modelNew->$key)
-				$differences[$key] = array(
-		            'old' => $model->$key,
-		            'new' => $modelNew->$key);
+		foreach($modelNew->attributes as $key => $value) {
+			if(strstr($key,'Id_') == false &&
+				$key != 'date_creation' &&
+				$key != 'import_code' &&
+				$key != 'code' &&
+				$key != 'Id')
+			{
+				if($model->$key != $modelNew->$key)
+					$differences[$key] = array(
+			            'old' => $model->$key,
+			            'new' => $modelNew->$key);
+			}
 		}
 		
 		

@@ -890,7 +890,7 @@ class ReviewController extends Controller
 										SELECT 1
 										FROM tapia.note n
 										WHERE n.Id_project = uc.Id_project
-										HAVING COUNT(*) = 1
+										HAVING COUNT(*) <= 1
 									) OR (n.username <> "' .User::getCurrentUser()->username. '")');
 			
 			$criteria->group = 't.Id';
