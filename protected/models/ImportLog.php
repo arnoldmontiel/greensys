@@ -98,6 +98,8 @@ class ImportLog extends CActiveRecord
 		$criteria->compare('date',$this->date,true);
 		$criteria->compare('import_code',$this->import_code,true);
 
+		$criteria->order = 't.date DESC';
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

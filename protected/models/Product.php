@@ -440,6 +440,7 @@ class Product extends ModelAudit
 		$criteria->compare('unit_rack',$this->unit_rack);
 		$criteria->compare('unit_fan',$this->unit_fan);
 		$criteria->compare('model',$this->model,true);
+		$criteria->compare('import_code',$this->import_code,true);
 		$criteria->addCondition('Id_product is not null');
 		
 		$criteria->with[]='brand';
