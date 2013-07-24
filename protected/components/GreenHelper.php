@@ -35,10 +35,10 @@ class GreenHelper
 				$returnValue =  ($value == 'True')?1:0;
 				break;
 			case "int":
-				$returnValue =  (!empty($value))?$value:0;
+				$returnValue =  (!empty($value))?(int)$value:0;
 				break;
 			case "decimal":
-				$returnValue =  (!empty($value))?$value:0.00;
+				$returnValue =  (!empty($value))?(float)$value:0.00;
 				break;
 			case "string":
 				$returnValue =  (!empty($value))?$value:'';
@@ -92,7 +92,7 @@ class GreenHelper
 					{
 						
 						$differences = false;
-						foreach($modelProduct->attributes as $key => $value) {
+						foreach($modelNewProduct->attributes as $key => $value) {
 							if(strstr($key,'Id_') == false &&
 							   $key != 'date_creation' &&
 							   $key != 'import_code' &&
@@ -164,10 +164,10 @@ class GreenHelper
 		try {
 					
 			$modelProduct->discontinued = self::getDataValue($data, '"Discontinued"', $arrFields, 'boolean');
-			$modelProduct->height = self::getDataValue($data, '"Height"', $arrFields,'int');
-			$modelProduct->width = self::getDataValue($data, '"Width"', $arrFields,'int');
-			$modelProduct->length = self::getDataValue($data, '"Depth"', $arrFields,'int');
-			$modelProduct->weight = self::getDataValue($data, '"Weight"', $arrFields,'int');
+			$modelProduct->height = self::getDataValue($data, '"Height"', $arrFields,'decimal');
+			$modelProduct->width = self::getDataValue($data, '"Width"', $arrFields,'decimal');
+			$modelProduct->length = self::getDataValue($data, '"Depth"', $arrFields,'decimal');
+			$modelProduct->weight = self::getDataValue($data, '"Weight"', $arrFields,'decimal');
 			$modelProduct->msrp = self::getDataValue($data, '"MSRP"', $arrFields, 'decimal');
 			$modelProduct->time_instalation = self::getDataValue($data, '"Labor Hours"', $arrFields);
 			$modelProduct->unit_rack = self::getDataValue($data, '"Rack Units"', $arrFields,'int');
