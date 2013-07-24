@@ -396,6 +396,19 @@ class ProductController extends Controller
 			'model'=>$model,
 		));
 	}
+	
+	public function actionAdminImport()
+	{
+		$model=new ImportLog('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['ImportLog']))
+			$model->attributes=$_GET['ImportLog'];
+	
+		$this->render('adminImport',array(
+				'model'=>$model,
+		));
+	}
+	
 	/**
 	* Manages all models.
 	*/
@@ -850,6 +863,8 @@ class ProductController extends Controller
 		$modelProduct->unsetAttributes();  // clear any default values
 		if(isset($_GET['Product']))
 			$modelProduct->attributes=$_GET['Product'];
+		
+		$modelProduct->import_code = $model->import_code;
 		
 		$this->render('importResults',array('model'=>$model,
 		'modelProduct'=>$modelProduct,
