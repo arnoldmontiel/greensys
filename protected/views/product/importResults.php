@@ -5,7 +5,8 @@ Yii::app()->clientScript->registerScript('admin-import-results', "
 
 $('.btn-merge-product').click(function(){
 	var id = $(this).attr('id');
-	window.location = '".ProductController::createUrl('mergeProduct')."' + '&id='+id;
+	var idImport = $('#idImport').val();
+	window.location = '".ProductController::createUrl('mergeProduct')."' + '&id='+id + '&idImport='+idImport;
 	return false;
 });
 ");
@@ -16,6 +17,7 @@ $this->menu=array(
 	array('label'=>'Manage Product', 'url'=>array('admin')),
 	array('label'=>'Assign Groups', 'url'=>array('productGroup')),
 	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
+	array('label'=>'Manage Import', 'url'=>array('adminImport')),
 	array('label'=>'Import From Excel', 'url'=>array('importFromExcel')),
 );
 ?>
@@ -35,7 +37,9 @@ $this->menu=array(
 	),
 )); ?>
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php 
+echo CHtml::hiddenField('idImport',$model->Id,array('id'=>'idImport'));
+$this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'product-grid',
 	'summaryText'=>'',
 	'afterAjaxUpdate'=>'js:function(){
