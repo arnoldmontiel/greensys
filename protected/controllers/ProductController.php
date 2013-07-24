@@ -856,11 +856,21 @@ class ProductController extends Controller
 		));
 	}
 	
-	public function actionMergeProduct($id)
+	public function actionMergeProduct($id, $idImport)
 	{
 		$modelNew = Product::model()->findByPk($id);
 		$model = Product::model()->findByPk($modelNew->Id_product);		
 	
+		if(isset($_POST['Product']))
+		{
+			$model->attributes=$_POST['Product'];
+			if($model->save())
+			{
+				$modelNew->delete();
+				$this->redirect(array('importResults','id'=>$idImport));
+			}
+		}
+		
 		$differences = array();
 		
 		foreach($modelNew->attributes as $key => $value) {
@@ -879,6 +889,7 @@ class ProductController extends Controller
 		
 		
 		$this->render('mergeProduct',array('model'=>$model,
+										'idImport'=>$idImport,
 										'differences'=>$differences,
 		));
 	}
