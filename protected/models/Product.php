@@ -29,8 +29,8 @@
  * @property string $color
  * @property integer $Id_sub_category
  * @property string $other
- * @property integer $power
- * @property integer $current
+ * @property string $power
+ * @property string $current
  * @property integer $need_rack
  * @property integer $unit_rack
  * @property integer $unit_fan
@@ -52,7 +52,7 @@
  * @property string $unit_cost_C
  * @property string $unit_price_C
  * @property integer $taxable
- * @property double $btu
+ * @property string $btu
  * @property string $summarize
  * @property string $sales_tax
  * @property string $labor_sales_tax
@@ -147,11 +147,11 @@ class Product extends ModelAudit
 		// will receive user inputs.
 		return array(
 			array('Id_brand, Id_category, Id_nomenclator, Id_product_type, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, Id_category, Id_sub_category', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
-			array('Id_volts,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, power, current, need_rack, unit_rack, unit_fan, from_dtools, verified, Id_product', 'numerical', 'integerOnly'=>true),
+			array('Id_volts,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, need_rack, unit_rack, unit_fan, from_dtools, verified, Id_product', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier, short_description, part_number, url, tags, 
 				accounting_item_name, summarize, sales_tax, labor_sales_tax, dispersion, bulk_wire, model, vendor', 'length', 'max'=>255),
 			array('code, code_supplier, color, other', 'length', 'max'=>45),
-			array('length, width, height, profit_rate, msrp, weight, dealer_cost', 'length', 'max'=>10),
+			array('length, width, height, profit_rate, msrp, weight, dealer_cost, btu, power, current', 'length', 'max'=>10),
 			array('phase', 'length', 'max'=>100),
 			array('Id_volts, time_instalation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, Id_sub_category', 'safe'),
 			// The following rule is used by search().
