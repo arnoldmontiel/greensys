@@ -885,13 +885,15 @@ class ReviewController extends Controller
           			LEFT OUTER JOIN tapia.user_group_note ugn on (u.Id_user_group = ugn.Id_user_group)
 				";
 			$criteria->addCondition('uc.username = "'. User::getCurrentUser()->username.'"');
-				
+//  		$criteria->addCondition('n.username <> "'. User::getCurrentUser()->username.'"');
 			$criteria->addCondition('EXISTS (
 										SELECT 1
 										FROM tapia.note n
 										WHERE n.Id_project = uc.Id_project
 										HAVING COUNT(*) <= 1
 									) OR (n.username <> "' .User::getCurrentUser()->username. '")');
+			$criteria->addCondition('n.Id IN(select Id_note from tapia.user_group_note)');
+			
 			
 			$criteria->group = 't.Id';
 			$criteria->order = 'max_date DESC';				
