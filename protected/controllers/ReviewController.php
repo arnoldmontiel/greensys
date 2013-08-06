@@ -885,14 +885,14 @@ class ReviewController extends Controller
           			LEFT OUTER JOIN tapia.user_group_note ugn on (u.Id_user_group = ugn.Id_user_group)
 				";
 			$criteria->addCondition('uc.username = "'. User::getCurrentUser()->username.'"');
-//  		$criteria->addCondition('n.username <> "'. User::getCurrentUser()->username.'"');
-			$criteria->addCondition('EXISTS (
-										SELECT 1
-										FROM tapia.note n
-										WHERE n.Id_project = uc.Id_project
-										HAVING COUNT(*) <= 1
-									) OR (n.username <> "' .User::getCurrentUser()->username. '")');
-			//$criteria->addCondition('n.Id IN(select Id_note from tapia.user_group_note)');
+  			$criteria->addCondition('n.username <> "'. User::getCurrentUser()->username.'"');
+// 			$criteria->addCondition('EXISTS (
+// 										SELECT 1
+// 										FROM tapia.note n
+// 										WHERE n.Id_project = uc.Id_project
+// 										HAVING COUNT(*) <= 1
+// 									) OR (n.username <> "' .User::getCurrentUser()->username. '")');
+			$criteria->addCondition('n.Id IN(select Id_note from tapia.user_group_note)');
 			
 			$criteria->group = 't.Id';
 			$criteria->order = 'max_date DESC';				
@@ -924,7 +924,55 @@ class ReviewController extends Controller
 				$count++;
 				
 			}
-					
+			//--------------------------------------------------------
+			$criteria=new CDbCriteria;
+			
+			$criteria->select = 't.*, max(n.change_date) as max_date';
+			$criteria->join =  	" 
+								JOIN tapia.customer cus on (t.Id_customer = cus.Id)
+								LEFT OUTER JOIN green.person gp on (cus.Id_person = gp.Id)
+								LEFT OUTER JOIN green.contact gc on (cus.Id_contact = gc.Id)
+								LEFT OUTER JOIN tapia.user_customer uc on (t.Id = uc.Id_project)
+								LEFT OUTER JOIN tapia.user u on (u.username = uc.username)
+			          			LEFT OUTER JOIN tapia.note n ON ( n.Id_project = uc.Id_project)
+			          			LEFT OUTER JOIN tapia.user_group_note ugn on (u.Id_user_group = ugn.Id_user_group)
+							";
+			$criteria->addCondition('uc.username = "'. User::getCurrentUser()->username.'"');
+			//$criteria->addCondition('n.username <> "'. User::getCurrentUser()->username.'"');
+			$criteria->addCondition('EXISTS (
+													SELECT 1
+													FROM tapia.note n
+													WHERE n.Id_project = uc.Id_project
+													HAVING COUNT(*) <= 1
+												)');			
+			$criteria->addCondition('n.username is null or n.username = "'.User::getCurrentUser()->username. '"');
+			
+			$criteria->group = 't.Id';
+			$criteria->order = 'max_date DESC';
+				
+			if(isset($arrFilters['customerNameFilter'])&&$arrFilters['customerNameFilter']!='')
+			{
+				$criteria->addCondition('gc.description like "%'. $arrFilters['customerNameFilter'].'%" OR
+			 										t.description like "%'. $arrFilters['customerNameFilter'].'%" OR 
+			 										CONCAT(CONCAT(gc.description," - "),t.description) like "%'. $arrFilters['customerNameFilter'].'%"'
+				);
+			}
+				
+			$projects = Project::model()->findAll($criteria);
+			$count = 0;
+			foreach ($projects as $project){
+				$review->Id_customer = $project->customer->Id;
+				$review->Id_project = $project->Id;
+			
+				$dataProvider = $review->searchQuickView($arrFilters);
+			
+				$dataProvider->pagination->pageSize= 4;
+			
+				$data = $dataProvider->getData();
+				$this->renderPartial('_quickView',array('data'=>$data, 'customer'=>$project->customer,'project'=>$project,'collapsed'=>true));
+				$count++;
+			
+			}
 // 			$customers = TCustomer::model()->findAll($criteria);
 			
 // 			foreach ($customers as $customer){
