@@ -875,7 +875,7 @@ class ReviewController extends Controller
 			$criteria=new CDbCriteria;
 
 			$criteria->select = 't.*, max(n.change_date) as max_date';
-			$criteria->join =  	"
+			$criteria->join =  	" 
 					JOIN tapia.customer cus on (t.Id_customer = cus.Id)
 					LEFT OUTER JOIN green.person gp on (cus.Id_person = gp.Id)
 					LEFT OUTER JOIN green.contact gc on (cus.Id_contact = gc.Id)
@@ -885,7 +885,7 @@ class ReviewController extends Controller
           			LEFT OUTER JOIN tapia.user_group_note ugn on (u.Id_user_group = ugn.Id_user_group)
 				";
 			$criteria->addCondition('uc.username = "'. User::getCurrentUser()->username.'"');
-			$criteria->addCondition('n.in_progress = 0');
+			$criteria->addCondition('n.in_progress is null OR n.in_progress = 0');			
 
 			$criteria->group = 't.Id';
 			$criteria->order = 'max_date DESC';				
