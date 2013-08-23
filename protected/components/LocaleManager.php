@@ -22,12 +22,17 @@ class LocaleManager extends CApplicationComponent {
 
 	
 	public function getSelectedLanguage() {
-		if (isset(Yii::app()->session['sel_lang'])) {
-			return Yii::app()->session['sel_lang'];
+		if(isset(Yii::app()->session))
+		{
+			if (isset(Yii::app()->session['sel_lang'])) {
+				return Yii::app()->session['sel_lang'];
+			}
+			else {
+				return Yii::app()->getLanguage();
+			}
 		}
-		else {
-			return Yii::app()->getLanguage();
-		}
+		else
+			return Yii::app()->language;
 	}
 
 
