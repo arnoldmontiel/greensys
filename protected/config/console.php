@@ -11,7 +11,9 @@ return array(
 		'application.models.*',
 		'application.components.*',
 	),
-		
+
+	'localeDataPath'=>'protected/i18n/data/',
+
 	// application components
 	'components'=>array(
 		'db'=>array(
