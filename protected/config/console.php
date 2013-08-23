@@ -2,6 +2,8 @@
 
 // This is the configuration for yiic console application.
 // Any writable CConsoleApplication properties can be configured here.
+$GLOBALS['yii'] = dirname(__FILE__).'/../../../../yii/framework/yii.php';
+
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'My Console Application',
