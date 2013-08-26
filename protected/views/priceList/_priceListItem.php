@@ -27,9 +27,9 @@ $('#addAll').click(
 			}
 		
 			$.post('".PriceListController::createUrl('AjaxAddFilteredProducts')."',
-				$.param($(
-			        '#product-grid .filters input,  #product-grid .filters select, '
-    		))+'&Id_price_list='+$('#PriceList_Id :selected').attr('value'),
+				$.param(
+					$('#product-grid .filters input,  #product-grid .filters select')
+					)+'&Id_price_list='+$('#PriceList_Id :selected').attr('value'),
 				function(data){
 					$.fn.yiiGridView.update('price-list-item-grid');
 				}
@@ -286,7 +286,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				),
 				array(
 					'name'=>'code_supplier',
-				    'value'=>'$data->code_supplier',				 
+				    'value'=>'$data->product->code_supplier',				 
 				),
 				array(
  				            'name'=>'description_customer',
