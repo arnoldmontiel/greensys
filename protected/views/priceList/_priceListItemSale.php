@@ -27,7 +27,7 @@ $('#addAll-sale').click(
 			}
 			$.post('".PriceListController::createUrl('AjaxAddFilteredProductsSale')."',
 				$.param($(
-			        '#product-grid-sale .filters input,  #product-grid-sale .filters select, '
+			        '#product-grid-sale .filters input, '
     		))+'&Id_price_list='+$('#PriceList_Id :selected').attr('value'),
 				function(data){
 					$.fn.yiiGridView.update('price-list-item-grid-sale');

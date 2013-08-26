@@ -441,7 +441,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'modal'=>true,
 					'width'=> '700',
 					'buttons'=>	array(
-							'Close'=>'js:function(){jQuery("#SelectBudget").dialog( "close" );}',
 							'Add'=>'js:function(){
 								var idProduct;
 								var items="";
@@ -475,6 +474,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 									});							
 								jQuery("#SelectBudget").dialog( "close" );
 							}',
+						'Close'=>'js:function(){jQuery("#SelectBudget").dialog( "close" );}',
+
 					),
 			),
 	));
