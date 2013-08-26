@@ -35,7 +35,7 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#price_list', "
 		<?php echo $form->labelEx($model,'date_validity'); ?>
  		<?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 	     // additional javascript options for the date picker plugin
- 		'language'=>'en',
+ 		'language'=>'es',
  		'model'=>$model,
  		'attribute'=>'date_validity',
  		'options'=>array(
