@@ -69,6 +69,34 @@
  * @property string $model
  * @property string $vendor
  * @property integer $Id_product
+ * @property string $default_broker
+ * @property string $default_send_format
+ * @property string $shipping_box_lenght
+ * @property string $shipping_box_width
+ * @property string $shipping_box_height
+ * @property string $shipping_box_volume
+ * @property string $shipping_box_weight
+ * @property string $dimensional_weight_IATA
+ * @property string $dimensional_weight_FEDEX
+ * @property string $dimensional_weight_DHL
+ * @property string $dimensional_weight_UPS
+ * @property string $dimensional_weight_custom1
+ * @property string $dimensional_weight_custom2
+ * @property string $dimensional_weight_custom3
+ * @property string $off
+ * @property string $off_category_a
+ * @property string $off_cateogry_b
+ * @property string $off_category_c
+ * @property string $off_category_d
+ * @property string $deale_distributor_price
+ * @property integer $need_ups
+ * @property string $commercial_name
+ * @property string $commercial_description
+ * @property string $accessory_a
+ * @property string $accessory_b
+ * @property string $accessory_c
+ * @property string $accessory_d
+ * @property string $attached
  * 
  * The followings are the available model relations:
  * @property BudgetItem[] $budgetItems
@@ -147,16 +175,17 @@ class Product extends ModelAudit
 		// will receive user inputs.
 		return array(
 			array('Id_brand, Id_category, Id_nomenclator, Id_product_type, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, Id_category, Id_sub_category', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
-			array('Id_volts,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, need_rack, unit_rack, unit_fan, from_dtools, verified, Id_product', 'numerical', 'integerOnly'=>true),
+			array('Id_volts,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, need_rack, unit_rack, unit_fan, from_dtools, verified, Id_product, need_ups', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier, short_description, part_number, url, tags, 
-				accounting_item_name, summarize, sales_tax, labor_sales_tax, dispersion, bulk_wire, model, vendor', 'length', 'max'=>255),
+				accounting_item_name, summarize, sales_tax, labor_sales_tax, dispersion, bulk_wire, model, vendor, default_broker, default_send_format, commercial_name, accessory_a, accessory_b, accessory_c, accessory_d, attached', 'length', 'max'=>255),
 			array('code, code_supplier, color, other', 'length', 'max'=>45),
-			array('length, width, height, profit_rate, msrp, weight, dealer_cost, btu, power, current', 'length', 'max'=>10),
+			array('length, width, height, profit_rate, msrp, weight, dealer_cost, btu, power, current, unit_cost_A, unit_price_A, unit_cost_B, unit_price_B, unit_cost_C, unit_price_C, btu, shipping_box_lenght, shipping_box_width, shipping_box_height, shipping_box_volume, shipping_box_weight, dimensional_weight_IATA, dimensional_weight_FEDEX, dimensional_weight_DHL, dimensional_weight_UPS, dimensional_weight_custom1, dimensional_weight_custom2, dimensional_weight_custom3, off, off_category_a, off_cateogry_b, off_category_c, off_category_d, deale_distributor_price', 'length', 'max'=>10),
 			array('phase', 'length', 'max'=>100),
+			array('date_creation, long_description, input_terminals, input_signals, input_labels, output_terminals, output_signals, output_labels, commercial_description', 'safe'),
 			array('Id_volts, time_instalation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, Id_sub_category', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_brand, Id_category, Id_nomenclator, Id_product_type, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color, other, Id_category, power, current, need_rack, unit_rack, from_dtools, verified, model, vendor, Id_product', 'safe', 'on'=>'search'),
+			array('Id, Id_brand, Id_category, Id_nomenclator, Id_product_type, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color, other, Id_category, power, current, need_rack, unit_rack, from_dtools, verified, model, vendor, Id_product, default_broker, default_send_format, shipping_box_lenght, shipping_box_width, shipping_box_height, shipping_box_volume, shipping_box_weight, dimensional_weight_IATA, dimensional_weight_FEDEX, dimensional_weight_DHL, dimensional_weight_UPS, dimensional_weight_custom1, dimensional_weight_custom2, dimensional_weight_custom3, off, off_category_a, off_cateogry_b, off_category_c, off_category_d, deale_distributor_price, need_ups, commercial_name, commercial_description, accessory_a, accessory_b, accessory_c, accessory_d, attached', 'safe', 'on'=>'search'),
 		
 			
 		);
@@ -239,6 +268,67 @@ class Product extends ModelAudit
 			'supplier_description'=>'Supplier',
 			'brand_description'=>'Brand',
 			'category_description'=>'Category',
+			'date_creation' => 'Date Creation',
+			'from_dtools' => 'From Dtools',
+			'long_description' => 'Long Description',
+			'short_description' => 'Short Description',
+			'part_number' => 'Part Number',
+			'url' => 'Url',
+			'tags' => 'Tags',
+			'phase' => 'Phase',
+			'accounting_item_name' => 'Accounting Item Name',
+			'unit_cost_A' => 'Unit Cost A',
+			'unit_price_A' => 'Unit Price A',
+			'unit_cost_B' => 'Unit Cost B',
+			'unit_price_B' => 'Unit Price B',
+			'unit_cost_C' => 'Unit Cost C',
+			'unit_price_C' => 'Unit Price C',
+			'taxable' => 'Taxable',
+			'btu' => 'Btu',
+			'summarize' => 'Summarize',
+			'sales_tax' => 'Sales Tax',
+			'labor_sales_tax' => 'Labor Sales Tax',
+			'dispersion' => 'Dispersion',
+			'bulk_wire' => 'Bulk Wire',
+			'input_terminals' => 'Input Terminals',
+			'input_signals' => 'Input Signals',
+			'input_labels' => 'Input Labels',
+			'output_terminals' => 'Output Terminals',
+			'output_signals' => 'Output Signals',
+			'output_labels' => 'Output Labels',
+			'import_code' => 'Import Code',
+			'verified' => 'Verified',
+			'model' => 'Model',
+			'vendor' => 'Vendor',
+			'Id_product' => 'Id Product',
+			'default_broker' => 'Despachante por defecto',
+			'default_send_format' => 'Formato de envio por defecto',
+			'shipping_box_lenght' => 'Shipping Box Lenght',
+			'shipping_box_width' => 'Shipping Box Width',
+			'shipping_box_height' => 'Shipping Box Height',
+			'shipping_box_volume' => 'Shipping Box Volume',
+			'shipping_box_weight' => 'Shipping Box Weight',
+			'dimensional_weight_IATA' => 'Dimensional Weight Iata',
+			'dimensional_weight_FEDEX' => 'Dimensional Weight Fedex',
+			'dimensional_weight_DHL' => 'Dimensional Weight Dhl',
+			'dimensional_weight_UPS' => 'Dimensional Weight Ups',
+			'dimensional_weight_custom1' => 'Dimensional Weight Custom1',
+			'dimensional_weight_custom2' => 'Dimensional Weight Custom2',
+			'dimensional_weight_custom3' => 'Dimensional Weight Custom3',
+			'off' => 'Descuento',
+			'off_category_a' => 'Descuento Categoria A',
+			'off_cateogry_b' => 'Descuento Categoria B',
+			'off_category_c' => 'Descuento Categoria C',
+			'off_category_d' => 'Descuento Categoria D',
+			'deale_distributor_price' => 'Deale Distributor Price',
+			'need_ups' => 'Necesita Ups',
+			'commercial_name' => 'Nombre Commercial',
+			'commercial_description' => 'Description Commercial',
+			'accessory_a' => 'Accesorio A',
+			'accessory_b' => 'Accesorio B',
+			'accessory_c' => 'Accesorio C',
+			'accessory_d' => 'Accesorio D',
+			'attached' => 'Adjuntos',
 		);
 	}
 
