@@ -596,7 +596,7 @@ class PriceListController extends Controller
 	{
 	
 		$plItemsFilter = isset($_POST['PriceListItem'])?$_POST['PriceListItem']:null;
-		$plItemId = isset($_POST['PriceList'])? (int)$_POST['PriceList']['Id']:null;
+		$plItemId = isset($_POST['Id_price_list'])?$_POST['Id_price_list']:null;
 		
 		if($plItemsFilter != null && $plItemId != null){
 			$plItems = PriceListItem::model();

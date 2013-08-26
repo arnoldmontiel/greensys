@@ -37,7 +37,27 @@ $('#addAll').click(
 			return false;				
 		}
 );
+
+$('#deleteAll').click(
+		function()
+		{
+			if(!confirm('Are you sure you want to delete all filtered products?'))
+			{ 
+				return false;
+			}
 		
+			$.post('".PriceListController::createUrl('AjaxDeleteFilteredProducts')."',
+				$.param(
+					$('#price-list-item-grid .filters input,  #price-list-item-grid .filters select')
+					)+'&Id_price_list='+$('#PriceList_Id :selected').attr('value'),
+				function(data){
+					$.fn.yiiGridView.update('price-list-item-grid');
+				}
+			);	
+			return false;				
+		}
+);
+
 ");
 ?>
 	<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;margin-bottom: 5px;">
@@ -156,20 +176,6 @@ $('#addAll').click(
                                 'title'=>'Delete current filtered products',
                                 'style'=>'width:30px;',
                                 'id'=>'deleteAll',
-                                	'ajax'=> array(
-										'type'=>'POST',
-										'url'=>PriceListController::createUrl('AjaxDeleteFilteredProducts'),
-										'beforeSend'=>'function(){
-													if(!confirm("Are you sure you want to delete all filtered products?")) 
-														return false;
-														}',
-										'success'=>'function(data)
-										{
-											$.fn.yiiGridView.update("price-list-item-grid", {
-												data: $(this).serialize()
-											});
-										}'
-                                	)
                                 )
                                                          
                             ); 
