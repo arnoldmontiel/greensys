@@ -83,7 +83,7 @@
 			'links'=>$this->breadcrumbs,
 		)); ?><!-- breadcrumbs -->
 	<?php endif?>
-		<div id="language" class="language">
+		<div id="language" class="language" style="display:none;">
 			<?php
 			$data = Yii::app()->lc->getAvalaibleLanguages();
 			$returnArr = array();
