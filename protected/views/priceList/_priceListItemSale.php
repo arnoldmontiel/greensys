@@ -159,7 +159,7 @@ $('#addAll-sale').click(
                                 'images/delete_all_blue.png',
                                 array(
                                 'title'=>'Delete current filtered products',
-                                'width'=>'30px',
+								'style'=>'width:30px;',
                                 'id'=>'deleteAll-sale',
                                 	'ajax'=> array(
 										'type'=>'POST',
