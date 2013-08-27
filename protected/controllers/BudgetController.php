@@ -215,7 +215,8 @@ class BudgetController extends Controller
 				GROUP BY Id) b2';
 		
 		$criteria->condition = 't.Id = b2.Id and t.version_number = b2.vn';
-		
+		$criteria->order="date_creation DESC";
+				
 		$dataProvider=new CActiveDataProvider('Budget', array(
 			'criteria'=>$criteria,
 		));
