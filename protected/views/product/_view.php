@@ -11,6 +11,10 @@
 		<?php echo CHtml::link(CHtml::encode($data->code), array('view', 'id'=>$data->Id)); ?>
 		<br />
 	
+		<b><?php echo CHtml::encode($data->getAttributeLabel('model')); ?>:</b>
+		<?php echo CHtml::encode($data->model); ?>
+		<br />
+		
 		<b><?php echo CHtml::encode($data->getAttributeLabel('code_supplier')); ?>:</b>
 		<?php echo CHtml::encode($data->code_supplier); ?>
 		<br />

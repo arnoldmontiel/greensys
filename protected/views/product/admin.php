@@ -27,9 +27,9 @@ $this->menu=array(
 				'value'=>'$data->code',
 			),			
 			array(
-		 		'name'=>'code_supplier',
-				'value'=>'$data->code_supplier',
-			),			
+		 		'name'=>'model',
+				'value'=>'$data->model',
+			),
 			array(
 		 		'name'=>'supplier_description',
 				'value'=>'$data->supplier->business_name',

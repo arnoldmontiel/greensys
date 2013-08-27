@@ -161,6 +161,12 @@ $('#deleteIcon').click(function(){
 	<?php endif; ?>
 	
 	<div class="row">
+		<?php echo $form->labelEx($model,'model'); ?>
+		<?php echo $form->textField($model,'model',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($model,'model'); ?>
+	</div>
+	
+	<div class="row">
 		<?php echo $form->labelEx($model,'code_supplier'); ?>
 		<?php echo $form->textField($model,'code_supplier',array('size'=>45,'maxlength'=>45)); ?>
 		<?php echo $form->error($model,'code_supplier'); ?>
@@ -448,6 +454,270 @@ $('#deleteIcon').click(function(){
 		<?php echo $form->checkBox($model,'hide'); ?>
 		<?php echo $form->error($model,'hide'); ?>
 	</div>
+	
+	<div class="row">
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'unit_cost_A'); ?>
+			<?php echo $form->textField($model,'unit_cost_A',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'unit_cost_A'); ?>
+		</div>
+
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'unit_price_A'); ?>
+			<?php echo $form->textField($model,'unit_price_A',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'unit_price_A'); ?>
+		</div>
+	</div>
+	<div class="row">
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'unit_cost_B'); ?>
+			<?php echo $form->textField($model,'unit_cost_B',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'unit_cost_B'); ?>
+		</div>
+		
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'unit_price_B'); ?>
+			<?php echo $form->textField($model,'unit_price_B',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'unit_price_B'); ?>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'unit_cost_C'); ?>
+			<?php echo $form->textField($model,'unit_cost_C',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'unit_cost_C'); ?>
+		</div>
+		
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'unit_price_C'); ?>
+			<?php echo $form->textField($model,'unit_price_C',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'unit_price_C'); ?>
+		</div>
+	</div>
+
+	<div class="row">
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'input_terminals'); ?>
+			<?php echo $form->textArea($model, 'input_terminals', array('maxlength' => 300, 'rows' => 6, 'cols' => 50)); ?>
+			<?php echo $form->error($model,'input_terminals'); ?>
+		</div>
+		
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'input_signals'); ?>
+			<?php echo $form->textArea($model, 'input_signals', array('maxlength' => 300, 'rows' => 6, 'cols' => 50)); ?>
+			<?php echo $form->error($model,'input_signals'); ?>
+		</div>
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'input_labels'); ?>
+			<?php echo $form->textArea($model, 'input_labels', array('maxlength' => 300, 'rows' => 6, 'cols' => 50)); ?>
+			<?php echo $form->error($model,'input_labels'); ?>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'output_terminals'); ?>
+			<?php echo $form->textArea($model, 'output_terminals', array('maxlength' => 300, 'rows' => 6, 'cols' => 50)); ?>
+			<?php echo $form->error($model,'output_terminals'); ?>
+		</div>
+		
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'output_signals'); ?>
+			<?php echo $form->textArea($model, 'output_signals', array('maxlength' => 300, 'rows' => 6, 'cols' => 50)); ?>
+			<?php echo $form->error($model,'output_signals'); ?>
+		</div>
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'output_labels'); ?>
+			<?php echo $form->textArea($model, 'output_labels', array('maxlength' => 300, 'rows' => 6, 'cols' => 50)); ?>
+			<?php echo $form->error($model,'output_labels'); ?>
+		</div>
+	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'default_broker'); ?>
+		<?php echo $form->textField($model,'default_broker'); ?>
+		<?php echo $form->error($model,'default_broker'); ?>
+	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'default_send_format'); ?>
+		<?php echo $form->textField($model,'default_send_format'); ?>
+		<?php echo $form->error($model,'default_send_format'); ?>
+	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'default_send_format'); ?>
+		<?php echo $form->textField($model,'default_send_format'); ?>
+		<?php echo $form->error($model,'default_send_format'); ?>
+	</div>
+	
+	<div class="row">
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'shipping_box_lenght'); ?>
+			<?php echo $form->textField($model,'shipping_box_lenght',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'shipping_box_lenght'); ?>
+		</div>
+
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'shipping_box_width'); ?>
+			<?php echo $form->textField($model,'shipping_box_width',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'shipping_box_width'); ?>
+		</div>
+
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'shipping_box_height'); ?>
+			<?php echo $form->textField($model,'shipping_box_height',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'shipping_box_height'); ?>
+		</div>
+		
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'shipping_box_volume'); ?>
+			<?php echo $form->textField($model,'shipping_box_volume',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'shipping_box_volume'); ?>
+		</div>
+		
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'shipping_box_weight'); ?>
+			<?php echo $form->textField($model,'shipping_box_weight',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'shipping_box_weight'); ?>
+		</div>		
+
+	</div>
+
+	<div class="row">
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'dimensional_weight_IATA'); ?>
+			<?php echo $form->textField($model,'dimensional_weight_IATA',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'dimensional_weight_IATA'); ?>
+		</div>
+
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'dimensional_weight_FEDEX'); ?>
+			<?php echo $form->textField($model,'dimensional_weight_FEDEX',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'dimensional_weight_FEDEX'); ?>
+		</div>
+
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'dimensional_weight_DHL'); ?>
+			<?php echo $form->textField($model,'dimensional_weight_DHL',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'dimensional_weight_DHL'); ?>
+		</div>
+		
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'dimensional_weight_UPS'); ?>
+			<?php echo $form->textField($model,'dimensional_weight_UPS',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'dimensional_weight_UPS'); ?>
+		</div>
+		
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'dimensional_weight_custom1'); ?>
+			<?php echo $form->textField($model,'dimensional_weight_custom1',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'dimensional_weight_custom1'); ?>
+		</div>		
+
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'dimensional_weight_custom2'); ?>
+			<?php echo $form->textField($model,'dimensional_weight_custom2',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'dimensional_weight_custom2'); ?>
+		</div>
+		
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'dimensional_weight_custom3'); ?>
+			<?php echo $form->textField($model,'dimensional_weight_custom3',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'dimensional_weight_custom3'); ?>
+		</div>
+		
+	</div>
+	
+	<div class="row">
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'off'); ?>
+			<?php echo $form->textField($model,'off',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'off'); ?>
+		</div>
+
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'off_category_a'); ?>
+			<?php echo $form->textField($model,'off_category_a',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'off_category_a'); ?>
+		</div>
+
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'off_category_b'); ?>
+			<?php echo $form->textField($model,'off_category_b',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'off_category_b'); ?>
+		</div>
+		
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'off_category_c'); ?>
+			<?php echo $form->textField($model,'off_category_c',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'off_category_c'); ?>
+		</div>
+		
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($model,'off_category_d'); ?>
+			<?php echo $form->textField($model,'off_category_d',array('size'=>10,'maxlength'=>10)); ?>
+			<?php echo $form->error($model,'off_category_d'); ?>
+		</div>		
+		
+	</div>
+	
+	<div class="row">
+	
+		<?php echo $form->labelEx($model,'need_ups'); ?>
+		<?php echo $form->checkBox($model,'need_ups'); ?>
+		<?php echo $form->error($model,'need_ups'); ?>
+	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'deale_distributor_price'); ?>
+		<?php echo $form->textField($model,'deale_distributor_price',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'deale_distributor_price'); ?>
+	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'commercial_name'); ?>
+		<?php echo $form->textField($model,'commercial_name',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'commercial_name'); ?>
+	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'commercial_description'); ?>
+		<?php echo $form->textField($model,'commercial_description',array('size'=>60,'maxlength'=>255)); ?>				
+		<?php echo $form->error($model,'commercial_description'); ?>
+	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'accessory_a'); ?>
+		<?php echo $form->textField($model,'accessory_a',array('size'=>60,'maxlength'=>255)); ?>				
+		<?php echo $form->error($model,'accessory_a'); ?>
+	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'accessory_b'); ?>
+		<?php echo $form->textField($model,'accessory_b',array('size'=>60,'maxlength'=>255)); ?>				
+		<?php echo $form->error($model,'accessory_b'); ?>
+	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'accessory_c'); ?>
+		<?php echo $form->textField($model,'accessory_c',array('size'=>60,'maxlength'=>255)); ?>				
+		<?php echo $form->error($model,'accessory_c'); ?>
+	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'accessory_d'); ?>
+		<?php echo $form->textField($model,'accessory_d',array('size'=>60,'maxlength'=>255)); ?>				
+		<?php echo $form->error($model,'accessory_d'); ?>
+	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'attached'); ?>
+		<?php echo $form->textField($model,'attached',array('size'=>60,'maxlength'=>255)); ?>				
+		<?php echo $form->error($model,'attached'); ?>
+	</div> 
+	
 <?php
 $hyperLinks = CHtml::listData($modelHyperlink, 'Id','description');
 

@@ -37,6 +37,7 @@ $this->widget('zii.widgets.CDetailView', array(
 	'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',	
 	'attributes'=>array(
 		'code',
+		'model',
 		'code_supplier',
 		array('label'=>$model->getAttributeLabel('Id_supplier'),
 					'type'=>'raw',
@@ -181,9 +182,40 @@ $this->widget('zii.widgets.CDetailView', array(
 																						'style'=>'height:100%;overflow: hidden;',
 																						'readonly'=>true)),
 		),
-
+		'default_broker',
+		'default_send_format',
+		'shipping_box_lenght',
+		'shipping_box_width',
+		'shipping_box_height',
+		'shipping_box_volume',
+		'shipping_box_weight',
+		'dimensional_weight_IATA',
+		'dimensional_weight_FEDEX',
+		'dimensional_weight_DHL',
+		'dimensional_weight_UPS',
+		'dimensional_weight_custom1',
+		'dimensional_weight_custom2',
+		'dimensional_weight_custom3',
+		'off',
+		'off_category_a',
+		'off_cateogry_b',
+		'off_category_c',
+		'off_category_d',
+		'deale_distributor_price',
+		array('label'=>$model->getAttributeLabel('need_ups'),
+			'type'=>'raw',
+			'value'=>CHtml::checkBox("need_ups",$model->need_ups,array("disabled"=>"disabled"))
+		),
+		'commercial_name',
+		'commercial_description',
+		'accessory_a',
+		'accessory_b',
+		'accessory_c',
+		'accessory_d',
+		'attached',
 	),
 )); 
+
 ?>
 </div>
 <div class="right" style="margin-left:1px; width: 48%; ">
