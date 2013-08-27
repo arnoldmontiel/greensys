@@ -93,9 +93,18 @@ class ReviewController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidationNote($model,$modelNote);
 		
-		$dllReviewTypeUserGroup = ReviewTypeUserGroup::model()->findAllByAttributes(
-				array('Id_user_group'=>User::getCurrentUserGroup()->Id,
-						'can_create'=>1));
+		$criteria = new CDbCriteria;
+		$criteria->join = 'INNER JOIN review_type rt ON (rt.Id = t.Id_review_type)';
+		$criteria->addCondition('Id_user_group = '. User::getCurrentUserGroup()->Id);
+		$criteria->addCondition('can_create = 1');
+		$criteria->order = 'rt.description ASC';
+		
+		$dllReviewTypeUserGroup = ReviewTypeUserGroup::model()->findAll($criteria);
+		
+// 		$dllReviewTypeUserGroup = ReviewTypeUserGroup::model()->findAllByAttributes(
+// 				array('Id_user_group'=>User::getCurrentUserGroup()->Id,
+// 						'can_create'=>1));
+		
 		if($dllReviewTypeUserGroup)
 		{
 			foreach($dllReviewTypeUserGroup as $itemReviewType)
