@@ -79,10 +79,14 @@ $('input:checkbox').live('click',function() {
 	var idProduct = $(this).attr('idProduct');
 	var idBudgetItem = $(this).attr('idBudgetItem');
 	var idBudgetItemParent = $(this).attr('idBudgetItemParent');
-	$('#displayChildrenPrices' ).toggle('blind',{},1000);
 	
 	if($(this).is(':checked'))
 	{
+		if(!$('#displayChildrenPrices').is(':visible'))
+		{
+			$('#displayChildrenPrices' ).toggle('blind',{},1000);
+		}		
+					
 		selectSpecificRow('budget-item-children-grid', idBudgetItem);
 	
 		$.fn.yiiGridView.update('price-list-item-child-grid', {
@@ -91,6 +95,11 @@ $('input:checkbox').live('click',function() {
 	}
 	else
 	{
+		if($('#displayChildrenPrices').is(':visible'))
+		{
+			$('#displayChildrenPrices' ).toggle('blind',{},1000);
+		}		
+					
 		unselectRow('budget-item-children-grid');
 		$.post(
 			'".BudgetController::createUrl('AjaxQuitItem')."',
