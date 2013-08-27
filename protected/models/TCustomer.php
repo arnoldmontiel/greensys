@@ -150,7 +150,7 @@ class TCustomer extends TapiaActiveRecord
 		$criteria->addSearchCondition("gc.telephone_1",$this->telephone_1);
 		$criteria->addSearchCondition("gc.email",$this->email);
 		$criteria->addSearchCondition("gc.description",$this->contact_description);
-		$criteria->addSearchCondition("t.username IS NOT NULL");
+		$criteria->addCondition("t.username IS NOT NULL");
 		
 		$sort=new CSort;
 		$sort->defaultOrder="gc.description ASC";
@@ -197,8 +197,8 @@ class TCustomer extends TapiaActiveRecord
 		$criteria->addSearchCondition("gc.telephone_1",$this->telephone_1);
 		$criteria->addSearchCondition("gc.email",$this->email);
 		$criteria->addSearchCondition("gc.description",$this->contact_description);
-		$criteria->addSearchCondition("t.username IS NOT NULL");
-		
+		$criteria->addCondition("t.username IS NOT NULL");
+				
 		$criteria->compare('t.username',$this->username,true);
 		$criteria->compare('building_address',$this->building_address,true);
 	
@@ -253,8 +253,8 @@ class TCustomer extends TapiaActiveRecord
 		$criteria->addSearchCondition("gc.telephone_1",$this->telephone_1);
 		$criteria->addSearchCondition("gc.email",$this->email);
 		$criteria->addSearchCondition("gc.description",$this->contact_description);
-		$criteria->addSearchCondition("t.username IS NOT NULL");
-		
+		$criteria->addCondition("t.username IS NOT NULL");
+				
 		
 		$criteria->addCondition('t.Id IN(select Id_customer from user_customer where username = "'. User::getCurrentUser()->username.'")');
 		
