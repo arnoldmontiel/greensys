@@ -67,6 +67,7 @@
 			array('label'=>Yii::app()->lc->t('Reports'), 'visible'=>!Yii::app()->user->isGuest, 'items'=>array
 				(
 					array('label'=>Yii::app()->lc->t('Costs'), 'url'=>array('/cost/index')),
+					array('label'=>Yii::app()->lc->t('Stock'), 'url'=>array('/stockSummary/index')),
 				)
 			),
 		array('label'=>Yii::app()->lc->t('Logout').' ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
