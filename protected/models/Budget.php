@@ -260,7 +260,8 @@ class Budget extends ModelAudit
 		$criteria->compare('date_estimated_finalization',$this->date_estimated_finalization,true);
 		$criteria->compare('version_number',$this->version_number);
 		$criteria->compare('description',$this->description,true);
-	
+		$criteria->order="date_creation DESC";
+		
 		//$criteria->with[]='project';
 		$criteria->addSearchCondition('project.description',$this->Id_project);
 		

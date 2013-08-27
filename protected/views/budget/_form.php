@@ -18,8 +18,16 @@ $('#Budget_percent_discount').keyup(function(){
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'Id_project'); ?>	<?php 
-		$project = CHtml::listData($modelProject, 'Id', 'description');
-		echo $form->dropDownList($model, 'Id_project', $project,array('disabled'=>$model->isNewRecord ? '' : 'disabled'));
+
+			$criteria=new CDbCriteria;			
+			$criteria->select ="t.*, contact.description designacion";
+			$criteria->join =" INNER JOIN customer c on (t.Id_customer = c.Id)
+					INNER JOIN contact contact on (c.Id_contact = contact.Id)";
+			$criteria->order="designacion, t.description";
+						
+			$list = CHtml::listData(Project::model()->findAll($criteria), 'Id', 'LongDescription');
+		
+		echo $form->dropDownList($model, 'Id_project', $list,array('disabled'=>$model->isNewRecord ? '' : 'disabled'));
 		?>
 		<?php echo $form->error($model,'Id_project'); ?>
 	</div>
@@ -48,7 +56,7 @@ $('#Budget_percent_discount').keyup(function(){
 		<?php echo $form->labelEx($model,'date_estimated_inicialization'); ?>
  		<?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 	     // additional javascript options for the date picker plugin
- 		'language'=>'en',
+ 		'language'=>'es',
  		'model'=>$model,
  		'attribute'=>'date_estimated_inicialization',
  		'options'=>array(
@@ -65,7 +73,7 @@ $('#Budget_percent_discount').keyup(function(){
 		<?php echo $form->labelEx($model,'date_estimated_finalization'); ?>
  		<?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 	     // additional javascript options for the date picker plugin
- 		'language'=>'en',
+ 		'language'=>'es',
  		'model'=>$model,
  		'attribute'=>'date_estimated_finalization',
  		'options'=>array(
@@ -82,7 +90,7 @@ $('#Budget_percent_discount').keyup(function(){
 		<?php echo $form->labelEx($model,'date_inicialization'); ?>
  		<?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 	     // additional javascript options for the date picker plugin
- 		'language'=>'en',
+ 		'language'=>'es',
  		'model'=>$model,
  		'attribute'=>'date_inicialization',
  		'options'=>array(
@@ -99,7 +107,7 @@ $('#Budget_percent_discount').keyup(function(){
 		<?php echo $form->labelEx($model,'date_finalization'); ?>
  		<?php $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 	     // additional javascript options for the date picker plugin
- 		'language'=>'en',
+ 		'language'=>'es',
  		'model'=>$model,
  		'attribute'=>'date_finalization',
  		'options'=>array(
