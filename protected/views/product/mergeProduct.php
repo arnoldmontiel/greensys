@@ -108,7 +108,7 @@ foreach($differences as $key => $diff)
 	echo '</tr>';
 	echo '<tr class="even">';
 		echo '<td width=40%>';
-			echo CHtml::activeTextArea($model, $key,array('disabled'=>true));
+			echo CHtml::activeTextArea($model, $key);
 			echo CHtml::textArea($key,$diff['old'],array('id'=>$key.'_hidden', 'style'=>'display:none'));
 		echo '</td>';		
 		echo '<td width=20% style="text-align:center">';
