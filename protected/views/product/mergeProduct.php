@@ -72,8 +72,8 @@ array('label'=>'Import Results', 'url'=>array('importResults','id'=>$idImport)),
 </div>
 <br>
 <?php
-echo CHtml::button("<< All",array('id'=>'btn-merge-data-all', 'key'=>$key));
-echo CHtml::button("Undo All",array('id'=>'btn-undo-all', 'key'=>$key));
+echo CHtml::button("<< All",array('id'=>'btn-merge-data-all'));
+echo CHtml::button("Undo All",array('id'=>'btn-undo-all'));
 ?>
 <br>
 <div id="merge-area">
