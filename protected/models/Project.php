@@ -127,4 +127,9 @@ class Project extends ModelAudit
 			'criteria'=>$criteria,
 		));
 	}
+	public function getLongDescription()
+	{
+		$customer = $this->customer;
+		return $customer->contact->description ." - ".$this->description; 
+	}
 }

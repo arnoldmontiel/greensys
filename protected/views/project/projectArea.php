@@ -25,8 +25,20 @@ $this->trashDraggableId = 'ddlAssigment';
 		?>
 	<div style="row;width:300px;margin:2px;">
 		
-		<?php echo $form->labelEx($model,'Project'); ?>
-		<?php echo $form->dropDownList($model, 'Id', CHtml::listData($model->findAll(), 'Id', 'description'),		
+		<?php 
+			$criteria=new CDbCriteria;
+			
+			$criteria->select ="t.*, contact.description designacion";
+			$criteria->join =" INNER JOIN customer c on (t.Id_customer = c.Id)
+					INNER JOIN contact contact on (c.Id_contact = contact.Id)";
+			$criteria->order="designacion, t.description";
+			
+			echo $form->labelEx($model,'Project');
+			
+			$list = CHtml::listData($model->findAll($criteria), 'Id', 'LongDescription');
+		?>
+		
+		<?php echo $form->dropDownList($model, 'Id', $list,		
 			array(
 				'ajax' => array(
 				'type'=>'POST',
