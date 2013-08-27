@@ -81,6 +81,7 @@
  		'Nomenclator'=>'Nomenclador',
  		'Service'=>'Servicio',
  		'Services'=>'Servicios',
+ 		'Product Type'=>'Tipo de producto',
  		'Are you sure you want to delete this item?'=>'¿Esta seguro que desea eliminar este elemento?',
  	);
  ?>
