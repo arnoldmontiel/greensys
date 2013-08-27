@@ -17,7 +17,7 @@ $this->widget('zii.widgets.CDetailView', array(
 		'description',
 	),
 ));
-echo CHtml::button("Un Assing from stock",array('class'=>'btn-un-assign-stock','idProduct'=>$model->Id_product, 'idBudgetItem'=>$model->Id_budget_item));
+echo CHtml::button("Unassign from stock",array('class'=>'btn-un-assign-stock','idProduct'=>$model->Id_product, 'idBudgetItem'=>$model->Id_budget_item));
 }
 else{
 
