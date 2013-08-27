@@ -10,7 +10,7 @@
 	<div class="row">
 		<?php echo $form->labelEx($model,'Id_supplier'); ?>
 		<?php echo $form->dropDownList($model, 'Id_supplier', CHtml::listData(
-    			Supplier::model()->findAll(), 'Id', 'business_name')); 
+    			$modelSupplier, 'Id', 'business_name')); 
 		?>
 		<?php echo $form->error($model,'Id_supplier'); ?>
 	</div>

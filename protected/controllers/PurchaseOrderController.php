@@ -267,6 +267,10 @@ class PurchaseOrderController extends Controller
 	{
 		$model=new PurchaseOrder;
 
+		$criteria = new CDbCriteria;
+		$criteria->order = 't.business_name ASC';
+		$modelSupplier = Supplier::model()->findAll($criteria);
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -282,6 +286,7 @@ class PurchaseOrderController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
+			'modelSupplier'=>$modelSupplier,
 		));
 	}
 
@@ -293,7 +298,11 @@ class PurchaseOrderController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+		
+		$criteria = new CDbCriteria;
+		$criteria->order = 't.business_name ASC';
+		$modelSupplier = Supplier::model()->findAll($criteria);
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -306,6 +315,7 @@ class PurchaseOrderController extends Controller
 
 		$this->render('update',array(
 			'model'=>$model,
+			'modelSupplier'=>$modelSupplier,
 		));
 	}
 
