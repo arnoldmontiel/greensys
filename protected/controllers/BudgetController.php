@@ -101,7 +101,9 @@ class BudgetController extends Controller
 		$model=new Budget;
 
 		$modelBudgetState = BudgetState::model()->findAll();
-		$modelProject = Project::model()->findAll();
+		$criteria = new CDbCriteria;		
+		$criteria->order = 't.description ASC';
+		$modelProject = Project::model()->findAll($criteria);
 		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
