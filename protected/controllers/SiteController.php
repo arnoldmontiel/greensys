@@ -42,7 +42,15 @@ class SiteController extends Controller
 		}
 		$this->render('index');		
 	}
-
+	/**
+	 * This is the default 'index' action that is invoked
+	 * when an action is not explicitly requested by users.
+	 */
+	public function actionIndexGreen()
+	{
+		$this->render('index');
+	}
+	
 	/**
 	 * This is the action to handle external exceptions.
 	 */

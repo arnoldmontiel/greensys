@@ -34,7 +34,8 @@
 		'items'=>array
 		(
 			array('label'=>Yii::app()->lc->t('Login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-			array('label'=>Yii::app()->lc->t('Home'), 'url'=>array('/site/index'),'visible'=>!Yii::app()->user->isGuest),
+			array('label'=>Yii::app()->lc->t('Tapia'), 'url'=>array('/site/index'),'visible'=>!Yii::app()->user->isGuest),
+			array('label'=>Yii::app()->lc->t('Green'), 'url'=>array('/site/indexGreen'),'visible'=>!Yii::app()->user->isGuest),
 			array('label'=>Yii::app()->lc->t('Administration'), 'visible'=>Yii::app()->user->checkAccess('AdministrationViewMenu'), 'items'=>array
 				(
 					//array('label'=>'User', 'url'=>array('/user', 'view'=>'manage')),

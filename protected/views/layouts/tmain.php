@@ -28,7 +28,9 @@
 	<div >
 		<?php 
 		$items = array();			
-				
+		if(Yii::app()->user->checkAccess('SiteIndexGreen'))
+			$items[] = array('label'=>'Green', 'url'=>Yii::app()->createUrl('site/indexGreen'),'active'=>false);
+		
 		$items[] = array('label'=>'Monitor', 'url'=>Yii::app()->createUrl('review/index'),'active'=>$this->uniqueid=='review' && $this->action->id == 'index');
 
 		$items[] = array('label'=>'General', 'url'=>Yii::app()->createUrl('review/crossView'),'active'=>$this->uniqueid=='review' && $this->action->id == 'crossView');
