@@ -94,7 +94,10 @@ $('#PriceList_Id').change(function(){
 	
 	<div id="priceList" style="margin-bottom: 5px">		
 		<?php
-			$priceListDB= PriceList::model()->findAll();
+		
+			$criteria = new CDbCriteria;			
+			$criteria->order = 't.Id_price_list_type, t.description ASC';
+			$priceListDB= PriceList::model()->findAll($criteria);
 			$priceLists = CHtml::listData($priceListDB, 'Id', 'PriceListDesc');
 		?>
 		<?php echo $form->labelEx($modelPriceList,'Price List'); ?>
