@@ -44,6 +44,9 @@
 			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Assign Requirements'),array('/product/productRequirement'));?>
 			</div>
+			<div class="home-item-view" >
+			<?php echo CHtml::link(Yii::app()->lc->t('Import from Excel'),array('/product/importFromExcel'));?>
+			</div>
 		</div>
 	</div>
 	<div class="home-row" >
