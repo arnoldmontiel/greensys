@@ -323,7 +323,7 @@ class GreenHelper
 				$modelContact = new Contact();
 				$modelContact->description = '--';
 				$modelContact->telephone_1 = '--';
-				$modelContact->email = 'aa@bb.com';
+				$modelContact->email = uniqid().'@bb.com';
 				$modelContact->save();
 					
 				$modelSupplier = new Supplier();
