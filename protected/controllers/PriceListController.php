@@ -408,10 +408,9 @@ class PriceListController extends Controller
 	
 	public function actionAjaxAddPriceListItemSale()
 	{
-	
 		$idPriceList = isset($_GET['Id_price_list'])?$_GET['Id_price_list']:'';
 		$idProduct = isset($_GET['Id_product'])?$_GET['Id_product']:'';
-	
+		
 		if(!empty($idPriceList)&&!empty($idProduct))
 		{
 			$priceListItemInDb = PriceListItem::model()->findByAttributes(array('Id_price_list'=>(int) $idPriceList,'Id_product'=>(int)$idProduct));
@@ -436,7 +435,7 @@ class PriceListController extends Controller
 						$air = $shippingParameter->shippingParameterAir;
 						$maritime = $shippingParameter->shippingParameterMaritime;
 						
-						$maritime_cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$product->length*$product->height*$product->width); 
+						$maritime_cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$product->getVolume()); 
 						$air_cost = $priceListItemPurchase->dealer_cost+($air->cost_measurement_unit*$product->weight);
 						$priceListItem->attributes =  array('Id_price_list'=>$idPriceList,
 								'Id_product'=>$idProduct,
@@ -446,7 +445,8 @@ class PriceListController extends Controller
 								'maritime_cost'=>$maritime_cost * $priceListItemPurchase->profit_rate,
 								'air_cost'=>$air_cost * $priceListItemPurchase->profit_rate,
 						);
-						$priceListItem->save();						
+						
+						$priceListItem->save();
 					}
 				}
 				else
