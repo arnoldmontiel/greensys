@@ -57,7 +57,7 @@ class PriceListItem extends ModelAudit
 		return array(
 			array('Id_product, Id_price_list', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_product, Id_price_list', 'numerical', 'integerOnly'=>true),
-			array('msrp, dealer_cost, profit_rate, maritime_cost,air_cost', 'length', 'max'=>10),
+			array('msrp, dealer_cost, profit_rate, maritime_cost,air_cost', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, Id_product, Id_price_list, cost, description_customer, code, code_supplier,importer_desc, maritime_days, air_days', 'safe'),
@@ -248,7 +248,7 @@ class PriceListItem extends ModelAudit
 				$maritime = $shippingParameter->shippingParameterMaritime;
 				if (isset($this)&&isset($shippingParameter)&&isset($maritime)&&isset($this->product))
 				{
-					$cost = $this->dealer_cost+($maritime->cost_measurement_unit*$this->product->length*$this->product->height*$this->product->width);
+					$cost = $this->dealer_cost+($maritime->cost_measurement_unit*$this->product->getVolume());
 					return number_format(round($cost,4),2);
 				}
 			}						
