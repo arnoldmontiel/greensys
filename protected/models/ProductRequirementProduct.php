@@ -101,7 +101,7 @@ class ProductRequirementProduct extends CActiveRecord
 		$criteria=new CDbCriteria;
 	
 		$criteria->compare('Id_product_requirement',$this->Id_product_requirement);
-		$criteria->compare('Id_product',$this->Id_product);
+		$criteria->compare('t.Id_product',$this->Id_product);
 	
 		$criteria->with[]='productRequirement';
 		$criteria->addSearchCondition("productRequirement.description_short",$this->description_short);
