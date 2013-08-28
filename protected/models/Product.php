@@ -410,6 +410,7 @@ class Product extends ModelAudit
 		$criteria->compare('need_rack',$this->need_rack);
 		$criteria->compare('unit_rack',$this->unit_rack);
 		$criteria->compare('unit_fan',$this->unit_fan);
+		$criteria->compare('model',$this->model,true);
 		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -450,6 +451,7 @@ class Product extends ModelAudit
 		$criteria->compare('need_rack',$this->need_rack);
 		$criteria->compare('unit_rack',$this->unit_rack);
 		$criteria->compare('unit_fan',$this->unit_fan);
+		$criteria->compare('model',$this->model,true);
 		
 		$criteria->with[]='brand';
 		$criteria->addSearchCondition("brand.description",$this->brand_description);
