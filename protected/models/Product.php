@@ -350,16 +350,26 @@ class Product extends ModelAudit
 		$height = $this->height;
 		$length = $this->length;
 		$measureLinear = MeasurementUnit::model()->findByPk($this->Id_measurement_unit_linear);
-		if($measureLinear->short_description=='ml' || $measureLinear->short_description=='mm')
+		if($measureLinear->short_description=='ml')
 		{
 			$cubicFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'m3'));
+		}
+		if($measureLinear->short_description=='mm')
+		{
+			$cubicFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'mm3'));
 		}
 		else if($measureLinear->short_description=='in')
 		{
 			$cubicFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'in3'));				
 		}
+		else if($measureLinear->short_description=='ft')
+		{
+			$cubicFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'ft3'));
+		}
+		
+		$settings = new Settings();
 			
-		$cubicTo = MeasurementUnit::model()->findByAttributes(array('short_description'=>'m3'));
+		$cubicTo = $settings->getMeasurementUnit(Settings::MT_VOLUME);
 		$converter = MeasurementUnitConverter::model()->findByAttributes(
 			array(
 				'Id_measurement_from'=>$cubicFrom->Id,
