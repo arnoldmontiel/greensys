@@ -291,8 +291,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				            'value'=>'$data->product->code',
 				),
 				array(
-					'name'=>'code_supplier',
-				    'value'=>'$data->product->code_supplier',				 
+				 				            'name'=>'model',
+								            'value'=>'$data->product->model',
+					
+				),
+				array(
+				 				            'name'=>'part_number',
+								            'value'=>'$data->product->part_number',
+					
 				),
 				array(
  				            'name'=>'description_customer',

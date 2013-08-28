@@ -142,9 +142,9 @@ $('#deleteAll-sale').click(
 						'value'=>'$data->model',
 				),				
 				array(
-		 			'name'=>'supplier_description',
-					'value'=>'$data->supplier->business_name',
-				),
+						'name'=>'part_number',
+						'value'=>'$data->part_number',
+				),				
 				array(
 		 			'name'=>'brand_description',
 					'value'=>'$data->brand->description',
@@ -252,11 +252,16 @@ $('#deleteAll-sale').click(
 				            'value'=>'$data->product->code',
 				 
 				),
-					array(
-							'name'=>'code_supplier',
-							'value'=>'$data->code_supplier',
-					),
-						
+				array(
+				 				            'name'=>'model',
+								            'value'=>'$data->product->model',
+					
+				),
+				array(
+				 				            'name'=>'part_number',
+								            'value'=>'$data->product->part_number',
+					
+				),					
 				array(
  				            'name'=>'description_customer',
 				            'value'=>'$data->product->description_customer',

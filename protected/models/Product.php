@@ -452,6 +452,7 @@ class Product extends ModelAudit
 		$criteria->compare('unit_rack',$this->unit_rack);
 		$criteria->compare('unit_fan',$this->unit_fan);
 		$criteria->compare('model',$this->model,true);
+		$criteria->compare('part_number',$this->part_number,true);
 		
 		$criteria->with[]='brand';
 		$criteria->addSearchCondition("brand.description",$this->brand_description);
@@ -532,6 +533,7 @@ class Product extends ModelAudit
 		$criteria->compare('unit_rack',$this->unit_rack);
 		$criteria->compare('unit_fan',$this->unit_fan);
 		$criteria->compare('model',$this->model,true);
+		$criteria->compare('part_number',$this->part_number,true);
 		$criteria->compare('import_code',$this->import_code,true);
 		$criteria->addCondition('Id_product is not null');
 		
@@ -612,7 +614,9 @@ class Product extends ModelAudit
 		$criteria->compare('need_rack',$this->need_rack);
 		$criteria->compare('unit_rack',$this->unit_rack);
 		$criteria->compare('unit_fan',$this->unit_fan);
-	
+		$criteria->compare('model',$this->model,true);
+		$criteria->compare('part_number',$this->part_number,true);
+		
 		$criteria->with[]='brand';
 		$criteria->addSearchCondition("brand.description",$this->brand_description);
 	
@@ -691,7 +695,9 @@ class Product extends ModelAudit
 		$criteria->compare('need_rack',$this->need_rack);
 		$criteria->compare('unit_rack',$this->unit_rack);
 		$criteria->compare('unit_fan',$this->unit_fan);
-	
+		$criteria->compare('model',$this->model,true);
+		$criteria->compare('part_number',$this->part_number,true);
+		
 		$criteria->with[]='brand';
 		$criteria->addSearchCondition("brand.description",$this->brand_description);
 	
@@ -769,7 +775,9 @@ class Product extends ModelAudit
 		$criteria->compare('need_rack',$this->need_rack);
 		$criteria->compare('unit_rack',$this->unit_rack);
 		$criteria->compare('unit_fan',$this->unit_fan);
-	
+		$criteria->compare('model',$this->model,true);
+		$criteria->compare('part_number',$this->part_number,true);
+		
 		$criteria->with[]='brand';
 		$criteria->addSearchCondition("brand.description",$this->brand_description);
 	

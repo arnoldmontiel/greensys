@@ -23,12 +23,13 @@ class PriceListItem extends ModelAudit
 	
 	public $description_customer;
 	public $code;
+	public $model;
+	public $part_number;
 	public $code_supplier;
 	public $Id_importer;
 	public $importer_desc;
 	public $maritime_days;
 	public $air_days;
-	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return PriceListItem the static model class
@@ -60,7 +61,7 @@ class PriceListItem extends ModelAudit
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, Id_product, Id_price_list, cost, description_customer, code, code_supplier,importer_desc, maritime_days, air_days', 'safe'),
-			array('Id, Id_product, Id_price_list, description_customer, code, code_supplier, msrp, dealer_cost, profit_rate, maritime_cost,air_cost, importer_desc, maritime_days, air_days', 'safe', 'on'=>'search'),
+			array('Id, Id_product, Id_price_list, description_customer, code, code_supplier, msrp, dealer_cost, profit_rate, maritime_cost,air_cost, importer_desc, maritime_days, air_days,part_number,model', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -199,12 +200,22 @@ class PriceListItem extends ModelAudit
 		$criteria->addSearchCondition("description_customer",$this->description_customer);
 		$criteria->addSearchCondition("code",$this->code);
 		$criteria->addSearchCondition("code_supplier",$this->code_supplier);
+		$criteria->addSearchCondition("part_number",$this->part_number);
+		$criteria->addSearchCondition("model",$this->model);		
 		
 		// Create a custom sort
 		$sort=new CSort;
 		$sort->attributes=array(
 		      'cost',
 		// For each relational attribute, create a 'virtual attribute' using the public variable name
+		'part_number' => array(
+				        'asc' => 'product.part_number',
+				        'desc' => 'product.part_number DESC',
+		),
+		'model' => array(
+				        'asc' => 'product.model',
+				        'desc' => 'product.model DESC',
+		),
 		      'description_customer' => array(
 		        'asc' => 'product.description_customer',
 		        'desc' => 'product.description_customer DESC',
