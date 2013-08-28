@@ -198,7 +198,7 @@ $this->widget('zii.widgets.CDetailView', array(
 		'dimensional_weight_custom3',
 		'off',
 		'off_category_a',
-		'off_cateogry_b',
+		'off_category_b',
 		'off_category_c',
 		'off_category_d',
 		'deale_distributor_price',
