@@ -578,6 +578,7 @@ class ProductController extends Controller
 			$width = $_POST['Product']['width'];
 			$height = $_POST['Product']['height'];
 			$length = $_POST['Product']['length'];
+			if($width==0.0||$height==0.0||$length==0.0)	return 0;
 			$measureLinear = MeasurementUnit::model()->findByPk($_POST['Product']['Id_measurement_unit_linear']);
 			if($measureLinear->short_description=='ml' )
 			{

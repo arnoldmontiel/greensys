@@ -424,6 +424,11 @@ class PriceListController extends Controller
 				$criteria->order = 't.Id_price_list DESC';
 				$priceListItemPurchase = PriceListItem::model()->find($criteria);
 				$product = Product::model()->findByPk($idProduct);
+				if($product->getVolume()===false)
+				{
+					throw new CDbException('Product has not width or heightor orlength');
+					return;
+				}
 				if(isset($priceListItemPurchase))
 				{
 					$priceListItem=new PriceListItem();
