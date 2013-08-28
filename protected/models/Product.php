@@ -349,6 +349,7 @@ class Product extends ModelAudit
 		$width = $this->width;
 		$height = $this->height;
 		$length = $this->length;
+		if($width==0.0||$height==0.0||$length==0.0)	return false;
 		$measureLinear = MeasurementUnit::model()->findByPk($this->Id_measurement_unit_linear);
 		if($measureLinear->short_description=='ml')
 		{
