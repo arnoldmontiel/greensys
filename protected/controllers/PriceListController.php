@@ -400,7 +400,7 @@ class PriceListController extends Controller
 			}
 			else
 			{
-				throw new CDbException('Item has already been added');
+				throw new CHttpException(500,'Item has already been added');
 			}
 		}
 		
@@ -424,10 +424,10 @@ class PriceListController extends Controller
 				$criteria->order = 't.Id_price_list DESC';
 				$priceListItemPurchase = PriceListItem::model()->find($criteria);
 				$product = Product::model()->findByPk($idProduct);
-				if($product->getVolume()===false)
+				$volume = $product->getVolume();
+				if($volume===false)
 				{
-					throw new CDbException('Product has not width or heightor orlength');
-					return;
+					throw new CHttpException(500,Yii::app()->lc->t('Product has not width or heightor or length'));
 				}
 				if(isset($priceListItemPurchase))
 				{
@@ -440,7 +440,7 @@ class PriceListController extends Controller
 						$air = $shippingParameter->shippingParameterAir;
 						$maritime = $shippingParameter->shippingParameterMaritime;
 						
-						$maritime_cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$product->getVolume()); 
+						$maritime_cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$volume); 
 						$air_cost = $priceListItemPurchase->dealer_cost+($air->cost_measurement_unit*$product->weight);
 						$priceListItem->attributes =  array('Id_price_list'=>$idPriceList,
 								'Id_product'=>$idProduct,
@@ -456,12 +456,12 @@ class PriceListController extends Controller
 				}
 				else
 				{
-					throw new CDbException('Product must be included in at least one purchase price list');						
+					throw new CHttpException(500,Yii::app()->lc->t('Product must be included in at least one purchase price list'));											
 				}
 			}
 			else
 			{
-				throw new CDbException('Item has already been added');
+				throw new CHttpException(500,Yii::app()->lc->t('Item has already been added'));
 			}
 		}
 	
@@ -565,7 +565,8 @@ class PriceListController extends Controller
 				//$criteria->compare('priceList.validity',1);
 				$criteria->order = 't.Id_price_list DESC';
 				$priceListItemPurchase = PriceListItem::model()->find($criteria);
-				if(isset($priceListItemPurchase))
+				$volume = $product->getVolume();
+				if(isset($priceListItemPurchase)&&$volume!==false)
 				{
 					$priceListItemInDb = PriceListItem::model()->findByAttributes(array('Id_price_list'=>(int) $idPriceList,'Id_product'=>$product->Id));
 					if(!isset($priceListItemInDb))
@@ -578,7 +579,7 @@ class PriceListController extends Controller
 							$air = $shippingParameter->shippingParameterAir;
 							$maritime = $shippingParameter->shippingParameterMaritime;
 								
-							$maritime_cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$product->length*$product->height*$product->width);
+							$maritime_cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$volume);
 							$air_cost = $priceListItemPurchase->dealer_cost+($air->cost_measurement_unit*$product->weight);
 							$priceListItem->attributes =  array('Id_price_list'=>$idPriceList,
 									'Id_product'=>$product->Id,

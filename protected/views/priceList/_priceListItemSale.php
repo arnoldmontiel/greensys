@@ -109,6 +109,7 @@ $('#deleteAll-sale').click(
 		//'ajaxUrl'=>PriceListController::createUrl('AjaxUpdateProductGrid'),				
 		'summaryText'=>'',	
 		'selectionChanged'=>'js:function(id){
+			$(".messageError").animate({opacity: "hide"},2000);
 			$.get(	"'.PriceListController::createUrl('AjaxAddPriceListItemSale').'",
 					{
 						Id_price_list:$("#PriceList_Id :selected").attr("value"),
@@ -127,8 +128,8 @@ $('#deleteAll-sale').click(
 					.error(
 						function(data)
 						{
-							$(".messageError").animate({opacity: "show"},2000);
-							$(".messageError").animate({opacity: "hide"},2000);
+							$(".messageError").html(data.responseText);
+							$(".messageError").animate({opacity: "show"},2000.,function(){$(".messageError").animate({opacity: "hide"},2000)});
 							unselectRow("product-grid-sale");
 						});
 		}',

@@ -106,6 +106,8 @@ $('#deleteAll').click(
 		'filter'=>$modelProduct,
 		'summaryText'=>'',	
 		'selectionChanged'=>'js:function(id){
+			$(".messageError").animate({opacity: "hide"},2000);
+
 			$.get(	"'.PriceListController::createUrl('AjaxAddPriceListItem').'",
 					{
 						IdPriceList:$("#PriceList_Id :selected").attr("value"),
@@ -122,10 +124,10 @@ $('#deleteAll').click(
 							unselectRow("product-grid");		
 						})
 					.error(
-						function()
+						function(data)
 						{
-							$(".messageError").animate({opacity: "show"},2000);
-							$(".messageError").animate({opacity: "hide"},2000);
+							$(".messageError").html(data.responseText);
+							$(".messageError").animate({opacity: "show"},2000.,function(){$(".messageError").animate({opacity: "hide"},2000)});
 							unselectRow("product-grid");
 						});
 		}',

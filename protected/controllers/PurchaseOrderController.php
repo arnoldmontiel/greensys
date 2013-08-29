@@ -218,7 +218,9 @@ class PurchaseOrderController extends Controller
 				//$criteria->compare('priceList.validity',1);
 				$criteria->order = 't.Id_price_list DESC';
 				$priceListItemPurchase = PriceListItem::model()->find($criteria);
-				if(isset($priceListItemPurchase))
+				$volume = $product->getVolume();
+				
+				if(isset($priceListItemPurchase) && $volume!==false)
 				{
 					$purchasOrderItemInDb = PurchaseOrderItem::model()->findByAttributes(array('Id_purchase_order'=> $idPurchaseOrder,'Id_product'=>$product->Id));
 					if(!isset($purchasOrderItemInDb))
@@ -231,11 +233,11 @@ class PurchaseOrderController extends Controller
 						$cost = 0;
 						if($purchaseOrder->Id_shipping_type == 1)
 						{
-							$cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$product->length*$product->height*$product->width);
+							$cost = $priceListItemPurchase->dealer_cost+($maritime->cost_measurement_unit*$volume);
 						}
 						else
 						{
-							$cost = $priceListItemPurchase->dealer_cost+($air->cost_measurement_unit*$product->weight);								
+							$cost = $priceListItemPurchase->dealer_cost+($air->cost_measurement_unit*$product->weight);
 						}
 						$total = $priceListItemPurchase->dealer_cost+$cost;
 						$purchaseOrderItem->attributes =  array('Id_purchase_order'=>$idPurchaseOrder,
