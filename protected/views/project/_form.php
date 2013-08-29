@@ -12,8 +12,14 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'Id_customer'); ?>
-		<?php echo $form->dropDownList($model, 'Id_customer', CHtml::listData(
-    			Customer::model()->findAll(), 'Id', 'FullName'
+		<?php
+		$criteria=new CDbCriteria;
+		
+		$criteria->with[]='contact';
+		$criteria->order="contact.description";
+		
+		echo $form->dropDownList($model, 'Id_customer', CHtml::listData(
+    			Customer::model()->findAll($criteria), 'Id', 'Description'
 		),array(
 				'prompt'=>'Select a Customer'
 			)); 

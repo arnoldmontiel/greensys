@@ -119,6 +119,11 @@ class Customer extends ModelAudit
 		return $this->person->last_name . ' - ' . $this->person->name;
 	}
 	
+	public function getDescription()
+	{
+		return $this->contact->description;
+	}
+	
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -157,7 +162,7 @@ class Customer extends ModelAudit
 		$criteria->with[]='contact';
 		$criteria->addSearchCondition("contact.telephone_1",$this->telephone_1);
 		$criteria->addSearchCondition("contact.email",$this->email);
-	
+		$criteria->order="contact.description";
 		// Create a custom sort
 		$sort=new CSort;
 		$sort->attributes=array(
