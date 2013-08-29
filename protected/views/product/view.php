@@ -11,14 +11,14 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Product', 'url'=>array('index')),
 	array('label'=>'Create Product', 'url'=>array('create')),
+	array('label'=>'Manage Product', 'url'=>array('admin')),
 	array('label'=>'Update Product', 'url'=>array('update', 'id'=>$model->Id)),
 	array('label'=>'Update Resources', 'url'=>array('updateMultimedia', 'id'=>$model->Id)),
-	array('label'=>'Delete Product', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Product', 'url'=>array('admin')),
+	array('label'=>'Delete Product', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),	
 	array('label'=>'Assign Groups', 'url'=>array('productGroup','Product'=>array('Id'=>$model->Id))),
 	array('label'=>'Assign Requirements', 'url'=>array('productRequirement','Product'=>array('Id'=>$model->Id))),
+	array('label'=>'Manage Import', 'url'=>array('adminImport')),
 	array('label'=>'Import From Excel', 'url'=>array('importFromExcel')),
 );
 ?>
@@ -36,8 +36,10 @@ $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'cssFile'=>Yii::app()->baseUrl . '/css/detail-view-blue.css',	
 	'attributes'=>array(
-		'code',
 		'model',
+		'part_number',
+		'code',
+		'short_description',
 		'code_supplier',
 		array('label'=>$model->getAttributeLabel('Id_supplier'),
 					'type'=>'raw',
@@ -62,8 +64,7 @@ $this->widget('zii.widgets.CDetailView', array(
 		array('label'=>$model->getAttributeLabel('Id_nomenclator'),
 			'type'=>'raw',
 			'value'=>$model->nomenclator->description
-		),
-		'model',
+		),		
 		'vendor',
 		'description_customer',
 		'description_supplier',
@@ -119,15 +120,13 @@ $this->widget('zii.widgets.CDetailView', array(
 		array('label'=>$model->getAttributeLabel('hide'),
 			'type'=>'raw',
 			'value'=>CHtml::checkBox("hide",$model->hide,array("disabled"=>"disabled"))
-		),
-		'short_description',
+		),		
 		array('label'=>$model->getAttributeLabel('long_description'),	
 			'type'=>'raw',
 			'value'=>CHtml::textArea('long_description',$model->long_description,array(																				
 																						'style'=>'height:100%;overflow: hidden;',
 																						'readonly'=>true)),			
-		),
-		'part_number',
+		),		
 		'url',
 		'tags',
 		'phase',

@@ -6,12 +6,14 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Product', 'url'=>array('index')),
 	array('label'=>'Create Product', 'url'=>array('create')),
-	array('label'=>'View Product', 'url'=>array('view', 'id'=>$model->Id)),
 	array('label'=>'Manage Product', 'url'=>array('admin')),
+	array('label'=>'View Product', 'url'=>array('view', 'id'=>$model->Id)),
+	array('label'=>'Update Resources', 'url'=>array('updateMultimedia', 'id'=>$model->Id)),
 	array('label'=>'Assign Groups', 'url'=>array('productGroup')),
 	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
+	array('label'=>'Manage Import', 'url'=>array('adminImport')),
+	array('label'=>'Import From Excel', 'url'=>array('importFromExcel')),
 );
 ?>
 

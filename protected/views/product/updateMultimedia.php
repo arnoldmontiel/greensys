@@ -9,10 +9,14 @@ $this->breadcrumbs=array(
 		'Update Resources'
 );
 $this->menu=array(
-		array('label'=>'List', 'url'=>array('index')),
-		array('label'=>'Create ', 'url'=>array('create')),
-		array('label'=>'Update', 'url'=>array('update', 'id'=>$model->Id)),
-		array('label'=>'Manage', 'url'=>array('admin')),
+		array('label'=>'Create Product', 'url'=>array('create')),
+		array('label'=>'Manage Product', 'url'=>array('admin')),
+		array('label'=>'Update Product', 'url'=>array('update', 'id'=>$model->Id)),
+		array('label'=>'View Product', 'url'=>array('view', 'id'=>$model->Id)),
+		array('label'=>'Assign Groups', 'url'=>array('productGroup')),
+		array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
+		array('label'=>'Manage Import', 'url'=>array('adminImport')),
+		array('label'=>'Import From Excel', 'url'=>array('importFromExcel')),
 );
 
 Yii::app()->clientScript->registerScript('updateMultimedia-view', "

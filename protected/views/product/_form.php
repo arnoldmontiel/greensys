@@ -151,6 +151,18 @@ $('#deleteIcon').click(function(){
 
 	<?php echo $form->errorSummary($model); ?>
 
+	<div class="row">
+		<?php echo $form->labelEx($model,'model'); ?>
+		<?php echo $form->textField($model,'model',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($model,'model'); ?>
+	</div>
+		
+	<div class="row">
+		<?php echo $form->labelEx($model,'part_number'); ?>
+		<?php echo $form->textField($model,'part_number',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($model,'part_number'); ?>
+	</div>
+		
 	<?php if (!$model->isNewRecord):?>
 		<div class="row">
 			<?php echo $form->labelEx($model,'code'); ?>
@@ -158,12 +170,12 @@ $('#deleteIcon').click(function(){
 			<?php echo $form->error($model,'code'); ?>
 			<p id="errorMsg" class="messageError"></p>
 		</div>
-	<?php endif; ?>
+	<?php endif; ?>	
 	
 	<div class="row">
-		<?php echo $form->labelEx($model,'model'); ?>
-		<?php echo $form->textField($model,'model',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->error($model,'model'); ?>
+		<?php echo $form->labelEx($model,'short_description'); ?>
+		<?php echo $form->textField($model,'short_description',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->error($model,'short_description'); ?>
 	</div>
 	
 	<div class="row">
