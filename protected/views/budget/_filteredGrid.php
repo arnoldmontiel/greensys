@@ -28,12 +28,16 @@
 		}',
 		'columns'=>array(	
 				array(
-					'name'=>'code',
-				    'value'=>'$data->code',				 
+					'name'=>'model',
+				    'value'=>'$data->model',				 
 				),
 				array(
-					'name'=>'code_supplier',
-					'value'=>'$data->code_supplier',
+					'name'=>'part_number',
+				    'value'=>'$data->part_number',				 
+				),
+				array(
+					'name'=>'code',
+				    'value'=>'$data->code',				 
 				),
 				array(
 		 			'name'=>'brand_description',
@@ -43,8 +47,7 @@
 			 		'name'=>'category_description',
 					'value'=>'$data->category->description',
 				),
-				'description_customer',
-				'description_supplier',
+				'short_description',
 				array(
 						'value'=>'CHtml::image("images/grid_warning.png","",array("title"=>$data->getWarningsDescription("hasPriceListSale"),"style"=>$data->getHasWarnings("hasPriceListSale")?"display":"display:none"))',
 						'type'=>'raw',

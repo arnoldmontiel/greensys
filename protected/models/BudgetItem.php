@@ -29,7 +29,8 @@
  */
 class BudgetItem extends ModelAudit
 {
-	
+	public $product_model;
+	public $product_part_number;	
 	public $product_code;
 	public $product_code_supplier;
 	public $product_brand_desc;
@@ -75,7 +76,7 @@ class BudgetItem extends ModelAudit
 			array('price', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_product, Id_area, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type, product_code, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc, parent_product_code, quantity, children_count, children_included', 'safe', 'on'=>'search'),
+			array('Id, Id_product, Id_area, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type, product_code,product_model,product_part_number, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc, parent_product_code, quantity, children_count, children_included', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -113,9 +114,11 @@ class BudgetItem extends ModelAudit
 			'Id_price_list' => 'Price List',
 			'Id_shipping_type' => 'Shipping Type',
 			'product_code'=>'Code',
+			'product_model'=>'Model',
+			'product_part_number'=>'Part Number',
 			'product_code_supplier'=>'Code Supplier',
-			'product_customer_desc'=>'Description Customer',
-			'product_brand_desc'=>'Brand Description',
+			'product_customer_desc'=>'Customer',
+			'product_brand_desc'=>'Brand',
 			'product_supplier_name'=>'Supplier Name',
 			'Id_area'=>'Area',
 			'parent_product_code'=>'Parent Code',
@@ -199,6 +202,8 @@ class BudgetItem extends ModelAudit
 		
 		
 		$criteria->addSearchCondition("p.code",$this->product_code);
+		$criteria->addSearchCondition("p.model",$this->product_model);
+		$criteria->addSearchCondition("p.part_number",$this->product_part_number);		
 		$criteria->addSearchCondition("p.code_supplier",$this->product_code_supplier);
 		$criteria->addSearchCondition("p.description_customer",$this->product_customer_desc);
 		$criteria->addSearchCondition("b.description",$this->product_brand_desc);
@@ -215,7 +220,15 @@ class BudgetItem extends ModelAudit
 											        'asc' => 'p.code',
 											        'desc' => 'p.code DESC',
 		),
-												'children_count' => array(
+											      'product_model' => array(
+											        'asc' => 'p.model',
+											        'desc' => 'p.model DESC',
+		),
+								      'product_part_number' => array(
+											        'asc' => 'p.part_number',
+											        'desc' => 'p.part_number DESC',
+		),
+														'children_count' => array(
 													        'asc' => 'bud.child',
 													        'desc' => 'bud.child DESC',
 		),

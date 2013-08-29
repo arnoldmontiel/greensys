@@ -119,12 +119,21 @@ $this->widget('zii.widgets.grid.CGridView', array(
  		}',
 	'columns'=>array(
 				array(
+					'name'=>'product_model',
+				    'value'=>'$data->product->model',				 
+				),			
+				array(
+						'name'=>'product_part_number',
+						'value'=>'$data->product->part_number',
+				),
+				array(
 					'name'=>'product_code',
 				    'value'=>'$data->product->code',				 
 				),
 				array(
-					'name'=>'product_code_supplier',
-				    'value'=>'$data->product->code_supplier',				 
+ 					'name'=>'product_brand_desc',
+				    'value'=>'$data->product->brand->description',
+	
 				),
 				array(
 					'name'=>'children_count',
@@ -135,21 +144,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'name'=>'children_included',
 					'value'=>'($data->childrenCount > 0)?$data->childrenIncluded:""',
 					'type'=>'raw'
-				),
-				array(
-					'name'=>'product_customer_desc',
-				    'value'=>'$data->product->description_customer',
-	
-				),
-				array(
- 					'name'=>'product_brand_desc',
-				    'value'=>'$data->product->brand->description',
-	
-				),
-				array(
- 					'name'=>'product_supplier_name',
-				    'value'=>'$data->product->supplier->business_name',
-
 				),
 				array(
 					
