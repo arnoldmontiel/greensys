@@ -47,7 +47,7 @@ function fillParentData(data)
 	$('#parent_brand_desc').text(data.parent_brand_desc);
 	$('#parent_supplier_name').text(data.parent_supplier_name);
 	$('#parent_price').text(data.parent_price);
-	if(data.do_not_warning)
+	if(data.parent_do_not_warning=='1')
 	{
 		$('#parent_do_not_warning').attr('checked', true);;
 	}
@@ -82,7 +82,17 @@ $('.link-popup').click(function(){
 });
 
 $('input:checkbox').live('click',function() {
-
+	if($(this).attr('id')=='parent_do_not_warning')
+	{
+		$.post(
+			'".BudgetController::createUrl('AjaxVerified')."',
+			{
+				IdBudgetItem: $('#IdItemBudgetParent').val(),
+				isChecked:$(this).is(':checked')					
+			});
+	}
+	else
+	{
 	var idProduct = $(this).attr('idProduct');
 	var idBudgetItem = $(this).attr('idBudgetItem');
 	var idBudgetItemParent = $(this).attr('idBudgetItemParent');
@@ -120,6 +130,7 @@ $('input:checkbox').live('click',function() {
  				});
 			});
 	}
+}
 });
 
 $('.btn-Assign-From-Stock').click(function(){

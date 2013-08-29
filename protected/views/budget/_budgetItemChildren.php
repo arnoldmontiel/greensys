@@ -241,11 +241,17 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	),
 )); ?>
 </div>
-<div>
-<?php 
-echo CHtml::label("Verificado", "PriceList_do_not_warning");
+<div style="float:right;display:inline-block;">
+<div style="float:right">
+<?php
 echo CHtml::CheckBox('do_not_warning','', array (
 		'id'=>'parent_do_not_warning',
 ));
 ?>
+</div>
+<div style="float:right;margin-top: 4px">
+<?php 
+echo CHtml::label("Verificado", "parent_do_not_warning");
+?>
+</div>
 </div>

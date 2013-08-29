@@ -347,6 +347,18 @@ class BudgetController extends Controller
 		));
 	}
 	
+	public function actionAjaxVerified()
+	{
+		if(isset($_POST['IdBudgetItem'])&&isset($_POST['isChecked']))
+		{
+			$model = BudgetItem::model()->findByPk($_POST['IdBudgetItem']);
+			if(isset($model))
+			{
+				$model->do_not_warning = $_POST['isChecked']=="true"?1:0;
+				$model->save();
+			}
+		}
+	}
 	public function actionAjaxGetParentInfo()
 	{
 		
@@ -362,6 +374,7 @@ class BudgetController extends Controller
 				$arrayParent['parent_supplier_name'] = $model->product->supplier->business_name;
 				$arrayParent['parent_price'] = $model->price;
 				$arrayParent['id'] = $model->Id;
+				$arrayParent['parent_do_not_warning'] = $model->do_not_warning;
 				echo json_encode($arrayParent);
 			} 
 		}
