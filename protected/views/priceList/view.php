@@ -82,5 +82,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'type'=>'raw',
 			        'htmlOptions'=>array('style'=>'text-align: right;'),
 				),
+				array(
+						'value'=>'CHtml::image("images/grid_warning.png","",array("title"=>$data->product->getWarningsDescription("hasMeasure"),"style"=>$data->product->getHasWarnings("hasMeasure")?"display":"display:none"))',
+						'type'=>'raw',
+						'htmlOptions'=>array('width'=>25),
+				),
 			),
 )); ?>

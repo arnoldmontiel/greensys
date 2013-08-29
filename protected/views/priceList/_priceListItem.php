@@ -363,7 +363,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'htmlOptions'=>array('width'=>25),
 				),
 				array(
-						'value'=>'CHtml::image("images/grid_warning.png","",array("title"=>$data->product->warningsDescription,"style"=>$data->product->hasWarnings?"display":"display:none"))',
+						'value'=>'CHtml::image("images/grid_warning.png","",array("title"=>$data->product->getWarningsDescription("hasMeasure"),"style"=>$data->product->getHasWarnings("hasMeasure")?"display":"display:none"))',
 						'type'=>'raw',
 						'htmlOptions'=>array('width'=>25),
 				),

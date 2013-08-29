@@ -46,7 +46,7 @@
 				'description_customer',
 				'description_supplier',
 				array(
-						'value'=>'CHtml::image("images/grid_warning.png","",array("title"=>$data->getWarningsDescription("budget"),"style"=>$data->getHasWarnings("budget")?"display":"display:none"))',
+						'value'=>'CHtml::image("images/grid_warning.png","",array("title"=>$data->getWarningsDescription("hasPriceListSale"),"style"=>$data->getHasWarnings("hasPriceListSale")?"display":"display:none"))',
 						'type'=>'raw',
 						'htmlOptions'=>array('width'=>25),
 				),

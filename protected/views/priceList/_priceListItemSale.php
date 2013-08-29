@@ -147,7 +147,12 @@ $('#deleteAll-sale').click(
 				),
 				'short_description',
 				array(
-						'value'=>'CHtml::image("images/grid_warning.png","",array("title"=>$data->getWarningsDescription("priceListSale"),"style"=>$data->getHasWarnings("priceListSale")?"display":"display:none"))',
+						'value'=>'CHtml::image("images/grid_warning.png","",array("title"=>$data->getWarningsDescription("hasPriceListPurch"),"style"=>$data->getHasWarnings("hasPriceListPurch")?"display":"display:none"))',
+						'type'=>'raw',
+						'htmlOptions'=>array('width'=>25),
+				),
+				array(
+						'value'=>'CHtml::image("images/grid_warning.png","",array("title"=>$data->getWarningsDescription("hasMeasure"),"style"=>$data->getHasWarnings("hasMeasure")?"display":"display:none"))',
 						'type'=>'raw',
 						'htmlOptions'=>array('width'=>25),
 				),
