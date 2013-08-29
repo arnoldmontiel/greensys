@@ -23,8 +23,10 @@ class PriceListItem extends ModelAudit
 	
 	public $description_customer;
 	public $code;
-	public $model;
+	public $model;	
 	public $part_number;
+	public $product_short_description;
+	public $brand_description;
 	public $code_supplier;
 	public $Id_importer;
 	public $importer_desc;
@@ -60,8 +62,8 @@ class PriceListItem extends ModelAudit
 			array('msrp, dealer_cost, profit_rate, maritime_cost,air_cost', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_product, Id_price_list, cost, description_customer, code, code_supplier,importer_desc, maritime_days, air_days', 'safe'),
-			array('Id, Id_product, Id_price_list, description_customer, code, code_supplier, msrp, dealer_cost, profit_rate, maritime_cost,air_cost, importer_desc, maritime_days, air_days,part_number,model', 'safe', 'on'=>'search'),
+			array('Id, Id_product, Id_price_list, cost, description_customer, code, code_supplier,importer_desc, maritime_days, air_days,part_number,model,product_short_description, brand_description', 'safe'),
+			array('Id, Id_product, Id_price_list, description_customer, code, code_supplier, msrp, dealer_cost, profit_rate, maritime_cost,air_cost, importer_desc, maritime_days, air_days,part_number,model,product_short_description, brand_description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -95,6 +97,8 @@ class PriceListItem extends ModelAudit
 			'importer_desc'=>'Importer',
 			'maritime_days'=>'Maritime days',
 			'air_days'=>'Air days',
+			'AirPurchaseCost'=>'Air Cost',
+			'MaritimePurchaseCost'=>'Maritime Cost',
 		);
 	}
 
@@ -194,39 +198,51 @@ class PriceListItem extends ModelAudit
 		$criteria->compare('t.dealer_cost',$this->dealer_cost);
 		$criteria->compare('t.profit_rate',$this->profit_rate);
 		$criteria->compare('t.maritime_cost',$this->maritime_cost);
-		$criteria->compare('t.air_cost',$this->air_cost);
+		$criteria->compare('t.air_cost',$this->air_cost);		
 		
-		$criteria->with[]='product';
-		$criteria->addSearchCondition("description_customer",$this->description_customer);
-		$criteria->addSearchCondition("code",$this->code);
-		$criteria->addSearchCondition("code_supplier",$this->code_supplier);
-		$criteria->addSearchCondition("part_number",$this->part_number);
-		$criteria->addSearchCondition("model",$this->model);		
+		$criteria->join =	"LEFT OUTER JOIN product p ON p.Id=t.Id_product
+							LEFT OUTER JOIN brand b ON b.Id=p.Id_brand";
+		$criteria->addSearchCondition("b.description",$this->brand_description);
+		$criteria->addSearchCondition("p.description_customer",$this->description_customer);
+		$criteria->addSearchCondition("p.code",$this->code);
+		$criteria->addSearchCondition("p.code_supplier",$this->code_supplier);
+		$criteria->addSearchCondition("p.part_number",$this->part_number);
+		$criteria->addSearchCondition("p.model",$this->model);
+		$criteria->addSearchCondition("p.short_description",$this->product_short_description);
 		
 		// Create a custom sort
 		$sort=new CSort;
 		$sort->attributes=array(
 		      'cost',
 		// For each relational attribute, create a 'virtual attribute' using the public variable name
+		
+		'brand_description' => array(
+						        'asc' => 'b.description',
+						        'desc' => 'b.description DESC',
+		),
 		'part_number' => array(
-				        'asc' => 'product.part_number',
-				        'desc' => 'product.part_number DESC',
+				        'asc' => 'p.part_number',
+				        'desc' => 'p.part_number DESC',
+		),
+		'product_short_description' => array(
+						        'asc' => 'p.short_description',
+						        'desc' => 'p.short_description DESC',
 		),
 		'model' => array(
-				        'asc' => 'product.model',
-				        'desc' => 'product.model DESC',
+				        'asc' => 'p.model',
+				        'desc' => 'p.model DESC',
 		),
 		      'description_customer' => array(
-		        'asc' => 'product.description_customer',
-		        'desc' => 'product.description_customer DESC',
+		        'asc' => 'p.description_customer',
+		        'desc' => 'p.description_customer DESC',
 				),
 		      'code' => array(
-		        'asc' => 'product.code',
-		        'desc' => 'product.code DESC',
+		        'asc' => 'p.code',
+		        'desc' => 'p.code DESC',
 		),
 		      'code_supplier' => array(
-		        'asc' => 'product.code_supplier',
-		        'desc' => 'product.code_supplier DESC',
+		        'asc' => 'p.code_supplier',
+		        'desc' => 'p.code_supplier DESC',
 		),
 		'*',
 		);

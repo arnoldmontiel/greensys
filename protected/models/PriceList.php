@@ -105,7 +105,7 @@ class PriceList extends ModelAudit
 			'validity' => 'Validity',
 			'Id_supplier' => 'Supplier',
 			'Id_importer'=>'Importer',
-			'Id_price_list_type' => 'Type',
+			'Id_price_list_type' => 'Price List Type',
 			'description' => 'Description',
 			'supplier_business_name'=>'Supplier',
 		
