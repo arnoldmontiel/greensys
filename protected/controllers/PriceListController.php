@@ -400,7 +400,7 @@ class PriceListController extends Controller
 			}
 			else
 			{
-				throw new CHttpException(500,'Item has already been added');
+				throw new CHttpException(500,Yii::app()->lc->t('Item has already been added'));
 			}
 		}
 		

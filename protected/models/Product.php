@@ -343,6 +343,18 @@ class Product extends ModelAudit
 												'Id_budget_item'=>null,
 												'Id_purchase_order_item'=>null));		
 	}
+	public function getHasWarnings()
+	{
+		return ($this->getVolume()===false);
+	}
+	public function getWarningsDescription()
+	{
+		if ($this->getVolume()===false)
+		{
+			return Yii::app()->lc->t('Missing Volume.');
+		}
+		return Yii::app()->lc->t('No warnings.');
+	}
 	
 	public function getVolume()
 	{
