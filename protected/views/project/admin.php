@@ -15,11 +15,15 @@ $this->menu=array(
 <h1>Manage Projects</h1>
 
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php
+$data =$model->search();
+$data->setPagination(array('pageSize' => 20,)); 
+$this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'project-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$data,
 	'filter'=>$model,
 	'columns'=>array(
+		array('name'=>'Id_customer','value'=>'$data->customer->contact->description'),
 		'description',
 		'address',
 		array(

@@ -122,7 +122,9 @@ class Project extends ModelAudit
 		$criteria->compare('Id_customer',$this->Id_customer);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('address',$this->address,true);
-
+		$criteria->join='INNER JOIN `customer` `c` ON (`c`.`Id`=`t`.`Id_customer`)
+						INNER JOIN 	`contact` `con` ON (`con`.`Id`=`c`.`Id_contact`)';
+		$criteria->order="con.description, t.description";
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
