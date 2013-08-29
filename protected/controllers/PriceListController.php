@@ -227,15 +227,7 @@ class PriceListController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$model = new PriceList();
-		$model->Id_price_list_type = 1;
-		$dataProvider=$model->search();
-		$model->Id_price_list_type = 2;
-		$dataProviderSale=$model->search();
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-			'dataProviderSale'=>$dataProviderSale,
-		));
+		$this->redirect(array('admin'));
 	}
 
 	/**
