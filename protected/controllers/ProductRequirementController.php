@@ -273,10 +273,7 @@ class ProductRequirementController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('ProductRequirement');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		$this->redirect(array('admin'));
 	}
 
 	/**

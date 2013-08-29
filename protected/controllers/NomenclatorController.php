@@ -148,10 +148,7 @@ class NomenclatorController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Nomenclator');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		$this->redirect(array('admin'));
 	}
 
 	/**

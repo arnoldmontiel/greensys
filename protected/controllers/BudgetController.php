@@ -208,22 +208,23 @@ class BudgetController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$criteria=new CDbCriteria;
+		$this->redirect(array('admin'));
+// 		$criteria=new CDbCriteria;
 		
-		$criteria->join = ',(SELECT Id, MAX(version_number) vn
-				FROM budget
-				GROUP BY Id) b2';
+// 		$criteria->join = ',(SELECT Id, MAX(version_number) vn
+// 				FROM budget
+// 				GROUP BY Id) b2';
 		
-		$criteria->condition = 't.Id = b2.Id and t.version_number = b2.vn';
-		$criteria->order="date_creation DESC";
+// 		$criteria->condition = 't.Id = b2.Id and t.version_number = b2.vn';
+// 		$criteria->order="date_creation DESC";
 				
-		$dataProvider=new CActiveDataProvider('Budget', array(
-			'criteria'=>$criteria,
-		));
+// 		$dataProvider=new CActiveDataProvider('Budget', array(
+// 			'criteria'=>$criteria,
+// 		));
 		
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+// 		$this->render('index',array(
+// 			'dataProvider'=>$dataProvider,
+// 		));		
 	}
 
 	/**
