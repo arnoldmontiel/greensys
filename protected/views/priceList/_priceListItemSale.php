@@ -147,9 +147,9 @@ $('#deleteAll-sale').click(
 				),
 				'short_description',
 				array(
-					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok-sale", "style"=>"display:none; float:left;", "width"=>"15px", "height"=>"15px"))',
-					'type'=>'raw',
-					'htmlOptions'=>array('width'=>20),
+						'value'=>'CHtml::image("images/grid_warning.png","",array("title"=>$data->getWarningsDescription("priceListSale"),"style"=>$data->getHasWarnings("priceListSale")?"display":"display:none"))',
+						'type'=>'raw',
+						'htmlOptions'=>array('width'=>25),
 				),
 			),
 		));		
