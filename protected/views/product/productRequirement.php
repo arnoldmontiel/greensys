@@ -154,10 +154,11 @@ function gridSelectionChange()
 							 
 							)
 						.error(
-							function()
+							function(data)
 							{
-								$(".messageError").animate({opacity: "show"},2000);
-								$(".messageError").animate({opacity: "hide"},2000);
+								$(".messageError").html(data.responseText);
+								$(".messageError").animate({opacity: "show"},2000.,function(){$(".messageError").animate({opacity: "hide"},2000)});
+								unselectRow("requirement-grid");
 							}
 						);
 				}',

@@ -677,7 +677,7 @@ class ProductController extends Controller
 			}
 			else
 			{
-				throw new CDbException('Item has already been added');
+				throw new CHttpException(500,Yii::app()->lc->t('The requirement has already been added'));				
 			}
 		}
 	}
