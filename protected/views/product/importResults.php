@@ -57,14 +57,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$modelProduct->searchDuplicade(),
 	'filter'=>$modelProduct,
 	'columns'=>array(
-			array(
-		 		'name'=>'code',
-				'value'=>'$data->code',
-			),			
-			array(
-		 		'name'=>'model',
-				'value'=>'$data->model',
-			),					
+			'model',
+			'part_number',
+			'code',
 			array(
 	 			'name'=>'brand_description',
 				'value'=>'$data->brand->description',
@@ -73,6 +68,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		 		'name'=>'category_description',
 				'value'=>'$data->category->description',
 			),
+			'short_description',
 			array(				
 				'htmlOptions' => array('style'=>'width:100px;'),
 			 	'type'=>'raw',

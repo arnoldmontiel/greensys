@@ -15,6 +15,9 @@ class ProductRequirementProduct extends CActiveRecord
 	public $description_supplier;
 	public $description_customer;
 	public $guild;
+	public $model;
+	public $part_number;
+	public $short_description;
 	
 	/**
 	 * Returns the static model of the specified AR class.
@@ -46,7 +49,7 @@ class ProductRequirementProduct extends CActiveRecord
 			array('Id_product_requirement, Id_product', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id_product_requirement, Id_product, description_short, internal, code, description_supplier, description_customer, guild', 'safe', 'on'=>'search'),
+			array('Id_product_requirement, Id_product, description_short, internal, code, description_supplier, description_customer, guild, model, part_number, short_description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,6 +74,9 @@ class ProductRequirementProduct extends CActiveRecord
 		return array(
 			'Id_product_requirement' => 'Id Product Requirement',
 			'Id_product' => 'Id Product',
+			'model'=>'Model', 
+			'part_number'=>'Part Number',
+			'short_description'=>'Short Description',
 		);
 	}
 
@@ -111,7 +117,10 @@ class ProductRequirementProduct extends CActiveRecord
 		$criteria->addSearchCondition("product.code",$this->code);
 		$criteria->addSearchCondition("product.description_supplier",$this->description_supplier);
 		$criteria->addSearchCondition("product.description_customer",$this->description_customer);
-		 
+		$criteria->addSearchCondition("product.model",$this->model);
+		$criteria->addSearchCondition("product.part_number",$this->part_number);
+		$criteria->addSearchCondition("product.short_description",$this->short_description);
+		
 		$criteria->join =	"LEFT OUTER JOIN product_requirement pr ON pr.Id=t.Id_product_requirement
 										 LEFT OUTER JOIN guild g ON pr.Id_guild=g.Id";
 		$criteria->addSearchCondition("g.description",$this->guild);
@@ -119,6 +128,18 @@ class ProductRequirementProduct extends CActiveRecord
 		// Create a custom sort
 		$sort=new CSort;
 		$sort->attributes=array(
+		'model' => array(
+					        'asc' => 'product.model',
+					        'desc' => 'product.model DESC',
+		),
+		'part_number' => array(
+					        'asc' => 'product.part_number',
+					        'desc' => 'product.part_number DESC',
+		),
+		'short_description' => array(
+					        'asc' => 'product.short_description',
+					        'desc' => 'product.short_description DESC',
+		),
 			'description_short' => array(
 			        'asc' => 'productRequirement.description_short',
 			        'desc' => 'productRequirement.description_short DESC',

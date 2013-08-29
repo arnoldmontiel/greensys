@@ -4,10 +4,13 @@ $this->breadcrumbs=array(
 	'Assing Requirement',
 );
 $this->menu=array(
-	array('label'=>'List Product', 'url'=>array('index')),
 	array('label'=>'Create Product', 'url'=>array('create')),
 	array('label'=>'Manage Product', 'url'=>array('admin')),
 	array('label'=>'Assign Groups', 'url'=>array('productGroup')),
+	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
+	array('label'=>'Manage Import', 'url'=>array('adminImport')),
+	array('label'=>'Import From Excel', 'url'=>array('importFromExcel')),
+	
 );
 $this->showSideBar = true;
 Yii::app()->clientScript->registerScript('productRequirement', "
@@ -103,11 +106,9 @@ function gridSelectionChange()
 						}
 					}',
 				'columns'=>array(
-							array(
-						 		'name'=>'code',
-								'value'=>'$data->code',
-							),
-							
+							'model',
+							'part_number',
+							'code',
 							array(
 						 		'name'=>'supplier_description',
 								'value'=>'$data->supplier->business_name',
@@ -120,8 +121,7 @@ function gridSelectionChange()
 						 		'name'=>'category_description',
 								'value'=>'$data->category->description',
 							),
-							'description_customer',
-							'description_supplier',
+							'short_description',
 						),
 				));
 	?>
@@ -214,23 +214,27 @@ function gridSelectionChange()
 						 		'name'=>'description_short',
 								'value'=>'$data->productRequirement->description_short',
 				),
+			array(
+								 			'name'=>'guild',
+											'value'=>'$data->productRequirement->guild->description',
+			),
+				array(
+						 		'name'=>'model',
+								'value'=>'$data->product->model',
+				),
 			
 				array(
-					 			'name'=>'description_customer',
-								'value'=>'$data->product->description_customer',
-				),		
-				array(
-						 		'name'=>'description_supplier',
-								'value'=>'$data->product->description_supplier',
-				),
+					 			'name'=>'part_number',
+								'value'=>'$data->product->part_number',
+				),						
 				array(
 					 			'name'=>'code',
 								'value'=>'$data->product->code',
 				),
 				array(
-					 			'name'=>'guild',
-								'value'=>'$data->productRequirement->guild->description',
-				),
+										 		'name'=>'short_description',
+												'value'=>'$data->product->short_description',
+				),				
 							array(
 						'class'=>'CButtonColumn',
 						'template'=>'{delete}',
