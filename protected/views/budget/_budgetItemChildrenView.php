@@ -26,7 +26,8 @@
 		</tr>
 	</tbody>
 </table>
-<?php 
+
+<?php
 echo CHtml::hiddenField("IdItemBudgetParent","",array("id"=>"IdItemBudgetParent"));
 
 $this->widget('zii.widgets.grid.CGridView', array(
@@ -137,6 +138,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 )); 
 
 ?>
+
 </div>
 
 <div id="displayChildrenPrices" style="display: none">
@@ -237,4 +239,5 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		 ),
 	),
 )); ?>
+
 </div>

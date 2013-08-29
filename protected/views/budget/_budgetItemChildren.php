@@ -27,6 +27,7 @@
 	</tbody>
 </table>
 <?php 
+
 echo CHtml::hiddenField("IdItemBudgetParent","",array("id"=>"IdItemBudgetParent"));
 
 $this->widget('zii.widgets.grid.CGridView', array(
@@ -239,4 +240,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		 ),
 	),
 )); ?>
+</div>
+<div>
+<?php 
+echo CHtml::label("Verificado", "PriceList_do_not_warning");
+echo CHtml::CheckBox('do_not_warning','', array (
+		'id'=>'parent_do_not_warning',
+));
+?>
 </div>

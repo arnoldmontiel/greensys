@@ -47,7 +47,14 @@ function fillParentData(data)
 	$('#parent_brand_desc').text(data.parent_brand_desc);
 	$('#parent_supplier_name').text(data.parent_supplier_name);
 	$('#parent_price').text(data.parent_price);
-	
+	if(data.do_not_warning)
+	{
+		$('#parent_do_not_warning').attr('checked', true);;
+	}
+	else
+	{
+		$('#parent_do_not_warning').attr('checked', false);
+	}		
 }
 
 $('.link-popup').click(function(){
