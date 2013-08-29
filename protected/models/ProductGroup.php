@@ -21,6 +21,9 @@ class ProductGroup extends CActiveRecord
 	public $product_description_supplier;
 	public $product_description_customer;
 	public $product_code;
+	public $product_model;
+	public $product_part_number;
+	public $product_short_description;
 	
 	/**
 	 * Returns the static model of the specified AR class.
@@ -51,10 +54,10 @@ class ProductGroup extends CActiveRecord
 			array('Id_product_parent, Id_product_child, quantity', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id_product_parent, Id_product_child, quantity, product_brand_description, product_category_description, product_nomenclator_description,product_description_supplier,product_description_customer, product_code, product_supplier_business_name', 'safe', 'on'=>'search'),
+			array('Id_product_parent, Id_product_child, quantity, product_brand_description, product_category_description, product_nomenclator_description,product_description_supplier,product_description_customer, product_code, product_supplier_business_name,product_model,product_part_number,product_short_description', 'safe', 'on'=>'search'),
 		);
 	}
-
+	
 	/**
 	 * @return array relational rules.
 	 */
@@ -77,6 +80,12 @@ class ProductGroup extends CActiveRecord
 			'Id_product_parent' => 'Id Product Parent',
 			'Id_product_child' => 'Id Product Child',
 			'quantity' => 'Quantity',
+			'product_model'=>'Model',
+			'product_part_number'=>'Part Number',
+			'product_short_description'=>'Short Description',
+			'product_supplier_business_name'=>'Supplier',
+			'product_brand_description'=>'Brand',
+			'product_code'=>'Code',
 		);
 	}
 
@@ -137,7 +146,10 @@ class ProductGroup extends CActiveRecord
 		$criteria->addSearchCondition("productChild.code",$this->product_code);
 		$criteria->addSearchCondition("productChild.description_customer",$this->product_description_customer);
 		$criteria->addSearchCondition("productChild.description_supplier",$this->product_description_supplier);
-	
+		$criteria->addSearchCondition("productChild.model",$this->product_model);
+		$criteria->addSearchCondition("productChild.part_number",$this->product_part_number);
+		$criteria->addSearchCondition("productChild.short_description",$this->product_short_description);
+		
 		$criteria->join =	"LEFT OUTER JOIN product p ON p.Id=t.Id_product_child
 								 LEFT OUTER JOIN brand b ON p.Id_brand=b.Id
 								 LEFT OUTER JOIN supplier s ON p.Id_supplier=s.Id";
@@ -150,6 +162,18 @@ class ProductGroup extends CActiveRecord
 							      'product_code' => array(
 							        'asc' => 'productChild.code',
 							        'desc' => 'productChild.code DESC',
+		),
+		'product_model' => array(
+									        'asc' => 'productChild.model',
+									        'desc' => 'productChild.model DESC',
+		),
+		'product_part_number' => array(
+											        'asc' => 'productChild.part_number',
+											        'desc' => 'productChild.part_number DESC',
+		),
+		'product_short_description' => array(
+													        'asc' => 'productChild.short_description',
+													        'desc' => 'productChild.short_description DESC',
 		),
 									'product_description_customer' => array(
 							        'asc' => 'productChild.description_customer',

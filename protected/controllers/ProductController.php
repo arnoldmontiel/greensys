@@ -376,10 +376,7 @@ class ProductController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Product');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		$this->redirect(array('admin'));
 	}
 
 	/**
@@ -539,10 +536,18 @@ class ProductController extends Controller
 		{
 			$product = Product::model()->findByPk($_POST['Product']['Id']);
 			echo CHtml::openTag("ul");
-			echo "Selected Product:";
+			echo "Product Parent:";
 			echo CHtml::closeTag("ul");
 			echo CHtml::openTag("ul");
 	
+			echo CHtml::openTag("li");
+			echo $product->model;
+			echo CHtml::closeTag("li");
+			
+			echo CHtml::openTag("li");
+			echo $product->part_number;
+			echo CHtml::closeTag("li");
+			
 			echo CHtml::openTag("li");
 			echo $product->code;
 			echo CHtml::closeTag("li");
@@ -560,11 +565,7 @@ class ProductController extends Controller
 			echo CHtml::closeTag("li");
 			
 			echo CHtml::openTag("li");
-			echo $product->description_customer;
-			echo CHtml::closeTag("li");
-			
-			echo CHtml::openTag("li");
-			echo $product->description_supplier;
+			echo $product->short_description;
 			echo CHtml::closeTag("li");
 			
 			echo CHtml::closeTag("ul");

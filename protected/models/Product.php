@@ -422,6 +422,8 @@ class Product extends ModelAudit
 		$criteria->compare('unit_rack',$this->unit_rack);
 		$criteria->compare('unit_fan',$this->unit_fan);
 		$criteria->compare('model',$this->model,true);
+		$criteria->compare('part_number',$this->part_number,true);
+		$criteria->compare('short_description',$this->short_description,true);
 		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -464,6 +466,7 @@ class Product extends ModelAudit
 		$criteria->compare('unit_fan',$this->unit_fan);
 		$criteria->compare('model',$this->model,true);
 		$criteria->compare('part_number',$this->part_number,true);
+		$criteria->compare('short_description',$this->short_description,true);
 		
 		$criteria->with[]='brand';
 		$criteria->addSearchCondition("brand.description",$this->brand_description);
@@ -482,6 +485,9 @@ class Product extends ModelAudit
 		$sort=new CSort;
 		$sort->attributes=array(
 				      'code',
+						'model',
+						'part_number',
+						'short_description',
 				      'brand_description' => array(
 				        'asc' => 'brand.description',
 				        'desc' => 'brand.description DESC',
@@ -544,8 +550,9 @@ class Product extends ModelAudit
 		$criteria->compare('unit_rack',$this->unit_rack);
 		$criteria->compare('unit_fan',$this->unit_fan);
 		$criteria->compare('model',$this->model,true);
+		$criteria->compare('model',$this->model,true);
 		$criteria->compare('part_number',$this->part_number,true);
-		$criteria->compare('import_code',$this->import_code,true);
+		$criteria->compare('short_description',$this->short_description,true);
 		$criteria->addCondition('Id_product is not null');
 		
 		$criteria->with[]='brand';
@@ -565,6 +572,9 @@ class Product extends ModelAudit
 		$sort=new CSort;
 		$sort->attributes=array(
 					      'code',
+						'model',
+						'part_number',
+						'short_description',
 					      'brand_description' => array(
 					        'asc' => 'brand.description',
 					        'desc' => 'brand.description DESC',
@@ -627,6 +637,7 @@ class Product extends ModelAudit
 		$criteria->compare('unit_fan',$this->unit_fan);
 		$criteria->compare('model',$this->model,true);
 		$criteria->compare('part_number',$this->part_number,true);
+		$criteria->compare('short_description',$this->short_description,true);
 		
 		$criteria->with[]='brand';
 		$criteria->addSearchCondition("brand.description",$this->brand_description);
@@ -646,6 +657,9 @@ class Product extends ModelAudit
 		$sort=new CSort;
 		$sort->attributes=array(
 					      'code',
+						'model',
+						'part_number',
+						'short_description',
 					      'brand_description' => array(
 					        'asc' => 'brand.description',
 					        'desc' => 'brand.description DESC',
@@ -708,6 +722,7 @@ class Product extends ModelAudit
 		$criteria->compare('unit_fan',$this->unit_fan);
 		$criteria->compare('model',$this->model,true);
 		$criteria->compare('part_number',$this->part_number,true);
+		$criteria->compare('short_description',$this->short_description,true);
 		
 		$criteria->with[]='brand';
 		$criteria->addSearchCondition("brand.description",$this->brand_description);
@@ -727,6 +742,9 @@ class Product extends ModelAudit
 		$sort=new CSort;
 		$sort->attributes=array(
 						      'code',
+								'model',
+								'part_number',
+								'short_description',
 						      'brand_description' => array(
 						        'asc' => 'brand.description',
 						        'desc' => 'brand.description DESC',
@@ -788,6 +806,7 @@ class Product extends ModelAudit
 		$criteria->compare('unit_fan',$this->unit_fan);
 		$criteria->compare('model',$this->model,true);
 		$criteria->compare('part_number',$this->part_number,true);
+		$criteria->compare('short_description',$this->short_description,true);
 		
 		$criteria->with[]='brand';
 		$criteria->addSearchCondition("brand.description",$this->brand_description);
@@ -812,6 +831,9 @@ class Product extends ModelAudit
 		$sort=new CSort;
 		$sort->attributes=array(
 				'code',
+				'model',
+				'part_number',
+				'short_description',
 				'brand_description' => array(
 						'asc' => 'brand.description',
 						'desc' => 'brand.description DESC',
