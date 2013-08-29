@@ -357,6 +357,16 @@ class Product extends ModelAudit
 			if(empty($priceList))
 				return true;						
 		}
+		if($from=="priceListSale")
+		{
+			$criteria = new CDbCriteria;
+			$criteria->compare('Id_product',$this->Id);
+			$criteria->with[]="priceList";
+			$criteria->compare('priceList.Id_price_list_type',1);//compro			
+			$priceList = PriceListItem::model()->findAll($criteria);
+			if(empty($priceList))
+				return true;						
+		}
 		return false;
 	}
 	public function getWarningsDescription($from="")
@@ -371,7 +381,12 @@ class Product extends ModelAudit
 		if($from=="budget")
 		{
 			if($this->getHasWarnings($from))
-				return Yii::app()->lc->t('Missing Price List.');				
+				return Yii::app()->lc->t('Missing price list.');				
+		}		
+		if($from=="priceListSale")
+		{
+			if($this->getHasWarnings($from))
+				return Yii::app()->lc->t('Missing purchase price list.');				
 		}		
 		return Yii::app()->lc->t('No warnings.');
 	}
