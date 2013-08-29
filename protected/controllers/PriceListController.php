@@ -190,10 +190,32 @@ class PriceListController extends Controller
 	public function actionDelete($id)
 	{
 		if(Yii::app()->request->isPostRequest)
-		{
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
-
+		{				
+			$model = $this->loadModel($id);
+			
+			if($model->Id_price_list_type == 1) //de compra
+			{
+				$criteria = new CDbCriteria();
+				
+				$criteria->join = 'inner join price_list_item pli1 on pli1.Id_price_list = t.Id';
+				$criteria->addCondition('pli1.Id_product not in
+								(select pli2.Id_product from price_list_item pli2
+								where
+								pli2.Id_price_list = '.$id.')
+								and t.Id_price_list_type = 2');
+				
+				if(PriceList::model()->count($criteria)>0)
+					$model->delete();
+				else
+					throw new CHttpException(500,Yii::app()->lc->t('The current Price List is used by a Sale Price List, you can not delete it.'));
+			}
+			else
+			{
+				if(BudgetItem::model()->countByAttributes(array('Id_price_list'=>$id)) == 0)
+					$model->delete();
+				else
+					throw new CHttpException(500,Yii::app()->lc->t('The current Sale Price List is used by a Budget, you can not delete it.'));
+			}
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
 				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
