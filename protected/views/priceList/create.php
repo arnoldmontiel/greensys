@@ -6,7 +6,7 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Manage PriceList', 'url'=>array('admin')),
-	array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
+	//array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
 );
 ?>
 

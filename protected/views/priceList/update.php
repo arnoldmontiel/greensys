@@ -10,7 +10,7 @@ $this->menu=array(
 	array('label'=>'Manage PriceList', 'url'=>array('admin')),
 	array('label'=>'View PriceList', 'url'=>array('view', 'id'=>$model->Id)),
 	array('label'=>'Assing Products', 'url'=>array('priceListItem','PriceList'=>array('Id'=>$model->Id))),
-	array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
+	//array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
 );
 ?>
 

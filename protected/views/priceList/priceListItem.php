@@ -8,7 +8,7 @@ $this->menu=array(
 	array('label'=>'Create PriceList', 'url'=>array('create')),
 	array('label'=>'Manage PriceList', 'url'=>array('admin')),
 	array('label'=>'View PriceList', 'url'=>array('view', 'id'=>$modelPriceList->Id)),
-	array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
+	//array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
 );
 
 $this->showSideBar = true;

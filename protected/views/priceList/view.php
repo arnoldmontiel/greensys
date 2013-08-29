@@ -10,7 +10,7 @@ $this->menu=array(
 	array('label'=>'Update PriceList', 'url'=>array('update', 'id'=>$model->Id)),
 	array('label'=>'Delete PriceList', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Assing Products', 'url'=>array('priceListItem','PriceList'=>array('Id'=>$model->Id))),
-	array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
+	//array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
 );
 ?>
 
