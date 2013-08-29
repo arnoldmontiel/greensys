@@ -343,16 +343,36 @@ class Product extends ModelAudit
 												'Id_budget_item'=>null,
 												'Id_purchase_order_item'=>null));		
 	}
-	public function getHasWarnings()
+	public function getHasWarnings($from="")
 	{
-		return ($this->getVolume()===false);
-	}
-	public function getWarningsDescription()
-	{
-		if ($this->getVolume()===false)
+		if(empty($from))
+			return ($this->getVolume()===false);
+		if($from=="budget")
 		{
-			return Yii::app()->lc->t('Missing Volume.');
+			$criteria = new CDbCriteria;
+			$criteria->compare('Id_product',$this->Id);
+			$criteria->with[]="priceList";
+			$criteria->compare('priceList.Id_price_list_type',2);//venta			
+			$priceList = PriceListItem::model()->findAll($criteria);
+			if(empty($priceList))
+				return true;						
 		}
+		return false;
+	}
+	public function getWarningsDescription($from="")
+	{
+		if(empty($from))
+		{
+			if ($this->getVolume()===false)
+			{
+				return Yii::app()->lc->t('Missing Volume.');
+			}				
+		}
+		if($from=="budget")
+		{
+			if($this->getHasWarnings($from))
+				return Yii::app()->lc->t('Missing Price List.');				
+		}		
 		return Yii::app()->lc->t('No warnings.');
 	}
 	

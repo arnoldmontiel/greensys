@@ -46,9 +46,9 @@
 				'description_customer',
 				'description_supplier',
 				array(
-					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok", "style"=>"display:none; float:left;", "width"=>"15px", "height"=>"15px"))',
-					'type'=>'raw',
-					'htmlOptions'=>array('width'=>20),
+						'value'=>'CHtml::image("images/grid_warning.png","",array("title"=>$data->getWarningsDescription("budget"),"style"=>$data->getHasWarnings("budget")?"display":"display:none"))',
+						'type'=>'raw',
+						'htmlOptions'=>array('width'=>25),
 				),
 			),
 		));		
