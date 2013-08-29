@@ -29,7 +29,7 @@ $('#addAll').click(
 			$.post('".PriceListController::createUrl('AjaxAddFilteredProducts')."',
 				$.param(
 					$('#product-grid .filters input,  #product-grid .filters select')
-					)+'&Id_price_list='+$('#PriceList_Id :selected').attr('value'),
+					)+'&Id_price_list='+$('#PriceList_Id').val(),
 				function(data){
 					$.fn.yiiGridView.update('price-list-item-grid');
 				}
@@ -49,7 +49,7 @@ $('#deleteAll').click(
 			$.post('".PriceListController::createUrl('AjaxDeleteFilteredProducts')."',
 				$.param(
 					$('#price-list-item-grid .filters input,  #price-list-item-grid .filters select')
-					)+'&Id_price_list='+$('#PriceList_Id :selected').attr('value'),
+					)+'&Id_price_list='+$('#PriceList_Id').val(),
 				function(data){
 					$.fn.yiiGridView.update('price-list-item-grid');
 				}
@@ -110,7 +110,7 @@ $('#deleteAll').click(
 
 			$.get(	"'.PriceListController::createUrl('AjaxAddPriceListItem').'",
 					{
-						IdPriceList:$("#PriceList_Id :selected").attr("value"),
+						IdPriceList:$("#PriceList_Id").val(),
 						IdProduct:$.fn.yiiGridView.getSelection("product-grid")
 					}).success(
 						function() 
@@ -132,14 +132,9 @@ $('#deleteAll').click(
 						});
 		}',
 		'columns'=>array(	
-				array(
-					'name'=>'code',
-				    'value'=>'$data->code',				 
-				),
-				array(
-					'name'=>'model',
-				    'value'=>'$data->model',				 
-				),
+				'model',
+				'part_number',
+				'code',
 				array(
 		 			'name'=>'brand_description',
 					'value'=>'$data->brand->description',
@@ -148,8 +143,7 @@ $('#deleteAll').click(
 			 		'name'=>'category_description',
 					'value'=>'$data->category->description',
 				),
-				'description_customer',
-				'description_supplier',
+				'short_description',
 				array(
 					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok", "style"=>"display:none; float:left;", "width"=>"15px", "height"=>"15px"))',
 					'type'=>'raw',
@@ -287,11 +281,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 // 																});
 // 													});	
  									}',	
-	'columns'=>array(
-				array(
- 				            'name'=>'code',
-				            'value'=>'$data->product->code',
-				),
+	'columns'=>array(				
 				array(
 				 				            'name'=>'model',
 								            'value'=>'$data->product->model',
@@ -303,8 +293,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					
 				),
 				array(
- 				            'name'=>'description_customer',
-				            'value'=>'$data->product->description_customer',
+				 				            'name'=>'code',
+								            'value'=>'$data->product->code',
+				),
+				array(
+ 				            'name'=>'brand_description',
+				            'value'=>'$data->product->brand->description',
 				),
 				array(
 					'name'=>'msrp',

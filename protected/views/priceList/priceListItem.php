@@ -5,9 +5,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List PriceList', 'url'=>array('index')),
 	array('label'=>'Create PriceList', 'url'=>array('create')),
 	array('label'=>'Manage PriceList', 'url'=>array('admin')),
+	array('label'=>'View PriceList', 'url'=>array('view', 'id'=>$modelPriceList->Id)),
 	array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
 );
 
@@ -78,10 +78,6 @@ function loadPage()
 
 loadPage();
 		
-$('#PriceList_Id').change(function(){
-		loadPage();
-}	
-);
 
 ");
 ?>
@@ -92,24 +88,8 @@ $('#PriceList_Id').change(function(){
 		'enableAjaxValidation'=>true,
 ));
 ?>
-	
-	<div id="priceList" style="margin-bottom: 5px">		
-		<?php
-		
-			$criteria = new CDbCriteria;			
-			$criteria->order = 't.Id_price_list_type, t.description ASC';
-			$priceListDB= PriceList::model()->findAll($criteria);
-			$priceLists = CHtml::listData($priceListDB, 'Id', 'PriceListDesc');
-		?>
-		<?php echo $form->labelEx($modelPriceList,'Price List'); ?>
-		<?php echo $form->dropDownList($modelPriceList, 'Id', $priceLists,		
-			array(
-				'prompt'=>'Select a Price List'
-			)		
-		);
-		?>
-	</div>
-		
+	<?php echo CHtml::activeHiddenField($modelPriceList, 'Id'); ?>
+	<h1>Add Item To Price List - <?php echo $modelPriceList->priceListType->name;?></h1>	
 	<div id="display" style="display: none">
 		<?php echo $this->renderPartial('_priceListItem', array('model'=>$model,'modelProduct'=>$modelProduct,)); ?>
 	</div><!-- display-->

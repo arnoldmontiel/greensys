@@ -5,9 +5,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List PriceList', 'url'=>array('index')),
 	array('label'=>'Create PriceList', 'url'=>array('create')),
-	array('label'=>'Assing Products', 'url'=>array('priceListItem')),
 	array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
 );
 
@@ -34,6 +32,18 @@ $names=$model->attributeNames();
 	'dataProvider'=>$model->searchSummary(),
 	'filter'=>$model,
 	'columns'=>array(
+ 		array(
+  			'name'=>"Id_price_list_type",//$model->getAttributeLabel('validity'),
+  			'type'=>'raw',
+  			'value'=>'isset($data->priceListType)?$data->priceListType->name:""',
+  			'filter'=>CHtml::listData(
+ 				array(
+ 					array('id'=>'1','value'=>'Compra'),
+ 					array('id'=>'2','value'=>'Venta')
+ 				)
+ 				,'id','value'
+ 			),
+ 		),
 		array(
 			'name'=>'supplier_business_name',
 			'value'=>'isset($data->supplier)?$data->supplier->business_name:""',
@@ -42,11 +52,7 @@ $names=$model->attributeNames();
 			'name'=>'Id_importer',
 			'value'=>'isset($data->importer)?$data->importer->contact->description:""',
 		),
-		'description',
-		array(
-			'name'=>'Id_price_list_type',
-			'value'=>'isset($data->priceListType)?$data->priceListType->name:""',
-		),
+		'description',	
 		'date_creation',
 		'date_validity',
  		array(

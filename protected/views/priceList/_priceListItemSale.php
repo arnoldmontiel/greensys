@@ -28,7 +28,7 @@ $('#addAll-sale').click(
 			$.post('".PriceListController::createUrl('AjaxAddFilteredProductsSale')."',
 				$.param(
 					$('#product-grid-sale .filters input,  #product-grid-sale .filters select')
-					)+'&Id_price_list='+$('#PriceList_Id :selected').attr('value'),
+					)+'&Id_price_list='+$('#PriceList_Id').val(),
 				function(data){
 					$.fn.yiiGridView.update('price-list-item-grid-sale');
 				}
@@ -49,7 +49,7 @@ $('#deleteAll-sale').click(
 			$.post('".PriceListController::createUrl('AjaxDeleteFilteredProducts')."',
 				$.param(
 					$('#price-list-item-grid-sale .filters input,  #price-list-item-grid-sale .filters select')
-					)+'&Id_price_list='+$('#PriceList_Id :selected').attr('value'),
+					)+'&Id_price_list='+$('#PriceList_Id').val(),
 				function(data){
 					$.fn.yiiGridView.update('price-list-item-grid-sale');
 				}
@@ -112,7 +112,7 @@ $('#deleteAll-sale').click(
 			$(".messageError").animate({opacity: "hide"},2000);
 			$.get(	"'.PriceListController::createUrl('AjaxAddPriceListItemSale').'",
 					{
-						Id_price_list:$("#PriceList_Id :selected").attr("value"),
+						Id_price_list:$("#PriceList_Id").val(),
 						Id_product:$.fn.yiiGridView.getSelection("product-grid-sale")[0],
 					}).success(
 						function() 
@@ -133,19 +133,10 @@ $('#deleteAll-sale').click(
 							unselectRow("product-grid-sale");
 						});
 		}',
-		'columns'=>array(	
-				array(
-					'name'=>'code',
-				    'value'=>'$data->code',				 
-				),
-				array(
-						'name'=>'model',
-						'value'=>'$data->model',
-				),				
-				array(
-						'name'=>'part_number',
-						'value'=>'$data->part_number',
-				),				
+		'columns'=>array(
+				'model',
+				'part_number',
+				'code',	
 				array(
 		 			'name'=>'brand_description',
 					'value'=>'$data->brand->description',
@@ -154,8 +145,7 @@ $('#deleteAll-sale').click(
 			 		'name'=>'category_description',
 					'value'=>'$data->category->description',
 				),
-				'description_customer',
-				'description_supplier',
+				'short_description',
 				array(
 					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok-sale", "style"=>"display:none; float:left;", "width"=>"15px", "height"=>"15px"))',
 					'type'=>'raw',
@@ -247,12 +237,7 @@ $('#deleteAll-sale').click(
 																});
 													});	
  									}',	
-			'columns'=>array(
-				array(
- 				            'name'=>'code',
-				            'value'=>'$data->product->code',
-				 
-				),
+			'columns'=>array(				
 				array(
 				 				            'name'=>'model',
 								            'value'=>'$data->product->model',
@@ -262,11 +247,15 @@ $('#deleteAll-sale').click(
 				 				            'name'=>'part_number',
 								            'value'=>'$data->product->part_number',
 					
-				),					
+				),			
 				array(
- 				            'name'=>'description_customer',
-				            'value'=>'$data->product->description_customer',
- 
+	 				            'name'=>'code',
+					            'value'=>'$data->product->code',
+		
+				),
+				array(
+ 				            'name'=>'brand_description',
+				            'value'=>'$data->product->brand->description',
 				),
 				array(
 					'name'=>'msrp',

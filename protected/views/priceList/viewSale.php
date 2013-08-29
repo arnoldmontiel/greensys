@@ -4,18 +4,17 @@ $this->breadcrumbs=array(
 	$model->description,
 );
 
-$this->menu=array(
-	array('label'=>'List PriceList', 'url'=>array('index')),
+$this->menu=array(	
 	array('label'=>'Create PriceList', 'url'=>array('create')),
+	array('label'=>'Manage PriceList', 'url'=>array('admin')),
 	array('label'=>'Update PriceList', 'url'=>array('update', 'id'=>$model->Id)),
 	array('label'=>'Delete PriceList', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage PriceList', 'url'=>array('admin')),
 	array('label'=>'Assing Products', 'url'=>array('priceListItem','PriceList'=>array('Id'=>$model->Id))),
 	array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
 );
 ?>
 
-<h1>View PriceList</h1>
+<h1>View PriceList - <?php echo $model->priceListType->name;?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
@@ -47,29 +46,25 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'summaryText'=>'',
 	'columns'=>array(
 				array(
+ 				            'name'=>'model',
+				            'value'=>'$data->product->model',				 
+				),
+				array(
+ 				            'name'=>'part_number',
+				            'value'=>'$data->product->part_number',				 
+				),
+				array(
  				            'name'=>'code',
 				            'value'=>'$data->product->code',				 
 				),
 				array(
- 				            'name'=>'code_supplier',
-				            'value'=>'$data->product->code_supplier',
+ 				            'name'=>'brand_description',
+				            'value'=>'$data->product->brand->description',
 				),
 				array(
- 				            'name'=>'description_customer',
-				            'value'=>'$data->product->description_customer', 
+ 				            'name'=>'product_short_description',
+				            'value'=>'$data->product->short_description', 
 				),
-// 				array(
-// 					'name'=>'msrp',
-// 					'value'=>'$data->msrp',							
-// 					'type'=>'raw',					
-// 			        'htmlOptions'=>array('width'=>5),
-// 				),
-// 				array(
-// 					'name'=>'dealer_cost',
-// 					'value'=>'$data->dealer_cost',
-// 					'type'=>'raw',
-// 			        'htmlOptions'=>array('width'=>5),
-// 				),
 				array(
 					'name'=>'profit_rate',
 					'value'=>'$data->profit_rate',

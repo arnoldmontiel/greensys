@@ -5,9 +5,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List PriceList', 'url'=>array('index')),
 	array('label'=>'Manage PriceList', 'url'=>array('admin')),
-	array('label'=>'Assing Products', 'url'=>array('priceListItem')),
+	array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
 );
 ?>
 
