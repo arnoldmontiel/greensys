@@ -4,10 +4,12 @@ $this->breadcrumbs=array(
 	'Assing Products',
 );
 $this->menu=array(
-	array('label'=>'List Product', 'url'=>array('index')),
-	array('label'=>'Create Product', 'url'=>array('create')),
-	array('label'=>'Manage Product', 'url'=>array('admin')),
-	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
+array('label'=>'Create Product', 'url'=>array('create')),
+array('label'=>'Manage Product', 'url'=>array('admin')),
+array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
+array('label'=>'Manage Import', 'url'=>array('adminImport')),
+array('label'=>'Import From Excel', 'url'=>array('importFromExcel')),
+
 );
 $this->showSideBar = true;
 Yii::app()->clientScript->registerScript('productGroup', "
@@ -64,7 +66,7 @@ function gridSelectionChange()
 
 	<div class="gridTitle-decoration1">
 		<div class="gridTitle1">
-		Products
+		Product Parent
 		</div>
 	</div>
 	
@@ -105,11 +107,9 @@ function gridSelectionChange()
 						}
 					}',
 				'columns'=>array(
-	array(
-								 		'name'=>'code',
-										'value'=>'$data->code',
-	),
-	
+				'model',
+				'part_number',
+				'code',
 	array(
 								 		'name'=>'supplier_description',
 										'value'=>'$data->supplier->business_name',
@@ -122,8 +122,8 @@ function gridSelectionChange()
 								 		'name'=>'category_description',
 										'value'=>'$data->category->description',
 	),
-									'description_customer',
-									'description_supplier',
+									'short_description',
+									
 	),
 	));
 	?>
@@ -156,11 +156,9 @@ function gridSelectionChange()
 						);
 			}',
 			'columns'=>array(	
-			array(
-		 		'name'=>'code',
-				'value'=>'$data->code',
-		),
-			
+			'model',
+			'part_number',
+			'code',
 			array(
 		 		'name'=>'supplier_description',
 				'value'=>'$data->supplier->business_name',
@@ -173,8 +171,7 @@ function gridSelectionChange()
 		 		'name'=>'category_description',
 				'value'=>'$data->category->description',
 			),
-				'description_customer',
-				'description_supplier',
+				'short_description',
 			array(
 				'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok", "style"=>"display:none; float:left;", "width"=>"15px", "height"=>"15px"))',
 				'type'=>'raw',
@@ -186,7 +183,7 @@ function gridSelectionChange()
 		?>
 	<div class="gridTitle-decoration1">
 		<div class="gridTitle1">
-		Group
+		Product Children
 		</div>
 	</div>
 		<?php 				
@@ -195,7 +192,15 @@ function gridSelectionChange()
 			'dataProvider'=>$modelProductGroup->searchProductChild(),
 			'filter'=>$modelProductGroup,
 			'summaryText'=>'',
-			'columns'=>array(	
+			'columns'=>array(
+			array(
+							 		'name'=>'product_model',
+									'value'=>'$data->productChild->model',
+			),
+		array(
+							 		'name'=>'product_part_number',
+									'value'=>'$data->productChild->part_number',
+		),		
 			array(
 					 		'name'=>'product_code',
 							'value'=>'$data->productChild->code',
@@ -210,12 +215,8 @@ function gridSelectionChange()
 							'value'=>'$data->productChild->brand->description',
 			),		
 			array(
-					 		'name'=>'product_description_customer',
-							'value'=>'$data->productChild->description_customer',
-			),
-			array(
-				 			'name'=>'product_description_supplier',
-							'value'=>'$data->productChild->description_supplier',
+							 		'name'=>'product_short_description',
+									'value'=>'$data->productChild->short_description',
 			),
 						'quantity',
 						array(

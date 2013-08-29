@@ -4,11 +4,12 @@ $this->breadcrumbs=array(
 	'Manage',
 );
 
-$this->menu=array(
-	array('label'=>'List Product', 'url'=>array('index')),
+$this->menu=array(	
 	array('label'=>'Create Product', 'url'=>array('create')),
 	array('label'=>'Assign Groups', 'url'=>array('productGroup')),
 	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
+	array('label'=>'Manage Import', 'url'=>array('adminImport')),
+	array('label'=>'Import From Excel', 'url'=>array('importFromExcel')),
 
 );
 
@@ -21,15 +22,10 @@ $this->menu=array(
 	'id'=>'product-grid',
 	'dataProvider'=>$model->searchSummary(),
 	'filter'=>$model,
-	'columns'=>array(
-			array(
-		 		'name'=>'code',
-				'value'=>'$data->code',
-			),			
-			array(
-		 		'name'=>'model',
-				'value'=>'$data->model',
-			),
+	'columns'=>array(			
+			'model',
+			'part_number',
+			'code',
 			array(
 		 		'name'=>'supplier_description',
 				'value'=>'$data->supplier->business_name',
@@ -42,8 +38,7 @@ $this->menu=array(
 		 		'name'=>'category_description',
 				'value'=>'$data->category->description',
 			),
-				'description_customer',
-				'description_supplier',
+			'short_description',
 		array(
 			'class'=>'CButtonColumn',
 		),
