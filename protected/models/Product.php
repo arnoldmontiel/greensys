@@ -343,50 +343,51 @@ class Product extends ModelAudit
 												'Id_budget_item'=>null,
 												'Id_purchase_order_item'=>null));		
 	}
-	public function getHasWarnings($from="")
-	{
-		if(empty($from))
-			return ($this->getVolume()===false);
-		if($from=="budget")
-		{
-			$criteria = new CDbCriteria;
-			$criteria->compare('Id_product',$this->Id);
-			$criteria->with[]="priceList";
-			$criteria->compare('priceList.Id_price_list_type',2);//venta			
-			$priceList = PriceListItem::model()->findAll($criteria);
-			if(empty($priceList))
-				return true;						
-		}
-		if($from=="priceListSale")
-		{
-			$criteria = new CDbCriteria;
-			$criteria->compare('Id_product',$this->Id);
-			$criteria->with[]="priceList";
-			$criteria->compare('priceList.Id_price_list_type',1);//compro			
-			$priceList = PriceListItem::model()->findAll($criteria);
-			if(empty($priceList))
-				return true;						
+	public function getHasWarnings($warning)
+	{		
+		switch ($warning) {
+			case "hasMeasure":
+				return ($this->getVolume()===false);
+				break;
+			case "hasPriceListPurch":
+				$criteria = new CDbCriteria;
+				$criteria->compare('Id_product',$this->Id);
+				$criteria->with[]="priceList";
+				$criteria->compare('priceList.Id_price_list_type',1);//compro			
+				$priceList = PriceListItem::model()->findAll($criteria);
+				if(empty($priceList))
+					return true;
+				break;
+			case "hasPriceListSale":
+				$criteria = new CDbCriteria;
+				$criteria->compare('Id_product',$this->Id);
+				$criteria->with[]="priceList";
+				$criteria->compare('priceList.Id_price_list_type',2);//venta			
+				$priceList = PriceListItem::model()->findAll($criteria);
+				if(empty($priceList))
+					return true;
+				break;
 		}
 		return false;
 	}
-	public function getWarningsDescription($from="")
+	
+	public function getWarningsDescription($warning)
 	{
-		if(empty($from))
-		{
-			if ($this->getVolume()===false)
-			{
-				return Yii::app()->lc->t('Missing Volume.');
-			}				
-		}
-		if($from=="budget")
-		{
-			if($this->getHasWarnings($from))
-				return Yii::app()->lc->t('Missing price list.');				
-		}		
-		if($from=="priceListSale")
-		{
-			if($this->getHasWarnings($from))
-				return Yii::app()->lc->t('Missing purchase price list.');				
+		$hasWarning = $this->getHasWarnings($warning);
+		
+		switch ($warning) {
+			case "hasMeasure":
+				if ($hasWarning)
+					return Yii::app()->lc->t('Missing Volume.');
+				break;
+			case "hasPriceListPurch":
+				if ($hasWarning)
+					return Yii::app()->lc->t('Missing price list.');
+				break;
+			case "hasPriceListSale":
+				if ($hasWarning)
+					return Yii::app()->lc->t('Missing purchase price list.');
+				break;
 		}		
 		return Yii::app()->lc->t('No warnings.');
 	}
