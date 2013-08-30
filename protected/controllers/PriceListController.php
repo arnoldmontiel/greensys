@@ -464,7 +464,7 @@ class PriceListController extends Controller
 				$volume = $product->getVolume();
 				if($volume===false)
 				{
-					throw new CHttpException(500,Yii::app()->lc->t('Product has not width or heightor or length'));
+					throw new CHttpException(500,Yii::app()->lc->t('Product has not width or height or or length.'));
 				}
 				if(isset($priceListItemPurchase))
 				{
@@ -493,12 +493,12 @@ class PriceListController extends Controller
 				}
 				else
 				{
-					throw new CHttpException(500,Yii::app()->lc->t('Product must be included in at least one purchase price list'));											
+					throw new CHttpException(500,Yii::app()->lc->t('Product must be included in at least one purchase price list.'));											
 				}
 			}
 			else
 			{
-				throw new CHttpException(500,Yii::app()->lc->t('Item has already been added'));
+				throw new CHttpException(500,Yii::app()->lc->t('Item has already been added.'));
 			}
 		}
 	
