@@ -21,6 +21,8 @@ class PurchaseOrderItem extends ModelAudit
 	public $product_description_customer;
 	public $product_code;
 	public $product_code_supplier;
+	public $product_model;
+	public $product_part_number;	
 	
 	/**
 	 * Returns the static model of the specified AR class.
@@ -53,7 +55,7 @@ class PurchaseOrderItem extends ModelAudit
 			array('price_shipping, price_purchase,price_total', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_purchase_order, price_shipping,price_total, price_purchase, price_total,product_description_supplier,product_description_customer,product_code,product_code_supplier,quantity', 'safe', 'on'=>'search'),
+			array('Id, Id_purchase_order, price_shipping,price_total, price_purchase, price_total,product_description_supplier,product_description_customer,product_code,product_code_supplier,product_model,product_part_number,quantity', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -78,10 +80,13 @@ class PurchaseOrderItem extends ModelAudit
 	{
 		return array(
 			'Id' => 'ID',
+			'product_model'=>'Model',
+			'product_part_number'=>'Part number',				
 			'Id_purchase_order' => 'Id Purchase Order',
 			'price_shipping' => 'Price Shipping',
 			'price_purchase' => 'Price Purchase',
-				'price_total'=> 'Price Total',
+			'price_total'=> 'Price Total',
+			'product_code'=>'Code',
 		);
 	}
 
@@ -107,6 +112,8 @@ class PurchaseOrderItem extends ModelAudit
 		$criteria->addSearchCondition("description_supplier",$this->product_description_supplier);
 		$criteria->addSearchCondition("code",$this->product_code);
 		$criteria->addSearchCondition("code_supplier",$this->product_code_supplier);
+		$criteria->addSearchCondition("model",$this->product_model);
+		$criteria->addSearchCondition("part_number",$this->product_part_number);		
 		
 		$sort=new CSort;
 		$sort->attributes=array(
@@ -126,6 +133,14 @@ class PurchaseOrderItem extends ModelAudit
 						'asc' => 'product.code_supplier',
 						'desc' => 'product.code_supplier DESC',
 				),
+				'product_model' => array(
+						'asc' => 'product.model',
+						'desc' => 'product.model DESC',
+				),
+				'product_part_number' => array(
+						'asc' => 'product.part_number',
+						'desc' => 'product.part_number DESC',
+				),				
 				'*',
 		);
 		

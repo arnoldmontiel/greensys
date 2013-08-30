@@ -472,9 +472,49 @@ class Product extends ModelAudit
 		$criteria->compare('model',$this->model,true);
 		$criteria->compare('part_number',$this->part_number,true);
 		$criteria->compare('short_description',$this->short_description,true);
+
+		$criteria->with[]='brand';
+		$criteria->addSearchCondition("brand.description",$this->brand_description);
+		
+		$criteria->with[]='category';
+		$criteria->addSearchCondition("category.description",$this->category_description);
+		
+		$criteria->with[]='nomenclator';
+		$criteria->addSearchCondition("nomenclator.description",$this->nomenclator_description);
+		
+		$criteria->with[]='supplier';
+		$criteria->addSearchCondition("supplier.business_name",$this->supplier_description);
+		
+		
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+				'code',
+				'model',
+				'part_number',
+				'short_description',
+				'brand_description' => array(
+						'asc' => 'brand.description',
+						'desc' => 'brand.description DESC',
+				),
+				'category_description' => array(
+						'asc' => 'category.description',
+						'desc' => 'category.description DESC',
+				),
+				'nomenclator_description' => array(
+						'asc' => 'nomenclator.description',
+						'desc' => 'nomenclator.description DESC',
+				),
+				'supplier_description' => array(
+						'asc' => 'supplier.business_name',
+						'desc' => 'supplier.business_name DESC',
+				),
+				'*',
+		);
 		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>$sort,				
 		));
 	}
 	

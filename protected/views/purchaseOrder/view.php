@@ -105,18 +105,18 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	}',
 	'columns'=>array(
 				array(
+ 				            'name'=>'product_model',
+				            'value'=>'$data->product->model',
+				),
+				array(
+ 				            'name'=>'product_part_number',
+				            'value'=>'$data->product->part_number',
+				),
+				array(
  				            'name'=>'product_code',
 				            'value'=>'CHtml::link($data->product->code,"#",array("id"=>$data->product->Id,"class"=>"link-popup-product"))',
 							'type'=>'raw',
 							'footer'=>'Total'
-				),
-				array(
- 				            'name'=>'product_code_supplier',
-				            'value'=>'$data->product->code_supplier',
-				),
-				array(
- 				            'name'=>'product_description_customer',
-				            'value'=>'$data->product->description_customer',
 				),
 				array(
 					'name'=>'price_purchase',

@@ -13,25 +13,31 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	}',
 	'columns'=>array(	
 			array(
-				'name'=>'code',
-			    'value'=>'CHtml::link($data->code,"#",array("id"=>$data->Id,"class"=>"link-popup"))',
+				'name'=>'model',
+			    'value'=>'$data->model',
 				'type'=>'raw'				 
 			),
 			array(
-				'name'=>'code_supplier',
-			    'value'=>'$data->code_supplier',
+				'name'=>'part_number',
+			    'value'=>'$data->part_number',
 				'type'=>'raw'				 
 			),
 			array(
 	 			'name'=>'brand_description',
 				'value'=>'$data->brand->description',
+				'type'=>'raw'				 
+			),
+			array(
+				'name'=>'code',
+			    'value'=>'CHtml::link($data->code,"#",array("id"=>$data->Id,"class"=>"link-popup"))',
+				'type'=>'raw'				 
 			),
 			array(
 		 		'name'=>'category_description',
 				'value'=>'$data->category->description',
+				'type'=>'raw'				 
 			),
-			'description_customer',
-			'description_supplier',
+			'short_description',
 		),
 	));		
 ?>

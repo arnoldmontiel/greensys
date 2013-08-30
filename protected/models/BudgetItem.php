@@ -162,6 +162,13 @@ class BudgetItem extends ModelAudit
 		return $this->getChildrenTotalPrice() + $this->price;
 	}
 	
+	public function getDoNotWarning()
+	{
+		if($this->getChildrenCount()==0)
+			return true;
+		return $this->do_not_warning;
+	}
+	
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.

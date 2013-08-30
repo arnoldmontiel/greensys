@@ -184,12 +184,19 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			        'htmlOptions'=>array('style'=>'text-align: right;'),
 				),
 				array(
-						'value'=>'CHtml::image("images/grid_warning.png","",array("title"=>"Pending check products","style"=>!$data->do_not_warning?"display":"display:none"))',
+						'value'=>
+							'CHtml::image("images/grid_warning.png","",
+								array("title"=>"Pending check products",
+									"style"=>!$data->DoNotWarning?"display":"display:none",
+									"id"=>$data->Id, "idArea"=>$data->Id_area, "idProduct"=>$data->Id_product, "class"=>"link-popup"
+								)
+							)',
 						'type'=>'raw',
 						'htmlOptions'=>array('width'=>25),
 				),
 				
 				array(
+					'visible'=>($canEdit)?true:false,
 					'class'=>'CButtonColumn',
 					'template'=>($canEdit)?'{delete}':'',
 					'deleteConfirmation'=>"js:'Are you sure you want to delete this item?'",
