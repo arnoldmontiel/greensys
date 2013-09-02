@@ -52,8 +52,8 @@ class MeasureImportLog extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idMeasurementUnitLinear' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_linear'),
-			'idMeasurementUnitWeight' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_weight'),
+			'measurementUnitLinear' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_linear'),
+			'measurementUnitWeight' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_weight'),
 		);
 	}
 
@@ -66,8 +66,8 @@ class MeasureImportLog extends CActiveRecord
 			'Id' => 'ID',
 			'original_file_name' => 'Original File Name',
 			'file_name' => 'File Name',
-			'Id_measurement_unit_linear' => 'Id Measurement Unit Linear',
-			'Id_measurement_unit_weight' => 'Id Measurement Unit Weight',
+			'Id_measurement_unit_linear' => 'Unit Linear',
+			'Id_measurement_unit_weight' => 'Unit Weight',
 			'creation_date' => 'Creation Date',
 			'not_found_model' => 'Not Found Model',
 		);
