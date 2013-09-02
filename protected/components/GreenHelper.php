@@ -48,6 +48,94 @@ class GreenHelper
 		return $returnValue;
 	}
 	
+	static public function importMeasuresFromExcel($modelUpload, $Id_linear, $Id_weight)
+	{		
+		$file=CUploadedFile::getInstance($modelUpload,'file');
+		$sheet_array = Yii::app()->yexcel->readActiveSheet($file->tempName);
+		
+		$ext = end(explode(".", $file->name));
+		$ext = strtolower($ext);
+		
+		$uniqueId = uniqid();
+
+		$folder = "docs/";
+		$fileName = $uniqueId.'.'.$ext;
+		$filePath = $folder . $fileName;
+		
+		//save doc
+		move_uploaded_file($file->tempName,$filePath);
+		
+		$arrCols = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
+		$col_model =	'A';
+		$col_weight =	'B';
+		$col_length =	'C';
+		$col_width =	'D';
+		$col_height =	'E';
+		$col_index = 0;
+		
+		foreach( $sheet_array[1] as $header ) 
+		{			
+			$colName = strtoupper($header);
+			$col_index++;
+			if(strpos($colName, 'MODEL')!== false)
+			{
+				$col_model = $arrCols[$col_index];
+				continue; 
+			}
+			if(strpos($colName, 'WEIGHT')!== false)
+			{
+				$col_weight = $arrCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'LENGTH')!== false)
+			{
+				$col_length = $arrCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'WIDTH')!== false)
+			{
+				$col_width = $arrCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'HEIGHT')!== false)
+			{
+				$col_height = $arrCols[$col_index];
+				continue;
+			}			
+		}
+			
+		$row_index = 1;
+		$model_not_found = '';
+		foreach( $sheet_array as $row ) 
+		{
+			if($row_index != 1)
+			{
+				$modelProductDB = Product::model()->findByAttributes(array('model'=>$row[$col_model]));
+				if(isset($modelProductDB))
+				{					
+					$modelProductDB->length = (float)$row[$col_length];
+					$modelProductDB->width = (float)$row[$col_width];
+					$modelProductDB->height = (float)$row[$col_height];
+					$modelProductDB->weight = (float)$row[$col_weight];					
+					$modelProductDB->Id_measurement_unit_linear = $Id_linear;
+					$modelProductDB->Id_measurement_unit_weight = $Id_weight;
+					$modelProductDB->save();		
+				}
+				else 
+					$model_not_found .= $row[$col_model]. ', ';
+			}
+			$row_index++;			
+		}
+
+		$modelMeasureImportLog = new MeasureImportLog();
+		$modelMeasureImportLog->file_name = $filePath;
+		$modelMeasureImportLog->original_file_name = $file->name;
+		$modelMeasureImportLog->Id_measurement_unit_linear = $Id_linear;
+		$modelMeasureImportLog->Id_measurement_unit_weight = $Id_weight;
+		$modelMeasureImportLog->not_found_model = rtrim($model_not_found, ", ");
+		$modelMeasureImportLog->save();
+	}
+	
 	/**
 	 * 
 	 * Imports a csv file to database
