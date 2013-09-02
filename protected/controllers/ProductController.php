@@ -861,6 +861,44 @@ class ProductController extends Controller
 		$this->render('importFromExcel',array('model'=>$model,));
 	}
 	
+	public function actionImportMeasuresFromExcel()
+	{
+		$model=new UploadExcel();
+		$modelMeasureImportLog = new MeasureImportLog();
+		
+		$measureType = MeasurementType::model()->findByAttributes(array('description'=>'linear'));
+
+		$criteria = new CDbCriteria();
+		
+		$criteria->join = 'INNER JOIN measurement_type mt ON (mt.Id = t.Id_measurement_type)';
+		$criteria->addCondition('mt.description = "linear"');
+		
+		$ddlMeasurementUnitLinear = MeasurementUnit::model()->findAll($criteria);
+		
+		$criteria = new CDbCriteria();
+		
+		$criteria->join = 'INNER JOIN measurement_type mt ON (mt.Id = t.Id_measurement_type)';
+		$criteria->addCondition('mt.description = "weight"');
+		
+		$ddlMeasurementUnitWeight = MeasurementUnit::model()->findAll($criteria);
+				
+		if(isset($_POST['UploadExcel']) && isset($_POST['MeasureImportLog']))
+		{
+			$modelMeasureImportLog->attributes = $_POST['MeasureImportLog'];
+			$model->attributes = $_POST['UploadExcel'];			
+			if($model->validate())
+			{
+				GreenHelper::importMeasuresFromExcel($model,$modelMeasureImportLog->Id_measurement_unit_linear, $modelMeasureImportLog->Id_measurement_unit_weight);
+				$this->redirect(array('admin'));
+			}
+		}
+	
+		$this->render('importMeasuresFromExcel',array('model'=>$model,
+										'modelMeasureImportLog'=>$modelMeasureImportLog, 
+										'ddlMeasurementUnitLinear'=>$ddlMeasurementUnitLinear,
+										'ddlMeasurementUnitWeight'=>$ddlMeasurementUnitWeight));
+	}
+	
 	public function actionImportResults($id)
 	{
 		$model = ImportLog::model()->findByPk($id);
