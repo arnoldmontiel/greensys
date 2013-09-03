@@ -10,6 +10,8 @@ $this->menu=array(
 	array('label'=>'Manage PriceList', 'url'=>array('admin')),
 	array('label'=>'View PriceList', 'url'=>array('view', 'id'=>$model->Id)),
 	array('label'=>'Assing Products', 'url'=>array('priceListItem','PriceList'=>array('Id'=>$model->Id))),
+	array('label'=>'Manage Import Purch List', 'url'=>array('adminPurchListImport')),
+	array('label'=>'Import Purch List from Excel', 'url'=>array('importPurchListFromExcel')),
 	//array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
 );
 ?>

@@ -8,6 +8,8 @@ $this->menu=array(
 	array('label'=>'Create PriceList', 'url'=>array('create')),
 	array('label'=>'Manage PriceList', 'url'=>array('admin')),
 	array('label'=>'View PriceList', 'url'=>array('view', 'id'=>$modelPriceList->Id)),
+	array('label'=>'Manage Import', 'url'=>array('adminPurchListImport')),
+	array('label'=>'Import from Excel', 'url'=>array('importPurchListFromExcel')),
 	//array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
 );
 

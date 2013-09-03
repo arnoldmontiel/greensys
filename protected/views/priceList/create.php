@@ -6,6 +6,8 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Manage PriceList', 'url'=>array('admin')),
+	array('label'=>'Manage Import Purch List', 'url'=>array('adminPurchListImport')),
+	array('label'=>'Import Purch List from Excel', 'url'=>array('importPurchListFromExcel')),
 	//array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
 );
 ?>
