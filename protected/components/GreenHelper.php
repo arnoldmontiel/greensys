@@ -58,9 +58,8 @@ class GreenHelper
 		
 		$uniqueId = uniqid();
 
-		$folder = "docs/";
 		$fileName = $uniqueId.'.'.$ext;
-		$filePath = $folder . $fileName;
+		$filePath = $fileName;
 		
 		//save doc
 		move_uploaded_file($file->tempName,$filePath);
