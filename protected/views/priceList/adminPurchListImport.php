@@ -41,9 +41,15 @@ $('.btn-download-file').click(function(){
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(				
-			'original_file_name',			
-			'Id_supplier',
-			'Id_price_list',
+			'original_file_name',
+			array(
+					'name'=>'supplier_description',
+					'value'=>'$data->supplier->business_name',
+				),			
+			array(
+					'name'=>'priceList_description',
+					'value'=>'$data->priceList->description',
+			),
 			'not_found_model',
 			'creation_date',
 	),
