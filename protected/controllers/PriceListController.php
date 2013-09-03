@@ -289,6 +289,47 @@ class PriceListController extends Controller
 			'model'=>$model,
 		));
 	}
+	
+	public function actionAdminPurchListImport()
+	{
+		$model = new PriceListPurchImportLog('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['PriceListPurchImportLog']))
+			$model->attributes=$_GET['PriceListPurchImportLog'];
+	
+		$this->render('adminPurchListImport',array(
+						'model'=>$model,
+		));
+	}
+	
+	public function actionImportPurchListFromExcel()
+	{
+		$model=new UploadExcel();
+		$modelPriceList = new PriceList();
+		$modelPriceList->Id_price_list_type = 1; //de compra
+		
+		$criteria = new CDbCriteria();
+		$criteria->order = 'business_name ASC';
+		
+		$ddlSupplier = Supplier::model()->findAll($criteria);
+	
+				
+		if(isset($_POST['UploadExcel']) && isset($_POST['PriceList']))
+		{
+			$modelPriceList->attributes = $_POST['PriceList'];
+			$model->attributes = $_POST['UploadExcel'];			
+			if($model->validate())
+			{
+				GreenHelper::importPurchListFromExcel($model, $modelPriceList);
+				$this->redirect(array('adminPurchListImport'));
+			}
+		}
+	
+		$this->render('importPurchListFromExcel',array('model'=>$model,
+										'modelPriceList'=>$modelPriceList, 
+										'ddlSupplier'=>$ddlSupplier));
+	}
+	
 	public function actionPriceListItem()
 	{
 		
