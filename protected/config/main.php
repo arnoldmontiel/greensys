@@ -80,6 +80,9 @@ return array(
 					    'class' => 'ext.bootstrap.components.Bootstrap',
 					    'responsiveCss' => true,
 		),
+		'yexcel' => array(
+		    'class' => 'ext.yexcel.Yexcel'
+		),
 		'mail' => array(
 		 			'class' => 'ext.yii-mail.YiiMail',
 		 			//'transportType' => 'php',
@@ -140,6 +143,9 @@ return array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 		),
 		*/
+		'file'=>array(
+	        'class'=>'application.extensions.file.CFile',
+		),
 		// uncomment the following to use a MySQL database
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=green',
