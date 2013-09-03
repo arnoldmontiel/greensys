@@ -36,9 +36,6 @@
 			<?php echo CHtml::link(Yii::app()->lc->t('Create'),array('/product/create'));?>			
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('List'),array('/product/index'));?>
-			</div>
-			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Assign Groups'),array('/product/productGroup'));?>
 			</div>
 			<div class="home-item-view" >
@@ -64,10 +61,10 @@
 			<?php echo CHtml::link(Yii::app()->lc->t('Create'),array('/priceList/create'));?>			
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('List'),array('/priceList/index'));?>
+			<?php echo CHtml::link(Yii::app()->lc->t('Assign Products'),array('/priceList/priceListItem'));?>
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Assign Products'),array('/priceList/priceListItem'));?>
+			<?php echo CHtml::link(Yii::app()->lc->t('Import Price List from Excel'),array('/priceList/importPurchListFromExcel'));?>
 			</div>
 		</div><!-- end  home-left-view -->
 		<div class="home-right-view" >
@@ -92,10 +89,7 @@
 			</div>
 			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Create'),array('/budget/create'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('List'),array('/budget/index'));?>
-			</div>
+			</div>			
 		</div><!-- end  home-left-view -->
 		<div class="home-right-view" >
 			<div class="home-title-view" >
@@ -106,10 +100,7 @@
 			</div>
 			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Create'),array('/purchaseOrder/create'));?>			
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('List'),array('/purchaseOrder/index'));?>
-			</div>
+			</div>			
 		</div> <!-- end  home-right-view -->
 	</div>	<!-- end  home-row -->
 	<div class="home-row" >

@@ -1,6 +1,10 @@
 <?php
-Yii::app()->clientScript->registerScript(__CLASS__.'#UploadSubtitle', "
+Yii::app()->clientScript->registerScript(__CLASS__.'#importMeasures-Excel', "
 
+$('#cancelButton').click(function(){
+	window.location = '".ProductController::createUrl('adminMeasuresImport')."';
+	return false;
+});
 
 ");
 
