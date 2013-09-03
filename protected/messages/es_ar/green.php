@@ -84,6 +84,7 @@
  		'Product Type'=>'Tipo de producto',
  		'Are you sure you want to delete this item?'=>'¿Esta seguro que desea eliminar este elemento?',
  		'Import from Excel'=>'Importar desde Excel',
- 		'Import Measures from Excel'=>'Importar Dimensiones desde Excel'
+ 		'Import Measures from Excel'=>'Importar Dimensiones desde Excel',
+ 		'Import Price List from Excel'=>'Importar Lista de compra desde Excel',
  	);
  ?>
