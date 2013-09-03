@@ -18,6 +18,9 @@
  */
 class MeasureImportLog extends CActiveRecord
 {
+	public $unit_weight_description;
+	public $unit_linear_description;
+	
 	/**
 	 * @return string the associated database table name
 	 */
@@ -40,7 +43,7 @@ class MeasureImportLog extends CActiveRecord
 			array('creation_date, not_found_model', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('Id, original_file_name, file_name, Id_measurement_unit_linear, Id_measurement_unit_weight, creation_date, not_found_model', 'safe', 'on'=>'search'),
+			array('Id, original_file_name, file_name, Id_measurement_unit_linear, Id_measurement_unit_weight, creation_date, not_found_model, unit_weight_description,unit_linear_description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,12 +67,14 @@ class MeasureImportLog extends CActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
-			'original_file_name' => 'Original File Name',
+			'original_file_name' => 'File Name',
 			'file_name' => 'File Name',
 			'Id_measurement_unit_linear' => 'Unit Linear',
 			'Id_measurement_unit_weight' => 'Unit Weight',
 			'creation_date' => 'Creation Date',
 			'not_found_model' => 'Not Found Model',
+			'unit_weight_description'=>'Unit Weight',
+			'unit_linear_description'=>'Unit Linear',
 		);
 	}
 
@@ -99,6 +104,13 @@ class MeasureImportLog extends CActiveRecord
 		$criteria->compare('creation_date',$this->creation_date,true);
 		$criteria->compare('not_found_model',$this->not_found_model,true);
 
+		$criteria->with[]='measurementUnitLinear';
+		$criteria->compare('measurementUnitLinear.short_description',$this->unit_linear_description,true);
+		
+		$criteria->with[]='measurementUnitWeight';
+		$criteria->compare('measurementUnitWeight.short_description',$this->unit_weight_description,true);
+		
+		$criteria->order = 't.creation_date DESC';
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
