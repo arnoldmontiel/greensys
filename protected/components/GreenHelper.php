@@ -58,8 +58,9 @@ class GreenHelper
 		
 		$uniqueId = uniqid();
 
+		$folder = "docs/";
 		$fileName = $uniqueId.'.'.$ext;
-		$filePath = $fileName;
+		$filePath = $folder . $fileName;
 		
 		//save doc
 		move_uploaded_file($file->tempName,$filePath);
@@ -127,12 +128,99 @@ class GreenHelper
 		}
 
 		$modelMeasureImportLog = new MeasureImportLog();
-		$modelMeasureImportLog->file_name = $filePath;
+		$modelMeasureImportLog->file_name = $fileName;
 		$modelMeasureImportLog->original_file_name = $file->name;
 		$modelMeasureImportLog->Id_measurement_unit_linear = $Id_linear;
 		$modelMeasureImportLog->Id_measurement_unit_weight = $Id_weight;
 		$modelMeasureImportLog->not_found_model = rtrim($model_not_found, ", ");
 		$modelMeasureImportLog->save();
+	}
+	
+	static public function importPurchListFromExcel($modelUpload, $modelPriceList)
+	{
+		$file=CUploadedFile::getInstance($modelUpload,'file');
+		$sheet_array = Yii::app()->yexcel->readActiveSheet($file->tempName);
+	
+		$ext = end(explode(".", $file->name));
+		$ext = strtolower($ext);
+	
+		$uniqueId = uniqid();		
+	
+		$folder = "docs/";
+		$fileName = $uniqueId.'.'.$ext;
+		$filePath = $folder . $fileName;
+		
+		//save doc
+		move_uploaded_file($file->tempName,$filePath);
+	
+		$arrCols = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
+		$col_model =	'A';
+		$col_dealer =	'B';
+		$col_msrp =		'C';		
+		$col_index = 0;
+	
+		foreach( $sheet_array[1] as $header )
+		{
+			$colName = strtoupper($header);
+			$col_index++;
+			if(strpos($colName, 'MODEL')!== false)
+			{
+				$col_model = $arrCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'DEALER')!== false)
+			{
+				$col_dealer = $arrCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'MSRP')!== false || strpos($colName, 'MAP')!== false)
+			{
+				$col_msrp = $arrCols[$col_index];
+				continue;
+			}
+		}
+			
+		//save purch list price to add items
+		if($modelPriceList->save())
+		{		
+			$row_index = 1;
+			$model_not_found = '';
+			foreach( $sheet_array as $row )
+			{
+				if($row_index != 1)
+				{
+					$modelProductDB = Product::model()->findByAttributes(array('model'=>$row[$col_model]));
+					if(isset($modelProductDB))
+					{
+						$msrp = (float)str_replace('$','',$row[$col_msrp]);
+						$dealer_cost = (float)str_replace('$','',$row[$col_dealer]);
+						$profit_rate = 0;
+						
+						if($dealer_cost != 0)
+							$profit_rate = $msrp / $dealer_cost;
+						
+						$modelPriceListItem = new PriceListItem();
+						$modelPriceListItem->Id_product = $modelProductDB->Id;
+						$modelPriceListItem->Id_price_list = $modelPriceList->Id;
+						$modelPriceListItem->msrp = $msrp;
+						$modelPriceListItem->dealer_cost = $dealer_cost;
+						$modelPriceListItem->profit_rate = (float)$profit_rate;
+						$modelPriceListItem->save();
+					}
+					else
+					$model_not_found .= $row[$col_model]. ', ';
+				}
+				$row_index++;
+			}
+		
+			$modelPriceListPuchImportLog = new PriceListPurchImportLog();
+			$modelPriceListPuchImportLog->Id_price_list = $modelPriceList->Id;
+			$modelPriceListPuchImportLog->file_name = $fileName;
+			$modelPriceListPuchImportLog->original_file_name = $file->name;
+			$modelPriceListPuchImportLog->Id_supplier = $modelPriceList->Id_supplier;
+			$modelPriceListPuchImportLog->not_found_model = rtrim($model_not_found, ", ");
+			$modelPriceListPuchImportLog->save();
+		}
 	}
 	
 	/**
