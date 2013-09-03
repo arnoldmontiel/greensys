@@ -11,6 +11,8 @@ $this->menu=array(
 	array('label'=>'Assign Groups', 'url'=>array('productGroup')),
 	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
 	array('label'=>'Manage Import', 'url'=>array('adminImport')),
+	array('label'=>'Manage Measures Import', 'url'=>array('adminMeasuresImport')),
+	array('label'=>'Import Measures From Excel', 'url'=>array('importMeasuresFromExcel')),
 );
 ?>
 

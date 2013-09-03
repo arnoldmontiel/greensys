@@ -10,11 +10,13 @@ $this->menu=array(
 	array('label'=>'Assign Groups', 'url'=>array('productGroup')),
 	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
 	array('label'=>'Import From Excel', 'url'=>array('importFromExcel')),
+	array('label'=>'Manage Measures Import', 'url'=>array('adminMeasuresImport')),
+	array('label'=>'Import Measures From Excel', 'url'=>array('importMeasuresFromExcel')),
 );
 
 ?>
 
-<h1>Manage Products</h1>
+<h1>Manage Products Import</h1>
 
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(

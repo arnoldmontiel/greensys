@@ -47,6 +47,9 @@
 			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Import from Excel'),array('/product/importFromExcel'));?>
 			</div>
+			<div class="home-item-view" >
+			<?php echo CHtml::link(Yii::app()->lc->t('Import Measures from Excel'),array('/product/importMeasuresFromExcel'));?>
+			</div>
 		</div>
 	</div>
 	<div class="home-row" >

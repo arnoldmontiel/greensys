@@ -48,6 +48,8 @@ $this->menu=array(
 array('label'=>'Import From Excel', 'url'=>array('importFromExcel')),
 array('label'=>'Manage Import', 'url'=>array('adminImport')),
 array('label'=>'Import Results', 'url'=>array('importResults','id'=>$idImport)),
+array('label'=>'Manage Measures Import', 'url'=>array('adminMeasuresImport')),
+array('label'=>'Import Measures From Excel', 'url'=>array('importMeasuresFromExcel')),
 );
 ?>
 <div>

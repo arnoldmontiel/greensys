@@ -5,12 +5,13 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#UploadSubtitle', "
 ");
 
 $this->menu=array(
-	array('label'=>'List Product', 'url'=>array('index')),
 	array('label'=>'Create Product', 'url'=>array('create')),
 	array('label'=>'Manage Product', 'url'=>array('admin')),
 	array('label'=>'Assign Groups', 'url'=>array('productGroup')),
 	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
 	array('label'=>'Manage Import', 'url'=>array('adminImport')),
+	array('label'=>'Import From Excel', 'url'=>array('importFromExcel')),
+	array('label'=>'Manage Measures Import', 'url'=>array('adminMeasuresImport')),
 );
 
 ?>

@@ -19,6 +19,8 @@ $this->menu=array(
 	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
 	array('label'=>'Manage Import', 'url'=>array('adminImport')),
 	array('label'=>'Import From Excel', 'url'=>array('importFromExcel')),
+	array('label'=>'Manage Measures Import', 'url'=>array('adminMeasuresImport')),
+	array('label'=>'Import Measures From Excel', 'url'=>array('importMeasuresFromExcel')),
 );
 ?>
 
