@@ -1,27 +1,29 @@
 <?php
 
 /**
- * This is the model class for table "price_list_measure_import_log".
+ * This is the model class for table "price_list_purch_import_log".
  *
- * The followings are the available columns in table 'price_list_measure_import_log':
+ * The followings are the available columns in table 'price_list_purch_import_log':
  * @property integer $Id
  * @property string $creation_date
  * @property string $file_name
  * @property string $original_file_name
  * @property string $not_found_model
  * @property integer $Id_supplier
+ * @property integer $Id_price_list
  *
  * The followings are the available model relations:
  * @property Supplier $idSupplier
+ * @property PriceList $idPriceList
  */
-class PriceListMeasureImportLog extends CActiveRecord
+class PriceListPurchImportLog extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'price_list_measure_import_log';
+		return 'price_list_purch_import_log';
 	}
 
 	/**
@@ -32,13 +34,13 @@ class PriceListMeasureImportLog extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_supplier', 'required'),
-			array('Id_supplier', 'numerical', 'integerOnly'=>true),
+			array('Id_supplier, Id_price_list', 'required'),
+			array('Id_supplier, Id_price_list', 'numerical', 'integerOnly'=>true),
 			array('file_name, original_file_name', 'length', 'max'=>100),
 			array('creation_date, not_found_model', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('Id, creation_date, file_name, original_file_name, not_found_model, Id_supplier', 'safe', 'on'=>'search'),
+			array('Id, creation_date, file_name, original_file_name, not_found_model, Id_supplier, Id_price_list', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,6 +53,7 @@ class PriceListMeasureImportLog extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'idSupplier' => array(self::BELONGS_TO, 'Supplier', 'Id_supplier'),
+			'idPriceList' => array(self::BELONGS_TO, 'PriceList', 'Id_price_list'),
 		);
 	}
 
@@ -66,6 +69,7 @@ class PriceListMeasureImportLog extends CActiveRecord
 			'original_file_name' => 'Original File Name',
 			'not_found_model' => 'Not Found Model',
 			'Id_supplier' => 'Id Supplier',
+			'Id_price_list' => 'Id Price List',
 		);
 	}
 
@@ -93,6 +97,7 @@ class PriceListMeasureImportLog extends CActiveRecord
 		$criteria->compare('original_file_name',$this->original_file_name,true);
 		$criteria->compare('not_found_model',$this->not_found_model,true);
 		$criteria->compare('Id_supplier',$this->Id_supplier);
+		$criteria->compare('Id_price_list',$this->Id_price_list);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -103,7 +108,7 @@ class PriceListMeasureImportLog extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return PriceListMeasureImportLog the static model class
+	 * @return PriceListPurchImportLog the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
