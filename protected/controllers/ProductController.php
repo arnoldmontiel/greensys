@@ -406,6 +406,18 @@ class ProductController extends Controller
 		));
 	}
 	
+	public function actionAdminMeasuresImport()
+	{
+		$model = new MeasureImportLog('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['MeasureImportLog']))
+			$model->attributes=$_GET['MeasureImportLog'];
+	
+		$this->render('adminMeasuresImport',array(
+					'model'=>$model,
+		));
+	}
+	
 	/**
 	* Manages all models.
 	*/
@@ -889,7 +901,7 @@ class ProductController extends Controller
 			if($model->validate())
 			{
 				GreenHelper::importMeasuresFromExcel($model,$modelMeasureImportLog->Id_measurement_unit_linear, $modelMeasureImportLog->Id_measurement_unit_weight);
-				$this->redirect(array('admin'));
+				$this->redirect(array('adminMeasuresImport'));
 			}
 		}
 	
@@ -897,6 +909,13 @@ class ProductController extends Controller
 										'modelMeasureImportLog'=>$modelMeasureImportLog, 
 										'ddlMeasurementUnitLinear'=>$ddlMeasurementUnitLinear,
 										'ddlMeasurementUnitWeight'=>$ddlMeasurementUnitWeight));
+	}
+	
+	public function actionAjaxDownloadFile($fileName, $root)
+	{
+		
+		$myfile = Yii::app()->file->set('./'.$root.'/'.$fileName, true);
+		echo $myfile->send();
 	}
 	
 	public function actionImportResults($id)
