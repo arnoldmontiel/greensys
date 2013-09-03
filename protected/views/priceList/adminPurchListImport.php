@@ -12,36 +12,46 @@ $this->menu=array(
 
 Yii::app()->clientScript->registerScript('admin-measures-import', "
 
-$('.btn-download-file').click(function(){
+$('.link-download-file').click(function(){
 	var fileName = $(this).attr('fileName');
 	var root = 'docs';
-	$(this).attr('src')
-	$.post('".ProductController::createUrl('AjaxDownloadFile')."',
-				{
-					fileName: fileName,
-					root: root 
-				}
-				).success(
-					function(data) 
-								{
-								
-								}
-							);
+	var href = '".PriceListController::createUrl('AjaxDownloadFile')."';
+	var params = '&fileName='+fileName + '&root='+root;
+	$(this).attr('href',href+params);
+	
 });
 
 ");
 
 ?>
 
-<h1>Manage Measures Import</h1>
+<h1>Manage Purch List Import</h1>
 
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'measures-import-grid',
+<?php 
+$this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'purch-list-import-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
-	'columns'=>array(				
-			'original_file_name',
+	'afterAjaxUpdate'=>'js:function(){
+				$("#purch-list-import-grid").find(".link-download-file").each(
+						function(index, item){
+							$(item).click(function(){
+									var fileName = $(this).attr("fileName");
+									var root = "docs";
+									var href = "'.PriceListController::createUrl('AjaxDownloadFile').'";
+									var params = "&fileName="+fileName + "&root="+root;
+									$(this).attr("href",href+params);				
+															
+							});
+						});
+		}',
+	'columns'=>array(		
+			array(
+					'name'=>'original_file_name',
+					'value'=>'CHtml::link($data->original_file_name,"",array("class"=>"link-download-file", "fileName"=>$data->file_name))',
+					'type'=>'raw'
+			),
 			array(
 					'name'=>'supplier_description',
 					'value'=>'$data->supplier->business_name',
@@ -51,6 +61,6 @@ $('.btn-download-file').click(function(){
 					'value'=>'$data->priceList->description',
 			),
 			'not_found_model',
-			'creation_date',
+			'creation_date',			
 	),
 )); ?>

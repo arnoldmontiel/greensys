@@ -16,21 +16,13 @@ $this->menu=array(
 
 Yii::app()->clientScript->registerScript('admin-measures-import', "
 
-$('.btn-download-file').click(function(){
+$('.link-download-file').click(function(){
 	var fileName = $(this).attr('fileName');
 	var root = 'docs';
-	$(this).attr('src')
-	$.post('".ProductController::createUrl('AjaxDownloadFile')."',
-				{
-					fileName: fileName,
-					root: root 
-				}
-				).success(
-					function(data) 
-								{
-								
-								}
-							);
+	var href = '".ProductController::createUrl('AjaxDownloadFile')."';
+	var params = '&fileName='+fileName + '&root='+root;
+	$(this).attr('href',href+params);
+	
 });
 
 ");
@@ -44,8 +36,25 @@ $('.btn-download-file').click(function(){
 	'id'=>'measures-import-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
+	'afterAjaxUpdate'=>'js:function(){
+				$("#measures-import-grid").find(".link-download-file").each(
+						function(index, item){
+							$(item).click(function(){
+									var fileName = $(this).attr("fileName");
+									var root = "docs";
+									var href = "'.ProductController::createUrl('AjaxDownloadFile').'";
+									var params = "&fileName="+fileName + "&root="+root;
+									$(this).attr("href",href+params);				
+															
+							});
+						});
+		}',
 	'columns'=>array(				
-			'original_file_name',			
+			array(
+					'name'=>'original_file_name',
+					'value'=>'CHtml::link($data->original_file_name,"",array("class"=>"link-download-file", "fileName"=>$data->file_name))',
+					'type'=>'raw'
+			),	
 			array(
 				'name'=>'unit_weight_description',
 				'value'=>'isset($data->measurementUnitWeight)?$data->measurementUnitWeight->short_description:""',
