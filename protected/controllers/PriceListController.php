@@ -224,6 +224,13 @@ class PriceListController extends Controller
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
+	public function actionAjaxDownloadFile($fileName, $root)
+	{
+	
+		$myfile = Yii::app()->file->set('./'.$root.'/'.$fileName, true);
+		echo $myfile->send();
+	}
+	
 	/**
 	* Deletes a particular model.
 	* If deletion is successful, the browser will be redirected to the 'admin' page.
