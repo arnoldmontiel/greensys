@@ -297,7 +297,7 @@ class GreenHelper
 						} 
 						catch (Exception $e) 
 						{
-							$model_not_found .="error";
+							$model_not_found .= $e->getMessage();
 							$transaction->rollback();
 						}
 						
