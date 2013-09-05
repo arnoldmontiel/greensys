@@ -142,7 +142,7 @@ class GreenHelper
 						$modelProductDB->Id_measurement_unit_weight = $Id_weight;
 						$modelProductDB->save();
 						
-						$qty = (int)$row[$col_qty];
+						$qty = isset($row[$col_qty])?(int)$row[$col_qty]:0;
 						if($qty > 1)
 						{
 							$modelPackagingDB = Packaging::model()->findByAttributes(array('qty'=>$qty,
