@@ -69,12 +69,12 @@ class GreenHelper
 		move_uploaded_file($file->tempName,$filePath);
 		
 		$arrCols = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F',7=>'G');
-		$col_model =		'A';
-		$col_weight =		'B';
-		$col_length =		'C';
-		$col_width =		'D';
-		$col_height =		'E';
-		$col_qty = 			'F';
+		$col_model =		'';
+		$col_weight =		'';
+		$col_length =		'';
+		$col_width =		'';
+		$col_height =		'';
+		$col_qty = 			'';
 		$col_index = 0;
 		
 		foreach( $sheet_array[1] as $header ) 
@@ -206,9 +206,10 @@ class GreenHelper
 		move_uploaded_file($file->tempName,$filePath);
 	
 		$arrCols = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
-		$col_model =	'A';
-		$col_dealer =	'B';
-		$col_msrp =		'C';		
+		$col_model =	'';
+		$col_dealer =	'';
+		$col_msrp =		'';
+		$col_part_num = '';		
 		$col_index = 0;
 	
 		foreach( $sheet_array[1] as $header )
@@ -223,6 +224,11 @@ class GreenHelper
 			if(strpos($colName, 'DEALER')!== false)
 			{
 				$col_dealer = $arrCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'PART')!== false)
+			{
+				$col_part_num = $arrCols[$col_index];
 				continue;
 			}
 			if(strpos($colName, 'MSRP')!== false || strpos($colName, 'MAP')!== false)
@@ -240,8 +246,18 @@ class GreenHelper
 			foreach( $sheet_array as $row )
 			{
 				if($row_index != 1)
-				{
-					$modelProductDB = Product::model()->findByAttributes(array('model'=>$row[$col_model]));
+				{	
+					$criteria = new CDbCriteria();
+					$criteria->addCondition('t.Id_supplier = '. $modelPriceList->Id_supplier);
+					$newModel = str_replace('"','',$row[$col_model]);
+					
+					if(empty($newModel))
+						continue;
+					
+					$criteria->addCondition('"'. $newModel . '" like CONCAT("%", model ,"%")');
+					
+					$modelProductDB = Product::model()->find($criteria);
+					
 					if(isset($modelProductDB))
 					{
 						$msrp = (float)str_replace('$','',$row[$col_msrp]);
@@ -260,7 +276,15 @@ class GreenHelper
 						$modelPriceListItem->save();
 					}
 					else
-					$model_not_found .= $row[$col_model]. ', ';
+					{
+						$modelProduct = new Product();
+						$modelProduct->model = $row[$col_model];
+						$modelProduct->part_number = isset($row[$col_part_num])?$row[$col_part_num]:"";
+						$modelProduct->Id_supplier = $modelMeasureImportLog->Id_supplier;
+						$modelProduct = self::setEmptyProduct($modelProduct);
+						$modelProduct->save();
+						$model_not_found .= $row[$col_model]. ', ';
+					}
 				}
 				$row_index++;
 			}
@@ -390,15 +414,82 @@ class GreenHelper
 		try {
 			
 			//BEGIN NOMENCLATOR-------------------------------------------------
-			$modelNomenclator = Nomenclator::model()->findByAttributes(array('description'=>'Dtools'));
-			if(!isset($modelNomenclator))
+			if(!isset($modelProduct->Id_nomenclator))
 			{
-				$modelNomenclator = new Nomenclator();
-				$modelNomenclator->description = 'Dtools';
-				$modelNomenclator->save();
+				$modelNomenclator = Nomenclator::model()->findByAttributes(array('description'=>'Dtools'));
+				if(!isset($modelNomenclator))
+				{
+					$modelNomenclator = new Nomenclator();
+					$modelNomenclator->description = 'Dtools';
+					$modelNomenclator->save();
+				}
+				$modelProduct->Id_nomenclator = $modelNomenclator->Id;
 			}
-			$modelProduct->Id_nomenclator = $modelNomenclator->Id;
 			//END NOMENCLATOR-------------------------------------------------
+			
+			
+			//BEGIN MEASURE UNIT WEIGHT-------------------------------------------------
+			if(!isset($modelProduct->Id_measurement_unit_weight))
+			{
+				$modelMeasureUnitWeight = MeasurementUnit::model()->findByAttributes(array('short_description'=>'kg'));
+				if(!isset($modelMeasureUnitWeight))
+				{
+					$modelMeasureType = MeasurementType::model()->findByAttributes(array('description'=>'weight'));
+					if(!isset($modelMeasureType))
+					{
+						$modelMeasureType->description = 'weight';
+						$modelMeasureType->save();
+					}
+						
+					$modelMeasureUnitWeight = new MeasurementUnit();
+					$modelMeasureUnitWeight->Id_measurement_type = $modelMeasureType->Id;
+					$modelMeasureUnitWeight->short_description = 'kg';
+					$modelMeasureUnitWeight->description = 'kilograms';
+					$modelMeasureUnitWeight->save();
+						
+				}
+				$modelProduct->Id_measurement_unit_weight = $modelMeasureUnitWeight->Id;
+			}
+			//END MEASURE UNIT WEIGHT-------------------------------------------------
+				
+			//BEGIN MEASURE UNIT LINEAR-------------------------------------------------
+			if(!isset($modelProduct->Id_measurement_unit_linear))
+			{
+				$modelMeasureUnitLinear = MeasurementUnit::model()->findByAttributes(array('short_description'=>'mm'));
+				if(!isset($modelMeasureUnitLinear))
+				{
+					$modelMeasureType = MeasurementType::model()->findByAttributes(array('description'=>'linear'));
+					if(!isset($modelMeasureType))
+					{
+						$modelMeasureType->description = 'linear';
+						$modelMeasureType->save();
+					}
+						
+					$modelMeasureUnitLinear = new MeasurementUnit();
+					$modelMeasureUnitLinear->Id_measurement_type = $modelMeasureType->Id;
+					$modelMeasureUnitLinear->short_description = 'mm';
+					$modelMeasureUnitLinear->description = 'Milimeters';
+					$modelMeasureUnitLinear->save();
+						
+				}
+				$modelProduct->Id_measurement_unit_linear = $modelMeasureUnitLinear->Id;
+			}
+			//END MEASURE UNIT LINEAR-------------------------------------------------
+			
+			//BEGIN BRAND-------------------------------------------------
+			if(!isset($modelProduct->Id_brand))
+			{
+				$manufacturer = "--";
+				$modelBrand = Brand::model()->findByAttributes(array('description'=>$manufacturer));
+				if(!isset($modelBrand))
+				{
+					$modelBrand = new Brand();
+					$modelBrand->description = $manufacturer;
+					$modelBrand->save();
+				}
+				$modelProduct->Id_brand = $modelBrand->Id;
+			}
+			//END BRAND-------------------------------------------------
 			
 			//BEGIN VOLTS-------------------------------------------------
 			$volts = 0;
@@ -449,21 +540,24 @@ class GreenHelper
 			//END PRODUCT-TYPE-------------------------------------------------
 			
 			//BEGIN SUPPLIER-------------------------------------------------
-			$modelSupplier = Supplier::model()->findByAttributes(array('business_name'=>'--'));
-			if(!isset($modelSupplier))
+			if(!isset($modelProduct->Id_supplier))
 			{
-				$modelContact = new Contact();
-				$modelContact->description = '--';
-				$modelContact->telephone_1 = '--';
-				$modelContact->email = uniqid().'@bb.com';
-				$modelContact->save();
-					
-				$modelSupplier = new Supplier();
-				$modelSupplier->business_name = '--';
-				$modelSupplier->Id_contact = $modelContact->Id;
-				$modelSupplier->save();
+				$modelSupplier = Supplier::model()->findByAttributes(array('business_name'=>'--'));
+				if(!isset($modelSupplier))
+				{
+					$modelContact = new Contact();
+					$modelContact->description = '--';
+					$modelContact->telephone_1 = '--';
+					$modelContact->email = uniqid().'@bb.com';
+					$modelContact->save();
+						
+					$modelSupplier = new Supplier();
+					$modelSupplier->business_name = '--';
+					$modelSupplier->Id_contact = $modelContact->Id;
+					$modelSupplier->save();
+				}
+				$modelProduct->Id_supplier = $modelSupplier->Id;
 			}
-			$modelProduct->Id_supplier = $modelSupplier->Id;
 			//END SUPPLIER-------------------------------------------------
 			
 			$modelProduct->from_dtools = 0;
