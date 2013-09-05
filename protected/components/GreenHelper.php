@@ -247,25 +247,24 @@ class GreenHelper
 			{
 				if($row_index != 1)
 				{	
-					$criteria = new CDbCriteria();
-					$criteria->addCondition('t.Id_supplier = '. $modelPriceList->Id_supplier);
+
 					$newModel = str_replace('"','',$row[$col_model]);
 					
 					if(empty($newModel))
 						continue;
 					
-					$criteria->addCondition('"'. $newModel . '" like CONCAT("%", model ,"%")');
+					$modelProductDB = Product::model()->findByAttributes(array('model'=>$newModel,
+																			'Id_supplier'=>$modelPriceList->Id_supplier));
 					
-					$modelProductDB = Product::model()->find($criteria);
+					$msrp = (float)str_replace('$','',$row[$col_msrp]);
+					$dealer_cost = (float)str_replace('$','',$row[$col_dealer]);
+					$profit_rate = 0;
+					
+					if($dealer_cost != 0)
+						$profit_rate = $msrp / $dealer_cost;
 					
 					if(isset($modelProductDB))
 					{
-						$msrp = (float)str_replace('$','',$row[$col_msrp]);
-						$dealer_cost = (float)str_replace('$','',$row[$col_dealer]);
-						$profit_rate = 0;
-						
-						if($dealer_cost != 0)
-							$profit_rate = $msrp / $dealer_cost;
 						
 						$modelPriceListItem = new PriceListItem();
 						$modelPriceListItem->Id_product = $modelProductDB->Id;
@@ -278,11 +277,29 @@ class GreenHelper
 					else
 					{
 						$modelProduct = new Product();
-						$modelProduct->model = $row[$col_model];
-						$modelProduct->part_number = isset($row[$col_part_num])?$row[$col_part_num]:"";
-						$modelProduct->Id_supplier = $modelMeasureImportLog->Id_supplier;
-						$modelProduct = self::setEmptyProduct($modelProduct);
-						$modelProduct->save();
+						$transaction = $modelProduct->dbConnection->beginTransaction();
+						try 
+						{
+							$modelProduct->model = $row[$col_model];
+							$modelProduct->part_number = isset($row[$col_part_num])?$row[$col_part_num]:"";
+							$modelProduct->Id_supplier = $modelMeasureImportLog->Id_supplier;
+							$modelProduct = self::setEmptyProduct($modelProduct);
+							$modelProduct->save();
+							
+							$modelPriceListItem = new PriceListItem();
+							$modelPriceListItem->Id_product = $modelProduct->Id;
+							$modelPriceListItem->Id_price_list = $modelPriceList->Id;
+							$modelPriceListItem->msrp = $msrp;
+							$modelPriceListItem->dealer_cost = $dealer_cost;
+							$modelPriceListItem->profit_rate = (float)$profit_rate;
+							$modelPriceListItem->save();
+							$transaction->commit();
+						} 
+						catch (Exception $e) 
+						{
+							$transaction->rollback();
+						}
+						
 						$model_not_found .= $row[$col_model]. ', ';
 					}
 				}
