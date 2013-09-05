@@ -282,7 +282,7 @@ class GreenHelper
 						{
 							$modelProduct->model = $row[$col_model];
 							$modelProduct->part_number = isset($row[$col_part_num])?$row[$col_part_num]:"";
-							$modelProduct->Id_supplier = $modelMeasureImportLog->Id_supplier;
+							$modelProduct->Id_supplier = $modelPriceList->Id_supplier;
 							$modelProduct = self::setEmptyProduct($modelProduct);
 							$modelProduct->save();
 							
