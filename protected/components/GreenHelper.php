@@ -427,165 +427,157 @@ class GreenHelper
 	}
 	
 	private function setEmptyProduct($modelProduct)
-	{
-		$transaction = $modelProduct->dbConnection->beginTransaction(); 
-		try {
-			
-			//BEGIN NOMENCLATOR-------------------------------------------------
-			if(!isset($modelProduct->Id_nomenclator))
+	{	
+		//BEGIN NOMENCLATOR-------------------------------------------------
+		if(!isset($modelProduct->Id_nomenclator))
+		{
+			$modelNomenclator = Nomenclator::model()->findByAttributes(array('description'=>'Dtools'));
+			if(!isset($modelNomenclator))
 			{
-				$modelNomenclator = Nomenclator::model()->findByAttributes(array('description'=>'Dtools'));
-				if(!isset($modelNomenclator))
-				{
-					$modelNomenclator = new Nomenclator();
-					$modelNomenclator->description = 'Dtools';
-					$modelNomenclator->save();
-				}
-				$modelProduct->Id_nomenclator = $modelNomenclator->Id;
+				$modelNomenclator = new Nomenclator();
+				$modelNomenclator->description = 'Dtools';
+				$modelNomenclator->save();
 			}
-			//END NOMENCLATOR-------------------------------------------------
-			
-			
-			//BEGIN MEASURE UNIT WEIGHT-------------------------------------------------
-			if(!isset($modelProduct->Id_measurement_unit_weight))
-			{
-				$modelMeasureUnitWeight = MeasurementUnit::model()->findByAttributes(array('short_description'=>'kg'));
-				if(!isset($modelMeasureUnitWeight))
-				{
-					$modelMeasureType = MeasurementType::model()->findByAttributes(array('description'=>'weight'));
-					if(!isset($modelMeasureType))
-					{
-						$modelMeasureType->description = 'weight';
-						$modelMeasureType->save();
-					}
-						
-					$modelMeasureUnitWeight = new MeasurementUnit();
-					$modelMeasureUnitWeight->Id_measurement_type = $modelMeasureType->Id;
-					$modelMeasureUnitWeight->short_description = 'kg';
-					$modelMeasureUnitWeight->description = 'kilograms';
-					$modelMeasureUnitWeight->save();
-						
-				}
-				$modelProduct->Id_measurement_unit_weight = $modelMeasureUnitWeight->Id;
-			}
-			//END MEASURE UNIT WEIGHT-------------------------------------------------
-				
-			//BEGIN MEASURE UNIT LINEAR-------------------------------------------------
-			if(!isset($modelProduct->Id_measurement_unit_linear))
-			{
-				$modelMeasureUnitLinear = MeasurementUnit::model()->findByAttributes(array('short_description'=>'mm'));
-				if(!isset($modelMeasureUnitLinear))
-				{
-					$modelMeasureType = MeasurementType::model()->findByAttributes(array('description'=>'linear'));
-					if(!isset($modelMeasureType))
-					{
-						$modelMeasureType->description = 'linear';
-						$modelMeasureType->save();
-					}
-						
-					$modelMeasureUnitLinear = new MeasurementUnit();
-					$modelMeasureUnitLinear->Id_measurement_type = $modelMeasureType->Id;
-					$modelMeasureUnitLinear->short_description = 'mm';
-					$modelMeasureUnitLinear->description = 'Milimeters';
-					$modelMeasureUnitLinear->save();
-						
-				}
-				$modelProduct->Id_measurement_unit_linear = $modelMeasureUnitLinear->Id;
-			}
-			//END MEASURE UNIT LINEAR-------------------------------------------------
-			
-			//BEGIN BRAND-------------------------------------------------
-			if(!isset($modelProduct->Id_brand))
-			{
-				$manufacturer = "--";
-				$modelBrand = Brand::model()->findByAttributes(array('description'=>$manufacturer));
-				if(!isset($modelBrand))
-				{
-					$modelBrand = new Brand();
-					$modelBrand->description = $manufacturer;
-					$modelBrand->save();
-				}
-				$modelProduct->Id_brand = $modelBrand->Id;
-			}
-			//END BRAND-------------------------------------------------
-			
-			//BEGIN VOLTS-------------------------------------------------
-			$volts = 0;
-			$modelVolts = Volts::model()->findByAttributes(array('volts'=>$volts));
-			if(!isset($modelVolts))
-			{
-				$modelVolts = new Volts();
-				$modelVolts->volts = $volts;
-				$modelVolts->save();
-			}
-			$modelProduct->Id_volts = $modelVolts->Id;
-			//END VOLTS-------------------------------------------------
-			
-			//BEGIN CATEGORY-------------------------------------------------
-			$category = "--";
-			$modelCategory = Category::model()->findByAttributes(array('description'=>$category));
-			if(!isset($modelCategory))
-			{
-				$modelCategory = new Category();
-				$modelCategory->description = $category;
-				$modelCategory->save();
-			}
-			$modelProduct->Id_category = $modelCategory->Id;
-			//END CATEGORY-------------------------------------------------
-			
-			//BEGIN SUB-CATEGORY-------------------------------------------------
-			$subCategory = "--";
-			$modelSubCategory = SubCategory::model()->findByAttributes(array('description'=>$subCategory));
-			if(!isset($modelSubCategory))
-			{
-				$modelSubCategory = new SubCategory();
-				$modelSubCategory->description = $subCategory;
-				$modelSubCategory->save();
-			}
-			$modelProduct->Id_sub_category = $modelSubCategory->Id;
-			//END SUB-CATEGORY-------------------------------------------------
-			
-			//BEGIN PRODUCT-TYPE-------------------------------------------------
-			$productType = "--";
-			$modelProductType = ProductType::model()->findByAttributes(array('description'=>$productType));
-			if(!isset($modelProductType))
-			{
-				$modelProductType = new ProductType();
-				$modelProductType->description = $productType;
-				$modelProductType->save();
-			}
-			$modelProduct->Id_product_type = $modelProductType->Id;
-			//END PRODUCT-TYPE-------------------------------------------------
-			
-			//BEGIN SUPPLIER-------------------------------------------------
-			if(!isset($modelProduct->Id_supplier))
-			{
-				$modelSupplier = Supplier::model()->findByAttributes(array('business_name'=>'--'));
-				if(!isset($modelSupplier))
-				{
-					$modelContact = new Contact();
-					$modelContact->description = '--';
-					$modelContact->telephone_1 = '--';
-					$modelContact->email = uniqid().'@bb.com';
-					$modelContact->save();
-						
-					$modelSupplier = new Supplier();
-					$modelSupplier->business_name = '--';
-					$modelSupplier->Id_contact = $modelContact->Id;
-					$modelSupplier->save();
-				}
-				$modelProduct->Id_supplier = $modelSupplier->Id;
-			}
-			//END SUPPLIER-------------------------------------------------
-			
-			$modelProduct->from_dtools = 0;
-			$modelProduct->hide = 0;			
-			
-			$transaction->commit();
-		} catch (Exception $e) {
-			$transaction->rollback();
-			return null;
+			$modelProduct->Id_nomenclator = $modelNomenclator->Id;
 		}
+		//END NOMENCLATOR-------------------------------------------------
+		
+		
+		//BEGIN MEASURE UNIT WEIGHT-------------------------------------------------
+		if(!isset($modelProduct->Id_measurement_unit_weight))
+		{
+			$modelMeasureUnitWeight = MeasurementUnit::model()->findByAttributes(array('short_description'=>'kg'));
+			if(!isset($modelMeasureUnitWeight))
+			{
+				$modelMeasureType = MeasurementType::model()->findByAttributes(array('description'=>'weight'));
+				if(!isset($modelMeasureType))
+				{
+					$modelMeasureType->description = 'weight';
+					$modelMeasureType->save();
+				}
+					
+				$modelMeasureUnitWeight = new MeasurementUnit();
+				$modelMeasureUnitWeight->Id_measurement_type = $modelMeasureType->Id;
+				$modelMeasureUnitWeight->short_description = 'kg';
+				$modelMeasureUnitWeight->description = 'kilograms';
+				$modelMeasureUnitWeight->save();
+					
+			}
+			$modelProduct->Id_measurement_unit_weight = $modelMeasureUnitWeight->Id;
+		}
+		//END MEASURE UNIT WEIGHT-------------------------------------------------
+			
+		//BEGIN MEASURE UNIT LINEAR-------------------------------------------------
+		if(!isset($modelProduct->Id_measurement_unit_linear))
+		{
+			$modelMeasureUnitLinear = MeasurementUnit::model()->findByAttributes(array('short_description'=>'mm'));
+			if(!isset($modelMeasureUnitLinear))
+			{
+				$modelMeasureType = MeasurementType::model()->findByAttributes(array('description'=>'linear'));
+				if(!isset($modelMeasureType))
+				{
+					$modelMeasureType->description = 'linear';
+					$modelMeasureType->save();
+				}
+					
+				$modelMeasureUnitLinear = new MeasurementUnit();
+				$modelMeasureUnitLinear->Id_measurement_type = $modelMeasureType->Id;
+				$modelMeasureUnitLinear->short_description = 'mm';
+				$modelMeasureUnitLinear->description = 'Milimeters';
+				$modelMeasureUnitLinear->save();
+					
+			}
+			$modelProduct->Id_measurement_unit_linear = $modelMeasureUnitLinear->Id;
+		}
+		//END MEASURE UNIT LINEAR-------------------------------------------------
+		
+		//BEGIN BRAND-------------------------------------------------
+		if(!isset($modelProduct->Id_brand))
+		{
+			$manufacturer = "--";
+			$modelBrand = Brand::model()->findByAttributes(array('description'=>$manufacturer));
+			if(!isset($modelBrand))
+			{
+				$modelBrand = new Brand();
+				$modelBrand->description = $manufacturer;
+				$modelBrand->save();
+			}
+			$modelProduct->Id_brand = $modelBrand->Id;
+		}
+		//END BRAND-------------------------------------------------
+		
+		//BEGIN VOLTS-------------------------------------------------
+		$volts = 0;
+		$modelVolts = Volts::model()->findByAttributes(array('volts'=>$volts));
+		if(!isset($modelVolts))
+		{
+			$modelVolts = new Volts();
+			$modelVolts->volts = $volts;
+			$modelVolts->save();
+		}
+		$modelProduct->Id_volts = $modelVolts->Id;
+		//END VOLTS-------------------------------------------------
+		
+		//BEGIN CATEGORY-------------------------------------------------
+		$category = "--";
+		$modelCategory = Category::model()->findByAttributes(array('description'=>$category));
+		if(!isset($modelCategory))
+		{
+			$modelCategory = new Category();
+			$modelCategory->description = $category;
+			$modelCategory->save();
+		}
+		$modelProduct->Id_category = $modelCategory->Id;
+		//END CATEGORY-------------------------------------------------
+		
+		//BEGIN SUB-CATEGORY-------------------------------------------------
+		$subCategory = "--";
+		$modelSubCategory = SubCategory::model()->findByAttributes(array('description'=>$subCategory));
+		if(!isset($modelSubCategory))
+		{
+			$modelSubCategory = new SubCategory();
+			$modelSubCategory->description = $subCategory;
+			$modelSubCategory->save();
+		}
+		$modelProduct->Id_sub_category = $modelSubCategory->Id;
+		//END SUB-CATEGORY-------------------------------------------------
+		
+		//BEGIN PRODUCT-TYPE-------------------------------------------------
+		$productType = "--";
+		$modelProductType = ProductType::model()->findByAttributes(array('description'=>$productType));
+		if(!isset($modelProductType))
+		{
+			$modelProductType = new ProductType();
+			$modelProductType->description = $productType;
+			$modelProductType->save();
+		}
+		$modelProduct->Id_product_type = $modelProductType->Id;
+		//END PRODUCT-TYPE-------------------------------------------------
+		
+		//BEGIN SUPPLIER-------------------------------------------------
+		if(!isset($modelProduct->Id_supplier))
+		{
+			$modelSupplier = Supplier::model()->findByAttributes(array('business_name'=>'--'));
+			if(!isset($modelSupplier))
+			{
+				$modelContact = new Contact();
+				$modelContact->description = '--';
+				$modelContact->telephone_1 = '--';
+				$modelContact->email = uniqid().'@bb.com';
+				$modelContact->save();
+					
+				$modelSupplier = new Supplier();
+				$modelSupplier->business_name = '--';
+				$modelSupplier->Id_contact = $modelContact->Id;
+				$modelSupplier->save();
+			}
+			$modelProduct->Id_supplier = $modelSupplier->Id;
+		}
+		//END SUPPLIER-------------------------------------------------
+		
+		$modelProduct->from_dtools = 0;
+		$modelProduct->hide = 0;			
+					
 		return $modelProduct; 
 	}
 	
