@@ -601,6 +601,10 @@ class ProductController extends Controller
 			{
 				$cubicFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'mm3'));
 			}				
+			if($measureLinear->short_description=='cm')
+			{
+				$cubicFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'cm3'));
+			}
 			else if($measureLinear->short_description=='in')
 			{
 				$cubicFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'in3'));				
