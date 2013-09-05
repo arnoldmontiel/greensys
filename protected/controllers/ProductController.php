@@ -911,13 +911,6 @@ class ProductController extends Controller
 										'ddlMeasurementUnitWeight'=>$ddlMeasurementUnitWeight));
 	}
 	
-	public function actionAjaxDownloadFile($fileName, $root)
-	{
-		
-		$myfile = Yii::app()->file->set('./'.$root.'/'.$fileName, true);
-		echo $myfile->send();
-	}
-	
 	public function actionImportResults($id)
 	{
 		$model = ImportLog::model()->findByPk($id);
