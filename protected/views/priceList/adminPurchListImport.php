@@ -12,15 +12,6 @@ $this->menu=array(
 
 Yii::app()->clientScript->registerScript('admin-measures-import', "
 
-$('.link-download-file').click(function(){
-	var fileName = $(this).attr('fileName');
-	var root = 'docs';
-	var href = '".PriceListController::createUrl('AjaxDownloadFile')."';
-	var params = '&fileName='+fileName + '&root='+root;
-	$(this).attr('href',href+params);
-	
-});
-
 ");
 
 ?>
@@ -33,23 +24,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'purch-list-import-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
-	'afterAjaxUpdate'=>'js:function(){
-				$("#purch-list-import-grid").find(".link-download-file").each(
-						function(index, item){
-							$(item).click(function(){
-									var fileName = $(this).attr("fileName");
-									var root = "docs";
-									var href = "'.PriceListController::createUrl('AjaxDownloadFile').'";
-									var params = "&fileName="+fileName + "&root="+root;
-									$(this).attr("href",href+params);				
-															
-							});
-						});
-		}',
 	'columns'=>array(		
 			array(
 					'name'=>'original_file_name',
-					'value'=>'CHtml::link($data->original_file_name,"",array("class"=>"link-download-file", "fileName"=>$data->file_name))',
+					'value'=>'CHtml::link($data->original_file_name,"./docs/".$data->file_name)',
 					'type'=>'raw'
 			),
 			array(
