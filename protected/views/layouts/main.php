@@ -20,8 +20,13 @@
 </head>
 
 <body>
+<?php if(isset($this->showSideBar)&&$this->showSideBar==true):?>
 <div id="page-wrap" class="container" style="width: 1340px">
+<div class="container" id="page" style="width: 1320px">
+<?php else:?>
+<div id="page-wrap" class="container">
 <div class="container" id="page">
+<?php endif?>
 
 	<div id="header">
 	</div><!-- header -->

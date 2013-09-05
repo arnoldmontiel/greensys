@@ -24,7 +24,7 @@ $(window).scroll(function() {
 ?>
 </div>
 <?php endif?>
-<div class="span-19">
+<div class="span-19" style="width: 850px;">
 	<div id="content">
 		<?php echo $content; ?>
 	</div><!-- content -->
