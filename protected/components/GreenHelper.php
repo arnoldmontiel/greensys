@@ -48,8 +48,11 @@ class GreenHelper
 		return $returnValue;
 	}
 	
-	static public function importMeasuresFromExcel($modelUpload, $Id_linear, $Id_weight)
+	static public function importMeasuresFromExcel($modelUpload, $modelMeasureImportLog)
 	{		
+		$Id_linear = $modelMeasureImportLog->Id_measurement_unit_linear;
+		$Id_weight =  $modelMeasureImportLog->Id_measurement_unit_weight;
+		
 		$file=CUploadedFile::getInstance($modelUpload,'file');
 		$sheet_array = Yii::app()->yexcel->readActiveSheet($file->tempName);
 		
@@ -65,12 +68,13 @@ class GreenHelper
 		//save doc
 		move_uploaded_file($file->tempName,$filePath);
 		
-		$arrCols = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F');
-		$col_model =	'A';
-		$col_weight =	'B';
-		$col_length =	'C';
-		$col_width =	'D';
-		$col_height =	'E';
+		$arrCols = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F',7=>'G');
+		$col_model =		'A';
+		$col_weight =		'B';
+		$col_length =		'C';
+		$col_width =		'D';
+		$col_height =		'E';
+		$col_qty = 			'F';
 		$col_index = 0;
 		
 		foreach( $sheet_array[1] as $header ) 
@@ -81,6 +85,11 @@ class GreenHelper
 			{
 				$col_model = $arrCols[$col_index];
 				continue; 
+			}			
+			if(strpos($colName, 'QTY')!== false)
+			{
+				$col_qty = $arrCols[$col_index];
+				continue;
 			}
 			if(strpos($colName, 'WEIGHT')!== false)
 			{
@@ -110,28 +119,71 @@ class GreenHelper
 		{
 			if($row_index != 1)
 			{
-				$modelProductDB = Product::model()->findByAttributes(array('model'=>$row[$col_model]));
+				$criteria = new CDbCriteria();
+				$criteria->addCondition('t.Id_brand = '. $modelMeasureImportLog->Id_brand);
+				$newModel = str_replace('"','',$row[$col_model]);
+				
+				if(empty($newModel))
+					continue;
+				
+				$criteria->addCondition('"'. $newModel . '" like CONCAT("%", model ,"%")');
+				
+				$modelProductDB = Product::model()->find($criteria);
+				
 				if(isset($modelProductDB))
-				{					
-					$modelProductDB->length = (float)$row[$col_length];
-					$modelProductDB->width = (float)$row[$col_width];
-					$modelProductDB->height = (float)$row[$col_height];
-					$modelProductDB->weight = (float)$row[$col_weight];					
-					$modelProductDB->Id_measurement_unit_linear = $Id_linear;
-					$modelProductDB->Id_measurement_unit_weight = $Id_weight;
-					$modelProductDB->save();		
+				{	
+					$transaction = $modelProductDB->dbConnection->beginTransaction();
+					try {						
+						$modelProductDB->length = (float)$row[$col_length];
+						$modelProductDB->width = (float)$row[$col_width];
+						$modelProductDB->height = (float)$row[$col_height];
+						$modelProductDB->weight = (float)$row[$col_weight];					
+						$modelProductDB->Id_measurement_unit_linear = $Id_linear;
+						$modelProductDB->Id_measurement_unit_weight = $Id_weight;
+						$modelProductDB->save();
+						
+						$qty = (int)$row[$col_qty];
+						if($qty > 1)
+						{
+							$modelPackagingDB = Packaging::model()->findByAttributes(array('qty'=>$qty,
+																				'Id_product'=>$modelProductDB->Id,
+																		));
+							if(!isset($modelPackagingDB))
+							{
+								$modelPackagingDB = new Packaging();
+								$modelPackagingDB->Id_product = $modelProductDB->Id;
+								$modelPackagingDB->qty = $qty;
+								$modelPackagingDB->save();
+							}
+						}
+						
+						$transaction->commit();
+					} catch (Exception $e) {
+						$transaction->rollback();
+					}		
+					
 				}
-				else 
+				else
+				{ 
+					$modelProduct = new Product();
+					$modelProduct->model = $row[$col_model];
+					$modelProduct->length = (float)$row[$col_length];
+					$modelProduct->width = (float)$row[$col_width];
+					$modelProduct->height = (float)$row[$col_height];
+					$modelProduct->weight = (float)$row[$col_weight];
+					$modelProduct->Id_measurement_unit_linear = $Id_linear;
+					$modelProduct->Id_measurement_unit_weight = $Id_weight;
+					$modelProduct->Id_brand = $modelMeasureImportLog->Id_brand;
+					$modelProduct = self::setEmptyProduct($modelProduct);
+					$modelProduct->save();
 					$model_not_found .= $row[$col_model]. ', ';
+				}
 			}
 			$row_index++;			
 		}
 
-		$modelMeasureImportLog = new MeasureImportLog();
 		$modelMeasureImportLog->file_name = $fileName;
-		$modelMeasureImportLog->original_file_name = $file->name;
-		$modelMeasureImportLog->Id_measurement_unit_linear = $Id_linear;
-		$modelMeasureImportLog->Id_measurement_unit_weight = $Id_weight;
+		$modelMeasureImportLog->original_file_name = $file->name;		
 		$modelMeasureImportLog->not_found_model = rtrim($model_not_found, ", ");
 		$modelMeasureImportLog->save();
 	}
@@ -330,6 +382,99 @@ class GreenHelper
 		} //end if(handle)
 		
 		return $importLogId;
+	}
+	
+	private function setEmptyProduct($modelProduct)
+	{
+		$transaction = $modelProduct->dbConnection->beginTransaction(); 
+		try {
+			
+			//BEGIN NOMENCLATOR-------------------------------------------------
+			$modelNomenclator = Nomenclator::model()->findByAttributes(array('description'=>'Dtools'));
+			if(!isset($modelNomenclator))
+			{
+				$modelNomenclator = new Nomenclator();
+				$modelNomenclator->description = 'Dtools';
+				$modelNomenclator->save();
+			}
+			$modelProduct->Id_nomenclator = $modelNomenclator->Id;
+			//END NOMENCLATOR-------------------------------------------------
+			
+			//BEGIN VOLTS-------------------------------------------------
+			$volts = 0;
+			$modelVolts = Volts::model()->findByAttributes(array('volts'=>$volts));
+			if(!isset($modelVolts))
+			{
+				$modelVolts = new Volts();
+				$modelVolts->volts = $volts;
+				$modelVolts->save();
+			}
+			$modelProduct->Id_volts = $modelVolts->Id;
+			//END VOLTS-------------------------------------------------
+			
+			//BEGIN CATEGORY-------------------------------------------------
+			$category = "--";
+			$modelCategory = Category::model()->findByAttributes(array('description'=>$category));
+			if(!isset($modelCategory))
+			{
+				$modelCategory = new Category();
+				$modelCategory->description = $category;
+				$modelCategory->save();
+			}
+			$modelProduct->Id_category = $modelCategory->Id;
+			//END CATEGORY-------------------------------------------------
+			
+			//BEGIN SUB-CATEGORY-------------------------------------------------
+			$subCategory = "--";
+			$modelSubCategory = SubCategory::model()->findByAttributes(array('description'=>$subCategory));
+			if(!isset($modelSubCategory))
+			{
+				$modelSubCategory = new SubCategory();
+				$modelSubCategory->description = $subCategory;
+				$modelSubCategory->save();
+			}
+			$modelProduct->Id_sub_category = $modelSubCategory->Id;
+			//END SUB-CATEGORY-------------------------------------------------
+			
+			//BEGIN PRODUCT-TYPE-------------------------------------------------
+			$productType = "--";
+			$modelProductType = ProductType::model()->findByAttributes(array('description'=>$productType));
+			if(!isset($modelProductType))
+			{
+				$modelProductType = new ProductType();
+				$modelProductType->description = $productType;
+				$modelProductType->save();
+			}
+			$modelProduct->Id_product_type = $modelProductType->Id;
+			//END PRODUCT-TYPE-------------------------------------------------
+			
+			//BEGIN SUPPLIER-------------------------------------------------
+			$modelSupplier = Supplier::model()->findByAttributes(array('business_name'=>'--'));
+			if(!isset($modelSupplier))
+			{
+				$modelContact = new Contact();
+				$modelContact->description = '--';
+				$modelContact->telephone_1 = '--';
+				$modelContact->email = uniqid().'@bb.com';
+				$modelContact->save();
+					
+				$modelSupplier = new Supplier();
+				$modelSupplier->business_name = '--';
+				$modelSupplier->Id_contact = $modelContact->Id;
+				$modelSupplier->save();
+			}
+			$modelProduct->Id_supplier = $modelSupplier->Id;
+			//END SUPPLIER-------------------------------------------------
+			
+			$modelProduct->from_dtools = 0;
+			$modelProduct->hide = 0;			
+			
+			$transaction->commit();
+		} catch (Exception $e) {
+			$transaction->rollback();
+			return null;
+		}
+		return $modelProduct; 
 	}
 	
 	private function setProduct($data, $arrFields, $importCode)

@@ -52,6 +52,14 @@ $this->menu=array(
 			?>
 			<?php echo $form->error($modelMeasureImportLog,'Id_measurement_unit_weight'); ?>
 		</div>		
+		<div style="width: 120px; display: inline-block;">
+			<?php echo $form->labelEx($modelMeasureImportLog,'Id_brand'); ?>
+			<?php				
+				echo $form->dropDownList($modelMeasureImportLog, 'Id_brand', 
+					CHtml::listData($ddlBrand, 'Id', 'description')); 
+			?>
+			<?php echo $form->error($modelMeasureImportLog,'Id_brand'); ?>
+		</div>
 	</div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'file  *.xslx, *.xls'); ?>
