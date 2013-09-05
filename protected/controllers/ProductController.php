@@ -894,13 +894,15 @@ class ProductController extends Controller
 		
 		$ddlMeasurementUnitWeight = MeasurementUnit::model()->findAll($criteria);
 				
+		$ddlBrand = Brand::model()->findAll(array('order'=>'description ASC'));
+		
 		if(isset($_POST['UploadExcel']) && isset($_POST['MeasureImportLog']))
 		{
 			$modelMeasureImportLog->attributes = $_POST['MeasureImportLog'];
 			$model->attributes = $_POST['UploadExcel'];			
 			if($model->validate())
 			{
-				GreenHelper::importMeasuresFromExcel($model,$modelMeasureImportLog->Id_measurement_unit_linear, $modelMeasureImportLog->Id_measurement_unit_weight);
+				GreenHelper::importMeasuresFromExcel($model, $modelMeasureImportLog);
 				$this->redirect(array('adminMeasuresImport'));
 			}
 		}
@@ -908,7 +910,8 @@ class ProductController extends Controller
 		$this->render('importMeasuresFromExcel',array('model'=>$model,
 										'modelMeasureImportLog'=>$modelMeasureImportLog, 
 										'ddlMeasurementUnitLinear'=>$ddlMeasurementUnitLinear,
-										'ddlMeasurementUnitWeight'=>$ddlMeasurementUnitWeight));
+										'ddlMeasurementUnitWeight'=>$ddlMeasurementUnitWeight,
+										'ddlBrand'=>$ddlBrand,));
 	}
 	
 	public function actionImportResults($id)

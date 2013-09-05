@@ -11,8 +11,10 @@
  * @property integer $Id_measurement_unit_weight
  * @property string $creation_date
  * @property string $not_found_model
+ * @property integer $Id_brand
  *
  * The followings are the available model relations:
+ * @property Brand $idBrand
  * @property MeasurementUnit $idMeasurementUnitLinear
  * @property MeasurementUnit $idMeasurementUnitWeight
  */
@@ -20,6 +22,7 @@ class MeasureImportLog extends CActiveRecord
 {
 	public $unit_weight_description;
 	public $unit_linear_description;
+	public $brand_description;
 	
 	/**
 	 * @return string the associated database table name
@@ -37,13 +40,13 @@ class MeasureImportLog extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_measurement_unit_linear, Id_measurement_unit_weight', 'required'),
-			array('Id_measurement_unit_linear, Id_measurement_unit_weight', 'numerical', 'integerOnly'=>true),
+			array('Id_measurement_unit_linear, Id_measurement_unit_weight, Id_brand', 'required'),
+			array('Id_measurement_unit_linear, Id_measurement_unit_weight, Id_brand', 'numerical', 'integerOnly'=>true),
 			array('original_file_name, file_name', 'length', 'max'=>100),
 			array('creation_date, not_found_model', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('Id, original_file_name, file_name, Id_measurement_unit_linear, Id_measurement_unit_weight, creation_date, not_found_model, unit_weight_description,unit_linear_description', 'safe', 'on'=>'search'),
+			array('Id, original_file_name, file_name, Id_measurement_unit_linear, Id_measurement_unit_weight, creation_date, not_found_model, unit_weight_description,unit_linear_description, Id_brand, brand_description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,6 +58,7 @@ class MeasureImportLog extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'brand' => array(self::BELONGS_TO, 'Brand', 'Id_brand'),
 			'measurementUnitLinear' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_linear'),
 			'measurementUnitWeight' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_weight'),
 		);
@@ -75,6 +79,8 @@ class MeasureImportLog extends CActiveRecord
 			'not_found_model' => 'Not Found Model',
 			'unit_weight_description'=>'Unit Weight',
 			'unit_linear_description'=>'Unit Linear',
+			'brand_description' => 'Brand',
+			'Id_brand'=>'Brand',
 		);
 	}
 
@@ -103,12 +109,16 @@ class MeasureImportLog extends CActiveRecord
 		$criteria->compare('Id_measurement_unit_weight',$this->Id_measurement_unit_weight);
 		$criteria->compare('creation_date',$this->creation_date,true);
 		$criteria->compare('not_found_model',$this->not_found_model,true);
-
+		
+		
 		$criteria->with[]='measurementUnitLinear';
 		$criteria->compare('measurementUnitLinear.short_description',$this->unit_linear_description,true);
 		
 		$criteria->with[]='measurementUnitWeight';
 		$criteria->compare('measurementUnitWeight.short_description',$this->unit_weight_description,true);
+		
+		$criteria->with[]='brand';
+		$criteria->compare('brand.description',$this->brand_description,true);
 		
 		$criteria->order = 't.creation_date DESC';
 		return new CActiveDataProvider($this, array(
