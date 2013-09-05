@@ -142,10 +142,7 @@ return array(
 'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 		),
-		*/
-		'file'=>array(
-	        'class'=>'application.extensions.file.CFile',
-		),
+		*/		
 		// uncomment the following to use a MySQL database
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=green',
