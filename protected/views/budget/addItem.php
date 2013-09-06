@@ -323,11 +323,144 @@ $('.btn-View-Assign').click(function(){
 <?php				
 	}
 ?>
-	 
-
+	<br>
+	 <div style="display: inline-block; float: left;margin-right:20px;">
+			<?php echo CHtml::link( 'Nuevo Item','#',array('onclick'=>'jQuery("#CreateNewBudgetItem").dialog("open"); return false;'));?>
+	</div>
+<?php
+	$this->widget('zii.widgets.grid.CGridView', array(
+					'id'=>'budget-item-generic',
+					'dataProvider'=>$modelBudgetItemGeneric->searchGenericItem(),
+					'summaryText'=>'',
+					'afterAjaxUpdate'=>'function(id, data){
+									$("#budget-item-generic").find("input.txtQuantityGenericItem").each(
+												function(index, item){
+												
+																$(item).keyup(function(){
+			        												validateNumber($(this));
+																});
+																
+																$(item).change(function(){
+																
+																		
+																});
+													});	
+										
+					}',
+					'columns'=>array(
+							array(
+									'name'=>'description',
+									'value'=>
+				                                    	'CHtml::textField("txtDescriptionGenericItem",
+																$data->description,
+																array(
+																		"id"=>$data->Id,
+																		"class"=>"txtDescriptionGenericItem",
+																		"style"=>"width:100%;text-align:left;",
+																	)
+															)',
+		
+									'type'=>'raw',
+									'htmlOptions'=>array("style"=>"text-align:right"),
+							),
+							array(
+								'name'=>'quantity',
+								'value'=>
+			                                    	'CHtml::textField("txtQuantityGenericItem",
+															$data->quantity,
+															array(
+																	"id"=>$data->Id,
+																	"class"=>"txtQuantityGenericItem",
+																	"style"=>"width:50px;text-align:right;",
+																)
+														)',
+			
+								'type'=>'raw',
+								'htmlOptions'=>array("style"=>"text-align:right;"),
+							),
+							array(
+								'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+								'type'=>'raw',
+								'htmlOptions'=>array('width'=>25),
+							),
+							array(
+									'name'=>'price',
+									'value'=>
+				                                    	'CHtml::textField("txtPriceGenericItem",
+																$data->price,
+																array(
+																		"id"=>$data->Id,
+																		"class"=>"txtPriceGenericItem",
+																		"style"=>"width:50px;text-align:right;",
+																	)
+															)',
+		
+									'type'=>'raw',
+									'htmlOptions'=>array("style"=>"text-align:right;"),
+							),
+							array(
+								'value'=>'CHtml::image("images/save_ok2.png","",array("id"=>"saveok", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+								'type'=>'raw',
+								'htmlOptions'=>array('width'=>25),
+							),
+							array(
+									'name'=>'total_price',
+									'value'=>'$data->quantity * $data->price',
+								),
+							array(
+									'class'=>'CButtonColumn',
+									'template'=>'{delete}',
+									'deleteConfirmation'=>"js:'Are you sure you want to delete this item?'",
+									'buttons'=>array
+									(
+									        'delete' => array
+												(
+									            	'url'=>'Yii::app()->createUrl("budget/AjaxDeleteBudgetItem", array("id"=>$data->Id))',
+												),
+											),
+									),
+							),
+					));
+	?>
 </div>
 
 <?php				
+//Project create
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+			'id'=>'CreateNewBudgetItem',
+// additional javascript options for the dialog plugin
+			'options'=>array(
+					'title'=>'Nuevo Item',
+					'autoOpen'=>false,
+					'modal'=>true,
+					'width'=> '550',
+					'buttons'=>	array(							
+							'Grabar'=>'js:function()
+							{
+							jQuery("#waiting").dialog("open");
+							jQuery.post("'.Yii::app()->createUrl("budget/ajaxCreateBudgetItem").'", $("#budget-item-form").serialize(),
+							function(data) {
+								if(data!=null)
+								{
+									//actualizar
+									$.fn.yiiGridView.update("budget-item-generic")
+									jQuery("#CreateNewBudgetItem").dialog( "close" );
+								}
+							jQuery("#waiting").dialog("close");
+						},"json"
+					);
+
+				}',
+				'Cancelar'=>'js:function(){jQuery("#CreateNewBudgetItem").dialog( "close" );}'),
+),
+));
+$modelNewBudgetItem = new BudgetItem();
+$modelNewBudgetItem->Id_budget = $model->Id;
+$modelNewBudgetItem->version_number = $model->version_number;
+echo $this->renderPartial('_formBudgetItem', array('model'=>$modelNewBudgetItem));
+
+$this->endWidget('zii.widgets.jui.CJuiDialog');
+
 
 //Product View Child
 	$this->beginWidget('zii.widgets.jui.CJuiDialog', array(

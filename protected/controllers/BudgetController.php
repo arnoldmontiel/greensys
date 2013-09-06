@@ -328,6 +328,12 @@ class BudgetController extends Controller
 	{
 		$model = $this->loadModel($id, $version);
 		
+		$modelBudgetItemGeneric = new BudgetItem('search');
+		$modelBudgetItemGeneric->unsetAttributes();  // clear any default values		
+		$modelBudgetItemGeneric->Id_budget = $id;
+		$modelBudgetItemGeneric->version_number = $version;
+		
+		
 		$modelProduct = new Product('search');
 		$modelProduct->unsetAttributes();
 		
@@ -360,9 +366,30 @@ class BudgetController extends Controller
 					'modelBudgetItem'=>$modelBudgetItem,
 					'priceListItemSale'=>$priceListItemSale,
 					'areaProjects'=>$areaProjects,
+					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
 		));
 	}
 
+	public function actionAjaxCreateBudgetItem()
+	{
+		$modelBudgetItem = new BudgetItem();
+		
+		// Uncomment the following line if AJAX validation is needed
+		//$this->performAjaxValidation($modelBudgetItem);
+		
+		if(isset($_POST['BudgetItem']))
+		{
+			$modelBudgetItem->attributes = $_POST['BudgetItem'];
+			try {
+				$modelBudgetItem->save();
+				echo json_encode($modelBudgetItem->attributes);
+			} catch (Exception $e) {
+				echo $e->getMessage();
+			}
+			
+		}
+	}
+	
 	public function actionAjaxBudgetItemChildren()
 	{
 		$modelBudgetItem = new BudgetItem('search');
