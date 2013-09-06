@@ -75,8 +75,8 @@ class BudgetItem extends ModelAudit
 		// will receive user inputs.
 		return array(
 			array('Id_budget, version_number', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
-			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type, Id_area, Id_service, quantity, is_included', 'numerical', 'integerOnly'=>true),
-			array('price', 'length', 'max'=>10),
+			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type, Id_area, Id_service, is_included', 'numerical', 'integerOnly'=>true),
+			array('price, quantity', 'length', 'max'=>10),
 			array('description', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -312,6 +312,32 @@ class BudgetItem extends ModelAudit
 
 		return new CActiveDataProvider($this, array(
 				'criteria'=>$criteria,
+		));
+	}
+	public function searchGenericItem()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('t.Id_budget',$this->Id_budget);
+		$criteria->compare('t.version_number',$this->version_number);
+		
+		$criteria->addCondition('t.Id_product is null');
+	
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+							'description',
+							'quantity',
+							'price',
+							'*',
+		);
+		
+		return new CActiveDataProvider($this, array(
+													'criteria'=>$criteria,
+													'sort'=>$sort,
 		));
 	}
 	public function searchByPurchaseItemsAssigned($Id_purchase_item)
