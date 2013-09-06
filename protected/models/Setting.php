@@ -8,6 +8,8 @@
  * @property integer $Id_volts
  * @property integer $Id_currency
  * @property integer $Id_measurement
+ * @property string $time_instalation_price
+ * @property string $time_programation_price
  *
  * The followings are the available model relations:
  * @property Measurement $idMeasurement
@@ -44,12 +46,13 @@ class Setting extends ModelAudit
 		return array(
 			array('Id, Id_volts, Id_currency, Id_measurement', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id, Id_volts, Id_currency, Id_measurement', 'numerical', 'integerOnly'=>true),
+			array('time_instalation_price, time_programation_price','safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_volts, Id_currency, Id_measurement', 'safe', 'on'=>'search'),
+			array('Id, Id_volts, Id_currency, Id_measurement, time_instalation_price, time_programation_price', 'safe', 'on'=>'search'),
 		);
 	}
-
+	
 	/**
 	 * @return array relational rules.
 	 */
@@ -74,6 +77,8 @@ class Setting extends ModelAudit
 			'Id_volts' => 'Volts',
 			'Id_currency' => 'Currency',
 			'Id_measurement' => 'Measurement',
+			'time_instalation_price'=>'Time Instalation Price',
+			'time_programation_price'=>'Time Programation Price',
 		);
 	}
 
@@ -92,6 +97,8 @@ class Setting extends ModelAudit
 		$criteria->compare('Id_volts',$this->Id_volts);
 		$criteria->compare('Id_currency',$this->Id_currency);
 		$criteria->compare('Id_measurement',$this->Id_measurement);
+		$criteria->compare('time_instalation_price',$this->time_instalation_price);
+		$criteria->compare('time_programation_price',$this->time_programation_price);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
