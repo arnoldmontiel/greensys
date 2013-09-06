@@ -67,11 +67,14 @@ function markAddedRow(id)
 function validateNumber(obj)
 {
 	var value=$(obj).val();
+	if(value=="")
+	{
+    	$(obj).val("0.00");
+	}
     var orignalValue=value;
     value=value.replace(/[0-9]*/g, "");			
    	var msg="Only Decimal Values allowed."; 						
    	value=value.replace(/\./, "");
-
     if (value!=""){
     	orignalValue=orignalValue.replace(value, "");
     	$(obj).val(orignalValue);
