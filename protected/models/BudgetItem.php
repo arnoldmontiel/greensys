@@ -16,6 +16,7 @@
  * @property integer $Id_service
  * @property integer $quantity
  * @property integer $is_included
+ * @property string $description
  *
  * The followings are the available model relations:
  * @property Budget $versionNumber
@@ -73,12 +74,13 @@ class BudgetItem extends ModelAudit
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_product, Id_budget, version_number, Id_area', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
+			array('Id_budget, version_number', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type, Id_area, Id_service, quantity, is_included', 'numerical', 'integerOnly'=>true),
 			array('price', 'length', 'max'=>10),
+			array('description', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_product, Id_area, Id_service, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type, product_code,product_model,product_part_number, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc, parent_product_code, quantity, children_count, children_included', 'safe', 'on'=>'search'),
+			array('Id, Id_product, Id_area, Id_service, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type, product_code,product_model,product_part_number, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc, parent_product_code, quantity, children_count, children_included, description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -130,6 +132,7 @@ class BudgetItem extends ModelAudit
 			'children_count'=>'Children Qty',
 			'children_included'=>'Children Inc',
 			'total_price'=>'Total price',
+			'description'=>'Description',
 		);
 	}
 
