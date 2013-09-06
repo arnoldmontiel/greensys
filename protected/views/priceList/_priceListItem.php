@@ -134,7 +134,12 @@ $('#deleteAll').click(
 		'columns'=>array(	
 				'model',
 				'part_number',
-				'code',
+				array(
+					'name'=>'code',
+				    'value'=>'CHtml::link($data->code,"#",array("id"=>$data->Id,"class"=>"product-link-popup"))',
+					'type'=>'raw'				 
+				),
+
 				array(
 		 			'name'=>'brand_description',
 					'value'=>'$data->brand->description',

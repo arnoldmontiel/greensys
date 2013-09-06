@@ -2,12 +2,42 @@
 <div id="display">
 
 <?php 
+$criteria = new CDbCriteria;
+$criteria->order ="description";
+$serviceList = CHtml::listData(Service::model()->findAll($criteria), 'Id', 'description');
+
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'budget-item-grid_'.$idArea,
 	'dataProvider'=>$modelBudgetItem->search(),
  	'filter'=>$modelBudgetItem,
 	'summaryText'=>'',
 	'afterAjaxUpdate'=>'function(id, data){
+				$("#budget-item-grid_'.$idArea.'").find(".ddl_id_service").each(
+					function(index, item)
+					{
+						$(item).change(
+							function()
+							{
+								var idBudgetItem = $(this).attr("id");
+								var idService = $(this).val();
+								$.post(
+										"'.BudgetController::createUrl('AjaxSaveService').'",
+										{
+											Id_budget_item: idBudgetItem,Id_service:idService
+										}
+										).success(function(data)
+										{
+											//alert("success");				
+									}).error(function(data)
+										{
+											//alert("error");				
+									});	
+							}
+						);
+					}
+		
+				);
+		
  				$("#budget-item-grid_'.$idArea.'").find(".link-popup").each(
 												function(index, item){
 													$(item).click(function(){
@@ -138,12 +168,14 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				array(
 					'name'=>'children_count',
 					'value'=>'CHtml::link(($data->childrenCount > 0)?$data->childrenCount:"","#",array("id"=>$data->Id, "idArea"=>$data->Id_area, "idProduct"=>$data->Id_product, "class"=>"link-popup"))',
-					'type'=>'raw'
+					'type'=>'raw',
+						'htmlOptions'=>array('width'=>5),
 				),
 				array(
 					'name'=>'children_included',
 					'value'=>'($data->childrenCount > 0)?$data->childrenIncluded:""',
-					'type'=>'raw'
+					'type'=>'html',
+						'htmlOptions'=>array("style"=>"width:20px"),
 				),
 				array(
 					
@@ -177,6 +209,48 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				    		,
 					'type'=>'raw'				 
 				),
+				array(
+ 					'name'=>'service',
+				    'value'=>($canEdit)?'
+						CHtml::dropDownList("Id_service", $data->Id_service,CHtml::listData(Service::model()->findAll(), "Id", "description"),array(
+						"prompt"=>"Service","id"=>$data->Id,"class"=>"ddl_id_service","style"=>"width:130px"
+						) );':'isset($data->service)?$data->service->description:"";',
+					'type'=>'raw',			       
+				),
+				array(
+ 					'name'=>'price',
+				    'value'=>'$data->price',
+					'type'=>'raw',
+			        'htmlOptions'=>array('style'=>'text-align: right;'),
+				),
+				array(
+						'name'=>'discount',
+						'value'=>
+						'CHtml::textField("txtDiscount",
+													$data->discount,
+													array(
+															"id"=>$data->Id,
+															"class"=>"txtDiscount",
+															"disabled"=>"",
+															"style"=>"width:50px;text-align:right;",
+														)
+												)',
+				
+						'type'=>'raw',
+				
+						'htmlOptions'=>array('width'=>5),
+				),
+				
+				array(
+						'name'=>'discount_type',
+						'value'=>($canEdit)?'
+							CHtml::dropDownList("discount_type", $data->discount_type,array("%","$"),array(
+							"id"=>$data->Id,"class"=>"ddl_discount_type","style"=>"width:50px"
+							) );':'($data->discount_type==0)?"%":"$";',
+						'type'=>($canEdit)?'raw':'html',
+						'htmlOptions'=>array('style'=>"width:20px"),
+				),
+				
 				array(
  					'name'=>'price',
 				    'value'=>'$data->totalPrice',

@@ -267,8 +267,6 @@ class BudgetController extends Controller
 		$objDrawingPType->setOffsetY(0);
 		$objDrawingPType->setWidth(200);
 		
-		
-		
 		// Redirect output to a client web browser (Excel5)
 		header('Content-Type: application/vnd.ms-excel');
 		header('Content-Disposition: attachment;filename="01simple.xls"');
@@ -314,7 +312,18 @@ class BudgetController extends Controller
 					'idArea'=>1,
 		));
 	}
-	
+	public function actionAjaxSaveService()
+	{
+		if(isset($_POST['Id_budget_item'])&&isset($_POST['Id_service']))
+		{
+			$budgetItem = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
+			if(isset($budgetItem))
+			{
+				$budgetItem->Id_service = $_POST['Id_service'];
+				$budgetItem->save();				
+			}
+		}
+	}	
 	public function actionAddItem($id, $version)
 	{
 		$model = $this->loadModel($id, $version);

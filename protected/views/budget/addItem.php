@@ -56,7 +56,26 @@ function fillParentData(data)
 		$('#parent_do_not_warning').attr('checked', false);
 	}		
 }
-
+$('.ddl_id_service').change(
+			function()
+			{
+				var idBudgetItem = $(this).attr('id');
+				var idService = $(this).val();
+				$.post(
+						'".BudgetController::createUrl('AjaxSaveService')."',
+						{
+							Id_budget_item: idBudgetItem,Id_service:idService
+						}
+						).success(function(data)
+						{
+							//alert('success');				
+					}).error(function(data)
+						{
+							//alert('error');				
+					});	
+			}
+		);
+		
 $('.link-popup').click(function(){
 	var idArea = $(this).attr('idArea');
 	var idBudgetItem = $(this).attr('id');

@@ -13,6 +13,7 @@
  * @property integer $Id_price_list
  * @property integer $Id_shipping_type
  * @property integer $Id_area
+ * @property integer $Id_service
  * @property integer $quantity
  * @property integer $is_included
  *
@@ -26,6 +27,7 @@
  * @property PriceList $idPriceList
  * @property ShippingType $idShippingType
  * @property ProductItem[] $productItems
+ * @property Service $service
  */
 class BudgetItem extends ModelAudit
 {
@@ -72,11 +74,11 @@ class BudgetItem extends ModelAudit
 		// will receive user inputs.
 		return array(
 			array('Id_product, Id_budget, version_number, Id_area', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
-			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type, Id_area, quantity, is_included', 'numerical', 'integerOnly'=>true),
+			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type, Id_area, Id_service, quantity, is_included', 'numerical', 'integerOnly'=>true),
 			array('price', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_product, Id_area, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type, product_code,product_model,product_part_number, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc, parent_product_code, quantity, children_count, children_included', 'safe', 'on'=>'search'),
+			array('Id, Id_product, Id_area, Id_service, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type, product_code,product_model,product_part_number, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc, parent_product_code, quantity, children_count, children_included', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -92,6 +94,7 @@ class BudgetItem extends ModelAudit
 			'budgetItems' => array(self::HAS_MANY, 'BudgetItem', 'Id_budget_item'),
 			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
 			'area' => array(self::BELONGS_TO, 'Area', 'Id_area'),
+			'service' => array(self::BELONGS_TO, 'Service', 'Id_service'),				
 			'priceList' => array(self::BELONGS_TO, 'PriceList', 'Id_price_list'),
 			'shippingType' => array(self::BELONGS_TO, 'ShippingType', 'Id_shipping_type'),
 			'productItems' => array(self::HAS_MANY, 'ProductItem', 'Id_budget_item'),
@@ -121,10 +124,12 @@ class BudgetItem extends ModelAudit
 			'product_brand_desc'=>'Brand',
 			'product_supplier_name'=>'Supplier Name',
 			'Id_area'=>'Area',
+			'Id_service'=>'Service',
 			'parent_product_code'=>'Parent Code',
 			'quantity'=>'Quantity',
 			'children_count'=>'Children Qty',
 			'children_included'=>'Children Inc',
+			'total_price'=>'Total price',
 		);
 	}
 
@@ -158,8 +163,15 @@ class BudgetItem extends ModelAudit
 	}
 	
 	public function getTotalPrice()
-	{	
-		return $this->getChildrenTotalPrice() + $this->price;
+	{	if($this->discount_type ==0)
+		{
+			$discount = (($this->getChildrenTotalPrice() + $this->price)*$this->quantity )* $this->discount/100;				
+		}
+		else
+		{
+			$discount = $this->discount;				
+		}
+		return number_format((($this->getChildrenTotalPrice() + $this->price)*$this->quantity) - $discount , 2);
 	}
 	
 	public function getDoNotWarning()
@@ -183,6 +195,7 @@ class BudgetItem extends ModelAudit
 		$criteria->compare('t.Id',$this->Id);
 		$criteria->compare('t.Id_product',$this->Id_product);
 		$criteria->compare('t.Id_area',$this->Id_area);
+		$criteria->compare('t.Id_service',$this->Id_service);
 		$criteria->compare('t.Id_budget',$this->Id_budget);
 		$criteria->compare('t.version_number',$this->version_number);
 		$criteria->compare('t.Id_budget_item',$this->Id_budget_item);
@@ -197,6 +210,7 @@ class BudgetItem extends ModelAudit
 		$criteria->join =	"LEFT OUTER JOIN product p ON p.Id=t.Id_product
 												 LEFT OUTER JOIN brand b ON p.Id_brand=b.Id
 												 LEFT OUTER JOIN area a ON a.Id = t.Id_area
+												 LEFT OUTER JOIN service se ON se.Id = t.Id_service
 												 LEFT OUTER JOIN supplier s ON p.Id_supplier=s.Id
 												 LEFT OUTER JOIN (select Id_budget_item, count(*) as child 
 												 	from budget_item group by Id_budget_item) bud on
@@ -281,6 +295,7 @@ class BudgetItem extends ModelAudit
 		$criteria->compare('t.Id',$this->Id);
 		$criteria->compare('t.Id_product',$this->Id_product);
 		$criteria->compare('t.Id_area',$this->Id_area);
+		$criteria->compare('t.Id_service',$this->Id_service);
 		$criteria->compare('t.Id_budget',$this->Id_budget);
 		$criteria->compare('t.version_number',$this->version_number);
 		$criteria->compare('t.Id_budget_item',$this->Id_budget_item);
@@ -306,6 +321,7 @@ class BudgetItem extends ModelAudit
 		$criteria->compare('t.Id',$this->Id);
 		$criteria->compare('t.Id_product',$this->Id_product);
 		$criteria->compare('t.Id_area',$this->Id_area);
+		$criteria->compare('t.Id_service',$this->Id_service);
 		$criteria->compare('t.Id_budget',$this->Id_budget);
 		$criteria->compare('t.version_number',$this->version_number);
 		$criteria->compare('t.Id_budget_item',$this->Id_budget_item);
