@@ -39,6 +39,17 @@
 		<?php echo $form->error($model,'Id_measurement'); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->labelEx($model,'time_instalation_price'); ?>
+		<?php echo $form->textField($model,'time_instalation_price'); ?>
+		<?php echo $form->error($model,'time_instalation_price'); ?>
+	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'time_programation_price'); ?>
+		<?php echo $form->textField($model,'time_programation_price'); ?>
+		<?php echo $form->error($model,'time_programation_price'); ?>
+	</div>
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

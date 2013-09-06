@@ -107,6 +107,7 @@ $this->widget('zii.widgets.CDetailView', array(
 			'value'=>$model->profit_rate.' %'
 		),
 		'time_instalation',
+		'time_programation',
 		'color',
 		'other',
 		array('label'=>$model->getAttributeLabel('Id_volts'),

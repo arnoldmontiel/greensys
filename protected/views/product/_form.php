@@ -447,6 +447,12 @@ $('#deleteIcon').click(function(){
 		<?php echo $form->textField($model,'time_instalation'); ?>
 		<?php echo $form->error($model,'time_instalation'); ?>
 	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'time_programation'); ?>
+		<?php echo $form->textField($model,'time_programation'); ?>
+		<?php echo $form->error($model,'time_programation'); ?>
+	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'color'); ?>

@@ -22,5 +22,7 @@ $this->menu=array(
 		'volts.volts',
 		'currency.short_description',
 		'measurement.description',
+		'time_instalation_price',
+		'time_programation_price',
 	),
 )); ?>
