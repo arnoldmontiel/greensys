@@ -6,7 +6,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Setting', 'url'=>array('index')),
 	array('label'=>'Create Setting', 'url'=>array('create')),
 	array('label'=>'View Setting', 'url'=>array('view', 'id'=>$model->Id)),
 	array('label'=>'Manage Setting', 'url'=>array('admin')),

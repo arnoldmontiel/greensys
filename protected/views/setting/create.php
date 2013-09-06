@@ -5,7 +5,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Setting', 'url'=>array('index')),
 	array('label'=>'Manage Setting', 'url'=>array('admin')),
 );
 ?>

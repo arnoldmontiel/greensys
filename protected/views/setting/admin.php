@@ -4,8 +4,7 @@ $this->breadcrumbs=array(
 	'Manage',
 );
 
-$this->menu=array(
-	array('label'=>'List Setting', 'url'=>array('index')),
+$this->menu=array(	
 	array('label'=>'Create Setting', 'url'=>array('create')),
 );
 
@@ -41,11 +40,19 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'id'=>'setting-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
-	'columns'=>array(
-		'Id',
-		'Id_volts',
-		'Id_currency',
-		'Id_measurement',
+	'columns'=>array(		
+		array(
+				'name'=>'measurement_description',
+				'value'=>'$data->measurement->description',
+			),
+		array(
+			'name'=>'currency_description',
+			'value'=>'$data->currency->short_description',
+		),
+		array(
+			'name'=>'volts_description',
+			'value'=>'$data->volts->volts',
+		),
 		'time_instalation_price',
 		'time_programation_price',
 		array(

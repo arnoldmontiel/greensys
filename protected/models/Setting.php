@@ -18,6 +18,10 @@
  */
 class Setting extends ModelAudit
 {
+	public $measurement_description;
+	public $currency_description;
+	public $volts_description;
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -49,7 +53,7 @@ class Setting extends ModelAudit
 			array('time_instalation_price, time_programation_price','safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_volts, Id_currency, Id_measurement, time_instalation_price, time_programation_price', 'safe', 'on'=>'search'),
+			array('Id, Id_volts, Id_currency, Id_measurement, time_instalation_price, time_programation_price, measurement_description,currency_description,volts_description', 'safe', 'on'=>'search'),
 		);
 	}
 	
@@ -79,6 +83,9 @@ class Setting extends ModelAudit
 			'Id_measurement' => 'Measurement',
 			'time_instalation_price'=>'Time Instalation Price',
 			'time_programation_price'=>'Time Programation Price',
+			'measurement_description'=>'Measurement',
+			'currency_description'=>'Currency',
+			'volts_description'=>'Volts',
 		);
 	}
 
@@ -99,9 +106,40 @@ class Setting extends ModelAudit
 		$criteria->compare('Id_measurement',$this->Id_measurement);
 		$criteria->compare('time_instalation_price',$this->time_instalation_price);
 		$criteria->compare('time_programation_price',$this->time_programation_price);
-
+		
+		$criteria->with[]='measurement';
+		$criteria->compare('measurement.description',$this->measurement_description,true);
+		
+		$criteria->with[]='currency';
+		$criteria->compare('currency.short_description',$this->currency_description,true);
+		
+		$criteria->with[]='volts';
+		$criteria->compare('volts.volts',$this->volts_description,true);
+		
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+							'time_instalation_price',
+							'time_programation_price',
+							'measurement_description' => array(
+							        'asc' => 'measurement.description',
+							        'desc' => 'measurement.description DESC',
+							),
+							'currency_description' => array(
+							        'asc' => 'currency.short_description',
+							        'desc' => 'currency.short_description DESC',
+							),
+							'volts_description' => array(
+							        'asc' => 'volts.volts',
+							        'desc' => 'volts.volts DESC',
+							),
+							'*',
+		);
+		
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+									'criteria'=>$criteria,
+									'sort'=>$sort,
 		));
+		
 	}
 }
