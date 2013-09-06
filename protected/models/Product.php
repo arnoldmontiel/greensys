@@ -345,11 +345,16 @@ class Product extends ModelAudit
 												'Id_budget_item'=>null,
 												'Id_purchase_order_item'=>null));		
 	}
+	public function hasWeight()
+	{
+		return ($this->weight > 0)?true:false;
+	}
+	
 	public function getHasWarnings($warning)
 	{		
 		switch ($warning) {
 			case "hasMeasure":
-				return ($this->getVolume()===false);
+				return ($this->getVolume()===false || !$this->hasWeight() );
 				break;
 			case "hasPriceListPurch":
 				$criteria = new CDbCriteria;
@@ -380,7 +385,7 @@ class Product extends ModelAudit
 		switch ($warning) {
 			case "hasMeasure":
 				if ($hasWarning)
-					return Yii::app()->lc->t('Missing Volume.');
+					return Yii::app()->lc->t('Missing Measures.');
 				break;
 			case "hasPriceListPurch":
 				if ($hasWarning)
