@@ -14,6 +14,73 @@ $this->menu=array(
 );
 Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 
+$('#budget-item-generic').find('input.txtQuantityGenericItem').each(
+												function(index, item){
+												
+																$(item).keyup(function(){
+			        												validateNumber($(this));
+																});
+																
+																$(item).change(function(){
+																	var target = $(this);
+																	var total = 0;
+																	var price = $(this).parent().parent().find('input.txtPriceGenericItem').val();
+																	
+																	total = ($(this).val() * price).toFixed(2);
+																	
+																	$.post(
+																		'".PriceListController::createUrl('AjaxUpdateUpdateGenericItem')."',
+																		 {
+																		 	Id: $(this).attr('id'),
+																			quantity:$(this).val(),
+																			price: price
+																		 }).success(
+																			 	function(data) 
+																			 		{ 
+																			 			$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000);
+																						$(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000);
+																						$(target).parent().parent().find('input.txtTotalPriceGenericItem').val(total);
+																						$(target).parent().parent().find('#saveok3').animate({opacity: 'show'},4000);
+ 																						$(target).parent().parent().find('#saveok3').animate({opacity: 'hide'},4000);
+																						
+																					});
+																		
+																});
+});	
+
+$('#budget-item-generic').find('input.txtPriceGenericItem').each(
+												function(index, item){
+												
+																$(item).keyup(function(){
+			        												validateNumber($(this));
+																});
+																
+																$(item).change(function(){
+																	var target = $(this);
+																	var total = 0;
+																	var quantity = $(this).parent().parent().find('input.txtQuantityGenericItem').val();
+																	
+																	total = ($(this).val() * quantity).toFixed(2);
+																	
+																	$.post(
+																		'".PriceListController::createUrl('AjaxUpdateUpdateGenericItem')."',
+																		 {
+																		 	Id: $(this).attr('id'),
+																			quantity: quantity,
+																			price: $(this).val()
+																		 }).success(
+																			 	function(data) 
+																			 		{ 
+																			 			$(target).parent().parent().find('#saveok2').animate({opacity: 'show'},4000);
+																						$(target).parent().parent().find('#saveok2').animate({opacity: 'hide'},4000);
+																						$(target).parent().parent().find('input.txtTotalPriceGenericItem').val(total);
+																						$(target).parent().parent().find('#saveok3').animate({opacity: 'show'},4000);
+ 																						$(target).parent().parent().find('#saveok3').animate({opacity: 'hide'},4000);
+																						
+																					});
+																		
+																});
+});	
 function updateGridViews()
 {
 	$('div.grid-view').each(
@@ -341,28 +408,68 @@ $('.btn-View-Assign').click(function(){
 																});
 																
 																$(item).change(function(){
-																
+																	var target = $(this);
+																	var total = 0;
+																	var price = $(this).parent().parent().find("input.txtPriceGenericItem").val();
+																	
+																	total = ($(this).val() * price).toFixed(2);
+																	
+																	$.post(
+																		"'.PriceListController::createUrl('AjaxUpdateUpdateGenericItem').'",
+																		 {
+																		 	Id: $(this).attr("id"),
+																			quantity:$(this).val(),
+																			price: price
+																		 }).success(
+																			 	function(data) 
+																			 		{ 
+																			 			$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000);
+																						$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000);
+																						$(target).parent().parent().find("input.txtTotalPriceGenericItem").val(total);
+																						$(target).parent().parent().find("#saveok3").animate({opacity: "show"},4000);
+ 																					$(target).parent().parent().find("#saveok3").animate({opacity: "hide"},4000);
+																						
+																					});
 																		
 																});
-													});	
+													});
+									$("#budget-item-generic").find("input.txtPriceGenericItem").each(
+												function(index, item){
+												
+																$(item).keyup(function(){
+			        												validateNumber($(this));
+																});
+																
+																$(item).change(function(){
+																	var target = $(this);
+																	var total = 0;
+																	var quantity = $(this).parent().parent().find("input.txtQuantityGenericItem").val();
+																	
+																	total = ($(this).val() * quantity).toFixed(2);
+																	
+																	$.post(
+																		"'.PriceListController::createUrl('AjaxUpdateUpdateGenericItem').'",
+																		 {
+																		 	Id: $(this).attr("id"),
+																			quantity: quantity,
+																			price: $(this).val()
+																		 }).success(
+																			 	function(data) 
+																			 		{ 
+																			 			$(target).parent().parent().find("#saveok2").animate({opacity: "show"},4000);
+																						$(target).parent().parent().find("#saveok2").animate({opacity: "hide"},4000);
+																						$(target).parent().parent().find("input.txtTotalPriceGenericItem").val(total);
+																						$(target).parent().parent().find("#saveok3").animate({opacity: "show"},4000);
+ 																						$(target).parent().parent().find("#saveok3").animate({opacity: "hide"},4000);
+																						
+																					});
+																		
+																});
+													});		
 										
 					}',
 					'columns'=>array(
-							array(
-									'name'=>'description',
-									'value'=>
-				                                    	'CHtml::textField("txtDescriptionGenericItem",
-																$data->description,
-																array(
-																		"id"=>$data->Id,
-																		"class"=>"txtDescriptionGenericItem",
-																		"style"=>"width:100%;text-align:left;",
-																	)
-															)',
-		
-									'type'=>'raw',
-									'htmlOptions'=>array("style"=>"text-align:right"),
-							),
+							'description',
 							array(
 								'name'=>'quantity',
 								'value'=>
@@ -399,14 +506,34 @@ $('.btn-View-Assign').click(function(){
 									'htmlOptions'=>array("style"=>"text-align:right;"),
 							),
 							array(
-								'value'=>'CHtml::image("images/save_ok2.png","",array("id"=>"saveok", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+								'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok2", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
 								'type'=>'raw',
 								'htmlOptions'=>array('width'=>25),
 							),
 							array(
 									'name'=>'total_price',
 									'value'=>'$data->quantity * $data->price',
+									
+									'name'=>'total_price',
+									'value'=>
+				                                    	'CHtml::textField("txtTotalPriceGenericItem",
+																$data->quantity * $data->price,
+																array(
+																		"id"=>$data->Id,
+																		"class"=>"txtTotalPriceGenericItem",
+																		"disabled"=>"disabled",
+																		"style"=>"width:50px;text-align:right;",
+																	)
+															)',
+
+									'type'=>'raw',
+									'htmlOptions'=>array("style"=>"text-align:right;"),
 								),
+							array(
+									'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok3", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+									'type'=>'raw',
+									'htmlOptions'=>array('width'=>25),
+							),
 							array(
 									'class'=>'CButtonColumn',
 									'template'=>'{delete}',
@@ -445,18 +572,27 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 									//actualizar
 									$.fn.yiiGridView.update("budget-item-generic")
 									jQuery("#CreateNewBudgetItem").dialog( "close" );
+									$("#BudgetItem_description").val("");
+									$("#BudgetItem_quantity").val(1);
+									$("#BudgetItem_price").val(0);
 								}
 							jQuery("#waiting").dialog("close");
 						},"json"
 					);
 
 				}',
-				'Cancelar'=>'js:function(){jQuery("#CreateNewBudgetItem").dialog( "close" );}'),
+				'Cancelar'=>'js:function(){jQuery("#CreateNewBudgetItem").dialog( "close" );
+											$("#BudgetItem_description").val("");
+											$("#BudgetItem_quantity").val(1);
+											$("#BudgetItem_price").val(0);
+											}'),
 ),
 ));
 $modelNewBudgetItem = new BudgetItem();
 $modelNewBudgetItem->Id_budget = $model->Id;
 $modelNewBudgetItem->version_number = $model->version_number;
+$modelNewBudgetItem->price = 0;
+$modelNewBudgetItem->quantity = 1;
 echo $this->renderPartial('_formBudgetItem', array('model'=>$modelNewBudgetItem));
 
 $this->endWidget('zii.widgets.jui.CJuiDialog');
