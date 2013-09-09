@@ -370,6 +370,24 @@ class BudgetController extends Controller
 		));
 	}
 
+	public function actionAjaxUpdateUpdateGenericItem()
+	{
+		$id = isset($_POST['Id'])?$_POST['Id']:null;
+		$quantity = isset($_POST['quantity'])?$_POST['quantity']:0;
+		$price = isset($_POST['price'])?$_POST['price']:0;
+		
+		if(isset($id) && $quantity > 0 && $price > 0)
+		{
+			$modelBudgetItemDB = BudgetItem::model()->findByPk($id);
+			if(isset($modelBudgetItemDB))
+			{
+				$modelBudgetItemDB->quantity = $quantity;
+				$modelBudgetItemDB->price = $price;
+				$modelBudgetItemDB->save();
+			}
+		}
+	}
+	
 	public function actionAjaxCreateBudgetItem()
 	{
 		$modelBudgetItem = new BudgetItem();
