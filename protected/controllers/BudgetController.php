@@ -637,7 +637,38 @@ class BudgetController extends Controller
 		}
 		
 	}
-	
+	public function actionAjaxSaveDiscountType()
+	{
+		if(isset($_POST['Id_budget_item'])&&isset($_POST['discount_type']))
+		{
+			$budgetItem = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
+			if(isset($budgetItem))
+			{
+				$budgetItem->discount_type = $_POST['discount_type'];
+				if($budgetItem->save())
+				{
+					$result['total_price']=$budgetItem->totalPrice;
+					echo json_encode(array_merge($budgetItem->attributes,$result));						
+				}
+			}
+		}
+	}
+	public function actionAjaxSaveDiscountValue()
+	{
+		if(isset($_POST['Id_budget_item'])&&isset($_POST['discount']))
+		{
+			$budgetItem = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
+			if(isset($budgetItem))
+			{
+				$budgetItem->discount= $_POST['discount'];
+				if($budgetItem->save())
+				{
+					$result['total_price']=$budgetItem->totalPrice;
+					echo json_encode(array_merge($budgetItem->attributes,$result));						
+				}
+			}
+		}
+	}
 	public function actionAjaxAddBudgetItem()
 	{
 		$idPriceList = isset($_POST['IdPriceList'])?$_POST['IdPriceList']:'';

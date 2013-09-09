@@ -11,10 +11,41 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$modelBudgetItem->search(),
  	'filter'=>$modelBudgetItem,
 	'summaryText'=>'',
-	'afterAjaxUpdate'=>'function(id, data){
-				$("#budget-item-grid_'.$idArea.'").find(".ddl_id_service").each(
+	'afterAjaxUpdate'=>'function(id, data){	
+				$("#budget-item-grid_'.$idArea.'").find(".ddl_discount_type").each(
 					function(index, item)
 					{
+						$(item).unbind("change");
+						$(item).change(
+							function()
+							{
+								var target = $(this);
+								var idBudgetItem = $(this).attr("id");
+								var discount_type = $(this).val();
+								$.post(
+										"'.BudgetController::createUrl('AjaxSaveDiscountType').'",
+										{
+											Id_budget_item: idBudgetItem,discount_type:discount_type
+										}
+										).success(function(data)
+										{
+											var response = jQuery.parseJSON(data);
+											$(target).parent().parent().find("input.txtTotalPrice").val(response.total_price);
+											//alert("success");				
+									}).error(function(data)
+										{
+											//alert("error");				
+									},"json");	
+							}
+						);
+					}
+		
+				);
+		
+			$("#budget-item-grid_'.$idArea.'").find(".ddl_id_service").each(
+					function(index, item)
+					{
+						$(item).unbind("change");
 						$(item).change(
 							function()
 							{
@@ -40,6 +71,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		
  				$("#budget-item-grid_'.$idArea.'").find(".link-popup").each(
 												function(index, item){
+													$(item).unbind("click");		
 													$(item).click(function(){
 															
 														var idArea = $(this).attr("idArea");
@@ -70,6 +102,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				$("#budget-item-grid_'.$idArea.'").find(".btn-Assign-From-Stock").each(
 												function(index, item){
 												
+													$(item).unbind("click");		
 													$(item).click(function(){
 														if(!confirm("Are you sure you want to assign from stock?")) 
 														{			
@@ -98,7 +131,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				$("#budget-item-grid_'.$idArea.'").find(".btn-View-Assign").each(
 												function(index, item){
 												
-													$(item).click(function(){
+														$(item).unbind("click");		
+														$(item).click(function(){
 														var idProduct = $(this).attr("idProduct");
 														var idBudgetItem = $(this).attr("idBudgetItem");
 														var idArea = $(this).attr("idArea");
@@ -169,13 +203,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					'name'=>'children_count',
 					'value'=>'CHtml::link(($data->childrenCount > 0)?$data->childrenCount:"","#",array("id"=>$data->Id, "idArea"=>$data->Id_area, "idProduct"=>$data->Id_product, "class"=>"link-popup"))',
 					'type'=>'raw',
-						'htmlOptions'=>array('width'=>5),
 				),
 				array(
 					'name'=>'children_included',
 					'value'=>'($data->childrenCount > 0)?$data->childrenIncluded:""',
 					'type'=>'html',
-						'htmlOptions'=>array("style"=>"width:20px"),
 				),
 				array(
 					
@@ -250,12 +282,22 @@ $this->widget('zii.widgets.grid.CGridView', array(
 						'type'=>($canEdit)?'raw':'html',
 						'htmlOptions'=>array('style'=>"width:20px"),
 				),
-				
 				array(
- 					'name'=>'price',
-				    'value'=>'$data->totalPrice',
-					'type'=>'raw',
-			        'htmlOptions'=>array('style'=>'text-align: right;'),
+						'name'=>'total_price',
+						'value'=>
+						'CHtml::textField("txtTotalPrice",
+														$data->totalPrice,
+														array(
+																"id"=>$data->Id,
+																"class"=>"txtTotalPrice",
+																"disabled"=>"disbled",
+																"style"=>"width:50px;text-align:right;",
+															)
+													)',
+				
+						'type'=>'raw',
+				
+						'htmlOptions'=>array('width'=>5),
 				),
 				array(
 						'value'=>

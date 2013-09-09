@@ -142,7 +142,60 @@ $('.ddl_id_service').change(
 					});	
 			}
 		);
-		
+
+$('.ddl_discount_type').unbind('change');
+$('.ddl_discount_type').change(
+			function()
+			{
+						var target = $(this);
+						var idBudgetItem = $(this).attr('id');
+						var discount_type = $(this).val();
+						$.post(
+						'".BudgetController::createUrl('AjaxSaveDiscountType')."',
+						{
+							Id_budget_item: idBudgetItem,discount_type:discount_type
+						}
+						).success(function(data)
+						{
+							var response = jQuery.parseJSON(data);
+							$(target).parent().parent().find('input.txtTotalPrice').val(response.total_price);
+								//alert('success');				
+					}).error(function(data)
+						{
+							//alert('error');				
+					});	
+			}
+		);
+$('.txtDiscount').unbind('keyup');
+$('.txtDiscount').keyup(function(){
+	validateNumber($(this));
+});
+								
+$('.txtDiscount').unbind('change');
+$('.txtDiscount').change(
+			function()
+			{
+						validateNumber($(this));
+						var target = $(this);
+						var idBudgetItem = $(this).attr('id');
+						var discount = $(this).val();
+						$.post(
+						'".BudgetController::createUrl('AjaxSaveDiscountValue')."',
+						{
+							Id_budget_item: idBudgetItem,discount:discount
+						}
+						).success(function(data)
+						{
+							var response = jQuery.parseJSON(data);
+							$(target).parent().parent().find('input.txtTotalPrice').val(response.total_price);
+								//alert('success');				
+					}).error(function(data)
+						{
+							//alert('error');				
+					});	
+			}
+		);
+								
 $('.link-popup').click(function(){
 	var idArea = $(this).attr('idArea');
 	var idBudgetItem = $(this).attr('id');
