@@ -11,6 +11,5 @@ $this->breadcrumbs=array(
 <?php echo $this->renderPartial('_form', array('modelCustomer'=>$modelCustomer,
 	'modelContact'=>$modelContact,
 	'modelPerson'=>$modelPerson,
-	'modelUser'=>$modelUser,
 	'modelHyperlink'=>$modelHyperlink
 )); ?>
