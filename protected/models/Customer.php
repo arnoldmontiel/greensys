@@ -28,16 +28,40 @@ class Customer extends ModelAudit
 	{
 		parent::afterSave();
 		$tcustomer = TCustomer::model()->findByPk($this->Id);
+		
+		$isNewCustomer = false;
+		
 		if(!isset($tcustomer))
 		{
 			$tcustomer = new TCustomer();
+			$isNewCustomer = true;
 		}
 		$tcustomer->Id = $this->Id;
 		$tcustomer->Id_contact = $this->Id_contact;
 		$tcustomer->Id_person= $this->Id_person;
 		$tcustomer->Id_user_group = $this->Id_user_group;
 		$tcustomer->username = $this->username;
+		
+		$isOnlyGreenCustomer = false;
+		
+		if(!isset($this->username))
+		{
+			$tcustomer->Id_customer_type = 1;
+			$isOnlyGreenCustomer = true;
+		}
+		else
+			$tcustomer->Id_customer_type = 3;
+		
 		$tcustomer->save();
+		
+		if($isNewCustomer && $isOnlyGreenCustomer)
+		{
+			$modelProject = new Project();
+			$modelProject->Id_customer = $this->Id;
+			$modelProject->description = 'XX';
+			$modelProject->save();
+		}
+		
 	}
 	protected function afterDelete()
 	{
