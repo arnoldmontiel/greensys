@@ -1104,8 +1104,14 @@ if($model->is_open)
 
 <div class="wall-action-area" id="wall-action-area">
 <div id="customer" class="review-action-back" >
-	<?php echo CHtml::link($model->customer->contact->description.' - '.$model->project->description,
-		ReviewController::createUrl('index',array('Id_customer'=>$model->Id_customer,'Id_project'=>$model->Id_project)),
+	<?php
+		$pageAction = 'index';
+		$tCustomer = TCustomer::model()->findByPk($model->Id_customer);
+		if(isset($tCustomer) && !isset($tCustomer->username))
+			$pageAction = 'dashboardClient';
+		
+		echo CHtml::link($model->customer->contact->description.' - '.$model->project->description,
+		ReviewController::createUrl($pageAction,array('Id_customer'=>$model->Id_customer,'Id_project'=>$model->Id_project)),
 		array('class'=>'index-review-single-link')
 		);
 	 ?>
