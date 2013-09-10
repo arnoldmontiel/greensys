@@ -41,6 +41,10 @@ Yii::app()->clientScript->registerScript('admin-measures-import', "
 				'name'=>'unit_linear_description',
 				'value'=>'isset($data->measurementUnitLinear)?$data->measurementUnitLinear->short_description:""',
 			),
+			array(
+				'name'=>'brand_description',
+				'value'=>'isset($data->brand->description)?$data->brand->description:""',
+			),
 			'not_found_model',
 			'creation_date',
 	),
