@@ -663,6 +663,64 @@ class ReviewController extends Controller
 		);
 	}
 
+	public function actionDashboardClient()
+	{
+		$modelMultimedia = new TMultimedia;
+		$modelNote = new Note;
+	
+		$Id_customer = -1;
+		$Id_project = -1;
+		if(isset($_GET['Id_customer']))
+		{
+			$Id_customer =$_GET['Id_customer'];
+		}
+		if(isset($_GET['Id_project']))
+		{
+			$Id_project =$_GET['Id_project'];
+		}
+	
+		$this->showFilter = true;
+	
+		if($Id_customer==-1)
+		{
+			$this->showFilter = false;
+		}
+	
+		$hasAlbum = Album::model()->countByAttributes(array('Id_customer'=>$Id_customer,'Id_project'=>$Id_project,
+							'Id_user_group_owner'=>User::getCurrentUserGroup()->Id )) > 0;		
+	
+		$criteria=new CDbCriteria;
+		$criteria->addCondition('Id_document_type is null');
+		$criteria->addCondition('Id_user_group = '. User::getCurrentUserGroup()->Id);
+		$criteria->addCondition('Id_customer = '. $Id_customer);
+		$criteria->addCondition('Id_project = '. $Id_project);
+		$criteria->addCondition('Id_multimedia_type > 1 ');
+	
+		$hasDocs = count(TMultimedia::model()->findAll($criteria)) > 0;
+	
+		$hasTechDocs = false;
+		if (User::useTechnicalDocs())
+		{
+			$criteria=new CDbCriteria;
+			$criteria->addCondition('Id_document_type is not null');
+			$criteria->addCondition('Id_customer = '. $Id_customer);
+			$criteria->addCondition('Id_project = '. $Id_project);
+				
+			$hasTechDocs = count(TMultimedia::model()->findAll($criteria)) > 0;
+		}
+	
+		$this->render('dashboardClient',
+		array('modelMultimedia'=>$modelMultimedia,
+						'modelNote'=>$modelNote,
+						'Id_customer'=>$Id_customer,
+						'Id_project'=>$Id_project,
+						'hasAlbum'=>$hasAlbum,
+						'hasDocs'=>$hasDocs,
+						'hasTechDocs'=>$hasTechDocs,
+		)
+		);
+	}
+	
 	public function actionCrossView()
 	{	
 	
@@ -859,6 +917,60 @@ class ReviewController extends Controller
 		
 	}
 	
+	private function fillClientDashboard($Id_customer,$Id_project, $arrFilters,$collapsed)
+	{
+		$review = new Review;
+		if($Id_customer > 0)
+		{
+			$review->Id_customer = $Id_customer;
+			$review->Id_project = $Id_project;
+			
+			$dataProvider = $review->searchSummary($arrFilters);
+				
+			$dataProvider->pagination->pageSize= 60;
+				
+			$data = $dataProvider->getData();
+		
+			foreach ($data as $item){
+				$this->renderPartial('_view',array('data'=>$item,'width'=>'95%'));
+			}
+		}
+		else
+		{
+			$criteria=new CDbCriteria;
+			$criteria->select = 't.*, max(n.change_date) as max_date';
+			$criteria->join = 'INNER JOIN tapia.customer c on (c.Id = t.Id_customer)
+							LEFT OUTER JOIN tapia.note n ON ( n.Id_project = t.Id)
+			';
+			$criteria->addCondition('c.username is null');
+			
+			$criteria->group = 't.Id';
+			$criteria->order = 'max_date DESC';
+			
+			$projects = Project::model()->findAll($criteria);
+			foreach ($projects as $project){
+				$review->Id_customer = $project->customer->Id;
+				$review->Id_project = $project->Id;
+	
+				$dataProvider = $review->searchQuickDashboardClient($arrFilters);
+	
+				$dataProvider->pagination->pageSize= 4;
+	
+				$data = $dataProvider->getData();
+				
+				$isCollapsed = array_search($project->Id, $collapsed);
+				if($count>2)
+					if(empty($collapsed))
+						$isCollapsed = true;
+				
+				$this->renderPartial('_quickView',array('data'=>$data, 'customer'=>$project->customer,'project'=>$project,'collapsed'=>$isCollapsed));
+				
+				$count++;
+	
+			}
+		}
+	}
+	
 	private function fillIndex($Id_customer,$Id_project, $arrFilters,$collapsed)
 	{
 		
@@ -1005,6 +1117,23 @@ class ReviewController extends Controller
 			if(isset($_POST['collapsed'])) $collapsed =$_POST['collapsed'];
 			$this->fillIndex($_POST['Id_customer'],$_POST['Id_project'], $arrFilters,$collapsed);
 		}		
+	}
+	
+	public function actionAjaxFillClientDashboard()
+	{
+		if(isset($_POST['Id_customer']))
+		{
+			$arrFilters = array('tagFilter'=>$_POST['tagFilter'],
+								 'isCloseFilter'=>$_POST['isCloseFilter'],
+								 'typeFilter'=>$_POST['typeFilter'],
+								 'reviewTypeFilter'=>$_POST['reviewTypeFilter'],
+								 'dateFromFilter'=>$_POST['dateFromFilter'],
+								 'dateToFilter'=>$_POST['dateToFilter'],
+								 'customerNameFilter'=>$_POST['customerNameFilter']);
+			$collapsed = array();
+			if(isset($_POST['collapsed'])) $collapsed =$_POST['collapsed'];
+			$this->fillClientDashboard($_POST['Id_customer'],$_POST['Id_project'], $arrFilters,$collapsed);
+		}
 	}
 	
 	public function actionAjaxFillCrossView()

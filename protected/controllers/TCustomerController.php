@@ -553,6 +553,18 @@ class TCustomerController extends Controller
 		));
 	}
 	
+	public function actionAdminInitCustomer()
+	{
+		$model=new TCustomer('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['TCustomer']))
+			$model->attributes=$_GET['TCustomer'];
+	
+		$this->render('adminInitCustomer',array(
+				'model'=>$model,
+		));
+	}
+	
 	public function actionAjaxSelect()
 	{
 		$model=new TCustomer('search');
