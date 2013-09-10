@@ -35,8 +35,12 @@
 
 		$items[] = array('label'=>'General', 'url'=>Yii::app()->createUrl('review/crossView'),'active'=>$this->uniqueid=='review' && $this->action->id == 'crossView');
 		
+		if(Yii::app()->user->checkAccess('InitCustomerIndex')){
+			$items[] = array('label'=>'Dashboard Contactos', 'url'=>Yii::app()->createUrl('review/dashboardClient'),'active'=>$this->uniqueid=='review' && $this->action->id == 'dashboardClient');
+			$items[] = array('label'=>'Contacto Inicial', 'url'=>Yii::app()->createUrl('initCustomer/admin'),'active'=>$this->uniqueid=='initCustomer');
+		}
 		if(Yii::app()->user->checkAccess('CustomerIndex'))			
-			$items[] = array('label'=>'Clientes', 'url'=>Yii::app()->createUrl('tCustomer/index'),'active'=>$this->uniqueid=='tCustomer');
+			$items[] = array('label'=>'Clientes', 'url'=>Yii::app()->createUrl('tCustomer/index'),'active'=>$this->uniqueid=='tCustomer');		
 		if(Yii::app()->user->checkAccess('TagIndex'))
 			$items[] = array('label'=>'Etapas', 'url'=>Yii::app()->createUrl('tag/index'),'active'=>$this->uniqueid=='tag');
 		if(Yii::app()->user->checkAccess('ReviewTypeIndex'))
