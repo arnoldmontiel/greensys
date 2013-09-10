@@ -948,6 +948,7 @@ class ReviewController extends Controller
 			$criteria->order = 'max_date DESC';
 			
 			$projects = Project::model()->findAll($criteria);
+			$count = 0;
 			foreach ($projects as $project){
 				$review->Id_customer = $project->customer->Id;
 				$review->Id_project = $project->Id;
