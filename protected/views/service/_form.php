@@ -17,7 +17,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'long_description'); ?>
-		<?php echo $form->textArea($model,'long_description'); ?>
+		<?php echo $form->textArea($model,'long_description',array("style"=>"height: 260px; width: 500px;")); ?>
 		<?php echo $form->error($model,'long_description'); ?>
 	</div>
 	
