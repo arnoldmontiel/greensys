@@ -321,7 +321,45 @@ class ProjectController extends Controller
 	{
 		$this->redirect(array('customer/createNew','modelCaller'=>get_class(Project::model())));
 	}
-		
+	
+	public function actionAjaxGetLongDescription()
+	{
+		if(isset($_POST['Id_service'])&&isset($_POST['Id_project']) )
+		{
+			$model = ProjectService::model()->findByPk(array('Id_service'=>$_POST['Id_service'],'Id_project'=>$_POST['Id_project']));
+			if(isset($model))
+			{
+				echo json_encode($model->attributes);
+			}
+			else
+			{
+				$modelService = Service::model()->findByPk($_POST['Id_service']);
+				echo json_encode($modelService->attributes);				
+			}
+		}
+	}
+	public function actionAjaxSaveServiceLongDescription()
+	{
+		if(isset($_POST['Id_service'])&&isset($_POST['Id_project'])&&isset($_POST['long_description']) )
+		{
+			$model = ProjectService::model()->findByPk(array('Id_service'=>$_POST['Id_service'],'Id_project'=>$_POST['Id_project']));
+			if(isset($model))
+			{
+				$model->long_description = $_POST['long_description'];
+				$model->save();
+				echo json_encode($model->attributes);
+			}
+			else
+			{
+				$model = new ProjectService();
+				$model->Id_project = $_POST['Id_project'];
+				$model->Id_service = $_POST['Id_service'];
+				$model->long_description = $_POST['long_description'];
+				$model->save();
+				echo json_encode($model->attributes);				
+			}
+		}
+	}
 	public function actionAjaxUpdateAreaDescription()
 	{
 		if(isset($_POST['AreaProject']) )

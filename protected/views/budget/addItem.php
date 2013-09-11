@@ -12,6 +12,11 @@ $this->menu=array(
 	array('label'=>'Delete Budget', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id, 'version'=>$model->version_number),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Budget', 'url'=>array('admin')),
 );
+$this->widget('ext.processingDialog.processingDialog', array(
+		'buttons'=>array('none'),
+		'idDialog'=>'waiting',
+));
+
 Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 
 $('#budget-item-generic').find('input.txtQuantityGenericItem').each(
@@ -370,6 +375,46 @@ $('.btn-View-Assign').click(function(){
 <div id="display">
 
 <?php
+
+echo CHtml::link('Servicios',
+		'#',
+		array(	
+				
+				'id'=>'services',
+				'onclick'=>'
+				$("#editServices").dialog( "open" );
+				return false;
+			'
+		)
+);
+//Edit description
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+		'id'=>'editServices',
+		// additional javascript options for the dialog plugin
+		'options'=>array(
+				'title'=>'Editar servicios',
+				'autoOpen'=>false,
+				'modal'=>true,
+				'width'=> '550',
+				'buttons'=>	array(
+						'Close'=>'js:function()
+									{
+									jQuery("#editServices").dialog( "close" );
+
+						}',
+						),
+		),
+));
+$modelProjectService = new ProjectService();
+$modelProjectService->Id_project = $model->Id_project;
+ 
+echo $this->renderPartial('_formServiceProject', array('model'=>$modelProjectService));
+	
+$this->endWidget('zii.widgets.jui.CJuiDialog');
+
+echo '</br>';
+echo '</br>';
+
 	foreach($areaProjects as $item)
 	{ 
 	?>

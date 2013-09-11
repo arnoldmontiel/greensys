@@ -52,9 +52,9 @@ class ProjectService extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'Id_project' => 'Id Project',
-			'Id_service' => 'Id Service',
-			'long_description' => 'Long Description',
+			'Id_project' => 'Project',
+			'Id_service' => 'Service',
+			'long_description' => 'Description',
 		);
 	}
 

@@ -39,9 +39,10 @@ class Service extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('description', 'length', 'max'=>100),
-			// The following rule is used by search().
+			array('long_description', 'safe'),
+				// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description', 'safe', 'on'=>'search'),
+			array('Id, description, long_description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,6 +67,7 @@ class Service extends CActiveRecord
 		return array(
 			'Id' => 'ID',
 			'description' => 'Description',
+			'long_description' => 'Long description',
 		);
 	}
 
