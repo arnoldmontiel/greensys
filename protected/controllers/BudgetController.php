@@ -228,6 +228,10 @@ class BudgetController extends Controller
 	}
 	public function actionExportToExcel()
 	{
+		
+		$idBudget = 1;
+		$versionNumber = 1;
+		
 		Yii::import('ext.phpexcel.XPHPExcel');
 		$objPHPExcel= XPHPExcel::createPHPExcel();
 		$objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
@@ -236,21 +240,111 @@ class BudgetController extends Controller
 		->setSubject("Office 2007 XLSX Test Document")
 		->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
 		->setKeywords("office 2007 openxml php")
-		->setCategory("Test result file");
+		->setCategory("Test result file");		
+		
+		//INDICES EXCEL
+		$indexService = array('name'=>'A', 'description'=>'B');
+		$indexProduct = array('model'=>'A','description'=>'B','image'=>'C',
+								'quantity'=>'D','price'=>'E');
+		$indexExtra	  = array('descriptionStart'=>'A', 'descriptionEnd'=>'C', 'quantity'=>'D', 'price'=>'E');
+		
+		//sheet 0
+		$sheet = $objPHPExcel->setActiveSheetIndex(0);
+		$row = 1;
+		
+		$criteria = new CDbCriteria();
+		$criteria->addCondition('Id_budget = '.$idBudget);
+		$criteria->addCondition('version_number = '.$versionNumber);
+		$criteria->group = 'Id_service';
+		$budgetItemServices = BudgetItem::model()->findAll($criteria);
 		
 		
-		// Add some data
-		$objPHPExcel->setActiveSheetIndex(0)
-		->setCellValue('A1', 'Pablito')
-		->setCellValue('B2', 'world!')
-		->setCellValue('C1', 'Hello')
-		->setCellValue('D2', 'world!');
+		foreach($budgetItemServices as $budgetItemService)
+		{
+			$serviceName = (isset($budgetItemService->service))?$budgetItemService->service->description:"General";
+			$serviceDesc = (isset($budgetItemService->service))?$budgetItemService->service->long_description:"";
+			$sheet->setCellValue($indexService['name'].$row, $serviceName);
+			$sheet->setCellValue($indexService['description'].$row, $serviceDesc);
+			
+			$row++;
+			
+			//HEADER
+			$sheet->setCellValue($indexProduct['model'].$row, 'Modelo');
+			$sheet->setCellValue($indexProduct['description'].$row, 'Descripcion');
+			$sheet->setCellValue($indexProduct['image'].$row, 'Imagen');
+			$sheet->setCellValue($indexProduct['quantity'].$row, 'Cantidad');
+			$sheet->setCellValue($indexProduct['price'].$row, 'Precio');
+			
+			$objPHPExcel->getActiveSheet()->getStyle('A'.$row.':E'.$row)->getFill()
+			->applyFromArray(array('type' => PHPExcel_Style_Fill::FILL_SOLID,
+					        'startcolor' => array('rgb' => '2c86ff')
+			));
+			
+			$criteria = new CDbCriteria();
+			$criteria->addCondition('Id_budget = '.$idBudget);
+			$criteria->addCondition('version_number = '.$versionNumber);
+			$criteria->addCondition('Id_service '.(isset($budgetItemService->Id_service)?" = ".$budgetItemService->Id_service:" is null"));
+			$criteria->addCondition('Id_product is not null');
+			
+			$budgetItems = BudgetItem::model()->findAll($criteria);
+			$row++;
+			foreach($budgetItems as $budgetItem)
+			{
+				$sheet->setCellValue($indexProduct['model'].$row, $budgetItem->product->model);
+				$sheet->setCellValue($indexProduct['description'].$row, $budgetItem->product->short_description);
+				//$sheet->setCellValue($indexProduct['image'].$row, 'Imagen');
+				$sheet->setCellValue($indexProduct['quantity'].$row, $budgetItem->quantity);
+				$sheet->setCellValue($indexProduct['price'].$row, $budgetItem->price);
+				$row++;
+			}
+			
+			$row++;
+		}
+	
+		//Extras
+		$criteria = new CDbCriteria();
+		$criteria->addCondition('Id_budget = '.$idBudget);
+		$criteria->addCondition('version_number = '.$versionNumber);
+		$criteria->addCondition('Id_service is null');
+		$criteria->addCondition('Id_product is null');
+			
+		$budgetItems = BudgetItem::model()->findAll($criteria);
 		
-		// Miscellaneous glyphs, UTF-8
-		$objPHPExcel->setActiveSheetIndex(0)
-		->setCellValue('A4', 'Miscellaneous glyphs')
-		->setCellValue('A5', 'Ã©Ã Ã¨Ã¹Ã¢ÃªÃ®Ã´Ã»Ã«Ã¯Ã¼Ã¿Ã¤Ã¶Ã¼Ã§');
+		if(count($budgetItems)>0)
+		{
+			$row++;
+			$sheet->setCellValue($indexExtra['descriptionStart'].$row, 'Extras');
+
+			$row++;
+				
+			//HEADER			
+			$sheet->setCellValue($indexExtra['descriptionStart'].$row, 'Descripcion');
+			$sheet->setCellValue($indexExtra['quantity'].$row, 'Cantidad');
+			$sheet->setCellValue($indexExtra['price'].$row, 'Precio');
+			$sheet->mergeCells($indexExtra['descriptionStart'].$row.':'.$indexExtra['descriptionEnd'].$row);
+			
+			$objPHPExcel->getActiveSheet()->getStyle('A'.$row.':E'.$row)->getFill()
+			->applyFromArray(array('type' => PHPExcel_Style_Fill::FILL_SOLID,
+								        'startcolor' => array('rgb' => '2c86ff')
+			));
+			
+			$row++;
+			foreach($budgetItems as $budgetItem)
+			{
+				$sheet->mergeCells($indexExtra['descriptionStart'].$row.':'.$indexExtra['descriptionEnd'].$row);
+				$sheet->setCellValue($indexExtra['descriptionStart'].$row, $budgetItem->description);
+				$sheet->setCellValue($indexExtra['quantity'].$row, $budgetItem->quantity);
+				$sheet->setCellValue($indexExtra['price'].$row, $budgetItem->price);
+				$row++;
+			}			
+		}
 		
+		//set column auto-size
+		foreach(range('A','E') as $columnID) {
+			$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+			->setAutoSize(true);
+		}
+			
 		// Rename worksheet
 		$objPHPExcel->getActiveSheet()->setTitle('Simple');
 		
@@ -258,14 +352,14 @@ class BudgetController extends Controller
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$objPHPExcel->setActiveSheetIndex(0);
 
-		$objDrawingPType = new PHPExcel_Worksheet_Drawing();
-		$objDrawingPType->setWorksheet($objPHPExcel->setActiveSheetIndex(0));
-		$objDrawingPType->setName("Pareto By Type");
-		$objDrawingPType->setPath(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/519538c3763c2.jpg");
-		$objDrawingPType->setCoordinates('C5');
-		$objDrawingPType->setOffsetX(0);
-		$objDrawingPType->setOffsetY(0);
-		$objDrawingPType->setWidth(200);
+// 		$objDrawingPType = new PHPExcel_Worksheet_Drawing();
+// 		$objDrawingPType->setWorksheet($objPHPExcel->setActiveSheetIndex(0));
+// 		$objDrawingPType->setName("Pareto By Type");
+// 		//$objDrawingPType->setPath(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/519538c3763c2.jpg");
+// 		$objDrawingPType->setCoordinates('C5');
+// 		$objDrawingPType->setOffsetX(0);
+// 		$objDrawingPType->setOffsetY(0);
+// 		$objDrawingPType->setWidth(200);
 		
 		// Redirect output to a client web browser (Excel5)
 		header('Content-Type: application/vnd.ms-excel');
