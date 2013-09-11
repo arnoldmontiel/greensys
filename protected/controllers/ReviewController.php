@@ -601,7 +601,12 @@ class ReviewController extends Controller
 		$idCustomer = $model->Id_customer;
 		$idProject = $model->Id_project;
 		
-		$this->redirect(array('index','Id_customer'=>$idCustomer,'Id_project'=>$idProject));
+		$pageAction = 'index';
+		$tCustomer = TCustomer::model()->findByPk($model->Id_customer);
+		if(isset($tCustomer) && !isset($tCustomer->username))
+			$pageAction = 'dashboardClient';
+		
+		$this->redirect(array($pageAction,'Id_customer'=>$idCustomer,'Id_project'=>$idProject));
 		
 	}
 	private function canDelete($model)
