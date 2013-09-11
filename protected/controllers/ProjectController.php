@@ -321,7 +321,20 @@ class ProjectController extends Controller
 	{
 		$this->redirect(array('customer/createNew','modelCaller'=>get_class(Project::model())));
 	}
-	
+		
+	public function actionAjaxUpdateAreaDescription()
+	{
+		if(isset($_POST['AreaProject']) )
+		{
+			$model = AreaProject::model()->findByPk(array('Id_area'=>$_POST['AreaProject']['Id_area'],'Id_project'=>$_POST['AreaProject']['Id_project'],'Id'=>$_POST['AreaProject']['Id']));
+			if(isset($model))
+			{
+				$model->description = $_POST['AreaProject']['description'];
+				$model->save();
+				echo json_encode($model->attributes);
+			}
+		}
+	}
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated

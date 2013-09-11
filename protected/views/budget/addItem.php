@@ -401,8 +401,57 @@ $('.btn-View-Assign').click(function(){
 									return false;
 								'
 								)
-							)
-				?><div style="float: right;margin-right:400px">
+							);
+							echo " - ";
+							
+							echo CHtml::link($item->description!=""?$item->description:"Editar",
+									'#',
+									array(	'description'=>$item->description,
+											'id'=>'edit-description-'.$item->Id,
+											'onclick'=>'
+							jQuery("#editAreaDescription'.$item->Id.'").dialog( "open" );
+														return false;
+													'
+									)
+							);
+
+							//Edit description
+							$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+									'id'=>'editAreaDescription'.$item->Id,
+									// additional javascript options for the dialog plugin
+									'options'=>array(
+											'title'=>'Editar descripción',
+											'autoOpen'=>false,
+											'modal'=>true,
+											'width'=> '550',
+											'buttons'=>	array(
+													'Grabar'=>'js:function()
+														{
+														jQuery("#waiting").dialog("open");
+														jQuery.post("'.Yii::app()->createUrl("project/ajaxUpdateAreaDescription").'", $("#project-area-form-'.$item->Id.'").serialize(),
+														function(data) {
+															if(data!=null)
+															{
+																//actualizar
+																jQuery("#editAreaDescription'.$item->Id.'").dialog( "close" );
+																$("#edit-description-'.$item->Id.'").html(data.description);
+															}
+														jQuery("#waiting").dialog("close");
+													},"json"
+												);
+							
+											}',
+													'Cancelar'=>'js:function(){jQuery("#editAreaDescription'.$item->Id.'").dialog( "close" );
+																		}'),
+									),
+							));
+							echo $this->renderPartial('_formAreaProject', array('model'=>$item));
+							
+							$this->endWidget('zii.widgets.jui.CJuiDialog');
+
+
+				?>
+				<div style="float: right;margin-right:400px">
 				<?php 
 					echo CHtml::link('+ Products',
 						'#',
