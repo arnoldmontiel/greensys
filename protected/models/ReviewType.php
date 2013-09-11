@@ -93,10 +93,11 @@ class ReviewType extends TapiaActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('Id',$this->Id);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('long_description',$this->long_description,true);
 		$criteria->compare('has_tag_tracking',$this->has_tag_tracking);
+		
+		$criteria->addCondition('t.Id <> 10'); //para que no traiga el formulario para Clientes Iniciales
 		$sort=new CSort;
 		$sort->defaultOrder ="description ASC";
 		return new CActiveDataProvider($this, array(

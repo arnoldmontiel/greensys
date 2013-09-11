@@ -105,17 +105,6 @@ class ReviewController extends Controller
 // 				array('Id_user_group'=>User::getCurrentUserGroup()->Id,
 // 						'can_create'=>1));
 		
-		if($dllReviewTypeUserGroup)
-		{
-			foreach($dllReviewTypeUserGroup as $itemReviewType)
-			{
-				$item['Id'] = $itemReviewType->Id_review_type;
-				$item['description'] = $itemReviewType->reviewType->description;
-				$item['long_description'] = $itemReviewType->reviewType->long_description;
-				$modelReviewType[$itemReviewType->Id_review_type] = $item;
-			}
-		}
-		
 		if(isset($_GET['Id_project']))
 		{
 			$model->Id_project=$_GET['Id_project'];
@@ -123,6 +112,32 @@ class ReviewController extends Controller
 			$modelCustomer = TCustomer::model()->findByPk($modelProject->Id_customer);
 			$model->Id_customer=$modelCustomer->Id;
 		}
+		
+		if($dllReviewTypeUserGroup)
+		{
+			foreach($dllReviewTypeUserGroup as $itemReviewType)
+			{
+				$item['Id'] = $itemReviewType->Id_review_type;
+				$item['description'] = $itemReviewType->reviewType->description;
+				$item['long_description'] = $itemReviewType->reviewType->long_description;
+				
+				if($item['Id'] == 10)
+				{
+					$tCustomer = TCustomer::model()->findByPk($model->Id_customer);
+					if(isset($tCustomer) && !isset($tCustomer->username))
+					{
+						$modelReviewType = array();
+						$modelReviewType[$itemReviewType->Id_review_type] = $item;
+						break;
+					}
+				}
+				else 
+				{					
+					$modelReviewType[$itemReviewType->Id_review_type] = $item;
+				}
+			}
+		}
+				
 		if(isset($_POST['Review']))
 		{
 			$model = $this->loadModel($_POST['Review']['Id']);
@@ -195,6 +210,7 @@ class ReviewController extends Controller
 				}
 			}				
 		}
+		
 		$model->setScenario('creation');
 		$modelNote->setScenario('reviewCreation');
 		
