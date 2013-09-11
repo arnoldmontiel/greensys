@@ -33,7 +33,8 @@ $('.search-form form').submit(function(){
 	'filter'=>$model,
 	'columns'=>array(
 		'description',
-		array(
+		'long_description',
+			array(
 			'class'=>'CButtonColumn',
 		),
 	),

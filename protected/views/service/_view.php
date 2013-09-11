@@ -4,5 +4,8 @@
 	<?php echo CHtml::link(CHtml::encode($data->description), array('view', 'id'=>$data->Id)); ?>
 	<br />
 
-
+	<b><?php echo CHtml::encode($data->getAttributeLabel('long_description')); ?>:</b>
+	<?php echo CHtml::encode($data->long_description); ?>
+	<br />
+		
 </div>
