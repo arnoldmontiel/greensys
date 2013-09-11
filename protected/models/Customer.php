@@ -58,7 +58,7 @@ class Customer extends ModelAudit
 		{
 			$modelProject = new Project();
 			$modelProject->Id_customer = $this->Id;
-			$modelProject->description = 'XX';
+			$modelProject->description = 'Contacto Inicial';
 			$modelProject->save();
 		}
 		

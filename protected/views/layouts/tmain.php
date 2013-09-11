@@ -36,7 +36,7 @@
 		$items[] = array('label'=>'General', 'url'=>Yii::app()->createUrl('review/crossView'),'active'=>$this->uniqueid=='review' && $this->action->id == 'crossView');
 		
 		if(Yii::app()->user->checkAccess('InitCustomerIndex')){
-			$items[] = array('label'=>'Dashboard Contactos', 'url'=>Yii::app()->createUrl('review/dashboardClient'),'active'=>$this->uniqueid=='review' && $this->action->id == 'dashboardClient');
+			$items[] = array('label'=>'Contactos', 'url'=>Yii::app()->createUrl('review/dashboardClient'),'active'=>$this->uniqueid=='review' && $this->action->id == 'dashboardClient');
 			$items[] = array('label'=>'Contacto Inicial', 'url'=>Yii::app()->createUrl('initCustomer/admin'),'active'=>$this->uniqueid=='initCustomer');
 		}
 		if(Yii::app()->user->checkAccess('CustomerIndex'))			
