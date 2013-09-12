@@ -237,26 +237,44 @@ class BudgetItem extends ModelAudit
 	}
 	
 	public function getTotalPrice()
-	{	if($this->discount_type ==0)
+	{
+		return number_format($this->getTotalPriceNotFormated(), 2);
+	}
+	public function getTotalPriceNotFormated()
+	{
+		if($this->discount_type ==0)
 		{
-			$discount = (($this->getChildrenTotalPrice() + $this->price)*$this->quantity )* $this->discount/100;				
+			$discount = (($this->getChildrenTotalPrice() + $this->price)*$this->quantity )* $this->discount/100;
 		}
 		else
 		{
-			$discount = $this->discount;				
+			$discount = $this->discount;
 		}
-		return number_format((($this->getChildrenTotalPrice() + $this->price)*$this->quantity) - $discount , 2);
+		return (($this->getChildrenTotalPrice() + $this->price)*$this->quantity) - $discount;
 	}
-	public function getTotalPriceNotFormated()
-	{	if($this->discount_type ==0)
+	public function getTotalDiscount()
 	{
-		$discount = (($this->getChildrenTotalPrice() + $this->price)*$this->quantity )* $this->discount/100;
+		if($this->discount_type ==0)
+		{
+			$discount = (($this->getChildrenTotalPrice() + $this->price)*$this->quantity )* $this->discount/100;
+		}
+		else
+		{
+			$discount = $this->discount;
+		}
+		return number_format($discount , 2);
 	}
-	else
+	public function getTotalDiscountNotFormated()
 	{
-		$discount = $this->discount;
-	}
-	return (($this->getChildrenTotalPrice() + $this->price)*$this->quantity) - $discount;
+		if($this->discount_type ==0)
+		{
+			$discount = (($this->getChildrenTotalPrice() + $this->price)*$this->quantity )* $this->discount/100;
+		}
+		else
+		{
+			$discount = $this->discount;
+		}
+		return $discount;
 	}
 	
 	public function getDiscount()

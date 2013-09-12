@@ -118,7 +118,7 @@ class Budget extends ModelAudit
 		return array(
 			'Id' => 'ID',
 			'Id_project' => 'Project',
-			'percent_discount' => 'Percent Discount',
+			'percent_discount' => 'Discount',
 			'date_creation' => 'Date Creation',
 			'Id_budget_state' => 'State',
 			'date_inicialization' => 'Date Inicialization',
@@ -127,7 +127,8 @@ class Budget extends ModelAudit
 			'date_estimated_finalization' => 'Date Estimated Finalization',
 			'version_number' => 'Version Number',
 			'description' => 'Description',
-			'totPrice'=>'Total Price',
+			'subTotalPrice'=>'Sub Total',
+			'totalPrice'=>'Total',
 			'note' => 'Note',
 		);
 	}
@@ -191,6 +192,43 @@ class Budget extends ModelAudit
 			$totalPrice += $item->getTotalPriceNotFormated();			
 		}
 		return number_format($totalPrice,2);
+	}
+	public function getTotalDiscount()
+	{
+		$criteria=new CDbCriteria;
+		
+		$criteria->compare('t.Id_budget',$this->Id);
+		$criteria->compare('t.version_number',$this->version_number);
+		$criteria->addCondition('(t.Id_budget_item is null)');
+		
+		
+		$modelBudgetItem = BudgetItem::model()->findAll($criteria);
+		$totalPrice = 0;
+		foreach ($modelBudgetItem as $item)
+		{
+			$totalPrice += $item->getTotalPriceNotFormated();
+		}
+		return number_format(($totalPrice*$this->percent_discount/100),2);
+		
+	}
+	
+	public function getTotalPriceWithDiscount()
+	{
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('t.Id_budget',$this->Id);
+		$criteria->compare('t.version_number',$this->version_number);
+		$criteria->addCondition('(t.Id_budget_item is null)');
+	
+	
+		$modelBudgetItem = BudgetItem::model()->findAll($criteria);
+		$totalPrice = 0;
+		foreach ($modelBudgetItem as $item)
+		{
+			$totalPrice += $item->getTotalPriceNotFormated();
+		}
+		return number_format($totalPrice-($totalPrice*$this->percent_discount/100),2);
 	}
 	
 	/**
