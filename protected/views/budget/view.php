@@ -241,24 +241,24 @@ $this->widget('zii.widgets.CDetailView', array(
 $this->widget('zii.widgets.CDetailView', array(
 		'data'=>$model,
 		'attributes'=>array(
-array('label'=>$model->getAttributeLabel('subTotalPrice'),
-		'type'=>'raw',
-		'htmlOptions'=>array('style' => 'text-align: right;'),
-		'value'=>
-		CHtml::textField("totalPrice",
-				$model->totalPrice,
-				array(
-						'id'=>"totals_total_price",
-						"disabled"=>"disabled",
-						"style"=>"width:60px;float:right;text-align:right;",
-				)
-		),
-),
+			array('label'=>$model->getAttributeLabel('subTotalPrice'),
+					'type'=>'raw',
+					'htmlOptions'=>array('style' => 'text-align: right;'),
+					'value'=>
+					CHtml::textField("totalPrice",
+							$model->totalPrice,
+							array(
+									'id'=>"totals_total_price",
+									"disabled"=>"disabled",
+									"style"=>"width:60px;float:right;text-align:right;",
+							)
+					),
+			),
 
-array('label'=>$model->getAttributeLabel('percent_discount'),
-		'type'=>'raw',
-		'htmlOptions'=>array('style' => 'text-align: right;'),
-		'value'=>
+		array('label'=>$model->getAttributeLabel('percent_discount'),
+			'type'=>'raw',
+			'htmlOptions'=>array('style' => 'text-align: right;'),
+			'value'=>
 			CHtml::textField("percen_discount",
 				$model->percent_discount." %",
 				array(
@@ -274,22 +274,22 @@ array('label'=>$model->getAttributeLabel('percent_discount'),
 					"disabled"=>"disabled",
 					"style"=>"width:60px;float:right;text-align:right;display:inline-block;",
 					)
+			),
+		),
+		array('label'=>$model->getAttributeLabel('totalPrice'),
+				'type'=>'raw',
+				'htmlOptions'=>array('style' => 'text-align: right;'),
+				'value'=>
+				CHtml::textField("TotalPriceWithDiscount",
+						$model->TotalPriceWithDiscount,
+						array(
+								'id'=>"totals_price_w_discount",
+								"disabled"=>"disabled",
+								"style"=>"width:60px;float:right;text-align:right;",
+						)
 				),
 		),
-array('label'=>$model->getAttributeLabel('totalPrice'),
-		'type'=>'raw',
-		'htmlOptions'=>array('style' => 'text-align: right;'),
-		'value'=>
-		CHtml::textField("TotalPriceWithDiscount",
-				$model->TotalPriceWithDiscount,
-				array(
-						'id'=>"totals_price_w_discount",
-						"disabled"=>"disabled",
-						"style"=>"width:60px;float:right;text-align:right;",
-				)
-		),
-),
-),
+	),
 ));
 	?>
 </div>
