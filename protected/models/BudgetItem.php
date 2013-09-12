@@ -177,6 +177,31 @@ class BudgetItem extends ModelAudit
 		return number_format((($this->getChildrenTotalPrice() + $this->price)*$this->quantity) - $discount , 2);
 	}
 	
+	public function getDiscount()
+	{
+		$discount = $this->discount;
+		if(isset($this->Id_budget_item))
+			$discount = $this->budgetItem->discount;
+		
+		return $discount;
+	}
+	
+	public function getTotalPriceWOChildern()
+	{
+		if($this->discount_type ==0)
+		{
+			if(isset($this->Id_budget_item))
+				$discount = (($this->price)*$this->quantity )* $this->budgetItem->discount/100;
+			else
+				$discount = (($this->price)*$this->quantity )* $this->discount/100;
+		}
+		else
+		{
+			$discount = $this->discount;
+		}
+		return number_format((($this->price)*$this->quantity) - $discount , 2);
+	}
+	
 	public function getDoNotWarning()
 	{
 		if($this->getChildrenCount()==0)

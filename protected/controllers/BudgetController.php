@@ -429,6 +429,8 @@ class BudgetController extends Controller
 			{
 				$arrayParent = array();
 				$arrayParent['parent_code'] = $model->product->code;
+				$arrayParent['parent_model'] = $model->product->model;
+				$arrayParent['parent_part_number'] = $model->product->part_number;
 				$arrayParent['parent_customer_desc'] = $model->product->description_customer;
 				$arrayParent['parent_brand_desc'] = $model->product->brand->description;
 				$arrayParent['parent_supplier_name'] = $model->product->supplier->business_name;
