@@ -151,6 +151,29 @@ $('.ddl_id_service').change(
 			}
 		);
 
+$('.ddl_generic_discount_type').unbind('change');
+$('.ddl_generic_discount_type').change(
+			function()
+			{
+						var target = $(this);
+						var idBudgetItem = $(this).attr('id');
+						var discount_type = $(this).val();
+						$.post(
+						'".BudgetController::createUrl('AjaxSaveDiscountType')."',
+						{
+							Id_budget_item: idBudgetItem,discount_type:discount_type
+						}
+						).success(function(data)
+						{
+							var response = jQuery.parseJSON(data);
+							$(target).parent().parent().find('input.txtTotalPriceGenericItem').val(response.total_price);
+								//alert('success');				
+					}).error(function(data)
+						{
+							//alert('error');				
+					});	
+			}
+		);
 $('.ddl_discount_type').unbind('change');
 $('.ddl_discount_type').change(
 			function()
@@ -174,8 +197,13 @@ $('.ddl_discount_type').change(
 					});	
 			}
 		);
+								
 $('.txtDiscount').unbind('keyup');
 $('.txtDiscount').keyup(function(){
+	validateNumber($(this));
+});
+$('.txtGenericDiscount').unbind('keyup');
+$('.txtGenericDiscount').keyup(function(){
 	validateNumber($(this));
 });
 								
@@ -196,6 +224,30 @@ $('.txtDiscount').change(
 						{
 							var response = jQuery.parseJSON(data);
 							$(target).parent().parent().find('input.txtTotalPrice').val(response.total_price);
+								//alert('success');				
+					}).error(function(data)
+						{
+							//alert('error');				
+					});	
+			}
+		);
+$('.txtGenericDiscount').unbind('change');
+$('.txtGenericDiscount').change(
+			function()
+			{
+						validateNumber($(this));
+						var target = $(this);
+						var idBudgetItem = $(this).attr('id');
+						var discount = $(this).val();
+						$.post(
+						'".BudgetController::createUrl('AjaxSaveDiscountValue')."',
+						{
+							Id_budget_item: idBudgetItem,discount:discount
+						}
+						).success(function(data)
+						{
+							var response = jQuery.parseJSON(data);
+							$(target).parent().parent().find('input.txtTotalPriceGenericItem').val(response.total_price);
 								//alert('success');				
 					}).error(function(data)
 						{
@@ -550,6 +602,65 @@ echo '</br>';
 					'dataProvider'=>$modelBudgetItemGeneric->searchGenericItem(),
 					'summaryText'=>'',
 					'afterAjaxUpdate'=>'function(id, data){
+									$("#budget-item-generic").find(".txtGenericDiscount").each(
+										function(index, item)
+										{
+											$(item).unbind("change");
+											$(item).change(
+												function()
+												{
+															validateNumber($(this));
+															var target = $(this);
+															var idBudgetItem = $(this).attr("id");
+															var discount = $(this).val();
+															$.post(
+															"'.BudgetController::createUrl("AjaxSaveDiscountValue").'",
+															{
+																Id_budget_item: idBudgetItem,discount:discount
+															}
+															).success(function(data)
+															{
+																var response = jQuery.parseJSON(data);
+																$(target).parent().parent().find("input.txtTotalPriceGenericItem").val(response.total_price);
+													}).error(function(data)
+															{
+														});	
+												}
+											);
+										}
+							
+									);
+
+									$("#budget-item-generic").find(".ddl_generic_discount_type").each(
+										function(index, item)
+										{
+											$(item).unbind("change");
+											$(item).change(
+												function()
+												{
+													var target = $(this);
+													var idBudgetItem = $(this).attr("id");
+													var discount_type = $(this).val();
+													$.post(
+															"'.BudgetController::createUrl('AjaxSaveDiscountType').'",
+															{
+																Id_budget_item: idBudgetItem,discount_type:discount_type
+															}
+															).success(function(data)
+															{
+																var response = jQuery.parseJSON(data);
+																$(target).parent().parent().find("input.txtTotalPriceGenericItem").val(response.total_price);
+																//alert("success");				
+														}).error(function(data)
+															{
+																//alert("error");				
+														},"json");	
+												}
+											);
+										}
+							
+									);
+
 									$("#budget-item-generic").find("input.txtQuantityGenericItem").each(
 												function(index, item){
 												
@@ -661,9 +772,34 @@ echo '</br>';
 								'htmlOptions'=>array('width'=>25),
 							),
 							array(
-									'name'=>'total_price',
-									'value'=>'$data->quantity * $data->price',
-									
+									'name'=>'discount',
+									'value'=>
+									'CHtml::textField("txtDiscount",
+																				$data->discount,
+																				array(
+																						"id"=>$data->Id,
+																						"class"=>"txtGenericDiscount",
+																						"disabled"=>"",
+																						"style"=>"width:50px;text-align:right;",
+																					)
+																			)',
+							
+									'type'=>'raw',
+							
+									'htmlOptions'=>array('width'=>5),
+							),
+							
+							array(
+									'name'=>'discount_type',
+									'value'=>(true)?'
+														CHtml::dropDownList("discount_type", $data->discount_type,array("%","$"),array(
+														"id"=>$data->Id,"class"=>"ddl_generic_discount_type","style"=>"width:50px"
+														) );':'($data->discount_type==0)?"%":"$";',
+									'type'=>(true)?'raw':'html',
+									'htmlOptions'=>array('style'=>"width:20px"),
+							),
+
+							array(									
 									'name'=>'total_price',
 									'value'=>
 				                                    	'CHtml::textField("txtTotalPriceGenericItem",

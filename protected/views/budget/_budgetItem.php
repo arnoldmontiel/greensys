@@ -13,6 +13,38 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'summaryText'=>'',
 	'afterAjaxUpdate'=>'function(id, data){	
 				$.fn.yiiGridView.update("budget-item-generic");		
+		
+				$("#budget-item-grid_'.$idArea.'").find(".txtDiscount").each(
+					function(index, item)
+					{
+						$(item).unbind("change");
+						$(item).change(
+							function()
+							{
+										validateNumber($(this));
+										var target = $(this);
+										var idBudgetItem = $(this).attr("id");
+										var discount = $(this).val();
+										$.post(
+										"'.BudgetController::createUrl("AjaxSaveDiscountValue").'",
+										{
+											Id_budget_item: idBudgetItem,discount:discount
+										}
+										).success(function(data)
+										{
+											var response = jQuery.parseJSON(data);
+											$(target).parent().parent().find("input.txtTotalPrice").val(response.total_price);
+								}).error(function(data)
+										{
+									});	
+							}
+						);
+					}
+		
+				);
+		
+		
+		
 				$("#budget-item-grid_'.$idArea.'").find(".ddl_discount_type").each(
 					function(index, item)
 					{
