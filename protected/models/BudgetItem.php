@@ -59,7 +59,6 @@ class BudgetItem extends ModelAudit
 	}
 	public function afterDelete()
 	{
-		echo "public function afterDelete()"; 
 		if($this->description == "Horas de programación"||$this->description == "Horas de instalación")
 		{
 			return parent::afterDelete();
@@ -69,12 +68,9 @@ class BudgetItem extends ModelAudit
 	}
 	public function calculateTimes()
 	{
-		echo "Arnold -- ".$this->Id_budget."  --"; 
 		$modelBudget = new Budget();
 		$modelBudget->Id =$this->Id_budget;
 		$version = $modelBudget->getCurrentVersion();
-		echo "-- ".$version."  --";
-		
 		
 		$modelProgramingHours = BudgetItem::model()->findByAttributes(array('Id_budget'=>$this->Id_budget,'version_number'=>$version,'description'=>'Horas de programación'));
 		if(!isset($modelProgramingHours))
