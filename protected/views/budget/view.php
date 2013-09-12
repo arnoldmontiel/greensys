@@ -86,11 +86,17 @@ $('.btn-View-Assign').click(function(){
  	return false; 	
 });
 
+$('#btn-export').click(function(){
+	window.location = '".BudgetController::createUrl('ExportToExcel',array('id'=>$model->Id,'versionNumber'=>$model->version_number)) ."';
+	return false;
+});
 ");
 ?>
 
 <h1>View Budget
 <?php echo CHtml::link( ' (Create new version)','#',array('onclick'=>'jQuery("#CreateBudgetNewVersion").dialog("open"); return false;'));?>
+&nbsp;-&nbsp;
+<?php echo CHtml::link( 'Export','#',array('id'=>'btn-export'));?>
 </h1>
 
 <?php 
