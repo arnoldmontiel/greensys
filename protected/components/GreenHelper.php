@@ -72,8 +72,9 @@ class GreenHelper
 		//INDICES EXCEL
 		$indexService = array('name'=>'A', 'description'=>'B');
 		$indexProduct = array('model'=>'A','description'=>'B','image'=>'C',
-										'quantity'=>'D','price'=>'E');
-		$indexExtra	  = array('descriptionStart'=>'A', 'descriptionEnd'=>'C', 'quantity'=>'D', 'price'=>'E');
+										'quantity'=>'D','price'=>'E','discount'=>'F','total'=>'G');
+		$indexExtra	  = array('descriptionStart'=>'A', 'descriptionEnd'=>'C', 'quantity'=>'D', 'price'=>'E',
+										'discount'=>'F','total'=>'G');
 		
 		//sheet 0
 		$sheet = $objPHPExcel->setActiveSheetIndex(0);
@@ -88,8 +89,19 @@ class GreenHelper
 		
 		foreach($budgetItemServices as $budgetItemService)
 		{
-			$serviceName = (isset($budgetItemService->service))?$budgetItemService->service->description:"General";
-			$serviceDesc = (isset($budgetItemService->service))?$budgetItemService->service->long_description:"";
+			$serviceName = 'General';
+			$serviceDesc = '';
+			if(isset($budgetItemService->service))
+			{
+				$serviceName = $budgetItemService->service->description;
+				$serviceDesc = $budgetItemService->service->long_description;
+				
+				$projectServiceDB = ProjectService::model()->findByAttributes(array('Id_project'=>$budgetItemService->budget->Id_project,
+																	'Id_service'=>$budgetItemService->Id_service));
+				if(isset($projectServiceDB))
+					$serviceDesc = $projectServiceDB->long_description;				
+			}
+			
 			$sheet->setCellValue($indexService['name'].$row, $serviceName);
 			$sheet->setCellValue($indexService['description'].$row, $serviceDesc);
 				
@@ -101,13 +113,30 @@ class GreenHelper
 			$sheet->setCellValue($indexProduct['image'].$row, 'Imagen');
 			$sheet->setCellValue($indexProduct['quantity'].$row, 'Cantidad');
 			$sheet->setCellValue($indexProduct['price'].$row, 'Precio');
+			$sheet->setCellValue($indexProduct['discount'].$row, 'Descuento');
+			$sheet->setCellValue($indexProduct['total'].$row, 'Total');
 				
-			self::cellColor($sheet, $indexProduct['model'].$row.':'.$indexProduct['price'].$row, '2c86ff');
+			self::cellColor($sheet, $indexProduct['model'].$row.':'.$indexProduct['total'].$row, '2c86ff');
 				
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('Id_budget = '.$idBudget);
 			$criteria->addCondition('version_number = '.$versionNumber);
-			$criteria->addCondition('Id_service '.(isset($budgetItemService->Id_service)?" = ".$budgetItemService->Id_service:" is null"));
+			
+			$serviceCondition = '';
+			if(isset($budgetItemService->Id_service))
+			{
+				$serviceCondition = 'Id_service = '.$budgetItemService->Id_service. ' OR 
+												(Id_budget_item in (select Id from budget_item bi 	
+												where Id_budget = '.$idBudget .' 
+												and version_number = '.$versionNumber .'
+												and Id_product is not null
+												and Id_service = '.$budgetItemService->Id_service.' )
+											AND is_included = 1)';
+			}
+			else
+				$serviceCondition = '(Id_service is null and Id_budget_item is null)';
+			
+			$criteria->addCondition($serviceCondition);
 			$criteria->addCondition('Id_product is not null');
 				
 			$budgetItems = BudgetItem::model()->findAll($criteria);
@@ -117,8 +146,34 @@ class GreenHelper
 				$sheet->setCellValue($indexProduct['model'].$row, $budgetItem->product->model);
 				$sheet->setCellValue($indexProduct['description'].$row, $budgetItem->product->short_description);
 				//$sheet->setCellValue($indexProduct['image'].$row, 'Imagen');
+				
+				$criteria = new CDbCriteria();
+				$criteria->join = 'inner join product_multimedia pm on (pm.Id_multimedia = t.Id)';
+				$criteria->addCondition('t.Id_multimedia_type = 1');
+				$criteria->addCondition('pm.Id_product = '. $budgetItem->Id_product);
+				
+				$modelMultimediaDB = Multimedia::model()->find($criteria);
+				if(isset($modelMultimediaDB))
+				{				
+// 					$objDrawingPType = new PHPExcel_Worksheet_Drawing();
+// 					$objDrawingPType->setWorksheet($sheet);
+// 					$objDrawingPType->setName("Pareto By Type");
+// 					$objDrawingPType->setPath(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $modelMultimediaDB->file_name_small);
+// 					$objDrawingPType->setCoordinates($indexProduct['image'].$row);
+// 					$objDrawingPType->setOffsetX(0);
+// 					$objDrawingPType->setOffsetY(0);
+// 					$objDrawingPType->setHeight(100);
+// 					//$objDrawingPType->setResizeProportional(10);
+// 					$sheet->getRowDimension($row)->setRowHeight(100);
+// 					//$sheet->getColumnDimension($indexProduct['image'])->setWidth(30);
+// 					//$sheet->setCellValue($indexProduct['image'].$row, '                             ');
+					
+				}
+				
 				$sheet->setCellValue($indexProduct['quantity'].$row, $budgetItem->quantity);
 				$sheet->setCellValue($indexProduct['price'].$row, $budgetItem->price);
+				$sheet->setCellValue($indexProduct['discount'].$row, $budgetItem->getDiscount());
+				$sheet->setCellValue($indexProduct['total'].$row, $budgetItem->getTotalPriceWOChildern());
 				$row++;
 			}
 				
@@ -145,10 +200,12 @@ class GreenHelper
 			$sheet->setCellValue($indexExtra['descriptionStart'].$row, 'Descripcion');
 			$sheet->setCellValue($indexExtra['quantity'].$row, 'Cantidad');
 			$sheet->setCellValue($indexExtra['price'].$row, 'Precio');
+			$sheet->setCellValue($indexExtra['discount'].$row, 'Descuento');
+			$sheet->setCellValue($indexExtra['total'].$row, 'Total');
 			
 			$sheet->mergeCells($indexExtra['descriptionStart'].$row.':'.$indexExtra['descriptionEnd'].$row);
 				
-			self::cellColor($sheet, $indexExtra['descriptionStart'].$row.':'.$indexExtra['price'].$row, '2c86ff');
+			self::cellColor($sheet, $indexExtra['descriptionStart'].$row.':'.$indexExtra['total'].$row, '2c86ff');
 				
 			$row++;
 			foreach($budgetItems as $budgetItem)
@@ -157,16 +214,17 @@ class GreenHelper
 				$sheet->setCellValue($indexExtra['descriptionStart'].$row, $budgetItem->description);
 				$sheet->setCellValue($indexExtra['quantity'].$row, $budgetItem->quantity);
 				$sheet->setCellValue($indexExtra['price'].$row, $budgetItem->price);
+				$sheet->setCellValue($indexExtra['total'].$row, $budgetItem->price * $budgetItem->quantity);
 				$row++;
 			}
 		}
 		
 		//set column auto-size
-		foreach(range('A','E') as $columnID) {
+		foreach(range($indexProduct['model'],$indexProduct['total']) as $columnID) {
 			$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
 			->setAutoSize(true);
 		}
-			
+		
 		// Rename worksheet
 		$objPHPExcel->getActiveSheet()->setTitle('Simple');
 		
