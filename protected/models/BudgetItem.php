@@ -206,6 +206,8 @@ class BudgetItem extends ModelAudit
 		$criteria->compare('t.Id_price_list',$this->Id_price_list);
 		$criteria->compare('t.Id_shipping_type',$this->Id_shipping_type);
 		$criteria->compare('quantity',$this->quantity);
+
+		$criteria->addCondition('t.Id_product is not null');
 		
 		if(!isset($this->Id_budget_item))
 			$criteria->addCondition('isnull(t.Id_budget_item)');
