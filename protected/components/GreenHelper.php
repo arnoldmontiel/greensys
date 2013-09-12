@@ -250,7 +250,8 @@ class GreenHelper
 				$sheet->getStyle($indexExtra['descriptionStart'].$row)->getAlignment()->setWrapText(true);
 				$sheet->setCellValue($indexExtra['quantity'].$row, $budgetItem->quantity);
 				$sheet->setCellValue($indexExtra['price'].$row, $budgetItem->price);
-				$sheet->setCellValue($indexExtra['total'].$row, $budgetItem->price * $budgetItem->quantity);
+				$sheet->setCellValue($indexExtra['discount'].$row, $budgetItem->discount);
+				$sheet->setCellValue($indexExtra['total'].$row, $budgetItem->getTotalPriceWOChildern());
 				$sheet->getStyle($indexExtra['descriptionStart'].$row.':'.$indexExtra['total'].$row)->applyFromArray($styleArray);
 				$row++;
 			}
