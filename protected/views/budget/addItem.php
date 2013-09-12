@@ -28,10 +28,7 @@ $('#budget-item-generic').find('input.txtQuantityGenericItem').each(
 																
 																$(item).change(function(){
 																	var target = $(this);
-																	var total = 0;
 																	var price = $(this).parent().parent().find('input.txtPriceGenericItem').val();
-																	
-																	total = ($(this).val() * price).toFixed(2);
 																	
 																	$.post(
 																		'".PriceListController::createUrl('AjaxUpdateUpdateGenericItem')."',
@@ -39,14 +36,12 @@ $('#budget-item-generic').find('input.txtQuantityGenericItem').each(
 																		 	Id: $(this).attr('id'),
 																			quantity:$(this).val(),
 																			price: price
-																		 }).success(
+																		 },'json').success(
 																			 	function(data) 
 																			 		{ 
-																			 			$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000);
-																						$(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000);
-																						$(target).parent().parent().find('input.txtTotalPriceGenericItem').val(total);
-																						$(target).parent().parent().find('#saveok3').animate({opacity: 'show'},4000);
- 																						$(target).parent().parent().find('#saveok3').animate({opacity: 'hide'},4000);
+																						var response = jQuery.parseJSON(data);
+																						$(target).parent().parent().find('input.txtTotalPriceGenericItem').val(response.total_price);
+																						$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000,function(){ $(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000);}); 																						
 																						
 																					});
 																		
@@ -62,10 +57,7 @@ $('#budget-item-generic').find('input.txtPriceGenericItem').each(
 																
 																$(item).change(function(){
 																	var target = $(this);
-																	var total = 0;
 																	var quantity = $(this).parent().parent().find('input.txtQuantityGenericItem').val();
-																	
-																	total = ($(this).val() * quantity).toFixed(2);
 																	
 																	$.post(
 																		'".PriceListController::createUrl('AjaxUpdateUpdateGenericItem')."',
@@ -73,14 +65,13 @@ $('#budget-item-generic').find('input.txtPriceGenericItem').each(
 																		 	Id: $(this).attr('id'),
 																			quantity: quantity,
 																			price: $(this).val()
-																		 }).success(
+																		 },'json').success(
 																			 	function(data) 
 																			 		{ 
-																			 			$(target).parent().parent().find('#saveok2').animate({opacity: 'show'},4000);
-																						$(target).parent().parent().find('#saveok2').animate({opacity: 'hide'},4000);
-																						$(target).parent().parent().find('input.txtTotalPriceGenericItem').val(total);
-																						$(target).parent().parent().find('#saveok3').animate({opacity: 'show'},4000);
- 																						$(target).parent().parent().find('#saveok3').animate({opacity: 'hide'},4000);
+																						var response = jQuery.parseJSON(data);
+																						$(target).parent().parent().find('input.txtTotalPriceGenericItem').val(response.total_price);
+																						$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000,function(){ $(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000);});
+ 																						
 																						
 																					});
 																		
@@ -167,6 +158,7 @@ $('.ddl_generic_discount_type').change(
 						{
 							var response = jQuery.parseJSON(data);
 							$(target).parent().parent().find('input.txtTotalPriceGenericItem').val(response.total_price);
+							$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000,function(){ $(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000);});
 								//alert('success');				
 					}).error(function(data)
 						{
@@ -248,6 +240,7 @@ $('.txtGenericDiscount').change(
 						{
 							var response = jQuery.parseJSON(data);
 							$(target).parent().parent().find('input.txtTotalPriceGenericItem').val(response.total_price);
+							$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000,function(){ $(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000);});
 								//alert('success');				
 					}).error(function(data)
 						{
@@ -670,26 +663,19 @@ echo '</br>';
 																
 																$(item).change(function(){
 																	var target = $(this);
-																	var total = 0;
 																	var price = $(this).parent().parent().find("input.txtPriceGenericItem").val();
-																	
-																	total = ($(this).val() * price).toFixed(2);
-																	
 																	$.post(
 																		"'.PriceListController::createUrl('AjaxUpdateUpdateGenericItem').'",
 																		 {
 																		 	Id: $(this).attr("id"),
 																			quantity:$(this).val(),
 																			price: price
-																		 }).success(
+																		 },"json").success(
 																			 	function(data) 
 																			 		{ 
-																			 			$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000);
-																						$(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000);
-																						$(target).parent().parent().find("input.txtTotalPriceGenericItem").val(total);
-																						$(target).parent().parent().find("#saveok3").animate({opacity: "show"},4000);
- 																					$(target).parent().parent().find("#saveok3").animate({opacity: "hide"},4000);
-																						
+																						var response = jQuery.parseJSON(data);
+																						$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000,function(){ $(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000);});
+																						$(target).parent().parent().find("input.txtTotalPriceGenericItem").val(response.total_price);																						
 																					});
 																		
 																});
@@ -703,10 +689,7 @@ echo '</br>';
 																
 																$(item).change(function(){
 																	var target = $(this);
-																	var total = 0;
 																	var quantity = $(this).parent().parent().find("input.txtQuantityGenericItem").val();
-																	
-																	total = ($(this).val() * quantity).toFixed(2);
 																	
 																	$.post(
 																		"'.PriceListController::createUrl('AjaxUpdateUpdateGenericItem').'",
@@ -714,14 +697,12 @@ echo '</br>';
 																		 	Id: $(this).attr("id"),
 																			quantity: quantity,
 																			price: $(this).val()
-																		 }).success(
+																		 },"json").success(
 																			 	function(data) 
-																			 		{ 
-																			 			$(target).parent().parent().find("#saveok2").animate({opacity: "show"},4000);
-																						$(target).parent().parent().find("#saveok2").animate({opacity: "hide"},4000);
-																						$(target).parent().parent().find("input.txtTotalPriceGenericItem").val(total);
-																						$(target).parent().parent().find("#saveok3").animate({opacity: "show"},4000);
- 																						$(target).parent().parent().find("#saveok3").animate({opacity: "hide"},4000);
+																			 		{
+																						var response = jQuery.parseJSON(data);
+																						$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000,function(){ $(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000);});
+																						$(target).parent().parent().find("input.txtTotalPriceGenericItem").val(response.total_price);
 																						
 																					});
 																		
@@ -747,11 +728,6 @@ echo '</br>';
 								'htmlOptions'=>array("style"=>"text-align:right;"),
 							),
 							array(
-								'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
-								'type'=>'raw',
-								'htmlOptions'=>array('width'=>25),
-							),
-							array(
 									'name'=>'price',
 									'value'=>
 				                                    	'CHtml::textField("txtPriceGenericItem",
@@ -765,11 +741,6 @@ echo '</br>';
 		
 									'type'=>'raw',
 									'htmlOptions'=>array("style"=>"text-align:right;"),
-							),
-							array(
-								'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok2", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
-								'type'=>'raw',
-								'htmlOptions'=>array('width'=>25),
 							),
 							array(
 									'name'=>'discount',
@@ -815,11 +786,11 @@ echo '</br>';
 									'type'=>'raw',
 									'htmlOptions'=>array("style"=>"text-align:right;"),
 								),
-							array(
-									'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok3", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
-									'type'=>'raw',
-									'htmlOptions'=>array('width'=>25),
-							),
+								array(
+										'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+										'type'=>'raw',
+										'htmlOptions'=>array('width'=>25),
+								),
 							array(
 									'class'=>'CButtonColumn',
 									'template'=>'{delete}',

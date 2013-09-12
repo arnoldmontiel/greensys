@@ -331,6 +331,9 @@ class BudgetController extends Controller
 				$modelBudgetItemDB->quantity = $quantity;
 				$modelBudgetItemDB->price = $price;
 				$modelBudgetItemDB->save();
+				$result['total_price']=$modelBudgetItemDB->totalPrice;
+				echo json_encode(array_merge($modelBudgetItemDB->attributes,$result));						
+				
 			}
 		}
 	}
