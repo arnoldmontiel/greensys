@@ -88,7 +88,8 @@ $('#budget-item-generic').find('input.txtPriceGenericItem').each(
 });	
 function updateGridViews()
 {
-	$('div.grid-view').each(
+		$.fn.yiiGridView.update('budget-item-generic');
+		$('div.grid-view').each(
 		function(index){
 			if($(this).attr('id').indexOf('budget-item-grid') != -1)
 				$.fn.yiiGridView.update($(this).attr('id'));
@@ -666,7 +667,7 @@ echo '</br>';
 									'name'=>'total_price',
 									'value'=>
 				                                    	'CHtml::textField("txtTotalPriceGenericItem",
-																$data->quantity * $data->price,
+																$data->totalPrice,
 																array(
 																		"id"=>$data->Id,
 																		"class"=>"txtTotalPriceGenericItem",
@@ -719,7 +720,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 								if(data!=null)
 								{
 									//actualizar
-									$.fn.yiiGridView.update("budget-item-generic")
+									$.fn.yiiGridView.update("budget-item-generic");
 									jQuery("#CreateNewBudgetItem").dialog( "close" );
 									$("#BudgetItem_description").val("");
 									$("#BudgetItem_quantity").val(1);

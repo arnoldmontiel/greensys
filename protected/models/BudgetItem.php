@@ -48,6 +48,81 @@ class BudgetItem extends ModelAudit
 	public $children_count;
 	public $children_included;
 	
+	public function afterSave()
+	{
+		if($this->description == "Horas de programación"||$this->description == "Horas de instalación")
+		{
+			return parent::afterSave();
+		}
+		$this->calculateTimes();
+		return parent::afterSave();
+	}
+	public function afterDelete()
+	{
+		echo "public function afterDelete()"; 
+		if($this->description == "Horas de programación"||$this->description == "Horas de instalación")
+		{
+			return parent::afterDelete();
+		}
+		$this->calculateTimes();
+		return parent::afterDelete();
+	}
+	public function calculateTimes()
+	{
+		echo "Arnold -- ".$this->Id_budget."  --"; 
+		$modelBudget = new Budget();
+		$modelBudget->Id =$this->Id_budget;
+		$version = $modelBudget->getCurrentVersion();
+		echo "-- ".$version."  --";
+		
+		
+		$modelProgramingHours = BudgetItem::model()->findByAttributes(array('Id_budget'=>$this->Id_budget,'version_number'=>$version,'description'=>'Horas de programación'));
+		if(!isset($modelProgramingHours))
+		{
+			$modelProgramingHours = new BudgetItem();
+			$modelProgramingHours->Id_budget=$this->Id_budget;
+			$modelProgramingHours->version_number=$version;
+			$modelProgramingHours->description='Horas de programación';
+		
+		}
+		
+		$modelInstalationHours = BudgetItem::model()->findByAttributes(array('Id_budget'=>$this->Id_budget,'description'=>'Horas de instalación'));
+		if(!isset($modelInstalationHours))
+		{
+			$modelInstalationHours = new BudgetItem();
+			$modelInstalationHours->Id_budget=$this->Id_budget;
+			$modelInstalationHours->version_number=$version;
+			$modelInstalationHours->description='Horas de instalación';
+		
+		}
+		
+		$criteria=new CDbCriteria;
+		
+		$criteria->compare('t.Id_budget',$this->Id_budget);
+		$criteria->compare('t.version_number',$version);
+		$criteria->addCondition('t.Id_product is not null and (t.Id_budget_item is null OR t.is_included=1)');
+		
+		$modelItems = BudgetItem::model()->findAll($criteria);
+		
+		$timeProgramation = 0.0;
+		$timeInstalation = 0.0;
+		foreach ($modelItems as $item)
+		{
+			$timeProgramation += $item->product->time_programation;
+			$timeInstalation += $item->product->time_instalation;
+		}
+		$modelProgramingHours->quantity = $timeProgramation;
+		$modelInstalationHours->quantity = $timeInstalation;
+		
+		$settings = new Settings();
+		$setting = $settings->getSetting();
+		$modelProgramingHours->price = $setting->time_programation_price;
+		$modelInstalationHours->price = $setting->time_instalation_price;
+		
+		$modelProgramingHours->save();
+		$modelInstalationHours->save();		
+	}
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.

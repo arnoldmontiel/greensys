@@ -12,6 +12,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
  	'filter'=>$modelBudgetItem,
 	'summaryText'=>'',
 	'afterAjaxUpdate'=>'function(id, data){	
+				$.fn.yiiGridView.update("budget-item-generic");		
 				$("#budget-item-grid_'.$idArea.'").find(".ddl_discount_type").each(
 					function(index, item)
 					{
