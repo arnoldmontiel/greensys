@@ -115,6 +115,8 @@ function fillParentData(data)
 {
 	$('#IdItemBudgetParent').val(data.id);
 	$('#parent_code').text(data.parent_code);
+	$('#parent_model').text(data.parent_model);
+	$('#parent_part_number').text(data.parent_part_number);
 	$('#parent_customer_desc').text(data.parent_customer_desc);
 	$('#parent_brand_desc').text(data.parent_brand_desc);
 	$('#parent_supplier_name').text(data.parent_supplier_name);

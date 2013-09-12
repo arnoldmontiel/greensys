@@ -5,6 +5,14 @@
 <table id="yw3" class="detail-view">
 	<tbody>
 		<tr class="odd">
+			<th>Model</th>
+			<td id="parent_model"></td>
+		</tr>
+		<tr class="even">
+			<th>Part Number</th>
+			<td id="parent_part_number"></td>
+		</tr>
+		<tr class="odd">
 			<th>Code</th>
 			<td id="parent_code"></td>
 		</tr>
@@ -76,18 +84,17 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			}	',
 	'columns'=>array(
 				array(
-					'name'=>'product_code',
-				    'value'=>'$data->product->code',		
+					'name'=>'product_model',
+				    'value'=>'$data->product->model',		
 					'footer'=>'Total'
 				),
 				array(
-					'name'=>'product_code_supplier',
-				    'value'=>'$data->product->code_supplier',		
+					'name'=>'product_part_number',
+				    'value'=>'$data->product->part_number',		
 				),
 				array(
-					'name'=>'product_customer_desc',
-				    'value'=>'$data->product->description_customer',
-	
+					'name'=>'product_code',
+				    'value'=>'$data->product->code',
 				),
 				array(
  					'name'=>'product_brand_desc',
