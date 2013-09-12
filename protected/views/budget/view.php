@@ -140,7 +140,7 @@ $this->widget('zii.widgets.CDetailView', array(
 	?>
 		<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
 			<div class="areaTitle" idArea="<?php echo $item->Id_area; ?>" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
-				<span id="expandCollapse_<?php echo $item->Id_area; ?>">+</span>&nbsp;<?php echo $item->area->description;?>
+				<span id="expandCollapse_<?php echo $item->Id_area; ?>">+</span>&nbsp;<?php echo $item->area->description." ( ".$item->description." )";?>
 			</div>
 		</div>
 		<br>&nbsp;
@@ -153,8 +153,96 @@ $this->widget('zii.widgets.CDetailView', array(
 													   'canEdit'=>false,));
 		?>		
 		</div><!-- close itemArea -->
-<?php				
+	<?php				
 	}
+	?>
+		<div>
+<?php
+	$this->widget('zii.widgets.grid.CGridView', array(
+					'id'=>'budget-item-generic',
+					'dataProvider'=>$modelBudgetItem->searchGenericItem(),
+					'summaryText'=>'',
+					'columns'=>array(
+							'description',
+							array(
+								'name'=>'quantity',
+								'value'=>
+                                    	'CHtml::textField("txtQuantityGenericItem",
+												$data->quantity,
+												array(
+														"id"=>$data->Id,
+														"class"=>"txtQuantityGenericItem",
+														"style"=>"width:50px;text-align:right;",
+														"disabled"=>"disabled",
+													)
+											)',
+			
+								'type'=>'raw',
+								'htmlOptions'=>array("style"=>"text-align:right;"),
+							),
+							array(
+									'name'=>'price',
+									'value'=>
+                                    	'CHtml::textField("txtPriceGenericItem",
+												$data->price,
+												array(
+														"id"=>$data->Id,
+														"class"=>"txtPriceGenericItem",
+														"disabled"=>"disabled",
+														"style"=>"width:50px;text-align:right;",
+													)
+											)',
+
+									'type'=>'raw',
+									'htmlOptions'=>array("style"=>"text-align:right;"),
+							),
+							array(
+									'name'=>'discount',
+									'value'=>
+									'CHtml::textField("txtDiscount",
+											$data->discount,
+											array(
+													"id"=>$data->Id,
+													"class"=>"txtGenericDiscount",
+													"disabled"=>"disabled",
+													"style"=>"width:50px;text-align:right;",
+												)
+										)',
+							
+									'type'=>'raw',
+							
+									'htmlOptions'=>array('width'=>5),
+							),
+							
+							array(
+									'name'=>'discount_type',
+									'value'=>'($data->discount_type==0)?"%":"$";',
+									'type'=>'html',
+									'htmlOptions'=>array('style'=>"width:20px"),
+							),
+
+							array(									
+									'name'=>'total_price',
+									'value'=>
+                                    	'CHtml::textField("txtTotalPriceGenericItem",
+												$data->totalPrice,
+												array(
+														"id"=>$data->Id,
+														"class"=>"txtTotalPriceGenericItem",
+														"disabled"=>"disabled",
+														"style"=>"width:50px;text-align:right;",
+													)
+											)',
+
+									'type'=>'raw',
+									'htmlOptions'=>array("style"=>"text-align:right;"),
+								),
+							),
+					));
+	?>
+</div>
+	
+	<?php 
 
 
 //New Budget Version

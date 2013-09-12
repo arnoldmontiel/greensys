@@ -179,12 +179,18 @@ class Budget extends ModelAudit
 		
 		$criteria=new CDbCriteria;
 	
-		$criteria->select='SUM(price) as total_price';
-		$criteria->condition='Id_budget = '.$this->Id . ' AND version_number = '. $this->version_number;
+		$criteria->compare('t.Id_budget',$this->Id);
+		$criteria->compare('t.version_number',$this->version_number);
+		$criteria->addCondition('(t.Id_budget_item is null)');
+		
 	
-		$modelBudgetItem = BudgetItem::model()->find($criteria);
-	
-		return $modelBudgetItem->total_price;
+		$modelBudgetItem = BudgetItem::model()->findAll($criteria);
+		$totalPrice = 0;
+		foreach ($modelBudgetItem as $item)
+		{
+			$totalPrice += $item->getTotalPriceNotFormated();			
+		}
+		return number_format($totalPrice,2);
 	}
 	
 	/**

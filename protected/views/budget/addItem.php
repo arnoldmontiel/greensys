@@ -495,9 +495,8 @@ echo '</br>';
 								'
 								)
 							);
-							echo " - ";
 							
-							echo CHtml::link($item->description!=""?$item->description:"Editar",
+							echo CHtml::link(" ( ".($item->description!=""?$item->description:"Editar")." ) ",
 									'#',
 									array(	'description'=>$item->description,
 											'id'=>'edit-description-'.$item->Id,

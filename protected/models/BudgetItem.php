@@ -247,6 +247,17 @@ class BudgetItem extends ModelAudit
 		}
 		return number_format((($this->getChildrenTotalPrice() + $this->price)*$this->quantity) - $discount , 2);
 	}
+	public function getTotalPriceNotFormated()
+	{	if($this->discount_type ==0)
+	{
+		$discount = (($this->getChildrenTotalPrice() + $this->price)*$this->quantity )* $this->discount/100;
+	}
+	else
+	{
+		$discount = $this->discount;
+	}
+	return (($this->getChildrenTotalPrice() + $this->price)*$this->quantity) - $discount;
+	}
 	
 	public function getDiscount()
 	{

@@ -296,7 +296,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 													array(
 															"id"=>$data->Id,
 															"class"=>"txtDiscount",
-															"disabled"=>"",
+															"disabled"=>'.(($canEdit)?'""':'"disabled"').',
 															"style"=>"width:50px;text-align:right;",
 														)
 												)',
