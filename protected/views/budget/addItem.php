@@ -38,7 +38,12 @@ function setTotals()
 					}
 				);		
 		}
+	$('#totals_percent_discount').keyup(function(){
+		validateNumberInteger($('#totals_percent_discount'));
+		if($('#totals_percent_discount').val()>100)	$('#totals_percent_discount').val(100);
+	});							
 	$('#totals_percent_discount').change(
+						
 		function(){
 			$.post(
 				'".PriceListController::createUrl('AjaxUpdatePercentDiscount')."',
