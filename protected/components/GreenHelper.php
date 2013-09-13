@@ -184,7 +184,7 @@ class GreenHelper
 					$objDrawingPType->setCoordinates($indexProduct['image'].$row);
 					$objDrawingPType->setOffsetX(1);
 					$objDrawingPType->setOffsetY(1);
-					$objDrawingPType->setHeight(100);
+					$objDrawingPType->setHeight(95);
 					//$objDrawingPType->setResizeProportional(10);
 					//$sheet->getRowDimension($row)->setRowHeight(100);
 					//$sheet->getColumnDimension($indexProduct['image'])->setWidth(30);
