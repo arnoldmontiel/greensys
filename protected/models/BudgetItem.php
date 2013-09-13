@@ -285,6 +285,30 @@ class BudgetItem extends ModelAudit
 		
 		return $discount;
 	}
+
+	public function getDiscountType()
+	{
+		$discountType = "";
+		if(self::getDiscount() > 0)
+		{
+			if(isset($this->Id_budget_item))
+			{
+				if(isset($this->budgetItem->discount_type))
+					$discountType = "$";
+				else 
+					$discountType = "%";
+			}
+			else
+			{
+				if(isset($this->discount_type))
+					$discountType = "$";
+				else
+					$discountType = "%";
+			}
+		}
+		
+		return $discountType;
+	}
 	
 	public function getTotalPriceWOChildern()
 	{
