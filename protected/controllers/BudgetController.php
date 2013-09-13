@@ -55,7 +55,26 @@ class BudgetController extends Controller
 			'modelBudgetItem'=>$modelBudgetItem,
 		));
 	}
-
+	public function actionViewService($id, $version)
+	{
+		$modelBudgetItem = new BudgetItem('search');
+		$modelBudgetItem->unsetAttributes();  // clear any default values
+		if(isset($_GET['BudgetItem']))
+		{
+			$modelBudgetItem->attributes =$_GET['BudgetItem'];
+		}
+	
+		//seteo el presupuesto y su version
+		$modelBudgetItem->Id_budget = $id;
+		$modelBudgetItem->version_number = $version;
+	
+	
+		$this->render('viewService',array(
+				'model'=>$this->loadModel($id, $version),
+				'modelBudgetItem'=>$modelBudgetItem,
+		));
+	}
+	
 	public function actionViewVersion($id, $version)
 	{
 		$modelBudgetItem = new BudgetItem('search');
