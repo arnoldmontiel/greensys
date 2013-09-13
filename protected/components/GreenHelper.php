@@ -61,13 +61,18 @@ class GreenHelper
 		
 		Yii::import('ext.phpexcel.XPHPExcel');
 		$objPHPExcel= XPHPExcel::createPHPExcel();
-		$objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
+		$objPHPExcel->getProperties()->setCreator("Grupo Smartliving")
 		->setLastModifiedBy("Maarten Balliauw")
 		->setTitle("Office 2007 XLSX Test Document")
 		->setSubject("Office 2007 XLSX Test Document")
 		->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
 		->setKeywords("office 2007 openxml php")
 		->setCategory("Test result file");
+		
+		$modelSettings = Setting::model()->findByPk(1);
+		$currency = "$";
+		if(isset($modelSettings))
+			$currency = $modelSettings->currency->short_description;
 		
 		//INDICES EXCEL
 		$indexService = array('name'=>'A', 'description'=>'B');
@@ -199,12 +204,11 @@ class GreenHelper
 				}
 				
 				$sheet->setCellValue($indexProduct['quantity'].$row, $budgetItem->quantity);
-				$sheet->setCellValue($indexProduct['price'].$row, $budgetItem->price);
-				$sheet->setCellValue($indexProduct['discount'].$row, $budgetItem->getDiscountType(). $budgetItem->getDiscount());
-				$sheet->setCellValue($indexProduct['total'].$row, $budgetItem->getTotalPriceWOChildern());
+				$sheet->setCellValue($indexProduct['price'].$row, $currency .' '. $budgetItem->price);
+				$sheet->setCellValue($indexProduct['discount'].$row, $budgetItem->getDiscountType().' '. $budgetItem->getDiscount());
+				$sheet->setCellValue($indexProduct['total'].$row, $currency .' '. $budgetItem->getTotalPriceWOChildern());
 				
-				$sheet->getStyle($indexProduct['quantity'].$row.':'.$indexProduct['total'].$row)->applyFromArray($style_num);
-				
+				$sheet->getStyle($indexProduct['quantity'].$row.':'.$indexProduct['total'].$row)->applyFromArray($style_num);				
 				$newRow = $row + $sumImageRows;
 				$sheet->getStyle($indexProduct['model'].$row.':'.$indexProduct['total'].$newRow)->applyFromArray($style_border);
 				
@@ -257,9 +261,9 @@ class GreenHelper
 				$sheet->setCellValue($indexExtra['descriptionStart'].$row, $budgetItem->description);
 				$sheet->getStyle($indexExtra['descriptionStart'].$row)->getAlignment()->setWrapText(true);
 				$sheet->setCellValue($indexExtra['quantity'].$row, $budgetItem->quantity);
-				$sheet->setCellValue($indexExtra['price'].$row, $budgetItem->price);
-				$sheet->setCellValue($indexExtra['discount'].$row, $budgetItem->getDiscountType(). $budgetItem->discount);
-				$sheet->setCellValue($indexExtra['total'].$row, $budgetItem->getTotalPriceWOChildern());
+				$sheet->setCellValue($indexExtra['price'].$row, $currency . ' ' .$budgetItem->price);
+				$sheet->setCellValue($indexExtra['discount'].$row, $budgetItem->getDiscountType().' '. $budgetItem->discount);
+				$sheet->setCellValue($indexExtra['total'].$row, $currency . ' ' . $budgetItem->getTotalPriceWOChildern());
 				$sheet->getStyle($indexExtra['descriptionStart'].$row.':'.$indexExtra['total'].$row)->applyFromArray($style_border);
 				
 				$sheet->getStyle($indexExtra['quantity'].$row.':'.$indexExtra['total'].$row)->applyFromArray($style_num);
@@ -281,7 +285,7 @@ class GreenHelper
 			self::cellColor($sheet, $indexTotal['descriptionStart'].$row.':'.$indexTotal['descriptionStart'].$row, 'e6e6fa');
 			$sheet->getStyle($indexTotal['total'].$row)->applyFromArray($style_num);
 			$sheet->getStyle($indexTotal['descriptionStart'].$row.':'.$indexTotal['total'].$row)->applyFromArray($style_border);
-			$sheet->setCellValue($indexTotal['total'].$row, $modelBudget->totalPrice);
+			$sheet->setCellValue($indexTotal['total'].$row, $currency . ' ' . $modelBudget->totalPrice);
 			$row++;
 			
 			//sub total
@@ -290,7 +294,7 @@ class GreenHelper
 			self::cellColor($sheet, $indexTotal['descriptionStart'].$row.':'.$indexTotal['descriptionStart'].$row, 'e6e6fa');
 			$sheet->getStyle($indexTotal['total'].$row)->applyFromArray($style_num);
 			$sheet->getStyle($indexTotal['descriptionStart'].$row.':'.$indexTotal['total'].$row)->applyFromArray($style_border);			
-			$sheet->setCellValue($indexTotal['total'].$row, $modelBudget->TotalDiscount);
+			$sheet->setCellValue($indexTotal['total'].$row, $currency .' ' . $modelBudget->TotalDiscount);
 			$row++;
 			
 			//sub total
@@ -299,9 +303,11 @@ class GreenHelper
 			self::cellColor($sheet, $indexTotal['descriptionStart'].$row.':'.$indexTotal['descriptionStart'].$row, 'e6e6fa');
 			$sheet->getStyle($indexTotal['total'].$row)->applyFromArray($style_num);
 			$sheet->getStyle($indexTotal['descriptionStart'].$row.':'.$indexTotal['total'].$row)->applyFromArray($style_border);
-			$sheet->setCellValue($indexTotal['total'].$row, $modelBudget->TotalPriceWithDiscount);
+			$sheet->setCellValue($indexTotal['total'].$row, $currency . ' ' .$modelBudget->TotalPriceWithDiscount);
 			$row++;
-			
+						
+			$project = isset($modelBudget->project)?$modelBudget->project->description:"";
+			$fileName = $project . " - v" .$versionNumber;
 		}
 		//END TOTALES---------------------------------------------------------------
 		
@@ -329,7 +335,7 @@ class GreenHelper
 		
 		// Redirect output to a client web browser (Excel5)
 		header('Content-Type: application/vnd.ms-excel');
-		header('Content-Disposition: attachment;filename="01simple.xls"');
+		header('Content-Disposition: attachment;filename="'.$fileName.'.xls"');
 		header('Cache-Control: max-age=0');
 		// If you're serving to IE 9, then the following may be needed
 		header('Cache-Control: max-age=1');
