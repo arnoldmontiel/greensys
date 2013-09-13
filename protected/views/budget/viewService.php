@@ -11,20 +11,20 @@ $this->menu=array(
 	array('label'=>'Delete Budget', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id, 'version'=>$model->version_number),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Add Items Budget', 'url'=>array('addItem', 'id'=>$model->Id, 'version'=>$model->version_number)),
 	array('label'=>'Manage Budget', 'url'=>array('admin')),
-	array('label'=>'View by services', 'url'=>array('viewService', 'id'=>$model->Id, 'version'=>$model->version_number)),
+	array('label'=>'View', 'url'=>array('view', 'id'=>$model->Id, 'version'=>$model->version_number)),
 );
 Yii::app()->clientScript->registerScript(__CLASS__.'view-budget', "
 
 
-$('.areaTitle').click(function(){
-	var idArea = $(this).attr('idArea');	
-	if($( '#itemArea_' + idArea ).is(':visible')){
-		$('#expandCollapse_' + idArea).text('+');
+$('.serviceTitle').click(function(){
+	var idService = $(this).attr('idService');	
+	if($( '#itemService_' + idService ).is(':visible')){
+		$('#expandCollapse_' + idService).text('+');
 	}
 	else{
-		$('#expandCollapse_' + idArea).text('-');
+		$('#expandCollapse_' + idService).text('-');
 	}
-	$('#itemArea_' + idArea ).toggle('blind',{},1000);
+	$('#itemService_' + idService ).toggle('blind',{},1000);
 	
 });
 
@@ -42,7 +42,7 @@ function fillParentData(data)
 }
 
 $('.link-popup').click(function(){
-	var idArea = $(this).attr('idArea');
+	var idService = $(this).attr('idService');
 	var idBudgetItem = $(this).attr('id');
 	var idProduct = $(this).attr('idProduct');
 		
@@ -68,9 +68,9 @@ $('.link-popup').click(function(){
 $('.btn-View-Assign').click(function(){
 	var idProduct = $(this).attr('idProduct');
 	var idBudgetItem = $(this).attr('idBudgetItem');
-	var idArea = $(this).attr('idArea');
+	var idService = $(this).attr('idService');
 	
-	$('#ViewStockAssign').attr('area',idArea);	
+	$('#ViewStockAssign').attr('service',idService);	
 
 	$.post(
 			'".BudgetController::createUrl('AjaxViewAssign')."',
@@ -141,27 +141,28 @@ $('#btn-export').click(function(){
 
 
 <?php 
-	$areaProjects = AreaProject::model()->findAllByAttributes(array('Id_project'=>$model->Id_project));		
-
-	foreach($areaProjects as $item)
-	{ 
-	?>
+	$criteria = new CDbCriteria;
+	$criteria->order ="t.description ASC";
+	$services = Service::model()->findAll($criteria);
+	foreach ($services as $service)
+	{?>
 		<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
-			<div class="areaTitle" idArea="<?php echo $item->Id_area; ?>" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
-				<span id="expandCollapse_<?php echo $item->Id_area; ?>">+</span>&nbsp;<?php echo $item->area->description." ( ".$item->description." )";?>
+			<div class="serviceTitle" idService="<?php echo $service->Id; ?>" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
+				<span id="expandCollapse_<?php echo $service->Id; ?>">+</span>&nbsp;<?php echo $service->description;?>
 			</div>
 		</div>
 		<br>&nbsp;
-		<div id="itemArea_<?php echo $item->Id_area; ?>" style="display: none">
+		<div id="itemService_<?php echo $service->Id; ?>" style="display: none">
 		<?php		
-		$modelBudgetItem->Id_area = $item->Id_area;		
+		$modelBudgetItem->Id_service = $service->Id;		
 		
-		echo $this->renderPartial('_budgetItem', array('idArea'=>$item->Id_area,
+		echo $this->renderPartial('_budgetItemService', array('idService'=>$service->Id,
 													   'modelBudgetItem'=>$modelBudgetItem,
 													   'canEdit'=>false,));
 		?>		
-		</div><!-- close itemArea -->
-	<?php				
+		</div><!-- close itemService -->
+		
+	<?php 
 	}
 	?>
 		<div>
@@ -385,7 +386,7 @@ $this->endWidget('zii.widgets.jui.CJuiDialog');
 								'width'=> '700',
 								'buttons'=>	array(
 										'cerrar'=>'js:function(){jQuery("#ViewStockAssign").dialog( "close" );
-																//$.fn.yiiGridView.update("budget-item-grid_" + $("#ViewStockAssign").attr("area"));
+																//$.fn.yiiGridView.update("budget-item-grid_" + $("#ViewStockAssign").attr("service"));
 																}',
 	),
 	),

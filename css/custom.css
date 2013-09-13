@@ -26,6 +26,18 @@ div .areaTitle
     height: 18px;
     padding-top: 5px;
 }
+div .serviceTitle
+{
+ 	color: #298DCD;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    height: 18px;
+    padding-top: 5px;
+}
+
 div .gridTitle-decoration1
 {
  	background: none repeat scroll 0 0 #B7D6E7;

@@ -11,6 +11,8 @@ $this->menu=array(
 	array('label'=>'Update Budget', 'url'=>array('update', 'id'=>$model->Id, 'version'=>$model->version_number)),
 	array('label'=>'Delete Budget', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id, 'version'=>$model->version_number),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Budget', 'url'=>array('admin')),
+	array('label'=>'View Budget', 'url'=>array('view', 'id'=>$model->Id, 'version'=>$model->version_number)),
+	array('label'=>'View by services', 'url'=>array('viewService', 'id'=>$model->Id, 'version'=>$model->version_number)),
 );
 $this->widget('ext.processingDialog.processingDialog', array(
 		'buttons'=>array('none'),
@@ -452,6 +454,7 @@ $('.btn-View-Assign').click(function(){
 ?>
 
 <h1>Add product</h1>
+<div id="left" style="width: 49% ;float: left">
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
@@ -460,17 +463,33 @@ $('.btn-View-Assign').click(function(){
 			'type'=>'raw',
 			'value'=>$model->project->description
 		),
-		'version_number',
 		array('label'=>$model->getAttributeLabel('Id_budget_state'),
 			'type'=>'raw',
 			'value'=>$model->budgetState->description
 		),
-		'description',
-		'percent_discount',
 		'date_estimated_inicialization',
+	),
+)); ?>
+</div>
+<div id="left" style="width: 49%;float: left;">
+
+<?php $this->widget('zii.widgets.CDetailView', array(
+	'data'=>$model,
+	'attributes'=>array(
+		'version_number',
+		'description',
 		'date_estimated_finalization',
 	),
 )); ?>
+</div>
+<div id="left" style="width: 98%;float: left;">
+<?php $this->widget('zii.widgets.CDetailView', array(
+	'data'=>$model,
+	'attributes'=>array(
+		'note',
+	),
+)); ?>
+</div>
 
 <br>
 
@@ -580,7 +599,7 @@ echo '</br>';
 															{
 																//actualizar
 																jQuery("#editAreaDescription'.$item->Id.'").dialog( "close" );
-																$("#edit-description-'.$item->Id.'").html(data.description);
+																$("#edit-description-'.$item->Id.'").html(" ( "+data.description+" ) ");
 															}
 														jQuery("#waiting").dialog("close");
 													},"json"
