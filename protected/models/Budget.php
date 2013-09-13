@@ -127,7 +127,7 @@ class Budget extends ModelAudit
 			'date_estimated_finalization' => 'Date Estimated Finalization',
 			'version_number' => 'Version Number',
 			'description' => 'Description',
-			'subTotalPrice'=>'Sub Total',
+			'subTotalPrice'=>'Subtotal',
 			'totalPrice'=>'Total',
 			'note' => 'Note',
 		);
