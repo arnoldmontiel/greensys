@@ -281,7 +281,8 @@ class BudgetItem extends ModelAudit
 	{
 		$discount = $this->discount;
 		if(isset($this->Id_budget_item))
-			$discount = $this->budgetItem->discount;
+			if(isset($this->discount_type) && $this->discount_type == 0)
+				$discount = $this->budgetItem->discount;
 		
 		return $discount;
 	}
@@ -293,14 +294,14 @@ class BudgetItem extends ModelAudit
 		{
 			if(isset($this->Id_budget_item))
 			{
-				if(isset($this->budgetItem->discount_type))
+				if($this->budgetItem->discount_type == 1)
 					$discountType = "$";
 				else 
 					$discountType = "%";
 			}
 			else
 			{
-				if(isset($this->discount_type))
+				if($this->discount_type == 1)
 					$discountType = "$";
 				else
 					$discountType = "%";
@@ -312,16 +313,21 @@ class BudgetItem extends ModelAudit
 	
 	public function getTotalPriceWOChildern()
 	{
-		if($this->discount_type ==0)
+		$discount = 0;
+		if(isset($this->discount_type))
 		{
-			if(isset($this->Id_budget_item))
-				$discount = (($this->price)*$this->quantity )* $this->budgetItem->discount/100;
+			if($this->discount_type == 0)
+			{
+				if(isset($this->Id_budget_item))
+					$discount = (($this->price)*$this->quantity )* $this->budgetItem->discount/100;
+				else
+					$discount = (($this->price)*$this->quantity )* $this->discount/100;
+			}
 			else
-				$discount = (($this->price)*$this->quantity )* $this->discount/100;
-		}
-		else
-		{
-			$discount = $this->discount;
+			{
+				if(!isset($this->Id_budget_item))
+					$discount = $this->discount;
+			}
 		}
 		return number_format((($this->price)*$this->quantity) - $discount , 2);
 	}
