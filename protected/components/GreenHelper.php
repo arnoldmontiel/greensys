@@ -76,7 +76,7 @@ class GreenHelper
 		$indexExtra	  = array('descriptionStart'=>'A', 'descriptionEnd'=>'E', 'quantity'=>'F', 'price'=>'G',
 										'discount'=>'H','total'=>'I');
 		
-		$styleArray = array(
+		$style_border = array(
 		       'borders' => array(
 		             'outline' => array(
 		                    'style' => PHPExcel_Style_Border::BORDER_THIN,
@@ -84,6 +84,13 @@ class GreenHelper
 							),
 				),
 		);		
+		
+		$style_num = array(
+		                'alignment' => array(
+		                    		'wrap' => true,
+		                                      'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_RIGHT,
+									),
+		);
 		
 		//sheet 0
 		$sheet = $objPHPExcel->setActiveSheetIndex(0);
@@ -120,7 +127,7 @@ class GreenHelper
 			$sheet->setCellValue($indexService['description'].$row, $serviceDesc);
 
 			self::cellColor($sheet, $indexService['name'].$row.':'.$indexService['description'].$row, 'e6e6fa');
-			$sheet->getStyle($indexService['name'].$row.':'.$indexService['description'].$row)->applyFromArray($styleArray);
+			$sheet->getStyle($indexService['name'].$row.':'.$indexService['description'].$row)->applyFromArray($style_border);
 			
 			$row++;
 			//END SERVICE---------------------------------------------------------------
@@ -135,7 +142,7 @@ class GreenHelper
 			$sheet->setCellValue($indexProduct['total'].$row, 'Total');
 							
 			self::cellColor($sheet, $indexProduct['model'].$row.':'.$indexProduct['total'].$row, '2c86ff');
-			$sheet->getStyle($indexProduct['model'].$row.':'.$indexProduct['total'].$row)->applyFromArray($styleArray);			
+			$sheet->getStyle($indexProduct['model'].$row.':'.$indexProduct['total'].$row)->applyFromArray($style_border);			
 			//END HEADER BUDGET ITEM---------------------------------------------------------------
 			
 			//BODY BUDGET ITEM---------------------------------------------------------------
@@ -193,8 +200,10 @@ class GreenHelper
 				$sheet->setCellValue($indexProduct['discount'].$row, $budgetItem->getDiscountType(). $budgetItem->getDiscount());
 				$sheet->setCellValue($indexProduct['total'].$row, $budgetItem->getTotalPriceWOChildern());
 				
+				$sheet->getStyle($indexProduct['quantity'].$row.':'.$indexProduct['total'].$row)->applyFromArray($style_num);
+				
 				$newRow = $row + $sumImageRows;
-				$sheet->getStyle($indexProduct['model'].$row.':'.$indexProduct['total'].$newRow)->applyFromArray($styleArray);
+				$sheet->getStyle($indexProduct['model'].$row.':'.$indexProduct['total'].$newRow)->applyFromArray($style_border);
 				
 				$row++;
 				$row = $row + $sumImageRows;
@@ -220,7 +229,7 @@ class GreenHelper
 			$sheet->setCellValue($indexService['name'].$row, 'Extras');
 			$sheet->setCellValue($indexService['description'].$row, 'Agregados');
 			self::cellColor($sheet, $indexService['name'].$row.':'.$indexService['description'].$row, 'e6e6fa');
-			$sheet->getStyle($indexService['name'].$row.':'.$indexService['description'].$row)->applyFromArray($styleArray);
+			$sheet->getStyle($indexService['name'].$row.':'.$indexService['description'].$row)->applyFromArray($style_border);
 			$row++;
 			//END SERVICE EXTRAS---------------------------------------------------------------
 			
@@ -234,7 +243,7 @@ class GreenHelper
 			$sheet->mergeCells($indexExtra['descriptionStart'].$row.':'.$indexExtra['descriptionEnd'].$row);
 				
 			self::cellColor($sheet, $indexExtra['descriptionStart'].$row.':'.$indexExtra['total'].$row, '2c86ff');
-			$sheet->getStyle($indexExtra['descriptionStart'].$row.':'.$indexExtra['total'].$row)->applyFromArray($styleArray);
+			$sheet->getStyle($indexExtra['descriptionStart'].$row.':'.$indexExtra['total'].$row)->applyFromArray($style_border);
 			$row++;
 			//END HEADER EXTRAS---------------------------------------------------------------
 			
@@ -248,7 +257,9 @@ class GreenHelper
 				$sheet->setCellValue($indexExtra['price'].$row, $budgetItem->price);
 				$sheet->setCellValue($indexExtra['discount'].$row, $budgetItem->getDiscountType(). $budgetItem->discount);
 				$sheet->setCellValue($indexExtra['total'].$row, $budgetItem->getTotalPriceWOChildern());
-				$sheet->getStyle($indexExtra['descriptionStart'].$row.':'.$indexExtra['total'].$row)->applyFromArray($styleArray);
+				$sheet->getStyle($indexExtra['descriptionStart'].$row.':'.$indexExtra['total'].$row)->applyFromArray($style_border);
+				
+				$sheet->getStyle($indexExtra['quantity'].$row.':'.$indexExtra['total'].$row)->applyFromArray($style_num);
 				$row++;
 			}
 			//END EXTRAS---------------------------------------------------------------
