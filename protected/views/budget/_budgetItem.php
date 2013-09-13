@@ -11,7 +11,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$modelBudgetItem->search(),
  	'filter'=>$modelBudgetItem,
 	'summaryText'=>'',
-	'afterAjaxUpdate'=>'function(id, data){	
+	'afterAjaxUpdate'=>'function(id, data){
+				setTotals();	
 				$.fn.yiiGridView.update("budget-item-generic");		
 		
 				$("#budget-item-grid_'.$idArea.'").find(".txtDiscount").each(
@@ -34,6 +35,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 										{
 											var response = jQuery.parseJSON(data);
 											$(target).parent().parent().find("input.txtTotalPrice").val(response.total_price);
+											setTotals();
 								}).error(function(data)
 										{
 									});	
@@ -64,6 +66,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 										{
 											var response = jQuery.parseJSON(data);
 											$(target).parent().parent().find("input.txtTotalPrice").val(response.total_price);
+											setTotals();
 											//alert("success");				
 									}).error(function(data)
 										{

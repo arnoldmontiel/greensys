@@ -316,7 +316,40 @@ class BudgetController extends Controller
 					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
 		));
 	}
-
+	
+	public function actionAjaxUpdatePercentDiscount()
+	{
+		if(isset($_POST['Id'])&&isset($_POST['version_number'])&&isset($_POST['percent_discount']))
+		{
+			$model = Budget::model()->findByPk(array('Id'=>$_POST['Id'],'version_number'=>$_POST['version_number']));
+			if(isset($model))
+			{
+				$model->percent_discount = $_POST['percent_discount'];
+				if($model->save())
+				{
+					$result['total_price_with_discount']=$model->TotalPriceWithDiscount;
+					$result['total_discount']=$model->TotalDiscount;
+					$result['total_price']=$model->totalPrice;					
+					echo json_encode(array_merge($model->attributes,$result)); 
+				}				
+			}			
+		}
+	}
+	public function actionAjaxGetTotals()
+	{
+		if(isset($_POST['Id'])&&isset($_POST['version_number']))
+		{
+			$model = Budget::model()->findByPk(array('Id'=>$_POST['Id'],'version_number'=>$_POST['version_number']));
+			if(isset($model))
+			{
+				$result['total_price_with_discount']=$model->TotalPriceWithDiscount;
+				$result['total_discount']=$model->TotalDiscount;
+				$result['total_price']=$model->totalPrice;
+				echo json_encode(array_merge($model->attributes,$result));
+			}
+		}
+	}
+	
 	public function actionAjaxUpdateUpdateGenericItem()
 	{
 		$id = isset($_POST['Id'])?$_POST['Id']:null;

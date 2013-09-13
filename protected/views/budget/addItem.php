@@ -18,7 +18,49 @@ $this->widget('ext.processingDialog.processingDialog', array(
 ));
 
 Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
-
+function setTotals()
+		{
+			$.post(
+				'".PriceListController::createUrl('AjaxGetTotals')."',
+				 {
+				 	Id: ".$model->Id.",
+					version_number:".$model->version_number.",
+				 },'json').success(
+					function(data) 
+					{ 
+						if(data!='')
+						{
+							var response = jQuery.parseJSON(data);							
+							$('#totals_price_w_discount').val(response.total_price_with_discount);					
+							$('#totals_discount').val(response.total_discount);
+							$('#totals_total_price').val(response.total_price);
+						}
+					}
+				);		
+		}
+	$('#totals_percent_discount').change(
+		function(){
+			$.post(
+				'".PriceListController::createUrl('AjaxUpdatePercentDiscount')."',
+				 {
+				 	Id: ".$model->Id.",
+					version_number:".$model->version_number.",
+					percent_discount: $(this).val(),
+				 },'json').success(
+					 	function(data) 
+					 		{ 
+								if(data!='')
+								{
+									var response = jQuery.parseJSON(data);							
+									$('#totals_price_w_discount').val(response.total_price_with_discount);					
+									$('#totals_discount').val(response.total_discount);
+									$('#totals_total_price').val(response.total_price);
+								//	$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000,function(){ $(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000);});								
+								}
+							});
+		
+		}
+		);
 $('#budget-item-generic').find('input.txtQuantityGenericItem').each(
 												function(index, item){
 												
@@ -41,7 +83,8 @@ $('#budget-item-generic').find('input.txtQuantityGenericItem').each(
 																			 		{ 
 																						var response = jQuery.parseJSON(data);
 																						$(target).parent().parent().find('input.txtTotalPriceGenericItem').val(response.total_price);
-																						$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000,function(){ $(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000);}); 																						
+																						$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000,function(){ $(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000);});
+																						setTotals(); 																						
 																						
 																					});
 																		
@@ -71,6 +114,7 @@ $('#budget-item-generic').find('input.txtPriceGenericItem').each(
 																						var response = jQuery.parseJSON(data);
 																						$(target).parent().parent().find('input.txtTotalPriceGenericItem').val(response.total_price);
 																						$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000,function(){ $(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000);});
+																						setTotals();
  																						
 																						
 																					});
@@ -79,6 +123,7 @@ $('#budget-item-generic').find('input.txtPriceGenericItem').each(
 });	
 function updateGridViews()
 {
+		setTotals();
 		$.fn.yiiGridView.update('budget-item-generic');
 		$('div.grid-view').each(
 		function(index){
@@ -159,6 +204,7 @@ $('.ddl_generic_discount_type').change(
 							var response = jQuery.parseJSON(data);
 							$(target).parent().parent().find('input.txtTotalPriceGenericItem').val(response.total_price);
 							$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000,function(){ $(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000);});
+							setTotals();
 								//alert('success');				
 					}).error(function(data)
 						{
@@ -182,6 +228,7 @@ $('.ddl_discount_type').change(
 						{
 							var response = jQuery.parseJSON(data);
 							$(target).parent().parent().find('input.txtTotalPrice').val(response.total_price);
+							setTotals();
 								//alert('success');				
 					}).error(function(data)
 						{
@@ -216,6 +263,7 @@ $('.txtDiscount').change(
 						{
 							var response = jQuery.parseJSON(data);
 							$(target).parent().parent().find('input.txtTotalPrice').val(response.total_price);
+							setTotals();
 								//alert('success');				
 					}).error(function(data)
 						{
@@ -241,6 +289,7 @@ $('.txtGenericDiscount').change(
 							var response = jQuery.parseJSON(data);
 							$(target).parent().parent().find('input.txtTotalPriceGenericItem').val(response.total_price);
 							$(target).parent().parent().find('#saveok').animate({opacity: 'show'},4000,function(){ $(target).parent().parent().find('#saveok').animate({opacity: 'hide'},4000);});
+							setTotals();
 								//alert('success');				
 					}).error(function(data)
 						{
@@ -265,7 +314,7 @@ $('.link-popup').click(function(){
 		},'json');	
 		
 	$('#ViewProductChild').dialog('open');
-	
+
 	$.fn.yiiGridView.update('budget-item-children-grid', {
  		data: 'BudgetItem[Id_budget_item]=' + idBudgetItem
  	});
@@ -614,6 +663,7 @@ echo '</br>';
 															{
 																var response = jQuery.parseJSON(data);
 																$(target).parent().parent().find("input.txtTotalPriceGenericItem").val(response.total_price);
+																setTotals();
 													}).error(function(data)
 															{
 														});	
@@ -642,6 +692,7 @@ echo '</br>';
 															{
 																var response = jQuery.parseJSON(data);
 																$(target).parent().parent().find("input.txtTotalPriceGenericItem").val(response.total_price);
+																setTotals();
 																//alert("success");				
 														}).error(function(data)
 															{
@@ -674,7 +725,8 @@ echo '</br>';
 																			 		{ 
 																						var response = jQuery.parseJSON(data);
 																						$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000,function(){ $(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000);});
-																						$(target).parent().parent().find("input.txtTotalPriceGenericItem").val(response.total_price);																						
+																						$(target).parent().parent().find("input.txtTotalPriceGenericItem").val(response.total_price);
+																						setTotals();																						
 																					});
 																		
 																});
@@ -702,6 +754,7 @@ echo '</br>';
 																						var response = jQuery.parseJSON(data);
 																						$(target).parent().parent().find("#saveok").animate({opacity: "show"},4000,function(){ $(target).parent().parent().find("#saveok").animate({opacity: "hide"},4000);});
 																						$(target).parent().parent().find("input.txtTotalPriceGenericItem").val(response.total_price);
+																						setTotals();
 																						
 																					});
 																		
@@ -829,14 +882,13 @@ $this->widget('zii.widgets.CDetailView', array(
 						'htmlOptions'=>array('style' => 'text-align: right;'),
 						'value'=>
 						CHtml::textField("percen_discount",
-								$model->percent_discount." %",
+								$model->percent_discount,
 								array(
 										'id'=>"totals_percent_discount",
-										"disabled"=>"disabled",
-										"style"=>"width:50px;display:inline-block;text-align:right;",
+										"style"=>"width:30px;display:inline-block;text-align:right;",
 								)
-						).
-						CHtml::textField("TotalPriceWithDiscount",
+						)." %".
+						CHtml::textField("TotalDiscount",
 								$model->TotalDiscount,
 								array(
 										'id'=>"totals_discount",
@@ -883,6 +935,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
 								if(data!=null)
 								{
 									//actualizar
+									setTotals();
 									$.fn.yiiGridView.update("budget-item-generic");
 									jQuery("#CreateNewBudgetItem").dialog( "close" );
 									$("#BudgetItem_description").val("");
