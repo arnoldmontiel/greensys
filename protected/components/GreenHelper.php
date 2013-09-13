@@ -110,7 +110,7 @@ class GreenHelper
 			
 			//SERVICE---------------------------------------------------------------
 			$serviceName = 'General';
-			$serviceDesc = 'Items sin area designada';
+			$serviceDesc = 'Items sin agrupar en servicios';
 			if(isset($budgetItemService->service))
 			{
 				$serviceName = $budgetItemService->service->description;
