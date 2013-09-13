@@ -289,22 +289,28 @@ class BudgetItem extends ModelAudit
 
 	public function getDiscountType()
 	{
+		$modelSettings = Setting::model()->findByPk(1);
+				
 		$discountType = "";
-		if(self::getDiscount() > 0)
+		
+		if(isset($modelSettings))
 		{
-			if(isset($this->Id_budget_item))
+			if(self::getDiscount() > 0)
 			{
-				if($this->budgetItem->discount_type == 1)
-					$discountType = "$";
-				else 
-					$discountType = "%";
-			}
-			else
-			{
-				if($this->discount_type == 1)
-					$discountType = "$";
+				if(isset($this->Id_budget_item))
+				{
+					if($this->budgetItem->discount_type == 1)
+						$discountType = $modelSettings->currency->short_description;
+					else 
+						$discountType = "%";
+				}
 				else
-					$discountType = "%";
+				{
+					if($this->discount_type == 1)
+						$discountType = $modelSettings->currency->short_description;
+					else
+						$discountType = "%";
+				}
 			}
 		}
 		
