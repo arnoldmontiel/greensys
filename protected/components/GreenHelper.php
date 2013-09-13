@@ -185,16 +185,12 @@ class GreenHelper
 					$objDrawingPType->setOffsetX(1);
 					$objDrawingPType->setOffsetY(1);
 					$objDrawingPType->setHeight(95);
-					//$objDrawingPType->setResizeProportional(10);
-					//$sheet->getRowDimension($row)->setRowHeight(100);
-					//$sheet->getColumnDimension($indexProduct['image'])->setWidth(30);
-					//$sheet->setCellValue($indexProduct['image'].$row, '                             ');
 					$sumImageRows = 4;
 				}
 				
 				$sheet->setCellValue($indexProduct['quantity'].$row, $budgetItem->quantity);
 				$sheet->setCellValue($indexProduct['price'].$row, $budgetItem->price);
-				$sheet->setCellValue($indexProduct['discount'].$row, $budgetItem->getDiscount());
+				$sheet->setCellValue($indexProduct['discount'].$row, $budgetItem->getDiscountType(). $budgetItem->getDiscount());
 				$sheet->setCellValue($indexProduct['total'].$row, $budgetItem->getTotalPriceWOChildern());
 				
 				$newRow = $row + $sumImageRows;
@@ -250,7 +246,7 @@ class GreenHelper
 				$sheet->getStyle($indexExtra['descriptionStart'].$row)->getAlignment()->setWrapText(true);
 				$sheet->setCellValue($indexExtra['quantity'].$row, $budgetItem->quantity);
 				$sheet->setCellValue($indexExtra['price'].$row, $budgetItem->price);
-				$sheet->setCellValue($indexExtra['discount'].$row, $budgetItem->discount);
+				$sheet->setCellValue($indexExtra['discount'].$row, $budgetItem->getDiscountType(). $budgetItem->discount);
 				$sheet->setCellValue($indexExtra['total'].$row, $budgetItem->getTotalPriceWOChildern());
 				$sheet->getStyle($indexExtra['descriptionStart'].$row.':'.$indexExtra['total'].$row)->applyFromArray($styleArray);
 				$row++;
