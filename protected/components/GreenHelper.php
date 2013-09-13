@@ -75,6 +75,7 @@ class GreenHelper
 										'quantity'=>'F','price'=>'G','discount'=>'H','total'=>'I');
 		$indexExtra	  = array('descriptionStart'=>'A', 'descriptionEnd'=>'E', 'quantity'=>'F', 'price'=>'G',
 										'discount'=>'H','total'=>'I');
+		$indexTotal	  = array('descriptionStart'=>'F','descriptionEnd'=>'H','total'=>'I');
 		
 		$style_border = array(
 		       'borders' => array(
@@ -262,9 +263,45 @@ class GreenHelper
 				$sheet->getStyle($indexExtra['quantity'].$row.':'.$indexExtra['total'].$row)->applyFromArray($style_num);
 				$row++;
 			}
-			//END EXTRAS---------------------------------------------------------------
+			//END BODY EXTRAS---------------------------------------------------------------
 		}
 		//END EXTRAS---------------------------------------------------------------
+		
+		
+		//TOTALES---------------------------------------------------------------
+		$row++;
+		$modelBudget = Budget::model()->findByAttributes(array('Id'=>$idBudget,'version_number'=>$versionNumber));
+		if(isset($modelBudget))
+		{
+			//sub total
+			$sheet->setCellValue($indexTotal['descriptionStart'].$row, 'Sub Total');
+			$sheet->mergeCells($indexTotal['descriptionStart'].$row.':'.$indexTotal['descriptionEnd'].$row);
+			self::cellColor($sheet, $indexTotal['descriptionStart'].$row.':'.$indexTotal['descriptionStart'].$row, 'e6e6fa');
+			$sheet->getStyle($indexTotal['total'].$row)->applyFromArray($style_num);
+			$sheet->getStyle($indexTotal['descriptionStart'].$row.':'.$indexTotal['total'].$row)->applyFromArray($style_border);
+			$sheet->setCellValue($indexTotal['total'].$row, $modelBudget->totalPrice);
+			$row++;
+			
+			//sub total
+			$sheet->setCellValue($indexTotal['descriptionStart'].$row, 'Descuento');
+			$sheet->mergeCells($indexTotal['descriptionStart'].$row.':'.$indexTotal['descriptionEnd'].$row);
+			self::cellColor($sheet, $indexTotal['descriptionStart'].$row.':'.$indexTotal['descriptionStart'].$row, 'e6e6fa');
+			$sheet->getStyle($indexTotal['total'].$row)->applyFromArray($style_num);
+			$sheet->getStyle($indexTotal['descriptionStart'].$row.':'.$indexTotal['total'].$row)->applyFromArray($style_border);			
+			$sheet->setCellValue($indexTotal['total'].$row, $modelBudget->TotalDiscount);
+			$row++;
+			
+			//sub total
+			$sheet->setCellValue($indexTotal['descriptionStart'].$row, 'Total');
+			$sheet->mergeCells($indexTotal['descriptionStart'].$row.':'.$indexTotal['descriptionEnd'].$row);
+			self::cellColor($sheet, $indexTotal['descriptionStart'].$row.':'.$indexTotal['descriptionStart'].$row, 'e6e6fa');
+			$sheet->getStyle($indexTotal['total'].$row)->applyFromArray($style_num);
+			$sheet->getStyle($indexTotal['descriptionStart'].$row.':'.$indexTotal['total'].$row)->applyFromArray($style_border);
+			$sheet->setCellValue($indexTotal['total'].$row, $modelBudget->TotalPriceWithDiscount);
+			$row++;
+			
+		}
+		//END TOTALES---------------------------------------------------------------
 		
 		//set column auto-size		
 		foreach(range($indexProduct['quantity'],$indexProduct['total']) as $columnID) {
