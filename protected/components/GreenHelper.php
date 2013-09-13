@@ -130,6 +130,7 @@ class GreenHelper
 			self::cellColor($sheet, $indexService['name'].$row.':'.$indexService['description'].$row, 'e6e6fa');
 			$sheet->getStyle($indexService['name'].$row.':'.$indexService['description'].$row)->applyFromArray($style_border);
 			$sheet->getStyle($indexService['name'].$row)->getAlignment()->setWrapText(true);
+			$sheet->getStyle($indexService['name'].$row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 			
 			$row++;
 			//END SERVICE---------------------------------------------------------------
