@@ -75,6 +75,7 @@ class GreenHelper
 			$currency = $modelSettings->currency->short_description;
 		
 		//INDICES EXCEL
+		$indexMain = array('main'=>'A','image'=>'C','mainStart'=>'A','mainEnd'=>'I');
 		$indexService = array('name'=>'A', 'description'=>'B');
 		$indexProduct = array('model'=>'A','description'=>'B','image'=>'C',
 										'quantity'=>'F','price'=>'G','discount'=>'H','total'=>'I');
@@ -103,6 +104,47 @@ class GreenHelper
 		$sheet->getColumnDimension($indexService['description'])->setWidth(50);
 		$row = 1;
 		
+		//MAIN HEADER---------------------------------------------------------------
+		$modelBudget = Budget::model()->findByAttributes(array('Id'=>$idBudget,'version_number'=>$versionNumber));
+		if(isset($modelBudget))
+		{
+			$sheet->setCellValue($indexService['name'].$row, $serviceName);
+			$sheet->setCellValue($indexService['description'].$row, $serviceDesc);
+			$objDrawingPType = new PHPExcel_Worksheet_Drawing();
+			$objDrawingPType->setWorksheet($sheet);
+			$objDrawingPType->setName("Pareto By Type");
+			$objDrawingPType->setPath(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/logoSL.png");
+			$objDrawingPType->setCoordinates($indexMain['image'].$row);
+			$objDrawingPType->setOffsetX(1);
+			$objDrawingPType->setOffsetY(1);
+			$objDrawingPType->setHeight(95);
+			
+			$row = 6;
+			$sheet->mergeCells($indexMain['mainStart'].'1:'.$indexMain['mainEnd'].$row);
+			
+			$row++;
+			$sheet->setCellValue($indexMain['main'].$row, 'Propuesta - '. $modelBudget->description);
+			$sheet->mergeCells($indexMain['mainStart'].$row.':'.$indexMain['mainEnd'].$row);
+			$row++;
+			
+			$customer = $modelBudget->project->customer;
+			$sheet->setCellValue($indexMain['main'].$row, $customer->person->name . ' ' . $customer->person->last_name);
+			$sheet->mergeCells($indexMain['mainStart'].$row.':'.$indexMain['mainEnd'].$row);
+			$row++;
+			
+			$sheet->setCellValue($indexMain['main'].$row, 'Revision '.$versionNumber);
+			$sheet->mergeCells($indexMain['mainStart'].$row.':'.$indexMain['mainEnd'].$row);
+			$row++;
+			
+			$sheet->setCellValue($indexMain['main'].$row, date("d-m-Y"));
+			$sheet->mergeCells($indexMain['mainStart'].$row.':'.$indexMain['mainEnd'].$row);
+			
+			$sheet->getStyle($indexMain['main'].'1:'.$indexMain['main'].$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER) ;
+			$row++;
+		}
+		//END MAIN HEADER---------------------------------------------------------------		
+		
+		$row++;
 		$criteria = new CDbCriteria();
 		$criteria->addCondition('Id_budget = '.$idBudget);
 		$criteria->addCondition('version_number = '.$versionNumber);
@@ -275,8 +317,7 @@ class GreenHelper
 		
 		
 		//TOTALES---------------------------------------------------------------
-		$row++;
-		$modelBudget = Budget::model()->findByAttributes(array('Id'=>$idBudget,'version_number'=>$versionNumber));
+		$row++;		
 		if(isset($modelBudget))
 		{
 			//sub total
