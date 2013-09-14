@@ -3,6 +3,7 @@ $this->breadcrumbs=array(
 	'Budgets'=>array('index'),
 	$model->project->description,
 );
+$settings = new Settings();
 
 $this->menu=array(
 	array('label'=>'List Budget', 'url'=>array('index')),
@@ -192,12 +193,12 @@ $('#btn-export').click(function(){
 									'name'=>'price',
 									'value'=>
                                     	'CHtml::textField("txtPriceGenericItem",
-												$data->price,
+												"'.$settings->getEscapedCurrencyShortDescription().' ".$data->price,
 												array(
 														"id"=>$data->Id,
 														"class"=>"txtPriceGenericItem",
 														"disabled"=>"disabled",
-														"style"=>"width:50px;text-align:right;",
+														"style"=>"width:90px;text-align:right;",
 													)
 											)',
 
@@ -224,7 +225,7 @@ $('#btn-export').click(function(){
 							
 							array(
 									'name'=>'discount_type',
-									'value'=>'($data->discount_type==0)?"%":"$";',
+									'value'=>'($data->discount_type==0)?"%":"'.$settings->getEscapedCurrencyShortDescription().'";',
 									'type'=>'html',
 									'htmlOptions'=>array('style'=>"width:20px"),
 							),
@@ -233,12 +234,12 @@ $('#btn-export').click(function(){
 									'name'=>'total_price',
 									'value'=>
                                     	'CHtml::textField("txtTotalPriceGenericItem",
-												$data->totalPrice,
+												"'.$settings->getEscapedCurrencyShortDescription().' ". $data->totalPrice,
 												array(
 														"id"=>$data->Id,
 														"class"=>"txtTotalPriceGenericItem",
 														"disabled"=>"disabled",
-														"style"=>"width:50px;text-align:right;",
+														"style"=>"width:90px;text-align:right;",
 													)
 											)',
 
@@ -256,11 +257,11 @@ $this->widget('zii.widgets.CDetailView', array(
 					'htmlOptions'=>array('style' => 'text-align: right;'),
 					'value'=>
 					CHtml::textField("totalPrice",
-							$model->totalPrice,
+							$settings->getCurrencyShortDescription()." ".$model->totalPrice,
 							array(
 									'id'=>"totals_total_price",
 									"disabled"=>"disabled",
-									"style"=>"width:60px;float:right;text-align:right;",
+									"style"=>"width:100px;float:right;text-align:right;",
 							)
 					),
 			),
@@ -278,11 +279,11 @@ $this->widget('zii.widgets.CDetailView', array(
 					)
 				).
 			CHtml::textField("TotalPriceWithDiscount",
-				$model->TotalDiscount,
+				$settings->getCurrencyShortDescription()." ".$model->TotalDiscount,
 				array(
 					'id'=>"totals_discount",
 					"disabled"=>"disabled",
-					"style"=>"width:60px;float:right;text-align:right;display:inline-block;",
+					"style"=>"width:100px;float:right;text-align:right;display:inline-block;",
 					)
 			),
 		),
@@ -291,11 +292,11 @@ $this->widget('zii.widgets.CDetailView', array(
 				'htmlOptions'=>array('style' => 'text-align: right;'),
 				'value'=>
 				CHtml::textField("TotalPriceWithDiscount",
-						$model->TotalPriceWithDiscount,
+						$settings->getCurrencyShortDescription()." ".$model->TotalPriceWithDiscount,
 						array(
 								'id'=>"totals_price_w_discount",
 								"disabled"=>"disabled",
-								"style"=>"width:60px;float:right;text-align:right;",
+								"style"=>"width:100px;float:right;text-align:right;",
 						)
 				),
 		),

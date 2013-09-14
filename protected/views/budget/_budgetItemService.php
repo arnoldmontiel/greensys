@@ -1,7 +1,9 @@
 
 <div id="display">
 
-<?php 
+<?php
+$settings = new Settings();
+
 $criteria = new CDbCriteria;
 $criteria->order ="description";
 $serviceList = CHtml::listData(Service::model()->findAll($criteria), 'Id', 'description');
@@ -279,20 +281,20 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				),
 				array(
  					'name'=>'price',
-				    'value'=>'$data->price',
+				    'value'=>'"'.$settings->getEscapedCurrencyShortDescription().' ".$data->price',
 					'type'=>'raw',
-			        'htmlOptions'=>array('style'=>'text-align: right;'),
+			        'htmlOptions'=>array('style'=>'text-align: right;width:90px;'),
 				),
 				array(
 						'name'=>'discount',
 						'value'=>
 						'CHtml::textField("txtDiscount",
-													$data->discount,
+													(($data->discount_type==0)?"% ":"'.$settings->getEscapedCurrencyShortDescription().' ").$data->discount,
 													array(
 															"id"=>$data->Id,
 															"class"=>"txtDiscount",
 															"disabled"=>'.(($canEdit)?'""':'"disabled"').',
-															"style"=>"width:50px;text-align:right;",
+															"style"=>"width:90px;text-align:right;",
 														)
 												)',
 				
@@ -301,25 +303,26 @@ $this->widget('zii.widgets.grid.CGridView', array(
 						'htmlOptions'=>array('width'=>5),
 				),
 				
-				array(
-						'name'=>'discount_type',
-						'value'=>($canEdit)?'
-							CHtml::dropDownList("discount_type", $data->discount_type,array("%","$"),array(
-							"id"=>$data->Id,"class"=>"ddl_discount_type","style"=>"width:50px"
-							) );':'($data->discount_type==0)?"%":"$";',
-						'type'=>($canEdit)?'raw':'html',
-						'htmlOptions'=>array('style'=>"width:20px"),
-				),
+					($canEdit)?array(
+							'name'=>'discount_type',
+							'value'=>($canEdit)?'
+								CHtml::dropDownList("discount_type", $data->discount_type,array("%","'.$settings->getEscapedCurrencyShortDescription().'"),array(
+								"id"=>$data->Id,"class"=>"ddl_discount_type","style"=>"width:50px"
+								) );':'($data->discount_type==0)?"%":"$";',
+							'type'=>($canEdit)?'raw':'html',
+							'htmlOptions'=>array('style'=>"width:20px"),
+					):array('visible'=>false)
+				,
 				array(
 						'name'=>'total_price',
 						'value'=>
 						'CHtml::textField("txtTotalPrice",
-														$data->totalPrice,
+														"'.$settings->getEscapedCurrencyShortDescription().' ".$data->totalPrice,
 														array(
 																"id"=>$data->Id,
 																"class"=>"txtTotalPrice",
 																"disabled"=>"disbled",
-																"style"=>"width:50px;text-align:right;",
+																"style"=>"width:90px;text-align:right;",
 															)
 													)',
 				

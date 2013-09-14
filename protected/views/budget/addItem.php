@@ -14,6 +14,8 @@ $this->menu=array(
 	array('label'=>'View Budget', 'url'=>array('view', 'id'=>$model->Id, 'version'=>$model->version_number)),
 	array('label'=>'View by services', 'url'=>array('viewService', 'id'=>$model->Id, 'version'=>$model->version_number)),
 );
+$settings = new Settings();
+
 $this->widget('ext.processingDialog.processingDialog', array(
 		'buttons'=>array('none'),
 		'idDialog'=>'waiting',
@@ -806,12 +808,12 @@ echo '</br>';
 							array(
 									'name'=>'price',
 									'value'=>
-				                                    	'CHtml::textField("txtPriceGenericItem",
+				                                   '"'.$settings->getEscapedCurrencyShortDescription().' ".CHtml::textField("txtPriceGenericItem",
 																$data->price,
 																array(
 																		"id"=>$data->Id,
 																		"class"=>"txtPriceGenericItem",
-																		"style"=>"width:50px;text-align:right;",
+																		"style"=>"width:70px;text-align:right;",
 																	)
 															)',
 		
@@ -839,23 +841,23 @@ echo '</br>';
 							array(
 									'name'=>'discount_type',
 									'value'=>(true)?'
-														CHtml::dropDownList("discount_type", $data->discount_type,array("%","$"),array(
+														CHtml::dropDownList("discount_type", $data->discount_type,array("%","'.$settings->getEscapedCurrencyShortDescription().'"),array(
 														"id"=>$data->Id,"class"=>"ddl_generic_discount_type","style"=>"width:50px"
 														) );':'($data->discount_type==0)?"%":"$";',
 									'type'=>(true)?'raw':'html',
-									'htmlOptions'=>array('style'=>"width:20px"),
+									'htmlOptions'=>array('style'=>"width:25px"),
 							),
 
 							array(									
 									'name'=>'total_price',
 									'value'=>
 				                                    	'CHtml::textField("txtTotalPriceGenericItem",
-																$data->totalPrice,
+																"'.$settings->getEscapedCurrencyShortDescription().' ". $data->totalPrice,
 																array(
 																		"id"=>$data->Id,
 																		"class"=>"txtTotalPriceGenericItem",
 																		"disabled"=>"disabled",
-																		"style"=>"width:50px;text-align:right;",
+																		"style"=>"width:90px;text-align:right;",
 																	)
 															)',
 
@@ -892,11 +894,11 @@ $this->widget('zii.widgets.CDetailView', array(
 						'htmlOptions'=>array('style' => 'text-align: right;'),
 						'value'=>
 						CHtml::textField("totalPrice",
-								$model->totalPrice,
+								$settings->getCurrencyShortDescription()." ".$model->totalPrice,
 								array(
 										'id'=>"totals_total_price",
 										"disabled"=>"disabled",
-										"style"=>"width:60px;float:right;text-align:right;",
+										"style"=>"width:100px;float:right;text-align:right;",
 								)
 						),
 				),
@@ -913,11 +915,11 @@ $this->widget('zii.widgets.CDetailView', array(
 								)
 						)." %".
 						CHtml::textField("TotalDiscount",
-								$model->TotalDiscount,
+								$settings->getCurrencyShortDescription()." ".$model->TotalDiscount,
 								array(
 										'id'=>"totals_discount",
 										"disabled"=>"disabled",
-										"style"=>"width:60px;float:right;text-align:right;display:inline-block;",
+										"style"=>"width:100px;float:right;text-align:right;display:inline-block;",
 								)
 						),
 				),
@@ -926,11 +928,11 @@ $this->widget('zii.widgets.CDetailView', array(
 						'htmlOptions'=>array('style' => 'text-align: right;'),
 						'value'=>
 						CHtml::textField("TotalPriceWithDiscount",
-								$model->TotalPriceWithDiscount,
+								$settings->getCurrencyShortDescription()." ".$model->TotalPriceWithDiscount,
 								array(
 										'id'=>"totals_price_w_discount",
 										"disabled"=>"disabled",
-										"style"=>"width:60px;float:right;text-align:right;",
+										"style"=>"width:100px;float:right;text-align:right;",
 								)
 						),
 				),

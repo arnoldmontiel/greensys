@@ -62,4 +62,9 @@ class Settings
 	{
 		return $this->_setting->currency->short_description;				
 	}
+	public function getEscapedCurrencyShortDescription()
+	{
+		return str_replace ( "$" , "\\$", $this->_setting->currency->short_description);
+	}
+	
 }
