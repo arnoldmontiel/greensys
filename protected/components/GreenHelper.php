@@ -108,8 +108,6 @@ class GreenHelper
 		$modelBudget = Budget::model()->findByAttributes(array('Id'=>$idBudget,'version_number'=>$versionNumber));
 		if(isset($modelBudget))
 		{
-// 			$sheet->setCellValue($indexService['name'].$row, $serviceName);
-// 			$sheet->setCellValue($indexService['description'].$row, $serviceDesc);
 			$objDrawingPType = new PHPExcel_Worksheet_Drawing();
 			$objDrawingPType->setWorksheet($sheet);
 			$objDrawingPType->setName("Pareto By Type");
@@ -155,30 +153,55 @@ class GreenHelper
 		foreach($budgetItemServices as $budgetItemService)
 		{
 			
-			//SERVICE---------------------------------------------------------------
-			$serviceName = 'General';
-			$serviceDesc = 'Items sin agrupar en servicios';
-			if(isset($budgetItemService->service))
-			{
-				$serviceName = $budgetItemService->service->description;
-				$serviceDesc = $budgetItemService->service->long_description;
+			$criteria = new CDbCriteria();
+			$criteria->addCondition('Id_budget = '.$idBudget);
+			$criteria->addCondition('version_number = '.$versionNumber);
 				
-				$projectServiceDB = ProjectService::model()->findByAttributes(array('Id_project'=>$budgetItemService->budget->Id_project,
-																	'Id_service'=>$budgetItemService->Id_service));
-				if(isset($projectServiceDB))
-					$serviceDesc = $projectServiceDB->long_description;				
+			$serviceCondition = '';
+			if(isset($budgetItemService->Id_service))
+			{
+				$serviceCondition = 'Id_service = '.$budgetItemService->Id_service. ' OR
+															(Id_budget_item in (select Id from budget_item bi 	
+															where Id_budget = '.$idBudget .' 
+															and version_number = '.$versionNumber .'
+															and Id_product is not null
+															and Id_service = '.$budgetItemService->Id_service.' )
+														AND is_included = 1)';
 			}
+			else
+				$serviceCondition = '(Id_service is null and Id_budget_item is null)';
+				
+			$criteria->addCondition($serviceCondition);
+			$criteria->addCondition('Id_product is not null');
 			
-			$sheet->getStyle($indexService['description'].$row)->getAlignment()->setWrapText(true);
+			$budgetItems = BudgetItem::model()->findAll($criteria);
 			
-			$sheet->setCellValue($indexService['name'].$row, $serviceName);
-			$sheet->setCellValue($indexService['description'].$row, $serviceDesc);
-
-			self::cellColor($sheet, $indexService['name'].$row.':'.$indexService['description'].$row, 'e6e6fa');
-			$sheet->getStyle($indexService['name'].$row.':'.$indexService['description'].$row)->applyFromArray($style_border);
-			$sheet->getStyle($indexService['name'].$row)->getAlignment()->setWrapText(true);
-			$sheet->getStyle($indexService['name'].$row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-			
+			//SERVICE---------------------------------------------------------------
+			if(count($budgetItems)>0)
+			{
+				$serviceName = 'General';
+				$serviceDesc = 'Items sin agrupar en servicios';
+				if(isset($budgetItemService->service))
+				{
+					$serviceName = $budgetItemService->service->description;
+					$serviceDesc = $budgetItemService->service->long_description;
+					
+					$projectServiceDB = ProjectService::model()->findByAttributes(array('Id_project'=>$budgetItemService->budget->Id_project,
+																		'Id_service'=>$budgetItemService->Id_service));
+					if(isset($projectServiceDB))
+						$serviceDesc = $projectServiceDB->long_description;				
+				}
+				
+				$sheet->getStyle($indexService['description'].$row)->getAlignment()->setWrapText(true);
+				
+				$sheet->setCellValue($indexService['name'].$row, $serviceName);
+				$sheet->setCellValue($indexService['description'].$row, $serviceDesc);
+	
+				self::cellColor($sheet, $indexService['name'].$row.':'.$indexService['description'].$row, 'e6e6fa');
+				$sheet->getStyle($indexService['name'].$row.':'.$indexService['description'].$row)->applyFromArray($style_border);
+				$sheet->getStyle($indexService['name'].$row)->getAlignment()->setWrapText(true);
+				$sheet->getStyle($indexService['name'].$row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+			}
 			$row++;
 			//END SERVICE---------------------------------------------------------------
 						
@@ -196,28 +219,7 @@ class GreenHelper
 			//END HEADER BUDGET ITEM---------------------------------------------------------------
 			
 			//BODY BUDGET ITEM---------------------------------------------------------------
-			$criteria = new CDbCriteria();
-			$criteria->addCondition('Id_budget = '.$idBudget);
-			$criteria->addCondition('version_number = '.$versionNumber);
 			
-			$serviceCondition = '';
-			if(isset($budgetItemService->Id_service))
-			{
-				$serviceCondition = 'Id_service = '.$budgetItemService->Id_service. ' OR 
-												(Id_budget_item in (select Id from budget_item bi 	
-												where Id_budget = '.$idBudget .' 
-												and version_number = '.$versionNumber .'
-												and Id_product is not null
-												and Id_service = '.$budgetItemService->Id_service.' )
-											AND is_included = 1)';
-			}
-			else
-				$serviceCondition = '(Id_service is null and Id_budget_item is null)';
-			
-			$criteria->addCondition($serviceCondition);
-			$criteria->addCondition('Id_product is not null');
-				
-			$budgetItems = BudgetItem::model()->findAll($criteria);
 			$row++;
 			foreach($budgetItems as $budgetItem)
 			{
