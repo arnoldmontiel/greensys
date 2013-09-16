@@ -8,6 +8,12 @@ class InitCustomerController extends Controller
 	 */
 	public $layout='//layouts/tcolumn2';
 
+	public function beforeAction(CAction $action)
+	{
+		$result = parent::beforeAction($action);
+		$this->menu[]= array('label'=>'Dashboard', 'url'=>array('review/dashboardClient'));
+		return $result;
+	}
 	public function getEntityType()
 	{
 		return EntityType::model()->findByAttributes(array('name'=>get_class(Customer::model())))->Id;

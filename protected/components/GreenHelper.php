@@ -108,8 +108,8 @@ class GreenHelper
 		$modelBudget = Budget::model()->findByAttributes(array('Id'=>$idBudget,'version_number'=>$versionNumber));
 		if(isset($modelBudget))
 		{
-			$sheet->setCellValue($indexService['name'].$row, $serviceName);
-			$sheet->setCellValue($indexService['description'].$row, $serviceDesc);
+// 			$sheet->setCellValue($indexService['name'].$row, $serviceName);
+// 			$sheet->setCellValue($indexService['description'].$row, $serviceDesc);
 			$objDrawingPType = new PHPExcel_Worksheet_Drawing();
 			$objDrawingPType->setWorksheet($sheet);
 			$objDrawingPType->setName("Pareto By Type");
