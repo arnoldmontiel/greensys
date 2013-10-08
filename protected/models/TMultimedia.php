@@ -176,9 +176,17 @@ class TMultimedia extends TapiaActiveRecord
 		$im = imagecreatefromstring(file_get_contents($filePath));
 		
 		$exif = exif_read_data($filePath);
-		if(!empty($exif['THUMBNAIL']['Orientation'])) 
+		$orientation = 1;
+		
+		if(!empty($exif['THUMBNAIL']['Orientation']))
+			$orientation = $exif['THUMBNAIL']['Orientation'];
+		
+		if(!empty($exif['Orientation']))
+			$orientation = $exif['Orientation'];
+		
+		if(!empty($orientation)) 
 		{
-			switch($exif['THUMBNAIL']['Orientation']) 
+			switch($orientation) 
 			{
 				case 8:
 					$im = imagerotate($im,90,0);
