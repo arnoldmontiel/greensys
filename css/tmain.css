@@ -2788,9 +2788,6 @@ div.review-simple-note-container
 	width: 100%;
 }
 @media (max-width: 1200px) {
-.container{ width:1270px !important; max-width:100% !important}
-}
-@media (max-width: 1200px) {
 .container,.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container{ width:100% !important; max-width:100% !important}
 }
 @media (max-width: 800px) {
