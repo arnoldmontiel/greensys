@@ -99,11 +99,18 @@ class InitCustomerController extends Controller
 					$links=explode(",", $_POST['Hyperlink']['description']);
 					GreenHelper::saveLinks($links, $modelCustomer->Id_contact, $this->getEntityType(),'Id_contact');
 				}
-				
-				$transaction->commit();
-				$transactionT->commit();
+								
 				if($valid)
+				{
+					$transaction->commit();
+					$transactionT->commit();
 					$this->redirect(array('view','id'=>$modelCustomer->Id));
+				}
+				else 
+				{
+					$transaction->rollback();
+					$transactionT->rollback();
+				}
 				
 			} catch (Exception $e) {
 				$transaction->rollback();
