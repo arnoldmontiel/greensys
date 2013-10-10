@@ -20,7 +20,9 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		<?php echo $form->textFieldRow($modelContact,'description',array('size'=>45,'maxlength'=>45)); ?>
 		<?php echo $form->textFieldRow($modelPerson,'name',array('size'=>45,'maxlength'=>45)); ?>
 		<?php echo $form->textFieldRow($modelPerson,'last_name',array('size'=>45,'maxlength'=>45)); ?>
-		<?php echo $form->datepickerRow($modelPerson, 'date_birth',
+		<?php 
+		$this->date_birth = Yii::app()->lc->toLocal($this->date_birth, 'date', 'small');
+		echo $form->datepickerRow($modelPerson, 'date_birth',
         array('hint'=>'Click para seleccionar la fecha.',
         'prepend'=>'<i class="icon-calendar"></i>','options'=>array('language'=>'es','format' => Yii::app()->locale->getDateFormat('calendar_small'))));?>
 		<?php echo $form->textFieldRow($modelPerson,'uid',array('size'=>45,'maxlength'=>45)); ?>
