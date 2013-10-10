@@ -65,7 +65,7 @@ class UserGroupNote extends TapiaActiveRecord
 			
 			
 			//client
-			if(isset($this->customer))
+			if(isset($this->customer) && isset($this->customer->user))
 			{
 				if($this->customer->user->Id_user_group == $this->Id_user_group && $this->customer->user->username != User::getCurrentUser()->username)
 				{
