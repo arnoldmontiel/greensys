@@ -21,8 +21,10 @@ class Person extends ModelAudit
 		return parent::beforeSave();
 	}
 	public function afterFind()
-	{		
-		$this->date_birth = Yii::app()->lc->toLocal($this->date_birth, 'date', 'small');
+	{	
+		if(isset($this->date_birth))	
+			$this->date_birth = Yii::app()->lc->toLocal($this->date_birth, 'date', 'small');
+		
 		return parent::afterFind();
 	}
 	
