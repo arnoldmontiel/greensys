@@ -69,7 +69,7 @@ class InitCustomerController extends Controller
 		$modelPerson=new Person();
 		
 		$modelHyperlink = new Hyperlink;
-		
+		$this->performAjaxValidation(array($modelCustomer,$modelContact,$modelPerson));
 		$modelCustomer->Id_user_group = 3; // cliente
 		
 		if(isset($_POST['Person'])&&isset($_POST['Contact']))
