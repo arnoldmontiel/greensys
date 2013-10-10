@@ -65,20 +65,23 @@ class UserGroupNote extends TapiaActiveRecord
 			
 			
 			//client
-			if($this->customer->user->Id_user_group == $this->Id_user_group && $this->customer->user->username != User::getCurrentUser()->username)
+			if(isset($this->customer))
 			{
-				$modelReviewUserDb = ReviewUser::model()->findByPk(array('Id_review'=>$modelReview->Id,'username'=>$this->customer->user->username));
-				if($modelReviewUserDb)
+				if($this->customer->user->Id_user_group == $this->Id_user_group && $this->customer->user->username != User::getCurrentUser()->username)
 				{
-					$modelReviewUserDb->read = 0;
-					$modelReviewUserDb->save();
-				}
-				else
-				{
-					$modelReviewUser = new ReviewUser;
-					$modelReviewUser->Id_review = $modelReview->Id;
-					$modelReviewUser->username = $this->customer->user->username;
-					$modelReviewUser->save();
+					$modelReviewUserDb = ReviewUser::model()->findByPk(array('Id_review'=>$modelReview->Id,'username'=>$this->customer->user->username));
+					if($modelReviewUserDb)
+					{
+						$modelReviewUserDb->read = 0;
+						$modelReviewUserDb->save();
+					}
+					else
+					{
+						$modelReviewUser = new ReviewUser;
+						$modelReviewUser->Id_review = $modelReview->Id;
+						$modelReviewUser->username = $this->customer->user->username;
+						$modelReviewUser->save();
+					}
 				}
 			}
 			
