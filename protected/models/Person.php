@@ -22,7 +22,7 @@ class Person extends ModelAudit
 	}
 	public function afterFind()
 	{	
-		if(isset($this->date_birth))	
+		if(isset($this->date_birth) && !empty($this->data_birth))	
 			$this->date_birth = Yii::app()->lc->toLocal($this->date_birth, 'date', 'small');
 		
 		return parent::afterFind();
