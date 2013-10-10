@@ -81,16 +81,16 @@ class InitCustomerController extends Controller
 			$transaction = $modelCustomer->dbConnection->beginTransaction();
 			try {				
 		
-				if(!$modelPerson->save())
+				if(!$modelPerson->validate() || !$modelPerson->save())
 					$valid = false;
 		
-				if(!$modelContact->save())
+				if(!$modelContact->validate() || !$modelContact->save())
 					$valid = false;
 				
 				$modelCustomer->Id_contact = $modelContact->Id;
 				$modelCustomer->Id_person = $modelPerson->Id;
 		
-				if(!$modelCustomer->save())
+				if(!$modelCustomer->validate() || !$modelCustomer->save())
 					$valid = false;
 		
 				Hyperlink::model()->deleteAllByAttributes(array('Id_contact'=>$modelCustomer->Id_contact));
