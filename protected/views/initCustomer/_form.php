@@ -21,7 +21,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		<?php echo $form->textFieldRow($modelPerson,'name',array('size'=>45,'maxlength'=>45)); ?>
 		<?php echo $form->textFieldRow($modelPerson,'last_name',array('size'=>45,'maxlength'=>45)); ?>
 		<?php 
-		if(isset($modelPerson->date_birth))
+		if(isset($modelPerson->date_birth) && !empty($modelPerson->date_birth))
 			$modelPerson->date_birth = Yii::app()->lc->toLocal($modelPerson->date_birth, 'date', 'small');
 		
 		echo $form->datepickerRow($modelPerson, 'date_birth',
