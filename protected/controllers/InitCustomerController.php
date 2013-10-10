@@ -77,6 +77,7 @@ class InitCustomerController extends Controller
 			$valid = true;
 			$modelContact->attributes=$_POST['Contact'];
 			$modelPerson->attributes=$_POST['Person'];
+			$transactionT = TCustomer::model()->dbConnection->beginTransaction();
 			$transaction = $modelCustomer->dbConnection->beginTransaction();
 			try {				
 		
@@ -100,12 +101,13 @@ class InitCustomerController extends Controller
 				}
 				
 				$transaction->commit();
-
+				$transactionT->commit();
 				if($valid)
 					$this->redirect(array('view','id'=>$modelCustomer->Id));
 				
 			} catch (Exception $e) {
 				$transaction->rollback();
+				$transactionT->rollback();
 			}
 		}
 		
