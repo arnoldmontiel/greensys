@@ -55,7 +55,7 @@ class Person extends ModelAudit
 		return array(
 			array('name, last_name, uid', 'length', 'max'=>45),			
 			array('date_birth', 'safe'),
-			array('date_birth', 'date', 'format'=>Yii::app()->locale->getDateFormat('small')),
+			
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, name, last_name, date_birth, uid', 'safe', 'on'=>'search'),
