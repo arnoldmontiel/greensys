@@ -1027,7 +1027,9 @@ class ReviewController extends Controller
           			LEFT OUTER JOIN tapia.note n ON ( n.Id_project = uc.Id_project)
           			LEFT OUTER JOIN tapia.user_group_note ugn on (u.Id_user_group = ugn.Id_user_group)
 				";
-			$criteria->addCondition('uc.username = "'. User::getCurrentUser()->username.'"');
+			if(!User::isAdministartor())
+				$criteria->addCondition('uc.username = "'. User::getCurrentUser()->username.'"');
+			
 			$criteria->addCondition('n.in_progress is null OR n.in_progress = 0');			
 
 			$criteria->group = 't.Id';
