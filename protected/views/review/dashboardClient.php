@@ -513,14 +513,19 @@ $(document).keypress(function(e) {
 		));
 		?>
 	</div>
+	<?php if(isset($Id_customer) && $Id_customer <= 0):?>
 	<div id="int-client-admin" class="review-action-back" >
 	<?php
+			
+			
 			echo CHtml::link('Administrador',
 				InitCustomerController::createUrl('initCustomer/admin'),
 				array('class'=>'index-review-single-link', 'id'=>'linkAdminInitCust')
 				);
-		 ?>
+			
+		 ?>	
 	</div>
+		<?php endif;?>	
 	<?php endif;?>	
 </div>
 <div class="review-action-area-second">
