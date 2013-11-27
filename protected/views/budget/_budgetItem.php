@@ -9,7 +9,7 @@ $criteria->order ="description";
 $serviceList = CHtml::listData(Service::model()->findAll($criteria), 'Id', 'description');
 
 $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'budget-item-grid_'.$idArea,
+	'id'=>'budget-item-grid_'.$idAreaProject.'_'.$idArea,
 	'dataProvider'=>$modelBudgetItem->search(),
  	'filter'=>$modelBudgetItem,
 	'summaryText'=>'',
@@ -17,7 +17,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				setTotals();	
 				$.fn.yiiGridView.update("budget-item-generic");		
 		
-				$("#budget-item-grid_'.$idArea.'").find(".txtDiscount").each(
+				$("#budget-item-grid_'.$idAreaProject.'_'.$idArea.'").find(".txtDiscount").each(
 					function(index, item)
 					{
 						$(item).unbind("change");
@@ -49,7 +49,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		
 		
 		
-				$("#budget-item-grid_'.$idArea.'").find(".ddl_discount_type").each(
+				$("#budget-item-grid_'.$idAreaProject.'_'.$idArea.'").find(".ddl_discount_type").each(
 					function(index, item)
 					{
 						$(item).unbind("change");
@@ -80,7 +80,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		
 				);
 		
-			$("#budget-item-grid_'.$idArea.'").find(".ddl_id_service").each(
+			$("#budget-item-grid_'.$idAreaProject.'_'.$idArea.'").find(".ddl_id_service").each(
 					function(index, item)
 					{
 						$(item).unbind("change");
@@ -107,15 +107,17 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		
 				);
 		
- 				$("#budget-item-grid_'.$idArea.'").find(".link-popup").each(
+ 				$("#budget-item-grid_'.$idAreaProject.'_'.$idArea.'").find(".link-popup").each(
 												function(index, item){
 													$(item).unbind("click");		
 													$(item).click(function(){
 															
 														var idArea = $(this).attr("idArea");
+														var idAreaProject = $(this).attr("idAreaProject");
 														var idBudgetItem = $(this).attr("id");
 														var idProduct = $(this).attr("idProduct");
-														$("#ViewProductChild").attr("area",idArea);	
+														$("#ViewProductChild").attr("idArea",idArea);	
+														$("#ViewProductChild").attr("idAreaProject",idAreaProject);	
 														$.post(
 																"'.BudgetController::createUrl('AjaxGetParentInfo').'",
 																{
@@ -137,7 +139,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 													});
 												}
 										);
-				$("#budget-item-grid_'.$idArea.'").find(".btn-Assign-From-Stock").each(
+				$("#budget-item-grid_'.$idAreaProject.'_'.$idArea.'").find(".btn-Assign-From-Stock").each(
 												function(index, item){
 												
 													$(item).unbind("click");		
@@ -149,7 +151,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 														var idProduct = $(this).attr("idProduct");
 														var idBudgetItem = $(this).attr("idBudgetItem");
 														var idArea = $(this).attr("idArea");
-	
+														var idAreaProject = $(this).attr("idAreaProject");
+		
 														$.post(
 														"'.BudgetController::createUrl('AjaxAssignFromStock').'",
 														{
@@ -166,7 +169,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 													});
 												}
 										);
-				$("#budget-item-grid_'.$idArea.'").find(".btn-View-Assign").each(
+				$("#budget-item-grid_'.$idAreaProject.'_'.$idArea.'").find(".btn-View-Assign").each(
 												function(index, item){
 												
 														$(item).unbind("click");		
@@ -174,9 +177,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
 														var idProduct = $(this).attr("idProduct");
 														var idBudgetItem = $(this).attr("idBudgetItem");
 														var idArea = $(this).attr("idArea");
-														
-														$("#ViewStockAssign").attr("area",idArea);	
-													
+														var idAreaProject = $(this).attr("idAreaProject");
+		
+														$("#ViewStockAssign").attr("idArea",idArea);	
+														$("#ViewStockAssign").attr("idAreaProject",idAreaProject);	
+		
 														$.post(
 																"'.BudgetController::createUrl('AjaxViewAssign').'",
 																{
@@ -195,7 +200,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 																			
 																			var idProduct = $(this).attr("idProduct");
 																			var idBudgetItem = $(this).attr("idBudgetItem");	
-																			var idArea = $("#ViewStockAssign").attr("area");
+																			var idArea = $("#ViewStockAssign").attr("idArea");
+																			var idAreaProject = $("#ViewStockAssign").attr("idAreaProject");		
 																			
 																			$.post(
 																					"'.BudgetController::createUrl('AjaxUnAssignStock').'",
@@ -239,7 +245,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				),
 				array(
 					'name'=>'children_count',
-					'value'=>'CHtml::link(($data->childrenCount > 0)?$data->childrenCount:"","#",array("id"=>$data->Id, "idArea"=>$data->Id_area, "idProduct"=>$data->Id_product, "class"=>"link-popup"))',
+					'value'=>'CHtml::link(($data->childrenCount > 0)?$data->childrenCount:"","#",array("id"=>$data->Id, "idArea"=>$data->Id_area, "idAreaProject"=>$data->Id_area_project, "idProduct"=>$data->Id_product, "class"=>"link-popup"))',
 					'type'=>'raw',
 				),
 				array(
@@ -254,13 +260,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				    					array("class"=>"btn-View-Assign",
 				    							"idBudgetItem"=>$data->Id,
 				    							"idProduct"=>$data->Id_product,
-				    							"idArea"=>$data->Id_area,))
+				    							"idArea"=>$data->Id_area,"idAreaProject"=>$data->Id_area_project,))
 				    		: 
 				    		 CHtml::button(($data->product->stockCount)>0?"Assign from stock":"No Stock",
 				    					array("class"=>"btn-Assign-From-Stock",
 				    							"idBudgetItem"=>$data->Id,
 				    							"idProduct"=>$data->Id_product,
-				    							"idArea"=>$data->Id_area,
+				    							"idArea"=>$data->Id_area,"idAreaProject"=>$data->Id_area_project,
 				    							"disabled"=>($data->product->stockCount > 0)?"":"disabled", ))'
 				    		:'
 							$data->hasStockAssigned?
@@ -268,13 +274,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
 							array("class"=>"btn-View-Assign",
 				    							"idBudgetItem"=>$data->Id,
 				    							"idProduct"=>$data->Id_product,
-				    							"idArea"=>$data->Id_area,))
+				    							"idArea"=>$data->Id_area,"idProject"=>$data->Id_area_project,))
 							:
 							CHtml::button(($data->product->stockCount)>0?"Assign from stock":"No Stock",
 							array("class"=>"btn-Assign-From-Stock",
 				    							"idBudgetItem"=>$data->Id,
 				    							"idProduct"=>$data->Id_product,
-				    							"idArea"=>$data->Id_area,
+				    							"idArea"=>$data->Id_area,"idAreaProject"=>$data->Id_area_project,
 				    							"disabled"=>"disabled", ))'
 				    		,
 					'type'=>'raw'				 
@@ -343,7 +349,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 							'CHtml::image("images/grid_warning.png","",
 								array("title"=>"Pending check products",
 									"style"=>!$data->DoNotWarning?"display":"display:none",
-									"id"=>$data->Id, "idArea"=>$data->Id_area, "idProduct"=>$data->Id_product, "class"=>"link-popup"
+									"id"=>$data->Id, "idArea"=>$data->Id_area, "idAreaProject"=>$data->Id_area_project, "idProduct"=>$data->Id_product, "class"=>"link-popup"
 								)
 							)',
 						'type'=>'raw',

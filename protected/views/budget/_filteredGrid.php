@@ -5,11 +5,11 @@
 	$dataProvider = ($type == "byProd")?$modelProduct->searchByProduct():$dataProvider;
 	
 	$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'product-grid_'. $idArea.$type,
+		'id'=>'product-grid_'. $idAreaProject.$idArea.$type,
 		'dataProvider'=>$dataProvider,
 		'filter'=>$modelProduct,
 		'summaryText'=>'',	
-		'selectableRows'=>0,
+		'selectionChanged'=>0,
 		'columns'=>array(	
 				array(
 					'name'=>'model',
@@ -83,22 +83,22 @@
 		));		
 		?>	
 		
-<div id="displayPrices_<?php echo $idArea.$type; ?>" style="display: none">
+<div id="displayPrices_<?php echo $idAreaProject.$idArea.$type; ?>" style="display: none">
 <?php
  $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'price-list-item-grid_'. $idArea.$type,
+	'id'=>'price-list-item-grid_'.$idAreaProject. $idArea.$type,
 	'dataProvider'=>$priceListItemSale->searchForBudget(),
 	'filter'=>$priceListItemSale,
  	'emptyText'=>Yii::app()->lc->t('The selected product has not been included in a price list of sales.'),
  	'summaryText'=>'',
  	'afterAjaxUpdate'=>'function(id, data){
- 				$("#price-list-item-grid_'.$idArea.$type.'").find(":radio").each(
+ 				$("#price-list-item-grid_'.$idAreaProject.$idArea.$type.'").find(":radio").each(
 												function(index, item){
 													$(item).change(function(){
 															
 														if(!confirm("Are you sure you want to select this price?")) 
 														{
-															$.fn.yiiGridView.update("price-list-item-grid_'.$idArea.$type.'");
+															$.fn.yiiGridView.update("price-list-item-grid_'.$idAreaProject.$idArea.$type.'");
 															return false;
 														}
 														$.post(
@@ -109,14 +109,15 @@
 																 	IdPriceList: $(this).attr("idPriceList"),
 																 	IdProduct: $(this).attr("idProduct"),
 																 	IdArea: "'.$idArea.'",
-																 	IdShippingType: $(this).attr("idShippingType")
+																 	IdAreaProject: "'.$idAreaProject.'",
+ 																	IdShippingType: $(this).attr("idShippingType")
 															}).success(
 																function(data) 
 																{ 
-																	$.fn.yiiGridView.update("budget-item-grid_'.$idArea.'", {
+																	$.fn.yiiGridView.update("budget-item-grid_'.$idAreaProject.$idArea.'", {
 																		data: $(this).serialize()
 																	});
-																	$.fn.yiiGridView.update("price-list-item-grid_'.$idArea.$type.'");
+																	$.fn.yiiGridView.update("price-list-item-grid_'.$idAreaProject.$idArea.$type.'");
 																});
 														
 													});

@@ -145,14 +145,15 @@ function updateGridViews()
 
 $('.aareaTitle').click(function(){
 	var idArea = $(this).attr('idArea');	
-	
-	if($( '#itemArea_' + idArea ).is(':visible')){
-		$('#expandCollapse_' + idArea).text('+');
+	var idAreaProject = $(this).attr('idAreaProject');	
+																				
+	if($( '#itemArea_' + idAreaProject + '_' + idArea ).is(':visible')){
+		$('#expandCollapse_'+ idAreaProject + '_'  + idArea).text('+');
 	}
 	else{
-		$('#expandCollapse_' + idArea).text('-');
+		$('#expandCollapse_'+ idAreaProject + '_'  + idArea).text('-');
 	}
-	$('#itemArea_' + idArea ).toggle('blind',{},1000);
+	$('#itemArea_' + idAreaProject + '_' + idArea ).toggle('blind',{},1000);
 	
 });
 
@@ -309,9 +310,11 @@ $('.txtGenericDiscount').change(
 								
 $('.link-popup').click(function(){
 	var idArea = $(this).attr('idArea');
+	var idAreaProject = $(this).attr('idAreaProject');
 	var idBudgetItem = $(this).attr('id');
 	var idProduct = $(this).attr('idProduct');
-	$('#ViewProductChild').attr('area',idArea);	
+	$('#ViewProductChild').attr('idArea',idArea);	
+	$('#ViewProductChild').attr('idAreaProject',idAreaProject);	
 	$.post(
 			'".BudgetController::createUrl('AjaxGetParentInfo')."',
 			{
@@ -391,6 +394,8 @@ $('.btn-Assign-From-Stock').click(function(){
 	var idProduct = $(this).attr('idProduct');
 	var idBudgetItem = $(this).attr('idBudgetItem');
 	var idArea = $(this).attr('idArea');
+	var idAreaProject = $(this).attr('idAreaProject');	
+					
 	$.post(
 			'".BudgetController::createUrl('AjaxAssignFromStock')."',
 			{
@@ -407,9 +412,11 @@ $('.btn-View-Assign').click(function(){
 	var idProduct = $(this).attr('idProduct');
 	var idBudgetItem = $(this).attr('idBudgetItem');
 	var idArea = $(this).attr('idArea');
+	var idAreaProject = $(this).attr('idAreaProject');						
 	
-	$('#ViewStockAssign').attr('area',idArea);	
-
+	$('#ViewStockAssign').attr('idArea',idArea);	
+	$('#ViewStockAssign').attr('idAreaProject',idAreaProject);	
+					
 	$.post(
 			'".BudgetController::createUrl('AjaxViewAssign')."',
 			{
@@ -427,8 +434,9 @@ $('.btn-View-Assign').click(function(){
 						
 						var idProduct = $(this).attr('idProduct');
 						var idBudgetItem = $(this).attr('idBudgetItem');	
-						var idArea = $('#ViewStockAssign').attr('area');
-						
+						var idArea = $('#ViewStockAssign').attr('idArea');
+						var idAreaProject = $('#ViewStockAssign').attr('idAreaProject');
+					
 						$.post(
 								'".BudgetController::createUrl('AjaxUnAssignStock')."',
 								{
@@ -542,7 +550,7 @@ echo '</br>';
 	{ 
 	?>
 		<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
-			<div class="gridTitle1" idProjectArea="<?php echo $item->Id; ?>" idArea="<?php echo $item->Id_area; ?>" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
+			<div class="gridTitle1" idAreaProject="<?php echo $item->Id; ?>" idArea="<?php echo $item->Id_area; ?>" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
 				<?php 
 					echo CHtml::link('+ '.$item->area->description,
 						'#',
@@ -650,7 +658,8 @@ echo '</br>';
 		$modelProduct->product_area_id = $item->Id_area;
 		
 		echo $this->renderPartial('_selectItem', array('model'=>$model,
-													   'idArea'=>$item->Id.'_'.$item->Id_area,
+													   'idArea'=>$item->Id_area,
+													   'idAreaProject'=>$item->Id,
 													   'modelProduct'=>$modelProduct,
 													   'priceListItemSale'=>$priceListItemSale,
 													   'modelBudgetItem'=>$modelBudgetItem));
@@ -1003,7 +1012,7 @@ $this->endWidget('zii.widgets.jui.CJuiDialog');
 								'cerrar'=>'js:function(){
 									jQuery("#ViewProductChild").dialog( "close" );
 									updateGridViews();
-									//$.fn.yiiGridView.update("budget-item-grid_" + $("#ViewProductChild").attr("area"));
+									//$.fn.yiiGridView.update("budget-item-grid_" + $("#ViewProductChild").attr("idArea"));
 									}',
 	),
 	),
