@@ -7,6 +7,7 @@
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'product-grid_'. $idAreaProject.$idArea.$type,
 		'dataProvider'=>$dataProvider,
+		'selectableRows' => 0,
 		'filter'=>$modelProduct,
 		'summaryText'=>'',	
 		'columns'=>array(	
