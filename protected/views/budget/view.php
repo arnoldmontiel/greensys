@@ -157,9 +157,10 @@ $('#btn-export').click(function(){
 			</div>
 		</div>
 		<br>&nbsp;
-		<div id="itemArea_<?php echo $item->Id_area; ?>" style="display: none">
+		<div id="itemArea_<?php echo $item->Id."_".$item->Id_area; ?>" style="display: none">
 		<?php		
 		$modelBudgetItem->Id_area = $item->Id_area;		
+		$modelBudgetItem->Id_area_project = $item->Id;
 		
 		echo $this->renderPartial('_budgetItem', array('idArea'=>$item->Id_area,
 													   'idAreaProject'=>$item->Id,
