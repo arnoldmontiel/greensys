@@ -550,8 +550,8 @@ echo '</br>';
 								'state'=>'+',
 								'id'=>'expand-products',
 								'onclick'=>'
-									jQuery("#itemArea_'.$item->Id_area.'").toggle("blind",{},1000);
-									jQuery("#expand-products'.$item->Id_area.'").toggle("blind",{},1000);
+									jQuery("#itemArea_'.$item->Id.'_'.$item->Id_area.'").toggle("blind",{},1000);
+									jQuery("#expand-products'.$item->Id.'_'.$item->Id_area.'").toggle("blind",{},1000);
 									if($(this).attr("state")=="+")
 									{
 										$(this).attr("state","-");
@@ -559,9 +559,9 @@ echo '</br>';
 									}
 									else
 									{
-										if(jQuery("#expand-products'.$item->Id_area.'").html()=="- Products"){
-											jQuery("#expand-products'.$item->Id_area.'").html("+ Products");
-											jQuery("#selectProducts_'.$item->Id_area.'").toggle("blind",{},1000);
+										if(jQuery("#expand-products'.$item->Id.'_'.$item->Id_area.'").html()=="- Products"){
+											jQuery("#expand-products'.$item->Id.'_'.$item->Id_area.'").html("+ Products");
+											jQuery("#selectProducts_'.$item->Id.'_'.$item->Id_area.'").toggle("blind",{},1000);
 										}
 										$(this).attr("state","+");
 										$(this).html("+ "+$(this).attr("description"));
@@ -625,9 +625,9 @@ echo '</br>';
 						array(	'description'=>$item->area->description,
 								'state'=>'+',
 								'style'=>'display:none',
-								'id'=>'expand-products'.$item->Id_area,
+								'id'=>'expand-products'.$item->Id.'_'.$item->Id_area,
 								'onclick'=>'
-									jQuery("#selectProducts_'.$item->Id_area.'").toggle("blind",{},1000);
+									jQuery("#selectProducts_'.$item->Id.'_'.$item->Id_area.'").toggle("blind",{},1000);
 									if($(this).html()=="+ Products")
 									{
 										$(this).html("- Products");
@@ -644,13 +644,13 @@ echo '</br>';
 					</div>
 		</div>
 		<br>&nbsp;
-		<div id="itemArea_<?php echo $item->Id_area; ?>" style="display: none">
+		<div id="itemArea_<?php echo $item->Id.'_'.$item->Id_area; ?>" style="display: none">
 		<?php		
 		$modelBudgetItem->Id_area = $item->Id_area;		
 		$modelProduct->product_area_id = $item->Id_area;
 		
 		echo $this->renderPartial('_selectItem', array('model'=>$model,
-													   'idArea'=>$item->Id_area,
+													   'idArea'=>$item->Id.'_'.$item->Id_area,
 													   'modelProduct'=>$modelProduct,
 													   'priceListItemSale'=>$priceListItemSale,
 													   'modelBudgetItem'=>$modelBudgetItem));
