@@ -25,6 +25,38 @@ function loadGrid()
 	
 }
 
+function gridChangeSelectedRow()
+{
+	$.fn.yiiGridView.update('productGroup-grid', {
+							data: 'Product[Id]='+$.fn.yiiGridView.getSelection('product-grid')
+						});
+						$.post('".ProductController::createUrl('AjaxFillSidebar')."',
+								{'Product[Id]':$.fn.yiiGridView.getSelection('product-grid')}
+							).success(
+								function(data) 
+								{
+									$('#sidebar').html(data);
+									if(data!='')
+									{
+										$( '#sidebar' ).show();
+									}
+									else
+									{
+										$( '#sidebar' ).hide();	
+									}	
+								}
+							);
+						var idProduct = $.fn.yiiGridView.getSelection('product-grid');
+						if(idProduct!='')
+						{
+							$( '#display' ).animate({opacity: 'show'},'slow');
+						}
+						else
+						{
+							$( '#display' ).animate({opacity: 'hide'},'slow');
+						}
+}
+
 function gridSelectionChange()
 {
 	var idProduct = '".$modelProductGroup->Id_product_parent."';
@@ -78,53 +110,52 @@ function gridSelectionChange()
 					'dataProvider'=>$model->searchSummary(),
 					'filter'=>$model,
 					'summaryText'=>'',
-					'selectionChanged'=>'js:function(){
-						$.fn.yiiGridView.update("productGroup-grid", {
-							data: "Product[Id]="+$.fn.yiiGridView.getSelection("product-grid")
-						});
-						$.post("'.ProductController::createUrl('AjaxFillSidebar').'",
-								{"Product[Id]":$.fn.yiiGridView.getSelection("product-grid")}
-							).success(
-								function(data) 
-								{
-									$("#sidebar").html(data);
-									if(data!="")
-									{
-										$( "#sidebar" ).show();
-									}
-									else
-									{
-										$( "#sidebar" ).hide();	
-									}	
-								}
-							);
-						var idProduct = $.fn.yiiGridView.getSelection("product-grid");
-						if(idProduct!="")
-						{
-							$( "#display" ).animate({opacity: "show"},"slow");
-						}
-						else
-						{
-							$( "#display" ).animate({opacity: "hide"},"slow");
-						}
-					}',
+					'selectableRows'=>0,
 				'columns'=>array(
-				'model',
-				'part_number',
-				'code',
-	array(
+								'model',
+								'part_number',
+								'code',
+								array(
 								 		'name'=>'supplier_description',
 										'value'=>'$data->supplier->business_name',
-	),
-	array(
+								),
+								array(
 							 			'name'=>'brand_description',
 										'value'=>'$data->brand->description',
-	),
-	array(
+								),
+								array(
 								 		'name'=>'category_description',
 										'value'=>'$data->category->description',
-	),
-									'short_description',
+								),
+								'short_description',
+								array
+								(
+								    'class'=>'CButtonColumn',
+								    'template'=>'{selectRowBtn}',
+								    'buttons'=>array
+									(
+								        'selectRowBtn' => array
+											(
+												'imageUrl'=>'images/rbn_no.png',
+									            'click'=>'function(){
+									            		if($(this).parent().parent().hasClass("selected"))
+									            		{
+									            			$(this).children().attr("src","images/rbn_no.png");
+									            			$("#product-grid").find("tr").removeClass("selected");
+									            		}
+									            		else
+									            		{
+									            			$("#product-grid").find("tr").removeClass("selected");
+									            			$("#product-grid").find(".selectRowBtn").children().attr("src","images/rbn_no.png");
+									            			$(this).parent().parent().addClass("selected");
+									            			$(this).children().attr("src","images/rbn_yes.png")
+									            		}
+									            		gridChangeSelectedRow();
+													}',
+											),
+								        
+									),
+								),
 									
 	),
 	));
