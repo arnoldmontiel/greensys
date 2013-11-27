@@ -29,10 +29,15 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         'prepend'=>'<i class="icon-calendar"></i>','options'=>array('language'=>'es','format' => Yii::app()->locale->getDateFormat('calendar_small'))));?>
 		<?php echo $form->textFieldRow($modelPerson,'uid',array('size'=>45,'maxlength'=>45)); ?>
 		<?php echo $form->textFieldRow($modelContact,'telephone_1',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->textFieldRow($modelContact,'tel1_description',array('size'=>100,'maxlength'=>255)); ?>
 		<?php echo $form->textFieldRow($modelContact,'telephone_2',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->textFieldRow($modelContact,'tel2_description',array('size'=>100,'maxlength'=>255)); ?>
 		<?php echo $form->textFieldRow($modelContact,'telephone_3',array('size'=>45,'maxlength'=>45)); ?>
+		<?php echo $form->textFieldRow($modelContact,'tel3_description',array('size'=>100,'maxlength'=>255)); ?>
 		<?php echo $form->textFieldRow($modelContact,'email',array('size'=>60,'maxlength'=>128,'prepend'=>'@')); ?>
 		<?php echo $form->textFieldRow($modelContact,'address',array('size'=>60,'maxlength'=>100)); ?>
+		<?php echo $form->textAreaRow($modelContact, 'comment', array('class'=>'span8', 'rows'=>5)); ?>
+		
 		<?php
 			$hyperLinks = array();
 			$hyperDesc="";

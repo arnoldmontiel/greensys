@@ -38,10 +38,22 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
 						'type'=>'raw',
 						'value'=>$model->contact->telephone_1
 				),
+				array('label'=>$model->getAttributeLabel('tel1_description'),
+						'type'=>'raw',
+						'value'=>$model->contact->tel1_description
+				),
 				array('label'=>$model->getAttributeLabel('telephone_2'),
 						'type'=>'raw',
 						'value'=>$model->contact->telephone_2
+				),
+				array('label'=>$model->getAttributeLabel('tel2_description'),
+						'type'=>'raw',
+						'value'=>$model->contact->tel2_description
 				),				
+				array('label'=>$model->getAttributeLabel('comment'),
+						'type'=>'raw',
+						'value'=>$model->contact->comment
+				),
 		),
 ));
 ?>
