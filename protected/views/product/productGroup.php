@@ -151,6 +151,7 @@ function gridSelectionChange()
 									            			$(this).children().attr("src","images/rbn_yes.png")
 									            		}
 									            		gridChangeSelectedRow();
+									            		return false;
 													}',
 											),
 								        
