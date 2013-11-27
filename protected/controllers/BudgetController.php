@@ -681,7 +681,8 @@ class BudgetController extends Controller
 		$idBudget = isset($_POST['IdBudget'])?$_POST['IdBudget']:'';
 		$idVersion = isset($_POST['IdVersion'])?$_POST['IdVersion']:'';
 		$idArea = isset($_POST['IdArea'])?$_POST['IdArea']:'';
-				
+		$idAreaProject = isset($_POST['IdAreaProject'])?$_POST['IdAreaProject']:'';
+		
 		if(!empty($idPriceList)&&!empty($idProduct)&&!empty($idShippingType)&&!empty($idBudget)&&!empty($idVersion)&&!empty($idArea))
 		{
 			$modelPriceListItem = PriceListItem::model()->findByAttributes(array('Id_price_list'=>$idPriceList,'Id_product'=>$idProduct));
@@ -693,6 +694,7 @@ class BudgetController extends Controller
 			$modelBudgetItem->Id_shipping_type = $idShippingType;
 			$modelBudgetItem->version_number = $idVersion;
 			$modelBudgetItem->Id_area = $idArea;
+			$modelBudgetItem->Id_area_project = $idAreaProject;
 			$modelBudgetItem->price = ($idShippingType==1)?$modelPriceListItem->maritime_cost:$modelPriceListItem->air_cost;
 			$modelBudgetItem->save();
 			
@@ -709,6 +711,7 @@ class BudgetController extends Controller
 					$modelBudgetItemChild->version_number = $idVersion;
 					$modelBudgetItemChild->Id_budget_item = $modelBudgetItem->Id;
 					$modelBudgetItemChild->Id_area = $idArea;
+					$modelBudgetItemChild->Id_area_project = $idAreaProject;
 					$modelBudgetItemChild->price = 0;
 					$modelBudgetItemChild->save();
 				}
