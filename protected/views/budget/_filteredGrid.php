@@ -9,7 +9,7 @@
 		'dataProvider'=>$dataProvider,
 		'filter'=>$modelProduct,
 		'summaryText'=>'',	
-		'selectionChanged'=>0,
+		'selectionChanged'=>'',
 		'columns'=>array(	
 				array(
 					'name'=>'model',
