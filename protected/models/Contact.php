@@ -11,6 +11,10 @@
  * @property string $telephone_3
  * @property string $email
  * @property string $address
+ * @property string $tel1_description
+ * @property string $tel2_description
+ * @property string $tel3_description
+ * @property string $comment
  *
  * The followings are the available model relations:
  * @property Brand[] $brands
@@ -48,12 +52,14 @@ class Contact extends ModelAudit
 		return array(
 			array('description, address', 'length', 'max'=>100),
 			array('telephone_1, description, email', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
+			array('tel1_description, tel2_description, tel3_description', 'length', 'max'=>255),
 			array('email', 'unique'),				
 			array('telephone_1, telephone_2, telephone_3, email', 'length', 'max'=>45),
+			array('comment', 'length', 'max'=>512),
 			array('email', 'email', 'allowEmpty'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description, telephone_1, telephone_2, telephone_3, email, address', 'safe', 'on'=>'search'),
+			array('Id, description, telephone_1, telephone_2, telephone_3, email, address, tel1_description, tel2_description, tel3_description, comment', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -86,6 +92,10 @@ class Contact extends ModelAudit
 			'telephone_3' => 'Tel&eacute;fono 3',
 			'email' => 'Correo',
 			'address' => 'Direcci&oacute;n',
+			'tel1_description' => 'Tel 1 Descripci&oacute;n',
+			'tel2_description' => 'Tel 2 Descripci&oacute;n',
+			'tel3_description' => 'Tel 3 Descripci&oacute;n',
+			'comment' => 'Comentarios',
 		);
 	}
 
