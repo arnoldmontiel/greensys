@@ -542,7 +542,7 @@ echo '</br>';
 	{ 
 	?>
 		<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
-			<div class="gridTitle1" idArea="<?php echo $item->Id_area; ?>" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
+			<div class="gridTitle1" idProjectArea="<?php echo $item->Id; ?>" idArea="<?php echo $item->Id_area; ?>" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
 				<?php 
 					echo CHtml::link('+ '.$item->area->description,
 						'#',
