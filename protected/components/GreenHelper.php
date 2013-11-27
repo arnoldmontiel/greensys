@@ -236,20 +236,23 @@ class GreenHelper
 				$sumImageRows = 0;
 				if(isset($modelMultimediaDB))
 				{				
-					$objDrawingPType = new PHPExcel_Worksheet_Drawing();
-					$objDrawingPType->setWorksheet($sheet);
-					$objDrawingPType->setName("Pareto By Type");
+					$imagePath = "";
 					if(file_exists(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $modelMultimediaDB->file_name_small))
-						$objDrawingPType->setPath(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $modelMultimediaDB->file_name_small);
+						$imagePath = Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $modelMultimediaDB->file_name_small;
 					elseif(file_exists(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $budgetItem->product->model))
-						$objDrawingPType->setPath(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $budgetItem->product->model);
-					else
-						$objDrawingPType->setPath('');
+						$imagePath = Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $budgetItem->product->model;
 					
-					$objDrawingPType->setCoordinates($indexProduct['image'].$row);
-					$objDrawingPType->setOffsetX(1);
-					$objDrawingPType->setOffsetY(1);
-					$objDrawingPType->setHeight(95);
+					if(!empty($imagePath))
+					{
+						$objDrawingPType = new PHPExcel_Worksheet_Drawing();
+						$objDrawingPType->setWorksheet($sheet);
+						$objDrawingPType->setName("Pareto By Type");
+						$objDrawingPType->setPath($imagePath);
+						$objDrawingPType->setCoordinates($indexProduct['image'].$row);
+						$objDrawingPType->setOffsetX(1);
+						$objDrawingPType->setOffsetY(1);
+						$objDrawingPType->setHeight(95);
+					}
 					$sumImageRows = 4;
 				}
 				
