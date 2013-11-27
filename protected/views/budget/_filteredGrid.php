@@ -50,28 +50,28 @@
 								if($(this).parent().parent().hasClass("selected"))
 								{
 									$(this).children().attr("src","images/rbn_no.png");
-									$("#product-grid_'.$idArea.$type.'").find("tr").removeClass("selected");
+									$("#product-grid_'.$idAreaProject.$idArea.$type.'").find("tr").removeClass("selected");
 								}
 								else
 								{
-									$("#product-grid_'.$idArea.$type.'").find("tr").removeClass("selected");
-									$("#product-grid_'.$idArea.$type.'").find(".selectRowBtn").children().attr("src","images/rbn_no.png");
+									$("#product-grid_'.$idAreaProject.$idArea.$type.'").find("tr").removeClass("selected");
+									$("#product-grid_'.$idAreaProject.$idArea.$type.'").find(".selectRowBtn").children().attr("src","images/rbn_no.png");
 									$(this).parent().parent().addClass("selected");
 									$(this).children().attr("src","images/rbn_yes.png")
 								}
 								
-								$.fn.yiiGridView.update("price-list-item-grid_'.$idArea.$type.'", {
-									data: "ProductSale[Id]="+$.fn.yiiGridView.getSelection("product-grid_'.$idArea.$type.'")
+								$.fn.yiiGridView.update("price-list-item-grid_'.$idAreaProject.$idArea.$type.'", {
+									data: "ProductSale[Id]="+$.fn.yiiGridView.getSelection("product-grid_'.$idAreaProject.$idArea.$type.'")
 								});
 								
-								var idProduct = $.fn.yiiGridView.getSelection("product-grid_'.$idArea.$type.'");
+								var idProduct = $.fn.yiiGridView.getSelection("product-grid_'.$idAreaProject.$idArea.$type.'");
 								if(idProduct!="")
 								{
-									$( "#displayPrices_'. $idArea.$type.'" ).animate({opacity: "show"},"slow");
+									$( "#displayPrices_'.$idAreaProject. $idArea.$type.'" ).animate({opacity: "show"},"slow");
 								}
 								else
 								{
-									$( "#displayPrices_'. $idArea.$type.'"  ).animate({opacity: "hide"},"slow");
+									$( "#displayPrices_'.$idAreaProject. $idArea.$type.'"  ).animate({opacity: "hide"},"slow");
 								}
 								return false;
 							}',
