@@ -239,8 +239,8 @@ class GreenHelper
 					$imagePath = "";
 					if(file_exists(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $modelMultimediaDB->file_name_small))
 						$imagePath = Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $modelMultimediaDB->file_name_small;
-					elseif(file_exists(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $budgetItem->product->model))
-						$imagePath = Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $budgetItem->product->model;
+					elseif(file_exists(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $budgetItem->product->model.".jpg"))
+						$imagePath = Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $budgetItem->product->model.".jpg";
 					
 					if(!empty($imagePath))
 					{
