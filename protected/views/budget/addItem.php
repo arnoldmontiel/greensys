@@ -655,6 +655,7 @@ echo '</br>';
 		<div id="itemArea_<?php echo $item->Id.'_'.$item->Id_area; ?>" style="display: none">
 		<?php		
 		$modelBudgetItem->Id_area = $item->Id_area;		
+		$modelBudgetItem->Id_area_product = $item->Id;		
 		$modelProduct->product_area_id = $item->Id_area;
 		
 		echo $this->renderPartial('_selectItem', array('model'=>$model,
