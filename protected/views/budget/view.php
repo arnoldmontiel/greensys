@@ -19,13 +19,14 @@ Yii::app()->clientScript->registerScript(__CLASS__.'view-budget', "
 
 $('.areaTitle').click(function(){
 	var idArea = $(this).attr('idArea');	
-	if($( '#itemArea_' + idArea ).is(':visible')){
-		$('#expandCollapse_' + idArea).text('+');
+	var idAreaProject = $(this).attr('idAreaProject');	
+	if($( '#itemArea_' +idAreaProject + '_'+ idArea ).is(':visible')){
+		$('#expandCollapse_'+ idAreaProject +'_'+ idArea).text('+');
 	}
 	else{
-		$('#expandCollapse_' + idArea).text('-');
+		$('#expandCollapse_'+ idAreaProject +'_' + idArea).text('-');
 	}
-	$('#itemArea_' + idArea ).toggle('blind',{},1000);
+	$('#itemArea_'+ idAreaProject +'_' + idArea ).toggle('blind',{},1000);
 	
 });
 
@@ -44,6 +45,7 @@ function fillParentData(data)
 
 $('.link-popup').click(function(){
 	var idArea = $(this).attr('idArea');
+	var idAreaProject = $(this).attr('idAreaProject');
 	var idBudgetItem = $(this).attr('id');
 	var idProduct = $(this).attr('idProduct');
 		
@@ -70,9 +72,11 @@ $('.btn-View-Assign').click(function(){
 	var idProduct = $(this).attr('idProduct');
 	var idBudgetItem = $(this).attr('idBudgetItem');
 	var idArea = $(this).attr('idArea');
-	
-	$('#ViewStockAssign').attr('area',idArea);	
-
+	var idAreaProject = $(this).attr('idAreaProject');
+					
+	$('#ViewStockAssign').attr('idArea',idArea);	
+	$('#ViewStockAssign').attr('idAreaProject',idAreaProject);	
+					
 	$.post(
 			'".BudgetController::createUrl('AjaxViewAssign')."',
 			{
@@ -148,7 +152,7 @@ $('#btn-export').click(function(){
 	{ 
 	?>
 		<div class="gridTitle-decoration1" style="display: inline-block; width: 98%;height: 35px;">
-			<div class="areaTitle" idArea="<?php echo $item->Id_area; ?>" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
+			<div class="areaTitle" idArea="<?php echo $item->Id_area; ?>" idAreaProject="<?php echo $item->Id; ?>" style="display: inline-block;position: relative; width: 90%;vertical-align: top; margin-top: 4px;">
 				<span id="expandCollapse_<?php echo $item->Id_area; ?>">+</span>&nbsp;<?php echo $item->area->description." ( ".$item->description." )";?>
 			</div>
 		</div>
@@ -158,6 +162,7 @@ $('#btn-export').click(function(){
 		$modelBudgetItem->Id_area = $item->Id_area;		
 		
 		echo $this->renderPartial('_budgetItem', array('idArea'=>$item->Id_area,
+													   'idAreaProject'=>$item->Id,
 													   'modelBudgetItem'=>$modelBudgetItem,
 													   'canEdit'=>false,));
 		?>		
