@@ -113,7 +113,7 @@
 															}).success(
 																function(data) 
 																{ 
-																	$.fn.yiiGridView.update("budget-item-grid_'.$idAreaProject.$idArea.'", {
+																	$.fn.yiiGridView.update("budget-item-grid_'.$idAreaProject.'_'.$idArea.'", {
 																		data: $(this).serialize()
 																	});
 																	$.fn.yiiGridView.update("price-list-item-grid_'.$idAreaProject.$idArea.$type.'");
