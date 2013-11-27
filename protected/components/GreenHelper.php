@@ -241,8 +241,11 @@ class GreenHelper
 					$objDrawingPType->setName("Pareto By Type");
 					if(file_exists(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $modelMultimediaDB->file_name_small))
 						$objDrawingPType->setPath(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $modelMultimediaDB->file_name_small);
-					else 
+					elseif(file_exists(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $budgetItem->product->model))
 						$objDrawingPType->setPath(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $budgetItem->product->model);
+					else
+						$objDrawingPType->setPath('');
+					
 					$objDrawingPType->setCoordinates($indexProduct['image'].$row);
 					$objDrawingPType->setOffsetX(1);
 					$objDrawingPType->setOffsetY(1);
