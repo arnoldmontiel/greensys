@@ -710,10 +710,22 @@ if(isset($tCustomer))
 							'type'=>'raw',
 							'value'=>$tCustomer->contact->telephone_1
 					),
+					array('label'=>$tCustomer->getAttributeLabel('tel1_description'),
+							'type'=>'raw',
+							'value'=>$tCustomer->contact->tel1_description
+					),
 					array('label'=>$tCustomer->getAttributeLabel('telephone_2'),
 							'type'=>'raw',
 							'value'=>$tCustomer->contact->telephone_2
-					),				
+					),		
+					array('label'=>$tCustomer->getAttributeLabel('tel2_description'),
+							'type'=>'raw',
+							'value'=>$tCustomer->contact->tel2_description
+					),
+					array('label'=>$tCustomer->getAttributeLabel('comment'),
+							'type'=>'raw',
+							'value'=>$tCustomer->contact->comment
+					),
 			),
 	));
 }
