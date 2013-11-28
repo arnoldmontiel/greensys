@@ -50,6 +50,14 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
 						'type'=>'raw',
 						'value'=>$model->contact->tel2_description
 				),				
+				array('label'=>$model->getAttributeLabel('telephone_3'),
+										'type'=>'raw',
+										'value'=>$model->contact->telephone_3
+				),
+				array('label'=>$model->getAttributeLabel('tel3_description'),
+										'type'=>'raw',
+										'value'=>$model->contact->tel3_description
+				),
 				array('label'=>$model->getAttributeLabel('comment'),
 						'type'=>'raw',
 						'value'=>$model->contact->comment
