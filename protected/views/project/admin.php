@@ -7,6 +7,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List Project', 'url'=>array('index')),
 	array('label'=>'Create Project', 'url'=>array('create')),
+	array('label'=>'Assing Areas', 'url'=>array('projectArea')),
 );
 
 ?>
