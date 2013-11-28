@@ -61,9 +61,6 @@
 			<?php echo CHtml::link(Yii::app()->lc->t('Create'),array('/priceList/create'));?>			
 			</div>
 			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Assign Products'),array('/priceList/priceListItem'));?>
-			</div>
-			<div class="home-item-view" >
 			<?php echo CHtml::link(Yii::app()->lc->t('Import Price List from Excel'),array('/priceList/importPurchListFromExcel'));?>
 			</div>
 		</div><!-- end  home-left-view -->
