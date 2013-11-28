@@ -22,7 +22,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$data,
 	'filter'=>$model,
 	'columns'=>array(
-		array('name'=>'Id_customer','value'=>'$data->customer->contact->description'),
+		array('name'=>'contact_description','value'=>'$data->customer->contact->description'),
 		'description',
 		'address',
 		array(
