@@ -118,10 +118,10 @@ class Project extends ModelAudit
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('Id',$this->Id);
-		$criteria->compare('Id_customer',$this->Id_customer);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('address',$this->address,true);
+		$criteria->compare('t.Id',$this->Id);
+		$criteria->compare('t.Id_customer',$this->Id_customer);
+		$criteria->compare('t.description',$this->description,true);
+		$criteria->compare('t.address',$this->address,true);
 		$criteria->join='INNER JOIN `customer` `c` ON (`c`.`Id`=`t`.`Id_customer`)
 						INNER JOIN 	`contact` `con` ON (`con`.`Id`=`c`.`Id_contact`)';
 		$criteria->order="con.description, t.description";
