@@ -19,6 +19,7 @@
  */
 class Project extends ModelAudit
 {
+	public $contact_description;
 	public function afterSave()
 	{
 		parent::afterSave();
@@ -67,7 +68,7 @@ class Project extends ModelAudit
 			array('address', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_customer, description, address', 'safe', 'on'=>'search'),
+			array('Id, Id_customer, description, address,contact_description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -102,6 +103,7 @@ class Project extends ModelAudit
 		return array(
 			'Id' => 'ID',
 			'Id_customer' => 'Cliente',
+			'contact_description'=>'Cliente',
 			'description' => 'Descripción',
 			'address' => 'Dirección',
 		);
@@ -124,6 +126,7 @@ class Project extends ModelAudit
 		$criteria->compare('t.address',$this->address,true);
 		$criteria->join='INNER JOIN `customer` `c` ON (`c`.`Id`=`t`.`Id_customer`)
 						INNER JOIN 	`contact` `con` ON (`con`.`Id`=`c`.`Id_contact`)';
+		$criteria->compare('con.description',$this->contact_description,true);
 		$criteria->order="con.description, t.description";
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
