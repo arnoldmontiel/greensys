@@ -210,53 +210,58 @@ class ProjectController extends Controller
 	}
 
 	
-	public function actionProjectArea()
+	public function actionProjectArea($id)
 	{
-		$model=new Project;
-	
-		$dataProvider=new CActiveDataProvider('Project');
-		$dataProviderArea=new CActiveDataProvider('Area');
-	
+		$modelArea = new Area('search');
+		$modelArea->unsetAttributes();  // clear any default values
+		if(isset($_GET['Area']))
+			$modelArea->attributes=$_GET['Area'];
+		
+		$modelAssignedArea = new AreaProject('search');
+		$modelAssignedArea->unsetAttributes();  // clear any default values
+		if(isset($_GET['AreaProject']))
+			$modelAssignedArea->attributes=$_GET['AreaProject'];
+		
+		$modelAssignedArea->Id_project = $id;
+		
 		$this->render('projectArea',array(
-					'dataProvider'=>$dataProvider,
-					'dataProviderArea'=>$dataProviderArea,
-					'model'=>$model //model for creation
+						'idProject'=>$id,
+						'modelArea'=>$modelArea,
+						'modelAssignedArea'=>$modelAssignedArea
 		));
 	
 	}
 	
-	public function actionAjaxFillProjectArea()
+	public function actionAjaxUpdateRelDescription()
 	{
-		$data=AreaProject::model()->findAll('Id_project=:Id_project',
-		array(':Id_project'=>(int) $_POST['Project']['Id']));
-	
-	
-		foreach($data as $item)
+		$idAreaProject = isset($_POST['idAreaProject'])?$_POST['idAreaProject']:null;
+		$relDescription = isset($_POST['relDescription'])?$_POST['relDescription']:'';
+		
+		if(isset($idAreaProject))
 		{
-			$checked = '';
-			if($item->centralized > 0)
-				$checked = 'checked';
-				
-			echo CHtml::tag('li',
-							array('id'=>"items_".$item->Id_area,
-				  				  'class'=>'ui-state-default'),
-						    CHtml::encode($item->area->description). "  ". CHtml::checkBox("centralized",$item->centralized). 
-						    "  <img id='centralizedok' src='images/save_ok.png' alt=''  style='position: relative;float:rigth;width:15px; height:15px; display:none;' />" ,
-							true);
-		}
+			$modelAreaProject = AreaProject::model()->findByAttributes(array('Id'=>$idAreaProject));
+			if(isset($modelAreaProject))
+			{
+				$modelAreaProject->description = $relDescription;
+				$modelAreaProject->save();
+			}
+		}		
 	}
 	
-	public function actionAjaxSetCentralized()
+	public function actionAjaxUpdateCentralized()
 	{
-		$idArea = isset($_POST['IdArea'])?$_POST['IdArea']:'';
-		$idProject = isset($_POST['IdProject'])?$_POST['IdProject']:'';
-		$centralized = isset($_POST['centralized'])?(int)$_POST['centralized']:0;
-		$idArea = explode("_",$idArea);
-		$idArea = $idArea[1];
+		$idAreaProject = isset($_POST['idAreaProject'])?$_POST['idAreaProject']:null;
+		$isCentralized = isset($_POST['isCentralized'])?$_POST['isCentralized']:false;
 		
-		$oldCentralizedState = 0;
-		if($centralized==0)
-			$oldCentralizedState = 1;
+		if(isset($idAreaProject))
+		{
+			$modelAreaProject = AreaProject::model()->findByAttributes(array('Id'=>$idAreaProject));
+			if(isset($modelAreaProject))
+			{
+				$modelAreaProject->centralized = ($isCentralized == "true")?1:0;
+				$modelAreaProject->save();
+			}
+		}
 		
 		
 		if(!empty($idProject)&&!empty($idArea))
@@ -274,8 +279,7 @@ class ProjectController extends Controller
 	{
 		$idArea = isset($_POST['IdArea'])?$_POST['IdArea']:'';
 		$idProject= isset($_POST['IdProject'])?$_POST['IdProject']:'';
-		$idArea = explode("_",$idArea);
-		$idArea = $idArea[1];
+		$idArea = $idArea[0];
 	
 		if(!empty($idProject)&&!empty($idArea))
 		{			
@@ -287,11 +291,9 @@ class ProjectController extends Controller
 	
 	public function actionAjaxRemoveProjectArea()
 	{
-		$idArea = isset($_POST['IdArea'])?$_POST['IdArea']:'';
-		$idProject= isset($_POST['IdProject'])?$_POST['IdProject']:'';
-		$centralized= isset($_POST['centralized'])?(int)$_POST['centralized']:0;
-		$idArea = explode("_",$idArea);
-		$idArea = $idArea[1];
+		$idArea = isset($_GET['IdArea'])?$_GET['IdArea']:'';
+		$idProject= isset($_GET['IdProject'])?$_GET['IdProject']:'';
+		$centralized= isset($_GET['centralized'])?(int)$_GET['centralized']:0;
 	
 		if(!empty($idProject)&&!empty($idArea))
 		{
