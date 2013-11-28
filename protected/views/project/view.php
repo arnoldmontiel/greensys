@@ -10,6 +10,7 @@ $this->menu=array(
 	array('label'=>'Update Project', 'url'=>array('update', 'id'=>$model->Id)),
 	array('label'=>'Delete Project', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Project', 'url'=>array('admin')),
+	array('label'=>'Assing Areas', 'url'=>array('projectArea', 'id'=>$model->Id)),
 );
 ?>
 

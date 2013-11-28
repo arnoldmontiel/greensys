@@ -7,9 +7,17 @@ $this->menu=array(
 	array('label'=>'Create Project', 'url'=>array('create')),
 	array('label'=>'Manage Project', 'url'=>array('admin')),
 );
-$this->trashDraggableId = 'ddlAssigment';
+
+Yii::app()->clientScript->registerScript(__CLASS__.'#assign_area_project', "
+
+jQuery( document ).ready(function( $ ) {
+$.fn.yiiGridView.update('area-project-grid', {
+							data: $(this).serialize()
+							});
+});
 
 
+");
 ?>
 
 
@@ -19,170 +27,179 @@ $this->trashDraggableId = 'ddlAssigment';
 		'id'=>'ProjectArea-form',
 		'enableAjaxValidation'=>true,
 	)); ?>
-
-	<?php 	// Organize the dataProvider data into a Zii-friendly array
-		$items = CHtml::listData($dataProvider->getData(), 'Id', 'description');
-		?>
-	<div style="row;width:300px;margin:2px;">
-		
-		<?php 
-			$criteria=new CDbCriteria;
-			
-			$criteria->select ="t.*, contact.description designacion";
-			$criteria->join =" INNER JOIN customer c on (t.Id_customer = c.Id)
-					INNER JOIN contact contact on (c.Id_contact = contact.Id)";
-			$criteria->order="designacion, t.description";
-			
-			echo $form->labelEx($model,'Project');
-			
-			$list = CHtml::listData($model->findAll($criteria), 'Id', 'LongDescription');
-		?>
-		
-		<?php echo $form->dropDownList($model, 'Id', $list,		
-			array(
-				'ajax' => array(
-				'type'=>'POST',
-				'url'=>ProjectController::createUrl('AjaxFillProjectArea'),
-				'update'=>'#ddlAssigment', 
-				'success'=>'js:function(data)
-				{
-					if($("#Project_Id :selected").attr("value")=="")
-					{
-						$("#ddlAssigment").html(data);
-						$( "#Display" ).animate({opacity: "hide"},"slow");
-					}
-					else
-					{
-						$("#ddlAssigment").html(data);
-						$( "#Display" ).animate({opacity: "show"},"slow");
-						$("input[type=checkbox]").click(function(){
-							var target = $(this);
-							$.post(
-								"'.ProjectController::createUrl('AjaxSetCentralized').'",
-								 {
-								 	IdProject: $("#Project_Id :selected").attr("value"),
-									IdArea:$(this).parent().attr("id"),
-									centralized:($(this).is(":checked"))?1:0
-								 }).success(
-										 	function() 
-										 		{ 
-										 			$(target).parent().find("#centralizedok").animate({opacity: "show"},2000);
-													$(target).parent().find("#centralizedok").animate({opacity: "hide"},4000);
-												}); 
-						});
-					}
-				}',
-				//leave out the data key to pass all form values through
-				),'prompt'=>'Select a Project'
-			)		
-		);
-		?>
-		
-	</div>		
-	<div id="Display" style="display: none">
-	<div class="gridTitle-decoration1" style="float: left; width: 50%;">
-	<div class="gridTitle1">
-	Assigned (check centralized area)
-	</div>
-	</div>
-	<div class="gridTitle-decoration1" >
-	<div class="gridTitle1" >
-	Areas
-	</div>
-	</div>
-	<div id="ProjectArea"class="assigned-items">
-	<?php
 	
-	$itemsArea = CHtml::listData($dataProviderArea->getData(), 'Id', 'description');
-	
-	$this->widget('ext.dragdroplist.dragdroplist', array(
-					'id'=>'ddlAssigment',	// default is class="ui-sortable" id="yw0"
-					'items' => array(),
-					'options'=>array(
-						'revert'=> true,
-						'start'=>'var id=$(ui.item).attr("id");
-								  var isDrag=0;',		
-						'stop'=>'js:function(event, ui) 
-								{
-									try{
-										if(isDrag == 1){
-											isDrag=0;
-											$(ui.item).children().animate({opacity: "show"},2000);
-											$(ui.item).children().animate({opacity: "hide"},4000);
-											var input = document.createElement("input");
-											input.type = "checkbox";
-											input.name = "centralized";
-		  									$(ui.item).append(input);
-		  									$("input[type=checkbox]").click(function(){
-												var target = $(this);
-												$.post(
-													"'.ProjectController::createUrl('AjaxSetCentralized').'",
-													 {
-													 	IdProject: $("#Project_Id :selected").attr("value"),
-														IdArea:id,
-														centralized:($(this).is(":checked"))?1:0
-													 }).success(
-															 	function() 
-															 		{
-															 			$(target).parent().find("#saveok").animate({opacity: "show"},2000);
-																		$(target).parent().find("#saveok").animate({opacity: "hide"},4000);
-																	}); 
+	<div id="Display">
+		<div class="gridTitle-decoration1" style="float: left; width: 50%;">
+			<div class="gridTitle1">
+				Assigned (check centralized area)
+			</div>
+		</div>
+		<div class="gridTitle-decoration1" >
+			<div class="gridTitle1" >
+				Areas
+			</div>
+		</div>
+		<div id="ProjectArea"class="assigned-items" style="float: left; width: 45%;">
+			<?php 	// Organize the dataProvider data into a Zii-friendly array
+					$this->widget('zii.widgets.grid.CGridView', array(
+					'id'=>'area-project-grid',
+					'dataProvider'=>$modelAssignedArea->search(),
+					'filter'=>$modelAssignedArea,
+					'summaryText'=>'',	
+					'selectableRows'=>0,
+					'afterAjaxUpdate'=>'function(id, data){
+							$("#area-project-grid").find("input.txtRelDescription").each(
+										function(index, item){
+									
+													$(item).change(function(){
+														var target = $(this);
+														
+														$.post(
+															"'.PriceListController::createUrl('AjaxUpdateRelDescription').'",
+															 {
+															 	idAreaProject: $(this).attr("id"),
+																relDescription:$(this).val()
+															 }).success(
+																 	function() 
+																 		{ 
+																 			$(target).parent().parent().find("#saveok1-sale").animate({opacity: "show"},4000,
+																			function(){$(target).parent().parent().find("#saveok1-sale").animate({opacity: "hide"},4000);});																						
+																		});
+															
+													});
 											});
-										}
-									}catch(e){
+							$("#area-project-grid").find("input.chkCentralized").each(
+										function(index, item){
 									
-									}	
-									
-								}', 				
-						'receive'=>
-								'js:function(event, ui) 
-								{
-									isDrag = 1;
-									id = $(ui.item).attr("id");
-									$.post(
-										"'.ProjectController::createUrl('AjaxAddProjectArea').'",
-										 {
-										 	IdProject: $("#Project_Id :selected").attr("value"),
-											IdArea:$(ui.item).attr("id")
-										 }).success(
-										 	function() 
-										 		{ 
-												}); 
-								}', 				
-						'remove'=>
-								'js:function(event, ui) 
-								{ 
-									var IdArea = $(ui.item).attr("id");
-									
-									if(IdArea== undefined)
-										IdArea = id;
-									$.post(
-										"'.ProjectController::createUrl('AjaxRemoveProjectArea').'",
-										 {
-										 	IdProject: $("#Project_Id :selected").attr("value"),
-											IdArea:IdArea,
-											centralized:($(ui.item).find("input").is(":checked"))?1:0
-										});
-										 
-								}', 				
-	),
-	));
-	?>
-			</div>
-			<div id="Area" class="selectable-items">
-			<?php 
-			$this->widget('ext.draglist.draglist', array(
-			'id'=>'dlArea',
-			'items' => $itemsArea,
-			'options'=>array(
-					'helper'=> 'clone',
-					'connectToSortable'=>'#ddlAssigment',
-						),
-				));
+													$(item).click(function(){
+														var target = $(this);
+														
+														$.post(
+															"'.PriceListController::createUrl('AjaxUpdateCentralized').'",
+															 {
+															 	idAreaProject: $(this).attr("id"),
+																isCentralized:$(this).is(":checked")
+															 }).success(
+																 	function() 
+																 		{ 
+																 			$(target).parent().parent().find("#saveok2-sale").animate({opacity: "show"},4000,
+																			function(){$(target).parent().parent().find("#saveok2-sale").animate({opacity: "hide"},4000);});																						
+																		});
+															
+													});
+											});	
+					}',
+					'columns'=>array(	
+									array(
+										'name'=>'descripionArea',
+									    'value'=>'$data->area->description',				 
+									),
+									array(
+										'name'=>'description',
+										'value'=>
+		                                    	'CHtml::textField("txtRelDescription",
+														$data->description,
+														array(
+																"id"=>$data->Id,
+																"class"=>"txtRelDescription",
+																"maxlength"=>200,
+																"style"=>"width:150px;text-align:left;",
+															)
+													)',
 					
-			?>
-			</div>
-			</div>	
+										'type'=>'raw',
+									),
+									array(
+										'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok1-sale", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+										'type'=>'raw',
+										'htmlOptions'=>array('width'=>25),
+									),
+									array(
+										'name'=>'centralized',
+										'value'=>
+							            		'CHtml::checkBox("chkCentralized",
+														$data->centralized,
+														array(
+																"id"=>$data->Id,
+																"class"=>"chkCentralized",
+															)
+													)',
+	
+										'type'=>'raw',
+									),
+									array(
+										'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"saveok2-sale", "style"=>"display:none", "width"=>"20px", "height"=>"20px"))',
+										'type'=>'raw',
+										'htmlOptions'=>array('width'=>25),
+									),
+									array(
+										'class'=>'CButtonColumn',
+										'template'=>'{delete}',
+										'buttons'=>array
+													(
+													'delete' => array
+																(
+														        	'url'=>'Yii::app()->createUrl("project/AjaxRemoveProjectArea", array("IdArea"=>$data->Id_area,
+														        																		"IdProject"=>$data->Id_project,
+														        																		"centralized"=>$data->centralized))',
+																),
+													),
+									),
+								),
+						));
+					?>
+		</div>
+		<div id="Area" class="selectable-items" style="float: right; width: 45%;">
+				<?php 	// Organize the dataProvider data into a Zii-friendly array
+					$this->widget('zii.widgets.grid.CGridView', array(
+					'id'=>'area-grid',
+					'dataProvider'=>$modelArea->search(),
+					'filter'=>$modelArea,
+					'summaryText'=>'',	
+					'selectionChanged'=>'js:function(id){
+							$.post(	"'.ProjectController::createUrl('AjaxAddProjectArea').'",
+							{
+								IdProject:'.$idProject.',
+								IdArea:$.fn.yiiGridView.getSelection("area-grid")
+							}).success(
+								function() 
+								{
+									markAddedRow("area-grid");
+									
+									$.fn.yiiGridView.update("area-project-grid", {
+									data: $(this).serialize()
+									});
+									
+									unselectRow("area-grid");		
+								})
+							.error(
+								function(data)
+								{
+									unselectRow("area-grid");
+								});
+						}',
+					'columns'=>array(	
+									array(
+										'name'=>'description',
+									    'value'=>'$data->description',				 
+									),
+									array(
+										'name'=>'main',
+										'value'=>
+							            		'CHtml::checkBox("chkMain",
+														$data->main,
+														array(
+																"disabled"=>"disabled",
+															)
+													)',
+	
+										'type'=>'raw',
+									),
+								),
+						));
+					?>
+		</div>
+	</div>	
 	<?php $this->endWidget(); ?>
 	<div id="display"></div>
 </div><!-- form -->
