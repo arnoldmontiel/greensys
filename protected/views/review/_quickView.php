@@ -1,6 +1,6 @@
 
 <div class="index-review-quick-view">
-<div class="review-action-customer" >
+<div class="review-action-customer" <?php if(isset($isClosed)) echo "style='background-color: #CCCCCC;'"?>>
 	<?php
 		$tCustomer = TCustomer::model()->findByPk($customer->Id);
 		//echo CHtml::link($customer->person->name.' '.$customer->person->last_name. ' - ' . $customer->tagDesc,

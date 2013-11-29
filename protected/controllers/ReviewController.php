@@ -1021,7 +1021,7 @@ class ReviewController extends Controller
 					if(empty($collapsed))
 					$isCollapsed = true;
 			
-				$this->renderPartial('_quickView',array('data'=>$data, 'customer'=>$project->customer,'project'=>$project,'collapsed'=>$isCollapsed));
+				$this->renderPartial('_quickView',array('data'=>$data, 'customer'=>$project->customer,'project'=>$project,'collapsed'=>$isCollapsed,'isClosed'=>true));
 			
 				$count++;
 			
