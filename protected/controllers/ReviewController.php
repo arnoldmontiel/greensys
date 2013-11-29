@@ -992,6 +992,41 @@ class ReviewController extends Controller
 				$count++;
 	
 			}
+			//proyectos sin tareas pendientes.
+			$criteria=new CDbCriteria;
+			$criteria->select = 't.*, max(n.change_date) as max_date';
+			$criteria->join = 'INNER JOIN tapia.customer c on (c.Id = t.Id_customer)
+							LEFT OUTER JOIN tapia.note n ON ( n.Id_project = t.Id)
+							INNER JOIN tapia.review r ON ( r.Id_project = t.Id)
+			';
+			$criteria->addCondition('c.username is null');
+			$criteria->addCondition('r.is_open = 0');
+			
+			$criteria->group = 't.Id';
+			$criteria->order = 'max_date DESC';
+				
+			$projects = Project::model()->findAll($criteria);
+			foreach ($projects as $project){
+				$review->Id_customer = $project->customer->Id;
+				$review->Id_project = $project->Id;
+			
+				$dataProvider = $review->searchQuickDashboardClient($arrFilters);
+			
+				$dataProvider->pagination->pageSize= 4;
+			
+				$data = $dataProvider->getData();
+			
+				$isCollapsed = array_search($project->Id, $collapsed);
+				if($count>2)
+					if(empty($collapsed))
+					$isCollapsed = true;
+			
+				$this->renderPartial('_quickView',array('data'=>$data, 'customer'=>$project->customer,'project'=>$project,'collapsed'=>$isCollapsed));
+			
+				$count++;
+			
+			}
+				
 		}
 	}
 	
