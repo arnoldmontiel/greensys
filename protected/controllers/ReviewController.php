@@ -962,9 +962,11 @@ class ReviewController extends Controller
 			$criteria->select = 't.*, max(n.change_date) as max_date';
 			$criteria->join = 'INNER JOIN tapia.customer c on (c.Id = t.Id_customer)
 							LEFT OUTER JOIN tapia.note n ON ( n.Id_project = t.Id)
+							INNER JOIN tapia.review r ON ( r.Id_project = t.Id)
 			';
 			$criteria->addCondition('c.username is null');
-			
+			$criteria->addCondition('r.is_open = 1');
+				
 			$criteria->group = 't.Id';
 			$criteria->order = 'max_date DESC';
 			
@@ -1083,7 +1085,7 @@ class ReviewController extends Controller
 					continue;
 				}
 
-				//proyectos con la última novedad del current_user
+				//proyectos con la ï¿½ltima novedad del current_user
 				$criteria=new CDbCriteria;
 				$criteria->addCondition('change_date =
 											( select max(change_date)
