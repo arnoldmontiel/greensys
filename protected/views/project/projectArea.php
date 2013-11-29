@@ -156,6 +156,7 @@ $.fn.yiiGridView.update('area-project-grid', {
 					'dataProvider'=>$modelArea->search(),
 					'filter'=>$modelArea,
 					'summaryText'=>'',	
+					'selectableRows'=>0,
 					'selectionChanged'=>'js:function(id){
 							$.post(	"'.ProjectController::createUrl('AjaxAddProjectArea').'",
 							{
@@ -195,6 +196,43 @@ $.fn.yiiGridView.update('area-project-grid', {
 	
 										'type'=>'raw',
 									),
+									array
+									(
+											'class'=>'CButtonColumn',
+											'template'=>'{agregar}',
+											'buttons'=>array
+											(
+												'agregar' => array
+													(
+														'click'=>'function(){
+				            								$(this).parent().parent().addClass("selected");
+																$.post(	"'.ProjectController::createUrl('AjaxAddProjectArea').'",
+																{
+																	IdProject:'.$idProject.',
+																	IdArea:$.fn.yiiGridView.getSelection("area-grid")
+																}).success(
+																	function() 
+																	{
+																		markAddedRow("area-grid");
+																		
+																		$.fn.yiiGridView.update("area-project-grid", {
+																		data: $(this).serialize()
+																		});
+																		
+																		unselectRow("area-grid");		
+																	})
+																.error(
+																	function(data)
+																	{
+																		unselectRow("area-grid");
+																	});
+													            		return false;
+																	}',
+													),
+														
+											),
+									),
+										
 								),
 						));
 					?>
