@@ -74,8 +74,10 @@ class GreenHelper
 		if(isset($modelSettings))
 			$currency = $modelSettings->currency->short_description;
 		
+		$arrayServiceTotal = array();
 		//INDICES EXCEL
 		$indexMain = array('main'=>'A','image'=>'E','mainStart'=>'A','mainEnd'=>'K');
+		$indexSummary = array('service'=>'D', 'total'=>'G');
 		$indexServiceHeader = array('name'=>'A');
 		$indexServiceBody = array('description'=>'A', 'descriptionEnd'=>'K');
 		$indexService = array('name'=>'A', 'description'=>'B');
@@ -159,10 +161,10 @@ class GreenHelper
 		$criteria->group = 'Id_service';
 		$budgetItemServices = BudgetItem::model()->findAll($criteria);
 		
-		
+		$rowSummary = $row; 
+		$row = $row + count($budgetItemServices) + 2;
 		foreach($budgetItemServices as $budgetItemService)
 		{
-			
 			$criteria = new CDbCriteria();
 			$criteria->addCondition('Id_budget = '.$idBudget);
 			$criteria->addCondition('version_number = '.$versionNumber);
@@ -187,6 +189,7 @@ class GreenHelper
 			$budgetItems = BudgetItem::model()->findAll($criteria);
 			
 			//SERVICE---------------------------------------------------------------
+			$serviceName = '';
 			if(count($budgetItems)>0)
 			{
 				$serviceName = 'General';
@@ -225,8 +228,9 @@ class GreenHelper
 			//BODY BUDGET ITEM---------------------------------------------------------------
 			
 			$row++;
+			$serviceTotalPrice = 0;
 			foreach($budgetItems as $budgetItem)
-			{
+			{				
 				$prodHeader = $budgetItem->product->brand->description .' '. $budgetItem->product->model;
 				
 				$sheet->setCellValue($indexProductHeader['shortDescription'].$row, $prodHeader);
@@ -284,12 +288,13 @@ class GreenHelper
 				$sheet->getStyle($indexProductFooter['totalDesc'].$row)->getFont()->setBold(true);
 				$sheet->setCellValue($indexProductFooter['total'].$row, $currency .' '. $budgetItem->getTotalPriceWOChildern());
 				$sheet->getStyle($indexProductFooter['total'].$row)->getFont()->setBold(true);
-				
+				$serviceTotalPrice = $serviceTotalPrice + $budgetItem->getTotalPriceWOChildern();
 				$row++;
 				$row = $row + 2;
 			}
 				
 			$row++;
+			$arrayServiceTotal[] = array('serviceName'=>$serviceName, 'total'=>$serviceTotalPrice);
 		}
 		//END BODY BUDGET ITEM---------------------------------------------------------------
 		
@@ -382,7 +387,15 @@ class GreenHelper
 			$fileName = $project . " - v" .$versionNumber;
 		}
 		//END TOTALES---------------------------------------------------------------
-		
+		$sheet->setCellValue($indexSummary['service'].$rowSummary, "Resumen de propuesta");
+		$sheet->getStyle($indexSummary['service'].$rowSummary)->getFont()->setBold(true);
+		$rowSummary++;
+		foreach($arrayServiceTotal as $currentService)
+		{
+			$sheet->setCellValue($indexSummary['service'].$rowSummary, $currentService['serviceName']);
+			$sheet->setCellValue($indexSummary['total'].$rowSummary, $currency . ' ' .$currentService['total']);
+			$rowSummary++;
+		}
 		//set column auto-size		
 // 		foreach(range($indexProduct['quantity'],$indexProduct['total']) as $columnID) {
 // 			$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
