@@ -75,10 +75,14 @@ class GreenHelper
 			$currency = $modelSettings->currency->short_description;
 		
 		//INDICES EXCEL
-		$indexMain = array('main'=>'A','image'=>'C','mainStart'=>'A','mainEnd'=>'I');
+		$indexMain = array('main'=>'A','image'=>'E','mainStart'=>'A','mainEnd'=>'K');
+		$indexServiceHeader = array('name'=>'A');
+		$indexServiceBody = array('description'=>'A', 'descriptionEnd'=>'K');
 		$indexService = array('name'=>'A', 'description'=>'B');
-		$indexProduct = array('model'=>'A','description'=>'B','image'=>'C',
-										'quantity'=>'F','price'=>'G','discount'=>'H','total'=>'I');
+		$indexProductHeader = array('shortDescription'=>'A');
+		$indexProductBody = array('image'=>'A', 'description'=>'D', 'descriptionEnd'=>'K');
+		$indexProductFooter = array('qtyDesc'=>'A', 'qty'=>'B', 'unitPriceDesc'=>'D', 'unitPrice'=>'F',
+										'totalDesc'=>'H', 'total'=>'I');
 		$indexExtra	  = array('descriptionStart'=>'A', 'descriptionEnd'=>'E', 'quantity'=>'F', 'price'=>'G',
 										'discount'=>'H','total'=>'I');
 		$indexTotal	  = array('descriptionStart'=>'F','descriptionEnd'=>'H','total'=>'I');
@@ -99,9 +103,15 @@ class GreenHelper
 									),
 		);
 		
+		$style_desc = array(
+				                'alignment' => array(
+				                    		'wrap' => true,
+				                                      'vertical' => PHPExcel_Style_Alignment::VERTICAL_TOP,
+								),
+		);
+		
 		//sheet 0
 		$sheet = $objPHPExcel->setActiveSheetIndex(0);
-		$sheet->getColumnDimension($indexService['description'])->setWidth(50);
 		$row = 1;
 		
 		//MAIN HEADER---------------------------------------------------------------
@@ -191,41 +201,37 @@ class GreenHelper
 					if(isset($projectServiceDB))
 						$serviceDesc = $projectServiceDB->long_description;				
 				}
-				
-				$sheet->getStyle($indexService['description'].$row)->getAlignment()->setWrapText(true);
-				
-				$sheet->setCellValue($indexService['name'].$row, $serviceName);
-				$sheet->setCellValue($indexService['description'].$row, $serviceDesc);
 	
-				self::cellColor($sheet, $indexService['name'].$row.':'.$indexService['description'].$row, 'e6e6fa');
-				$sheet->getStyle($indexService['name'].$row.':'.$indexService['description'].$row)->applyFromArray($style_border);
-				$sheet->getStyle($indexService['name'].$row)->getAlignment()->setWrapText(true);
-				$sheet->getStyle($indexService['name'].$row)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+				$sheet->setCellValue($indexServiceHeader['name'].$row, $serviceName);
+				$sheet->getStyle($indexServiceHeader['name'].$row)->getFont()->setBold(true);
+				$row++;
+				$sheet->setCellValue($indexServiceBody['description'].$row, $serviceDesc);
+				
+				$newRow = $row + 5;
+				$sheet->getStyle($indexServiceBody['description'].$row)->getAlignment()->setWrapText(true);
+				$sheet->mergeCells($indexServiceBody['description'].$row.':'.$indexProductBody['descriptionEnd'].$newRow);
+				$sheet->getStyle($indexServiceBody['description'].$row)->applyFromArray($style_desc);
+				
+				$row = $newRow;
+				
 			}
 			$row++;
 			//END SERVICE---------------------------------------------------------------
 						
-			//HEADER BUDGET ITEM---------------------------------------------------------------
-			$sheet->setCellValue($indexProduct['model'].$row, 'Modelo');
-			$sheet->setCellValue($indexProduct['description'].$row, 'Descripcion');
-			$sheet->setCellValue($indexProduct['image'].$row, 'Imagen');
-			$sheet->setCellValue($indexProduct['quantity'].$row, 'Cantidad');
-			$sheet->setCellValue($indexProduct['price'].$row, 'Precio');
-			$sheet->setCellValue($indexProduct['discount'].$row, 'Descuento');
-			$sheet->setCellValue($indexProduct['total'].$row, 'Total');
-							
-			self::cellColor($sheet, $indexProduct['model'].$row.':'.$indexProduct['total'].$row, '2c86ff');
-			$sheet->getStyle($indexProduct['model'].$row.':'.$indexProduct['total'].$row)->applyFromArray($style_border);			
-			//END HEADER BUDGET ITEM---------------------------------------------------------------
+// 			//HEADER BUDGET ITEM---------------------------------------------------------------
+
+// 			//END HEADER BUDGET ITEM---------------------------------------------------------------
 			
 			//BODY BUDGET ITEM---------------------------------------------------------------
 			
 			$row++;
 			foreach($budgetItems as $budgetItem)
 			{
-				$sheet->setCellValue($indexProduct['model'].$row, $budgetItem->product->model);
-				$sheet->setCellValue($indexProduct['description'].$row, $budgetItem->product->short_description);
-				$sheet->getStyle($indexProduct['description'].$row)->getAlignment()->setWrapText(true);
+				$prodHeader = $budgetItem->product->brand->description .' '. $budgetItem->product->model;
+				
+				$sheet->setCellValue($indexProductHeader['shortDescription'].$row, $prodHeader);
+				$sheet->getStyle($indexProductHeader['shortDescription'].$row)->getFont()->setBold(true);
+				$row++;
 				
 				$criteria = new CDbCriteria();
 				$criteria->join = 'inner join product_multimedia pm on (pm.Id_multimedia = t.Id)';
@@ -233,7 +239,6 @@ class GreenHelper
 				$criteria->addCondition('pm.Id_product = '. $budgetItem->Id_product);
 				
 				$modelMultimediaDB = Multimedia::model()->find($criteria);
-				$sumImageRows = 0;
 				if(isset($modelMultimediaDB))
 				{				
 					$imagePath = "";
@@ -248,25 +253,40 @@ class GreenHelper
 						$objDrawingPType->setWorksheet($sheet);
 						$objDrawingPType->setName("Pareto By Type");
 						$objDrawingPType->setPath($imagePath);
-						$objDrawingPType->setCoordinates($indexProduct['image'].$row);
+						$objDrawingPType->setCoordinates($indexProductBody['image'].$row);
 						$objDrawingPType->setOffsetX(1);
 						$objDrawingPType->setOffsetY(1);
-						$objDrawingPType->setHeight(95);
+						//$objDrawingPType->setHeight(95);
+						$objDrawingPType->setResizeProportional(true);
+						$objDrawingPType->setWidthAndHeight(150,150);
 					}
-					$sumImageRows = 4;
 				}
 				
-				$sheet->setCellValue($indexProduct['quantity'].$row, $budgetItem->quantity);
-				$sheet->setCellValue($indexProduct['price'].$row, $currency .' '. $budgetItem->price);
-				$sheet->setCellValue($indexProduct['discount'].$row, $budgetItem->getDiscountType().' '. $budgetItem->getDiscount());
-				$sheet->setCellValue($indexProduct['total'].$row, $currency .' '. $budgetItem->getTotalPriceWOChildern());
+				$row++;
 				
-				$sheet->getStyle($indexProduct['quantity'].$row.':'.$indexProduct['total'].$row)->applyFromArray($style_num);				
-				$newRow = $row + $sumImageRows;
-				$sheet->getStyle($indexProduct['model'].$row.':'.$indexProduct['total'].$newRow)->applyFromArray($style_border);
+				$sheet->setCellValue($indexProductBody['description'].$row, $budgetItem->product->short_description);
+				$newRow = $row + 5;
+				$sheet->getStyle($indexProductBody['description'].$row)->getAlignment()->setWrapText(true);
+				$sheet->mergeCells($indexProductBody['description'].$row.':'.$indexProductBody['descriptionEnd'].$newRow);
+				$sheet->getStyle($indexProductBody['description'].$row)->applyFromArray($style_desc);
+				
+				$row = $newRow + 2;
+				
+				$sheet->setCellValue($indexProductFooter['qtyDesc'].$row, "Cantidad:");
+				$sheet->getStyle($indexProductFooter['qtyDesc'].$row)->getFont()->setBold(true);
+				$sheet->setCellValue($indexProductFooter['qty'].$row, $budgetItem->quantity);
+				$sheet->getStyle($indexProductFooter['qty'].$row)->getFont()->setBold(true);
+				$sheet->setCellValue($indexProductFooter['unitPriceDesc'].$row, "Precio Unitario");
+				$sheet->getStyle($indexProductFooter['unitPriceDesc'].$row)->getFont()->setBold(true);
+				$sheet->setCellValue($indexProductFooter['unitPrice'].$row, $currency .' '. $budgetItem->price);
+				$sheet->getStyle($indexProductFooter['unitPrice'].$row)->getFont()->setBold(true);
+				$sheet->setCellValue($indexProductFooter['totalDesc'].$row, "Total:");
+				$sheet->getStyle($indexProductFooter['totalDesc'].$row)->getFont()->setBold(true);
+				$sheet->setCellValue($indexProductFooter['total'].$row, $currency .' '. $budgetItem->getTotalPriceWOChildern());
+				$sheet->getStyle($indexProductFooter['total'].$row)->getFont()->setBold(true);
 				
 				$row++;
-				$row = $row + $sumImageRows;
+				$row = $row + 2;
 			}
 				
 			$row++;
@@ -364,10 +384,10 @@ class GreenHelper
 		//END TOTALES---------------------------------------------------------------
 		
 		//set column auto-size		
-		foreach(range($indexProduct['quantity'],$indexProduct['total']) as $columnID) {
-			$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
-			->setAutoSize(true);
-		}
+// 		foreach(range($indexProduct['quantity'],$indexProduct['total']) as $columnID) {
+// 			$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+// 			->setAutoSize(true);
+// 		}
 		
 		// Rename worksheet
 		$objPHPExcel->getActiveSheet()->setTitle('Simple');
