@@ -105,6 +105,7 @@ $('#deleteAll').click(
 		'dataProvider'=>$modelProduct->searchSummary(),
 		'filter'=>$modelProduct,
 		'summaryText'=>'',	
+		'selectableRows'=>0,
 		'selectionChanged'=>'js:function(id){
 			$(".messageError").animate({opacity: "hide"},2000);
 
@@ -149,6 +150,46 @@ $('#deleteAll').click(
 					'value'=>'$data->category->description',
 				),
 				'short_description',
+				array
+				(
+						'class'=>'CButtonColumn',
+						'template'=>'{agregar}',
+						'buttons'=>array
+						(
+								'agregar' => array
+								(
+										'click'=>'function(){
+            								$(this).parent().parent().addClass("selected");
+			$(".messageError").animate({opacity: "hide"},20);
+
+			$.get(	"'.PriceListController::createUrl('AjaxAddPriceListItem').'",
+					{
+						IdPriceList:$("#PriceList_Id").val(),
+						IdProduct:$.fn.yiiGridView.getSelection("product-grid")
+					}).success(
+						function() 
+						{
+							markAddedRow("product-grid");
+							
+							$.fn.yiiGridView.update("price-list-item-grid", {
+							data: $(this).serialize()
+							});
+							
+							unselectRow("product-grid");		
+						})
+					.error(
+						function(data)
+						{
+							$(".messageError").html(data.responseText);
+							$(".messageError").animate({opacity: "show"},2000.,function(){$(".messageError").animate({opacity: "hide"},2000)});
+							unselectRow("product-grid");
+						});
+									            		return false;
+													}',
+								),
+				
+						),
+				),
 				array(
 					'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok", "style"=>"display:none; float:left;", "width"=>"15px", "height"=>"15px"))',
 					'type'=>'raw',

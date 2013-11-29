@@ -108,6 +108,7 @@ $('#deleteAll-sale').click(
 		'filter'=>$modelProduct,
 		//'ajaxUrl'=>PriceListController::createUrl('AjaxUpdateProductGrid'),				
 		'summaryText'=>'',	
+		'selectableRows'=>0,
 		'selectionChanged'=>'js:function(id){
 			$(".messageError").animate({opacity: "hide"},2000);
 			$.get(	"'.PriceListController::createUrl('AjaxAddPriceListItemSale').'",
@@ -146,6 +147,47 @@ $('#deleteAll-sale').click(
 					'value'=>'$data->category->description',
 				),
 				'short_description',
+array
+(
+		'class'=>'CButtonColumn',
+		'template'=>'{agregar}',
+		'buttons'=>array
+		(
+				'agregar' => array
+				(
+						'click'=>'function(){
+            								$(this).parent().parent().addClass("selected");
+			$(".messageError").animate({opacity: "hide"},20);
+
+			$.get(	"'.PriceListController::createUrl('AjaxAddPriceListItemSale').'",
+					{
+						Id_price_list:$("#PriceList_Id").val(),
+						Id_product:$.fn.yiiGridView.getSelection("product-grid-sale")[0],
+					}).success(
+						function()
+						{
+							markAddedRow("product-grid-sale");
+				
+							$.fn.yiiGridView.update("price-list-item-grid-sale", {
+							data: $(this).serialize()+$("#PriceList_Id").serialize()
+							});
+				
+							unselectRow("product-grid-sale");
+						})
+					.error(
+						function(data)
+						{
+							$(".messageError").html(data.responseText);
+							$(".messageError").animate({opacity: "show"},2000.,function(){$(".messageError").animate({opacity: "hide"},2000)});
+							unselectRow("product-grid-sale");
+						});
+					return false;
+													}',
+				),
+
+		),
+),
+
 				array(
 						'value'=>'CHtml::image("images/grid_warning.png","",array("title"=>$data->getWarningsDescription("hasPriceListPurch"),"style"=>$data->getHasWarnings("hasPriceListPurch")?"display":"display:none"))',
 						'type'=>'raw',
