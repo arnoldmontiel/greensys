@@ -172,7 +172,8 @@ function gridSelectionChange()
 			'id'=>'productChild-grid',
 			'dataProvider'=>$model->searchSummary(),
 			'filter'=>$model,
-			'summaryText'=>'',	
+			'summaryText'=>'',
+			'selectableRows'=>0,	
 			'selectionChanged'=>'js:function(){
 				$.get(	"'.ProductController::createUrl('AjaxAddProductGroup').'",
 						{
@@ -206,6 +207,36 @@ function gridSelectionChange()
 				'value'=>'$data->category->description',
 			),
 				'short_description',
+			array
+			(
+					'class'=>'CButtonColumn',
+					'template'=>'{agregar}',
+					'buttons'=>array
+					(
+							'agregar' => array
+							(
+									'click'=>'function(){
+				            			$(this).parent().parent().addClass("selected");
+										$.get(	"'.ProductController::createUrl('AjaxAddProductGroup').'",
+												{
+													IdProductParent:$.fn.yiiGridView.getSelection("product-grid"),
+													IdProductChild:$.fn.yiiGridView.getSelection("productChild-grid")
+												}).success(
+													function() 
+													{
+														markAddedRow("productChild-grid");		
+														$.fn.yiiGridView.update("productGroup-grid", {
+														data: $(this).serialize()
+														});
+														unselectRow("productChild-grid");		
+													}
+												);
+				            		return false;
+								}',
+							),
+			
+					),
+			),
 			array(
 				'value'=>'CHtml::image("images/save_ok.png","",array("id"=>"addok", "style"=>"display:none; float:left;", "width"=>"15px", "height"=>"15px"))',
 				'type'=>'raw',
