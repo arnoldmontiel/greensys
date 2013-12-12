@@ -324,7 +324,7 @@ $('#btnPublicAlbum').click(function(){
 
 $('#btnCancelAlbum').click(function(){
 	$('#loading').addClass('loading');
-	$.post('".AlbumController::createUrl('album/AjaxCancelAlbum')."', 
+	$.post('".ReviewController::createUrl('album/AjaxCancelAlbum')."', 
 		$('#Album_Id_album').serialize()
 	).success(
 	function(data){
