@@ -2,7 +2,7 @@
 Yii::app()->clientScript->registerScript('form-album-create', "
 $('#Album_title').change(function(){	
 	$.post(
-		'".AlbumController::createUrl('album/AjaxUpdateTitle')."',
+		'".ReviewController::createUrl('album/AjaxUpdateTitle')."',
 		{
 			id: $('#Album_Id_album').val(),
 			title:$(this).val()
@@ -16,7 +16,7 @@ $('#Album_title').change(function(){
 		
 $('#Album_description').change(function(){
 	$.post(
-		'".AlbumController::createUrl('album/AjaxUpdateDescription')."',
+		'".ReviewController::createUrl('album/AjaxUpdateDescription')."',
 		{
 			id: $('#Album_Id_album').val(),
 			description:$(this).val()
@@ -60,7 +60,7 @@ echo $formAlbum->hiddenField($model,'Id_project');
 
 <?php
 $this->widget('ext.xupload.XUploadWidget', array(
-                    'url' => AlbumController::createUrl('album/AjaxUpload'),
+                    'url' => ReviewController::createUrl('album/AjaxUpload'),
 					'multiple'=>true,
 					'name'=>'file',
 					'htmlOptions'=>array('id'=>'XUploadWidget_form'),
@@ -73,7 +73,7 @@ $this->widget('ext.xupload.XUploadWidget', array(
 							$tr.find(".file_upload_cancel button").click(function(){
 								var target = $(this);
 											
-								$.get("'.AlbumController::createUrl('album/AjaxRemoveImage').'",
+								$.get("'.ReviewController::createUrl('album/AjaxRemoveImage').'",
  									{
 										IdMultimedia:$(target).parent().parent().attr("id")
  								}).success(
@@ -89,7 +89,7 @@ $this->widget('ext.xupload.XUploadWidget', array(
  							$tr.find("#photo_description").change(function(){
 								var target = $(this);
 								
-								$.get("'.AlbumController::createUrl('album/AjaxAddImageDescription').'",
+								$.get("'.ReviewController::createUrl('album/AjaxAddImageDescription').'",
  									{
 										IdMultimedia:$(target).parent().parent().attr("id"),
 										description:$(this).val()
