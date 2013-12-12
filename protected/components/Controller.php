@@ -65,7 +65,7 @@ class Controller extends SBaseController
 	{
 		return Setting::model()->findByPk('1');
 	}
-	protected function beforeAction(CAction $action)
+	protected function beforeAction($action)
 	{
 		$this->menu=array(
 				array('label'=>'Administrar', 'url'=>array('admin')),
