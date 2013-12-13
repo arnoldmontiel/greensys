@@ -6,6 +6,7 @@ class GreenHelper
 		if(get_class($product)=="Product")
 		{
 			
+			
 		}
 		
 	}
