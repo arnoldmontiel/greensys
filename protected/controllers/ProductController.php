@@ -881,6 +881,8 @@ class ProductController extends Controller
 	{
 		$model=new UploadExcel();
 		$modelMeasureImportLog = new MeasureImportLog();
+		$modelProductImportLog = new ProductImportLog();
+		
 		
 		$measureType = MeasurementType::model()->findByAttributes(array('description'=>'linear'));
 
@@ -900,20 +902,20 @@ class ProductController extends Controller
 				
 		$ddlBrand = Brand::model()->findAll(array('order'=>'description ASC'));
 		
-		if(isset($_POST['UploadExcel']) && isset($_POST['MeasureImportLog']))
+		if(isset($_POST['UploadExcel']) && isset($_POST['ProductImportLog']))
 		{
-			$modelMeasureImportLog->attributes = $_POST['MeasureImportLog'];
+			$modelProductImportLog->attributes = $_POST['ProductImportLog'];
 			$model->attributes = $_POST['UploadExcel'];			
 			if($model->validate())
 			{
 				//GreenHelper::importMeasuresFromExcel($model, $modelMeasureImportLog);
-				GreenHelper::importProductFromExcel($model, $modelMeasureImportLog);
+				GreenHelper::importProductFromExcel($model, $modelProductImportLog);
 				//$this->redirect(array('adminMeasuresImport'));
 			}
 		}
 	
 		$this->render('importMeasuresFromExcel',array('model'=>$model,
-										'modelMeasureImportLog'=>$modelMeasureImportLog, 
+										'modelProductImportLog'=>$modelProductImportLog, 
 										'ddlMeasurementUnitLinear'=>$ddlMeasurementUnitLinear,
 										'ddlMeasurementUnitWeight'=>$ddlMeasurementUnitWeight,
 										'ddlBrand'=>$ddlBrand,));
