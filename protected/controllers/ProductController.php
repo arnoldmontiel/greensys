@@ -921,6 +921,12 @@ class ProductController extends Controller
 										'ddlBrand'=>$ddlBrand,));
 	}
 	
+	public function actionExportToExcel()
+	{
+	
+		GreenHelper::generateProductExcelGrid(3);
+	}
+	
 	public function actionImportResults($id)
 	{
 		$model = ImportLog::model()->findByPk($id);

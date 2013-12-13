@@ -6,6 +6,11 @@ $('#cancelButton').click(function(){
 	return false;
 });
 
+$('#btn-export').click(function(){
+	window.location = '".ProductController::createUrl('ExportToExcel') ."';
+	return false;
+});
+			
 ");
 
 $this->menu=array(
@@ -34,7 +39,7 @@ $this->menu=array(
 
 <br>
 	<?php echo $form->errorSummary($model); ?>
-
+<?php echo CHtml::link( 'Export','#',array('id'=>'btn-export'));?>
 	<div class="row">		
 		<div style="width: 120px; display: inline-block;">
 			<?php echo $form->labelEx($modelProductImportLog,'Id_measurement_unit_linear'); ?>
