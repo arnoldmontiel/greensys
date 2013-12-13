@@ -1260,4 +1260,354 @@ class GreenHelper
 		}
 		return $modelProduct; 
 	}
+	
+	static public function importProductFromExcel($modelUpload, $modelMeasureImportLog)
+	{
+		$Id_linear = $modelMeasureImportLog->Id_measurement_unit_linear;
+		$Id_weight =  $modelMeasureImportLog->Id_measurement_unit_weight;
+	
+		$file=CUploadedFile::getInstance($modelUpload,'file');
+		$sheet_array = Yii::app()->yexcel->readActiveSheet($file->tempName);
+	
+		$ext = end(explode(".", $file->name));
+		$ext = strtolower($ext);
+	
+		$uniqueId = uniqid();
+	
+		$folder = "docs/";
+		$fileName = $uniqueId.'.'.$ext;
+		$filePath = $folder . $fileName;
+	
+		//save doc
+		move_uploaded_file($file->tempName,$filePath);
+		
+		$excelCols = self::getExcelCols($sheet_array[1]);
+		
+		$row_index = 1;
+		$model_not_found = '';
+		foreach( $sheet_array as $row )
+		{
+			if($row_index != 1)
+			{
+				$criteria = new CDbCriteria();
+				$criteria->addCondition('t.Id_brand = '. $modelMeasureImportLog->Id_brand);
+				$newModel = str_replace('"','',$row[$excelCols['MODELO']]);
+	
+				if(empty($newModel))
+					continue;
+	
+				$criteria->addCondition('"'. $newModel . '" like CONCAT("%", model ,"%")');
+	
+				$modelProductDB = Product::model()->find($criteria);
+	
+				if(isset($modelProductDB))
+				{
+					$transaction = $modelProductDB->dbConnection->beginTransaction();
+					try {
+						self::setProductAttributes($modelProductDB, $excelCols, $row);
+						$modelProductDB->Id_measurement_unit_linear = $Id_linear;
+						$modelProductDB->Id_measurement_unit_weight = $Id_weight;
+						$modelProductDB->save();
+	
+						$transaction->commit();
+					} catch (Exception $e) {
+						$transaction->rollback();
+					}
+						
+				}
+				else
+				{
+					$modelProduct = new Product();
+					$modelProduct->Id_brand = $modelMeasureImportLog->Id_brand;
+					
+					self::setProductAttributes($modelProduct, $excelCols, $row);
+					$modelProduct->Id_measurement_unit_linear = $Id_linear;
+					$modelProduct->Id_measurement_unit_weight = $Id_weight;
+					
+					
+					$modelProduct->save();
+					
+				}
+			}
+			$row_index++;
+		}
+
+	}
+	
+	static public function setProductAttributes($modelProduct, $excelCols, $row)
+	{
+		$modelProduct->model = $row[$excelCols['MODELO']];
+		$modelProduct->part_number = $row[$excelCols['PART NUMBER']];
+		$modelProduct->length = (float)$row[$excelCols['LARGO']];
+		$modelProduct->width = (float)$row[$excelCols['ANCHO']];
+		$modelProduct->height = (float)$row[$excelCols['ALTO']];
+		$modelProduct->weight = (float)$row[$excelCols['PESO']];
+		$modelProduct->msrp = (float)$row[$excelCols['MSRP']];
+		
+		if(!empty($row[$excelCols['DEALER COST']]))
+			$modelProduct->dealer_cost = (float)$row[$excelCols['DEALER COST']];
+		else 
+		{
+			if(!empty($row[$excelCols['MSRP']]) && !empty($row[$excelCols['PORCENTAJE DE DESCUENTO']]))
+			{
+				$discount = (int)$row[$excelCols['PORCENTAJE DE DESCUENTO']];
+				$modelProduct->dealer_cost = (float) $modelProduct->msrp * (100 - $discount) * 0.01;
+			}			
+		}
+		if($modelProduct->dealer_cost != 0)
+			$modelProduct->profit_rate = round($modelProduct->msrp / $modelProduct->dealer_cost,2);
+		
+		$modelProduct->discontinued = (strtoupper($row[$excelCols['DESCONTINUADO']]) == 'NO')?0:1;
+		$modelProduct->short_description = $row[$excelCols['DESCRIPCION CORTA']];
+		$modelProduct->long_description = $row[$excelCols['DESCRIPCION LARGA']];
+		$modelProduct->description_customer = $row[$excelCols['DESCRIPCION CORTA SL']];
+		$modelProduct->description_supplier = $row[$excelCols['DESCRIPCION LARGA SL']];
+		$modelProduct->time_instalation = (float)$row[$excelCols['TIEMPO INSTALACION']];
+		$modelProduct->time_programation = (float)$row[$excelCols['TIEMPO PROGRAMACION']];
+			
+		$modelProduct->unit_rack = (int)$row[$excelCols['UNIDADES DE RACK']];
+		$modelProduct->need_rack = ($modelProduct->unit_rack > 0)?1:0;
+		$modelProduct->unit_fan = (int)$row[$excelCols['UNIDADES DE FAN']];
+		
+		$modelProduct->current = (float)$row[$excelCols['AMPERAJE']];
+		$modelProduct->power = (float)$row[$excelCols['POTENCIA']];
+			
+		$modelProduct->color = $row[$excelCols['COLOR']];
+		
+		//BEGIN VOLT-------------------------------------------------
+		$volts = (int)$row[$excelCols['VOLTAJE']];
+		$modelVolts = Volts::model()->findByAttributes(array('volts'=>$volts));
+		if(!isset($modelVolts))
+		{
+			$modelVolts = new Volts();
+			$modelVolts->volts = $volts;
+			$modelVolts->save();
+		}
+		$modelProduct->Id_volts = $modelVolts->Id;
+		//END VOLT-------------------------------------------------
+		
+		//BEGIN CATEGORY-------------------------------------------------
+		$category = "--";
+		if(!empty($row[$excelCols['CATEGORIA']]))
+			$category = $row[$excelCols['CATEGORIA']];
+		
+		$modelCategory = Category::model()->findByAttributes(array('description'=>$category));
+		if(!isset($modelCategory))
+		{
+			$modelCategory = new Category();
+			$modelCategory->description = $category;
+			$modelCategory->save();
+		}
+		$modelProduct->Id_category = $modelCategory->Id;
+		//END CATEGORY-------------------------------------------------
+		
+		//BEGIN SUB-CATEGORY-------------------------------------------------
+		$subCategory = "--";
+		if(!empty($row[$excelCols['SUB CATEGORIA']]))
+			$subCategory = $row[$excelCols['SUB CATEGORIA']];
+		
+		$modelSubCategory = SubCategory::model()->findByAttributes(array('description'=>$subCategory));
+		if(!isset($modelSubCategory))
+		{
+			$modelSubCategory = new SubCategory();
+			$modelSubCategory->description = $subCategory;
+			$modelSubCategory->save();
+		}
+		$modelProduct->Id_sub_category = $modelSubCategory->Id;
+		//END SUB-CATEGORY-------------------------------------------------
+		
+		//BEGIN PRODUCT-TYPE-------------------------------------------------
+		$productType = "--";
+		if(!empty($row[$excelCols['TIPO']]))
+			$productType = $row[$excelCols['TIPO']];
+		
+		$modelProductType = ProductType::model()->findByAttributes(array('description'=>$productType));
+		if(!isset($modelProductType))
+		{
+			$modelProductType = new ProductType();
+			$modelProductType->description = $productType;
+			$modelProductType->save();
+		}
+		$modelProduct->Id_product_type = $modelProductType->Id;
+		//END PRODUCT-TYPE-------------------------------------------------
+		
+		//BEGIN SUPPLIER-------------------------------------------------
+		$modelSupplier = Supplier::model()->findByAttributes(array('business_name'=>$modelProduct->brand->description));
+		if(!isset($modelSupplier))
+		{
+			$modelContact = new Contact();
+			$modelContact->save();
+				
+			$modelSupplier = new Supplier();
+			$modelSupplier->business_name = $modelProduct->brand->description;
+			$modelSupplier->Id_contact = $modelContact->Id;
+			$modelSupplier->save();
+		}
+		$modelProduct->Id_supplier = $modelSupplier->Id;
+		//END SUPPLIER-------------------------------------------------
+		
+		//BEGIN NOMENCLATOR-------------------------------------------------
+		$modelNomenclator = Nomenclator::model()->findByAttributes(array('description'=>'Importado'));
+		if(!isset($modelNomenclator))
+		{
+			$modelNomenclator = new Nomenclator();
+			$modelNomenclator->description = 'Importado';
+			$modelNomenclator->save();
+		}
+		$modelProduct->Id_nomenclator = $modelNomenclator->Id;
+		//END NOMENCLATOR-------------------------------------------------
+		
+		$modelProduct->need_ups = (strtoupper($row[$excelCols['USA UPS']]) == 'NO')?0:1;
+			
+	}
+	
+	static public function getExcelCols($firstRow)
+	{
+		$arrIndexCols = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F',7=>'G',
+				8=>'H',9=>'I',10=>'J',11=>'K',12=>'L',13=>'M',14=>'N',
+				15=>'O',16=>'P',17=>'Q',18=>'R',19=>'S',20=>'T',21=>'U',
+				22=>'V',23=>'W',24=>'X', 25=>'Y', 26=>'Z');
+		
+		$excelCols = array();
+		
+		$col_index = 0;
+		
+		foreach( $firstRow as $header )
+		{
+			$colName = strtoupper($header); 
+			$col_index++;
+			if(strpos($colName, 'MODELO')!== false)
+			{
+				$excelCols['MODELO'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'PART NUMBER')!== false)
+			{
+				$excelCols['PART NUMBER'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'LARGO')!== false)
+			{
+				$excelCols['LARGO'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'ANCHO')!== false)
+			{
+				$excelCols['ANCHO'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'ALTO')!== false)
+			{
+				$excelCols['ALTO'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'PESO')!== false)
+			{
+				$excelCols['PESO'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'MSRP')!== false)
+			{
+				$excelCols['MSRP'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'DEALER COST')!== false)
+			{
+				$excelCols['DEALER COST'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'PORCENTAJE DE DESCUENTO')!== false)
+			{
+				$excelCols['PORCENTAJE DE DESCUENTO'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'DESCONTINUADO')!== false)
+			{
+				$excelCols['DESCONTINUADO'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'DESCRIPCION CORTA SL')!== false)
+			{
+				$excelCols['DESCRIPCION CORTA SL'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'DESCRIPCION LARGA SL')!== false)
+			{
+				$excelCols['DESCRIPCION LARGA SL'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'DESCRIPCION CORTA')!== false)
+			{
+				$excelCols['DESCRIPCION CORTA'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'DESCRIPCION LARGA')!== false)
+			{
+				$excelCols['DESCRIPCION LARGA'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'TIEMPO INSTALACION')!== false)
+			{
+				$excelCols['TIEMPO INSTALACION'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'TIEMPO PROGRAMACION')!== false)
+			{
+				$excelCols['TIEMPO PROGRAMACION'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'UNIDADES DE RACK')!== false)
+			{
+				$excelCols['UNIDADES DE RACK'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'UNIDADES DE FAN')!== false)
+			{
+				$excelCols['UNIDADES DE FAN'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'VOLTAJE')!== false)
+			{
+				$excelCols['VOLTAJE'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'AMPERAJE')!== false)
+			{
+				$excelCols['AMPERAJE'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'POTENCIA')!== false)
+			{
+				$excelCols['POTENCIA'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'COLOR')!== false)
+			{
+				$excelCols['COLOR'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'SUB CATEGORIA')!== false)
+			{
+				$excelCols['SUB CATEGORIA'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'CATEGORIA')!== false)
+			{
+				$excelCols['CATEGORIA'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'TIPO')!== false)
+			{
+				$excelCols['TIPO'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'USA UPS')!== false)
+			{
+				$excelCols['USA UPS'] = $arrIndexCols[$col_index];
+				continue;
+			}
+		}
+		
+		return $excelCols;
+	}
 }
