@@ -906,8 +906,9 @@ class ProductController extends Controller
 			$model->attributes = $_POST['UploadExcel'];			
 			if($model->validate())
 			{
-				GreenHelper::importMeasuresFromExcel($model, $modelMeasureImportLog);
-				$this->redirect(array('adminMeasuresImport'));
+				//GreenHelper::importMeasuresFromExcel($model, $modelMeasureImportLog);
+				GreenHelper::importProductFromExcel($model, $modelMeasureImportLog);
+				//$this->redirect(array('adminMeasuresImport'));
 			}
 		}
 	
