@@ -37,28 +37,28 @@ $this->menu=array(
 
 	<div class="row">		
 		<div style="width: 120px; display: inline-block;">
-			<?php echo $form->labelEx($modelMeasureImportLog,'Id_measurement_unit_linear'); ?>
+			<?php echo $form->labelEx($modelProductImportLog,'Id_measurement_unit_linear'); ?>
 			<?php				
-				echo $form->dropDownList($modelMeasureImportLog, 'Id_measurement_unit_linear', 
+				echo $form->dropDownList($modelProductImportLog, 'Id_measurement_unit_linear', 
 					CHtml::listData($ddlMeasurementUnitLinear, 'Id', 'short_description')); 
 			?>
-			<?php echo $form->error($modelMeasureImportLog,'Id_measurement_unit_linear'); ?>
+			<?php echo $form->error($modelProductImportLog,'Id_measurement_unit_linear'); ?>
 		</div>
 		<div style="width: 120px; display: inline-block;">
-			<?php echo $form->labelEx($modelMeasureImportLog,'Id_measurement_unit_weight'); ?>
+			<?php echo $form->labelEx($modelProductImportLog,'Id_measurement_unit_weight'); ?>
 			<?php				
-				echo $form->dropDownList($modelMeasureImportLog, 'Id_measurement_unit_weight', 
+				echo $form->dropDownList($modelProductImportLog, 'Id_measurement_unit_weight', 
 					CHtml::listData($ddlMeasurementUnitWeight, 'Id', 'short_description')); 
 			?>
-			<?php echo $form->error($modelMeasureImportLog,'Id_measurement_unit_weight'); ?>
+			<?php echo $form->error($modelProductImportLog,'Id_measurement_unit_weight'); ?>
 		</div>		
 		<div style="width: 120px; display: inline-block;">
-			<?php echo $form->labelEx($modelMeasureImportLog,'Id_brand'); ?>
+			<?php echo $form->labelEx($modelProductImportLog,'Id_brand'); ?>
 			<?php				
-				echo $form->dropDownList($modelMeasureImportLog, 'Id_brand', 
+				echo $form->dropDownList($modelProductImportLog, 'Id_brand', 
 					CHtml::listData($ddlBrand, 'Id', 'description')); 
 			?>
-			<?php echo $form->error($modelMeasureImportLog,'Id_brand'); ?>
+			<?php echo $form->error($modelProductImportLog,'Id_brand'); ?>
 		</div>
 	</div>
 	<div class="row">
