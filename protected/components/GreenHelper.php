@@ -1,6 +1,14 @@
 <?php
 class GreenHelper
 {
+	static public function generateListPrices($product)
+	{
+		if(get_class($product)=="Product")
+		{
+			
+		}
+		
+	}
 	static public function saveLinks($links, $id,$idEntityType,$idKey)
 	{
 		if(isset($links))
