@@ -82,7 +82,7 @@ class GreenHelper
 						$air = $shippingParameter->shippingParameterAir;
 						$maritime = $shippingParameter->shippingParameterMaritime;
 						$volume = $product->getVolume();
-						$weight = $product->weight;
+						$weight = $product->getWeightConverted;
 						if($volume != 0)
 						{
 							$maritime_cost = $priceListItem->dealer_cost+($maritime->cost_measurement_unit*$volume);
@@ -94,7 +94,7 @@ class GreenHelper
 						}
 						if($product->hasWeight()!=0)
 						{
-							$air_cost = $priceListItem->dealer_cost+($air->cost_measurement_unit*$product->weight);
+							$air_cost = $priceListItem->dealer_cost+($air->cost_measurement_unit*$weight);
 						}
 						else
 						{
