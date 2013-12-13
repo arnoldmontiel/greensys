@@ -5,10 +5,104 @@ class GreenHelper
 	{
 		if(get_class($product)=="Product")
 		{
-			
-			
-		}
-		
+			//compras
+			$criteria = new CDbCriteria;
+			$criteria->compare('Id_supplier',$product->Id_supplier);
+			$criteria->compare('Id_price_list_type',1); //compra
+
+			$priceList = PriceList::model()->find($criteria);
+			if(!isset($priceList))
+			{
+				$priceList = new PriceList();
+				$priceList->validity = 1;
+				//$priceList->date_validity = new CDbExpression('NOW()');
+				$priceList->Id_supplier = $product->Id_supplier;
+				$priceList->description = "Generada automaticamente";
+				$priceList->save();
+				
+			}
+			$criteria = new CDbCriteria;
+							
+			$criteria->compare('Id_product',$product->Id);
+			$criteria->compare('Id_price_list',$priceList->Id);
+			$priceListItem = PriceListItem::model()->find($criteria);
+			if(!isset($priceListItem))
+			{
+				$priceListItem = new PriceListItem;
+				$priceListItem->Id_price_list = $priceList->Id;
+				$priceListItem->Id_product = $priceList->Id_product;
+			}
+			$priceListItem->msrp = $priceListItem->msrp;
+			$priceListItem->dealer_cost = $priceListItem->dealer_cost;
+			$priceListItem->profit_rate = $priceListItem->profit_rate;
+			$priceListItem->save();						
+
+			//Ventas			
+			$importers = Importer::model()->findAll();
+			foreach ($importers as $importer)
+			{
+				$criteria = new CDbCriteria;
+				$criteria->compare('Id_importer',$importer->Id);
+				$criteria->compare('Id_price_list_type',2); //compra
+				
+				$priceList = PriceList::model()->find($criteria);
+				if(!isset($priceList))
+				{
+					$priceList = new PriceList();
+					$priceList->validity = 1;
+					//$priceList->date_validity = new CDbExpression('NOW()');
+					$priceList->Id_supplier = $importer->Id;
+					$priceList->description = "Generada automaticamente";
+					$priceList->save();
+				
+				}
+				$criteria = new CDbCriteria;
+					
+				$criteria->compare('Id_product',$product->Id);
+				$criteria->compare('Id_price_list',$priceList->Id);
+				$priceListItem = PriceListItem::model()->find($criteria);
+				if(!isset($priceListItem))
+				{
+					$priceListItem = new PriceListItem;
+					$priceListItem->Id_price_list = $priceList->Id;
+					$priceListItem->Id_product = $priceList->Id_product;
+				}
+				$priceListItem->msrp = $priceListItem->msrp;
+				$priceListItem->dealer_cost = $priceListItem->dealer_cost;
+				$priceListItem->profit_rate = $priceListItem->profit_rate;
+				
+				if(!empty($importer->shippingParameters))
+				{
+					$shippingParameter = $importer->shippingParameters[0];
+					$air = $shippingParameter->shippingParameterAir;
+					$maritime = $shippingParameter->shippingParameterMaritime;
+					$volume = $product->getVolume();						
+					$weight = $product->weight;
+					if($volume != 0)
+					{
+						$maritime_cost = $priceListItem->dealer_cost+($maritime->cost_measurement_unit*$volume);						
+					}
+					else 
+					{
+						$maritime_cost = 0;
+						
+					}
+					if($product->hasWeight()!=0)
+					{
+						$air_cost = $priceListItem->dealer_cost+($air->cost_measurement_unit*$product->weight);						
+					}
+					else
+					{
+						$air_cost = 0;						
+					}
+					$priceListItem->maritime_cost = $maritime_cost * $priceListItem->profit_rate;
+					$priceListItem->air_cost= $air_cost * $priceListItem->profit_rate;
+				}								
+				$priceListItem->save();
+				
+			}
+				
+		}			
 	}
 	static public function saveLinks($links, $id,$idEntityType,$idKey)
 	{
