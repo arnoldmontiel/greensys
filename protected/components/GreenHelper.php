@@ -1261,10 +1261,70 @@ class GreenHelper
 		return $modelProduct; 
 	}
 	
-	static public function importProductFromExcel($modelUpload, $modelMeasureImportLog)
+	static public function generateProductExcelGrid($idProductImportLog)
 	{
-		$Id_linear = $modelMeasureImportLog->Id_measurement_unit_linear;
-		$Id_weight =  $modelMeasureImportLog->Id_measurement_unit_weight;
+		$modelProductImportLog = ProductImportLog::model()->findByPk($idProductImportLog);
+		if(isset($modelProductImportLog))
+		{
+			Yii::import('ext.phpexcel.XPHPExcel');
+			$objPHPExcel= XPHPExcel::createPHPExcel();
+			$objPHPExcel->getProperties()->setCreator("Grupo Smartliving")
+			->setLastModifiedBy("I+D Team")
+			->setTitle("Office 2007 XLSX Test Document")
+			->setSubject("Office 2007 XLSX Test Document")
+			->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+			->setKeywords("office 2007 openxml php")
+			->setCategory("Green");
+			
+			
+			$arrIndexCols = array('MODELO'=>'A','PART NUMBER'=>'B','LARGO'=>'C','ANCHO'=>'D','ALTO'=>'E','PESO'=>'F','MSRP'=>'G',
+					'DEALER COST'=>'H','PORCENTAJE DE DESCUENTO'=>'I','DESCONTINUADO'=>'J','DESCRIPCION CORTA SL'=>'K','DESCRIPCION CORTA'=>'L',
+					'DESCRIPCION LARGA'=>'M','DESCRIPCION LARGA SL'=>'N',
+					'TIEMPO INSTALACION'=>'O','TIEMPO PROGRAMACION'=>'P','UNIDADES DE RACK'=>'Q','UNIDADES DE FAN'=>'R','VOLTAJE'=>'S','AMPERAJE'=>'T',
+					'POTENCIA'=>'U',
+					'COLOR'=>'V','CATEGORIA'=>'W','SUB CATEGORIA'=>'X', 'TIPO'=>'Y', 'USA UPS'=>'Z');
+			
+			//sheet 0
+			$sheet = $objPHPExcel->setActiveSheetIndex(0);
+			$row = 1;
+			
+			foreach($arrIndexCols as $key => $value)
+			{
+				$sheet->setCellValue($value.$row, $key);
+			}
+			
+			//$sheet->setCellValue($indexMain['main'].$row, 'Revision '.$versionNumber);
+			
+			
+			$objPHPExcel->getActiveSheet()->setTitle('Simple');
+			
+			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+			$objPHPExcel->setActiveSheetIndex(0);
+			
+			// Redirect output to a client web browser (Excel5)
+			header('Content-Type: application/vnd.ms-excel');
+			header('Content-Disposition: attachment;filename="'.$modelProductImportLog->brand->description.'.xls"');
+			header('Cache-Control: max-age=0');
+			// If you're serving to IE 9, then the following may be needed
+			header('Cache-Control: max-age=1');
+			
+			// If you're serving to IE over SSL, then the following may be needed
+			header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+			header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+			header ('Pragma: public'); // HTTP/1.0
+			
+			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+			$objWriter->save('php://output');
+			Yii::app()->end();
+			
+		}
+	}
+	
+	static public function importProductFromExcel($modelUpload, $modelProductImportLog)
+	{
+		$Id_linear = $modelProductImportLog->Id_measurement_unit_linear;
+		$Id_weight =  $modelProductImportLog->Id_measurement_unit_weight;
 	
 		$file=CUploadedFile::getInstance($modelUpload,'file');
 		$sheet_array = Yii::app()->yexcel->readActiveSheet($file->tempName);
@@ -1290,7 +1350,7 @@ class GreenHelper
 			if($row_index != 1)
 			{
 				$criteria = new CDbCriteria();
-				$criteria->addCondition('t.Id_brand = '. $modelMeasureImportLog->Id_brand);
+				$criteria->addCondition('t.Id_brand = '. $modelProductImportLog->Id_brand);
 				$newModel = str_replace('"','',$row[$excelCols['MODELO']]);
 	
 				if(empty($newModel))
@@ -1319,7 +1379,7 @@ class GreenHelper
 				else
 				{
 					$modelProduct = new Product();
-					$modelProduct->Id_brand = $modelMeasureImportLog->Id_brand;
+					$modelProduct->Id_brand = $modelProductImportLog->Id_brand;
 					
 					self::setProductAttributes($modelProduct, $excelCols, $row);
 					$modelProduct->Id_measurement_unit_linear = $Id_linear;
@@ -1333,6 +1393,9 @@ class GreenHelper
 			}
 			$row_index++;
 		}
+		
+		$modelProductImportLog->last_import_date = new CDbExpression('NOW()');
+		$modelProductImportLog->save();
 
 	}
 	
