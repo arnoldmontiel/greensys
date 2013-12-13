@@ -5,6 +5,7 @@ class GreenHelper
 	{
 		if(get_class($product)=="Product")
 		{
+			if($product->dealer_cost == 0 ||$product->msrp==0)	return false;
 			//compras
 			$criteria = new CDbCriteria;
 			$criteria->compare('Id_supplier',$product->Id_supplier);
@@ -101,7 +102,7 @@ class GreenHelper
 				$priceListItem->save();
 				
 			}
-				
+			return true;
 		}			
 	}
 	static public function saveLinks($links, $id,$idEntityType,$idKey)

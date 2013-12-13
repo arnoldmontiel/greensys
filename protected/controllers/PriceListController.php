@@ -204,7 +204,7 @@ class PriceListController extends Controller
 								pli2.Id_price_list = '.$id.')
 								and t.Id_price_list_type = 2');
 				
-				if(PriceList::model()->count($criteria)>0)
+				if(PriceList::model()->count($criteria)==0)
 					$model->delete();
 				else
 					throw new CHttpException(500,Yii::app()->lc->t('The current Price List is used by a Sale Price List, you can not delete it.'));
