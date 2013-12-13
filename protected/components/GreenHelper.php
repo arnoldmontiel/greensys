@@ -1308,6 +1308,7 @@ class GreenHelper
 						$modelProductDB->Id_measurement_unit_linear = $Id_linear;
 						$modelProductDB->Id_measurement_unit_weight = $Id_weight;
 						$modelProductDB->save();
+						self::generateListPrices($modelProductDB);
 	
 						$transaction->commit();
 					} catch (Exception $e) {
@@ -1326,7 +1327,8 @@ class GreenHelper
 					
 					
 					$modelProduct->save();
-					
+					self::generateListPrices($modelProduct);
+						
 				}
 			}
 			$row_index++;
