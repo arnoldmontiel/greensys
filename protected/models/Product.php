@@ -398,7 +398,23 @@ class Product extends ModelAudit
 		}		
 		return Yii::app()->lc->t('No warnings.');
 	}
-	
+	public function getWeightConverted()
+	{
+		$weight = $this->weight;
+		$measureWeightFrom = MeasurementUnit::model()->findByPk($this->Id_measurement_unit_weight);
+		
+		$settings = new Settings();
+			
+		$weightTo = $settings->getMeasurementUnit(Settings::MT_WEIGHT);
+		$converter = MeasurementUnitConverter::model()->findByAttributes(
+				array(
+						'Id_measurement_from'=>$measureWeightFrom->Id,
+						'Id_measurement_to'=>$weightTo->Id,
+				)
+		);
+		return round($converter->factor * (double)$weight, 6);
+		
+	}
 	public function getVolume()
 	{
 		$width = $this->width;
