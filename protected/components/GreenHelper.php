@@ -1286,7 +1286,7 @@ class GreenHelper
 			
 			
 			$arrIndexCols = array('MODELO'=>'A','PART NUMBER'=>'B','LARGO'=>'C','ANCHO'=>'D','ALTO'=>'E','PESO'=>'F','MSRP'=>'G',
-					'DEALER COST'=>'H','PORCENTAJE DE DESCUENTO'=>'I','DESCONTINUADO'=>'J','DESCRIPCION CORTA SL'=>'K','DESCRIPCION CORTA'=>'L',
+					'DEALER COST'=>'H','PORCENTAJE DE DESCUENTO'=>'I','DESCONTINUADO'=>'J','DESCRIPCION CORTA'=>'K','DESCRIPCION CORTA SL'=>'L',
 					'DESCRIPCION LARGA'=>'M','DESCRIPCION LARGA SL'=>'N',
 					'TIEMPO INSTALACION'=>'O','TIEMPO PROGRAMACION'=>'P','UNIDADES DE RACK'=>'Q','UNIDADES DE FAN'=>'R','VOLTAJE'=>'S','AMPERAJE'=>'T',
 					'POTENCIA'=>'U',
@@ -1301,6 +1301,54 @@ class GreenHelper
 				$sheet->setCellValue($value.$row, $key);
 			}
 			
+			$row++;
+			
+			$modelProducts = Product::model()->findAllByAttributes(array('Id_brand'=>$modelProductImportLog->Id_brand));
+			
+			foreach($modelProducts as $product)
+			{
+				$sheet->setCellValue($arrIndexCols['MODELO'].$row, $product->model);
+				
+				$sheet->setCellValue($arrIndexCols['MODELO'].$row, $product->model);
+				$sheet->setCellValue($arrIndexCols['PART NUMBER'].$row, $product->part_number);
+				$sheet->setCellValue($arrIndexCols['LARGO'].$row, $product->length);
+				$sheet->setCellValue($arrIndexCols['ANCHO'].$row, $product->width);
+				$sheet->setCellValue($arrIndexCols['ALTO'].$row, $product->height);
+				$sheet->setCellValue($arrIndexCols['PESO'].$row, $product->weight);
+				$sheet->setCellValue($arrIndexCols['MSRP'].$row, $product->msrp);
+				$sheet->setCellValue($arrIndexCols['DEALER COST'].$row, $product->dealer_cost);
+				if($product->discontinued == 1)
+					$sheet->setCellValue($arrIndexCols['DESCONTINUADO'].$row, "SI");
+				else
+					$sheet->setCellValue($arrIndexCols['DESCONTINUADO'].$row, "NO");
+				$sheet->setCellValue($arrIndexCols['DESCRIPCION CORTA'].$row, $product->short_description);
+				$sheet->setCellValue($arrIndexCols['DESCRIPCION CORTA SL'].$row, $product->description_customer);
+				$sheet->setCellValue($arrIndexCols['DESCRIPCION LARGA'].$row, $product->long_description);
+				$sheet->setCellValue($arrIndexCols['DESCRIPCION LARGA SL'].$row, $product->description_supplier);
+								
+				$sheet->setCellValue($arrIndexCols['TIEMPO INSTALACION'].$row, $product->time_instalation);
+				$sheet->setCellValue($arrIndexCols['TIEMPO PROGRAMACION'].$row, $product->time_programation);
+				$sheet->setCellValue($arrIndexCols['UNIDADES DE RACK'].$row, $product->unit_rack);
+				$sheet->setCellValue($arrIndexCols['UNIDADES DE FAN'].$row, $product->unit_fan);
+				
+				$modelVolt = Volts::model()->findByPk($product->Id_volts);
+				if(isset($modelVolt))
+					$sheet->setCellValue($arrIndexCols['VOLTAJE'].$row, $modelVolt->volts);
+				
+				$sheet->setCellValue($arrIndexCols['AMPERAJE'].$row, $product->current);
+				$sheet->setCellValue($arrIndexCols['POTENCIA'].$row, $product->power);
+				$sheet->setCellValue($arrIndexCols['COLOR'].$row, $product->color);
+				$sheet->setCellValue($arrIndexCols['CATEGORIA'].$row, $product->category->description);
+				$sheet->setCellValue($arrIndexCols['SUB CATEGORIA'].$row, $product->subCategory->description);
+				$sheet->setCellValue($arrIndexCols['TIPO'].$row, $product->productType->description);
+				
+				if($product->need_ups == 1)
+					$sheet->setCellValue($arrIndexCols['USA UPS'].$row, "SI");
+				else 
+					$sheet->setCellValue($arrIndexCols['USA UPS'].$row, "NO");
+				
+				$row++;
+			}
 			//$sheet->setCellValue($indexMain['main'].$row, 'Revision '.$versionNumber);
 			
 			
