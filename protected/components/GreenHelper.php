@@ -1417,34 +1417,22 @@ class GreenHelper
 				$modelProductDB = Product::model()->find($criteria);
 	
 				if(isset($modelProductDB))
-				{
-					$transaction = $modelProductDB->dbConnection->beginTransaction();
-					try {
-						self::setProductAttributes($modelProductDB, $excelCols, $row);
-						$modelProductDB->Id_measurement_unit_linear = $Id_linear;
-						$modelProductDB->Id_measurement_unit_weight = $Id_weight;
-						$modelProductDB->save();
-						self::generateListPrices($modelProductDB);
-	
-						$transaction->commit();
-					} catch (Exception $e) {
-						$transaction->rollback();
-					}
-						
+				{					
+					self::setProductAttributes($modelProductDB, $excelCols, $row);
+					$modelProductDB->Id_measurement_unit_linear = $Id_linear;
+					$modelProductDB->Id_measurement_unit_weight = $Id_weight;
+					$modelProductDB->save();
+					self::generateListPrices($modelProductDB);
 				}
 				else
 				{
 					$modelProduct = new Product();
 					$modelProduct->Id_brand = $modelProductImportLog->Id_brand;
-					
 					self::setProductAttributes($modelProduct, $excelCols, $row);
 					$modelProduct->Id_measurement_unit_linear = $Id_linear;
 					$modelProduct->Id_measurement_unit_weight = $Id_weight;
-					
-					
 					$modelProduct->save();
 					self::generateListPrices($modelProduct);
-						
 				}
 			}
 			$row_index++;
