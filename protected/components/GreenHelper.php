@@ -90,7 +90,6 @@ class GreenHelper
 						else
 						{
 							$maritime_cost = 0;
-				
 						}
 						if($product->hasWeight()!=0)
 						{
