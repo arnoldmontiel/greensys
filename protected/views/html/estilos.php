@@ -203,7 +203,6 @@ line-height:48px;
 h2{font-size: 28px;
 font-weight: normal;
 color: #ccc;
-text-shadow: 0 1px 3px #333;
 font-family: 'GudeaRegular';
 margin:0px;
 line-height:auto;
@@ -213,7 +212,6 @@ padding-bottom:10px;
 h1.pageTitle{font-size: 2em;
 font-weight: normal;
 color: #fff;
-text-shadow: 0 1px 3px #333;
 text-align:left;
 margin:0px;
 line-height:auto; padding-bottom:20px; }
@@ -266,8 +264,31 @@ margin-bottom:10px;}
 .form-group label{font-size:15px; color:#333; text-align:right;line-height: 30px;
 padding-left: 5px;}
 
-.rowSeparator{ font-size:20px; margin-top:30px; margin-bottom:10px; padding:5px; color:white; background-color:rgba(255,255,255,0.4);}
+.rowSeparator{ font-size:20px; margin-top:30px;  padding:5px; background-color:rgba(255,255,255,0.4);
+color: #666;
+text-align: center;
+text-transform: uppercase;
+font-size: 16px;
+letter-spacing: 2px;
+font-weight: 600;
+}
 .noTopMargin{ margin-top:0px;}
+
+a.label-danger{ cursor:pointer;}
+a.label-danger:hover{ color:white;}
+
+#screenAgregarProductos table td{ vertical-align:middle;}
+#screenAgregarProductos table td label{ vertical-align:middle;}
+
+
+#screenAgregarProductos .table.tablaIndividual thead>tr>th, #screenAgregarProductos .table.tablaIndividual tbody>tr>th, #screenAgregarProductos .table.tablaIndividual tfoot>tr>th, #screenAgregarProductos .table.tablaIndividual thead>tr>td, #screenAgregarProductos .table.tablaIndividual tbody>tr>td, #screenAgregarProductos .table.tablaIndividual tfoot>tr>td {
+padding: 6px 8px;
+}
+
+.combined { width:100%;}
+.combined select{display:inline-block; width:60%;}
+.combined button{display:inline-block; width:35%; margin:0px !important;}
+
 /*---------- END EDIT CREATE FORM -------------*/
 
 

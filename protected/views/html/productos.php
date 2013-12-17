@@ -188,7 +188,7 @@ include('menu.php');?>
             <td>RTI</td>
             <td>0.20 mt</td>
             <td>0.35 mt</td>
-            <td><span class="label label-danger">Incompleto</span></td>
+            <td><a class="label label-danger" data-toggle="modal" data-target="#myModalPeque">Incompleto <i class="fa fa-pencil"></i> </a></td>
             <td>0.300 gr</td>
             <td>1.5</td>
             <td>300 USD</td>
@@ -201,9 +201,9 @@ include('menu.php');?>
             <td>10-210341-12</td>
             <td>RTI</td>
             <td>0.20 mt</td>
-            <td><span class="label label-danger">Incompleto</span></td>
+            <td><a class="label label-danger" data-toggle="modal" data-target="#myModalPeque">Incompleto <i class="fa fa-pencil"></i> </a></td>
             <td>0.40 mt</td>
-            <td><span class="label label-danger">Incompleto</span></td>
+            <td><a class="label label-danger" data-toggle="modal" data-target="#myModalPeque">Incompleto <i class="fa fa-pencil"></i> </a></td>
             <td>1.5</td>
             <td>300 USD</td>
             <td>500 USD</td>
@@ -219,7 +219,7 @@ include('menu.php');?>
             <td>0.40 mt</td>
             <td>0.300 gr</td>
             <td>1.5</td>
-            <td><span class="label label-danger">Incompleto</span></td>
+            <td><a class="label label-danger" data-toggle="modal" data-target="#myModalPeque">Incompleto <i class="fa fa-pencil"></i> </a></td>
             <td>500 USD</td>
             <td>Distributed Audio System</td>
             <td style="text-align:right;"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button> <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
@@ -233,7 +233,7 @@ include('menu.php');?>
             <td>0.40 mt</td>
             <td>0.300 gr</td>
             <td>1.5</td>
-            <td><span class="label label-danger">Incompleto</span></td>
+            <td><a class="label label-danger" data-toggle="modal" data-target="#myModalPeque">Incompleto <i class="fa fa-pencil"></i> </a></td>
             <td>500 USD</td>
             <td>Distributed Audio System</td>
             <td style="text-align:right;"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button> <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
@@ -256,31 +256,31 @@ include('menu.php');?>
         <tbody>
           <tr>
             <td>Vantage</td>
-            <td></td>
+            <td>5 <span class="text-danger">(1)</span></td>
             <td>06/10/2013</td>
             <td><span class="label label-danger">Datos Incompletos</span></td>
-            <td style="text-align:right;"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar Excel</button><button type="button" class="btn btn-default btn-sm"><i class="fa fa-upload"></i> Cargar Actualización</button><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
+            <td style="text-align:right;"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar Excel</button> <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModalActualizar"><i class="fa fa-upload"></i> Cargar Actualización</button><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
           </tr>
           <tr>
             <td>RTI</td>
-            <td>8</td>
+            <td>13</td>
             <td>06/10/2013</td>
             <td><span class="label label-success">Procesado</span></td>
-            <td style="text-align:right;"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar Excel</button><button type="button" class="btn btn-default btn-sm"><i class="fa fa-upload"></i> Cargar Actualización</button><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
+            <td style="text-align:right;"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar Excel</button> <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModalActualizar"><i class="fa fa-upload"></i> Cargar Actualización</button><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
           </tr>
           <tr>
             <td>SIM2</td>
-            <td>8</td>
+            <td>30</td>
             <td>06/10/2013</td>
             <td><span class="label label-success">Procesado</span></td>
-            <td style="text-align:right;"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar Excel</button><button type="button" class="btn btn-default btn-sm"><i class="fa fa-upload"></i> Cargar Actualización</button><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
+            <td style="text-align:right;"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar Excel</button> <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModalActualizar"><i class="fa fa-upload"></i> Cargar Actualización</button><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
           </tr>
           <tr>
             <td>DBox</td>
-            <td>8 (4 Incompletos)</td>
+            <td>8 <span class="text-danger">(4)</span></td>
             <td>06/10/2013</td>
             <td><span class="label label-danger">Datos Incompletos</span></td>
-            <td style="text-align:right;"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar Excel</button><button type="button" class="btn btn-default btn-sm"><i class="fa fa-upload"></i> Cargar Actualización</button><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
+            <td style="text-align:right;"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar Excel</button> <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModalActualizar"><i class="fa fa-upload"></i> Cargar Actualización</button><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
           </tr>
         </tbody>
       </table>
@@ -360,6 +360,81 @@ include('menu.php');?>
 </div><!-- /.modal -->
 <!--END MODAL EXCEL-->
 
+
+<!--MODAL ACTUALIZAR-->
+<div class="modal fade" id="myModalActualizar">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Actualizar Excel: Vantage</h4>
+      </div>
+      <div class="modal-body">
+
+<form role="form">
+  <div class="form-group">
+    <label for="campoArchivo">Archivo</label>
+    <input type="file" id="campoArchivo">
+  </div>
+  <div class="form-group">
+    <label for="campoMarca">Marca</label>
+    <select class="form-control" id="campoMarca" disabled="disabled">
+    <option disabled="disabled">Vantage</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="campoPeso">Unidad de Peso</label>
+    <select class="form-control" id="campoPeso">
+    <option>Opcion 1</option>
+    <option>Opcion 2</option>
+    <option>Opcion 3</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="campoLineal">Unidad Lineal</label>
+    <select class="form-control" id="campoLineal">
+    <option>Opcion 1</option>
+    <option>Opcion 2</option>
+    <option>Opcion 3</option>
+    </select>
+  </div>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary btn-lg"><i class="fa fa-upload"></i> Actualizar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--END MODAL EXCEL-->
+
+
+<!--MODAL PEQUE-->
+<div class="modal fade" id="myModalPeque">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">AD4 - RTI: Dealer Cost</h4>
+      </div>
+      <div class="modal-body">
+
+<form role="form">
+  <div class="form-group">
+    <label for="campoDealerCost">Dealer Cost</label>
+        <input type="email" class="form-control" id="campoDealerCost" placeholder="USD">
+  </div>
+</form>
+</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--END MODAL PEQUE-->
 
 <!-- Le javascript
     ================================================== --> 
