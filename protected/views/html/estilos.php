@@ -256,13 +256,19 @@ margin-bottom:10px;}
 
 /*---------- EDIT CREATE FORM -------------*/
 
-.buttonsBottom{border-top: 1px solid #fbfbfb; padding:5px; text-align:right; margin-top:20px;}
+.buttonsBottom{ padding:5px; text-align:right; margin-top:20px; background-color:rgba(0,0,0,0.5)}
 
 .form-group { color:#333;}
 .form-group input{font-size:16px; }
 .form-group textarea{font-size:16px; }
 .form-group label{font-size:15px; color:#333; text-align:right;line-height: 30px;
 padding-left: 5px;}
+
+.form-control{ padding:4px;}
+
+input[type="file"] {
+width:100%;
+}
 
 .rowSeparator{ font-size:20px; margin-top:30px;  padding:5px; background-color:rgba(255,255,255,0.4);
 color: #666;
@@ -277,6 +283,7 @@ font-weight: 600;
 a.label-danger{ cursor:pointer;}
 a.label-danger:hover{ color:white;}
 
+#screenAgregarProductos{ margin-bottom:40px;}
 #screenAgregarProductos table td{ vertical-align:middle;}
 #screenAgregarProductos table td label{ vertical-align:middle;}
 
@@ -284,6 +291,13 @@ a.label-danger:hover{ color:white;}
 #screenAgregarProductos .table.tablaIndividual thead>tr>th, #screenAgregarProductos .table.tablaIndividual tbody>tr>th, #screenAgregarProductos .table.tablaIndividual tfoot>tr>th, #screenAgregarProductos .table.tablaIndividual thead>tr>td, #screenAgregarProductos .table.tablaIndividual tbody>tr>td, #screenAgregarProductos .table.tablaIndividual tfoot>tr>td {
 padding: 6px 8px;
 }
+
+.tablaIndividual{ margin-bottom:20px; background-color:rgba(255,255,255,1); max-height:100px; overflow:auto; font-size:14px;}
+.table.tablaIndividual { margin-bottom:30px;}
+.tablaIndividual td button{ margin:5px; margin-left:0px; vertical-align:middle;}
+.table.tablaIndividual th{ font-weight:600;  font-size:16px; color:#555; background-color:#ddd;}
+.table.tablaIndividual thead>tr>th, .table.tablaIndividual tbody>tr>th, .table.tablaIndividual tfoot>tr>th, .table.tablaIndividual thead>tr>td, .table.tablaIndividual tbody>tr>td, .table.tablaIndividual tfoot>tr>td{vertical-align:middle; padding:5px;}
+
 
 .combined { width:100%;}
 .combined select{display:inline-block; width:60%;}
@@ -316,7 +330,6 @@ padding: 6px 8px;
 
 
 /* ----- DISPOSITIVOS --------*/
-.tablaIndividual{ margin-bottom:20px; background-color:rgba(255,255,255,1); max-height:100px; overflow:auto;}
 
 .devicesSelector{ padding-bottom:10px; margin-bottom:10px;}
 
@@ -327,16 +340,7 @@ padding: 6px 8px;
 .nav>li>a.ejectBTN{ width:35px; height:35px; padding:6px; position:absolute; top:3px; right:3px; color: #428bca;
 background-color: #fff;}
 
-.table.tablaIndividual { margin-bottom:30px;}
-.tablaIndividual .tdPath{font-size:14px;}
-.tablePeliTitle{ font-family:'GudeaBold';  font-size:18px;}
-.tablaIndividual td button{ margin:5px; margin-left:0px; vertical-align:middle;}
-.table.tablaIndividual th{ font-weight:600;  font-size:16px; color:#555; background-color:#ddd;}
-.table.tablaIndividual thead>tr>th, .table.tablaIndividual tbody>tr>th, .table.tablaIndividual tfoot>tr>th, .table.tablaIndividual thead>tr>td, .table.tablaIndividual tbody>tr>td, .table.tablaIndividual tfoot>tr>td{vertical-align:middle; padding:5px;}
 
-.table.tablaIndividual thead>tr>th, .table.tablaIndividual tbody>tr>th, .table.tablaIndividual tfoot>tr>th, .table.tablaIndividual thead>tr>td, .table.tablaIndividual tbody>tr>td, .table.tablaIndividual tfoot>tr>td {
-padding: 2px 8px;
-}
 
 
 .deviceDropdownName{border:0px none !important; font-size: 24px;padding:5px; border:0px none; 
