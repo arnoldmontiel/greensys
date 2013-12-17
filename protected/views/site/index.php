@@ -1,122 +1,105 @@
 <?php $this->pageTitle=Yii::app()->name; ?>
-
-<div>
-	<div class="home-row" >
-		<div class="home-left-view" >
-			<div class="home-title-view" >
-				<?php echo Yii::app()->lc->t('Master Data');?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Customer'),array('/customer/index'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Area'),array('/area/index'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Project'),array('/project/index'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Supplier'),array('/supplier/index'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Importer'),array('/importer/index'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Stock'),array('/stock/index'));?>			
-			</div>
-		</div>
-		<div class="home-right-view" >
-			<div class="home-title-view" >
-				<?php echo Yii::app()->lc->t('Products');?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Manage'),array('/product/admin'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Create'),array('/product/create'));?>			
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Assign Groups'),array('/product/productGroup'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Assign Requirements'),array('/product/productRequirement'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Import from Excel'),array('/product/importFromExcel'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Import Measures from Excel'),array('/product/importMeasuresFromExcel'));?>
-			</div>
-		</div>
-	</div>
-	<div class="home-row" >
-		<div class="home-left-view" >
-			<div class="home-title-view" >
-			<?php echo Yii::app()->lc->t('Price List');?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Manage'),array('/priceList/admin'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Create'),array('/priceList/create'));?>			
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Import Price List from Excel'),array('/priceList/importPurchListFromExcel'));?>
-			</div>
-		</div><!-- end  home-left-view -->
-		<div class="home-right-view" >
-			<div class="home-title-view" >
-				<?php echo Yii::app()->lc->t('Reports');?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Cost'),array('/cost/index'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Stock'),array('/stockSummary/index'));?>
-			</div>
-		</div> <!-- end  home-right-view -->
-	</div>	<!-- end  home-row -->
-	<div class="home-row" >
-		<div class="home-left-view" >
-			<div class="home-title-view" >
-			<?php echo Yii::app()->lc->t('Budget');?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Manage'),array('/budget/admin'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Create'),array('/budget/create'));?>
-			</div>			
-		</div><!-- end  home-left-view -->
-		<div class="home-right-view" >
-			<div class="home-title-view" >
-				<?php echo Yii::app()->lc->t('Purchase Order');?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Manage'),array('/purchaseOrder/admin'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Create'),array('/purchaseOrder/create'));?>			
-			</div>			
-		</div> <!-- end  home-right-view -->
-	</div>	<!-- end  home-row -->
-	<div class="home-row" >
-		<div class="home-left-view" >
-			<div class="home-title-view" >
-			<?php echo Yii::app()->lc->t('Settings');?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Settings'),array('/setting/index'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Measurement'),array('/measurement/index'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Volts'),array('/volts/index'));?>
-			</div>
-			<div class="home-item-view" >
-			<?php echo CHtml::link(Yii::app()->lc->t('Currency'),array('/currency/index'));?>
-			</div>
-		</div><!-- end  home-left-view -->
-	</div>	<!-- end  home-row -->
+<div class="container" id="screenInicio">
+  <h1 class="pageTitle">Dashboard</h1>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="fa fa-star fa-fw"></i> Productos</h3>
+            </div>
+            <div class="panel-body">
+              <div class="list-group"> <a href="#" class="list-group-item">Ver Productos <i class="fa fa-list fa-fw pull-right"></i></a> <a href="#" class="list-group-item">Ver Prod. por Marcas <i class="fa fa-list fa-fw pull-right"></i></a> <a href="#" class="list-group-item">Ver Pendientes <i class="fa fa-warning fa-fw pull-right"></i></a> <a href="#" class="list-group-item">Cargar Excel de Marca <i class="fa fa-upload fa-fw pull-right"></i></a> </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.col-md-6 -->
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> Listas de Precios</h3>
+            </div>
+            <div class="panel-body">
+              <div class="list-group"> <a href="#" class="list-group-item">Ver Precios Compra <i class="fa fa-list fa-fw pull-right"></i></a> <a href="#" class="list-group-item">Ver Precios Venta <i class="fa fa-list fa-fw pull-right"></i></a> </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.col-md-6 --> 
+      </div>
+      <!-- /.row -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="fa fa-building fa-fw"></i> Proyectos</h3>
+            </div>
+            <div class="panel-body">
+              <div class="list-group"> <a href="#" class="list-group-item">Ver Proyectos <i class="fa fa-list fa-fw pull-right"></i></a> <a href="#" class="list-group-item">Crear Proyecto <i class="fa fa-plus fa-fw pull-right"></i></a> </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.col-md-6 -->
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="fa fa-truck fa-fw"></i> Proveedores</h3>
+            </div>
+            <div class="panel-body">
+              <div class="list-group"> <a href="#" class="list-group-item">Ver Proveedores <i class="fa fa-list fa-fw pull-right"></i></a> <a href="#" class="list-group-item">Crear Proveedor <i class="fa fa-plus fa-fw pull-right"></i></a> </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.col-md-6 --> 
+      </div>
+      <!-- /.row -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="fa fa-glass fa-fw"></i> Clientes</h3>
+            </div>
+            <div class="panel-body">
+              <div class="list-group"> <a href="#" class="list-group-item">Ver Clientes <i class="fa fa-list fa-fw pull-right"></i></a> <a href="#" class="list-group-item">Crear Cliente <i class="fa fa-plus fa-fw pull-right"></i></a> </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.col-md-6 -->
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="fa fa-dollar fa-fw"></i> Presupuestos</h3>
+            </div>
+            <div class="panel-body">
+              <div class="list-group"> <a href="#" class="list-group-item">Ver Presupuestos <i class="fa fa-list fa-fw pull-right"></i></a> <a href="#" class="list-group-item">Crear Presupuesto <i class="fa fa-plus fa-fw pull-right"></i></a> </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.col-md-6 --> 
+      </div>
+      <!-- /.row --> 
+    </div>
+    <!-- /.col-md-8 -->
+    
+    <div class="col-md-4">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-cog fa-fw"></i> GREEN Setup</h3>
+        </div>
+        <div class="panel-body">
+          <p>Completa los siguientes pasos en orden para comenzar a presupuestar:</p>
+        </div>
+<ul class="list-group">
+<li class="list-group-item"><span class="listNumber done">1</span> Cargar Productos <span class="label label-success pull-right"><i class="fa fa-check fa-fw"></i> Hecho</span></li>
+  <li class="list-group-item"><span class="listNumber">2</span> Cargar Marcas <button type="button" class="btn btn-default pull-right">Completar</button></li>
+  <li class="list-group-item"><span class="listNumber">3</span> Cargar Clientes <button type="button" class="btn btn-default pull-right">Completar</button></li>
+  <li class="list-group-item"><span class="listNumber">4</span> Cargar Excel de Marca <button type="button" class="btn btn-default pull-right">Completar</button></li>
+</ul>
+        </div>
+    <!-- /.panel-body -->
+    </div>
+    <!-- /.col-md-4 --> 
+    
+  </div>
+  <!-- /.row --> 
 </div>
