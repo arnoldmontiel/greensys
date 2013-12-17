@@ -430,7 +430,11 @@ include('menu.php');?>
         <tbody>
           <tr>
             <td width="20%" style="text-align:right;"><label for="campoNecesitaUps">Necesita Ups</label></td>
-            <td width="80%"><input type="model" id="campoNecesitaUps" class="form-control" placeholder="0.00"></td>
+            <td><div class="checkbox">
+                <label>
+                  <input type="checkbox" id="campoNecesitaUps">
+                  S&iacute; </label>
+              </div></td>
           </tr>
           <tr>
             <td style="text-align:right;"><label for="campoDeale">Deale Distributor Price</label></td>
@@ -482,19 +486,19 @@ include('menu.php');?>
         <tbody>
           <tr>
             <td width="20%" style="text-align:right;"><label for="campoAccesorioA">Accesorio A</label></td>
-            <td width="80%"><input type="model" id="campoAccesorioA" class="form-control" placeholder="0.00"></td>
+            <td width="80%"><input type="model" id="campoAccesorioA" class="form-control"></td>
           </tr>
           <tr>
             <td style="text-align:right;"><label for="campoAccesorioB">Accesorio B</label></td>
-            <td><input type="model" id="campoAccesorioB" class="form-control" placeholder="0.00"></td>
+            <td><input type="model" id="campoAccesorioB" class="form-control"></td>
           </tr>
           <tr>
             <td style="text-align:right;"><label for="campoAccesorioC">Accesorio C</label></td>
-            <td><input type="model" id="campoAccesorioC" class="form-control" placeholder="0.00"></td>
+            <td><input type="model" id="campoAccesorioC" class="form-control"></td>
           </tr>
           <tr>
             <td style="text-align:right;"><label for="campoAccesorioD">Accesorio D</label></td>
-            <td><input type="model" id="campoAccesorioD" class="form-control" placeholder="0.00"></td>
+            <td><input type="model" id="campoAccesorioD" class="form-control"></td>
           </tr>
         </tbody>
       </table>
@@ -538,6 +542,7 @@ include('menu.php');?>
       <div class="buttonsBottom">
         <button type="button" class="btn btn-default btn-lg"> Cancelar</button>
         <button type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
+        <button type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar y Cargar Nuevo</button>
       </div>
     </div>
     <!-- /.col-sm-12 --> 
