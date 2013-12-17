@@ -376,7 +376,10 @@ class ProductController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$this->redirect(array('admin'));
+		$model = null;
+		$this->render('index',array(
+			'model'=>$model,
+		));
 	}
 
 	/**
@@ -875,6 +878,53 @@ class ProductController extends Controller
 		}
 		
 		$this->render('importFromExcel',array('model'=>$model,));
+	}
+	
+	public function actionAjaxOpenTabByBrand()
+	{
+		$modelImportProductLogs = ProductImportLog::model()->findAll();
+		echo $this->renderPartial('_tabByBrand', array('modelImportProductLogs'=>$modelImportProductLogs));
+	}
+	
+	public function actionAjaxHola()
+	{
+		$modelProductImportLog = $_POST['ProductImportLog'];
+		$modelExcel = $_POST['UploadExcel'];
+		
+		$file=CUploadedFile::getInstance($modelExcel,'file');
+		var_dump($file);
+	}
+	
+	public function actionAjaxOpenExcelLoader()
+	{		
+		$modelProductImportLog = new ProductImportLog();
+		$modelExcel = new UploadExcel();
+	
+		$measureType = MeasurementType::model()->findByAttributes(array('description'=>'linear'));
+	
+		$criteria = new CDbCriteria();
+	
+		$criteria->join = 'INNER JOIN measurement_type mt ON (mt.Id = t.Id_measurement_type)';
+		$criteria->addCondition('mt.description = "linear"');
+	
+		$ddlMeasurementUnitLinear = MeasurementUnit::model()->findAll($criteria);
+	
+		$criteria = new CDbCriteria();
+	
+		$criteria->join = 'INNER JOIN measurement_type mt ON (mt.Id = t.Id_measurement_type)';
+		$criteria->addCondition('mt.description = "weight"');
+	
+		$ddlMeasurementUnitWeight = MeasurementUnit::model()->findAll($criteria);
+	
+		$ddlBrand = Brand::model()->findAll(array('order'=>'description ASC'));
+	
+		echo $this->renderPartial('_modalUploadExcel', 
+								array(
+									'modelExcel'=>$modelExcel,
+									'modelProductImportLog'=>$modelProductImportLog,
+									'ddlMeasurementUnitLinear'=>$ddlMeasurementUnitLinear,
+									'ddlMeasurementUnitWeight'=>$ddlMeasurementUnitWeight,
+									'ddlBrand'=>$ddlBrand,));
 	}
 	
 	public function actionImportMeasuresFromExcel()
