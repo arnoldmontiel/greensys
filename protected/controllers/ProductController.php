@@ -882,17 +882,31 @@ class ProductController extends Controller
 	
 	public function actionAjaxOpenTabByBrand()
 	{
-		$modelImportProductLogs = ProductImportLog::model()->findAll();
+		$modelImportProductLogs = ProductImportLog::model()->findAll(array('order'=>'last_import_date DESC'));
 		echo $this->renderPartial('_tabByBrand', array('modelImportProductLogs'=>$modelImportProductLogs));
 	}
 	
-	public function actionAjaxHola()
+	public function actionAjaxUploadProductExcel()
 	{
-		$modelProductImportLog = $_POST['ProductImportLog'];
-		$modelExcel = $_POST['UploadExcel'];
+		$modelProductImportLog = new ProductImportLog();
+		$modelExcel = new UploadExcel();
 		
-		$file=CUploadedFile::getInstance($modelExcel,'file');
-		var_dump($file);
+		if(isset($_POST['UploadExcel']) && isset($_POST['ProductImportLog']))
+		{
+			$modelProductImportLog->attributes = $_POST['ProductImportLog'];
+			$modelExcel->attributes = $_POST['UploadExcel'];
+			if($modelExcel->validate())
+			{
+				GreenHelper::importProductFromExcel($modelExcel, $modelProductImportLog);
+			}
+		}
+		$modelImportProductLogs = ProductImportLog::model()->findAll(array('order'=>'last_import_date DESC'));
+		echo $this->renderPartial('_tabByBrand', array('modelImportProductLogs'=>$modelImportProductLogs));
+		
+// 		$response = array('msg'=>$h2msg,
+// 				'workingFirstScan'=>$workingFirstScan);
+			
+// 		echo json_encode($response);
 	}
 	
 	public function actionAjaxOpenExcelLoader()
@@ -916,7 +930,12 @@ class ProductController extends Controller
 	
 		$ddlMeasurementUnitWeight = MeasurementUnit::model()->findAll($criteria);
 	
-		$ddlBrand = Brand::model()->findAll(array('order'=>'description ASC'));
+		$criteria = new CDbCriteria();
+		
+		$criteria->addCondition('t.Id NOT IN (select Id_brand from product_import_log)');
+		$criteria->order = "t.description ASC";
+		
+		$ddlBrand = Brand::model()->findAll($criteria);
 	
 		echo $this->renderPartial('_modalUploadExcel', 
 								array(

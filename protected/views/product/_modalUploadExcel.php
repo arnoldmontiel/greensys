@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
     
-<form id="form-upload-excel" role="form" action="<?php echo ProductController::createUrl("AjaxHola"); ?>">
+<form id="form-upload-excel" role="form" action="<?php echo ProductController::createUrl("AjaxUploadProductExcel"); ?>">
   <div class="form-group">
     <label for="campoArchivo">Archivo</label>
     <?php				
@@ -75,10 +75,14 @@
 		        processData:false,
 		    success: function(data, textStatus, jqXHR)
 		    {
-		 
+		    	$('#status-wait').hide();
+		    	$('#status-success').show();
+		    	$('#tabPorMarca').html(data);
 		    },
 		     error: function(jqXHR, textStatus, errorThrown)
 		     {
+		    	$('#status-wait').hide();
+			    $('#status-error').show();
 		     }         
 		    });
 		    e.preventDefault(); //Prevent Default action.
