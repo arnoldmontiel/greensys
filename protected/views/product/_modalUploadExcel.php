@@ -3,7 +3,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Cargar Nuevo Excel</h4>
+        <?php 
+	        if($isUpdate)
+	        	echo "<h4 class='modal-title'>Actualizar Excel: ".$modelProductImportLog->brand->description."</h4>";
+	        else 
+				echo "<h4 class='modal-title'>Cargar Nuevo Excel</h4>";
+		?>        
       </div>
       <div class="modal-body">
     
@@ -15,21 +20,21 @@
 	?>
   </div>
   <div class="form-group">
-    <label for="campoMarca">Marca</label>
+    <label for="Id_brand">Marca</label>
     <?php				
 		echo CHtml::activeDropDownList($modelProductImportLog, 'Id_brand', 
 		CHtml::listData($ddlBrand, 'Id', 'description')); 
 	?>
   </div>
   <div class="form-group">
-    <label for="campoPeso">Unidad de Peso</label>
+    <label for="Id_measurement_unit_weight">Unidad de Peso</label>
     <?php
     	echo CHtml::activeDropDownList($modelProductImportLog, 'Id_measurement_unit_weight', 
 		CHtml::listData($ddlMeasurementUnitWeight, 'Id', 'short_description'));
 	?>
   </div>
   <div class="form-group">
-    <label for="campoLineal">Unidad Lineal</label>
+    <label for="Id_measurement_unit_linear">Unidad Lineal</label>
     <?php				
 		echo CHtml::activeDropDownList($modelProductImportLog, 'Id_measurement_unit_linear', 
 		CHtml::listData($ddlMeasurementUnitLinear, 'Id', 'short_description')); 
@@ -55,16 +60,19 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
-        <button type="button" onclick="uploadFile();" class="btn btn-primary btn-lg"><i class="fa fa-upload"></i> Cargar</button>
+        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cerrar</button>
+        <button type="button" id="btn-upload" onclick="uploadFile();" class="btn btn-primary btn-lg"><i class="fa fa-upload"></i> Cargar</button>
       </div>
     </div><!-- /.modal-content -->
 <script type="text/javascript">
+
 		$("#form-upload-excel").submit(function(e)
 		{
 		    var formObj = $(this);
 		    var formURL = formObj.attr("action");
 		    var formData = new FormData(this);
+			var selectedBrand = $('#ProductImportLog_Id_brand').val();
+		    
 		    $.ajax({
 		        url: formURL,
 		    type: 'POST',
@@ -78,11 +86,20 @@
 		    	$('#status-wait').hide();
 		    	$('#status-success').show();
 		    	$('#tabPorMarca').html(data);
+		    	$('#btn-upload').removeAttr('disabled');
+		    	
+		    	<?php if($isUpdate): ?> 		    				    		
+		    		$('#myModalUploadExcel').trigger('click');
+		    	<?php else: ?> 
+		    		$("#ProductImportLog_Id_brand option[value='"+selectedBrand+"']").remove();
+		    		$('#btn-upload').removeAttr('disabled');
+		    	<?php endif; ?>
 		    },
 		     error: function(jqXHR, textStatus, errorThrown)
 		     {
 		    	$('#status-wait').hide();
-			    $('#status-error').show();
+			    $('#status-error').show();			    
+			    $('#btn-upload').removeAttr('disabled');
 		     }         
 		    });
 		    e.preventDefault(); //Prevent Default action.
@@ -90,7 +107,10 @@
 	
 	function uploadFile()
 	{		
-		$('#status-wait').show();
+		$('#btn-upload').attr('disabled','disabled');
+		$('#status-success').hide();
+		$('#status-error').hide();
+		$('#status-wait').show();		
 		$('#form-upload-excel').submit();
 	}
 </script>

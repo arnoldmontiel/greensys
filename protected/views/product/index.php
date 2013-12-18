@@ -25,6 +25,26 @@ function openExcelLoader()
 		});
 }
 
+function downloadExcel(idProductImport)
+{
+	var param = "&id="+idProductImport;
+	window.location = "<?php echo ProductController::createUrl('ExportToExcel'); ?>" + param;
+	return false;
+}
+
+function updateExcel(idBrand)
+{
+	$.post("<?php echo ProductController::createUrl('AjaxOpenExcelUpdate'); ?>",
+		{
+			idBrand:idBrand
+		}
+	).success(
+		function(data){
+			$('#myModalUploadExcel').html(data);
+	   		$('#myModalUploadExcel').modal('show');	  
+		});
+}
+
 </script>
 <div class="container" id="screenProductos">
   <h1 class="pageTitle">Productos</h1>
