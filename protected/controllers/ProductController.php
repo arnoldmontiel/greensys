@@ -897,16 +897,18 @@ class ProductController extends Controller
 			$modelExcel->attributes = $_POST['UploadExcel'];
 			if($modelExcel->validate())
 			{
-				GreenHelper::importProductFromExcel($modelExcel, $modelProductImportLog);
+				$modelProductImportLogDB = ProductImportLog::model()->findByAttributes(array('Id_brand'=>$modelProductImportLog->Id_brand));
+				if(!isset($modelProductImportLogDB))
+					$modelProductImportLogDB = $modelProductImportLog;
+				else
+					$modelProductImportLogDB->attributes = $modelProductImportLog;
+				
+				GreenHelper::importProductFromExcel($modelExcel, $modelProductImportLogDB);
 			}
 		}
 		$modelImportProductLogs = ProductImportLog::model()->findAll(array('order'=>'last_import_date DESC'));
 		echo $this->renderPartial('_tabByBrand', array('modelImportProductLogs'=>$modelImportProductLogs));
-		
-// 		$response = array('msg'=>$h2msg,
-// 				'workingFirstScan'=>$workingFirstScan);
-			
-// 		echo json_encode($response);
+
 	}
 	
 	public function actionAjaxOpenExcelLoader()
@@ -943,7 +945,48 @@ class ProductController extends Controller
 									'modelProductImportLog'=>$modelProductImportLog,
 									'ddlMeasurementUnitLinear'=>$ddlMeasurementUnitLinear,
 									'ddlMeasurementUnitWeight'=>$ddlMeasurementUnitWeight,
-									'ddlBrand'=>$ddlBrand,));
+									'ddlBrand'=>$ddlBrand,
+									'isUpdate'=>false));
+	}
+	
+	public function actionAjaxOpenExcelUpdate()
+	{
+		$idBrand = $_POST['idBrand'];
+		
+		$modelProductImportLog = new ProductImportLog();
+		$modelProductImportLog->Id_brand = $idBrand;
+		$modelExcel = new UploadExcel();
+	
+		$measureType = MeasurementType::model()->findByAttributes(array('description'=>'linear'));
+	
+		$criteria = new CDbCriteria();
+	
+		$criteria->join = 'INNER JOIN measurement_type mt ON (mt.Id = t.Id_measurement_type)';
+		$criteria->addCondition('mt.description = "linear"');
+	
+		$ddlMeasurementUnitLinear = MeasurementUnit::model()->findAll($criteria);
+	
+		$criteria = new CDbCriteria();
+	
+		$criteria->join = 'INNER JOIN measurement_type mt ON (mt.Id = t.Id_measurement_type)';
+		$criteria->addCondition('mt.description = "weight"');
+	
+		$ddlMeasurementUnitWeight = MeasurementUnit::model()->findAll($criteria);
+	
+		$criteria = new CDbCriteria();
+		
+		$criteria->addCondition('t.Id = '.$idBrand);		
+		
+		$ddlBrand = Brand::model()->findAll($criteria);	
+	
+		echo $this->renderPartial('_modalUploadExcel',
+				array(
+						'modelExcel'=>$modelExcel,
+						'modelProductImportLog'=>$modelProductImportLog,
+						'ddlMeasurementUnitLinear'=>$ddlMeasurementUnitLinear,
+						'ddlMeasurementUnitWeight'=>$ddlMeasurementUnitWeight,
+						'ddlBrand'=>$ddlBrand,
+						'isUpdate'=>true));
 	}
 	
 	public function actionImportMeasuresFromExcel()
@@ -990,10 +1033,10 @@ class ProductController extends Controller
 										'ddlBrand'=>$ddlBrand,));
 	}
 	
-	public function actionExportToExcel()
+	public function actionExportToExcel($id)
 	{
 	
-		GreenHelper::generateProductExcelGrid(3);
+		GreenHelper::generateProductExcelGrid($id);
 	}
 	
 	public function actionImportResults($id)

@@ -1396,13 +1396,12 @@ class GreenHelper
 		//save doc
 		move_uploaded_file($file->tempName,$filePath);
 		
-		$excelCols = self::getExcelCols($sheet_array[1]);
-		
+		$excelCols = self::getExcelCols($sheet_array[2]);		
 		$row_index = 1;
 		$model_not_found = '';
 		foreach( $sheet_array as $row )
 		{
-			if($row_index != 1)
+			if($row_index > 2)
 			{
 				$criteria = new CDbCriteria();
 				$criteria->addCondition('t.Id_brand = '. $modelProductImportLog->Id_brand);
@@ -1411,8 +1410,9 @@ class GreenHelper
 				if(empty($newModel))
 					continue;
 	
-				$criteria->addCondition('"'. $newModel . '" like CONCAT("%", model ,"%")');
-	
+				//$criteria->addCondition('"'. $newModel . '" like CONCAT("%", model ,"%")');
+				$criteria->addCondition('t.model like "'. $newModel . '"');
+				
 				$modelProductDB = Product::model()->find($criteria);
 	
 				if(isset($modelProductDB))
@@ -1450,18 +1450,36 @@ class GreenHelper
 		$modelProduct->width = (float)$row[$excelCols['ANCHO']];
 		$modelProduct->height = (float)$row[$excelCols['ALTO']];
 		$modelProduct->weight = (float)$row[$excelCols['PESO']];
-		$modelProduct->msrp = (float)$row[$excelCols['MSRP']];
 		
-		if(!empty($row[$excelCols['DEALER COST']]))
-			$modelProduct->dealer_cost = (float)$row[$excelCols['DEALER COST']];
+		if(!empty($row[$excelCols['MSRP']]))
+		{
+			$modelProduct->msrp = (float)$row[$excelCols['MSRP']];
+			
+			if(!empty($row[$excelCols['DEALER COST']]))
+				$modelProduct->dealer_cost = (float)$row[$excelCols['DEALER COST']];
+			else 
+			{
+				if(!empty($row[$excelCols['MSRP']]) && !empty($row[$excelCols['PORCENTAJE DE DESCUENTO']]))
+				{
+					$discount = (int)$row[$excelCols['PORCENTAJE DE DESCUENTO']];
+					$modelProduct->dealer_cost = (float) $modelProduct->msrp * (100 - $discount) * 0.01;
+				}			
+			}
+		}
 		else 
 		{
-			if(!empty($row[$excelCols['MSRP']]) && !empty($row[$excelCols['PORCENTAJE DE DESCUENTO']]))
+			if(!empty($row[$excelCols['DEALER COST']]))
 			{
-				$discount = (int)$row[$excelCols['PORCENTAJE DE DESCUENTO']];
-				$modelProduct->dealer_cost = (float) $modelProduct->msrp * (100 - $discount) * 0.01;
-			}			
+				$modelProduct->dealer_cost = (float)$row[$excelCols['DEALER COST']];
+				if(!empty($row[$excelCols['PORCENTAJE DE DESCUENTO']]))
+				{
+					$discount = (int)$row[$excelCols['PORCENTAJE DE DESCUENTO']];
+					if($discount < 100)
+						$modelProduct->msrp = (float) $modelProduct->dealer_cost * 100 / (100 - $discount);
+				}
+			}
 		}
+		
 		if($modelProduct->dealer_cost != 0)
 			$modelProduct->profit_rate = round($modelProduct->msrp / $modelProduct->dealer_cost,2);
 		

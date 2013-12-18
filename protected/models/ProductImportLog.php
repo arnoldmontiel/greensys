@@ -17,6 +17,13 @@
  */
 class ProductImportLog extends CActiveRecord
 {
+	protected function afterFind(){
+		$this->last_import_date = Yii::app()->dateFormatter->formatDateTime(
+				CDateTimeParser::parse($this->last_import_date, Yii::app()->params['database_format']['date']),'small',null);
+	
+		return true;
+	}
+	
 	/**
 	 * @return string the associated database table name
 	 */
@@ -42,6 +49,34 @@ class ProductImportLog extends CActiveRecord
 		);
 	}
 
+	public function getUncompleteProducts()
+	{
+		$criteria = new CDbCriteria();
+		$criteria->addCondition("t.Id_brand = ".$this->Id_brand);
+		$criteria->addCondition("(t.width = 0 OR
+								t.height = 0 OR
+								t.weight = 0 OR
+								t.length = 0 OR
+								t.msrp = 0 OR
+				 				t.dealer_cost = 0)");
+	
+		return Product::model()->count($criteria);
+	}
+	
+	public function getCompleteProducts()
+	{
+		$criteria = new CDbCriteria();
+		$criteria->addCondition("t.Id_brand = ".$this->Id_brand);
+		$criteria->addCondition("(t.width > 0 AND
+								t.height > 0 AND
+								t.weight > 0 AND
+								t.length > 0 AND
+								t.msrp > 0 AND
+				 				t.dealer_cost > 0)");
+	
+		return Product::model()->count($criteria);
+	}
+	
 	/**
 	 * @return array relational rules.
 	 */
