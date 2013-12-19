@@ -385,8 +385,19 @@ class ProductController extends Controller
 				 				t.dealer_cost = 0)");
 		$pendingQty = Product::model()->count($criteria);
 		
+		$criteria = new CDbCriteria();
+		$criteria->addCondition("(t.width > 0 AND
+								t.height > 0 AND
+								t.weight > 0 AND
+								t.length > 0 AND
+								t.msrp > 0 AND
+				 				t.dealer_cost > 0)");
+		
+		$modelProducts = Product::model()->findAll($criteria);
+				
 		$this->render('index',array(
 			'pendingQty'=>$pendingQty,
+			'modelProducts'=>$modelProducts,
 		));
 	}
 
@@ -907,6 +918,21 @@ class ProductController extends Controller
 		
 		echo $this->renderPartial('_tabByPending',array('modelProducts'=>$modelProducts));
 	}	
+	
+	public function actionAjaxOpenTabByAll()
+	{
+		$criteria = new CDbCriteria();
+		$criteria->addCondition("(t.width > 0 AND
+								t.height > 0 AND
+								t.weight > 0 AND
+								t.length > 0 AND
+								t.msrp > 0 AND
+				 				t.dealer_cost > 0)");
+		
+		$modelProducts = Product::model()->findAll($criteria);
+	
+		echo $this->renderPartial('_tabByAll',array('modelProducts'=>$modelProducts));
+	}
 	
 	public function actionAjaxUploadProductExcel()
 	{
