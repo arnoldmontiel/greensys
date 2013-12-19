@@ -241,15 +241,15 @@ class Product extends ModelAudit
 			'code' => 'Code',
 			'code_supplier' => 'Code Supplier',
 			'discontinued' => 'Discontinued',
-			'length' => 'Length',
-			'width' => 'Width',
-			'height' => 'Height',
-			'profit_rate' => 'Profit Rate',
+			'length' => 'Largo',
+			'width' => 'Ancho',
+			'height' => 'Alto',
+			'profit_rate' => 'Tasa',
 			'msrp' => 'MSRP',
 			'time_instalation' => 'Time Instalation',
 			'time_programation'=>'Time Programation',
 			'hide' => 'Hide',
-			'weight' => 'Weight',
+			'weight' => 'Peso',
 			'link'=>'Links',
 			'note'=>'Note',
 			'image'=>'Image',
@@ -268,12 +268,12 @@ class Product extends ModelAudit
 			'unit_fan' => 'Unit fan',
 			'Id_volts' => 'Volts',
 			'supplier_description'=>'Supplier',
-			'brand_description'=>'Brand',
+			'brand_description'=>'Marca',
 			'category_description'=>'Category',
 			'date_creation' => 'Date Creation',
 			'from_dtools' => 'From Dtools',
 			'long_description' => 'Long Description',
-			'short_description' => 'Short Description',
+			'short_description' => 'Descripcion Corta',
 			'part_number' => 'Part Number',
 			'url' => 'Url',
 			'tags' => 'Tags',
@@ -300,7 +300,7 @@ class Product extends ModelAudit
 			'output_labels' => 'Output Labels',
 			'import_code' => 'Import Code',
 			'verified' => 'Verified',
-			'model' => 'Model',
+			'model' => 'Modelo',
 			'vendor' => 'Vendor',
 			'Id_product' => 'Id Product',
 			'default_broker' => 'Despachante por defecto',
@@ -334,6 +334,28 @@ class Product extends ModelAudit
 		);
 	}
 
+	public function showPrice($value)
+	{
+		$settings = Setting::getInstance();
+		$currency = '$';
+		if(isset($settings))
+			$currency = $settings->currency->short_description;
+		
+		return $value . " " . $currency; 
+	}
+	
+	public function showVolume($value)
+	{
+		$unitLinear = $this->measurementUnitLinear->short_description;
+		return $value . " " . $unitLinear;
+	}
+
+	public function showWeight($value)
+	{
+		$unitWeight = $this->measurementUnitWeight->short_description;
+		return $value . " " . $unitWeight;
+	}
+	
 	public function getProductDesc()
 	{
 		return $this->description_customer . ' - ' . $this->code;

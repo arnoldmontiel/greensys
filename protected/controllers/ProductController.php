@@ -385,32 +385,17 @@ class ProductController extends GController
 				 				t.dealer_cost = 0)");
 		$pendingQty = Product::model()->count($criteria);
 		
-		$criteria = new CDbCriteria();
-		$criteria->addCondition("(t.width > 0 AND
-								t.height > 0 AND
-								t.weight > 0 AND
-								t.length > 0 AND
-								t.msrp > 0 AND
-				 				t.dealer_cost > 0)");
+		$modelProducts = new Product('search');
+		$modelProducts->unsetAttributes();
+		if(isset($_GET['Product']))
+			$modelProducts->attributes=$_GET['Product'];
 		
-		$modelProducts = Product::model()->findAll($criteria);
-				
+		
 		$this->render('index',array(
 			'pendingQty'=>$pendingQty,
 			'modelProducts'=>$modelProducts,
 		));
 	}
-
-	/*
-	public function actionAjaxTest()
-	{
-		$model = new Product('search');
-		$model->unsetAttributes();
-		if(isset($_GET['Product']))
-			$model->attributes = $_GET['Product'];
-			
-	}
-	*/
 	
 	/**
 	 * Manages all models.
@@ -931,17 +916,12 @@ class ProductController extends GController
 	}	
 	
 	public function actionAjaxOpenTabByAll()
-	{
-		$criteria = new CDbCriteria();
-		$criteria->addCondition("(t.width > 0 AND
-								t.height > 0 AND
-								t.weight > 0 AND
-								t.length > 0 AND
-								t.msrp > 0 AND
-				 				t.dealer_cost > 0)");
+	{	
+		$modelProducts = new Product('search');
+		$modelProducts->unsetAttributes();  // clear any default values
+		if(isset($_GET['Product']))
+			$modelProducts->attributes=$_GET['Product'];
 		
-		$modelProducts = Product::model()->findAll($criteria);
-	
 		echo $this->renderPartial('_tabByAll',array('modelProducts'=>$modelProducts));
 	}
 	
