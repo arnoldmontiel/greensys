@@ -63,7 +63,7 @@
 	        			echo $model->short_description;
 	        		echo CHtml::closeTag("td");
 	        		echo CHtml::openTag("td",array("style"=>"text-align:right"));
-	        			echo "<button type='button' onclick='aaa(".$model->Id.");' class='btn btn-default btn-sm'><i class='fa fa-pencil'></i> Editar</button>" ;
+	        			echo "<button type='button' onclick='aaa(".$model->Id.");' class='btn btn-default btn-sm'><i class='fa fa-pencil'></i> Editar</button>";
 	        			echo "<button type='button' onclick='aaa(".$model->Id.");' class='btn btn-default btn-sm'><i class='fa fa-trash-o'></i> Borrar</button>";
 	        		echo CHtml::closeTag("td");
 	        	echo CHtml::closeTag("tr");

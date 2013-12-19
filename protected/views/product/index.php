@@ -76,13 +76,13 @@ function updateExcel(idBrand)
         <li><a id="tab-brand" href="#tabPorMarca" data-toggle="tab">por Marca </a></li>
       </ul>
       <div class="tab-content">
-  	  <div class="tab-pane active" id="tabTodos">
-  	  	<?php echo $this->renderPartial('_tabByPending',array('modelProducts'=>$modelProducts)); ?>
-      </div><!-- /.tab1 --> 
-      <div class="tab-pane" id="tabPendientes">
-      </div><!-- /.tab2 --> 
-      <div class="tab-pane" id="tabPorMarca">
-      </div><!-- /.tab3 -->      		
+	  	  <div class="tab-pane active" id="tabTodos">
+	  	  	<?php echo $this->renderPartial('_tabByAll',array('modelProducts'=>$modelProducts)); ?>
+	      </div><!-- /.tab1 --> 
+	      <div class="tab-pane" id="tabPendientes">
+	      </div><!-- /.tab2 --> 
+	      <div class="tab-pane" id="tabPorMarca">
+	      </div><!-- /.tab3 -->      		
       </div><!-- /.tab-content -->
     </div>
     <!-- /.col-sm-12 --> 

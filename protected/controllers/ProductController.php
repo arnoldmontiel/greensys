@@ -1,6 +1,6 @@
 <?php
 
-class ProductController extends Controller
+class ProductController extends GController
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -401,6 +401,17 @@ class ProductController extends Controller
 		));
 	}
 
+	/*
+	public function actionAjaxTest()
+	{
+		$model = new Product('search');
+		$model->unsetAttributes();
+		if(isset($_GET['Product']))
+			$model->attributes = $_GET['Product'];
+			
+	}
+	*/
+	
 	/**
 	 * Manages all models.
 	 */
