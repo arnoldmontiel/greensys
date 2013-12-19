@@ -1462,7 +1462,7 @@ class GreenHelper
 				if(!empty($row[$excelCols['MSRP']]) && !empty($row[$excelCols['PORCENTAJE DE DESCUENTO']]))
 				{
 					$discount = (int)$row[$excelCols['PORCENTAJE DE DESCUENTO']];
-					$modelProduct->dealer_cost = (float) $modelProduct->msrp * (100 - $discount) * 0.01;
+					$modelProduct->dealer_cost = round($modelProduct->msrp * (100 - $discount) * 0.01,2);
 				}			
 			}
 		}
@@ -1475,7 +1475,7 @@ class GreenHelper
 				{
 					$discount = (int)$row[$excelCols['PORCENTAJE DE DESCUENTO']];
 					if($discount < 100)
-						$modelProduct->msrp = (float) $modelProduct->dealer_cost * 100 / (100 - $discount);
+						$modelProduct->msrp = round($modelProduct->dealer_cost * 100 / (100 - $discount),2);
 				}
 			}
 		}
