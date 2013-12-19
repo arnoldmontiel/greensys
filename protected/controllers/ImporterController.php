@@ -1,6 +1,6 @@
 <?php
 
-class ImporterController extends Controller
+class ImporterController extends GController
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning

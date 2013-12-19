@@ -37,16 +37,16 @@
                 	      <li><a href="#">Usuarios</a></li>
 				          <?php endif?>			                    	
                 	      <?php if(Yii::app()->user->checkAccess('AreaManage')):?>			          
-                	      <li><a href="#">Areas</a></li>
+                	      <li><a href="<?php echo Yii::app()->createUrl("area/index")?>">Areas</a></li>
 				          <?php endif?>			                    	
                 	      <?php if(Yii::app()->user->checkAccess('ImporterManage')):?>			          
-                	      <li><a href="#">Importadores</a></li>
+                	      <li><a href="<?php echo Yii::app()->createUrl("importer/index")?>">Importadores</a></li>
 				          <?php endif?>			                    	
-                	      <?php if(Yii::app()->user->checkAccess('RequerimetManage')):?>			          
-                	      <li><a href="#">Requerimientos</a></li>
+                	      <?php if(Yii::app()->user->checkAccess('ProductRequirementManage')):?>			          
+                	      <li><a href="<?php echo Yii::app()->createUrl("productRequirement/index")?>">Requerimientos</a></li>
 				          <?php endif?>			                    	
                 	      <?php if(Yii::app()->user->checkAccess('ServiceManage')):?>			          
-                	      <li><a href="#">Servicios</a></li>
+                	      <li><a href="<?php echo Yii::app()->createUrl("service/index")?>">Servicios</a></li>
 				          <?php endif?>			                    	
                 	      </ul>
           </li>

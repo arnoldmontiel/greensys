@@ -1,6 +1,6 @@
 <?php
 
-class ProductRequirementController extends Controller
+class ProductRequirementController extends GController
 {	
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
