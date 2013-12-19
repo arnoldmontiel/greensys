@@ -1,4 +1,4 @@
-<a href="agregarProducto.php" class="btn btn-primary superBoton"><i class="fa fa-plus"></i>  Agregar Producto</a>
+<a href="<?php echo ProductController::createUrl('create'); ?>" class="btn btn-primary superBoton"><i class="fa fa-plus"></i>  Agregar Producto</a>
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <thead>
           <tr>

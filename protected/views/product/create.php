@@ -1,23 +1,9 @@
-<?php
-$this->breadcrumbs=array(
-	'Products'=>array('index'),
-	'Create',
-);
+<ol class="breadcrumb">
+  <li><a href="productos.php">Productos</a></li>
+  <li class="active"><a href="#">Agregar Producto</a></li>
+</ol>
 
-$this->menu=array(
-	array('label'=>'Manage Product', 'url'=>array('admin')),
-	array('label'=>'Assign Groups', 'url'=>array('productGroup')),
-	array('label'=>'Assign Requirements', 'url'=>array('productRequirement')),
-	array('label'=>'Manage Import', 'url'=>array('adminImport')),
-	array('label'=>'Import From Excel', 'url'=>array('importFromExcel')),
-	array('label'=>'Manage Measures Import', 'url'=>array('adminMeasuresImport')),
-	array('label'=>'Import Measures From Excel', 'url'=>array('importMeasuresFromExcel')),
-);
-?>
-
-<h1>Create Product</h1>
-
-<?php echo $this->renderPartial('_form', array(
+<?php echo $this->renderPartial('_formNew', array(
 											'model'=>$model,
 											'modelHyperlink'=>$modelHyperlink,
 											'modelNote'=>$modelNote,
