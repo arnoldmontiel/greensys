@@ -18,6 +18,7 @@
  */
 class Setting extends ModelAudit
 {
+	private static $setting;
 	public $measurement_description;
 	public $currency_description;
 	public $volts_description;
@@ -32,6 +33,17 @@ class Setting extends ModelAudit
 		return parent::model($className);
 	}
 
+	public static function getInstance()
+	{
+		if(!isset(self::$instancia))
+		{
+			$settings = Setting::model()->findAll();
+			if($settings!=null)
+				Setting::$setting= $settings[0];
+		}
+		return self::$setting;
+	}
+	
 	/**
 	 * @return string the associated database table name
 	 */

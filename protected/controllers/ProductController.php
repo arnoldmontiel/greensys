@@ -376,9 +376,17 @@ class ProductController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$model = null;
+		$criteria = new CDbCriteria();
+		$criteria->addCondition("(t.width = 0 OR
+								t.height = 0 OR
+								t.weight = 0 OR
+								t.length = 0 OR
+								t.msrp = 0 OR
+				 				t.dealer_cost = 0)");
+		$pendingQty = Product::model()->count($criteria);
+		
 		$this->render('index',array(
-			'model'=>$model,
+			'pendingQty'=>$pendingQty,
 		));
 	}
 
@@ -886,6 +894,20 @@ class ProductController extends Controller
 		echo $this->renderPartial('_tabByBrand', array('modelImportProductLogs'=>$modelImportProductLogs));
 	}
 	
+	public function actionAjaxOpenTabByPending()
+	{
+		$criteria = new CDbCriteria();
+		$criteria->addCondition("(t.width = 0 OR
+								t.height = 0 OR
+								t.weight = 0 OR
+								t.length = 0 OR
+								t.msrp = 0 OR
+				 				t.dealer_cost = 0)");
+		$modelProducts = Product::model()->findAll($criteria);
+		
+		echo $this->renderPartial('_tabByPending',array('modelProducts'=>$modelProducts));
+	}	
+	
 	public function actionAjaxUploadProductExcel()
 	{
 		$modelProductImportLog = new ProductImportLog();
@@ -909,6 +931,16 @@ class ProductController extends Controller
 		$modelImportProductLogs = ProductImportLog::model()->findAll(array('order'=>'last_import_date DESC'));
 		echo $this->renderPartial('_tabByBrand', array('modelImportProductLogs'=>$modelImportProductLogs));
 
+		$criteria = new CDbCriteria();
+		$criteria->addCondition("(t.width = 0 OR
+								t.height = 0 OR
+								t.weight = 0 OR
+								t.length = 0 OR
+								t.msrp = 0 OR
+				 				t.dealer_cost = 0)");
+		$pendingQty = Product::model()->count($criteria);
+		
+		echo CHtml::script("$('#tab-pending').children().text(".$pendingQty.");");
 	}
 	
 	public function actionAjaxOpenExcelLoader()
