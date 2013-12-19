@@ -4,7 +4,7 @@
  * All controller classes for this application should extend from this base class.
  */
 
-class Controller extends SBaseController
+class GController extends SBaseController
 {
 	/**
 	 * 
@@ -60,23 +60,7 @@ class Controller extends SBaseController
 		else if (isset($app->session['sel_lang']))
 		{
 			$app->lc->setLanguage($app->session['sel_lang']);
-		}
-		if (!Yii::app()->hasComponent('bootstrap'))
-		{
-			//Yii::setPathOfAlias('bootstrap', Yii::getPathOfAlias('ext.bootstrap'));
-			Yii::setPathOfAlias('bootstrap', dirname(__FILE__) . '/../extensions/bootstrap');
-			$boostrap=Yii::createComponent(
-					array(
-							'class' => 'ext.bootstrap.components.Bootstrap',
-							'responsiveCss' => true,
-		
-					));
-			Yii::app()->setComponent('bootstrap',$boostrap);
-			Yii::app()->bootstrap->init();
-			Yii::app()->bootstrap->register();
-		
-		}
-		
+		}		
 	}
 	public function getSetting()
 	{

@@ -11,7 +11,7 @@ return array(
 	'name'=>'G r E e N',
 	'language' => 'es_ar',
 	// preloading 'log' component
-	'preload'=>array('log','highcharts','bootstrap'),
+	'preload'=>array('log','highcharts'),
 
 	// autoloading model and component classes
 	'import'=>array(
@@ -76,10 +76,6 @@ return array(
 	// application components
 	'components'=>array(
 		'highcharts' => array('class' => 'highcharts.components.Highcharts'),
-		'bootstrap' => array(
-					    'class' => 'ext.bootstrap.components.Bootstrap',
-					    'responsiveCss' => true,
-		),
 		'yexcel' => array(
 		    'class' => 'ext.yexcel.Yexcel'
 		),
