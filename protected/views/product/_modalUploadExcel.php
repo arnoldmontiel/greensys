@@ -86,15 +86,15 @@
 
 			var extension = file.substr( (file.lastIndexOf('.') +1) ).toLowerCase();
 
-			if(extension != "xls")
+			if(extension != "xls" && extension != "xlsx")
 			{
-				$('#status-error').text("La extension permitida es 'xls'.");
+				$('#status-error').text("La extensiones permitidas son 'xls' o 'xlsx'.");
 				$('#status-wait').hide();
 				$('#status-error').show();
 				$('#btn-upload').removeAttr('disabled');
 				return false;
 			}
-		    
+			
 		    $.ajax({
 		        url: formURL,
 		    type: 'POST',
@@ -109,7 +109,7 @@
 		    	$('#status-success').show();
 		    	$('#tabPorMarca').html(data);
 		    	$('#btn-upload').removeAttr('disabled');
-		    	
+				
 		    	<?php if($isUpdate): ?> 		    		
 		    	 	setTimeout(function () {
 		    	 		$('#myModalUploadExcel').trigger('click');
