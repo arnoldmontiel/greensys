@@ -72,6 +72,28 @@
 		    var formURL = formObj.attr("action");
 		    var formData = new FormData(this);
 			var selectedBrand = $('#ProductImportLog_Id_brand').val();
+
+			var file = $('#UploadExcel_file').val();
+
+			if(file == "")
+			{
+				$('#status-error').text("No se selecciono ningun archivo.");
+				$('#status-wait').hide();
+				$('#status-error').show();
+				$('#btn-upload').removeAttr('disabled');
+				return false;
+			}
+
+			var extension = file.substr( (file.lastIndexOf('.') +1) ).toLowerCase();
+
+			if(extension != "xls")
+			{
+				$('#status-error').text("La extension permitida es 'xls'.");
+				$('#status-wait').hide();
+				$('#status-error').show();
+				$('#btn-upload').removeAttr('disabled');
+				return false;
+			}
 		    
 		    $.ajax({
 		        url: formURL,
@@ -88,8 +110,10 @@
 		    	$('#tabPorMarca').html(data);
 		    	$('#btn-upload').removeAttr('disabled');
 		    	
-		    	<?php if($isUpdate): ?> 		    				    		
-		    		$('#myModalUploadExcel').trigger('click');
+		    	<?php if($isUpdate): ?> 		    		
+		    	 	setTimeout(function () {
+		    	 		$('#myModalUploadExcel').trigger('click');
+		    	    }, 3000);		    				    		
 		    	<?php else: ?> 
 		    		$("#ProductImportLog_Id_brand option[value='"+selectedBrand+"']").remove();
 		    		$('#btn-upload').removeAttr('disabled');
