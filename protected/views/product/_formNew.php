@@ -222,7 +222,7 @@
             <td width="80%"><textarea class="form-control" rows="2" id="campoOTermianles"></textarea></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoOSenales">Output Se�ales</label></td>
+            <td style="text-align:right;"><label for="campoOSenales">Output Se&ntilde;ales</label></td>
             <td><textarea class="form-control" rows="2" id="campoOSenales"></textarea></td>
           </tr>
           <tr>
