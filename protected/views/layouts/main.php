@@ -7,7 +7,7 @@
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link rel="stylesheet" href="css/font-awesome.min.css">
 <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <?php include('estilos.php');?>
 <script src="js/jquery.js"></script>
 </head>
