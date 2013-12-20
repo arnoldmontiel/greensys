@@ -2,7 +2,7 @@
       
       <?php		
 	$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'product-grid_',
+		'id'=>'product-grid_all',
 		'dataProvider'=>$modelProducts->search(),
 		'selectableRows' => 0,
 		'filter'=>$modelProducts,
@@ -41,12 +41,16 @@
 				),
 				'short_description',
 				array(
-					'value'=>'CHtml::button("Editar",array("class"=>"btn btn-default btn-sm"))',
-					'type'=>'raw',
+						'value'=>function($data){
+							return '<button type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>';
+						},
+						'type'=>'raw',
 				),
 				array(
-					'value'=>'CHtml::button("Borrar",array("class"=>"btn btn-default btn-sm"))',
-					'type'=>'raw',
+						'value'=>function($data){
+							return '<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>';
+						},
+						'type'=>'raw',
 				),
 			),
 		));		

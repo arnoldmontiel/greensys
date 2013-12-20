@@ -1003,4 +1003,58 @@ class Product extends ModelAudit
 	
 	}
 	
+	public function searchByPending()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('length',$this->length,true);
+		$criteria->compare('width',$this->width,true);
+		$criteria->compare('height',$this->height,true);
+		$criteria->compare('profit_rate',$this->profit_rate,true);
+		$criteria->compare('msrp',$this->msrp,true);
+		$criteria->compare('dealer_cost',$this->dealer_cost,true);
+		$criteria->compare('weight',$this->weight,true);
+		$criteria->compare('model',$this->model,true);
+		$criteria->compare('part_number',$this->part_number,true);
+		$criteria->compare('short_description',$this->short_description,true);
+	
+		$criteria->with[]='brand';
+		$criteria->addSearchCondition("brand.description",$this->brand_description);
+	
+		$criteria->addCondition("(t.width = 0 OR
+								t.height = 0 OR
+								t.weight = 0 OR
+								t.length = 0 OR
+								t.msrp = 0 OR
+				 				t.dealer_cost = 0)");
+	
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+				'model',
+				'part_number',
+				'short_description',
+				'brand_description' => array(
+						'asc' => 'brand.description',
+						'desc' => 'brand.description DESC',
+				),
+				'length',
+				'width',
+				'height',
+				'profit_rate',
+				'msrp',
+				'dealer_cost',
+				'weight',
+				'*',
+		);
+	
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+				'sort'=>$sort,
+		));
+	
+	}
 }

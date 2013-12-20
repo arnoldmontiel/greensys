@@ -902,15 +902,11 @@ class ProductController extends GController
 	}
 	
 	public function actionAjaxOpenTabByPending()
-	{
-		$criteria = new CDbCriteria();
-		$criteria->addCondition("(t.width = 0 OR
-								t.height = 0 OR
-								t.weight = 0 OR
-								t.length = 0 OR
-								t.msrp = 0 OR
-				 				t.dealer_cost = 0)");
-		$modelProducts = Product::model()->findAll($criteria);
+	{	
+		$modelProducts = new Product('search');
+		$modelProducts->unsetAttributes();  // clear any default values
+		if(isset($_GET['Product']))
+			$modelProducts->attributes=$_GET['Product'];
 		
 		echo $this->renderPartial('_tabByPending',array('modelProducts'=>$modelProducts));
 	}	
