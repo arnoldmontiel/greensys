@@ -39,8 +39,15 @@
 						'name'=>'msrp',
 						'value'=>'$data->showPrice($data->msrp)',
 				),
-
 				'short_description',
+				array(
+					'value'=>'CHtml::button("Editar",array("class"=>"btn btn-default btn-sm"))',
+					'type'=>'raw',
+				),
+				array(
+					'value'=>'CHtml::button("Borrar",array("class"=>"btn btn-default btn-sm"))',
+					'type'=>'raw',
+				),
 			),
 		));		
-		?>	
+		?>
