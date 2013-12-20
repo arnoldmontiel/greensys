@@ -10,61 +10,63 @@
 <form role="form">
   <div class="form-group">
   	<?php
-  		$input = "";
-  		$unit = "";
+  		$placeholder = "";
 		switch ($field) {
 		    case "width":
-		        $input = CHtml::activeTextField($modelProduct, $field, array("class"=>"form-control"));
-		        $unit = $modelProduct->measurementUnitLinear->short_description;
+		        $placeholder = $modelProduct->measurementUnitLinear->short_description;
 		        break;
 			case "height":
-		    	$input = CHtml::activeTextField($modelProduct, $field, array("class"=>"form-control"));
-		    	$unit = $modelProduct->measurementUnitLinear->short_description;
+		    	$placeholder = $modelProduct->measurementUnitLinear->short_description;
 		        break;
 			case "length":
-				$input = CHtml::activeTextField($modelProduct, $field, array("class"=>"form-control"));
-				$unit = $modelProduct->measurementUnitLinear->short_description;
+				$placeholder = $modelProduct->measurementUnitLinear->short_description;
 		        break;
 			case "weight":
-				$input = CHtml::activeTextField($modelProduct, $field, array("class"=>"form-control"));
-				$unit = $modelProduct->measurementUnitLinear->short_description;
+				$placeholder = $modelProduct->measurementUnitLinear->short_description;
 		        break;
 	        case "msrp":
-	        	$input = CHtml::activeTextField($modelProduct, $field, array("class"=>"form-control"));
 	        	$settings = Setting::getInstance();
 	        	$currency = '$';
 	        	if(isset($settings))
 	        		$currency = $settings->currency->short_description;
-	        	$unit = $currency;
+	        	$placeholder = $currency;
 	        	break;
 			case "dealer_cost":
-		    	$input = CHtml::activeTextField($modelProduct, $field, array("class"=>"form-control"));
         		$settings = Setting::getInstance();
 	        	$currency = '$';
 	        	if(isset($settings))
 	        		$currency = $settings->currency->short_description;
-	        	$unit = $currency;
+	        	$placeholder = $currency;
         		break;
 		} 
     ?>
-    <label for="campoDealerCost"><?php echo $modelProduct->getAttributeLabel($field) ." (".$unit.")";?></label>
-    	<?php echo $input; ?>
+    <label for="campoDealerCost"><?php echo $modelProduct->getAttributeLabel($field) ." (".$placeholder.")";?></label>    	
+    	<input type="text" class="form-control" onkeyup="validateNumber(this);" id="edit-field" field="<?php echo $field; ?>" placeholder="<?php echo $placeholder; ?>">
   </div>
 </form>
 </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
-        <button type="button" id="btn-save-field" onclick="updateField();" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
+        <button type="button" id="btn-save-field" onclick="updateField(<?php echo $modelProduct->Id; ?>);" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
       </div>
     </div><!-- /.modal-content -->
 <script type="text/javascript">
-    function updateField()
+    function updateField(idProduct)
     {
-        
-    }
-    $("#Product_width").keyup(function(){
-		return $.isNumeric($(this).val());
-	});
+    	$.post("<?php echo ProductController::createUrl('AjaxUpdateProductField'); ?>",
+    			{
+    				idProduct:idProduct,
+    				field:$("#edit-field").attr("field"),
+    				value:$("#edit-field").val()
+    			}
+    		).success(
+    			function(data){    				
+    				$.fn.yiiGridView.update("product-grid_pending");
+    				$('#tab-pending').children().text(data);
+    				$('#myModalEditField').trigger('click');
+    			});
+    		return false;
+    }    
 </script>
 </div><!-- /.modal-dialog -->
 

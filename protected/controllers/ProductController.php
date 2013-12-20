@@ -964,6 +964,32 @@ class ProductController extends GController
 		
 	}
 	
+	public function actionAjaxUpdateProductField()
+	{
+		$idProduct = (isset($_POST['idProduct']))?$_POST['idProduct']:null;
+		$field = (isset($_POST['field']))?$_POST['field']:null;
+		$value = (isset($_POST['value']))?$_POST['value']:0;
+		
+		if(isset($idProduct) && isset($field))
+		{
+			$modelProduct = Product::model()->findByPk($idProduct);
+			if(isset($modelProduct))
+			{
+				$modelProduct->$field = round($value,2);
+				$modelProduct->save();;
+			}
+		}
+		
+		$criteria = new CDbCriteria();
+		$criteria->addCondition("(t.width = 0 OR
+								t.height = 0 OR
+								t.weight = 0 OR
+								t.length = 0 OR
+								t.msrp = 0 OR
+				 				t.dealer_cost = 0)");
+		echo Product::model()->count($criteria);
+	}
+	
 	public function actionAjaxOpenEditField()
 	{
 		$idProduct = (isset($_POST['idProduct']))?$_POST['idProduct']:null;
