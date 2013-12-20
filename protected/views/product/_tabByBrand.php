@@ -38,16 +38,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
 						'type'=>'html',
 				),
 				array(
+						'header'=>'Acciones',
 						'value'=>function($data){
-							return "<button type='button' onclick='downloadExcel(".$data->Id.");' class='btn btn-default btn-sm'><i class='fa fa-download'></i> Descargar Excel</button>";
+							return "<button type='button' onclick='downloadExcel(".$data->Id.");' class='btn btn-default btn-sm'><i class='fa fa-download'></i> Descargar Excel</button>
+									<button type='button' onclick='updateExcel(".$data->Id_brand.");' class='btn btn-default btn-sm'><i class='fa fa-upload'></i> Cargar Actualizaci�n</button>";
 						},
 						'type'=>'raw',
-				),
-				array(
-						'value'=>function($data){
-							return "<button type='button' onclick='updateExcel(".$data->Id_brand.");' class='btn btn-default btn-sm'><i class='fa fa-upload'></i> Cargar Actualizaci�n</button>";
-						},
-						'type'=>'raw',
+						'htmlOptions'=>array("style"=>"text-align:right;"),
 				),
 			),
 		));	

@@ -1736,4 +1736,20 @@ class GreenHelper
 		
 		return $excelCols;
 	}
+	
+	static public function cutString($str, $limit=100){
+		$str = trim($str);
+		$str = strip_tags($str);
+		$tamano = strlen($str);
+		$result = '';
+		if($tamano <= $limit){
+			return $str;
+		}else{
+			$str = substr($str, 0, $limit);
+			$words = explode(' ', $str);
+			$result = implode(' ', $words);
+			$result .= '...';
+		}
+		return $result;
+	}
 }

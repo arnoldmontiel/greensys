@@ -15,10 +15,6 @@
 <?php 
 $active='inicio';
 include('menu.php');?>
-<ol class="breadcrumb">
-  <li class="active"><a href="#">Dashboard</a></li>
-</ol>
-
 		
 <?php echo $content; ?>
 <div id="myModalUploadExcel" class="modal fade" style="display: none;" aria-hidden="true">

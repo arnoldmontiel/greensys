@@ -42,7 +42,7 @@
 				),
 				array(
 						'name'=>'short_description',
-						'value'=>'$data->short_description',
+						'value'=>'GreenHelper::cutString($data->short_description,40)',
 						'htmlOptions'=>array("style"=>"width:20%;"),
 				),
 				array(

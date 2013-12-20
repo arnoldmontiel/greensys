@@ -54,10 +54,17 @@
 </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
+        <button type="button" id="btn-save-field" onclick="updateField();" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
       </div>
     </div><!-- /.modal-content -->
 <script type="text/javascript">
+    function updateField()
+    {
+        
+    }
+    $("#Product_width").keyup(function(){
+		return $.isNumeric($(this).val());
+	});
 </script>
 </div><!-- /.modal-dialog -->
 
