@@ -280,7 +280,7 @@ border-radius: 4px;
 line-height: 26px;
 text-align: center;
 color: #5cb85c;
-background-color: #eee;
+background-color: #fff;
 border-color: #ddd;
 }
 ul.yiiPager .page a:hover{
@@ -316,7 +316,7 @@ border-color: #00A395;
 ul.yiiPager a:link, ul.yiiPager a:visited {
 
 color: #5cb85c;
-background-color: #eee;
+background-color: #fff;
 border-color: #ddd;
 }
 
