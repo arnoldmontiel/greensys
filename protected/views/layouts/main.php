@@ -23,7 +23,8 @@ include('menu.php');?>
 <?php echo $content; ?>
 <div id="myModalUploadExcel" class="modal fade" style="display: none;" aria-hidden="true">
 </div>
-
+<div id="myModalEditField" class="modal fade" style="display: none;" aria-hidden="true">
+</div>
 <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
