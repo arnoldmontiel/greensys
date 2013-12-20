@@ -5,6 +5,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		'selectableRows' => 0,
 		'filter'=>$modelProducts,
 		'summaryText'=>'',	
+		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
 		'columns'=>array(	
 				'model',
 				'part_number',				 

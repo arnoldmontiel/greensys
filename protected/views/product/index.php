@@ -83,6 +83,7 @@ function updateExcel(idBrand)
 	      <?php echo $this->renderPartial('_tabByPending',array('modelProducts'=>$modelProducts)); ?>
 	      </div><!-- /.tab2 --> 
 	      <div class="tab-pane" id="tabPorMarca">
+	      <?php echo $this->renderPartial('_tabByBrand',array('modelProductImportLogs'=>$modelProductImportLogs)); ?>
 	      </div><!-- /.tab3 -->      		
       </div><!-- /.tab-content -->
     </div>
