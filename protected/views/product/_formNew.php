@@ -674,7 +674,7 @@ $('#deleteIcon').click(function(){
     
   <div class="row navbar-fixed-bottom">
     <div class="col-sm-12">
-      <div class="buttonsBottom">
+      <div class="buttonsFloatBottom">
         <button type="button" class="btn btn-default btn-lg"> Cancelar</button>
         <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
         <button type="submit" class="btn btn-primary btn-lg" id="saveAndOther"><i class="fa fa-save"></i> Guardar y Cargar Nuevo</button>
