@@ -385,6 +385,8 @@ padding: 6px 8px;
 
 #screenProductos .table.tablaIndividual { margin-bottom:5px;}
 
+.buttonsTableProd{min-width:177px;}
+
 .combined { width:100%;}
 .combined select{display:inline-block; width:60%;}
 .combined button{display:inline-block; width:35%; margin:0px !important;}
