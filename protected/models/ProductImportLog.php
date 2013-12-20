@@ -138,6 +138,7 @@ class ProductImportLog extends CActiveRecord
 		
 		// Create a custom sort
 		$sort=new CSort;
+		$sort->defaultOrder = 't.last_import_date DESC';
 		$sort->attributes=array(
 				'last_import_date',
 				'brand_description' => array(

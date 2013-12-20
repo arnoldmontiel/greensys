@@ -107,7 +107,8 @@
 		    {
 		    	$('#status-wait').hide();
 		    	$('#status-success').show();
-		    	$('#tabPorMarca').html(data);
+		    	$.fn.yiiGridView.update("product-grid_brand");
+		    	$('#tab-pending').children().text(data)<
 		    	$('#btn-upload').removeAttr('disabled');
 				
 		    	<?php if($isUpdate): ?> 		    		
