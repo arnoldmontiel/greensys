@@ -45,6 +45,20 @@ function openExcelLoader()
 		});
 }
 
+function openEditField(idProduct, field)
+{
+	$.post("<?php echo ProductController::createUrl('AjaxOpenEditField'); ?>",
+		{
+			idProduct:idProduct,
+			field:field
+		}
+	).success(
+		function(data){
+			$('#myModalEditField').html(data);
+	   		$('#myModalEditField').modal('show');	  
+		});
+	return false;
+}
 function downloadExcel(idProductImport)
 {
 	var param = "&id="+idProductImport;

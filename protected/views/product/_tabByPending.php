@@ -17,89 +17,100 @@ $this->widget('zii.widgets.grid.CGridView', array(
 						'name'=>'height',
 						'value'=>function($data){
 							$value = $data->height;
+							$field = "'height'";
 							if($value == 0)
-								$value =  '<span class="label label-danger">Incompleto</span>';
+            					$value =  '<a href="#" onclick="openEditField('.$data->Id.', '.$field.');" class="label label-danger">Incompleto <i class="fa fa-pencil"></i></a>';
 							else
 								$value = $data->showVolume($data->height);
 								
 							return $value;
 						},
-						'type'=>'html',
+						'type'=>'raw',
 				),
 				array(
 						'name'=>'width',
 						'value'=>function($data){
 							$value = $data->width;
+							$field = "'width'";
 							if($value == 0)
-            					$value =  '<span class="label label-danger">Incompleto</span>';
+            					$value =  '<a href="#" onclick="openEditField('.$data->Id.', '.$field.');" class="label label-danger">Incompleto <i class="fa fa-pencil"></i></a>';
 							else 
 								$value = $data->showVolume($data->width);
 							
 							return $value;
 						},
-						'type'=>'html',
+						'type'=>'raw',
 				),
 				array(
 						'name'=>'length',
 						'value'=>function($data){
 							$value = $data->length;
+							$field = "'length'";
 							if($value == 0)
-            					$value =  '<span class="label label-danger">Incompleto</span>';
-							else 
+								$value =  '<a href="#" onclick="openEditField('.$data->Id.', '.$field.');" class="label label-danger">Incompleto <i class="fa fa-pencil"></i></a>';
+							else
 								$value = $data->showVolume($data->length);
-							
+								
 							return $value;
 						},
-						'type'=>'html',
+						'type'=>'raw',
 				),
 				array(
 						'name'=>'weight',
 						'value'=>function($data){
 							$value = $data->weight;
+							$field = "'weight'";
 							if($value == 0)
-								$value =  '<span class="label label-danger">Incompleto</span>';
+								$value =  '<a href="#" onclick="openEditField('.$data->Id.', '.$field.');" class="label label-danger">Incompleto <i class="fa fa-pencil"></i></a>';
 							else
-								$value = $data->showWeight($data->weight);
-								
+								$value = $data->showVolume($data->weight);
+				
 							return $value;
 						},
-						'type'=>'html',
+						'type'=>'raw',
 				),
 				'profit_rate',
 				array(
 						'name'=>'dealer_cost',
 						'value'=>function($data){
 							$value = $data->dealer_cost;
+							$field = "'dealer_cost'";
 							if($value == 0)
-								$value =  '<span class="label label-danger">Incompleto</span>';
+            					$value =  '<a href="#" onclick="openEditField('.$data->Id.', '.$field.');" class="label label-danger">Incompleto <i class="fa fa-pencil"></i></a>';
 							else
 								$value = $data->showPrice($data->dealer_cost);
 				
 							return $value;
 						},
-						'type'=>'html',
+						'type'=>'raw',
 				),
 				array(
 						'name'=>'msrp',
 						'value'=>function($data){
 							$value = $data->msrp;
+							$field = "'msrp'";
 							if($value == 0)
-								$value =  '<span class="label label-danger">Incompleto</span>';
+            					$value =  '<a href="#" onclick="openEditField('.$data->Id.', '.$field.');" class="label label-danger">Incompleto <i class="fa fa-pencil"></i></a>';
 							else
 								$value = $data->showPrice($data->msrp);
 				
 							return $value;
 						},
-						'type'=>'html',
-				),
-				'short_description',
-				array(
-					'value'=>'CHtml::button("Editar",array("class"=>"btn btn-default btn-sm"))',
-					'type'=>'raw',
+						'type'=>'raw',
 				),
 				array(
-					'value'=>'CHtml::button("Borrar",array("class"=>"btn btn-default btn-sm"))',
-					'type'=>'raw',
+						'name'=>'short_description',
+						'value'=>'$data->short_description',
+						'htmlOptions'=>array("style"=>"width:20%;"),
+				),
+				array(
+						'header'=>'Acciones',
+						'value'=>function($data){
+							return '<button type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
+									<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>';
+						},
+						'type'=>'raw',
+						'htmlOptions'=>array("style"=>"text-align:right;"),
 				),
 			),
 		));	

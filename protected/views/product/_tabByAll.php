@@ -40,18 +40,19 @@
 						'name'=>'msrp',
 						'value'=>'$data->showPrice($data->msrp)',
 				),
-				'short_description',
 				array(
-						'value'=>function($data){
-							return '<button type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>';
-						},
-						'type'=>'raw',
+						'name'=>'short_description',
+						'value'=>'$data->short_description',
+						'htmlOptions'=>array("style"=>"width:20%;"),
 				),
 				array(
+						'header'=>'Acciones',
 						'value'=>function($data){
-							return '<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>';
+							return '<button type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
+									<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>';
 						},
 						'type'=>'raw',
+						'htmlOptions'=>array("style"=>"text-align:right;"),
 				),
 			),
 		));		
