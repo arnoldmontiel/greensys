@@ -1,64 +1,220 @@
+<?php 
+$settings = new Settings();
+$weightToShipping = MeasurementUnit::model()->findByAttributes(array('short_description'=>'kg'));
+Yii::app()->clientScript->registerScript(__CLASS__.'#Product', "
+
+fillVolumeTextBox('".ProductController::createUrl("AjaxFillVolume")."','txtVolume','product-form');
+$('#display-weight').hide();
+
+$('#saveAndOther').click(function()
+{
+	$('#other').val('1');
+});		
+$('#weight').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+	if($('#Id_measurement_unit_weight').val()!='"
+		.$weightToShipping->Id.
+		"')
+	{
+		fillWieghtTextBox('".ProductController::createUrl("AjaxFillWeight")."','Product_weight','product-form');
+	}else{
+		$('#Product_weight').val($('#weight').val());
+	}
+}).keyup(function(){
+	validateNumber($(this));
+});
+
+$('#Id_measurement_unit_weight').change(function(){
+	if($('#Id_measurement_unit_weight').val()!='"
+				.$weightToShipping->Id.
+				"')
+	{
+ 		$('#display-weight').show();
+		fillWieghtTextBox('".ProductController::createUrl("AjaxFillWeight")."','Product_weight','product-form');
+	}else{
+		$('#Product_weight').val($('#weight').val());
+ 		$('#display-weight').hide();
+	}
+});
+
+$('#Product_msrp').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+	if($('#Product_dealer_cost').val()!=0)
+	{
+		$('#Product_profit_rate').val(($('#Product_msrp').val()/$('#Product_dealer_cost').val()).toFixed(2));
+	}
+}).keyup(function(){
+	validateNumber($(this));
+});
+
+$('#Product_dealer_cost').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+	if($('#Product_dealer_cost').val()!=0)
+	{
+		$('#Product_profit_rate').val(($('#Product_msrp').val()/$('#Product_dealer_cost').val()).toFixed(2));
+	}
+}).keyup(function(){
+	validateNumber($(this));
+});
+
+$('#Product_profit_rate').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+}).keyup(function(){
+	validateNumber($(this));
+});
+
+$('#Product_length').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+	fillVolumeTextBox('".ProductController::createUrl("AjaxFillVolume")."','txtVolume','product-form');
+}).keyup(function(){
+	validateNumber($(this));
+});
+
+$('#Product_width').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+	fillVolumeTextBox('".ProductController::createUrl("AjaxFillVolume")."','txtVolume','product-form');
+}).keyup(function(){
+	validateNumber($(this));
+});
+
+$('#Product_height').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+	fillVolumeTextBox('".ProductController::createUrl("AjaxFillVolume")."','txtVolume','product-form');
+}).keyup(function(){
+	validateNumber($(this));
+});
+$('#Product_Id_measurement_unit_linear').change(function(){
+	fillVolumeTextBox('".ProductController::createUrl("AjaxFillVolume")."','txtVolume','product-form');
+})
+
+$('#Product_weight').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+}).keyup(function(){
+	validateNumber($(this));
+});
+
+$('#Product_code').change(function(){
+	$.post(
+			'".ProductController::createUrl('AjaxCheckCode')."',
+			{
+			 	code: $(this).val(),
+			 	id: '" . $model->Id."'
+			 }).success(
+					function(data)
+					{
+						if(data != '')
+						{
+							$('#errorMsg').text(data);
+							$('#errorMsg').animate({opacity: 'show'},2000);
+							$('#errorMsg').animate({opacity: 'hide'},2000);
+						}
+					}
+			);
+});
+
+$('#Product_need_rack').change(function(){
+	if($(this).is(':checked'))
+		{
+		$('#Product_unit_rack').removeAttr('disabled');
+		$('#Product_unit_fan').removeAttr('disabled');
+		}
+	else
+	{
+		$('#Product_unit_rack').val('');
+		$('#Product_unit_rack').attr('disabled','disabled');
+		$('#Product_unit_fan').val('');
+		$('#Product_unit_fan').attr('disabled','disabled');
+	}
+});
+
+$('#deleteIcon').click(function(){
+	$.post(
+			'".ProductController::createUrl('AjaxDeleteIcon')."',
+			{
+			 	id: '" . $model->Id."'
+			 }).success(
+					function(data)
+					{
+						$('#iconArea').animate({opacity: 'hide'},2000);
+					}
+			);
+	return false;
+});
+");
+?>
 <div class="container" id="screenAgregarProductos">
   <h1 class="pageTitle">Agregar Producto</h1>
+		<?php $form=$this->beginWidget('CActiveForm', array(
+		'id'=>'product-form',
+		'enableAjaxValidation'=>true,
+		'htmlOptions'=>array('enctype'=>'multipart/form-data','enableClientValidation'=>true),
+		)); 
+		?>
   <div class="row">
     <div class="col-sm-4">
       <div class="rowSeparator noTopMargin">Informaci&oacute;n B&aacute;sica</div>
+      
       <table class="table table-striped table-bordered tablaIndividual form-inline" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><label for="campoModel">Model</label></td>
-            <td width="80%"><input type="model" id="campoModel" class="form-control"></td>
+            <td width="20%" style="text-align:right;">
+            <?php echo $form->labelEx($model,'model'); ?>
+            </td>
+            <td width="80%">
+            	<?php echo $form->textField($model,'model',array('class'=>"form-control")); ?>
+            </td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoPartNumber">Part Number</label></td>
-            <td><input type="model" id="campoPartNumber" class="form-control"></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'part_number'); ?></td>
+            <td><?php echo $form->textField($model,'part_number',array('class'=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoMarca">Marca</label></td>
-            <td class="combined"><select class="form-control" id="campoMarca">
-                <option>Vantage</option>
-                <option>RTI</option>
-              </select>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_brand'); ?></td>
+            <td class="combined"><?php echo $form->dropDownList($model, 'Id_brand', CHtml::listData(
+	    			Brand::model()->findAll(), 'Id', 'description'),array('class'=>"form-control")); 
+			?>
               <button type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Marca</button></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoProveedor">Proveedor</label></td>
-            <td class="combined"><select class="form-control" id="campoProveedor">
-                <option>Vantage</option>
-                <option>RTI</option>
-              </select>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_supplier'); ?></td>
+            <td class="combined"><?php echo $form->dropDownList($model, 'Id_supplier', CHtml::listData(
+	    			Supplier::model()->findAll(), 'Id', 'business_name'),array('class'=>"form-control")); 
+			?>
               <button type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Proveedor</button></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoCategoria">Categor&iacute;a</label></td>
-            <td class="combined"><select class="form-control" id="campoCategoria">
-                <option>Home Theater</option>
-                <option>Tele</option>
-              </select>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_category'); ?></td>
+            <td class="combined"><?php echo $form->dropDownList($model, 'Id_category', CHtml::listData(
+	    			Category::model()->findAll(), 'Id', 'description'),
+					array(
+						'class'=>"form-control",
+						'ajax' => array(
+						'type'=>'POST', 
+						'url'=>CController::createUrl('AjaxFillSubCategory'), 
+						'update'=>'#Product_Id_sub_category',
+						))); 
+			?>
               <button type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Categor&iacute;a</button></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoSubcategoria">Subcategor&iacute;a</label></td>
-            <td class="combined"><select class="form-control" id="campoSubcategoria">
-                <option>Audio</option>
-                <option>Video</option>
-              </select>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_sub_category'); ?></td>
+            <td class="combined"><?php $subCategory = CHtml::listData($ddlSubCategory, 'Id', 'description');?>
+			<?php echo $form->dropDownList($model, 'Id_sub_category', $subCategory,array(
+						'class'=>"form-control")); ?>
               <button type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Subcat.</button></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoNomenclatura">Nomenclatura</label></td>
-            <td class="combined"><select class="form-control" id="campoNomenclatura">
-                <option>Sin Asignar</option>
-                <option>DTools</option>
-              </select>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_nomenclator'); ?></td>
+            <td class="combined"><?php echo $form->dropDownList($model, 'Id_nomenclator', CHtml::listData(
+	    			Nomenclator::model()->findAll(), 'Id', 'description'),array('class'=>"form-control")); 
+			?>
               <button type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Nomenc.</button></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoTipo">Tipo</label></td>
-            <td class="combined"><select class="form-control" id="campoTipo">
-                <option>Controller</option>
-                <option>Dimmer</option>
-              </select>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_product_type'); ?></td>
+            <td class="combined"><?php echo $form->dropDownList($model, 'Id_product_type', CHtml::listData(
+	    			ProductType::model()->findAll(), 'Id', 'description'),array('class'=>"form-control")); 
+			?>
               <button type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Tipo</button></td>
           </tr>
         </tbody>
@@ -70,43 +226,46 @@
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><label for="campoLargo">Largo</label></td>
-            <td width="80%"><input type="model" id="campoLargo" class="form-control" placeholder="0.0"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'length'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'length',array('class'=>'form-control')); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoAncho">Ancho</label></td>
-            <td><input type="model" id="campoAncho" class="form-control" placeholder="0.0"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'width'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'width',array('class'=>'form-control')); ?></td>
+           </tr>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'height'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'height',array('class'=>'form-control','type'=>'number')); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoAlto">Alto</label></td>
-            <td><input type="model" id="campoAlto" class="form-control" placeholder="0.0"></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_measurement_unit_linear'); ?></td>
+            <td><?php				
+				$measureType = MeasurementType::model()->findByAttributes(array('description'=>'linear'));
+				echo $form->dropDownList($model, 'Id_measurement_unit_linear', CHtml::listData(
+	    			MeasurementUnit::model()->findAllByAttributes(array('Id_measurement_type'=>$measureType->Id)), 'Id', 'short_description'),array('class'=>'form-control'));?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoMeasureLinear">Measure Linear</label></td>
-            <td><select class="form-control" id="campoMeasureLinear">
-                <option>ml</option>
-                <option>in</option>
-                <option>ft</option>
-                <option>mm</option>
-                <option>cm</option>
-              </select></td>
+            <td style="text-align:right;"><?php echo CHtml::label("Volume", "Product_volume"); ?></td>
+            <td><?php echo CHtml::textField("txtVolume","",array('class'=>'form-control')); ?><?php echo $settings->getMUShortDescription(Settings::MT_VOLUME) ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoVolumen">Volumen</label></td>
-            <td><input type="model" id="campoVolumen" class="form-control" placeholder="000m3"></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_measurement_unit_weight'); ?></td>
+            <td><?php				
+				$measureType = MeasurementType::model()->findByAttributes(array('description'=>'weight'));
+				$measuremetUnit = MeasurementUnit::model()->findAllByAttributes(array('Id_measurement_type'=>$measureType->Id));
+				echo $form->dropDownList($model, 'Id_measurement_unit_weight',CHtml::listData(
+	    			$measuremetUnit, 'Id', 'short_description'),array('class'=>'form-control')); 
+			?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoMedidaPeso">Medida Peso</label></td>
-            <td><select class="form-control" id="campoMedidaPeso">
-                <option>kg</option>
-                <option>lb</option>
-              </select></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'weight'); ?></td>
+            <td><?php echo CHtml::textField("weight",$model->weight,array('class'=>'form-control')); ?></td>
           </tr>
-          <tr>
-            <td style="text-align:right;"><label for="campoPeso">Peso</label></td>
-            <td><input type="model" id="campoPeso" class="form-control" placeholder="000m3"></td>
+          <tr id="display-weight">
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'weight'); ?></td>
+            <td><?php echo $form->textField($model,'weight',array('class'=>'form-control')); ?></td>
           </tr>
-        </tbody>
+          </tbody>
       </table>
     </div>
     <!-- /.col-sm-4 --> 
@@ -115,76 +274,76 @@
       <table class="table table-striped table-bordered tablaIndividual form-inline" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><label for="campoOcultar">Ocultar</label></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'hide'); ?></td>
             <td width="80%"><div class="checkbox">
                 <label>
-                  <input type="checkbox" id="campoOcultar">
+                  <?php echo $form->checkBox($model,'hide'); ?>
                   S&iacute; </label>
               </div></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoDiscontinuado">Discontinuado</label></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'discontinued'); ?></td>
             <td><div class="checkbox">
                 <label>
-                  <input type="checkbox" id="campoDiscontinuado">
+                  <?php echo $form->checkBox($model,'discontinued'); ?>
                   S&iacute; </label>
               </div></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoVolts">Volts</label></td>
-            <td><select class="form-control" id="campoVolts">
-                <option>110</option>
-                <option>220</option>
-                <option>0</option>
-              </select></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_volts'); ?></td>
+            <td><?php echo $form->dropDownList($model,'Id_volts', CHtml::listData(
+			Volts::model()->findAll(), 'Id', 'volts'),array('prompt'=>'Seleccione Voltaje','class'=>'form-control'));?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoRack">Necesita Rack</label></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'need_rack'); ?></td>
             <td><div class="checkbox">
                 <label>
-                  <input type="checkbox" id="campoRack">
+                  <?php echo $form->checkBox($model,'need_rack'); ?>
                   S&iacute; </label>
               </div></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoCantRack">Cantidad Rack</label></td>
-            <td><select class="form-control" id="campoCantRack">
-                <option>0</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-              </select></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'unit_rack'); ?></td>
+            <td><?php $racks = CHtml::listData($ddlRacks, 'Id', 'description');?>
+			<?php
+			if($model->need_rack) 
+				echo $form->dropDownList($model, 'unit_rack', $racks);
+			else 
+				echo $form->dropDownList($model, 'unit_rack', $racks, array('disabled'=>'disabled','class'=>'form-control'));
+			?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoCantVent">Cantidad Ventiladores</label></td>
-            <td><select class="form-control" id="campoCantVent">
-                <option>0</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-              </select></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'unit_fan'); ?></td>
+            <td><?php $racks = CHtml::listData($ddlRacks, 'Id', 'description');?>
+		<?php
+			if($model->need_rack) 
+				echo $form->dropDownList($model, 'unit_fan', $racks);
+			else 
+				echo $form->dropDownList($model, 'unit_fan', $racks, array('disabled'=>'disabled','class'=>'form-control'));
+		?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoColor">Color</label></td>
-            <td><input type="model" id="campoColor" class="form-control" placeholder=""></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'color'); ?></td>
+            <td><?php echo $form->textField($model,'color', array('class'=>'form-control')); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoIcono">&Iacute;cono</label></td>
-            <td><input type="file" id="campoIcono"></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'Ícon'); ?></td>
+            <td><INPUT TYPE=FILE NAME="upfile"></td>
+				<?php 
+				if($model->Id_multimedia)
+				{
+					$this->widget('ext.highslide.highslide', array(
+													'smallImage'=>"images/".$model->multimedia->file_name_small,
+													'image'=>"images/".$model->multimedia->file_name,
+													'caption'=>'',
+													'Id'=>$model->Id_multimedia,
+													'small_width'=>240,
+													'small_height'=>180,
+					
+					));
+					echo CHtml::button('Delete Icon',array('id'=>'deleteIcon'));
+				}
+				?>
           </tr>
         </tbody>
       </table>
@@ -198,16 +357,16 @@
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><label for="campoITermianles">Input Terminales</label></td>
-            <td width="80%"><textarea class="form-control" rows="2" id="campoITermianles"></textarea></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'input_terminals'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'input_terminals', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoISenales">Input Se�ales</label></td>
-            <td><textarea class="form-control" rows="2" id="campoISenales"></textarea></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'input_signals'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'input_signals', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoILabels">Input Labels</label></td>
-            <td><textarea class="form-control" rows="2" id="campoILabels"></textarea></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'input_labels'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'input_labels', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
           </tr>
         </tbody>
       </table>
@@ -218,16 +377,16 @@
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><label for="campoOTermianles">Output Terminales</label></td>
-            <td width="80%"><textarea class="form-control" rows="2" id="campoOTermianles"></textarea></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'output_terminals'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'output_terminals', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoOSenales">Output Se&ntilde;ales</label></td>
-            <td><textarea class="form-control" rows="2" id="campoOSenales"></textarea></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'output_signals'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'output_signals', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoOLabels">Output Labels</label></td>
-            <td><textarea class="form-control" rows="2" id="campoOLabels"></textarea></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'output_labels'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'output_signals', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
           </tr>
         </tbody>
       </table>
@@ -238,12 +397,12 @@
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><label for="campoInstalacion">Tiempo Instalaci&oacute;n</label></td>
-            <td width="80%"><input type="model" id="campoInstalacion" class="form-control" placeholder="0.0"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'time_instalation'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'time_instalation', array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoProgramacion">Tiempo Programaci&oacute;n</label></td>
-            <td><input type="model" id="campoProgramacion" class="form-control" placeholder="0.0"></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'time_programation'); ?></td>
+            <td><?php echo $form->textField($model,'time_programation', array("class"=>"form-control")); ?></td>
           </tr>
         </tbody>
       </table>  
@@ -257,18 +416,18 @@
       <table class="table table-striped table-bordered tablaIndividual form-inline" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><label for="campoMSRP">MSRP</label></td>
-            <td width="80%"><input type="model" id="campoMSRP" class="form-control" placeholder="0.00 USD"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'msrp'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'msrp', array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoDealerCost">Dealer Cost</label></td>
-            <td><input type="model" id="campoDealerCost" class="form-control" placeholder="0.00 USD"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'dealer_cost'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'dealer_cost', array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoProfit">Profit Rate</label></td>
-            <td><input type="model" id="campoProfit" class="form-control" placeholder="0.00 %"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'profit_rate'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'profit_rate', array("class"=>"form-control")); ?></td>
           </tr>
-        </tbody>
+         </tbody>
       </table>
     </div>
     <!-- /.col-sm-4 -->
@@ -277,16 +436,16 @@
       <table class="table table-striped table-bordered tablaIndividual form-inline" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><label for="campoCostoA">Costo Unidad A</label></td>
-            <td width="80%"><input type="model" id="campoCostoA" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'unit_cost_A'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'unit_cost_A', array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoCostoB">Costo Unidad B</label></td>
-            <td><input type="model" id="campoCostoB" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'unit_cost_B'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'unit_cost_B', array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoCostoC">Costo Unidad C</label></td>
-            <td><input type="model" id="campoCostoC" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'unit_cost_C'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'unit_cost_C', array("class"=>"form-control")); ?></td>
           </tr>
         </tbody>
       </table>
@@ -297,16 +456,16 @@
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><label for="campoPrecioA">Precio Unidad A</label></td>
-            <td width="80%"><input type="model" id="campoPrecioA" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'unit_price_A'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'unit_price_A', array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoPrecioB">Precio Unidad B</label></td>
-            <td><input type="model" id="campoPrecioB" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'unit_price_B'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'unit_price_B', array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoPrecioC">Precio Unidad C</label></td>
-            <td><input type="model" id="campoPrecioC" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'unit_price_C'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'unit_price_C', array("class"=>"form-control")); ?></td>
           </tr>
         </tbody>
       </table>  
@@ -320,16 +479,12 @@
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><label for="campoDespachante">Despachante por defecto</label></td>
-            <td width="80%"><input type="model" id="campoDespachante" class="form-control"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'default_broker'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'default_broker', array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoEnvio">Env&iacute;o por defecto</label></td>
-            <td><input type="model" id="campoEnvio" class="form-control"></td>
-          </tr>
-          <tr>
-            <td style="text-align:right;"><label for="campoEnvio2">Env&iacute;o por defecto</label></td>
-            <td><input type="model" id="campoEnvio2" class="form-control"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'default_send_format'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'default_send_format', array("class"=>"form-control")); ?></td>
           </tr>
         </tbody>
       </table>
@@ -340,24 +495,24 @@
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><label for="campoDescCorta">Largo</label></td>
-            <td width="80%"><input type="model" id="campoDespachante" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'shipping_box_lenght'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'shipping_box_lenght',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoDescLarga">Ancho</label></td>
-            <td><input type="model" id="campoEnvio" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'shipping_box_width'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'shipping_box_width',array("class"=>"form-control")); ?></td>
+		  </tr>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'shipping_box_height'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'shipping_box_height',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoDescClientes">Alto</label></td>
-            <td><input type="model" id="campoEnvio" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'shipping_box_volume'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'shipping_box_volume',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoDescClientes">Volumen</label></td>
-            <td><input type="model" id="campoEnvio" class="form-control" placeholder="0.00"></td>
-          </tr>
-          <tr>
-            <td style="text-align:right;"><label for="campoDescClientes">Peso</label></td>
-            <td><input type="model" id="campoEnvio" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'shipping_box_weight'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'shipping_box_weight',array("class"=>"form-control")); ?></td>
           </tr>
         </tbody>
       </table>
@@ -368,32 +523,32 @@
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><label for="campoLata">Lata</label></td>
-            <td width="80%"><input type="model" id="campoLata" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'dimensional_weight_IATA'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'dimensional_weight_IATA',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoFedex">Fedex</label></td>
-            <td><input type="model" id="campoFedex" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'dimensional_weight_FEDEX'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'dimensional_weight_FEDEX',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoDHL">DHL</label></td>
-            <td><input type="model" id="campoDHL" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'dimensional_weight_DHL'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'dimensional_weight_DHL',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoUps">Ups</label></td>
-            <td><input type="model" id="campoUps" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'dimensional_weight_UPS'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'dimensional_weight_UPS',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoCustom1">Custom 1</label></td>
-            <td><input type="model" id="campoCustom1" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'dimensional_weight_custom1'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'dimensional_weight_custom1',array("class"=>"form-control")); ?></td>
+			</tr>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'dimensional_weight_custom2'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'dimensional_weight_custom2',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoCustom2">Custom 2</label></td>
-            <td><input type="model" id="campoCustom2" class="form-control" placeholder="0.00"></td>
-          </tr>
-          <tr>
-            <td style="text-align:right;"><label for="campoCustom3">Custom 3</label></td>
-            <td><input type="model" id="campoCustom3" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'dimensional_weight_custom3'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'dimensional_weight_custom3',array("class"=>"form-control")); ?></td>
           </tr>
         </tbody>
       </table>
@@ -408,24 +563,24 @@
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><label for="campoNecesitaUps">Necesita Ups</label></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'need_ups'); ?></td>
             <td><div class="checkbox">
                 <label>
-                  <input type="checkbox" id="campoNecesitaUps">
+                  <?php echo $form->checkBox($model,'need_ups'); ?>
                   S&iacute; </label>
               </div></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoDeale">Deale Distributor Price</label></td>
-            <td><input type="model" id="campoDeale" class="form-control" placeholder="0.00"></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'deale_distributor_price'); ?></td>
+            <td><?php echo $form->textField($model,'deale_distributor_price',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoNomComercial">Nombre Comercial</label></td>
-            <td><input type="model" id="campoNomComercial" class="form-control"></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'commercial_name'); ?></td>
+            <td><?php echo $form->textField($model,'commercial_name',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoDescComercial">Descripcion Comercial</label></td>
-            <td><input type="model" id="campoDescComercial" class="form-control"></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'commercial_description'); ?></td>
+            <td><?php echo $form->textField($model,'commercial_description',array("class"=>"form-control")); ?></td>
           </tr>
         </tbody>
       </table>
@@ -436,24 +591,24 @@
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><label for="campoDescuento">Descuento</label></td>
-            <td width="80%"><input type="model" id="campoDescuento" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'off'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'off',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoDescuentoA">Descuento Cat A</label></td>
-            <td><input type="model" id="campoDescuentoA" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'off_category_a'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'off_category_a',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoDescuentoB">Descuento Cat B</label></td>
-            <td><input type="model" id="campoDescuentoB" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'off_category_b'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'off_category_b',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoDescuentoC">Descuento Cat C</label></td>
-            <td><input type="model" id="campoDescuentoC" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'off_category_c'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'off_category_c',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoDescuentoD">Descuento Cat D</label></td>
-            <td><input type="model" id="campoEcampoDescuentoDnvio" class="form-control" placeholder="0.00"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'off_category_d'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'off_category_d',array("class"=>"form-control")); ?></td>
           </tr>
         </tbody>
       </table>
@@ -464,20 +619,20 @@
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><label for="campoAccesorioA">Accesorio A</label></td>
-            <td width="80%"><input type="model" id="campoAccesorioA" class="form-control"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'accessory_a'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'accessory_a',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoAccesorioB">Accesorio B</label></td>
-            <td><input type="model" id="campoAccesorioB" class="form-control"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'accessory_b'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'accessory_b',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoAccesorioC">Accesorio C</label></td>
-            <td><input type="model" id="campoAccesorioC" class="form-control"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'accessory_c'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'accessory_c',array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoAccesorioD">Accesorio D</label></td>
-            <td><input type="model" id="campoAccesorioD" class="form-control"></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'accessory_d'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'accessory_d',array("class"=>"form-control")); ?></td>
           </tr>
         </tbody>
       </table>
@@ -493,20 +648,20 @@
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><label for="campoDescCorta">Corta</label></td>
-            <td width="80%"><textarea class="form-control" rows="2" id="campoDescCorta"></textarea></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'short_description'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'short_description', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoDescLarga">Larga</label></td>
-            <td><textarea class="form-control" rows="4" id="campoDescLarga"></textarea></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'long_description'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'long_description', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoDescClientes">Clientes</label></td>
-            <td><textarea class="form-control" rows="2" id="campoDescClientes"></textarea></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'description_customer'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'description_customer', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><label for="campoProveedores">Proveedores</label></td>
-            <td><textarea class="form-control" rows="2" id="campoProveedores"></textarea></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'description_supplier'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'description_supplier', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
           </tr>
         </tbody>
       </table>
@@ -515,17 +670,20 @@
     </div>
     <!-- /.row -->
     
+	<?php echo CHtml::hiddenField("other",'',array('id'=>'other'));?>
     
   <div class="row navbar-fixed-bottom">
     <div class="col-sm-12">
       <div class="buttonsBottom">
         <button type="button" class="btn btn-default btn-lg"> Cancelar</button>
-        <button type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
-        <button type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar y Cargar Nuevo</button>
+        <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
+        <button type="submit" class="btn btn-primary btn-lg" id="saveAndOther"><i class="fa fa-save"></i> Guardar y Cargar Nuevo</button>
       </div>
     </div>
     <!-- /.col-sm-12 --> 
   </div>
   <!-- /.row --> 
+        <?php $this->endWidget(); ?>
+  
 </div>
 <!-- /container --> 

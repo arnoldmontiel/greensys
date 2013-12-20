@@ -90,7 +90,14 @@ class ProductController extends GController
 					//$this->createCode($model);
 					$transaction->commit();		
 					//$this->redirect(array('updateMultimedia','id'=>$model->Id));
-					$this->redirect(array('view','id'=>$model->Id));
+					if(isset($_POST['other'])&&$_POST['other']!='1')
+						$this->redirect(array('index','id'=>$model->Id));
+					else {
+						$model=new Product;
+						
+						$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
+						$modelNote = new GNote;						
+					}
 				}	
 			} catch (Exception $e) {
 				$transaction->rollback();
@@ -614,7 +621,7 @@ class ProductController extends GController
 			$width = $_POST['Product']['width'];
 			$height = $_POST['Product']['height'];
 			$length = $_POST['Product']['length'];
-			if($width==0.0||$height==0.0||$length==0.0)	return 0;
+			if($width==0.0||$height==0.0||$length==0.0){echo 0;	return 0;}
 			$measureLinear = MeasurementUnit::model()->findByPk($_POST['Product']['Id_measurement_unit_linear']);
 			if($measureLinear->short_description=='ml' )
 			{
@@ -655,14 +662,16 @@ class ProductController extends GController
 		{
 			$id_measurement_unit_weight = $_POST['Product']['width'];
 			$weight = $_POST['weight'];
-			
-			$weghtTo = MeasurementUnit::model()->findByAttributes(array('short_description'=>'kg'));		
-			$weghtFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'lb'));
+			$settings = new Settings();
+				
+			$weightTo = $settings->getMeasurementUnit(Settings::MT_WEIGHT);
+				
+			$weightFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'lb'));
 			
 			$converter = MeasurementUnitConverter::model()->findByAttributes(
 			array(
-							'Id_measurement_from'=>$weghtFrom->Id,
-							'Id_measurement_to'=>$weghtTo->Id,
+							'Id_measurement_from'=>$weightFrom->Id,
+							'Id_measurement_to'=>$weightTo->Id,
 			)
 			);
 			echo round($converter->factor * (double)$weight , 2);
