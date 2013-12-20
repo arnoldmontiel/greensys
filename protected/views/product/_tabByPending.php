@@ -63,7 +63,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 							if($value == 0)
 								$value =  '<a href="#" onclick="openEditField('.$data->Id.', '.$field.');" class="label label-danger">Incompleto <i class="fa fa-pencil"></i></a>';
 							else
-								$value = $data->showVolume($data->weight);
+								$value = $data->showWeight($data->weight);
 				
 							return $value;
 						},

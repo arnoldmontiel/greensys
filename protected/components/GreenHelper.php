@@ -1383,18 +1383,6 @@ class GreenHelper
 	
 		$file=CUploadedFile::getInstance($modelUpload,'file');
 		$sheet_array = Yii::app()->yexcel->readActiveSheet($file->tempName);
-	
-		$ext = end(explode(".", $file->name));
-		$ext = strtolower($ext);
-	
-		$uniqueId = uniqid();
-	
-		$folder = "docs/";
-		$fileName = $uniqueId.'.'.$ext;
-		$filePath = $folder . $fileName;
-	
-		//save doc
-		move_uploaded_file($file->tempName,$filePath);
 		
 		$excelCols = self::getExcelCols($sheet_array[2]);		
 		$row_index = 1;

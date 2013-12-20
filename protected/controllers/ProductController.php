@@ -942,12 +942,15 @@ class ProductController extends GController
 			if($modelExcel->validate())
 			{
 				$modelProductImportLogDB = ProductImportLog::model()->findByAttributes(array('Id_brand'=>$modelProductImportLog->Id_brand));
-				if(!isset($modelProductImportLogDB))
-					$modelProductImportLogDB = $modelProductImportLog;
+				if(isset($modelProductImportLogDB))
+				{
+					$modelProductImportLogDB->Id_measurement_unit_linear = $modelProductImportLog->Id_measurement_unit_linear;
+					$modelProductImportLogDB->Id_measurement_unit_weight = $modelProductImportLog->Id_measurement_unit_weight;
+					GreenHelper::importProductFromExcel($modelExcel, $modelProductImportLogDB);
+				}
 				else
-					$modelProductImportLogDB->attributes = $modelProductImportLog;
-				
-				GreenHelper::importProductFromExcel($modelExcel, $modelProductImportLogDB);
+					GreenHelper::importProductFromExcel($modelExcel, $modelProductImportLog);
+								
 			}
 		}
 		
@@ -1090,9 +1093,7 @@ class ProductController extends GController
 	public function actionImportMeasuresFromExcel()
 	{
 		$model=new UploadExcel();
-		$modelMeasureImportLog = new MeasureImportLog();
 		$modelProductImportLog = new ProductImportLog();
-		
 		
 		$measureType = MeasurementType::model()->findByAttributes(array('description'=>'linear'));
 
