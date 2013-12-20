@@ -252,10 +252,10 @@ margin-bottom:10px;}
 .dropdown-menu{ text-align:left;}
 
 
-#product-grid_all {padding: 0px; margin-bottom:50px;}
-#product-grid_all .summary{ display:none;}
+.grid_view {padding: 0px; margin-bottom:50px;}
+.grid_view .summary{ display:none;}
 
-#product-grid_all  input{
+.grid_view  input{
 border-radius:3px; border:1px solid #ccc;
 color:#666;
 padding:2px;
