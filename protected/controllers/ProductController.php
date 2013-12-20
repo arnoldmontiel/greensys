@@ -964,6 +964,25 @@ class ProductController extends GController
 		
 	}
 	
+	public function actionAjaxOpenEditField()
+	{
+		$idProduct = (isset($_POST['idProduct']))?$_POST['idProduct']:null;
+		$field = (isset($_POST['field']))?$_POST['field']:null;
+		
+		if(isset($idProduct) && isset($field))
+		{
+			$modelProduct = Product::model()->findByPk($idProduct);
+			if(isset($modelProduct))
+			{
+				echo $this->renderPartial('_modalEditField',
+						array(
+								'modelProduct'=>$modelProduct,
+								'field'=>$field,
+								));
+			}
+		}
+	}
+	
 	public function actionAjaxOpenExcelLoader()
 	{		
 		$modelProductImportLog = new ProductImportLog();
