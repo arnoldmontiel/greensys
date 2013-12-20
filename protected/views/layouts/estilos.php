@@ -93,7 +93,7 @@ body{
 	line-height:inherit;
 	color:#333;
 	background-color:#ccc;	
-	padding-top:125px;
+	padding-top:85px;
 	 }
 
 
