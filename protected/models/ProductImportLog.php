@@ -17,9 +17,11 @@
  */
 class ProductImportLog extends CActiveRecord
 {
+	public $brand_description;
+	
 	protected function afterFind(){
-		$this->last_import_date = Yii::app()->dateFormatter->formatDateTime(
-				CDateTimeParser::parse($this->last_import_date, Yii::app()->params['database_format']['date']),'small',null);
+
+		$this->last_import_date = isset($this->last_import_date)?Yii::app()->dateFormatter->formatDateTime($this->last_import_date,'small',null):null;
 	
 		return true;
 	}
@@ -45,7 +47,7 @@ class ProductImportLog extends CActiveRecord
 			array('last_import_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('Id, last_import_date, Id_brand, Id_measurement_unit_linear, Id_measurement_unit_weight', 'safe', 'on'=>'search'),
+			array('Id, last_import_date, Id_brand, Id_measurement_unit_linear, Id_measurement_unit_weight, brand_description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -98,8 +100,9 @@ class ProductImportLog extends CActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
-			'last_import_date' => 'Last Import Date',
+			'last_import_date' => 'Ultima Actualizacion',
 			'Id_brand' => 'Id Brand',
+			'brand_description'=>'Marca',
 			'Id_measurement_unit_linear' => 'Id Measurement Unit Linear',
 			'Id_measurement_unit_weight' => 'Id Measurement Unit Weight',
 		);
@@ -128,9 +131,25 @@ class ProductImportLog extends CActiveRecord
 		$criteria->compare('Id_brand',$this->Id_brand);
 		$criteria->compare('Id_measurement_unit_linear',$this->Id_measurement_unit_linear);
 		$criteria->compare('Id_measurement_unit_weight',$this->Id_measurement_unit_weight);
-
+		//$criteria->order = 't.last_import_date DESC';
+		
+		$criteria->with[]='brand';
+		$criteria->addSearchCondition("brand.description",$this->brand_description);
+		
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+				'last_import_date',
+				'brand_description' => array(
+						'asc' => 'brand.description',
+						'desc' => 'brand.description DESC',
+				),
+				'*',
+		);
+		
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+				'criteria'=>$criteria,
+				'sort'=>$sort,
 		));
 	}
 
