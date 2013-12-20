@@ -390,10 +390,15 @@ class ProductController extends GController
 		if(isset($_GET['Product']))
 			$modelProducts->attributes=$_GET['Product'];
 		
+		$modelProductImportLogs = new ProductImportLog('search');
+		$modelProductImportLogs->unsetAttributes();
+		if(isset($_GET['ProductImportLog']))
+			$modelProductImportLogs->attributes=$_GET['ProductImportLog'];
 		
 		$this->render('index',array(
 			'pendingQty'=>$pendingQty,
 			'modelProducts'=>$modelProducts,
+			'modelProductImportLogs'=>$modelProductImportLogs,
 		));
 	}
 	
@@ -896,9 +901,13 @@ class ProductController extends GController
 	}
 	
 	public function actionAjaxOpenTabByBrand()
-	{
-		$modelImportProductLogs = ProductImportLog::model()->findAll(array('order'=>'last_import_date DESC'));
-		echo $this->renderPartial('_tabByBrand', array('modelImportProductLogs'=>$modelImportProductLogs));
+	{		
+		$modelProductImportLogs = new ProductImportLog('search');
+		$modelProductImportLogs->unsetAttributes();  // clear any default values
+		if(isset($_GET['ProductImportLog']))
+			$modelProductImportLogs->attributes=$_GET['ProductImportLog'];
+		
+		echo $this->renderPartial('_tabByBrand',array('modelProductImportLogs'=>$modelProductImportLogs));
 	}
 	
 	public function actionAjaxOpenTabByPending()
@@ -941,9 +950,7 @@ class ProductController extends GController
 				GreenHelper::importProductFromExcel($modelExcel, $modelProductImportLogDB);
 			}
 		}
-		$modelImportProductLogs = ProductImportLog::model()->findAll(array('order'=>'last_import_date DESC'));
-		echo $this->renderPartial('_tabByBrand', array('modelImportProductLogs'=>$modelImportProductLogs));
-
+		
 		$criteria = new CDbCriteria();
 		$criteria->addCondition("(t.width = 0 OR
 								t.height = 0 OR
@@ -951,9 +958,10 @@ class ProductController extends GController
 								t.length = 0 OR
 								t.msrp = 0 OR
 				 				t.dealer_cost = 0)");
-		$pendingQty = Product::model()->count($criteria);
+		echo Product::model()->count($criteria);
 		
-		echo CHtml::script("$('#tab-pending').children().text(".$pendingQty.");");
+		//echo CHtml::script("$('#tab-pending').children().text(".$pendingQty.");");
+		
 	}
 	
 	public function actionAjaxOpenExcelLoader()
