@@ -13,7 +13,7 @@
 				'part_number',				 
 				array(
 		 			'name'=>'brand_description',
-					'value'=>'$data->brand->description',
+					'value'=>'$data->brand->description'
 				),
 				array(
 		 			'name'=>'height',
@@ -48,8 +48,8 @@
 				array(
 						'header'=>'Acciones',
 						'value'=>function($data){
-							return '<button type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
-									<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>';
+							return '<div class="buttonsTableProd"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
+									<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></div>';
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:right;"),
