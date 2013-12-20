@@ -249,14 +249,99 @@ margin-right:15px;
 padding-bottom:10px;
 margin-bottom:10px;}
 
+.dropdown-menu{ text-align:left;}
 
 
-/* ------ BODY / MAIN LAYOUT ------- */
+#product-grid_all {padding: 0px; margin-bottom:50px;}
+#product-grid_all .summary{ display:none;}
 
+#product-grid_all  input{
+border-radius:3px; border:1px solid #ccc;
+color:#666;
+padding:2px;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+}
+
+
+
+/* ------ END BODY / MAIN LAYOUT ------- */
+
+/* ------ PAGINADOR------- */
+ul.yiiPager .page a {
+font-weight: normal;
+height: 32px;
+width: 30px;
+margin: 0px;
+font-size: 16px;
+border-radius: 4px;
+line-height: 26px;
+text-align: center;
+color: #5cb85c;
+background-color: #eee;
+border-color: #ddd;
+}
+ul.yiiPager .page a:hover{
+color: #fff;
+background-color: #5cb85c;
+border-color: #00A395;
+}
+
+ul.yiiPager{ padding-bottom:40px; margin-left:10px;}
+
+.pager{color:white;}
+.pager .next>a, .pager .previous>a{
+font-weight: normal;
+height: 32px;
+margin: 0px;
+font-size: 16px;
+border-radius: 4px;
+line-height: 26px;
+text-align: center;
+margin-left:5px;
+color: #5cb85c;
+background-color: #eee;
+border-color: #ddd;
+}
+
+.pager .next>a:hover, .pager .previous>a:hover{
+color: #fff;
+background-color: #5cb85c;
+border-color: #00A395;
+}
+
+
+ul.yiiPager a:link, ul.yiiPager a:visited {
+
+color: #5cb85c;
+background-color: #eee;
+border-color: #ddd;
+}
+
+ul.yiiPager .selected a{color: #ffffff;
+background-color: #5cb85c;
+font-weight: 600;
+border-color: #5cb85c;
+}
+ul.yiiPager .selected a:hover{color: #ffffff;
+background-color: #5cb85c;
+font-weight: 600;
+border-color: #5cb85c;
+cursor:inherit;
+}
+
+
+
+
+/* ------ END PAGINADOR------- */
 
 /*---------- EDIT CREATE FORM -------------*/
 
-.buttonsBottom{ padding:5px; text-align:right; margin-top:20px; background-color:rgba(0,0,0,0.5)}
+.buttonsFloatBottom{ padding:5px; text-align:right; margin-top:20px; background-color:rgba(0,0,0,0.5);}
+.buttonsFloatBottom .btn{ margin:5px;}
+
 
 .form-group { color:#333;}
 .form-group input{font-size:16px; }
@@ -295,9 +380,10 @@ padding: 6px 8px;
 .tablaIndividual{ margin-bottom:20px; background-color:rgba(255,255,255,1); max-height:100px; overflow:auto; font-size:14px;}
 .table.tablaIndividual { margin-bottom:30px;}
 .tablaIndividual td button{ margin:5px; margin-left:0px; vertical-align:middle;}
-.table.tablaIndividual th{ font-weight:600;  font-size:16px; color:#555; background-color:#ddd;}
+.table.tablaIndividual th{ font-weight:600;  font-size:14px; line-height:15px; color:#555; background-color:#ddd;}
 .table.tablaIndividual thead>tr>th, .table.tablaIndividual tbody>tr>th, .table.tablaIndividual tfoot>tr>th, .table.tablaIndividual thead>tr>td, .table.tablaIndividual tbody>tr>td, .table.tablaIndividual tfoot>tr>td{vertical-align:middle; padding:5px;}
 
+#screenProductos .table.tablaIndividual { margin-bottom:5px;}
 
 .combined { width:100%;}
 .combined select{display:inline-block; width:60%;}
