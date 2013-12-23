@@ -79,6 +79,23 @@ function updateExcel(idBrand)
 		});
 }
 
+function removeProduct(idProduct, grid)
+{
+	if (confirm("Esta seguro de eliminar este producto?")) 
+	{
+		$.post("<?php echo ProductController::createUrl('AjaxDelete'); ?>",
+			{
+				idProduct:idProduct
+			}
+		).success(
+			function(data){
+				$.fn.yiiGridView.update(grid);
+				$('#tab-pending').children().text(data);
+			});
+		return false;
+	}
+	return false;
+}
 </script>
 <div class="container" id="screenProductos">
   <h1 class="pageTitle">Productos</h1>
