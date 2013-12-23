@@ -29,7 +29,7 @@ include('menu.php');?>
               <h3 class="panel-title"><i class="fa fa-star fa-fw"></i> Productos</h3>
             </div>
             <div class="panel-body">
-              <div class="list-group"> <a href="#" class="list-group-item">Ver Productos <i class="fa fa-list fa-fw pull-right"></i></a> <a href="#" class="list-group-item">Ver Prod. por Marcas <i class="fa fa-list fa-fw pull-right"></i></a> <a href="#" class="list-group-item">Ver Pendientes <i class="fa fa-warning fa-fw pull-right"></i></a> <a href="#" class="list-group-item">Cargar Excel de Marca <i class="fa fa-upload fa-fw pull-right"></i></a> </div>
+              <div class="list-group"> <a href="#" class="list-group-item">Ver Productos <i class="fa fa-list fa-fw pull-right"></i></a> <a href="agregarProducto.php" class="list-group-item">Agregar Producto <i class="fa fa-plus fa-fw pull-right"></i></a> <a href="#" class="list-group-item">Ver Pendientes <i class="fa fa-warning fa-fw pull-right"></i></a>  <a href="#" class="list-group-item">Ver Excel de Marcas <i class="fa fa-list fa-fw pull-right"></i></a><a href="#" class="list-group-item">Cargar Excel de Marca <i class="fa fa-upload fa-fw pull-right"></i></a> </div>
             </div>
           </div>
         </div>

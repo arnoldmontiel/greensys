@@ -539,10 +539,10 @@ include('menu.php');?>
     
   <div class="row navbar-fixed-bottom">
     <div class="col-sm-12">
-      <div class="buttonsBottom">
-        <button type="button" class="btn btn-default btn-lg"> Cancelar</button>
-        <button type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
-        <button type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar y Cargar Nuevo</button>
+      <div class="buttonsFloatBottom">
+        <button type="button" class="btn btn-default"> Cancelar</button>
+        <button type="button" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+        <button type="button" class="btn btn-primary"><i class="fa fa-save"></i> Guardar y Cargar Nuevo</button>
       </div>
     </div>
     <!-- /.col-sm-12 --> 

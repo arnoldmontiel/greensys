@@ -11,11 +11,11 @@
           <ul class="nav navbar-nav">
           <li <?php if ($active=="inicio"){ echo 'class="active"';}?> ><a href="index.php"><i class="fa fa-home fa-fw"></i> Dashboard</a></li>
           <li <?php if ($active=="productos"){ echo 'class="active"';}?> ><a href="productos.php"><i class="fa fa-star fa-fw"></i> Productos</a></li>
-          <li <?php if ($active=="proveedores"){ echo 'class="active"';}?> ><a href="mis-series.php"><i class="fa fa-truck fa-fw"></i> Proveedores</a></li>
-          <li <?php if ($active=="precios"){ echo 'class="active"';}?> ><a href="marketplace.php"><i class="fa fa-book fa-fw"></i> Listas de Precios</a></li>
-          <li <?php if ($active=="clientes"){ echo 'class="active"';}?> ><a href="descargas.php"><i class="fa fa-glass fa-fw"></i> Clientes</a></li>
-          <li <?php if ($active=="proyectos"){ echo 'class="active"';}?> ><a href="descargas.php"><i class="fa fa-building fa-fw"></i> Proyectos</a></li>
-          <li <?php if ($active=="presupuestos"){ echo 'class="active"';}?> ><a href="descargas.php"><i class="fa fa-dollar fa-fw"></i> Presupuestos</a></li>
+          <li <?php if ($active=="proveedores"){ echo 'class="active"';}?> ><a href="proveedores.php"><i class="fa fa-truck fa-fw"></i> Proveedores</a></li>
+          <li <?php if ($active=="precios"){ echo 'class="active"';}?> ><a href="precios.php"><i class="fa fa-book fa-fw"></i> Listas de Precios</a></li>
+          <li <?php if ($active=="clientes"){ echo 'class="active"';}?> ><a href="clientes.php"><i class="fa fa-glass fa-fw"></i> Clientes</a></li>
+          <li <?php if ($active=="proyectos"){ echo 'class="active"';}?> ><a href="proyectos.php"><i class="fa fa-building fa-fw"></i> Proyectos</a></li>
+          <li <?php if ($active=="presupuestos"){ echo 'class="active"';}?> ><a href="presupuestos.php"><i class="fa fa-dollar fa-fw"></i> Presupuestos</a></li>
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">M&aacute;s <i class="fa fa-caret-down fa-fw"></i></a>
                         <ul class="dropdown-menu">
                           <li><a href="#">Permisos</a></li>
