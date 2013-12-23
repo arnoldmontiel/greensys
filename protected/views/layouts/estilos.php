@@ -76,7 +76,7 @@ button {
 .align-center{ text-align:center;}
 .align-right{ text-align:right;}
 
-
+.bold{ font-weight:600;}
 .list-group{ margin-left:0px; margin-bottom:0px;}
 
 .list-group .label{ font-size:14px; line-height:26px;}
@@ -202,11 +202,12 @@ line-height:48px;
 
 h2{font-size: 28px;
 font-weight: normal;
-color: #ccc;
+color: greens;
 font-family: 'GudeaRegular';
 margin:0px;
 line-height:auto;
-padding-bottom:10px;
+color:green;
+margin-bottom:15px;
  }
 
 h1.pageTitle{font-size: 2em;
@@ -227,6 +228,13 @@ h3.tableTitle{ color: #666; text-shadow:none; background-color:#eee; padding:10p
 
 .panel-heading h3 { text-shadow:none; color:#333;}
 .panel-primary .panel-heading h3 {  color:white;}
+
+.panel .table.tablaIndividual{ margin-bottom:0px;}
+.panel-body{ padding:10px;}
+
+.panel-body .tablaDatosPanel{ margin-top:10px; margin-bottom:10px !important;}
+
+.marginLeft{margin-left:10px;}
 
 .listNumber {
 border: 1px solid #333;
@@ -266,6 +274,12 @@ padding:2px;
 }
 
 
+.nav-tabs>li>a{font-size:16px; color:white;  font-weight:600;}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{ border:none;}
+
+.nav-tabs>li.active>a{color:#333 !important;}
+.nav-tabs>li>a:hover{ color:#666 !important;}
 
 /* ------ END BODY / MAIN LAYOUT ------- */
 
@@ -346,7 +360,7 @@ cursor:inherit;
 .form-group { color:#333;}
 .form-group input{font-size:16px; }
 .form-group textarea{font-size:16px; }
-.form-group label{font-size:15px; color:#333; text-align:right;line-height: 30px;
+.form-group label{ color:#333; text-align:right;
 padding-left: 5px;}
 
 .form-control{ padding:4px;}
@@ -368,7 +382,7 @@ font-weight: 600;
 a.label-danger{ cursor:pointer;}
 a.label-danger:hover{ color:white;}
 
-#screenAgregarProductos{ margin-bottom:40px;}
+#screenAgregarProductos{ margin-bottom:60px;}
 #screenAgregarProductos table td{ vertical-align:middle;}
 #screenAgregarProductos table td label{ vertical-align:middle;}
 
@@ -393,6 +407,19 @@ padding: 6px 8px;
 
 /*---------- END EDIT CREATE FORM -------------*/
 
+/* ------ MODALS ------- */
+.modal{z-index:1070;}
+.modal-title{ font-size:1.6em; color:#666; }
+.modal-header {padding: 9px 15px;}
+.modal-header .close{padding: 0px; margin-top:0px; line-height:34px;}
+.modal-footer {padding: 9px 15px;}
+.modal-body{ overflow:hidden;}
+.modal-backdrop{z-index:1060;}
+.modal .nav-tabs li a{ color:#333;}
+
+.modal .nav-tabs>li.active>a { background-color:#ccc; color:#fff !important;}
+
+/* ------ END MODALS ------- */
 
 /* ------ MODAL CARGAR ------- */
 
@@ -400,19 +427,67 @@ padding: 6px 8px;
 .estadoModal label{ font-size:17px;}
 .estadoModal .alert{ font-size:17px;}
 
+.col-sm-6.limpiarPadding{ padding:0px;}
+
+.col-sm-6.paddingRight{ padding-right:15px;}
+.col-sm-6.paddingLeft{ padding-left:15px;}
+
+.modal-footer{margin-top:0px;}
+
+.modal-content .alert{ margin-bottom:0px;}
+
 /* ------ END MODAL CARGAR ------- */
 
-  
-/* ------ MODAL POPUPS SERIES / PELI DETAIL ------- */
-.modal{z-index:1070;}
-.modal-title{ font-size:1.6em; color:#666; }
-.modal-header {padding: 9px 15px;}
-.modal-header .close{padding: 0px; margin-top:0px; line-height:34px;}
-.modal-footer {padding: 9px 15px;}
-.modal-body{ overflow:hidden;}
-.modal-backdrop{z-index:1065;}
+/* ------ CREAR PRESU ------- */
 
-/* ------ END MODAL DETAIL ------- */
+#screenCrearPresupuesto{ margin-bottom:60px;}
+#campoPrecio{ width:65px; display:inline-block;}
+#campoTipoPrecio{ width:65px; display:inline-block;}
+
+h2 a.superEdit{ position:absolute; top:10px; right:30px; cursor:pointer; font-size:20px;}
+
+td.precioTabla{position:relative;}
+td.precioTabla button{ position:absolute; top:50%; right:5px; margin-top:-12px;}
+
+td.precioTabla .precioTablaValor{padding-right:30px;}
+
+.btnAlternateView{ margin-right:20px;}
+
+#myModalAgregarProductos .modal-dialog{ width:80%;}
+#myModalAgregarProductos .label{ font-size:15px;}
+#myModalAgregarProductos .table.tablaIndividual{ margin-bottom:0px;}
+
+.inputSmall{ width:40px; display:inline-block; margin-right:5px;}
+
+
+
+ul.superDropdown li{ width:400px;}
+
+.introProveedor{ padding:10px; padding-bottom:0px;}
+.introProveedor .table{ margin-bottom:0px;}
+.introProveedor .table th{ font-size:12px; background-color:white;}
+.introProveedor .table td{ font-size:12px;}
+.titleProveedor{ font-size:15px; font-weight:600; padding-bottom:5px;border-bottom:1px dotted #ccc; padding-left:5px;}
+
+.tableOpcionesPrecio{ padding:5px;}
+.introProveedor .tableOpcionesPrecio td{ background-color:#eee;font-size:18px;}
+
+.precioMasBajo{ color:#5cb85c;}
+
+
+.tituloFinalPresu{ font-size: 1.8em;
+font-weight: normal;
+color: #333;
+text-align: left;
+margin: 0px;
+line-height: auto;
+padding-bottom: 20px;}
+.totalPresupuesto{ background-color:#eee; height:120px; margin-top:20px; margin-bottom:30px;}
+
+/* ------ END CREAR PRESU ------- */
+
+  
+
 
 
 
@@ -444,12 +519,7 @@ font-family: 'GudeaRegular', Arial, sans-serif;}
 .deviceDropdownName:hover{background-color:#fff !important;border:0px none; color:#666; text-shadow:none;}
 .deviceDropdownName:focus{background-color:#fff !important;border:0px none; color:#666 !important; text-shadow:none;}
 
-.nav-tabs>li>a{font-size:16px; color:white;  font-weight:600;}
 
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{ border:none;}
-
-.nav-tabs>li.active>a{color:#333 !important;}
-.nav-tabs>li>a:hover{ color:#666 !important;}
 
 .tab-pane .superBoton{
 	position: absolute;
@@ -500,9 +570,6 @@ background: no-repeat center center fixed;
 ul.thumbnails.image_picker_selector{overflow:hidden;}
 
 #fieldDuracion{ width:78%; display:inline-block;}
-
-
-.modal .form-group label{font-size:17px; color:#333; text-align:right;}
 
 .form-group select, .form-group ul.select2-choices{
 display: block;
