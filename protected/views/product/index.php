@@ -81,7 +81,7 @@ function updateExcel(idBrand)
 
 function removeProduct(idProduct, grid)
 {
-	if (confirm("Esta seguro de eliminar este producto?")) 
+	if (confirm("¿Esta seguro de eliminar este producto?")) 
 	{
 		$.post("<?php echo ProductController::createUrl('AjaxDelete'); ?>",
 			{
