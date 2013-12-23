@@ -107,8 +107,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 						'header'=>'Acciones',
 						'value'=>function($data){
 							$grid = "'product-grid_pending'";
-							return '<button type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
-									<button type="button" onclick="removeProduct('.$data->Id.', '.$grid.');" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>';
+							return '<div class="buttonsTableProd"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
+									<button type="button" onclick="removeProduct('.$data->Id.', '.$grid.');" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></div>';
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:right;"),
