@@ -378,6 +378,41 @@ class ProductController extends GController
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
+	public function actionAjaxDelete()
+	{
+		$id = (isset($_POST['idProduct']))?$_POST['idProduct']:null;
+		
+		if(isset($id))
+		{
+			$model=$this->loadModel($id);
+	
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				//First delete links
+				$this->deleteLinks($id);
+				//First delete note
+				$this->deleteNote($id);
+				// we only allow deletion via POST request
+				$model->delete();
+	
+				$transaction->commit();
+	
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}			
+		}
+		
+		$criteria = new CDbCriteria();
+		$criteria->addCondition("(t.width = 0 OR
+								t.height = 0 OR
+								t.weight = 0 OR
+								t.length = 0 OR
+								t.msrp = 0 OR
+				 				t.dealer_cost = 0)");
+		echo Product::model()->count($criteria);
+
+	}
+	
 	/**
 	 * Lists all models.
 	 */
