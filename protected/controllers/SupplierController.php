@@ -123,6 +123,24 @@ class SupplierController extends GController
 			}
 		}		
 	}
+	public function actionAjaxShowCreateModal()
+	{
+		$field_caller ="";
+		if($_POST['field_caller'])
+			$field_caller=$_POST['field_caller'];
+
+		$model=new Supplier;
+		$modelContact = new Contact;
+		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$modelContact->Id,'Id_entity_type'=>$this->getEntityType()));
+			
+		$this->renderPartial('_formModal',array(
+				'model'=>$model,
+				'modelContact'=>$modelContact,
+				'modelHyperlink'=>$modelHyperlink,
+				'field_caller'=>$field_caller
+		));
+		
+	}
 	
 	public function actionCreateNew($modelCaller)
 	{

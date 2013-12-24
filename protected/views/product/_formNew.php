@@ -2,8 +2,59 @@
 $settings = new Settings();
 $weightToShipping = MeasurementUnit::model()->findByAttributes(array('short_description'=>'kg'));
 Yii::app()->clientScript->registerScript(__CLASS__.'#Product', "
-
 fillVolumeTextBox('".ProductController::createUrl("AjaxFillVolume")."','txtVolume','product-form');
+
+$('#createBrand').click(
+		function(){
+			$.post(
+			'".ProductController::createUrl('brand/AjaxShowCreateModal')."',{field_caller:'Product_Id_brand'}).success(
+					function(data)
+					{
+					if(data!=null)
+					{	
+						$('#modalPlaceHolder').html(data);
+						$('#modalPlaceHolder').modal('show');
+					}
+				}
+			);
+		return false;
+		}
+		);
+
+$('#createSupplier').click(
+		function(){
+			$.post(
+			'".ProductController::createUrl('supplier/AjaxShowCreateModal')."',{field_caller:'Product_Id_supplier'}).success(
+					function(data)
+					{
+					if(data!=null)
+					{	
+						$('#modalPlaceHolder').html(data);
+						$('#modalPlaceHolder').modal('show');
+					}
+				}
+			);
+		return false;
+		}
+		);
+					
+$('#createCategory').click(
+		function(){
+			$.post(
+			'".ProductController::createUrl('category/AjaxShowCreateModal')."',{field_caller:'Product_Id_category'}).success(
+					function(data)
+					{
+					if(data!=null)
+					{	
+						$('#modalPlaceHolder').html(data);
+						$('#modalPlaceHolder').modal('show');
+					}
+				}
+			);
+		return false;
+		}
+		);
+					
 $('#display-weight').hide();
 
 $('#cancel').click(function()
@@ -16,7 +67,7 @@ $('#cancel').click(function()
 });		
 $('#weight').change(function(){
 	$(this).val(Number($(this).val()).toFixed(2));
-	if($('#Id_measurement_unit_weight').val()!='"
+	if($('#Product_Id_measurement_unit_weight').val()!='"
 		.$weightToShipping->Id.
 		"')
 	{
@@ -28,8 +79,8 @@ $('#weight').change(function(){
 	validateNumber($(this));
 });
 
-$('#Id_measurement_unit_weight').change(function(){
-	if($('#Id_measurement_unit_weight').val()!='"
+$('#Product_Id_measurement_unit_weight').change(function(){
+	if($('#Product_Id_measurement_unit_weight').val()!='"
 				.$weightToShipping->Id.
 				"')
 	{
@@ -177,14 +228,14 @@ $('#deleteIcon').click(function(){
             <td class="combined"><?php echo $form->dropDownList($model, 'Id_brand', CHtml::listData(
 	    			Brand::model()->findAll(), 'Id', 'description'),array('class'=>"form-control")); 
 			?>
-              <button type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Marca</button></td>
+              <button id="createBrand" type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Marca</button></td>
           </tr>
           <tr>
             <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_supplier'); ?></td>
             <td class="combined"><?php echo $form->dropDownList($model, 'Id_supplier', CHtml::listData(
 	    			Supplier::model()->findAll(), 'Id', 'business_name'),array('class'=>"form-control")); 
 			?>
-              <button type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Proveedor</button></td>
+              <button id="createSupplier" type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Proveedor</button></td>
           </tr>
           <tr>
             <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_category'); ?></td>
@@ -198,14 +249,14 @@ $('#deleteIcon').click(function(){
 						'update'=>'#Product_Id_sub_category',
 						))); 
 			?>
-              <button type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Categor&iacute;a</button></td>
+              <button id="createCategory" type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Categor&iacute;a</button></td>
           </tr>
           <tr>
             <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_sub_category'); ?></td>
             <td class="combined"><?php $subCategory = CHtml::listData($ddlSubCategory, 'Id', 'description');?>
 			<?php echo $form->dropDownList($model, 'Id_sub_category', $subCategory,array(
 						'class'=>"form-control")); ?>
-              <button type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Subcat.</button></td>
+              <button id="createSubcategory" type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Subcat.</button></td>
           </tr>
           <tr>
             <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_nomenclator'); ?></td>
@@ -219,7 +270,7 @@ $('#deleteIcon').click(function(){
             <td class="combined"><?php echo $form->dropDownList($model, 'Id_product_type', CHtml::listData(
 	    			ProductType::model()->findAll(), 'Id', 'description'),array('class'=>"form-control")); 
 			?>
-              <button type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Tipo</button></td>
+              <button id="createProductType"  type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Tipo</button></td>
           </tr>
         </tbody>
       </table>

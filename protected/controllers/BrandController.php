@@ -83,7 +83,18 @@ class BrandController extends Controller
 				echo json_encode($model->attributes); 
 		}
 	}
-	
+	public function actionAjaxShowCreateModal()
+	{
+		$model=new Brand;
+		$field_caller ="";
+		if($_POST['field_caller'])
+			$field_caller=$_POST['field_caller'];
+		// Uncomment the following line if AJAX validation is needed		
+		$this->renderPartial('_formModal',array(
+			'model'=>$model,
+				'field_caller'=>$field_caller
+		));
+	}
 	public function actionCreateNew($modelCaller)
 	{
 		$model=new Brand;

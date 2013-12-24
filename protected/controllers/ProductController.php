@@ -693,16 +693,17 @@ class ProductController extends GController
 	}
 	public function actionAjaxFillWeight()
 	{
-		if(isset($_POST['Id_measurement_unit_weight'])&&isset($_POST['weight']))
+		if(isset($_POST['Product']['Id_measurement_unit_weight'])&&isset($_POST['weight']))
 		{
-			$id_measurement_unit_weight = $_POST['Product']['width'];
+			$id_measurement_unit_weight = $_POST['Product']['Id_measurement_unit_weight'];
 			$weight = $_POST['weight'];
 			$settings = new Settings();
 				
 			$weightTo = $settings->getMeasurementUnit(Settings::MT_WEIGHT);
 				
-			$weightFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'lb'));
-			
+			//$weightFrom = MeasurementUnit::model()->findByAttributes(array('short_description'=>'lb'));
+			$weightFrom = MeasurementUnit::model()->findByPk($id_measurement_unit_weight);
+				
 			$converter = MeasurementUnitConverter::model()->findByAttributes(
 			array(
 							'Id_measurement_from'=>$weightFrom->Id,
