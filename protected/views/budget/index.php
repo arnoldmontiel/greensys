@@ -9,7 +9,12 @@ function openNewBudget()
 	   		$('#myModalNewBudget').modal('show');	  
 		});
 }
-
+function editBudget(id)
+{
+	var params = "&id="+id;
+	window.location = "<?php echo BudgetController::createUrl("editBudget")?>" + params; 
+	return false;
+}
 </script>
 <div class="container" id="screenPresupuestos">
   <h1 class="pageTitle">Presupuestos</h1>

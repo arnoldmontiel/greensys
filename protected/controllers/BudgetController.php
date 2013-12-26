@@ -256,6 +256,11 @@ class BudgetController extends GController
 		echo $this->renderPartial('_modalNewBudget');
 	}
 	
+	public function actionEditBudget($id)
+	{
+		$this->render('editBudget');
+	}
+	
 	public function actionAjaxSelect()
 	{
 		$modelProduct = new Product('search');

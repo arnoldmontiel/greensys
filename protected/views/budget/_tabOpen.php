@@ -20,7 +20,7 @@
             <td>2013-08-28 12:20:12</td>
             <td>--</td>
             <td style="text-align:right;">
-            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
+            <button onclick="editBudget(10);" type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
             <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>
             <button type="button" class="btn btn-default btn-sm"><i class="fa fa-archive"></i> Cerrar</button>
             <button type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar</button></td>
