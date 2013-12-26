@@ -127,6 +127,7 @@ class Budget extends ModelAudit
 	{
 		return array(
 			'Id' => 'ID',
+			'Id_project'=>'Proyecto',
 			'project_description' => 'Proyecto',
 			'percent_discount' => 'Descuento',
 			'date_creation' => 'Fecha Creación',

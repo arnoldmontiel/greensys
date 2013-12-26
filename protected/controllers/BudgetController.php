@@ -375,7 +375,18 @@ class BudgetController extends GController
 
 	public function actionAjaxOpenNewBudget()
 	{
-		echo $this->renderPartial('_modalNewBudget');
+		$criteria=new CDbCriteria;
+		$criteria->select ="t.*, contact.description designacion";
+		$criteria->join =" INNER JOIN customer c on (t.Id_customer = c.Id)
+					INNER JOIN contact contact on (c.Id_contact = contact.Id)";
+		$criteria->order="designacion, t.description";
+		
+		$ddlProjects = Project::model()->findAll($criteria);
+		
+		$model = new Budget();
+		
+		echo $this->renderPartial('_modalNewBudget', array('model'=>$model,
+															'ddlProjects'=>$ddlProjects));
 	}
 	
 	public function actionEditBudget($id)

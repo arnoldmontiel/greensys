@@ -8,26 +8,23 @@
 
 <form role="form">
   <div class="form-group">
-    <label for="campoProyecto">Proyecto</label>
-	<select class="form-control" id="campoProyecto">
-                <option>Alvear Tower - Contacto Inicial</option>
-                <option>Ariel Wasserman - Contacto Inicial</option>
-                <option>RTI</option>
-              </select>
+    <label for="Id_project">Proyecto</label>
+    <?php
+    	echo CHtml::activeLabel($model, 'Id_project');
+    	echo CHtml::activeDropDownList($model, 'Id_project',
+    		CHtml::listData($ddlProjects, 'Id', 'LongDescription'),array('class'=>'form-control'));?>
+  </div>
+  <div class="form-group">    
+    <?php 
+    	echo CHtml::activeLabel($model, 'percent_discount');
+    	echo CHtml::activeTextField($model, 'percent_discount', array('class'=>'form-control'));
+    ?>
   </div>
   <div class="form-group">
-    <label for="campoEstado">Estado</label>
-	<select class="form-control" id="campoEstado">
-                <option>Nuevo</option>
-              </select>
-  </div>
-  <div class="form-group">
-    <label for="campoDescuento">Descuento</label>
-	<input type="text" id="campoDescuento" class="form-control">
-  </div>
-  <div class="form-group">
-    <label for="campoDescripcion">Descripci&oacute;n</label>
-	<textarea class="form-control" rows="3" id="campoDescripcion"></textarea>
+  	<?php 
+    	echo CHtml::activeLabel($model, 'description');
+    	echo CHtml::activeTextArea($model, 'description', array('class'=>'form-control', 'rows'=>3));
+    ?>    
   </div>
   <div class="form-group col-sm-6 limpiarPadding paddingRight">
     <label for="campoEstInicial">Fecha Estimada Inicio</label>
