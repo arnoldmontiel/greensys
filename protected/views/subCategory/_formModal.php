@@ -1,7 +1,7 @@
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'category-form',
+	'id'=>'sub-category-form',
 	'enableAjaxValidation'=>true,
-	'action'=>Yii::app()->createUrl("category/ajaxCreate")		
+	'action'=>Yii::app()->createUrl("subCategory/ajaxCreate")		
 )); ?>
 
   <div class="modal-dialog">
@@ -20,7 +20,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
-        <button id ="saveCategory" type="button" class="btn btn-primary btn-lg"><i class="fa fa-upload"></i> Cargar</button>
+        <button id ="saveSubCategory" type="button" class="btn btn-primary btn-lg"><i class="fa fa-upload"></i> Cargar</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -32,18 +32,27 @@ $("form").bind("keypress", function (e) {
     }
 });
 
-$('#saveCategory').unbind('click');
-$('#saveCategory').click(function()
+$('#saveSubCategory').unbind('click');
+$('#saveSubCategory').click(function()
 		{
-		$('#saveCategory').attr('disabled','disabled');
-		jQuery.post('<?php echo Yii::app()->createUrl("category/ajaxCreate")?>', $('#category-form').serialize(),
+		$('#saveSubCategory').attr('disabled','disabled');
+		jQuery.post('<?php echo Yii::app()->createUrl("subCategory/ajaxCreate")?>', $('#sub-category-form').serialize(),
 						function(data) {
 							if(data!=null)
 							{	
-								$("#"+$("#field_caller").val()).prepend(
-		  		  					$("<option></option>").val(data.Id).html(data.description)
-								);	
-								$('#modalPlaceHolder').modal('hide');					
+								jQuery.post('<?php echo Yii::app()->createUrl("subCategory/ajaxAssignToCategory")?>',
+										 {"Id_sub_category":data.Id,"Id_category":$("#Product_Id_category").val()},
+											function(data) {
+												if(data!=null)
+												{
+													$("#"+$("#field_caller").val()).prepend(
+								  		  					$("<option></option>").val(data.Id).html(data.description)
+														);	
+														$('#modalPlaceHolder').modal('hide');					
+												}
+											jQuery("#waiting").dialog("close");
+										},"json"
+									);
 							}	
 					},'json'
 				);

@@ -54,6 +54,40 @@ $('#createCategory').click(
 		return false;
 		}
 		);
+
+$('#createSubcategory').click(
+		function(){
+			$.post(
+			'".ProductController::createUrl('subCategory/AjaxShowCreateModal')."',{field_caller:'Product_Id_sub_category',field_caller_category:'Product_Id_category'}).success(
+					function(data)
+					{
+					if(data!=null)
+					{	
+						$('#modalPlaceHolder').html(data);
+						$('#modalPlaceHolder').modal('show');
+					}
+				}
+			);
+		return false;
+		}
+);
+$('#createNomenclator').click(
+		function(){
+			$.post(
+			'".ProductController::createUrl('nomenclator/AjaxShowCreateModal')."',{field_caller:'Product_Id_nomenclator'}).success(
+					function(data)
+					{
+					if(data!=null)
+					{	
+						$('#modalPlaceHolder').html(data);
+						$('#modalPlaceHolder').modal('show');
+					}
+				}
+			);
+		return false;
+		}
+);
+					
 					
 $('#display-weight').hide();
 
@@ -263,7 +297,7 @@ $('#deleteIcon').click(function(){
             <td class="combined"><?php echo $form->dropDownList($model, 'Id_nomenclator', CHtml::listData(
 	    			Nomenclator::model()->findAll(), 'Id', 'description'),array('class'=>"form-control")); 
 			?>
-              <button type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Nomenc.</button></td>
+              <button id="createNomenclator" type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#myModalRapido"><i class="fa fa-plus"></i> Nomenc.</button></td>
           </tr>
           <tr>
             <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_product_type'); ?></td>

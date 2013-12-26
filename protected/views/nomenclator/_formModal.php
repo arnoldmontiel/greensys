@@ -1,14 +1,14 @@
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'category-form',
+	'id'=>'nomenclator-form',
 	'enableAjaxValidation'=>true,
-	'action'=>Yii::app()->createUrl("category/ajaxCreate")		
+	'action'=>Yii::app()->createUrl("nomenclator/ajaxCreate")		
 )); ?>
 
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Agregar Categoria</h4>
+        <h4 class="modal-title">Agregar Nomenclador</h4>
       </div>
       <div class="modal-body">
 
@@ -20,7 +20,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
-        <button id ="saveCategory" type="button" class="btn btn-primary btn-lg"><i class="fa fa-upload"></i> Cargar</button>
+        <button id ="saveNomenclator" type="button" class="btn btn-primary btn-lg"><i class="fa fa-upload"></i> Cargar</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -32,11 +32,11 @@ $("form").bind("keypress", function (e) {
     }
 });
 
-$('#saveCategory').unbind('click');
-$('#saveCategory').click(function()
+$('#saveNomenclator').unbind('click');
+$('#saveNomenclator').click(function()
 		{
-		$('#saveCategory').attr('disabled','disabled');
-		jQuery.post('<?php echo Yii::app()->createUrl("category/ajaxCreate")?>', $('#category-form').serialize(),
+		$('#saveNomenclator').attr('disabled','disabled');
+		jQuery.post('<?php echo Yii::app()->createUrl("nomenclator/ajaxCreate")?>', $('#nomenclator-form').serialize(),
 						function(data) {
 							if(data!=null)
 							{	

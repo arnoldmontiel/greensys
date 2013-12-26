@@ -107,6 +107,23 @@ class SubCategoryController extends Controller
 			echo json_encode($modelSubCategory->attributes);
 		}
 	}
+	public function actionAjaxShowCreateModal()
+	{
+		$model=new SubCategory;
+		$field_caller ="";
+		if($_POST['field_caller'])
+			$field_caller=$_POST['field_caller'];
+		
+		$field_caller_category ="";
+		if($_POST['field_caller_category'])
+			$field_caller_category=$_POST['field_caller_category'];
+		
+		$this->renderPartial('_formModal',array(
+				'model'=>$model,
+				'field_caller'=>$field_caller,
+				'field_caller_category'=>$field_caller_category,
+		));
+	}
 	
 	/**
 	 * Updates a particular model.
