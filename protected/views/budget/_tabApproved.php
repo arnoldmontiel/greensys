@@ -1,8 +1,7 @@
-<a onclick="openNewBudget();" class="btn btn-primary superBoton" data-toggle="modal" data-target="#myModalCrearPresupuesto"><i class="fa fa-plus"></i> Crear Presupuesto</a>
- <?php		
+<?php		
 	$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'budget-grid-open',
-		'dataProvider'=>$modelBudgets->searchOpen(),
+		'id'=>'budget-grid-approved',
+		'dataProvider'=>$modelBudgets->searchApproved(),
 		'selectableRows' => 0,
 		'filter'=>$modelBudgets,
 		'summaryText'=>'',	
@@ -12,6 +11,11 @@
 					'name'=>'project_description',
 					'value'=>'$data->project->description',
 					'htmlOptions'=>array("style"=>"width:15%;"),
+				),
+				array(
+					'name'=>'date_approved',
+					'value'=>'$data->date_approved',
+					'htmlOptions'=>array("style"=>"width:10%;"),
 				),
 				array(
 					'name'=>'version_number',
@@ -41,15 +45,11 @@
 				array(
 						'header'=>'Acciones',
 						'value'=>function($data){
-						$grid = "'budget-grid-open'";
-							return '<button onclick="editBudget('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
-									<button onclick="removeBudget('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>
-            						<button onclick="closeVersion('.$data->Id.', '.$data->version_number.', '.$grid.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-archive"></i> Cerrar</button>
-            						<button onclick="exportBudget('.$data->Id.');"type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar</button>';						
+							return '<button onclick="exportBudget('.$data->Id.');"type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar</button>';						
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:right;"),
 				),
 			),
 		));		
-		?>
+?>

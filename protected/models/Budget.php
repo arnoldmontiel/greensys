@@ -16,7 +16,10 @@
  * @property integer $version_number
  * @property string $description
  * @property string $note
- *
+ * @property string $date_close
+ * @property string $date_cancelled
+ * @property string $date_approved
+ * 
  * The followings are the available model relations:
  * @property BudgetState $idBudgetState
  * @property Project $idProject
@@ -36,6 +39,11 @@ class Budget extends ModelAudit
 		$this->date_estimated_finalization = (!empty($this->date_estimated_finalization))?Yii::app()->lc->toDatabase($this->date_estimated_finalization,'date','small','date',null):null;//date('Y-m-d',strtotime($this->date_validity));
 		$this->date_inicialization = (!empty($this->date_inicialization))?Yii::app()->lc->toDatabase($this->date_inicialization,'date','small','date',null):null;//date('Y-m-d',strtotime($this->date_validity));
 		$this->date_finalization = (!empty($this->date_finalization))?Yii::app()->lc->toDatabase($this->date_finalization,'date','small','date',null):null;//date('Y-m-d',strtotime($this->date_validity));
+		
+		$this->date_close = (!empty($this->date_close))?Yii::app()->lc->toDatabase($this->date_close,'date','small','date',null):null;
+		$this->date_cancelled = (!empty($this->date_cancelled))?Yii::app()->lc->toDatabase($this->date_cancelled,'date','small','date',null):null;
+		$this->date_approved = (!empty($this->date_approved))?Yii::app()->lc->toDatabase($this->date_approved,'date','small','date',null):null;
+		$this->date_creation = (!empty($this->date_creation))?Yii::app()->lc->toDatabase($this->date_creation,'date','small','date',null):null;
 	
 		return parent::beforeSave();
 	}
@@ -52,6 +60,10 @@ class Budget extends ModelAudit
 	
 		$this->date_creation = isset($this->date_creation)?Yii::app()->dateFormatter->formatDateTime($this->date_creation,'small',null):null;
 	
+		$this->date_close = isset($this->date_close)?Yii::app()->dateFormatter->formatDateTime($this->date_close,'small',null):null;
+		$this->date_cancelled = isset($this->date_cancelled)?Yii::app()->dateFormatter->formatDateTime($this->date_cancelled,'small',null):null;
+		$this->date_approved = isset($this->date_approved)?Yii::app()->dateFormatter->formatDateTime($this->date_approved,'small',null):null;
+		
 		return true;
 	}
 	
@@ -84,14 +96,11 @@ class Budget extends ModelAudit
 			array('Id, Id_project, Id_budget_state, version_number', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_project, Id_budget_state, version_number', 'numerical', 'integerOnly'=>true),
 			array('percent_discount', 'length', 'max'=>10),
-			array('date_creation, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, totPrice', 'safe'),
+			array('date_creation, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, date_close, date_cancelled, date_approved', 'safe'),
 			array('description, note', 'length', 'max'=>255),
-			array('date_creation','default',
-			              'value'=>new CDbExpression('NOW()'),
-			              'setOnEmpty'=>true,'on'=>'insert'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_project, percent_discount, date_creation, Id_budget_state, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, version_number, totPrice, note, project_description', 'safe', 'on'=>'search'),
+			array('Id, Id_project, percent_discount, date_creation, Id_budget_state, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, version_number, totPrice, note, project_description, date_close, date_cancelled, date_approved', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -131,6 +140,9 @@ class Budget extends ModelAudit
 			'subTotalPrice'=>'Subtotal',
 			'totalPrice'=>'Total',
 			'note' => 'Note',
+			'date_close'=>'Cerrado', 
+			'date_cancelled'=>'Cancelado', 
+			'date_approved'=>'Aprobado'
 		);
 	}
 
@@ -244,19 +256,14 @@ class Budget extends ModelAudit
 	
 		$criteria=new CDbCriteria;
 	
-		$criteria->compare('Id',$this->Id);
-		$criteria->compare('Id_project',$this->Id_project);
 		$criteria->compare('Id_budget_state',1);
 		$criteria->compare('percent_discount',$this->percent_discount,true);
 		$criteria->compare('date_creation',$this->date_creation,true);
-		$criteria->compare('Id_budget_state',$this->Id_budget_state);
 		$criteria->compare('date_inicialization',$this->date_inicialization,true);
 		$criteria->compare('date_finalization',$this->date_finalization,true);
-		$criteria->compare('date_estimated_inicialization',$this->date_estimated_inicialization,true);
-		$criteria->compare('date_estimated_finalization',$this->date_estimated_finalization,true);
 		$criteria->compare('version_number',$this->version_number);
-		$criteria->compare('description',$this->description,true);
-	
+		$criteria->compare('t.description',$this->description,true);
+		
 		$criteria->with[]='project';
 		$criteria->addSearchCondition("project.description",$this->project_description);		
 		
@@ -278,6 +285,130 @@ class Budget extends ModelAudit
 				'sort'=>$sort,
 		));
 	}	
+	
+	public function searchWaiting()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('Id_budget_state',2);
+		$criteria->compare('percent_discount',$this->percent_discount,true);
+		$criteria->compare('date_creation',$this->date_creation,true);
+		$criteria->compare('date_inicialization',$this->date_inicialization,true);
+		$criteria->compare('date_finalization',$this->date_finalization,true);
+		$criteria->compare('date_estimated_inicialization',$this->date_estimated_inicialization,true);
+		$criteria->compare('date_estimated_finalization',$this->date_estimated_finalization,true);
+		$criteria->compare('version_number',$this->version_number);
+		$criteria->compare('t.description',$this->description,true);
+		$criteria->compare('date_close',$this->date_close,true);
+		
+		$criteria->with[]='project';
+		$criteria->addSearchCondition("project.description",$this->project_description);
+
+
+		$sort=new CSort;
+		$sort->attributes=array(
+				'date_creation',
+				'date_inicialization',
+				'version_number',
+				'date_close',
+				'description',
+				'percent_discount',
+				'project_description' => array(
+						'asc' => 'project.description',
+						'desc' => 'project.description DESC',
+				),
+		);
+	
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+				'sort'=>$sort,
+		));
+	}
+	
+	public function searchApproved()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('Id_budget_state',3);
+		$criteria->compare('percent_discount',$this->percent_discount,true);
+		$criteria->compare('date_creation',$this->date_creation,true);
+		$criteria->compare('date_inicialization',$this->date_inicialization,true);
+		$criteria->compare('date_finalization',$this->date_finalization,true);
+		$criteria->compare('date_estimated_inicialization',$this->date_estimated_inicialization,true);
+		$criteria->compare('date_estimated_finalization',$this->date_estimated_finalization,true);
+		$criteria->compare('version_number',$this->version_number);
+		$criteria->compare('t.description',$this->description,true);		
+		$criteria->compare('date_approved',$this->date_approved,true);
+		
+		$criteria->with[]='project';
+		$criteria->addSearchCondition("project.description",$this->project_description);
+	
+	
+		$sort=new CSort;
+		$sort->attributes=array(
+				'date_creation',
+				'date_inicialization',
+				'version_number',
+				'description',
+				'percent_discount',
+				'project_description' => array(
+						'asc' => 'project.description',
+						'desc' => 'project.description DESC',
+				),
+		);
+	
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+				'sort'=>$sort,
+		));
+	}
+	
+	public function searchCancelled()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('Id_budget_state',4);
+		$criteria->compare('percent_discount',$this->percent_discount,true);
+		$criteria->compare('date_creation',$this->date_creation,true);
+		$criteria->compare('date_inicialization',$this->date_inicialization,true);
+		$criteria->compare('date_finalization',$this->date_finalization,true);
+		$criteria->compare('date_estimated_inicialization',$this->date_estimated_inicialization,true);
+		$criteria->compare('date_estimated_finalization',$this->date_estimated_finalization,true);
+		$criteria->compare('version_number',$this->version_number);
+		$criteria->compare('t.description',$this->description,true);
+		$criteria->compare('date_cancelled',$this->date_cancelled,true);
+		
+		$criteria->with[]='project';
+		$criteria->addSearchCondition("project.description",$this->project_description);
+	
+	
+		$sort=new CSort;
+		$sort->attributes=array(
+				'date_creation',
+				'date_inicialization',
+				'version_number',
+				'description',
+				'percent_discount',
+				'project_description' => array(
+						'asc' => 'project.description',
+						'desc' => 'project.description DESC',
+				),
+		);
+	
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+				'sort'=>$sort,
+		));
+	}
 	
 	public function search()
 	{

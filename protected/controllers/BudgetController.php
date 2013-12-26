@@ -232,7 +232,124 @@ class BudgetController extends GController
 		if(isset($_GET['Budget']))
 			$modelBudgets->attributes=$_GET['Budget'];
 		
-		$this->render('index', array('modelBudgets'=>$modelBudgets));		
+		$openQty = Budget::model()->countByAttributes(array('Id_budget_state'=>1));
+		$waitingQty = Budget::model()->countByAttributes(array('Id_budget_state'=>2));
+		$approvedQty = Budget::model()->countByAttributes(array('Id_budget_state'=>3));
+		$cancelledQty = Budget::model()->countByAttributes(array('Id_budget_state'=>4));
+		$this->render('index', array('modelBudgets'=>$modelBudgets,
+									'openQty'=>$openQty,
+									'waitingQty'=>$waitingQty,
+									'approvedQty'=>$approvedQty,
+									'cancelledQty'=>$cancelledQty,
+									));		
+	}
+	
+	public function actionAjaxCloseVersion()
+	{
+		$id = (isset($_POST['id']))?$_POST['id']:null;
+		$version = (isset($_POST['version']))?$_POST['version']:null;
+		
+		if(isset($id) && isset($version))
+		{
+			$modelBudget = Budget::model()->findByPk(array('Id'=>$id, 'version_number'=>$version));
+			if(isset($modelBudget))
+			{
+				$modelBudget->Id_budget_state = 2;
+				$modelBudget->date_close = new CDbExpression('NOW()');
+				$modelBudget->save();
+			}
+		}
+		$openQty = Budget::model()->countByAttributes(array('Id_budget_state'=>1));
+		$waitingQty = Budget::model()->countByAttributes(array('Id_budget_state'=>2));
+		
+		$response = array('openQty'=>$openQty,
+									'waitingQty'=>$waitingQty);
+		echo json_encode($response);
+	}
+	
+	public function actionAjaxReOpen()
+	{
+		$id = (isset($_POST['id']))?$_POST['id']:null;
+		$version = (isset($_POST['version']))?$_POST['version']:null;
+	
+		if(isset($id) && isset($version))
+		{
+			$modelBudget = Budget::model()->findByPk(array('Id'=>$id, 'version_number'=>$version));
+			if(isset($modelBudget))
+			{
+				$modelBudget->Id_budget_state = 1;
+				$modelBudget->save();
+			}
+		}
+		$openQty = Budget::model()->countByAttributes(array('Id_budget_state'=>1));
+		$waitingQty = Budget::model()->countByAttributes(array('Id_budget_state'=>2));
+	
+		$response = array('openQty'=>$openQty,
+				'waitingQty'=>$waitingQty);
+		echo json_encode($response);
+	}
+	
+	public function actionAjaxApprove()
+	{
+		$id = (isset($_POST['id']))?$_POST['id']:null;
+		$version = (isset($_POST['version']))?$_POST['version']:null;
+		
+		if(isset($id) && isset($version))
+		{
+			$modelBudget = Budget::model()->findByPk(array('Id'=>$id, 'version_number'=>$version));
+			if(isset($modelBudget))
+			{
+				$modelBudget->Id_budget_state = 3;
+				$modelBudget->date_approved = new CDbExpression('NOW()');
+				$modelBudget->save();
+			}
+		}
+		$approvedQty = Budget::model()->countByAttributes(array('Id_budget_state'=>3));
+		$waitingQty = Budget::model()->countByAttributes(array('Id_budget_state'=>2));
+		
+		$response = array('approvedQty'=>$approvedQty,
+				'waitingQty'=>$waitingQty);
+		echo json_encode($response);
+	}
+	
+	public function actionAjaxOpenTabOpen()
+	{
+		$modelBudgets = new Budget('search');
+		$modelBudgets->unsetAttributes();  // clear any default values
+		if(isset($_GET['Budget']))
+			$modelBudgets->attributes=$_GET['Budget'];
+		
+		echo $this->renderPartial('_tabOpen',array('modelBudgets'=>$modelBudgets));
+	}
+	
+	public function actionAjaxOpenTabWaiting()
+	{
+		$modelBudgets = new Budget('search');
+		$modelBudgets->unsetAttributes();  // clear any default values
+		if(isset($_GET['Budget']))
+			$modelBudgets->attributes=$_GET['Budget'];
+	
+		echo $this->renderPartial('_tabWaiting',array('modelBudgets'=>$modelBudgets));
+	}
+	
+	public function actionAjaxOpenTabApproved()
+	{
+		$modelBudgets = new Budget('search');
+		$modelBudgets->unsetAttributes();  // clear any default values
+		if(isset($_GET['Budget']))
+			$modelBudgets->attributes=$_GET['Budget'];
+	
+		echo $this->renderPartial('_tabApproved',array('modelBudgets'=>$modelBudgets));
+	}
+	
+	public function actionAjaxOpenTabCancelled()
+	{
+		$modelBudgets = new Budget('search');
+		$modelBudgets->unsetAttributes();  // clear any default values
+		if(isset($_GET['Budget']))
+			$modelBudgets->attributes=$_GET['Budget'];
+	
+		echo $this->renderPartial('_tabCancelled',array('modelBudgets'=>$modelBudgets));
 	}
 	
 	public function actionExportToExcel($id,$versionNumber)
