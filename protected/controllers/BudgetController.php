@@ -251,6 +251,11 @@ class BudgetController extends GController
 		));
 	}
 
+	public function actionAjaxOpenNewBudget()
+	{
+		echo $this->renderPartial('_modalNewBudget');
+	}
+	
 	public function actionAjaxSelect()
 	{
 		$modelProduct = new Product('search');
