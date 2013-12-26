@@ -1,3 +1,16 @@
+<script type="text/javascript">
+
+function openNewBudget()
+{
+	$.post("<?php echo ProductController::createUrl('AjaxOpenNewBudget'); ?>"
+	).success(
+		function(data){
+			$('#myModalNewBudget').html(data);
+	   		$('#myModalNewBudget').modal('show');	  
+		});
+}
+
+</script>
 <div class="container" id="screenPresupuestos">
   <h1 class="pageTitle">Presupuestos</h1>
   <div class="row">
