@@ -3,7 +3,7 @@
           <tr>
             <th style="text-align:left;">Proyecto</th>
             <th style="text-align:left;">Cancelado</th>
-            <th style="text-align:left;">N� Versi&oacute;n</th>
+            <th style="text-align:left;">N&ordm; Versi&oacute;n</th>
             <th style="text-align:left;">Descripci&oacute;n</th>
             <th style="text-align:left;">Raz&oacute;n</th>
             <th style="text-align:right;">Acciones</th>

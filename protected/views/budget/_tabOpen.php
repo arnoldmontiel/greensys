@@ -3,7 +3,7 @@
         <thead>
           <tr>
             <th style="text-align:left;">Proyecto</th>
-            <th style="text-align:left;">N� Versi&oacute;n</th>
+            <th style="text-align:left;">N&ordm; Versi&oacute;n</th>
             <th style="text-align:left;">Descripci&oacute;n</th>
             <th style="text-align:left;">Descuento</th>
             <th style="text-align:left;">Fecha Creaci&oacute;n</th>
