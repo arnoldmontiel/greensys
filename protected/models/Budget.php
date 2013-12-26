@@ -28,6 +28,7 @@ class Budget extends ModelAudit
 {
 	public $curVersion;
 	public $totPrice;
+	public $project_description;
 	
 	public function beforeSave()
 	{
@@ -49,7 +50,7 @@ class Budget extends ModelAudit
 		
 		$this->date_finalization = isset($this->date_finalization)?Yii::app()->dateFormatter->formatDateTime($this->date_finalization,'small',null):null;
 	
-		
+		$this->date_creation = isset($this->date_creation)?Yii::app()->dateFormatter->formatDateTime($this->date_creation,'small',null):null;
 	
 		return true;
 	}
@@ -90,7 +91,7 @@ class Budget extends ModelAudit
 			              'setOnEmpty'=>true,'on'=>'insert'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_project, percent_discount, date_creation, Id_budget_state, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, version_number, totPrice, note', 'safe', 'on'=>'search'),
+			array('Id, Id_project, percent_discount, date_creation, Id_budget_state, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, version_number, totPrice, note, project_description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -117,16 +118,16 @@ class Budget extends ModelAudit
 	{
 		return array(
 			'Id' => 'ID',
-			'Id_project' => 'Project',
-			'percent_discount' => 'Discount',
-			'date_creation' => 'Date Creation',
+			'project_description' => 'Proyecto',
+			'percent_discount' => 'Descuento',
+			'date_creation' => 'Fecha Creación',
 			'Id_budget_state' => 'State',
-			'date_inicialization' => 'Date Inicialization',
+			'date_inicialization' => 'Fecha Inicio',
 			'date_finalization' => 'Date Finalization',
 			'date_estimated_inicialization' => 'Date Estimated Inicialization',
 			'date_estimated_finalization' => 'Date Estimated Finalization',
-			'version_number' => 'Version Number',
-			'description' => 'Description',
+			'version_number' => 'N° Versión',
+			'description' => 'Descripción',
 			'subTotalPrice'=>'Subtotal',
 			'totalPrice'=>'Total',
 			'note' => 'Note',
@@ -235,6 +236,49 @@ class Budget extends ModelAudit
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
+	
+	public function searchOpen()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('Id',$this->Id);
+		$criteria->compare('Id_project',$this->Id_project);
+		$criteria->compare('Id_budget_state',1);
+		$criteria->compare('percent_discount',$this->percent_discount,true);
+		$criteria->compare('date_creation',$this->date_creation,true);
+		$criteria->compare('Id_budget_state',$this->Id_budget_state);
+		$criteria->compare('date_inicialization',$this->date_inicialization,true);
+		$criteria->compare('date_finalization',$this->date_finalization,true);
+		$criteria->compare('date_estimated_inicialization',$this->date_estimated_inicialization,true);
+		$criteria->compare('date_estimated_finalization',$this->date_estimated_finalization,true);
+		$criteria->compare('version_number',$this->version_number);
+		$criteria->compare('description',$this->description,true);
+	
+		$criteria->with[]='project';
+		$criteria->addSearchCondition("project.description",$this->project_description);		
+		
+		$sort=new CSort;
+		$sort->attributes=array(
+				'date_creation',
+				'date_inicialization',
+				'version_number',
+				'description',
+				'percent_discount',
+				'project_description' => array(
+						'asc' => 'project.description',
+						'desc' => 'project.description DESC',
+				),
+		);
+	
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+				'sort'=>$sort,
+		));
+	}	
+	
 	public function search()
 	{
 		// Warning: Please modify the following code to remove attributes that

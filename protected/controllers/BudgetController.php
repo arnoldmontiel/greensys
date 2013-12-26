@@ -227,7 +227,12 @@ class BudgetController extends GController
 	 */
 	public function actionIndex()
 	{	
-		$this->render('index');		
+		$modelBudgets = new Budget('search');
+		$modelBudgets->unsetAttributes();
+		if(isset($_GET['Budget']))
+			$modelBudgets->attributes=$_GET['Budget'];
+		
+		$this->render('index', array('modelBudgets'=>$modelBudgets));		
 	}
 	
 	public function actionExportToExcel($id,$versionNumber)

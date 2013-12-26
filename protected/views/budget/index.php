@@ -2,7 +2,7 @@
 
 function openNewBudget()
 {
-	$.post("<?php echo ProductController::createUrl('AjaxOpenNewBudget'); ?>"
+	$.post("<?php echo BudgetController::createUrl('AjaxOpenNewBudget'); ?>"
 	).success(
 		function(data){
 			$('#myModalNewBudget').html(data);
@@ -28,7 +28,7 @@ function editBudget(id)
       </ul>
       <div class="tab-content">
   <div class="tab-pane active" id="tabAbiertos">
-  	<?php echo $this->renderPartial('_tabOpen'); ?>
+  	<?php echo $this->renderPartial('_tabOpen',array('modelBudgets'=>$modelBudgets)); ?>
   </div><!-- /.tab1 --> 
      <div class="tab-pane" id="tabEsperando">
       <?php echo $this->renderPartial('_tabWaiting'); ?>
