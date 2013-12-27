@@ -42,7 +42,7 @@
 						'header'=>'Acciones',
 						'value'=>function($data){
 						$grid = "'budget-grid-open'";
-							return '<div class="buttonsTablePres"><button onclick="editBudget('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
+							return '<div class="buttonsTablePres"><button onclick="editBudget('.$data->Id.', '.$data->version_number.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
 									<button onclick="removeBudget('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>
             						<button onclick="closeVersion('.$data->Id.', '.$data->version_number.', '.$grid.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-archive"></i> Cerrar</button>
             						<button onclick="exportBudget('.$data->Id.');"type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar</button></div>';						

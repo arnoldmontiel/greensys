@@ -54,10 +54,10 @@ function openNewBudget()
 		});
 }
 
-function editBudget(id)
+function editBudget(id,version)
 {
-	var params = "&id="+id;
-	window.location = "<?php echo BudgetController::createUrl("editBudget")?>" + params; 
+	var params = "&id="+id+"&version="+version;
+	window.location = "<?php echo BudgetController::createUrl("addItem")?>" + params; 
 	return false;
 }
 
