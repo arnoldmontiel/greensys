@@ -14,8 +14,8 @@ return array(
 		'application.components.*',
 	),
 
-	'localeDataPath'=>'protected/i18n/data/',
-
+	'localeDataPath'=>dirname(__FILE__).'/../i18n/data',
+		
 	// application components
 	'components'=>array(
 		'db'=>array(

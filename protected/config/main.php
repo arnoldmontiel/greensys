@@ -32,7 +32,7 @@ return array(
 		'application.extensions.yii-mail.YiiMailMessage',
 	),
 	
-	'localeDataPath'=>'protected/i18n/data/',
+	'localeDataPath'=>dirname(__FILE__).'/../i18n/data',
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
