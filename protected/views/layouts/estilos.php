@@ -232,7 +232,6 @@ h3.tableTitle{ color: #666; text-shadow:none; background-color:#eee; padding:10p
 .panel .table.tablaIndividual{ margin-bottom:0px;}
 .panel-body{ padding:10px;}
 
-.panel-body .tablaDatosPanel{ margin-top:10px; margin-bottom:10px !important;}
 
 .marginLeft{margin-left:10px;}
 
@@ -405,6 +404,7 @@ padding: 6px 8px;
 .combined select{display:inline-block; width:60%;}
 .combined button{display:inline-block; width:35%; margin:0px !important;}
 
+
 /*---------- END EDIT CREATE FORM -------------*/
 
 /* ------ MODALS ------- */
@@ -440,39 +440,47 @@ padding: 6px 8px;
 
 /* ------ CREAR PRESU ------- */
 
-#screenCrearPresupuesto{ margin-bottom:60px;}
-#campoPrecio{ width:65px; display:inline-block;}
+
+#screenCrearPresupuesto{ margin-bottom:80px;}
 #campoTipoPrecio{ width:65px; display:inline-block;}
 
 h2 a.superEdit{ position:absolute; top:10px; right:30px; cursor:pointer; font-size:20px;}
 
-td.precioTabla{position:relative;}
-td.precioTabla button{ position:absolute; top:50%; right:5px; margin-top:-12px;}
 
-td.precioTabla .precioTablaValor{padding-right:30px;}
 
-.btnAlternateView{ margin-right:20px;}
+.btnAlternateView{ margin-left:25px;}
 
 #myModalAgregarProductos .modal-dialog{ width:80%;}
 #myModalAgregarProductos .label{ font-size:15px;}
 #myModalAgregarProductos .table.tablaIndividual{ margin-bottom:0px;}
 
-.inputSmall{ width:40px; display:inline-block; margin-right:5px;}
+.inputSmall{ width:40px; display:inline-block; }
+.inputMed{ width:55px; display:inline-block; }
 
 
+ul.superDropdown{left:100px; top:-150px;}
+ul.superDropdown li{ width:300px; }
 
-ul.superDropdown li{ width:400px;}
 
-.introProveedor{ padding:10px; padding-bottom:0px;}
-.introProveedor .table{ margin-bottom:0px;}
+.introProveedor{ padding:10px; padding-bottom:0px; padding-top:5px;}
+.introProveedor .table{ margin-bottom: 0px;
+border-bottom: 1px dotted #ccc;}
 .introProveedor .table th{ font-size:12px; background-color:white;}
 .introProveedor .table td{ font-size:12px;}
 .titleProveedor{ font-size:15px; font-weight:600; padding-bottom:5px;border-bottom:1px dotted #ccc; padding-left:5px;}
 
-.tableOpcionesPrecio{ padding:5px;}
-.introProveedor .tableOpcionesPrecio td{ background-color:#eee;font-size:18px;}
+.introProveedor .tableDatosProd{ margin-bottom:5px;}
 
-.precioMasBajo{ color:#5cb85c;}
+.superDropdown .fa-fw{
+font-size: 12px;
+margin-right: 5px;
+color: #666;}
+
+.tableOpcionesPrecio{ padding:5px;}
+.introProveedor .tableOpcionesPrecio td{ background-color:#eee;font-size:16px;}
+
+.superDropdown .fa-fw.masBajo{ color:#5cb85c;}
+.superDropdown .fa-fw.masAlto{ color:red;}
 
 
 .tituloFinalPresu{ font-size: 1.8em;
@@ -484,12 +492,62 @@ line-height: auto;
 padding-bottom: 20px;}
 .totalPresupuesto{ background-color:#eee; height:120px; margin-top:20px; margin-bottom:30px;}
 
+.tablePresuTotal{ background-color:white;}
+.tablePresuTotal td{ line-height:20px; vertical-align:middle !important;}
+.superTotal{ font-size:20px;}
+
+.panelPresu{ background-color:rgba(255,255,255,0.5); border:none; margin-bottom:2px;}
+.panelPresu{ padding-bottom:20px;   border-bottom-right-radius: 0px;  border-bottom-left-radius: 0px;
+}
+
+.contenedorPresu{ background-color:rgba(255,255,255,0.5); padding:0px; margin:0px;  padding-top:20px; margin-bottom:2px;}
+
+.contenedorPresu .col-sm-12{ padding-right:10px;padding-left:10px;}
+
+.panel-body .tablaDatosPanel{ margin-top:10px; margin-bottom:10px !important;}
+
+
+.nav-tabs>li a{position:relative; padding-right:35px;}
+.nav-tabs>li a.tabEdit{ padding-right:5px;position:absolute;cursor:pointer; right:5px; top:-1px; background-transparent !important; border:none 0px;}
+
+
+.nav-tabs>li.active>a.tabEdit, .nav-tabs>li.active>a.tabEdit:hover, .nav-tabs>li.active>a.tabEdit:focus { background-color:transparent !important;}
+.nav>li>a:hover.tabEdit, .nav>li>a.tabEdit:focus { background-color:transparent !important;}
+
+.nav-tabs>li a.tabEdit:hover, .nav-tabs>li.active>a.tabEdit:hover{color:#5cb85c !important; cursor:pointer;}
+
+.bloqueHoras{min-width:170px; padding-top:1px;}
+.bloqueHoras span{ display:inline-block; width:22px; margin-right:3px; font-size:14px;}
+
+.bloqueDescuentoHoras{min-width:135px; padding-top:1px;}
+.bloqueDescuentoHoras span{ display:inline-block; width:22px; margin-right:3px; font-size:14px;}
+
+.bloqueTotalHoras{min-width:85px; margin-top:4px;}
+.bloqueTotalHoras span{ display:inline-block; width:22px; margin-right:3px; font-size:14px;}
+
+.bloqueDescuento{min-width:110px; padding-top:1px;}
+.bloqueDescuento input{ margin-right:0px;}
+.labelPrecio{ font-size:13px;}
+
+.radioTipo{display: inline-block;
+width: 50px;
+height: 40px;
+vertical-align: middle;}
+
+.radioTipo .radio{margin-bottom:0px; margin-top:0px;}
+
+#campoServicio{width:100px;}
+
+.usd{font-size:11px; display:inline-block;}
+
+
+.precioTabla{position:relative;}
+.precioTabla button{ position:absolute; top:50%; right:5px; margin-top:-12px !important;}
+
+.precioTablaValor{padding-right:30px;min-width:90px; line-height:12px;}
+
+
 /* ------ END CREAR PRESU ------- */
-
-  
-
-
-
 
 
 /* ----- DISPOSITIVOS --------*/
