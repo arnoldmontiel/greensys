@@ -474,7 +474,7 @@ class BudgetController extends GController
 			$priceListItemSale->Id_product=$_GET['ProductSale']['Id'];
 		}
 
-		$this->render('addItem',array(
+		$this->render('addItemNew',array(
 					'model'=>$model,
 					'modelProduct'=>$modelProduct,
 					'modelBudgetItem'=>$modelBudgetItem,
