@@ -61,10 +61,21 @@ function editBudget(id,version)
 	return false;
 }
 
-function removeBudget(id)
+function openCancelBudget(idBudget, version)
 {
-	
+	$.post("<?php echo BudgetController::createUrl('AjaxOpenCancelBudget'); ?>",
+		{
+			idBudget:idBudget,
+			version:version
+		}
+	).success(
+		function(data){
+			$('#myModalCancelBudget').html(data);
+	   		$('#myModalCancelBudget').modal('show');	  
+		});
+	return false;
 }
+
 
 function closeVersion(id, version, grid)
 {
@@ -113,6 +124,7 @@ function reopenBudget(id, version, grid)
 				{
 					$('#tab-open').children().text(obj.openQty);
 					$('#tab-waiting').children().text(obj.waitingQty);
+					$('#tab-cancelled').children().text(obj.cancelledQty);
 				}
 				
 			});
