@@ -3,17 +3,20 @@
   
   
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
     
-    <div class="panel panel-success">
+    <div class="panel panel-success panelPresu">
         <div class="panel-body">
           <h2>Alvear Tower - Contacto Inicial <a class="superEdit" data-toggle="modal" data-target="#myModalEditarPresupuesto"><i class="fa fa-pencil"></i></a></h2>
 
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sodales euismod neque vitae convallis. Phasellus in nunc vitae metus porttitor suscipit.
-<table class="table table-striped table-bordered tablaIndividual tablaDatosPanel" width="100%">
+<div class="row">
+                
+    <div class="col-sm-6">
+        <table class="table table-striped table-bordered tablaIndividual tablaDatosPanel" width="50%">
         <tbody>
             <tr>
-                <td width="20%" class="bold">Estado</td>
+                <td width="30%" class="bold">Estado</td>
                 <td>Abierto</td>
             </tr>
             <tr>
@@ -22,41 +25,43 @@
             </tr>
         </tbody>
       </table>
-                <button type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-archive fa-fw"></i> Cerrar Versi&oacute;n</button>
-                <button type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-print fa-fw"></i> Imprimir</button>
-      <button type="button" class="btn btn-primary pull-right"><i class="fa fa-eye fa-fw"></i> Preview</button> 
-        </div>
-        </div>
-    </div>
-    <div class="col-sm-6">
-    <!--
-    <div class="panel panel-default">
-        <!-- Default panel contents
-        <div class="panel-heading">Acciones</div>
-        <div class="panel-body">
-        <button type="button" class="btn btn-primary marginLeft"><i class="fa fa-archive fa-fw"></i> Cerrar Versi&oacute;n</button>
-                <button type="button" class="btn btn-primary marginLeft"><i class="fa fa-print fa-fw"></i> Imprimir</button>
-      <button type="button" class="btn btn-primary "><i class="fa fa-eye fa-fw"></i> Preview</button> 
-        </div>
       </div>
-
-    </div> -->
+    <div class="col-sm-6">
+        <table class="table table-striped table-bordered tablaIndividual tablaDatosPanel" width="50%">
+        <tbody>
+            <tr>
+                <td width="40%" class="bold">Fecha Estimada Inicio</td>
+                <td>20 Nov 2014</td>
+            </tr>
+            <tr>
+                <td class="bold">Fecha Estimada Finalizaci&oacute;n</td>
+                <td>20 Dec 2014</td>
+            </tr>
+        </tbody>
+      </table>
+                </div>
+               </div>
+                <button type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-archive fa-fw"></i> Cerrar Versi&oacute;n</button>
+                <button type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-download fa-fw"></i> Descargar</button>
+        </div>
+        </div>
     </div>
   </div>
- 
-   <div class="row">
+   <div class="row contenedorPresu">
     <div class="col-sm-12">
+      <div class="tituloFinalPresu">Productos</div>
+    
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#tabBanio" data-toggle="tab">Baï¿½o</a></li>
-        <li><a href="#tabEsperando" data-toggle="tab">Living</a></li>
-        <li><a href="#tabAprobados" data-toggle="tab">Comedor</a></li>
-                <li class="pull-right"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos">Agregar Productos</button></li>
+        <li class="active"><a href="#tabBanio" data-toggle="tab">Ba–o </a><a class="tabEdit"><i class="fa fa-pencil"></i></a></li>
+        <li><a href="#tabEsperando" data-toggle="tab">Living</a><a class="tabEdit"><i class="fa fa-pencil"></i></a></li>
+        <li><a href="#tabAprobados" data-toggle="tab">Comedor</a><a class="tabEdit"><i class="fa fa-pencil"></i></a></li>
         <li class="pull-right">
           <div class="btn-group btnAlternateView">
   <button type="button" class="btn btn-default active">ï¿½reas</button>
   <button type="button" class="btn btn-default">Servicios</button>
 </div>
         </li>
+                <li class="pull-right"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos">Agregar Productos</button></li>
       </ul>
       <div class="tab-content">
   <div class="tab-pane active" id="tabBanio">
@@ -64,7 +69,7 @@
         <thead>
           <tr>
             <th style="text-align:left;">Model</th>
-            <th style="text-align:left;">Cantidad</th>
+            <th style="text-align:left;">Cant</th>
             <th style="text-align:left;">Part Number</th>
             <th style="text-align:left;">Codigo</th>
             <th style="text-align:left;">Marca</th>
@@ -73,9 +78,10 @@
             <th style="text-align:left;">Precio</th>
             <th style="text-align:left;">Descuento</th>
             <th style="text-align:left;">Total</th>
-            <th style="text-align:left;">Horas Inst.</th>
-            <th style="text-align:left;">Horas Prog.</th>
-            <th style="text-align:right;">Acciones</th>
+            <th style="text-align:left;">Horas</th>
+            <th style="text-align:left;">Desc Horas</th>
+            <th style="text-align:left;">Total Horas</th>
+            <th style="text-align:right;">Acc</th>
           </tr>
         </thead>
         <tbody>
@@ -93,12 +99,12 @@
 <option value="3">Control de iluminaciï¿½n</option>
               </select>
             </td>
-            <td class="precioTabla"><div class="precioTablaValor">500 USD</div> <button type="button" class="btn btn-primary btn-xs pull-right dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown"><i class="fa fa-pencil"></i></button>
+            
+            <td class="precioTabla"><div class="precioTablaValor">500 <div class="usd">USD</div></div> <button type="button" class="btn btn-primary btn-xs pull-right dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown"><i class="fa fa-pencil"></i></button>
               <ul class="dropdown-menu superDropdown" role="menu" aria-labelledby="dropdownMenu1">
     <li role="presentation" class="introProveedor">
     
-    <div class="titleProveedor">Luis - Electronica </div>
-    <table class="table">
+    <table class="table tableDatosProd">
         <thead>
           <tr>
             <th>MSRP</th>
@@ -114,17 +120,20 @@
             </tr>
         </tbody>
       </table>
+      </li>
+    <li role="presentation" class="introProveedor">
+    <div class="titleProveedor">Luis - Electronica </div>
     <table class="table tableOpcionesPrecio">
         <tbody>
           <tr>
-            <td>Maritimo</td>
-            <td>50 Dias</td>
-            <td>$200 <i class="fa fa-arrow-down precioMasBajo"></i></td>
+            <td> <i class="fa fa-anchor fa-fw"></i>Maritimo</td>
+            <td>40 Dias</td>
+            <td>$200</td>
             <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
             </tr>
           <tr>
-            <td>Aereo</td>
-            <td>50 Dias</td>
+            <td> <i class="fa fa-plane fa-fw"></i>Aereo</td>
+            <td>40 Dias</td>
             <td>$500</td>
             <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
             </tr>
@@ -132,36 +141,31 @@
       </table>
     </li>
      <li role="presentation" class="introProveedor">
-    
     <div class="titleProveedor">Luis - Muebles </div>
-    <table class="table">
-        <thead>
-          <tr>
-            <th>MSRP</th>
-            <th style="text-align:center;">Dealer Cost</th>
-            <th style="text-align:right;">Profit Rate</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>899.00</td>
-            <td style="text-align:center;">450.00</td>
-            <td style="text-align:right;">2.00</td>
-            </tr>
-        </tbody>
-      </table>
     <table class="table tableOpcionesPrecio">
         <tbody>
           <tr>
-            <td>Maritimo</td>
-            <td>50 Dias</td>
+            <td> <i class="fa fa-anchor fa-fw"></i>Maritimo</td>
+            <td>30 Dias</td>
             <td>$500</td>
             <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
             </tr>
           <tr>
-            <td>Aereo</td>
+            <td> <i class="fa fa-plane fa-fw"></i>Aereo</td>
             <td>50 Dias</td>
-            <td>$500</td>
+            <td>$600 </td>
+            <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
+            </tr>
+        </tbody>
+      </table>
+    </li>
+    <li role="presentation" class="introProveedor">
+    <div class="titleProveedor">FOB </div>
+    <table class="table tableOpcionesPrecio">
+        <tbody>
+          <tr>
+            <td> <i class="fa fa-sun-o fa-fw"></i>MSRP</td>
+            <td>$899.00</td>
             <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
             </tr>
         </tbody>
@@ -170,16 +174,65 @@
   </ul>
             </td>
             <td>
-            <input type="model" id="campoPrecio" class="form-control">
-            <select class="form-control" id="campoTipoPrecio">
-<option value="1">%</option>
-<option value="2">USD</option>
-              </select>
+            <div class="bloqueDescuento"><input type="model" id="campoPrecio" class="form-control inputMed">
+                       <div class="radioTipo"><div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios1" id="optionsRadios1" value="option1" checked>
+    <div class="usd">USD</div>
+  </label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios1" id="optionsRadios2" value="option2">
+    %
+  </label>
+</div></div></div>
+            <td><span class="label label-primary labelPrecio">500 <div class="usd">USD</div></span></td>
+            <td> <div class="bloqueHoras">
+          <span class="label label-default">P</span>  
+          <input type="model" id="campoCantHoras" class="form-control inputSmall">
+            x 
+            <input type="model" id="campoPrecioHora" class="form-control inputMed" > <div class="usd">USD</div></div>
+             <div class="bloqueHoras">
+          <span class="label label-default">I</span>  
+          <input type="model" id="campoCantHoras" class="form-control inputSmall">
+            x 
+            <input type="model" id="campoPrecioHora" class="form-control inputMed" > <div class="usd">USD</div></div>
             </td>
-            <td>500 USD</td>
-            <td>-</td>
-            <td>-</td>
-            <td style="text-align:right;"> <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Remover</button></td>
+            <td>
+            <div class="bloqueDescuentoHoras"><span class="label label-default">P</span><input type="model" id="campoPrecio" class="form-control inputMed">
+              <div class="radioTipo"><div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios2" id="optionsRadios1" value="option1" checked>
+    <div class="usd">USD</div>
+  </label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios2" id="optionsRadios2" value="option2">
+    %
+  </label>
+</div></div></div>
+             <div class="bloqueDescuentoHoras"><span class="label label-default">I</span><input type="model" id="campoPrecio" class="form-control inputMed">
+              <div class="radioTipo"><div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios3" id="optionsRadios1" value="option1" checked>
+    <div class="usd">USD</div>
+  </label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios3" id="optionsRadios2" value="option2">
+    %
+  </label>
+</div></div></div>
+            </td>
+              <td>
+              <div class="bloqueTotalHoras"><span class="label label-default">P</span> 500 <div class="usd">USD</div></div>
+              <div class="bloqueTotalHoras"><span class="label label-default">I</span> 300 <div class="usd">USD</div></div>
+              
+              </td>
+            <td style="text-align:right;"> <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button></td>
           </tr>
           <tr>
             <td>AD4</td>
@@ -195,18 +248,68 @@
 <option value="3">Control de iluminaciï¿½n</option>
               </select>
             </td>
-            <td>500 USD</td>
+            <td>500 <div class="usd">USD</div></td>
             <td>
-            <input type="model" id="campoPrecio" class="form-control">
-            <select class="form-control" id="campoTipoPrecio">
-<option value="1">%</option>
-<option value="2">USD</option>
-              </select>
+            <div class="bloqueDescuento"><input type="model" id="campoPrecio" class="form-control inputMed">
+                       <div class="radioTipo"><div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios4" id="optionsRadios1" value="option1" checked>
+    <div class="usd">USD</div>
+  </label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios4" id="optionsRadios2" value="option2">
+    %
+  </label>
+</div></div></div>
             </td>
-            <td>500 USD</td>
-            <td>-</td>
-            <td>-</td>
-            <td style="text-align:right;"> <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Remover</button></td>
+            <td><span class="label label-primary labelPrecio">500 <div class="usd">USD</div></span></td>
+            <td> <div class="bloqueHoras">
+          <span class="label label-default">P</span>  
+          <input type="model" id="campoCantHoras" class="form-control inputSmall">
+            x 
+            <input type="model" id="campoPrecioHora" class="form-control inputMed" > <div class="usd">USD</div></div>
+             <div class="bloqueHoras">
+          <span class="label label-default">I</span>  
+          <input type="model" id="campoCantHoras" class="form-control inputSmall">
+            x 
+            <input type="model" id="campoPrecioHora" class="form-control inputMed" > <div class="usd">USD</div></div>
+            </td>
+            <td>
+            <div class="bloqueDescuentoHoras"><span class="label label-default">P</span><input type="model" id="campoPrecio" class="form-control inputMed">
+              <div class="radioTipo"><div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios5" id="optionsRadios1" value="option1" checked>
+    USD
+  </label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios5" id="optionsRadios2" value="option2">
+    %
+  </label>
+</div></div></div>
+             <div class="bloqueDescuentoHoras"><span class="label label-default">I</span><input type="model" id="campoPrecio" class="form-control inputMed">
+             <div class="radioTipo"><div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios6" id="optionsRadios1" value="option1" checked>
+    <div class="usd">USD</div>
+  </label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios6" id="optionsRadios2" value="option2">
+    %
+  </label>
+</div></div></div>
+            </td>
+              <td>
+              <div class="bloqueTotalHoras"><span class="label label-default">P</span> 500 <div class="usd">USD</div></div>
+              <div class="bloqueTotalHoras"><span class="label label-default">I</span> 300 <div class="usd">USD</div></div>
+              
+              </td>
+            <td style="text-align:right;"> <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button></td>
           </tr>
         </tbody>
       </table>
@@ -215,6 +318,33 @@
    </div>
     </div>
     </div>
+    <div class="row contenedorPresu">
+  <div class="col-sm-6">
+  </div>
+  <div class="col-sm-6">
+  <div class="tituloFinalPresu">Total</div>
+<table class="table tablePresuTotal">
+        <tbody>
+          <tr>
+            <td width="20%" valign="middle"  width="20%">Subtotal</td>
+            <td width="30%">&nbsp;</td>
+            <td valign="middle"  align="right" class="bold"><div class="usd">USD</div> 2000</td>
+          </tr>
+          <tr>
+            <td valign="middle" >Discount</td>
+            <td><input type="model" id="campoPrecio" class="form-control" value="0"> %</td>
+            <td align="right" valign="middle" class="bold"> <div class="usd">USD</div> 2000</td>
+          </tr>
+          <tr class="superTotal">
+            <td valign="middle" >Total</td>
+            <td>&nbsp;</td>
+            <td valign="middle"  align="right" class="bold">USD 2000</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  </div>
+    
   <div class="row navbar-fixed-bottom">
     <div class="col-sm-12">
       <div class="buttonsFloatBottom">
@@ -227,29 +357,6 @@
   <!-- /.row --> 
   
   
-    <div class="row ">
-  <div class="col-sm-6">
-  </div>
-  <div class="col-sm-6">
-  <div class="tituloFinalPresu">Total</div>
-<table class="table">
-        <tbody>
-          <tr>
-            <td width="20%">Subtotal</td>
-            <td>1000</td>
-          </tr>
-          <tr>
-            <td>Discount</td>
-            <td>1000</td>
-          </tr>
-          <tr>
-            <td>Total</td>
-            <td>2000</td>
-          </tr>
-        </tbody>
-      </table>
-  </div>
-  </div>
   
 </div>
 <!-- /container --> 
