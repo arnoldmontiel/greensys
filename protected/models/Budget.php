@@ -139,7 +139,7 @@ class Budget extends ModelAudit
 			'description' => 'Descripción',
 			'subTotalPrice'=>'Subtotal',
 			'totalPrice'=>'Total',
-			'note' => 'Note',
+			'note' => 'Razón',
 			'date_close'=>'Cerrado', 
 			'date_cancelled'=>'Cancelado', 
 			'date_approved'=>'Aprobado'
@@ -384,6 +384,7 @@ class Budget extends ModelAudit
 		$criteria->compare('date_estimated_inicialization',$this->date_estimated_inicialization,true);
 		$criteria->compare('date_estimated_finalization',$this->date_estimated_finalization,true);
 		$criteria->compare('version_number',$this->version_number);
+		$criteria->compare('note',$this->note, true);
 		$criteria->compare('t.description',$this->description,true);
 		$criteria->compare('date_cancelled',$this->date_cancelled,true);
 		
@@ -394,6 +395,7 @@ class Budget extends ModelAudit
 		$sort=new CSort;
 		$sort->attributes=array(
 				'date_creation',
+				'note',
 				'date_inicialization',
 				'version_number',
 				'description',
