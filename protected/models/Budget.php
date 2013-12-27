@@ -42,9 +42,8 @@ class Budget extends ModelAudit
 		
 		$this->date_close = (!empty($this->date_close))?Yii::app()->lc->toDatabase($this->date_close,'date','small','date',null):null;
 		$this->date_cancelled = (!empty($this->date_cancelled))?Yii::app()->lc->toDatabase($this->date_cancelled,'date','small','date',null):null;
-		$this->date_approved = (!empty($this->date_approved))?Yii::app()->lc->toDatabase($this->date_approved,'date','small','date',null):null;
-		$this->date_creation = (!empty($this->date_creation))?Yii::app()->lc->toDatabase($this->date_creation,'date','small','date',null):null;
-	
+		$this->date_approved = (!empty($this->date_approved))?Yii::app()->lc->toDatabase($this->date_approved,'date','small','date',null):null;		
+
 		return parent::beforeSave();
 	}
 	
@@ -133,9 +132,9 @@ class Budget extends ModelAudit
 			'date_creation' => 'Fecha Creación',
 			'Id_budget_state' => 'State',
 			'date_inicialization' => 'Fecha Inicio',
-			'date_finalization' => 'Date Finalization',
-			'date_estimated_inicialization' => 'Date Estimated Inicialization',
-			'date_estimated_finalization' => 'Date Estimated Finalization',
+			'date_finalization' => 'Fecha Finalización',
+			'date_estimated_inicialization' => 'Fecha Estimada Inicio',
+			'date_estimated_finalization' => 'Fecha Estimada Finalización',
 			'version_number' => 'N° Versión',
 			'description' => 'Descripción',
 			'subTotalPrice'=>'Subtotal',

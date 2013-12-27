@@ -389,6 +389,25 @@ class BudgetController extends GController
 															'ddlProjects'=>$ddlProjects));
 	}
 	
+	public function actionAjaxSaveNewBudget()
+	{
+		$modelBudget = new Budget();		
+		
+		if(isset($_POST['Budget']))
+		{
+			$modelBudget->attributes = $_POST['Budget'];
+			
+			//Genero el Id
+			$modelBudget->Id = Budget::model()->count() + 1;
+			//Solo para la creacion la version 1
+			$modelBudget->version_number = 1;
+			$modelBudget->Id_budget_state = 1;
+			
+			$modelBudget->save();
+		}
+		echo Budget::model()->countByAttributes(array('Id_budget_state'=>1));
+	}
+	
 	public function actionEditBudget($id)
 	{
 		$this->render('editBudget');

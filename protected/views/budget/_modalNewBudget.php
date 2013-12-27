@@ -6,7 +6,7 @@
       </div>
       <div class="modal-body">
 
-<form role="form">
+<form id="form-new-budget" role="form">
   <div class="form-group">
     <label for="Id_project">Proyecto</label>
     <?php
@@ -17,7 +17,7 @@
   <div class="form-group">    
     <?php 
     	echo CHtml::activeLabel($model, 'percent_discount');
-    	echo CHtml::activeTextField($model, 'percent_discount', array('class'=>'form-control'));
+    	echo CHtml::activeTextField($model, 'percent_discount', array('class'=>'form-control', 'onkeyup'=>'validateNumber(this);'));    	
     ?>
   </div>
   <div class="form-group">
@@ -26,29 +26,114 @@
     	echo CHtml::activeTextArea($model, 'description', array('class'=>'form-control', 'rows'=>3));
     ?>    
   </div>
-  <div class="form-group col-sm-6 limpiarPadding paddingRight">
-    <label for="campoEstInicial">Fecha Estimada Inicio</label>
-	<input type="text" id="campoEstInicial" class="form-control">
+  <div class="form-group col-sm-6 limpiarPadding paddingRight">    
+	<?php 
+ 		echo CHtml::activeLabel($model, 'date_estimated_inicialization');
+ 		$this->widget('zii.widgets.jui.CJuiDatePicker', array(
+	     // additional javascript options for the date picker plugin
+ 		'language'=>'es',
+ 		'model'=>$model,
+ 		'attribute'=>'date_estimated_inicialization',
+ 		'options'=>array(
+	         'showAnim'=>'fold',
+	     ),
+	     'htmlOptions'=>array(
+			'class'=>'form-control',
+	    ),
+		));
+	?>
   </div>
   <div class="form-group col-sm-6 limpiarPadding paddingLeft">
-    <label for="campoEstFinal">Fecha Estimada Finalizaci&oacute;n</label>
-	<input type="text" id="campoEstFinal" class="form-control">
+	<?php 
+ 		echo CHtml::activeLabel($model, 'date_estimated_finalization');
+ 		$this->widget('zii.widgets.jui.CJuiDatePicker', array(
+	     // additional javascript options for the date picker plugin
+ 		'language'=>'es',
+ 		'model'=>$model,
+ 		'attribute'=>'date_estimated_finalization',
+ 		'options'=>array(
+	         'showAnim'=>'fold',
+	     ),
+	     'htmlOptions'=>array(
+			'class'=>'form-control',
+	    ),
+		));
+	?>
   </div>
   <div class="form-group col-sm-6 limpiarPadding paddingRight">
-    <label for="campoInicio">Fecha Inicio</label>
-	<input type="text" id="campoInicio" class="form-control">
+	<?php 
+ 		echo CHtml::activeLabel($model, 'date_inicialization');
+ 		$this->widget('zii.widgets.jui.CJuiDatePicker', array(
+	     // additional javascript options for the date picker plugin
+ 		'language'=>'es',
+ 		'model'=>$model,
+ 		'attribute'=>'date_inicialization',
+ 		'options'=>array(
+	         'showAnim'=>'fold',
+	     ),
+	     'htmlOptions'=>array(
+			'class'=>'form-control',
+	    ),
+		));
+	?>
   </div>
-  <div class="form-group col-sm-6 limpiarPadding paddingLeft">
-    <label for="campoFinal">Fecha Finalizaci&oacute;n</label>
-	<input type="text" id="campoFinal" class="form-control">
+  <div class="form-group col-sm-6 limpiarPadding paddingLeft">    
+	<?php 
+ 		echo CHtml::activeLabel($model, 'date_finalization');
+ 		$this->widget('zii.widgets.jui.CJuiDatePicker', array(
+	     // additional javascript options for the date picker plugin
+ 		'language'=>'es',
+ 		'model'=>$model,
+ 		'attribute'=>'date_finalization',
+ 		'options'=>array(
+	         'showAnim'=>'fold',
+	     ),
+	     'htmlOptions'=>array(
+			'class'=>'form-control',
+	    ),
+		));
+	?>
   </div>
 </form>
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
+        <button onclick="save();" type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
         <a href="crearPresupuesto.php" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar y Agregar Prods.</a>
       </div>
     </div><!-- /.modal-content -->
+<script type="text/javascript">
+
+		$("#form-new-budget").submit(function(e)
+		{
+		    var formURL = "<?php echo BudgetController::createUrl("AjaxSaveNewBudget"); ?>";
+		    var formData = new FormData(this);
+			
+		    $.ajax({
+		        url: formURL,
+		    type: 'POST',
+		        data:  formData,
+		    mimeType:"multipart/form-data",
+		    contentType: false,
+		        cache: false,
+		        processData:false,
+		    success: function(data, textStatus, jqXHR)
+		    {		    							
+		    	$.fn.yiiGridView.update("budget-grid-open");
+		    	$('#myModalNewBudget').trigger('click');
+		    	$('#tab-open').children().text(data);
+		    },
+		     error: function(jqXHR, textStatus, errorThrown)
+		     {
+		     }         
+		    });
+		    e.preventDefault(); //Prevent Default action.
+		});
+	
+	function save()
+	{				
+		$('#form-new-budget').submit();
+	}
+</script>
   </div><!-- /.modal-dialog -->
