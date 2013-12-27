@@ -408,7 +408,7 @@ class BudgetController extends GController
 		echo Budget::model()->countByAttributes(array('Id_budget_state'=>1));
 	}
 	
-	public function actionEditBudget($id)
+	public function actionEditBudget($id,$version_number)
 	{
 		$this->render('editBudget');
 	}
@@ -473,8 +473,15 @@ class BudgetController extends GController
 		if(isset($_GET['ProductSale']['Id'])){
 			$priceListItemSale->Id_product=$_GET['ProductSale']['Id'];
 		}
-
-		$this->render('addItemNew',array(
+		$this->render('editBudget',array(
+					'model'=>$model,
+					'modelProduct'=>$modelProduct,
+					'modelBudgetItem'=>$modelBudgetItem,
+					'priceListItemSale'=>$priceListItemSale,
+					'areaProjects'=>$areaProjects,
+					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
+		));
+		$this->render('addItem',array(
 					'model'=>$model,
 					'modelProduct'=>$modelProduct,
 					'modelBudgetItem'=>$modelBudgetItem,
