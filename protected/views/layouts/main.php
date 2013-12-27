@@ -26,6 +26,8 @@ include('menu.php');?>
 </div>
 <div id="myModalNewBudget" class="modal fade" style="display: none;" aria-hidden="true">
 </div>
+<div id="myModalCancelBudget" class="modal fade" style="display: none;" aria-hidden="true">
+</div>
 <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
