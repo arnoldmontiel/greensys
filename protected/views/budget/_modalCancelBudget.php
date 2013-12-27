@@ -13,6 +13,8 @@
     	<textarea id="budget-note" rows="3" class="form-control" placeholder="Razón de cancelado..."></textarea>
   </div>
 </form>
+<div id="status-error" style="display:none" class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i>
+ Para cancelar, se debe escribir alguna razón.</div>
 </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
@@ -25,6 +27,7 @@
         var note = $("#budget-note").val().trim();
         if(note != '')
         {
+        	$('#status-error').hide();
     		$.post("<?php echo ProductController::createUrl('AjaxCancelBudget'); ?>",
     			{
     				idBudget:idBudget,
@@ -45,7 +48,7 @@
         }
         else
         {
-            alert("Para cancelar, se debe escribir alguna razón");
+        	$('#status-error').show();
         }
     		return false;
     }    
