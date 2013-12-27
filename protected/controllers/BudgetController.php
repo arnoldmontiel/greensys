@@ -283,9 +283,12 @@ class BudgetController extends GController
 		}
 		$openQty = Budget::model()->countByAttributes(array('Id_budget_state'=>1));
 		$waitingQty = Budget::model()->countByAttributes(array('Id_budget_state'=>2));
+		$cancelledQty = Budget::model()->countByAttributes(array('Id_budget_state'=>4));
 	
 		$response = array('openQty'=>$openQty,
-				'waitingQty'=>$waitingQty);
+				'waitingQty'=>$waitingQty,
+				'cancelledQty'=>$cancelledQty);
+		
 		echo json_encode($response);
 	}
 	
@@ -426,6 +429,53 @@ class BudgetController extends GController
 					'idArea'=>1,
 		));
 	}
+	
+	public function actionAjaxCancelBudget()
+	{
+		$idBudget = isset($_POST['idBudget'])?$_POST['idBudget']:null;
+		$version = isset($_POST['version'])?$_POST['version']:null;
+		$note = isset($_POST['note'])?$_POST['note']:'';
+		
+		if(isset($idBudget) && isset($version))
+		{
+			$modelBudget = Budget::model()->findByPk(array('Id'=>$idBudget, 'version_number'=>$version));
+			if(isset($modelBudget))
+			{
+				$modelBudget->Id_budget_state = 4;
+				$modelBudget->note = $note;
+				$modelBudget->date_cancelled = new CDbExpression('NOW()');
+				$modelBudget->save();
+			}	
+		}
+		
+		$waitingQty = Budget::model()->countByAttributes(array('Id_budget_state'=>2));
+		$cancelledQty = Budget::model()->countByAttributes(array('Id_budget_state'=>4));
+		
+		$response = array('cancelledQty'=>$cancelledQty,
+				'waitingQty'=>$waitingQty);
+		
+		echo json_encode($response);
+		
+	}
+	
+	public function actionAjaxOpenCancelBudget()
+	{
+		$idBudget = isset($_POST['idBudget'])?$_POST['idBudget']:null;
+		$version = isset($_POST['version'])?$_POST['version']:null;
+	
+		if(isset($idBudget) && isset($version))
+		{
+			$modelBudget = Budget::model()->findByPk(array('Id'=>$idBudget, 'version_number'=>$version));
+			if(isset($modelBudget))
+			{
+				echo $this->renderPartial('_modalCancelBudget',
+						array(
+								'modelBudget'=>$modelBudget
+						));
+			}
+		}
+	}
+	
 	public function actionAjaxSaveService()
 	{
 		if(isset($_POST['Id_budget_item'])&&isset($_POST['Id_service']))
