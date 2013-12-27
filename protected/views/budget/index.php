@@ -4,7 +4,7 @@ Yii::app()->clientScript->registerScript(__CLASS__.'index-budget', "
 $('#tab-open').click(function(){
 	$.ajax({
 	   		type: 'POST',
-	   		url: '". ProductController::createUrl('AjaxOpenTabOpen') . "',
+	   		url: '". BudgetController::createUrl('AjaxOpenTabOpen') . "',
 	 	}).success(function(data)
 	 	{	
 	   		$('#tabAbiertos').html(data);
@@ -14,7 +14,7 @@ $('#tab-open').click(function(){
 $('#tab-waiting').click(function(){
 	$.ajax({
 	   		type: 'POST',
-	   		url: '". ProductController::createUrl('AjaxOpenTabWaiting') . "',
+	   		url: '". BudgetController::createUrl('AjaxOpenTabWaiting') . "',
 	 	}).success(function(data)
 	 	{	
 	   		$('#tabEsperando').html(data);
@@ -24,7 +24,7 @@ $('#tab-waiting').click(function(){
 $('#tab-approved').click(function(){
 	$.ajax({
 	   		type: 'POST',
-	   		url: '". ProductController::createUrl('AjaxOpenTabApproved') . "',
+	   		url: '". BudgetController::createUrl('AjaxOpenTabApproved') . "',
 	 	}).success(function(data)
 	 	{	
 	   		$('#tabAprobados').html(data);
@@ -34,7 +34,7 @@ $('#tab-approved').click(function(){
 $('#tab-cancelled').click(function(){
 	$.ajax({
 	   		type: 'POST',
-	   		url: '". ProductController::createUrl('AjaxOpenTabCancelled') . "',
+	   		url: '". BudgetController::createUrl('AjaxOpenTabCancelled') . "',
 	 	}).success(function(data)
 	 	{	
 	   		$('#tabCancelados').html(data);
