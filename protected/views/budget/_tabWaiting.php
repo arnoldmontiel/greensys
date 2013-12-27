@@ -51,7 +51,7 @@
     										<ul class="dropdown-menu">
 										        <li><a onclick="reopenBudget('.$data->Id.', '.$data->version_number.', '.$grid.')" href="#"><i class="fa fa-refresh"></i> Re-Abrir</a></li>
 										        <li><a onclick="approveBudget('.$data->Id.', '.$data->version_number.', '.$grid.')" href="#"><i class="fa fa-check"></i> Aprobado</a></li>
-										        <li><a onclick="cancelBudget('.$data->Id.', '.$data->version_number.', '.$grid.')" href="#"><i class="fa fa-times-circle"></i> Cancelado</button></a></li>
+										        <li><a onclick="openCancelBudget('.$data->Id.', '.$data->version_number.')" href="#"><i class="fa fa-times-circle"></i> Cancelado</button></a></li>
 										    </ul>
 									</div>
             						<button type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar</button>';						
