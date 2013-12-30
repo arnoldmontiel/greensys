@@ -365,7 +365,7 @@ $settings = new Settings();
 							'name'=>'service',
 							'value'=>'
 											CHtml::dropDownList("Id_service", $data->Id_service,CHtml::listData(Service::model()->findAll(), "Id", "description"),array(
-											"prompt"=>"Service","id"=>$data->Id,"class"=>"ddl_id_service","style"=>"width:130px"
+											"prompt"=>"Servicios","id"=>$data->Id,"class"=>"form-control","style"=>"width:130px"
 											) );',
 							'type'=>'raw',
 					),
@@ -407,6 +407,13 @@ $settings = new Settings();
 								
 							'type'=>'raw',
 								
+							'htmlOptions'=>array(),
+					),
+					array(
+							'name'=>'total_price',
+							'value'=>'<span class="label label-primary labelPrecio">500 <div class="usd">USD</div></span>',
+							'type'=>'raw',
+					
 							'htmlOptions'=>array(),
 					),
 					
