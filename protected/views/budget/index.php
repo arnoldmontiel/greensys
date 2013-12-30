@@ -76,6 +76,29 @@ function openCancelBudget(idBudget, version)
 	return false;
 }
 
+function removeBudget(id, version, grid)
+{
+	if (confirm('¿Desea borrar este presupuesto?')) 
+	{
+		$.post("<?php echo BudgetController::createUrl('AjaxDelete'); ?>",
+			{
+				id:id,
+				version:version
+			}
+		).success(
+			function(data){
+				$.fn.yiiGridView.update(grid);
+				var obj = jQuery.parseJSON(data);				
+				if(obj != null)
+				{
+					$('#tab-open').children().text(obj.openQty);
+				}
+				
+			});
+		return false;
+	}
+	return false;
+}
 
 function closeVersion(id, version, grid)
 {
