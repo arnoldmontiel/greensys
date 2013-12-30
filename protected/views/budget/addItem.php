@@ -25,7 +25,7 @@ Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 function setTotals()
 		{
 			$.post(
-				'".PriceListController::createUrl('AjaxGetTotals')."',
+				'".BudgetController::createUrl('AjaxGetTotals')."',
 				 {
 				 	Id: ".$model->Id.",
 					version_number:".$model->version_number.",
@@ -50,7 +50,7 @@ function setTotals()
 						
 		function(){
 			$.post(
-				'".PriceListController::createUrl('AjaxUpdatePercentDiscount')."',
+				'".BudgetController::createUrl('AjaxUpdatePercentDiscount')."',
 				 {
 				 	Id: ".$model->Id.",
 					version_number:".$model->version_number.",
@@ -82,7 +82,7 @@ $('#budget-item-generic').find('input.txtQuantityGenericItem').each(
 																	var price = $(this).parent().parent().find('input.txtPriceGenericItem').val();
 																	
 																	$.post(
-																		'".PriceListController::createUrl('AjaxUpdateUpdateGenericItem')."',
+																		'".BudgetController::createUrl('AjaxUpdateUpdateGenericItem')."',
 																		 {
 																		 	Id: $(this).attr('id'),
 																			quantity:$(this).val(),
@@ -112,7 +112,7 @@ $('#budget-item-generic').find('input.txtPriceGenericItem').each(
 																	var quantity = $(this).parent().parent().find('input.txtQuantityGenericItem').val();
 																	
 																	$.post(
-																		'".PriceListController::createUrl('AjaxUpdateUpdateGenericItem')."',
+																		'".BudgetController::createUrl('AjaxUpdateUpdateGenericItem')."',
 																		 {
 																		 	Id: $(this).attr('id'),
 																			quantity: quantity,
@@ -751,7 +751,7 @@ echo '</br>';
 																	var target = $(this);
 																	var price = $(this).parent().parent().find("input.txtPriceGenericItem").val();
 																	$.post(
-																		"'.PriceListController::createUrl('AjaxUpdateUpdateGenericItem').'",
+																		"'.BudgetController::createUrl('AjaxUpdateUpdateGenericItem').'",
 																		 {
 																		 	Id: $(this).attr("id"),
 																			quantity:$(this).val(),
@@ -779,7 +779,7 @@ echo '</br>';
 																	var quantity = $(this).parent().parent().find("input.txtQuantityGenericItem").val();
 																	
 																	$.post(
-																		"'.PriceListController::createUrl('AjaxUpdateUpdateGenericItem').'",
+																		"'.BudgetController::createUrl('AjaxUpdateUpdateGenericItem').'",
 																		 {
 																		 	Id: $(this).attr("id"),
 																			quantity: quantity,
