@@ -408,18 +408,19 @@ $selectPrice='"<div class=\"precioTablaValor\">".$data->price." "."<div class=\"
 					array(
 							'name'=>'discount',
 							'value'=>
-							'CHtml::textField("txtDiscount",
-																'.('(	(($data->discount_type==0)?"% ":"'.$settings->getEscapedCurrencyShortDescription().' ").$data->discount)').',
-																		array(
-																				"id"=>$data->Id,
-																				"class"=>"txtDiscount",
-																				"disabled"=>"",
-																				"style"=>"width:'.('50px').';text-align:right;",
-																			)
-																	)',
-					
+							'"<div class=\"bloqueDescuento\"> ".CHtml::textField("txtDiscount","$data->discount",array("id"=>$data->Id,"class"=>"form-control inputMed",))."<div class=\"radioTipo\"><div class=\"radio\">
+  <label>
+    <input type=\"radio\" name=\"optionsRadios".$data->Id."\" id=\"optionsRadios1\" value=\"option1\" checked>
+    <div class=\"usd\">USD</div>
+  </label>
+</div>
+<div class=\"radio\">
+  <label>
+    <input type=\"radio\" name=\"optionsRadios".$data->Id."\" id=\"optionsRadios2\" value=\"option2\">
+    %
+  </label>
+</div></div></div>"',
 							'type'=>'raw',
-					
 							'htmlOptions'=>array(),
 					),
 // 					array(

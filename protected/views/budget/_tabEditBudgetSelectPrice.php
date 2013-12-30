@@ -67,9 +67,9 @@
 		    <?php endif?>
       
       <?php }?>
-	<li role="presentation" class="introProveedor" style="text-align: center;"><button id="ddClose" type="button" class="btn btn-default"> Cerrar</button></li>
+	<li role="presentation" class="introProveedor" style="text-align: center;"><button id="ddClose_<?php echo $model->Id?>" type="button" class="btn btn-default"> Cerrar</button></li>
 
 <script type="text/javascript">
-	$("#ddClose").unbind("click");
-	$("#ddClose").click(function(){$(this).parent().parent().parent().removeClass("open")});
+	$("#ddClose_<?php echo $model->Id?>").unbind("click");
+	$("#ddClose_<?php echo $model->Id?>").click(function(){$(this).parent().parent().parent().removeClass("open")});
 </script>
