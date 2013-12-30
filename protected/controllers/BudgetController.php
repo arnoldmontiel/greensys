@@ -588,14 +588,14 @@ class BudgetController extends GController
 					'areaProjects'=>$areaProjects,
 					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
 		));
-		$this->render('addItem',array(
-					'model'=>$model,
-					'modelProduct'=>$modelProduct,
-					'modelBudgetItem'=>$modelBudgetItem,
-					'priceListItemSale'=>$priceListItemSale,
-					'areaProjects'=>$areaProjects,
-					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
-		));
+// 		$this->render('addItem',array(
+// 					'model'=>$model,
+// 					'modelProduct'=>$modelProduct,
+// 					'modelBudgetItem'=>$modelBudgetItem,
+// 					'priceListItemSale'=>$priceListItemSale,
+// 					'areaProjects'=>$areaProjects,
+// 					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
+// 		));
 	}
 	
 	public function actionAjaxUpdatePercentDiscount()
