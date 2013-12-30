@@ -355,10 +355,9 @@ class BudgetController extends GController
 		echo $this->renderPartial('_tabCancelled',array('modelBudgets'=>$modelBudgets));
 	}
 	
-	public function actionExportToExcel($id,$versionNumber)
+	public function actionExportToExcel($id,$version)
 	{
-		
-		GreenHelper::exportBudgetToExcel($id, $versionNumber);
+		GreenHelper::exportBudgetToExcel($id, $version);
 	}
 	
 	/**
