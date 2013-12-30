@@ -14,11 +14,11 @@
           </tr>
         </thead>
         <tbody><tr>
-            <td colspan="1">
-            <span style="font-size:16px; font-family: 'GudeaBold'";>AD4</span>
-            <br/><span style="font-size: 16px;"> RTI</span>
-            <br/>PN: 10-210341-12
-            <br/>Stock: 05
+            <td>
+            <div class="tableProductName">AD4</div>
+            <div class="tableProductBrand">RTI</div>
+            <div>PN: 10-2003984</div>
+            <div>Stock: 05</div>
             </td>
             <td><input type="model" id="campoCantidad" class="form-control inputSmall"></td>
             <td>
@@ -165,10 +165,10 @@
           </tr>
           <tr>
             <td>
-            <span style="font-size:16px; font-family: 'GudeaBold'";>ADR RTIPANEL PREMIUM/E</span>
-            <br/><span style="font-size: 16px;"> RTI</span>
-            <br/>PN: 10-210341-12
-            <br/>Stock: 05
+            <div class="tableProductName">ADR RTIPANEL PREMIUM/E</div>
+            <div class="tableProductBrand">RTI</div>
+            <div>PN: 10-2003984</div>
+            <div>Stock: 05</div>
             </td>
             <td><input type="model" id="campoCantidad" class="form-control inputSmall"></td>
             <td>
