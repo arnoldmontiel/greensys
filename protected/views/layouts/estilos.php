@@ -399,6 +399,7 @@ padding: 6px 8px;
 #screenProductos .table.tablaIndividual { margin-bottom:5px;}
 
 .buttonsTableProd{min-width:177px;}
+.buttonsTablePres{min-width:380px;}
 
 .combined { width:100%;}
 .combined select{display:inline-block; width:60%;}
@@ -516,7 +517,7 @@ padding-bottom: 20px;}
 
 .nav-tabs>li a.tabEdit:hover, .nav-tabs>li.active>a.tabEdit:hover{color:#5cb85c !important; cursor:pointer;}
 
-.bloqueHoras{min-width:170px; padding-top:1px;}
+.bloqueHoras{min-width:170px; margin-top:6px;}
 .bloqueHoras span{ display:inline-block; width:22px; margin-right:3px; font-size:14px;}
 
 .bloqueDescuentoHoras{min-width:135px; padding-top:1px;}
@@ -536,7 +537,7 @@ vertical-align: middle;}
 
 .radioTipo .radio{margin-bottom:0px; margin-top:0px;}
 
-#campoServicio{width:100px;}
+#campoServicio{width:150px;}
 
 .usd{font-size:11px; display:inline-block;}
 

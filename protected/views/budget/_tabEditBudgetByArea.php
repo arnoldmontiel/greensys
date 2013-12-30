@@ -1,12 +1,8 @@
 <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <thead>
           <tr>
-            <th style="text-align:left;">Model</th>
+            <th style="text-align:left;">Producto</th>
             <th style="text-align:left;">Cant</th>
-            <th style="text-align:left;">Part Number</th>
-            <th style="text-align:left;">Codigo</th>
-            <th style="text-align:left;">Marca</th>
-            <th style="text-align:left;">Stock</th>
             <th style="text-align:left;">Servicio</th>
             <th style="text-align:left;">Precio</th>
             <th style="text-align:left;">Descuento</th>
@@ -14,17 +10,17 @@
             <th style="text-align:left;">Horas</th>
             <th style="text-align:left;">Desc Horas</th>
             <th style="text-align:left;">Total Horas</th>
-            <th style="text-align:right;">Acc</th>
+            <th style="text-align:center;">Acciones</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>AD4</td>
+        <tbody><tr>
+            <td colspan="1">
+            <span style="font-size:16px; font-family: 'GudeaBold'";>AD4</span>
+            <br/><span style="font-size: 16px;"> RTI</span>
+            <br/>PN: 10-210341-12
+            <br/>Stock: 05
+            </td>
             <td><input type="model" id="campoCantidad" class="form-control inputSmall"></td>
-            <td>10-210341-12</td>
-            <td>DHRT-01</td>
-            <td>RTI</td>
-            <td>5</td>
             <td>
             <select class="form-control" id="campoServicio">
 <option value="1">Home Theater</option>
@@ -121,7 +117,7 @@
   </label>
 </div></div></div>
             <td><span class="label label-primary labelPrecio">500 <div class="usd">USD</div></span></td>
-            <td> <div class="bloqueHoras">
+            <td> <div class="bloqueHoras noMargin">
           <span class="label label-default">P</span>  
           <input type="model" id="campoCantHoras" class="form-control inputSmall">
             x 
@@ -165,15 +161,16 @@
               <div class="bloqueTotalHoras"><span class="label label-default">I</span> 300 <div class="usd">USD</div></div>
               
               </td>
-            <td style="text-align:right;"> <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button></td>
+            <td style="text-align:center;"> <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button></td>
           </tr>
           <tr>
-            <td>AD4</td>
+            <td>
+            <span style="font-size:16px; font-family: 'GudeaBold'";>ADR RTIPANEL PREMIUM/E</span>
+            <br/><span style="font-size: 16px;"> RTI</span>
+            <br/>PN: 10-210341-12
+            <br/>Stock: 05
+            </td>
             <td><input type="model" id="campoCantidad" class="form-control inputSmall"></td>
-            <td>10-210341-12</td>
-            <td>DHRT-01</td>
-            <td>RTI</td>
-            <td>5</td>
             <td>
             <select class="form-control" id="campoServicio">
 <option value="1">Home Theater</option>
@@ -181,24 +178,96 @@
 <option value="3">Control de iluminaci�n</option>
               </select>
             </td>
-            <td>500 <div class="usd">USD</div></td>
+            
+            <td class="precioTabla"><div class="precioTablaValor">500 <div class="usd">USD</div></div> <button type="button" class="btn btn-primary btn-xs pull-right dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown"><i class="fa fa-pencil"></i></button>
+              <ul class="dropdown-menu superDropdown" role="menu" aria-labelledby="dropdownMenu1">
+    <li role="presentation" class="introProveedor">
+    
+    <table class="table tableDatosProd">
+        <thead>
+          <tr>
+            <th>MSRP</th>
+            <th style="text-align:center;">Dealer Cost</th>
+            <th style="text-align:right;">Profit Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>899.00</td>
+            <td style="text-align:center;">450.00</td>
+            <td style="text-align:right;">2.00</td>
+            </tr>
+        </tbody>
+      </table>
+      </li>
+    <li role="presentation" class="introProveedor">
+    <div class="titleProveedor">Luis - Electronica </div>
+    <table class="table tableOpcionesPrecio">
+        <tbody>
+          <tr>
+            <td> <i class="fa fa-anchor fa-fw"></i>Maritimo</td>
+            <td>40 Dias</td>
+            <td>$200</td>
+            <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
+            </tr>
+          <tr>
+            <td> <i class="fa fa-plane fa-fw"></i>Aereo</td>
+            <td>40 Dias</td>
+            <td>$500</td>
+            <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
+            </tr>
+        </tbody>
+      </table>
+    </li>
+     <li role="presentation" class="introProveedor">
+    <div class="titleProveedor">Luis - Muebles </div>
+    <table class="table tableOpcionesPrecio">
+        <tbody>
+          <tr>
+            <td> <i class="fa fa-anchor fa-fw"></i>Maritimo</td>
+            <td>30 Dias</td>
+            <td>$500</td>
+            <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
+            </tr>
+          <tr>
+            <td> <i class="fa fa-plane fa-fw"></i>Aereo</td>
+            <td>50 Dias</td>
+            <td>$600 </td>
+            <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
+            </tr>
+        </tbody>
+      </table>
+    </li>
+    <li role="presentation" class="introProveedor">
+    <div class="titleProveedor">FOB </div>
+    <table class="table tableOpcionesPrecio">
+        <tbody>
+          <tr>
+            <td> <i class="fa fa-sun-o fa-fw"></i>MSRP</td>
+            <td>$899.00</td>
+            <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
+            </tr>
+        </tbody>
+      </table>
+    </li>
+  </ul>
+            </td>
             <td>
             <div class="bloqueDescuento"><input type="model" id="campoPrecio" class="form-control inputMed">
                        <div class="radioTipo"><div class="radio">
   <label>
-    <input type="radio" name="optionsRadios4" id="optionsRadios1" value="option1" checked>
+    <input type="radio" name="optionsRadios1" id="optionsRadios1" value="option1" checked>
     <div class="usd">USD</div>
   </label>
 </div>
 <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios4" id="optionsRadios2" value="option2">
+    <input type="radio" name="optionsRadios1" id="optionsRadios2" value="option2">
     %
   </label>
 </div></div></div>
-            </td>
             <td><span class="label label-primary labelPrecio">500 <div class="usd">USD</div></span></td>
-            <td> <div class="bloqueHoras">
+            <td> <div class="bloqueHoras noMargin">
           <span class="label label-default">P</span>  
           <input type="model" id="campoCantHoras" class="form-control inputSmall">
             x 
@@ -213,26 +282,26 @@
             <div class="bloqueDescuentoHoras"><span class="label label-default">P</span><input type="model" id="campoPrecio" class="form-control inputMed">
               <div class="radioTipo"><div class="radio">
   <label>
-    <input type="radio" name="optionsRadios5" id="optionsRadios1" value="option1" checked>
-    USD
-  </label>
-</div>
-<div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios5" id="optionsRadios2" value="option2">
-    %
-  </label>
-</div></div></div>
-             <div class="bloqueDescuentoHoras"><span class="label label-default">I</span><input type="model" id="campoPrecio" class="form-control inputMed">
-             <div class="radioTipo"><div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios6" id="optionsRadios1" value="option1" checked>
+    <input type="radio" name="optionsRadios2" id="optionsRadios1" value="option1" checked>
     <div class="usd">USD</div>
   </label>
 </div>
 <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios6" id="optionsRadios2" value="option2">
+    <input type="radio" name="optionsRadios2" id="optionsRadios2" value="option2">
+    %
+  </label>
+</div></div></div>
+             <div class="bloqueDescuentoHoras"><span class="label label-default">I</span><input type="model" id="campoPrecio" class="form-control inputMed">
+              <div class="radioTipo"><div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios3" id="optionsRadios1" value="option1" checked>
+    <div class="usd">USD</div>
+  </label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios3" id="optionsRadios2" value="option2">
     %
   </label>
 </div></div></div>
@@ -242,8 +311,9 @@
               <div class="bloqueTotalHoras"><span class="label label-default">I</span> 300 <div class="usd">USD</div></div>
               
               </td>
-            <td style="text-align:right;"> <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button></td>
+            <td style="text-align:center;"> <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button></td>
           </tr>
+          
         </tbody>
       </table>
 <?php

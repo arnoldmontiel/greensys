@@ -16,7 +16,7 @@
 				array(
 					'name'=>'version_number',
 					'value'=>'$data->version_number',
-					'htmlOptions'=>array("style"=>"width:5%;"),
+					'htmlOptions'=>array("style"=>"width:7%;"),
 				),
 				array(
 					'name'=>'description',
