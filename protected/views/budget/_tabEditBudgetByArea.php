@@ -1,6 +1,7 @@
 <script type="text/javascript">
 function fillAndOpenDD(id)
 {
+	$(".dropdown-menu").removeClass("open");
 	$.post(
 			'<?php echo BudgetController::createUrl('ajaxFillDDPriceSelector')?>',
 			 {

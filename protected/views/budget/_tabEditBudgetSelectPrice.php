@@ -16,53 +16,54 @@
         </tbody>
       </table>
       </li>
-    <li role="presentation" class="introProveedor">
-    <div class="titleProveedor">Luis - Electronica </div>
-    <table class="table tableOpcionesPrecio">
-        <tbody>
-          <tr>
-            <td> <i class="fa fa-anchor fa-fw"></i>Maritimo</td>
-            <td>40 Dias</td>
-            <td>$200</td>
-            <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
-            </tr>
-          <tr>
-            <td> <i class="fa fa-plane fa-fw"></i>Aereo</td>
-            <td>40 Dias</td>
-            <td>$500</td>
-            <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
-            </tr>
-        </tbody>
-      </table>
-    </li>
-     <li role="presentation" class="introProveedor">
-    <div class="titleProveedor">Luis - Muebles </div>
-    <table class="table tableOpcionesPrecio">
-        <tbody>
-          <tr>
-            <td> <i class="fa fa-anchor fa-fw"></i>Maritimo</td>
-            <td>30 Dias</td>
-            <td>$500</td>
-            <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
-            </tr>
-          <tr>
-            <td> <i class="fa fa-plane fa-fw"></i>Aereo</td>
-            <td>50 Dias</td>
-            <td>$600 </td>
-            <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
-            </tr>
-        </tbody>
-      </table>
-    </li>
-    <li role="presentation" class="introProveedor">
-    <div class="titleProveedor">FOB </div>
-    <table class="table tableOpcionesPrecio">
-        <tbody>
-          <tr>
-            <td> <i class="fa fa-sun-o fa-fw"></i>MSRP</td>
-            <td>$899.00</td>
-            <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
-            </tr>
-        </tbody>
-      </table>
-    </li>
+      <?php
+      	$criteria= new CDbCriteria;
+      	$criteria->with[]="priceList";
+      	$criteria->addCondition('Id_product = '.$model->Id_product);
+      	$criteria->addCondition('priceList.Id_importer is not null');
+      	$priceListItems = PriceListItem::model()->findAll($criteria);
+      	$settings = new Settings;
+      ?>
+      <?php foreach ($priceListItems as $priceListItem){?>
+		    <li role="presentation" class="introProveedor">
+		    <?php $importer = $priceListItem->priceList->importer;?>
+		    <?php $shipping = $priceListItem->priceList->importer;
+		    	$shippingParameter = $importer->shippingParameters[0];
+				$air = $shippingParameter->shippingParameterAir;
+				$maritime = $shippingParameter->shippingParameterMaritime;
+		    ?>
+		    <?php if($importer->contact->description!="FOB"):?>
+		    <div class="titleProveedor"><?php echo $importer->contact->description?></div>
+		    <table class="table tableOpcionesPrecio">
+		        <tbody>
+		          <tr>
+		            <td> <i class="fa fa-anchor fa-fw"></i>Maritimo</td>
+		            <td><?php echo $maritime->days?> Días</td>
+		            <td><?php echo $priceListItem->maritime_cost." ".$settings->getCurrencyShortDescription() ;?></td>
+		            <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
+		            </tr>
+		          <tr>
+		            <td> <i class="fa fa-plane fa-fw"></i>Aereo</td>
+		            <td><?php echo $air->days?> Dias</td>
+		            <td><?php echo $priceListItem->air_cost." ".$settings->getCurrencyShortDescription();?></td>
+		            <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
+		            </tr>
+		        </tbody>
+		      </table>
+		    </li>
+		    <?php else:?>
+		    <li role="presentation" class="introProveedor">
+		    <div class="titleProveedor">FOB </div>
+		    <table class="table tableOpcionesPrecio">
+		        <tbody>
+		          <tr>
+		            <td> <i class="fa fa-sun-o fa-fw"></i>MSRP</td>
+		            <td><?php echo $priceListItem->msrp." ".$settings->getCurrencyShortDescription();?></td>
+		            <td style="text-align:right;">    <input type="radio" name="optionsRadios" id="optionProv" value="option1" checked></td>
+		            </tr>
+		        </tbody>
+		      </table>
+		    </li>
+		    <?php endif?>
+      
+      <?php }?>
