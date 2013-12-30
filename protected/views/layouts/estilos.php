@@ -451,7 +451,7 @@ h2 a.superEdit{ position:absolute; top:10px; right:30px; cursor:pointer; font-si
 
 .btnAlternateView{ margin-left:25px;}
 
-#myModalNewBudget .modal-dialog{ width:60%;}
+#myModalNewBudget .modal-dialog{ width:600px;}
 
 
 #myModalAgregarProductos .modal-dialog{ width:80%;}
