@@ -55,6 +55,7 @@ class BudgetController extends GController
 			'modelBudgetItem'=>$modelBudgetItem,
 		));
 	}
+	
 	public function actionViewService($id, $version)
 	{
 		$modelBudgetItem = new BudgetItem('search');
@@ -244,6 +245,29 @@ class BudgetController extends GController
 									));		
 	}
 	
+	public function actionAjaxDelete()
+	{
+		$id = (isset($_POST['id']))?$_POST['id']:null;
+		$version = (isset($_POST['version']))?$_POST['version']:null;
+		
+		if(isset($id) && isset($version))
+		{
+			$modelBudget = Budget::model()->findByPk(array('Id'=>$id, 'version_number'=>$version));
+	
+			if(isset($modelBudget))
+			{
+				$modelBudget->delete();
+			}
+		}
+	
+		$openQty = Budget::model()->countByAttributes(array('Id_budget_state'=>1));
+		
+		$response = array('openQty'=>$openQty);
+		
+		echo json_encode($response);
+		
+	}
+	
 	public function actionAjaxCloseVersion()
 	{
 		$id = (isset($_POST['id']))?$_POST['id']:null;
@@ -277,9 +301,43 @@ class BudgetController extends GController
 			$modelBudget = Budget::model()->findByPk(array('Id'=>$id, 'version_number'=>$version));
 			if(isset($modelBudget))
 			{
-				$modelBudget->Id_budget_state = 1;
-				$modelBudget->save();
+				$transaction = $modelBudget->dbConnection->beginTransaction();
+				
+				try {
+					$modelBudget->Id_budget_state = 5; //cerrado
+					$modelBudget->save();
+					
+					$modelNewBudget = new Budget();
+					$modelNewBudget->attributes = $modelBudget->attributes;
+					$modelNewBudget->Id_budget_state = 1; //open
+					$modelNewBudget->date_creation = new CDbExpression('NOW()');
+					$modelNewBudget->date_close = null;
+					$modelNewBudget->date_cancelled = null;
+					$modelNewBudget->date_approved = null;
+					$modelNewBudget->note = '';
+					$modelNewBudget->version_number = $modelBudget->version_number + 1;
+					
+					if($modelNewBudget->save())
+					{
+						$budgetItems = BudgetItem::model()->findAllByAttributes(array('Id_budget'=>$modelBudget->Id, 'version_number'=>$modelBudget->version_number));
+							
+						foreach($budgetItems as $item)
+						{
+							$modelBudgetItem = new BudgetItem;
+							$modelBudgetItem->attributes = $item->attributes;
+							$modelBudgetItem->version_number = $modelNewBudget->version_number;
+							$modelBudgetItem->save();
+						}
+							
+						$transaction->commit();
+					}
+					
+				} catch (Exception $e) {
+					$transaction->rollback();
+				}
+				
 			}
+			
 		}
 		$openQty = Budget::model()->countByAttributes(array('Id_budget_state'=>1));
 		$waitingQty = Budget::model()->countByAttributes(array('Id_budget_state'=>2));
