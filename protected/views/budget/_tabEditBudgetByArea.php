@@ -253,7 +253,6 @@ $settings = new Settings();
 		'id'=>'budget-grid-approved',
 		'dataProvider'=>$modelBudgetItem->search(),
 		'selectableRows' => 0,
-		'filter'=>$modelBudgetItem,
 		'summaryText'=>'',	
 		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
 		'columns'=>array(
