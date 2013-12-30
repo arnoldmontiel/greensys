@@ -1,3 +1,28 @@
+<script type="text/javascript">
+function fillAndOpenDD(id)
+{
+	$.post(
+			'<?php echo BudgetController::createUrl('ajaxFillDDPriceSelector')?>',
+			 {
+			 	Id: id,
+			 },'json').success(
+				function(data) 
+				{ 
+					if(data!='')
+					{
+						$("#btn_price_"+id).parent().addClass("open");
+						$("#ul_price_"+id).html(data);
+					}
+				}
+			);		
+	
+ 	return false;
+}
+<!--
+
+//-->
+</script>
+
 <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <thead>
           <tr>
@@ -29,20 +54,23 @@
               </select>
             </td>
             
-            <td class="precioTabla"><div class="precioTablaValor">500 <div class="usd">USD</div></div> <button type="button" class="btn btn-primary btn-xs pull-right dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown"><i class="fa fa-pencil"></i></button>
+            <td class="precioTabla"><div class="precioTablaValor">500 <div class="usd">USD</div></div>
+             <button type="button" class="btn btn-primary btn-xs pull-right dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">
+             <i class="fa fa-pencil"></i>
+             </button>
               <ul class="dropdown-menu superDropdown" role="menu" aria-labelledby="dropdownMenu1">
-    <li role="presentation" class="introProveedor">
+				<li role="presentation" class="introProveedor">
     
-    <table class="table tableDatosProd">
-        <thead>
-          <tr>
-            <th>MSRP</th>
-            <th style="text-align:center;">Dealer Cost</th>
-            <th style="text-align:right;">Profit Rate</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
+    			<table class="table tableDatosProd">
+        		<thead>
+          		<tr>
+            		<th>MSRP</th>
+            		<th style="text-align:center;">Dealer Cost</th>
+            		<th style="text-align:right;">Profit Rate</th>
+          		</tr>
+        		</thead>
+        	<tbody>
+          	<tr>
             <td>899.00</td>
             <td style="text-align:center;">450.00</td>
             <td style="text-align:right;">2.00</td>
@@ -318,6 +346,12 @@
       </table>
 <?php
 $settings = new Settings();
+$selectPrice='"<div class=\"precioTablaValor\">".$data->price." "."<div class=\"usd\">'.$settings->getEscapedCurrencyShortDescription().'</div></div>'.
+	'<button id=\"btn_price_".$data->Id."\" type=\"button\" class=\"btn btn-primary btn-xs pull-right dropdown-toggle\" onclick=\"fillAndOpenDD(".$data->Id.");\">
+             <i class=\"fa fa-pencil\"></i>
+             </button>".'.
+	'"<ul id=\"ul_price_".$data->Id."\" class=\"dropdown-menu superDropdown\" role=\"menu\" aria-labelledby=\"dropdownMenu1\">
+  </ul>"';
 
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'budget-grid-approved',
@@ -327,53 +361,49 @@ $settings = new Settings();
 		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
 		'columns'=>array(
 					array(
-							'name'=>'product_model',
-							'value'=>'$data->product->model',
+							'name'=>'Producto',
+							'value'=>'CHtml::openTag("div",array("class"=>"tableProductName")).$data->product->model."</div>"
+							.CHtml::openTag("div",array("class"=>"tableProductBrand")).$data->product->brand->description."</div>"
+							.CHtml::openTag("div")."PN: ".$data->product->part_number."</div>"
+							.CHtml::openTag("div")."Stock: ".$data->product->stockCount."</div>"',
+							'type'=>'raw'
 					),
 					array(
 							'name'=>'quantity',
-							'value'=>'$data->quantity',
-					),
-					array(
-							'name'=>'product_part_number',
-							'value'=>'$data->product->part_number',
-					),
-					array(
-							'name'=>'product_brand_desc',
-							'value'=>'$data->product->brand->description',
-					
-					),
-					array(
-							'name'=>'stock',	
-							'value'=>'$data->hasStockAssigned?
-									    		 CHtml::button("View Stock Assign",
-									    					array("class"=>"btn-View-Assign",
-									    							"idBudgetItem"=>$data->Id,
-									    							"idProduct"=>$data->Id_product,
-									    							"idArea"=>$data->Id_area,"idAreaProject"=>$data->Id_area_project,))
-									    		:
-									    		 CHtml::button(($data->product->stockCount)>0?"Assign from stock":"No Stock",
-									    					array("class"=>"btn-Assign-From-Stock",
-									    							"idBudgetItem"=>$data->Id,
-									    							"idProduct"=>$data->Id_product,
-									    							"idArea"=>$data->Id_area,"idAreaProject"=>$data->Id_area_project,
-									    							"disabled"=>($data->product->stockCount > 0)?"":"disabled", ))'
-							,
+							'value'=>'CHtml::textField("quantity",$data->quantity,array("class"=>"form-control inputSmall"))',
 							'type'=>'raw'
 					),
+// 					array(
+// 							'name'=>'stock',	
+// 							'value'=>'$data->hasStockAssigned?
+// 									    		 CHtml::button("View Stock Assign",
+// 									    					array("class"=>"btn-View-Assign",
+// 									    							"idBudgetItem"=>$data->Id,
+// 									    							"idProduct"=>$data->Id_product,
+// 									    							"idArea"=>$data->Id_area,"idAreaProject"=>$data->Id_area_project,))
+// 									    		:
+// 									    		 CHtml::button(($data->product->stockCount)>0?"Assign from stock":"No Stock",
+// 									    					array("class"=>"btn-Assign-From-Stock",
+// 									    							"idBudgetItem"=>$data->Id,
+// 									    							"idProduct"=>$data->Id_product,
+// 									    							"idArea"=>$data->Id_area,"idAreaProject"=>$data->Id_area_project,
+// 									    							"disabled"=>($data->product->stockCount > 0)?"":"disabled", ))'
+// 							,
+// 							'type'=>'raw'
+// 					),
 					array(
 							'name'=>'service',
 							'value'=>'
 											CHtml::dropDownList("Id_service", $data->Id_service,CHtml::listData(Service::model()->findAll(), "Id", "description"),array(
-											"prompt"=>"Servicios","id"=>$data->Id,"class"=>"form-control","style"=>"width:130px"
+											"prompt"=>"Servicios","id"=>$data->Id,"class"=>"form-control campoServicio"
 											) );',
 							'type'=>'raw',
 					),
 					array(
 							'name'=>'price',
-							'value'=>'"'.$settings->getEscapedCurrencyShortDescription().' ".$data->price',
+							'value'=>$selectPrice,
 							'type'=>'raw',
-							'htmlOptions'=>array('style'=>'text-align: right;width:90px;'),
+							'htmlOptions'=>array("class"=>"precioTabla"),
 					),
 					array(
 							'name'=>'discount',
@@ -392,31 +422,29 @@ $settings = new Settings();
 					
 							'htmlOptions'=>array(),
 					),
-					array(
-							'name'=>'total_price',
-							'value'=>
-							'CHtml::textField("txtTotalPrice",
-																								"'.$settings->getEscapedCurrencyShortDescription().' ".$data->totalPrice,
-																								array(
-																										"id"=>$data->Id,
-																										"class"=>"txtTotalPrice",
-																										"disabled"=>"disbled",
-																										"style"=>"width:90px;text-align:right;",
-																									)
-																							)',
+// 					array(
+// 							'name'=>'total_price',
+// 							'value'=>
+// 							'CHtml::textField("txtTotalPrice",
+// 																								"'.$settings->getEscapedCurrencyShortDescription().' ".$data->totalPrice,
+// 																								array(
+// 																										"id"=>$data->Id,
+// 																										"class"=>"txtTotalPrice",
+// 																										"disabled"=>"disbled",
+// 																										"style"=>"width:90px;text-align:right;",
+// 																									)
+// 																							)',
 								
-							'type'=>'raw',
+// 							'type'=>'raw',
 								
-							'htmlOptions'=>array(),
-					),
+// 							'htmlOptions'=>array(),
+// 					),
 					array(
-							'name'=>'',
-							//"<span class="label label-primary labelPrecio">500 <div class="usd">USD</div></span>"
+							'name'=>'Total',
 							'value'=>
-								'CHtml::openTag("span",array("class"=>"label label-primary labelPrecio")); CHtml::closeTag()',
+								'CHtml::openTag("span",array("class"=>"label label-primary labelPrecio")).$data->totalPrice." ".'.
+								'CHtml::openTag("div",array("class"=>"usd"))."'.$settings->getEscapedCurrencyShortDescription().'".CHtml::closeTag("div").CHtml::closeTag("span")',
 							'type'=>'raw',
-					
-							'htmlOptions'=>array(),
 					),
 					
 					array(
@@ -454,4 +482,6 @@ $settings = new Settings();
 					),
 ),
 		));		
+Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
+");
 ?>

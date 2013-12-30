@@ -597,7 +597,14 @@ class BudgetController extends GController
 // 					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
 // 		));
 	}
-	
+	public function actionAjaxFillDDPriceSelector()
+	{
+		if(isset($_POST['Id']))
+		{
+			$model = BudgetItem::model()->findByPk($_POST['Id']);
+			$this->renderPartial("_tabEditBudgetSelectPrice",array("model"=>$model));
+		}
+	}
 	public function actionAjaxUpdatePercentDiscount()
 	{
 		if(isset($_POST['Id'])&&isset($_POST['version_number'])&&isset($_POST['percent_discount']))
