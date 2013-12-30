@@ -23,7 +23,7 @@ function fillAndOpenDD(id)
 //-->
 </script>
 
-<table class="table table-striped table-bordered tablaIndividual" width="100%">
+<table class="table table-striped table-hover table-bordered tablaIndividual" width="100%">
         <thead>
           <tr>
             <th style="text-align:left;">Producto</th>
@@ -54,10 +54,7 @@ function fillAndOpenDD(id)
               </select>
             </td>
             
-            <td class="precioTabla"><div class="precioTablaValor">500 <div class="usd">USD</div></div>
-             <button type="button" class="btn btn-primary btn-xs pull-right dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">
-             <i class="fa fa-pencil"></i>
-             </button>
+            <td class="precioTabla"><div class="precioTablaValor">500 <div class="usd">USD</div></div> <button type="button" class="btn btn-primary btn-xs pull-right dropdown-toggle miniEdit" id="dropdownMenu1" data-toggle="dropdown"><i class="fa fa-pencil"></i></button>
               <ul class="dropdown-menu superDropdown" role="menu" aria-labelledby="dropdownMenu1">
 				<li role="presentation" class="introProveedor">
     
@@ -128,6 +125,7 @@ function fillAndOpenDD(id)
         </tbody>
       </table>
     </li>
+    <li role="presentation" class="introProveedor" style="text-align: center;"><button type="button" class="btn btn-default"> Cerrar</button></li>
   </ul>
             </td>
             <td>
