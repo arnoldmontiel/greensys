@@ -451,6 +451,9 @@ h2 a.superEdit{ position:absolute; top:10px; right:30px; cursor:pointer; font-si
 
 .btnAlternateView{ margin-left:25px;}
 
+#myModalNewBudget .modal-dialog{ width:60%;}
+
+
 #myModalAgregarProductos .modal-dialog{ width:80%;}
 #myModalAgregarProductos .label{ font-size:15px;}
 #myModalAgregarProductos .table.tablaIndividual{ margin-bottom:0px;}
@@ -613,13 +616,6 @@ width: 199px;}
 
 .buttonGroup{ margin-top:10px; text-align:right; }
 .buttonGroup button{ margin-right:10px;}
-#myModalCambiarAfiche .modal-dialog{ width:80%;}
-
-#myModalCambiarAfiche ul.thumbnails.image_picker_selector li{width: 165px; height:240px;
-cursor:pointer;}
-
-#myModalCambiarBackdrop ul.thumbnails.image_picker_selector li {width:240px; height:155px;cursor:pointer;}
-#myModalCambiarBackdrop .modal-dialog{ width:80%;}
 
 .modal-scroll{ max-height:430px; overflow-y:auto;}
 .backdrop-on{ 	
