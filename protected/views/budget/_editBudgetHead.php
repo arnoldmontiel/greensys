@@ -5,7 +5,7 @@
         <div class="panel-body">
           <h2><?php echo  $model->project->customer->contact->description?> - <?php echo  $model->project->description?><a class="superEdit" data-toggle="modal" data-target="#myModalEditarPresupuesto"><i class="fa fa-pencil"></i></a></h2>
 
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sodales euismod neque vitae convallis. Phasellus in nunc vitae metus porttitor suscipit.
+        <?php echo $model->description;?>
 <div class="row">
                 
     <div class="col-sm-6">

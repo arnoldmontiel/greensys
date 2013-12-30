@@ -3,7 +3,14 @@
   
   
 	<?php $this->renderPartial('_editBudgetHead',array('model'=>$model));?>
-	<?php $this->renderPartial('_editBudgetBody');?>
+	<?php $this->renderPartial('_editBudgetBody',array(
+					'model'=>$model,
+					'modelProduct'=>$modelProduct,
+					'modelBudgetItem'=>$modelBudgetItem,
+					'priceListItemSale'=>$priceListItemSale,
+					'areaProjects'=>$areaProjects,
+					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
+		));?>
   
 </div>
 <!-- /container --> 

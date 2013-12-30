@@ -47,7 +47,7 @@ class BudgetItem extends ModelAudit
 	public $children_total_price;
 	public $children_count;
 	public $children_included;
-	
+	public $stock;	
 	public function afterSave()
 	{
 		if($this->description == "Horas de programación"||$this->description == "Horas de instalación")
@@ -184,26 +184,28 @@ class BudgetItem extends ModelAudit
 			'Id' => 'ID',
 			'Id_product' => 'Product',
 			'Id_budget' => 'Budget',
-			'version_number' => 'Version',
-			'price' => 'Price',
+			'version_number' => 'Versión',
+			'price' => 'Precio',
 			'Id_budget_item' => 'Budget Item',
 			'Id_price_list' => 'Price List',
 			'Id_shipping_type' => 'Shipping Type',
 			'product_code'=>'Code',
-			'product_model'=>'Model',
+			'product_model'=>'Model',				
 			'product_part_number'=>'Part Number',
 			'product_code_supplier'=>'Code Supplier',
 			'product_customer_desc'=>'Customer',
-			'product_brand_desc'=>'Brand',
+			'product_brand_desc'=>'Marca',
 			'product_supplier_name'=>'Supplier Name',
 			'Id_area'=>'Area',
-			'Id_service'=>'Service',
+			'Id_service'=>'Servicio',
 			'parent_product_code'=>'Parent Code',
-			'quantity'=>'Quantity',
+			'quantity'=>'Cant',
 			'children_count'=>'Children Qty',
 			'children_included'=>'Children Inc',
-			'total_price'=>'Total price',
+			'total_price'=>'Total',
 			'description'=>'Description',
+			'stock'=>'Stock',
+			'discount'=>'Descuento',
 		);
 	}
 
