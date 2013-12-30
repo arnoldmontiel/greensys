@@ -548,7 +548,7 @@ vertical-align: middle;}
 
 
 .precioTabla{position:relative;}
-.precioTabla button{ position:absolute; top:50%; right:5px; margin-top:-12px !important;}
+.precioTabla button.miniEdit{ position:absolute; top:50%; right:5px; margin-top:-12px !important;}
 
 .precioTablaValor{padding-right:30px;min-width:90px; line-height:12px;}
 
