@@ -537,7 +537,7 @@ vertical-align: middle;}
 
 .radioTipo .radio{margin-bottom:0px; margin-top:0px;}
 
-#campoServicio{width:150px;}
+.campoServicio{width:150px;}
 
 .usd{font-size:11px; display:inline-block;}
 
