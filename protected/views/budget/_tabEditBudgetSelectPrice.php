@@ -67,3 +67,9 @@
 		    <?php endif?>
       
       <?php }?>
+	<li role="presentation" class="introProveedor" style="text-align: center;"><button id="ddClose" type="button" class="btn btn-default"> Cerrar</button></li>
+
+<script type="text/javascript">
+	$("#ddClose").unbind("click");
+	$("#ddClose").click(function(){$(this).parent().parent().parent().removeClass("open")});
+</script>

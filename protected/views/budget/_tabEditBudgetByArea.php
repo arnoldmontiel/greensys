@@ -1,4 +1,5 @@
 <script type="text/javascript">
+
 function fillAndOpenDD(id)
 {
 	$(".dropdown-menu").removeClass("open");
@@ -346,7 +347,7 @@ function fillAndOpenDD(id)
 <?php
 $settings = new Settings();
 $selectPrice='"<div class=\"precioTablaValor\">".$data->price." "."<div class=\"usd\">'.$settings->getEscapedCurrencyShortDescription().'</div></div>'.
-	'<button id=\"btn_price_".$data->Id."\" type=\"button\" class=\"btn btn-primary btn-xs pull-right dropdown-toggle\" onclick=\"fillAndOpenDD(".$data->Id.");\">
+	'<button id=\"btn_price_".$data->Id."\" type=\"button\" class=\"btn btn-primary btn-xs pull-right dropdown-toggle miniEdit\" onclick=\"fillAndOpenDD(".$data->Id.");\">
              <i class=\"fa fa-pencil\"></i>
              </button>".'.
 	'"<ul id=\"ul_price_".$data->Id."\" class=\"dropdown-menu superDropdown\" role=\"menu\" aria-labelledby=\"dropdownMenu1\">
