@@ -54,7 +54,7 @@
 										        <li><a onclick="openCancelBudget('.$data->Id.', '.$data->version_number.')" href="#"><i class="fa fa-times-circle"></i> Cancelado</button></a></li>
 										    </ul>
 									</div>
-            						<button type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar</button>';						
+            						<button onclick="exportBudget('.$data->Id.', '.$data->version_number.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar</button>';						
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:right;"),

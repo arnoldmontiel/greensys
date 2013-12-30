@@ -102,9 +102,11 @@ function closeVersion(id, version, grid)
 	return false;	
 }
 
-function exportBudget(id)
+function exportBudget(id, version)
 {
-	
+	var params = "&id="+id+"&version="+version;
+	window.location = "<?php echo BudgetController::createUrl("exportToExcel")?>" + params; 
+	return false;
 }
 
 function reopenBudget(id, version, grid)
