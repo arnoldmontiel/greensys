@@ -410,8 +410,10 @@ $settings = new Settings();
 							'htmlOptions'=>array(),
 					),
 					array(
-							'name'=>'total_price',
-							'value'=>'<span class="label label-primary labelPrecio">500 <div class="usd">USD</div></span>',
+							'name'=>'',
+							//"<span class="label label-primary labelPrecio">500 <div class="usd">USD</div></span>"
+							'value'=>
+								'CHtml::openTag("span",array("class"=>"label label-primary labelPrecio")); CHtml::closeTag()',
 							'type'=>'raw',
 					
 							'htmlOptions'=>array(),
