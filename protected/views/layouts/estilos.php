@@ -548,6 +548,9 @@ vertical-align: middle;}
 .precioTablaValor{padding-right:30px;min-width:90px; line-height:12px;}
 
 
+.tableProductName{ font-size:16px; font-family: 'GudeaBold';}
+.tableProductBrand{ font-size:16px;}
+
 /* ------ END CREAR PRESU ------- */
 
 
