@@ -508,7 +508,7 @@ padding-bottom: 20px;}
 .panel-body .tablaDatosPanel{ margin-top:10px; margin-bottom:10px !important;}
 
 
-.nav-tabs>li a{position:relative; padding-right:35px;}
+.navTabsPencil.nav-tabs>li a{position:relative; padding-right:35px;}
 .nav-tabs>li a.tabEdit{ padding-right:5px;position:absolute;cursor:pointer; right:5px; top:-1px; background-transparent !important; border:none 0px;}
 
 
@@ -529,6 +529,8 @@ padding-bottom: 20px;}
 .bloqueDescuento{min-width:110px; padding-top:1px;}
 .bloqueDescuento input{ margin-right:0px;}
 .labelPrecio{ font-size:13px;}
+
+.bloquePrecioRec{min-width:65px;}
 
 .radioTipo{display: inline-block;
 width: 50px;
