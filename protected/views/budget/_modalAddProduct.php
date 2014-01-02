@@ -54,7 +54,7 @@
 						'header'=>'Acciones',
 						'value'=>function($data){
 						$grid = "'budget-grid-waiting'";
-							return '<input type="text" id="campoFinal" class="form-control inputSmall" value="1"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-save"></i> Aplicar</button>';						
+							return '<input onkeyup="validateNumber(this);" type="text" id="qty-field-'.$data->Id.'" class="form-control inputSmall" value="1"><button onclick="addQty('.$data->Id.')" type="button" class="btn btn-default btn-sm"><i class="fa fa-save"></i> Aplicar</button>';						
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:right;"),
@@ -62,7 +62,7 @@
 				array(
 						'header'=>'Agregados',
 						'value'=>function($data){
-							return '<span class="label label-success">'.$data->qty_per_prod.'</span>';
+							return '<span class="label label-success">'.round($data->qty_per_prod).'</span>';
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:center;"),

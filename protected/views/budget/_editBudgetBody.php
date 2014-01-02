@@ -5,10 +5,18 @@
     
       <ul class="nav nav-tabs navTabsPencil">
         <?php 
-        $first = true; 
+        $first = true;
+        $idArea = null;
         foreach($areaProjects as $item)	{ ?>
-        <li class="<?php echo $first?'active':'';?>"><a href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab"><?php echo $item->area->description?> </a><a class="tabEdit"><i class="fa fa-pencil"></i></a></li>
-		<?php $first= false;}?>
+        <li class="<?php echo $first?'active':'';?>"><a onclick="changeTab(<?php echo $item->Id_area;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab"><?php echo $item->area->description?> </a><a class="tabEdit"><i class="fa fa-pencil"></i></a></li>
+		<?php if($first)
+	        {
+	        	$idArea = $item->Id_area;
+	        	$first= false;
+	        }
+		}
+		echo CHtml::hiddenField("idTabArea",$idArea, array('id'=>'idTabArea'));
+		?>
       
         <li class="pull-right">
           <div class="btn-group btnAlternateView">
@@ -20,25 +28,27 @@
       </ul>
       <div class="tab-content">
         <?php
-        $first = true; 
+        $first = true;
         foreach($areaProjects as $item)	{ ?>
         <div class="tab-pane <?php echo $first?'active':'';?>" id="itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>">
-        <?php $first= false;?>
-        <?php
-        $modelBudgetItem->Id_area = $item->Id_area;
-        $modelBudgetItem->Id_area_project = $item->Id;
-        
-        echo $this->renderPartial('_tabEditBudgetByArea',array(
-					'model'=>$model,
-					'modelProduct'=>$modelProduct,
-					'modelBudgetItem'=>$modelBudgetItem,
-					'priceListItemSale'=>$priceListItemSale,
-					'areaProject'=>$item,
-					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
-		));?>
+        <?php 
+	        
+	        
+	        $modelBudgetItem->Id_area = $item->Id_area;
+	        $modelBudgetItem->Id_area_project = $item->Id;
+	        
+	        echo $this->renderPartial('_tabEditBudgetByArea',array(
+						'model'=>$model,
+						'modelProduct'=>$modelProduct,
+						'modelBudgetItem'=>$modelBudgetItem,
+						'priceListItemSale'=>$priceListItemSale,
+						'areaProject'=>$item,
+						'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
+			));
+		?>
 
    </div>
-  		<?php }?>   
+  		<?php } ?>   
    </div>
     </div>
     </div>

@@ -266,6 +266,35 @@ class BudgetController extends GController
 		
 	}
 	
+	public function actionAjaxAddProduct()
+	{
+		$idBudget = (isset($_POST['idBudget']))?$_POST['idBudget']:null;
+		$version = (isset($_POST['version']))?$_POST['version']:null;
+		$idProduct = (isset($_POST['idProduct']))?$_POST['idProduct']:null;
+		$idArea = (isset($_POST['idArea']))?$_POST['idArea']:null;
+		$qty = (isset($_POST['qty']))?$_POST['qty']:0;
+	
+		if(isset($idBudget) && isset($version) && isset($idProduct) && isset($idArea) && $qty > 0)
+		{
+			$modelBudgetItemBD =  BudgetItem::model()->findByAttributes(array('Id_budget'=>$idBudget, 'Id_area'=>$idArea, 'Id_product'=>$idProduct, 'version_number'=>$version));
+			if(isset($modelBudgetItemBD))
+			{
+				$modelBudgetItemBD->quantity = $qty; 
+			}
+			else
+			{
+				$modelBudgetItemBD = new BudgetItem();
+				$modelBudgetItemBD->Id_area = $idArea;
+				$modelBudgetItemBD->Id_budget = $idBudget;
+				$modelBudgetItemBD->version_number = $version;
+				$modelBudgetItemBD->Id_product = $idProduct;
+				$modelBudgetItemBD->quantity = $qty;
+			}
+			$modelBudgetItemBD->save();
+		}
+		
+	}
+	
 	public function actionAjaxCloseVersion()
 	{
 		$id = (isset($_POST['id']))?$_POST['id']:null;
@@ -543,7 +572,7 @@ class BudgetController extends GController
 			}
 		}
 	}	
-	public function actionAddItem($id, $version)
+	public function actionAddItem($id, $version, $idArea=null)
 	{
 		$model = $this->loadModel($id, $version);
 		
@@ -586,6 +615,8 @@ class BudgetController extends GController
 		
 		$modelProducts->budget_id = $id;
 		$modelProducts->budget_version = $version;
+		if(isset($idArea))
+			$modelProducts->budget_area = $idArea;
 		
 		$this->render('editBudget',array(
 					'model'=>$model,
