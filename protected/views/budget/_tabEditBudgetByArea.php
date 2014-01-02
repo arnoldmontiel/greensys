@@ -1,5 +1,23 @@
 <script type="text/javascript">
 
+function deleteBudgetItem(id,idArea)
+{
+	if(confirm("¿Esta seguro que desea eliminar este item?"))
+	{
+		$.post(
+				'<?php echo BudgetController::createUrl('AjaxDeleteBudgetItem')?>',
+				 {
+				 	id: id,
+				 },'json').success(
+					function(data) 
+					{
+						 $.fn.yiiGridView.update('budget-item-grid_'+idArea); 
+					}
+				);		
+	}	
+ 	return false;
+}
+
 function fillAndOpenDD(id)
 {
 	$(".dropdown-menu").removeClass("open");
@@ -354,7 +372,7 @@ $selectPrice='"<div class=\"precioTablaValor\">".$data->price." "."<div class=\"
   </ul>"';
 
 	$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'budget-grid-approved',
+		'id'=>'budget-item-grid_'.$areaProject->Id_area,
 		'dataProvider'=>$modelBudgetItem->search(),
 		'selectableRows' => 0,
 		'summaryText'=>'',	
@@ -447,41 +465,13 @@ $selectPrice='"<div class=\"precioTablaValor\">".$data->price." "."<div class=\"
 								'CHtml::openTag("div",array("class"=>"usd"))."'.$settings->getEscapedCurrencyShortDescription().'".CHtml::closeTag("div").CHtml::closeTag("span")',
 							'type'=>'raw',
 					),
-					
 					array(
-							'name'=>'discount_type',
-							'value'=>'CHtml::dropDownList("discount_type", $data->discount_type,array("%","'.$settings->getEscapedCurrencyShortDescription().'"),array(
-													"id"=>$data->Id,"class"=>"ddl_discount_type","style"=>"width:50px"
-													) );',
+							'name'=>'Acciones',
+							'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"deleteBudgetItem(".$data->Id.",'.$areaProject->Id_area.');\" ><i class=\"fa fa-trash-o\"></i></button>"',
 							'type'=>'raw',
-							'htmlOptions'=>array('style'=>"width:20px"),
-					)
-					,
-					array(
-							'value'=>
-							'CHtml::image("images/grid_warning.png","",
-													array("title"=>"Pending check products",
-														"style"=>!$data->DoNotWarning?"display":"display:none",
-														"id"=>$data->Id, "idArea"=>$data->Id_area, "idAreaProject"=>$data->Id_area_project, "idProduct"=>$data->Id_product, "class"=>"link-popup"
-													)
-												)',
-							'type'=>'raw',
-							'htmlOptions'=>array(),
+							'htmlOptions'=>array("style"=>"text-align:center;"),
 					),
-					
-					array(
-							'class'=>'CButtonColumn',
-							'template'=>'{delete}',
-							'deleteConfirmation'=>"js:'Are you sure you want to delete this item?'",
-							'buttons'=>array
-							(
-									'delete' => array
-									(
-											'url'=>'Yii::app()->createUrl("budget/AjaxDeleteBudgetItem", array("id"=>$data->Id))',
-									),
-							),
-					),
-),
+			),
 		));		
 Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 ");

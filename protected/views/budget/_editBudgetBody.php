@@ -33,7 +33,7 @@
 					'modelProduct'=>$modelProduct,
 					'modelBudgetItem'=>$modelBudgetItem,
 					'priceListItemSale'=>$priceListItemSale,
-					'areaProjects'=>$areaProjects,
+					'areaProject'=>$item,
 					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
 		));?>
 
