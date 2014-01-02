@@ -8,7 +8,7 @@
         $first = true;
         $idArea = null;
         foreach($areaProjects as $item)	{ ?>
-        <li class="<?php echo $first?'active':'';?>"><a onclick="changeTab(<?php echo $item->Id_area;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab"><?php echo $item->area->description?> </a><a class="tabEdit"><i class="fa fa-pencil"></i></a></li>
+        <li class="<?php echo ($first?'active':'');?>"><a onclick="changeTab(<?php echo $item->Id_area;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab"><?php echo $item->area->description?> </a><a class="tabEdit"><i class="fa fa-pencil"></i></a></li>
 		<?php if($first)
 	        {
 	        	$idArea = $item->Id_area;
@@ -33,7 +33,8 @@
         <div class="tab-pane <?php echo $first?'active':'';?>" id="itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>">
         <?php 
 	        
-	        
+        	if($first)
+        		$first = false;
 	        $modelBudgetItem->Id_area = $item->Id_area;
 	        $modelBudgetItem->Id_area_project = $item->Id;
 	        
