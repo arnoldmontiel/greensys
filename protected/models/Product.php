@@ -124,6 +124,10 @@ class Product extends ModelAudit
 	public $nomenclator_description;
 	public $supplier_description;
 	public $product_area_id;
+	public $budget_id;
+	public $budget_version;
+	public $qty_per_prod;	
+	
 	public function beforeSave()
 	{
 		if($this->isNewRecord)
@@ -186,7 +190,7 @@ class Product extends ModelAudit
 			array('Id_volts, time_instalation, time_programation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, Id_sub_category', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_brand, Id_category, Id_nomenclator, Id_product_type, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation,time_programation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color, other, Id_category, power, current, need_rack, unit_rack, from_dtools, verified, model, vendor, Id_product, default_broker, default_send_format, shipping_box_lenght, shipping_box_width, shipping_box_height, shipping_box_volume, shipping_box_weight, dimensional_weight_IATA, dimensional_weight_FEDEX, dimensional_weight_DHL, dimensional_weight_UPS, dimensional_weight_custom1, dimensional_weight_custom2, dimensional_weight_custom3, off, off_category_a, off_category_b, off_category_c, off_category_d, deale_distributor_price, need_ups, commercial_name, commercial_description, accessory_a, accessory_b, accessory_c, accessory_d, attached', 'safe', 'on'=>'search'),
+			array('Id, Id_brand, Id_category, Id_nomenclator, Id_product_type, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation,time_programation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color, other, Id_category, power, current, need_rack, unit_rack, from_dtools, verified, model, vendor, Id_product, default_broker, default_send_format, shipping_box_lenght, shipping_box_width, shipping_box_height, shipping_box_volume, shipping_box_weight, dimensional_weight_IATA, dimensional_weight_FEDEX, dimensional_weight_DHL, dimensional_weight_UPS, dimensional_weight_custom1, dimensional_weight_custom2, dimensional_weight_custom3, off, off_category_a, off_category_b, off_category_c, off_category_d, deale_distributor_price, need_ups, commercial_name, commercial_description, accessory_a, accessory_b, accessory_c, accessory_d, attached, budget_id, budget_version qty_per_prod', 'safe', 'on'=>'search'),
 		
 			
 		);
@@ -1048,6 +1052,61 @@ class Product extends ModelAudit
 				'msrp',
 				'dealer_cost',
 				'weight',
+				'*',
+		);
+	
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+				'sort'=>$sort,
+		));
+	
+	}
+	
+	public function searchByBudgetItem()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->select = 't.model, t.part_number, t.Id_brand, t.msrp, t.Id_category, t.short_description, CASE WHEN bi.Id_product is not null THEN count(t.Id)
+		ELSE 0 END AS qty_per_prod';
+		
+		$criteria->compare('msrp',$this->msrp,true);
+		$criteria->compare('model',$this->model,true);
+		$criteria->compare('part_number',$this->part_number,true);
+		$criteria->compare('short_description',$this->short_description,true);
+		
+		$filter = '';
+		if(isset($this->budget_id))
+			$filter = ' and bi.Id_budget = '. $this->budget_id;
+		if(isset($this->budget_version))
+			$filter .= ' and bi.version_number = '. $this->budget_version;
+		
+		$criteria->join = 'INNER JOIN brand on (t.Id_brand = brand.Id)
+							INNER JOIN category on (t.Id_category = category.Id)
+							LEFT OUTER JOIN budget_item bi on (t.Id = bi.Id_product '.$filter.')';
+		
+		$criteria->addSearchCondition("brand.description",$this->brand_description);
+		$criteria->addSearchCondition("category.description",$this->category_description);		
+		
+		$criteria->group = 't.Id';
+	
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+				'model',
+				'part_number',
+				'short_description',
+				'brand_description' => array(
+						'asc' => 'brand.description',
+						'desc' => 'brand.description DESC',
+				),
+				'category_description' => array(
+						'asc' => 'category.description',
+						'desc' => 'category.description DESC',
+				),
+				'msrp',
 				'*',
 		);
 	
