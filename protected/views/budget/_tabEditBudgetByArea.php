@@ -119,12 +119,12 @@ function fillAndOpenDD(id)
 </script>
 
 <?php
-$selectPrice='"<div class=\"precioTablaValor\">".$data->price." "."<div class=\"usd\">'.$settings->getEscapedCurrencyShortDescription().'</div></div>'.
+$selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$data->price." "."<div class=\"usd\">'.$settings->getEscapedCurrencyShortDescription().'</div></div>'.
 	'<button id=\"btn_price_".$data->Id."\" type=\"button\" class=\"btn btn-primary btn-xs pull-right dropdown-toggle miniEdit\" onclick=\"fillAndOpenDD(".$data->Id.");\">
              <i class=\"fa fa-pencil\"></i>
              </button>".'.
 	'"<ul id=\"ul_price_".$data->Id."\" class=\"dropdown-menu superDropdown\" role=\"menu\" aria-labelledby=\"dropdownMenu1\">
-  </ul>"';
+  </ul></div>"';
 
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'budget-item-grid_'.$areaProject->Id_area,
@@ -146,24 +146,6 @@ $selectPrice='"<div class=\"precioTablaValor\">".$data->price." "."<div class=\"
 							'value'=>'CHtml::textField("quantity",$data->quantity,array("class"=>"form-control inputSmall","onchange"=>"changeQuantity(".$data->Id.",this)"))',
 							'type'=>'raw'
 					),
-// 					array(
-// 							'name'=>'stock',	
-// 							'value'=>'$data->hasStockAssigned?
-// 									    		 CHtml::button("View Stock Assign",
-// 									    					array("class"=>"btn-View-Assign",
-// 									    							"idBudgetItem"=>$data->Id,
-// 									    							"idProduct"=>$data->Id_product,
-// 									    							"idArea"=>$data->Id_area,"idAreaProject"=>$data->Id_area_project,))
-// 									    		:
-// 									    		 CHtml::button(($data->product->stockCount)>0?"Assign from stock":"No Stock",
-// 									    					array("class"=>"btn-Assign-From-Stock",
-// 									    							"idBudgetItem"=>$data->Id,
-// 									    							"idProduct"=>$data->Id_product,
-// 									    							"idArea"=>$data->Id_area,"idAreaProject"=>$data->Id_area_project,
-// 									    							"disabled"=>($data->product->stockCount > 0)?"":"disabled", ))'
-// 							,
-// 							'type'=>'raw'
-// 					),
 					array(
 							'name'=>'service',
 							'value'=>'
@@ -176,7 +158,6 @@ $selectPrice='"<div class=\"precioTablaValor\">".$data->price." "."<div class=\"
 							'name'=>'price',
 							'value'=>$selectPrice,
 							'type'=>'raw',
-							'htmlOptions'=>array("class"=>"precioTabla"),
 					),
 					array(
 							'name'=>'discount',
@@ -210,18 +191,7 @@ $selectPrice='"<div class=\"precioTablaValor\">".$data->price." "."<div class=\"
 							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."I"."</span>".CHtml::textField("time_instalation",$data->time_instalation,array("class"=>"form-control inputSmall"))."</div>"',
 							'type'=>'raw',
 					),
-// <td> <div class="bloqueHoras noMargin">
-// <span class="label label-default">P</span>
-// <input type="model" id="campoCantHoras" class="form-control inputSmall">
-// x
-// <input type="model" id="campoPrecioHora" class="form-control inputMed" > <div class="usd">USD</div></div>
-// <div class="bloqueHoras">
-// <span class="label label-default">I</span>
-// <input type="model" id="campoCantHoras" class="form-control inputSmall">
-// x
-// <input type="model" id="campoPrecioHora" class="form-control inputMed" > <div class="usd">USD</div></div>
-// </td>
-					array(
+		array(
 							'name'=>'Acciones',
 							'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"deleteBudgetItem(".$data->Id.",'.$areaProject->Id_area.');\" ><i class=\"fa fa-trash-o\"></i></button>"',
 							'type'=>'raw',
