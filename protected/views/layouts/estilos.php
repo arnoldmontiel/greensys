@@ -454,9 +454,9 @@ h2 a.superEdit{ position:absolute; top:10px; right:30px; cursor:pointer; font-si
 #myModalNewBudget .modal-dialog{ width:600px;}
 
 
-#myModalAgregarProductos .modal-dialog{ width:80%;}
-#myModalAgregarProductos .label{ font-size:15px;}
-#myModalAgregarProductos .table.tablaIndividual{ margin-bottom:0px;}
+#myModalAddProduct .modal-dialog{ width:80%;}
+#myModalAddProduct .label{ font-size:15px;}
+#myModalAddProduct .table.tablaIndividual{ margin-bottom:0px;}
 
 .inputSmall{ width:40px; display:inline-block; }
 .inputMed{ width:55px; display:inline-block; }
