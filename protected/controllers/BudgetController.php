@@ -1031,6 +1031,24 @@ class BudgetController extends GController
 			}
 		}
 	}
+	public function actionAjaxSaveQuantity()
+	{
+		if(isset($_POST['Id_budget_item'])&&isset($_POST['quantity']))
+		{
+			$budgetItem = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
+			if(isset($budgetItem))
+			{
+				$budgetItem->quantity= $_POST['quantity'];
+				if($budgetItem->save())
+				{
+					$budgetItem->refresh();
+					$result['total_price']=$budgetItem->totalPrice;
+					echo json_encode(array_merge($budgetItem->attributes,$result));						
+				}
+			}
+		}
+	}
+	
 	public function actionAjaxAddBudgetItem()
 	{
 		$idPriceList = isset($_POST['IdPriceList'])?$_POST['IdPriceList']:'';

@@ -37,6 +37,26 @@ function changeDiscount(id, object)
 				//alert("error");				
 		},"json");	
 }
+function changeQuantity(id, object)
+{
+	validateNumber(object);
+	$.post(
+			"<?php echo BudgetController::createUrl('AjaxSaveQuantity')?>",
+			{
+				Id_budget_item: id,quantity:$(object).val()
+			}
+			).success(function(data)
+			{
+				var response = jQuery.parseJSON(data);
+				$("#total_price_"+id).html(response.total_price+" <div class=\"usd\"><?php echo $settings->getEscapedCurrencyShortDescription()?></div>");
+				$(object).val(response.quantity);
+				//setTotals();
+				//alert("success");				
+		}).error(function(data)
+			{
+				//alert("error");				
+		},"json");	
+}
 
 function changeDiscountType(id, object)
 {
@@ -443,7 +463,7 @@ $selectPrice='"<div class=\"precioTablaValor\">".$data->price." "."<div class=\"
 					),
 					array(
 							'name'=>'quantity',
-							'value'=>'CHtml::textField("quantity",$data->quantity,array("class"=>"form-control inputSmall"))',
+							'value'=>'CHtml::textField("quantity",$data->quantity,array("class"=>"form-control inputSmall","onchange"=>"changeQuantity(".$data->Id.",this)"))',
 							'type'=>'raw'
 					),
 // 					array(
