@@ -284,11 +284,59 @@ class BudgetController extends GController
 			else
 			{
 				$modelBudgetItemBD = new BudgetItem();
-				$modelBudgetItemBD->Id_area = $idArea;
-				$modelBudgetItemBD->Id_budget = $idBudget;
-				$modelBudgetItemBD->version_number = $version;
-				$modelBudgetItemBD->Id_product = $idProduct;
-				$modelBudgetItemBD->quantity = $qty;
+				
+				$modelProduct = Product::model()->findByPk($idProduct);
+				
+				if(isset($modelProduct))
+				{
+					//traigo datos de price_list (precios, shipping_type)
+					$criteria = new CDbCriteria();
+					$criteria->join = 'inner join price_list pl on (pl.Id = t.Id_price_list)';
+					$criteria->addCondition('pl.Id_price_list_type = 2'); //lista de venta
+					$criteria->addCondition('t.Id_product = '. $idProduct);
+					$criteria->addCondition('pl.description <> "FOB"');
+					
+					$modelPriceListItem = PriceListItem::model()->find($criteria);
+					
+					if(isset($modelPriceListItem))
+					{
+						$modelBudgetItemBD->Id_price_list = $modelPriceListItem->Id_price_list;
+						if(isset($modelPriceListItem->maritime_cost) && $modelPriceListItem->maritime_cost > 0)
+						{
+							$modelBudgetItemBD->Id_shipping_type = 1;
+							$modelBudgetItemBD->price = $modelPriceListItem->maritime_cost;
+						}
+						else 
+						{						
+							$modelBudgetItemBD->Id_shipping_type = 2;
+							$modelBudgetItemBD->price = $modelPriceListItem->air_cost;
+						}
+					}
+					else 
+					{
+						$criteria = new CDbCriteria();
+						$criteria->join = 'inner join price_list pl on (pl.Id = t.Id_price_list)';
+						$criteria->addCondition('pl.Id_price_list_type = 2'); //lista de venta
+						$criteria->addCondition('t.Id_product = '. $idProduct);
+						$criteria->addCondition('pl.description = "FOB"');
+						
+						$modelPriceListItem = PriceListItem::model()->find($criteria);
+						if(isset($modelPriceListItem))
+						{
+							$modelBudgetItemBD->Id_price_list = $modelPriceListItem->Id_price_list;
+							$modelBudgetItemBD->Id_shipping_type = 1;
+							$modelBudgetItemBD->price = $modelPriceListItem->maritime_cost;
+						}
+					}
+					
+					$modelBudgetItemBD->time_programation = $modelProduct->time_programation;
+					$modelBudgetItemBD->time_instalation = $modelProduct->time_instalation;
+					$modelBudgetItemBD->Id_area = $idArea;
+					$modelBudgetItemBD->Id_budget = $idBudget;
+					$modelBudgetItemBD->version_number = $version;
+					$modelBudgetItemBD->Id_product = $idProduct;
+					$modelBudgetItemBD->quantity = $qty;
+				}
 			}
 			$modelBudgetItemBD->save();
 		}
