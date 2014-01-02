@@ -148,10 +148,11 @@ class BudgetController extends GController
 		));
 	}
 
-	public function actionAjaxDeleteBudgetItem($id)
+	public function actionAjaxDeleteBudgetItem()
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
+			$id = $_POST['id'];
 			// we only allow deletion via POST request
 			$model = BudgetItem::model()->findByPk($id);
 			$transaction = $model->dbConnection->beginTransaction();
@@ -161,10 +162,7 @@ class BudgetController extends GController
 				$model->deleteByPk($id);
 				
 				$transaction->commit();
-				
-				if(!isset($_GET['ajax']))
-					$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('addItem'));
-				
+								
 			} catch (Exception $e) {
 				$transaction->rollback();
 			}
