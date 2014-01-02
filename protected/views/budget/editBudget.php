@@ -1,17 +1,9 @@
 <script type="text/javascript">
 function addProduct(id,version)
 {
-	$.post("<?php echo BudgetController::createUrl('AjaxOpenAddProduct'); ?>",
-			{
-				id:id,
-				version:version
-			}
-		).success(
-			function(data){
-				$('#myModalAddProduct').html(data);
-		   		$('#myModalAddProduct').modal('show');	  
-			});
-		return false;
+	$('#myModalAddProduct').append($('#container-modal-addProduct'));
+	$('#myModalAddProduct').modal('show');
+	return false;
 }
 
 function editBudget(id,version)
@@ -35,5 +27,9 @@ function editBudget(id,version)
 					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
 		));?>
   
+</div>
+
+<div id="container-modal-addProduct">
+<?php echo $this->renderPartial('_modalAddProduct', array( 'modelProducts'=>$modelProducts, ));?>
 </div>
 <!-- /container --> 

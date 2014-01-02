@@ -14,9 +14,8 @@
   <?php		
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'product-grid-add',
-		'dataProvider'=>$dataProvider,
+		'dataProvider'=>$modelProducts->searchByBudgetItem(),
 		'selectableRows' => 0,
-		 'ajaxUrl' =>  CHtml::normalizeUrl($this->createUrl('index')),
 		'filter'=>$modelProducts,
 		'summaryText'=>'',	
 		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
@@ -63,7 +62,7 @@
 				array(
 						'header'=>'Agregados',
 						'value'=>function($data){
-							return '<span class="label label-success">3</span>';
+							return '<span class="label label-success">'.$data->qty_per_prod.'</span>';
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:center;"),
