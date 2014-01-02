@@ -266,6 +266,22 @@ class BudgetController extends GController
 		
 	}
 	
+	public function actionAjaxGetTotalQty()
+	{
+		$idBudget = (isset($_POST['idBudget']))?$_POST['idBudget']:null;
+		$version = (isset($_POST['version']))?$_POST['version']:null;
+		$idArea = (isset($_POST['idArea']))?$_POST['idArea']:null;
+		
+		$criteria = new CDbCriteria();
+		$criteria->select = 'sum(quantity) as quantity';
+		$criteria->addCondition('Id_budget = '.$idBudget);
+		$criteria->addCondition('Id_area = '.$idArea);
+		$criteria->addCondition('version_number = '.$version);
+		$model = BudgetItem::model()->find($criteria);
+		
+		echo isset($model)?round($model->quantity):0;		
+	}
+	
 	public function actionAjaxAddProduct()
 	{
 		$idBudget = (isset($_POST['idBudget']))?$_POST['idBudget']:null;
@@ -339,6 +355,19 @@ class BudgetController extends GController
 				}
 			}
 			$modelBudgetItemBD->save();
+			
+			$criteria = new CDbCriteria();
+			$criteria->select = 'sum(quantity) as quantity';
+			$criteria->addCondition('Id_budget = '.$idBudget);
+			$criteria->addCondition('Id_area = '.$idArea);
+			$criteria->addCondition('version_number = '.$version);
+			$model = BudgetItem::model()->find($criteria);
+			
+			echo isset($model)?round($model->quantity):0;
+		}
+		else 
+		{
+			echo 0;
 		}
 		
 	}

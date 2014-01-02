@@ -23,7 +23,8 @@ function addQty(idProduct)
 				$.fn.yiiGridView.update('product-grid-add', {
 					data: $(this).serialize() + '&idArea=' + $('#idTabArea').val()
 				});			
-				$.fn.yiiGridView.update("budget-item-grid_"+idArea);  
+				$.fn.yiiGridView.update("budget-item-grid_"+idArea); 
+				$('#total-qty').children().text(data); 
 			});
 		return false;
 }
@@ -33,9 +34,27 @@ function addProduct(id,version)
 	$.fn.yiiGridView.update('product-grid-add', {
 		data: $(this).serialize() + '&idArea=' + $('#idTabArea').val()
 	});
+	
 	$('#myModalAddProduct').append($('#container-modal-addProduct'));
 	$('#container-modal-addProduct').show();
+
+	var idArea = $('#idTabArea').val();
+	var idBudget = $('#idBudget').val();
+	var version = $('#version').val();
+	
+	$.post("<?php echo BudgetController::createUrl('AjaxGetTotalQty'); ?>",
+			{
+				idBudget:idBudget,
+				version:version,
+				idArea:idArea
+			}
+		).success(
+			function(data){
+				$('#total-qty').children().text(data);
+			});
+		
 	$('#myModalAddProduct').modal('show');
+	
 	return false;
 }
 
@@ -48,7 +67,6 @@ function editBudget(id,version)
 </script>
 <div class="container" id="screenCrearPresupuesto">
   <h1 class="pageTitle">Presupuesto</h1>
-  
   	<?php echo CHtml::hiddenField("idBudget",$model->Id,array("id"=>"idBudget"));?>
   	<?php echo CHtml::hiddenField("version",$model->version_number,array("id"=>"version"));?>
 	<?php $this->renderPartial('_editBudgetHead',array('model'=>$model));?>

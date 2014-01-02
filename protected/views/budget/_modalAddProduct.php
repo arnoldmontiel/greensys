@@ -7,7 +7,7 @@
       <div class="modal-body">
        <ul class="nav nav-tabs">
         <li class="active"><a href="#tabTodos" data-toggle="tab">Todos</a></li>
-        <li class="pull-right">Total Agregados <span class="label label-success">20</span></li>
+        <li id="total-qty" class="pull-right">Total Agregados <span class="label label-success">20</span></li>
       </ul>
       <div class="tab-content">
   <div class="tab-pane active" id="tabTodos">
