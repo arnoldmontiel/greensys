@@ -520,7 +520,7 @@ padding-bottom: 20px;}
 
 .nav-tabs>li a.tabEdit:hover, .nav-tabs>li.active>a.tabEdit:hover{color:#5cb85c !important; cursor:pointer;}
 
-.bloqueHoras{min-width:170px; margin-top:6px;}
+.bloqueHoras{min-width:60px; margin-top:6px;}
 .bloqueHoras span{ display:inline-block; width:22px; margin-right:3px; font-size:14px;}
 
 .bloqueDescuentoHoras{min-width:135px; padding-top:1px;}

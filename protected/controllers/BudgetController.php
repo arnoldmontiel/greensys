@@ -1007,6 +1007,7 @@ class BudgetController extends GController
 				$budgetItem->discount_type = $_POST['discount_type'];
 				if($budgetItem->save())
 				{
+					$budgetItem->refresh();
 					$result['total_price']=$budgetItem->totalPrice;
 					echo json_encode(array_merge($budgetItem->attributes,$result));						
 				}
@@ -1023,6 +1024,7 @@ class BudgetController extends GController
 				$budgetItem->discount= $_POST['discount'];
 				if($budgetItem->save())
 				{
+					$budgetItem->refresh();
 					$result['total_price']=$budgetItem->totalPrice;
 					echo json_encode(array_merge($budgetItem->attributes,$result));						
 				}
