@@ -22,7 +22,8 @@ function addQty(idProduct)
 			function(data){
 				$.fn.yiiGridView.update('product-grid-add', {
 					data: $(this).serialize() + '&idArea=' + $('#idTabArea').val()
-				});			  
+				});			
+				$.fn.yiiGridView.update("budget-item-grid_"+idArea);  
 			});
 		return false;
 }
