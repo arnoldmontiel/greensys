@@ -429,37 +429,7 @@ class BudgetController extends GController
 		$this->render('admin',array(
 			'model'=>$model,
 		));
-	}
-
-	public function actionAjaxOpenAddProduct()
-	{
-		$id = (isset($_POST['id']))?$_POST['id']:null;
-		$version = (isset($_POST['version']))?$_POST['version']:null;
-		
-		$modelProducts = new Product('search');
-		$modelProducts->unsetAttributes();  // clear any default values
-		if(isset($_GET['Product']))
-			$modelProducts->attributes=$_GET['Product'];
-		
-		$params = '&id='.$id.'&version='.$version;
-		
-		$criteria=new CDbCriteria;
-		
-		$dataProvider=new CActiveDataProvider('Product',array(
-				'criteria'=>$criteria,
-				'pagination'=>array(
-						'route'=>'budget/addItem'.$params
-				),
-				'sort'=>array(
-						'route'=>'something/search'
-				)
-		));
-		
-		echo $this->renderPartial('_modalAddProduct', array('dataProvider'=>$dataProvider, 
-															'modelProducts'=>$modelProducts, 
-															'id'=>$id, 
-															'version'=>$version));
-	}
+	}	
 	
 	public function actionAjaxOpenNewBudget()
 	{
@@ -613,6 +583,9 @@ class BudgetController extends GController
 		$modelProducts->unsetAttributes();  // clear any default values
 		if(isset($_GET['Product']))
 			$modelProducts->attributes=$_GET['Product'];
+		
+		$modelProducts->budget_id = $id;
+		$modelProducts->budget_version = $version;
 		
 		$this->render('editBudget',array(
 					'model'=>$model,
