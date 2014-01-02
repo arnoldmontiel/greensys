@@ -34,6 +34,7 @@ function addProduct(id,version)
 		data: $(this).serialize() + '&idArea=' + $('#idTabArea').val()
 	});
 	$('#myModalAddProduct').append($('#container-modal-addProduct'));
+	$('#container-modal-addProduct').show();
 	$('#myModalAddProduct').modal('show');
 	return false;
 }
@@ -62,7 +63,7 @@ function editBudget(id,version)
   
 </div>
 
-<div id="container-modal-addProduct">
+<div id="container-modal-addProduct" style="display: none">
 <?php echo $this->renderPartial('_modalAddProduct', array( 'modelProducts'=>$modelProducts));?>
 </div>
 <!-- /container --> 
