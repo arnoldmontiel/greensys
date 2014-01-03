@@ -63,7 +63,10 @@
 				array(
 						'header'=>'Agregados',
 						'value'=>function($data){
-							return '<span class="label label-success">'.round($data->qty_per_prod).'</span>';
+							$value = "<span class='label label-default'>0</span>";
+							if($data->qty_per_prod > 0 )
+								$value = '<span class="label label-success">'.round($data->qty_per_prod).'</span>';
+							return $value;
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:center;"),
