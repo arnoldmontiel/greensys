@@ -1,4 +1,23 @@
 <script type="text/javascript">
+function closeVersion(id, version)
+{
+	if (confirm('¿Desea cerrar esta versión y enviarla a "Esperando Respuesta"?')) 
+	{
+		$.post("<?php echo BudgetController::createUrl('AjaxCloseVersion'); ?>",
+			{
+				id:id,
+				version:version
+			}
+		).success(
+			function(data){
+				window.location = "<?php echo BudgetController::createUrl("index")?>";
+				return false;
+			});
+		return false;
+	}
+	return false;	
+}
+
 function openUpdateBudget(idBudget, version)
 {
 	$.post("<?php echo BudgetController::createUrl('AjaxOpenUpdateBudget'); ?>",
