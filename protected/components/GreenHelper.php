@@ -159,7 +159,7 @@ class GreenHelper
 		return $returnValue;
 	}
 	
-	private function cellColor($sheet, $cells, $color)
+	static public function cellColor($sheet, $cells, $color)
 	{
 		$sheet->getStyle($cells)->getFill()
 		->applyFromArray(array('type' => PHPExcel_Style_Fill::FILL_SOLID,
