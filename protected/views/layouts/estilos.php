@@ -281,6 +281,11 @@ padding:2px;
 .nav-tabs>li.active>a{color:#333 !important;}
 .nav-tabs>li>a:hover{ color:#666 !important;}
 
+.grid-view .sort-link{background-image:url(images/sort-desc.png); background-repeat:no-repeat; background-position:right; padding-right:20px;}
+
+.grid-view .sort-link.asc{background-image:url(images/sort-asc.png); background-repeat:no-repeat; background-position:right; padding-right:20px;}
+.grid-view .sort-link.desc{background-image:url(images/sort-desc.png); background-repeat:no-repeat; background-position:right; padding-right:20px;}
+
 /* ------ END BODY / MAIN LAYOUT ------- */
 
 /* ------ PAGINADOR------- */
@@ -404,7 +409,7 @@ padding: 6px 8px;
 
 #screenProductos .table.tablaIndividual { margin-bottom:5px;}
 
-.buttonsTableProd{min-width:177px;}
+.buttonsTableProd{min-width:158px;}
 .buttonsTablePres{min-width:380px;}
 
 .combined { width:100%;}
@@ -592,9 +597,9 @@ background-color: rgba(92,184,92,0.8);}
 .inlineForm .table{margin-bottom:0px; }
 .inlineForm .table td{border: 0px none; }
 
-.label-info{font-size: 14px;
+.label-info{font-size: 13px;
 font-family: "GudeaRegular";
-font-weight: normal;}
+}
 
 .liButtonAdd{ line-height:35px; padding-left:10px;}
 
