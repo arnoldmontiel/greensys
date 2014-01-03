@@ -65,7 +65,6 @@ $settings = new Settings();
 						'modelProduct'=>$modelProduct,
 						'modelBudgetItem'=>$modelBudgetItem,
 						'priceListItemSale'=>$priceListItemSale,
-						'areaProject'=>$item,
 						'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,));
     ?>
     
