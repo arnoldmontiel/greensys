@@ -30,7 +30,7 @@ $settings = new Settings();
   <button type="button" class="btn btn-default">Servicios</button>
 </div>
         </li>
-       <li class="liButtonAdd"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModalAddArea"><i class="fa fa-plus"></i> Agregar Area</button></li>
+       <li id="addAreaToProject" class="liButtonAdd"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ><i class="fa fa-plus"></i> Agregar Area</button></li>
        <li class="pull-right"><button onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button></li>
       </ul>
       <div class="tab-content">
@@ -298,6 +298,23 @@ function fillAndOpenDD(id)
 	
  	return false;
 }
+$("#addAreaToProject").click(function()
+{	
+	$.post(
+			'<?php echo BudgetController::createUrl('ajaxFillAddAreaToProject')?>',
+			 {
+			 	Id_project: <?php echo $model->Id_project?>,
+			 },'json').success(
+				function(data) 
+				{ 
+					if(data!='')
+					{
+						$('#modalPlaceHolder').html(data);
+						$('#modalPlaceHolder').modal('show');					
+					}
+				}
+			).error(function(){});		
+})
 <!--
 
 //-->
