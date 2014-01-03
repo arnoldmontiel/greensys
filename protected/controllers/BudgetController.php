@@ -593,6 +593,9 @@ class BudgetController extends GController
 	public function actionAjaxSaveNewBudget()
 	{
 		$modelBudget = new Budget();		
+		$response = array();
+		$idBudget = 0;
+		$version = 0;
 		
 		if(isset($_POST['Budget']))
 		{
@@ -613,8 +616,16 @@ class BudgetController extends GController
 			$modelBudget->Id_budget_state = 1;
 			
 			$modelBudget->save();
+			
+			$idBudget = $modelBudget->Id;
+			$version = $modelBudget->version_number;			
 		}
-		echo Budget::model()->countByAttributes(array('Id_budget_state'=>1));
+		
+		$response = array('openQty'=>Budget::model()->countByAttributes(array('Id_budget_state'=>1)),
+					'idBudget'=>$idBudget,
+					'version'=>$version);
+		
+		echo json_encode($response);
 	}
 	
 	public function actionAjaxSaveUpdatedBudget()

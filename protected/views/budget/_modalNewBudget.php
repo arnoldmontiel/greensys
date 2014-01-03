@@ -7,6 +7,7 @@
       <div class="modal-body">
 
 <form id="form-new-budget" role="form">
+	<?php echo CHtml::hiddenField("save-and-continue",false,array('id'=>'save-and-continue'));?>
 	<?php echo CHtml::hiddenField("create-project",false,array('id'=>'create-project'));?>
   <div class="form-group">
     <?php echo CHtml::activeLabel($model, 'Id_project');?>
@@ -131,7 +132,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
         <button onclick="save();" type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
-        <a href="crearPresupuesto.php" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar y Agregar Prods.</a>
+        <a onclick="saveAndContinue();" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar y Agregar Prods.</a>
       </div>
     </div><!-- /.modal-content -->
 <script type="text/javascript">
@@ -159,10 +160,24 @@
 		        cache: false,
 		        processData:false,
 		    success: function(data, textStatus, jqXHR)
-		    {		    							
+		    {		
+		    	var obj = jQuery.parseJSON(data);				
+				if(obj != null)
+				{
+					$('#tab-open').children().text(obj.openQty);
+
+					if($('#save-and-continue').val() == "true")
+					{
+						var params = "&id="+obj.idBudget+"&version="+obj.version;
+			    		window.location = "<?php echo BudgetController::createUrl("addItem")?>" + params;
+			    		return false;
+					}	
+				}
+				    									    	
+		    	
 		    	$.fn.yiiGridView.update("budget-grid-open");
 		    	$('#myModalNewBudget').trigger('click');
-		    	$('#tab-open').children().text(data);
+		    	
 		    },
 		     error: function(jqXHR, textStatus, errorThrown)
 		     {
@@ -173,6 +188,11 @@
 	
 	function save()
 	{				
+		$('#form-new-budget').submit();
+	}
+	function saveAndContinue()
+	{
+		$('#save-and-continue').val(true);
 		$('#form-new-budget').submit();
 	}
 </script>
