@@ -66,7 +66,7 @@ class Brand extends ModelAudit
 	{
 		return array(
 			'Id' => 'ID',
-			'description' => 'Description',
+			'description' => 'Nombre',
 		);
 	}
 
@@ -83,6 +83,7 @@ class Brand extends ModelAudit
 
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('description',$this->description,true);
+		$criteria->order="description";
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -1,6 +1,6 @@
 <?php
 
-class BrandController extends Controller
+class BrandController extends GController
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -83,6 +83,20 @@ class BrandController extends Controller
 				echo json_encode($model->attributes); 
 		}
 	}
+	public function actionAjaxUpdate()
+	{
+		if(isset($_POST['Brand']['Id']))
+		{
+			$model=$this->loadModel($_POST['Brand']['Id']);
+			
+			if(isset($_POST['Brand']))
+			{
+				$model->attributes=$_POST['Brand'];
+				if($model->save())
+					echo json_encode($model->attributes);
+			}
+		}
+	}
 	public function actionAjaxShowCreateModal()
 	{
 		$model=new Brand;
@@ -94,6 +108,21 @@ class BrandController extends Controller
 			'model'=>$model,
 				'field_caller'=>$field_caller
 		));
+	}
+	public function actionAjaxShowUpdateModal()
+	{
+		if(isset($_POST['id']))
+		{
+			$model=$this->loadModel($_POST['id']);
+			$field_caller ="";
+			if($_POST['field_caller'])
+				$field_caller=$_POST['field_caller'];
+			// Uncomment the following line if AJAX validation is needed
+			$this->renderPartial('_formModal',array(
+					'model'=>$model,
+					'field_caller'=>$field_caller
+			));				
+		}
 	}
 	public function actionCreateNew($modelCaller)
 	{
@@ -157,7 +186,27 @@ class BrandController extends Controller
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
-
+	/**
+	 * Deletes a particular model.
+	 * If deletion is successful, the browser will be redirected to the 'admin' page.
+	 * @param integer $id the ID of the model to be deleted
+	 */
+	public function actionAjaxDelete()
+	{
+		if(Yii::app()->request->isPostRequest)
+		{
+			$id = $_POST['id'];
+			// we only allow deletion via POST request
+			$this->loadModel($id)->delete();
+	
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		}
+		else
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+	}
+	
 	/**
 	 * Lists all models.
 	 */

@@ -14,7 +14,8 @@
 
   <div class="form-group">
   <?php echo CHtml::hiddenField('field_caller',$field_caller,array('id'=>'field_caller'))?>
-    <?php echo $form->labelEx($model,'description'); ?>
+  <?php echo $form->hiddenField($model,'Id'); ?>
+  <?php echo $form->labelEx($model,'description'); ?>
     <?php echo $form->textField($model,'description',array("class"=>"form-control")); ?>
   </div>
       </div>
@@ -36,14 +37,23 @@ $('#saveBrand').unbind('click');
 $('#saveBrand').click(function()
 		{
 		$('#saveBrand').attr('disabled','disabled');
-		jQuery.post('<?php echo Yii::app()->createUrl("brand/ajaxCreate")?>', $('#brand-form').serialize(),
+		jQuery.post('<?php 
+			if($model->isNewRecord)	echo Yii::app()->createUrl("brand/ajaxCreate");
+			else 	echo Yii::app()->createUrl("brand/ajaxUpdate");
+			?>', $('#brand-form').serialize(),
 						function(data) {
 							if(data!=null)
 							{	
-								//$("#Product_Id_brand").prepend(
-								$("#"+$("#field_caller").val()).prepend(
-		  		  					$("<option></option>").val(data.Id).html(data.description)
-								);	
+								if($("#field_caller").val().indexOf("grid")>=0)
+								{
+									$.fn.yiiGridView.update($("#field_caller").val());
+								}
+								else
+								{
+									$("#"+$("#field_caller").val()).prepend(
+				  		  					$("<option></option>").val(data.Id).html(data.description)
+										);	
+								}
 								$('#modalPlaceHolder').modal('hide');					
 							}	
 					},'json'
