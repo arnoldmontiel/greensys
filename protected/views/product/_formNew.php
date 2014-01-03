@@ -335,7 +335,9 @@ $('#deleteIcon').click(function(){
           </tr>
           <tr>
             <td style="text-align:right;"><?php echo CHtml::label("Volume", "Product_volume"); ?></td>
-            <td><?php echo CHtml::textField("txtVolume","",array('class'=>'form-control')); ?><?php echo $settings->getMUShortDescription(Settings::MT_VOLUME) ?></td>
+            <td>
+            <?php echo CHtml::textField("txtVolume","",array('class'=>'form-control formHasLabel')); ?>
+            <?php echo $settings->getMUShortDescription(Settings::MT_VOLUME) ?></td>
           </tr>
           <tr>
             <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_measurement_unit_weight'); ?></td>

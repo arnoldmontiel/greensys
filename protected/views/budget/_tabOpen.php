@@ -49,6 +49,7 @@
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:right;"),
+						'headerHtmlOptions'=>array("style"=>"text-align:right;"),
 				),
 			),
 		));		

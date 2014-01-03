@@ -112,6 +112,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:right;"),
+						'headerHtmlOptions'=>array("style"=>"text-align:right;"),
 				),
 			),
 		));	

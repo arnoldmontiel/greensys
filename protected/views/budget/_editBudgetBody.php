@@ -164,10 +164,12 @@
     
   <div class="row navbar-fixed-bottom">
     <div class="col-sm-12">
-      <div class="buttonsFloatBottom">
-        <button type="button" class="btn btn-default"> Cancelar</button>
-        <button type="button" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+      <div class="statusFloatSaving">
+        <i class="fa fa-spinner fa-spin fa-fw"></i> Guardando
       </div>
+      <div class="statusFloatSaved">
+        <i class="fa fa-check fa-fw"></i> Guardado
+        </div>
     </div>
     <!-- /.col-sm-12 --> 
   </div>

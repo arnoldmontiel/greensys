@@ -191,6 +191,7 @@ line-height:48px;
 /* ------ BTN INITIAL FONT SIZES ------- */
 .btn{ font-size:15px;}
 .btn-lg{ font-size:18px;}
+.btn-sm{ font-size:13px;}
 /* ------ END BTN SIZES ------- */
 
 /* ------ BODY / MAIN LAYOUT ------- */
@@ -364,6 +365,10 @@ padding-left: 5px;}
 
 .form-control{ padding:4px;}
 
+.formHasLabel{width: 90%;
+display: inline-block;
+margin-right: 5px;}
+
 input[type="file"] {
 width:100%;
 }
@@ -402,7 +407,7 @@ padding: 6px 8px;
 .buttonsTablePres{min-width:380px;}
 
 .combined { width:100%;}
-.combined select{display:inline-block; width:60%;}
+.combined select{display:inline-block !important; width:60% !important;}
 .combined button{display:inline-block; width:35%; margin:0px !important;}
 
 
@@ -462,7 +467,9 @@ h2 a.superEdit{ position:absolute; top:10px; right:30px; cursor:pointer; font-si
 .inputMed{ width:55px; display:inline-block; }
 
 
-ul.superDropdown{left:100px; top:-150px;}
+ul.superDropdown{
+margin-left: 182px !important;
+margin-top: -186PX;}
 ul.superDropdown li{ width:300px; }
 
 
@@ -522,6 +529,7 @@ padding-bottom: 20px;}
 
 .bloqueHoras{min-width:60px; margin-top:6px;}
 .bloqueHoras span{ display:inline-block; width:22px; margin-right:3px; font-size:14px;}
+.bloqueHoras .inputSmall{margin-top:2px;}
 
 .bloqueDescuentoHoras{min-width:135px; padding-top:1px;}
 .bloqueDescuentoHoras span{ display:inline-block; width:22px; margin-right:3px; font-size:14px;}
@@ -538,11 +546,11 @@ padding-bottom: 20px;}
 .radioTipo{display: inline-block;
 width: 50px;
 height: 40px;
-vertical-align: middle;}
+vertical-align: middle; margin-left:5px;}
 
 .radioTipo .radio{margin-bottom:0px; margin-top:0px;}
 
-.campoServicio{width:150px;}
+.campoServicio{width:100%;}
 
 .usd{font-size:11px; display:inline-block;}
 
@@ -555,6 +563,33 @@ vertical-align: middle;}
 
 .tableProductName{ font-size:16px; font-family: 'GudeaBold';}
 .tableProductBrand{ font-size:16px;}
+
+#product-grid-add .tablaIndividual td button{margin:0px; margin-left:5px;}
+#product-grid-add{margin-bottom:0px;}
+#myModalAddProduct .modal-body{padding:10px;}
+
+
+#myModalAddProduct .inputSmall{padding:0px 2px; height:31px;}
+
+
+.grid-view th{font-family:"Gudea"; font-weight:600;}
+.grid-view td{font-family:"Gudea";}
+
+.statusFloatSaving{padding: 5px;
+text-align: center;
+color:white;
+background-color: rgba(0,0,0,0.5);}
+
+.statusFloatSaved{padding: 5px;
+text-align: center;
+color:white;
+background-color: rgba(92,184,92,0.8);}
+
+
+.inlineForm{background-color:#eee; padding:5px; border-radius:5px; margin:5px 0px;}
+
+.inlineForm .table{margin-bottom:0px; }
+.inlineForm .table td{border: 0px none; }
 
 /* ------ END CREAR PRESU ------- */
 

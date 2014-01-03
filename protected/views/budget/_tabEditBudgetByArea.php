@@ -123,8 +123,8 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 	'<button id=\"btn_price_".$data->Id."\" type=\"button\" class=\"btn btn-primary btn-xs pull-right dropdown-toggle miniEdit\" onclick=\"fillAndOpenDD(".$data->Id.");\">
              <i class=\"fa fa-pencil\"></i>
              </button>".'.
-	'"<ul id=\"ul_price_".$data->Id."\" class=\"dropdown-menu superDropdown\" role=\"menu\" aria-labelledby=\"dropdownMenu1\">
-  </ul></div>"';
+	'"<ul id=\"ul_price_".$data->Id."\" class=\"popover right dropdown-menu superDropdown\" role=\"menu\" aria-labelledby=\"dropdownMenu1\">
+ </ul>"';
 
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'budget-item-grid_'.$areaProject->Id_area,
@@ -137,9 +137,13 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 							'name'=>'Producto',
 							'value'=>'CHtml::openTag("div",array("class"=>"tableProductName")).$data->product->model."</div>"
 							.CHtml::openTag("div",array("class"=>"tableProductBrand")).$data->product->brand->description."</div>"
-							.CHtml::openTag("div")."PN: ".$data->product->part_number."</div>"
-							.CHtml::openTag("div")."Stock: ".$data->product->stockCount."</div>"',
+							.CHtml::openTag("div")."PN: ".$data->product->part_number."</div>"',
 							'type'=>'raw'
+					),
+					array(
+							'name'=>'stock',
+							'value'=>'CHtml::openTag("div").$data->product->stockCount."</div>"',
+							'type'=>'raw',
 					),
 					array(
 							'name'=>'quantity',
@@ -196,6 +200,7 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 							'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"deleteBudgetItem(".$data->Id.",'.$areaProject->Id_area.');\" ><i class=\"fa fa-trash-o\"></i></button>"',
 							'type'=>'raw',
 							'htmlOptions'=>array("style"=>"text-align:center;"),
+							'headerHtmlOptions'=>array("style"=>"text-align:center;"),
 					),
 			),
 		));		

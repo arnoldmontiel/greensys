@@ -57,7 +57,8 @@
 							return '<input onkeyup="validateNumber(this);" type="text" id="qty-field-'.$data->Id.'" class="form-control inputSmall" value="1"><button onclick="addQty('.$data->Id.')" type="button" class="btn btn-default btn-sm"><i class="fa fa-save"></i> Aplicar</button>';						
 						},
 						'type'=>'raw',
-						'htmlOptions'=>array("style"=>"text-align:right;"),
+						'htmlOptions'=>array("style"=>"text-align:center;"),
+						'headerHtmlOptions'=>array("style"=>"text-align:center;"),
 				),
 				array(
 						'header'=>'Agregados',
@@ -66,6 +67,7 @@
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:center;"),
+						'headerHtmlOptions'=>array("style"=>"text-align:center;"),
 				),
 			),
 		));		
