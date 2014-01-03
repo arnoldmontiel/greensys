@@ -618,7 +618,7 @@ class BudgetController extends GController
 	
 	public function actionAjaxSaveUpdatedBudget()
 	{		
-		$modelBudget = null;
+		$response = array();
 		if(isset($_POST['Budget']))
 		{
 			$idBudget = $_POST['Budget']['Id'];
@@ -627,8 +627,14 @@ class BudgetController extends GController
 			
 			$modelBudget->attributes = $_POST['Budget'];
 			$modelBudget->save();
+						
+			$response = array('description'=>$modelBudget->description,
+							'version_number'=>$modelBudget->version_number,
+							'date_estimated_inicialization'=>isset($modelBudget->date_estimated_inicialization)?Yii::app()->dateFormatter->formatDateTime($modelBudget->date_estimated_inicialization,'small',null):'',
+							'date_estimated_finalization'=>isset($modelBudget->date_estimated_finalization)?Yii::app()->dateFormatter->formatDateTime($modelBudget->date_estimated_finalization,'small',null):'');
 		}
-		echo json_encode($modelBudget->attributes);		
+		
+		echo json_encode($response);		
 	}
 	
 	public function actionEditBudget($id,$version_number)
