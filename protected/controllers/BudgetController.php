@@ -563,10 +563,20 @@ class BudgetController extends GController
 		
 		$ddlProjects = Project::model()->findAll($criteria);
 		
+		$criteria=new CDbCriteria;
+		
+		$criteria->with[]='contact';
+		$criteria->order="contact.description";
+		
+		$ddlCustomer = Customer::model()->findAll($criteria);
+		
 		$model = new Budget();
+		$modelProject = new Project();
 		
 		echo $this->renderPartial('_modalNewBudget', array('model'=>$model,
-															'ddlProjects'=>$ddlProjects));
+															'modelProject'=>$modelProject,
+															'ddlProjects'=>$ddlProjects,
+															'ddlCustomer'=>$ddlCustomer,));
 	}
 	
 	public function actionAjaxSaveNewBudget()
@@ -576,6 +586,14 @@ class BudgetController extends GController
 		if(isset($_POST['Budget']))
 		{
 			$modelBudget->attributes = $_POST['Budget'];
+
+			if($_POST['create-project'] == "true")
+			{
+				$modelProject = new Project();
+				$modelProject->attributes = $_POST['Project'];
+				$modelProject->save();
+				$modelBudget->Id_project = $modelProject->Id; 
+			}
 			
 			//Genero el Id
 			$modelBudget->Id = Budget::model()->count() + 1;
