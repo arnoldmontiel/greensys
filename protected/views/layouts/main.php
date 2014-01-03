@@ -28,7 +28,7 @@ include('menu.php');?>
 </div>
 <div id="myModalUpdateBudget" class="modal fade" style="display: none;" aria-hidden="true">
 </div>
-<div id="myModalCancelBudget" class="modal fade" style="display: none;" aria-hidden="true">
+<div id="myModalChangeStateBudget" class="modal fade" style="display: none;" aria-hidden="true">
 </div>
 <div id="myModalAddProduct" class="modal fade" style="display: none;" aria-hidden="true">
 </div>
