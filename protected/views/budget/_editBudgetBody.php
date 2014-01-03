@@ -63,40 +63,74 @@
         </ul>
         <div class="tab-content">
         <div class="tab-pane active" id="tabRecargos">
-<table class="table table-striped table-bordered tablaIndividual">
-<thead>
-<tr>
-<th>Descripci&oacute;n</th>
-<th>Cantidad</th>
-<th>Precio</th>
-<th>Descuento</th>
-<th>Total</th>
-<th style="text-align:center;">Acciones</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>Super Recargo</td>
-<td><input type="model" class="form-control inputSmall"></td>
-<td><div class="bloquePrecioRec"><input type="model" class="form-control inputSmall"> <span class="usd">USD</span></div></td>
-<td>
-            <div class="bloqueDescuento"><input type="model" id="campoPrecio" class="form-control inputMed">
-                       <div class="radioTipo"><div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios1" id="optionsRadios1" value="option1" checked="">
-    <div class="usd">USD</div>
-  </label>
-</div>
-<div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios1" id="optionsRadios2" value="option2">
-    %
-  </label>
-</div></div></div>
-            </td>
-            <td><span class="label label-primary labelPrecio">500 <div class="usd">USD</div></span></td>
-            <td style="text-align:center;"> <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button></td>
-</tr></tbody>
-</table>
+        <?php
+	$settings = new Settings();
+
+	$selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$data->price." "."<div class=\"usd\">'.$settings->getEscapedCurrencyShortDescription().'</div></div>'.
+			'<button id=\"btn_price_".$data->Id."\" type=\"button\" class=\"btn btn-primary btn-xs pull-right dropdown-toggle miniEdit\" onclick=\"fillAndOpenDD(".$data->Id.");\">
+             <i class=\"fa fa-pencil\"></i>
+             </button>".'.
+	             '"<ul id=\"ul_price_".$data->Id."\" class=\"dropdown-menu superDropdown\" role=\"menu\" aria-labelledby=\"dropdownMenu1\">
+  </ul></div>"';
+	
+	$this->widget('zii.widgets.grid.CGridView', array(
+					'id'=>'budget-item-generic',
+					'dataProvider'=>$modelBudgetItem->searchGenericItem(),
+					'summaryText'=>'',
+					'selectableRows' => 0,
+					'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
+					'columns'=>array(
+							'description',
+							array(
+								'name'=>'quantity',
+								'value'=>
+                                    	'CHtml::textField("txtQuantityGenericItem",
+												$data->quantity,
+												array(
+														"id"=>$data->Id,
+														"class"=>"form-control inputSmall",
+													)
+											)',
+			
+								'type'=>'raw',
+								'htmlOptions'=>array("style"=>"text-align:right;"),
+							),
+					array(
+							'name'=>'price',
+							'value'=>$selectPrice,
+							'type'=>'raw',
+					),
+					array(
+						'name'=>'discount',
+						'value'=>
+						'"<div class=\"bloqueDescuento\"> ".CHtml::textField("txtDiscount","$data->discount",array("id"=>"discount_".$data->Id,"onchange"=>"changeDiscount(".$data->Id.",this)","class"=>"form-control inputMed",))."<div class=\"radioTipo\"><div class=\"radio\">
+				  <label>
+				    <input type=\"radio\" name=\"optionsRadios_".$data->Id."\" id=\"discount_type_".$data->Id."\" value=\"0\" onclick=\"changeDiscountType(".$data->Id.",this);\" ".($data->discount_type==0?"checked":"").">
+				    <div class=\"usd\">%</div>
+				  </label>
+				</div>
+				<div class=\"radio\">
+				  <label>
+				    <input type=\"radio\" name=\"optionsRadios_".$data->Id."\" id=\"discount_type_".$data->Id."\" value=\"1\" onclick=\"changeDiscountType(".$data->Id.",this);\" ".($data->discount_type==1?"checked":"").">
+				    <div class=\"usd\">USD</div>
+				  </label>
+				</div></div></div>"',
+						'type'=>'raw',
+						'htmlOptions'=>array(),
+				),
+							
+					array(
+							'name'=>'Total',
+							'value'=>
+							'CHtml::openTag("span",array("id"=>"total_price_".$data->Id, "class"=>"label label-primary labelPrecio")).$data->totalPrice." ".'.
+							'CHtml::openTag("div",array("class"=>"usd"))."'.$settings->getEscapedCurrencyShortDescription().'".CHtml::closeTag("div").CHtml::closeTag("span")',
+							'type'=>'raw',
+					),
+
+							),
+					));
+        ?>
+
 </div> 
     <!-- /.tab1 -->
 <div class="tab-pane" id="tabDescripciones">
@@ -200,3 +234,120 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div>
+
+<script type="text/javascript">
+function changeService(id, object)
+{
+
+	$.post(
+			"<?php echo BudgetController::createUrl('AjaxSaveService')?>",
+			{
+				Id_budget_item: id,Id_service:$(object).val()
+			}
+			).success(function(data)
+			{
+		}).error(function(data)
+			{
+		},"json");	
+}
+
+function changeDiscount(id, object)
+{
+	validateNumber(object);
+	$.post(
+			"<?php echo BudgetController::createUrl('AjaxSaveDiscountValue')?>",
+			{
+				Id_budget_item: id,discount:$(object).val()
+			}
+			).success(function(data)
+			{
+				var response = jQuery.parseJSON(data);
+				$("#total_price_"+id).html(response.total_price+" <div class=\"usd\"><?php echo $settings->getEscapedCurrencyShortDescription()?></div>");
+				$(object).val(response.discount);
+				//setTotals();
+				//alert("success");				
+		}).error(function(data)
+			{
+				//alert("error");				
+		},"json");	
+}
+function changeQuantity(id, object)
+{
+	validateNumber(object);
+	$.post(
+			"<?php echo BudgetController::createUrl('AjaxSaveQuantity')?>",
+			{
+				Id_budget_item: id,quantity:$(object).val()
+			}
+			).success(function(data)
+			{
+				var response = jQuery.parseJSON(data);
+				$("#total_price_"+id).html(response.total_price+" <div class=\"usd\"><?php echo $settings->getEscapedCurrencyShortDescription()?></div>");
+				$(object).val(response.quantity);
+				//setTotals();
+				//alert("success");				
+		}).error(function(data)
+			{
+				//alert("error");				
+		},"json");	
+}
+
+function changeDiscountType(id, object)
+{
+	$.post(
+			"<?php echo BudgetController::createUrl('AjaxSaveDiscountType')?>",
+			{
+				Id_budget_item: id,discount_type:$(object).val()
+			}
+			).success(function(data)
+			{
+				var response = jQuery.parseJSON(data);
+				$("#total_price_"+id).html(response.total_price+" <div class=\"usd\"><?php echo $settings->getEscapedCurrencyShortDescription()?></div>");
+				//setTotals();
+		}).error(function(data)
+			{
+				//alert("error");				
+		},"json");	
+}
+function deleteBudgetItem(id,idArea)
+{
+	if(confirm("¿Esta seguro que desea eliminar este item?"))
+	{
+		$.post(
+				'<?php echo BudgetController::createUrl('AjaxDeleteBudgetItem')?>',
+				 {
+				 	id: id,
+				 },'json').success(
+					function(data) 
+					{
+						 $.fn.yiiGridView.update('budget-item-grid_'+idArea); 
+					}
+				);		
+	}	
+ 	return false;
+}
+
+function fillAndOpenDD(id)
+{
+	$(".dropdown-menu").removeClass("open");
+	$.post(
+			'<?php echo BudgetController::createUrl('ajaxFillDDPriceSelector')?>',
+			 {
+			 	Id: id,
+			 },'json').success(
+				function(data) 
+				{ 
+					if(data!='')
+					{
+						$("#btn_price_"+id).parent().addClass("open");
+						$("#ul_price_"+id).html(data);
+					}
+				}
+			);		
+	
+ 	return false;
+}
+<!--
+
+//-->
+</script>

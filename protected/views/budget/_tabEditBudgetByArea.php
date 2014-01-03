@@ -1,122 +1,6 @@
 <?php 
 $settings = new Settings();
 ?>
-<script type="text/javascript">
-function changeService(id, object)
-{
-
-	$.post(
-			"<?php echo BudgetController::createUrl('AjaxSaveService')?>",
-			{
-				Id_budget_item: id,Id_service:$(object).val()
-			}
-			).success(function(data)
-			{
-		}).error(function(data)
-			{
-		},"json");	
-}
-
-function changeDiscount(id, object)
-{
-	validateNumber(object);
-	$.post(
-			"<?php echo BudgetController::createUrl('AjaxSaveDiscountValue')?>",
-			{
-				Id_budget_item: id,discount:$(object).val()
-			}
-			).success(function(data)
-			{
-				var response = jQuery.parseJSON(data);
-				$("#total_price_"+id).html(response.total_price+" <div class=\"usd\"><?php echo $settings->getEscapedCurrencyShortDescription()?></div>");
-				$(object).val(response.discount);
-				//setTotals();
-				//alert("success");				
-		}).error(function(data)
-			{
-				//alert("error");				
-		},"json");	
-}
-function changeQuantity(id, object)
-{
-	validateNumber(object);
-	$.post(
-			"<?php echo BudgetController::createUrl('AjaxSaveQuantity')?>",
-			{
-				Id_budget_item: id,quantity:$(object).val()
-			}
-			).success(function(data)
-			{
-				var response = jQuery.parseJSON(data);
-				$("#total_price_"+id).html(response.total_price+" <div class=\"usd\"><?php echo $settings->getEscapedCurrencyShortDescription()?></div>");
-				$(object).val(response.quantity);
-				//setTotals();
-				//alert("success");				
-		}).error(function(data)
-			{
-				//alert("error");				
-		},"json");	
-}
-
-function changeDiscountType(id, object)
-{
-	$.post(
-			"<?php echo BudgetController::createUrl('AjaxSaveDiscountType')?>",
-			{
-				Id_budget_item: id,discount_type:$(object).val()
-			}
-			).success(function(data)
-			{
-				var response = jQuery.parseJSON(data);
-				$("#total_price_"+id).html(response.total_price+" <div class=\"usd\"><?php echo $settings->getEscapedCurrencyShortDescription()?></div>");
-				//setTotals();
-		}).error(function(data)
-			{
-				//alert("error");				
-		},"json");	
-}
-function deleteBudgetItem(id,idArea)
-{
-	if(confirm("¿Esta seguro que desea eliminar este item?"))
-	{
-		$.post(
-				'<?php echo BudgetController::createUrl('AjaxDeleteBudgetItem')?>',
-				 {
-				 	id: id,
-				 },'json').success(
-					function(data) 
-					{
-						 $.fn.yiiGridView.update('budget-item-grid_'+idArea); 
-					}
-				);		
-	}	
- 	return false;
-}
-
-function fillAndOpenDD(id)
-{
-	$(".dropdown-menu").removeClass("open");
-	$.post(
-			'<?php echo BudgetController::createUrl('ajaxFillDDPriceSelector')?>',
-			 {
-			 	Id: id,
-			 },'json').success(
-				function(data) 
-				{ 
-					if(data!='')
-					{
-						$("#btn_price_"+id).parent().addClass("open");
-						$("#ul_price_"+id).html(data);
-					}
-				}
-			);		
-	
- 	return false;
-}
-<!--
-
-//-->
-</script>
 
 <?php
 $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$data->price." "."<div class=\"usd\">'.$settings->getEscapedCurrencyShortDescription().'</div></div>'.
@@ -139,11 +23,6 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 							.CHtml::openTag("div",array("class"=>"tableProductBrand")).$data->product->brand->description."</div>"
 							.CHtml::openTag("div")."PN: ".$data->product->part_number."</div>"',
 							'type'=>'raw'
-					),
-					array(
-							'name'=>'stock',
-							'value'=>'CHtml::openTag("div").$data->product->stockCount."</div>"',
-							'type'=>'raw',
 					),
 					array(
 							'name'=>'quantity',
