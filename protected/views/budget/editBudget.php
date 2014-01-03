@@ -1,4 +1,19 @@
 <script type="text/javascript">
+function openUpdateBudget(idBudget, version)
+{
+	$.post("<?php echo BudgetController::createUrl('AjaxOpenUpdateBudget'); ?>",
+			{
+				idBudget:idBudget,
+				version:version
+			}
+		).success(
+			function(data){
+				$('#myModalUpdateBudget').html(data);
+		   		$('#myModalUpdateBudget').modal('show');	  
+			});
+		return false;
+}
+
 function changeTab(idArea,idAreaProject)
 {
 	$('#idTabArea').val(idArea);
@@ -69,6 +84,13 @@ function editBudget(id,version)
 {
 	var params = "&id="+id+"&version="+version;
 	window.location = "<?php echo BudgetController::createUrl("addItem")?>" + params; 
+	return false;
+}
+
+function exportBudget(id, version)
+{
+	var params = "&id="+id+"&version="+version;
+	window.location = "<?php echo BudgetController::createUrl("exportToExcel")?>" + params; 
 	return false;
 }
 </script>
