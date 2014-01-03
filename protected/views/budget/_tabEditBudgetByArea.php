@@ -11,7 +11,7 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
  </ul>"';
 
 	$this->widget('zii.widgets.grid.CGridView', array(
-		'id'=>'budget-item-grid_'.$areaProject->Id_area,
+		'id'=>'budget-item-grid_'.$areaProject->Id."_".$areaProject->Id_area,
 		'dataProvider'=>$modelBudgetItem->search(),
 		'selectableRows' => 0,
 		'summaryText'=>'',	
@@ -76,7 +76,7 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 					),
 		array(
 							'name'=>'Acciones',
-							'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"deleteBudgetItem(".$data->Id.",'.$areaProject->Id_area.');\" ><i class=\"fa fa-trash-o\"></i></button>"',
+							'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"deleteBudgetItem(".$data->Id.",'.$areaProject->Id.','.$areaProject->Id_area.');\" ><i class=\"fa fa-trash-o\"></i></button>"',
 							'type'=>'raw',
 							'htmlOptions'=>array("style"=>"text-align:center;"),
 							'headerHtmlOptions'=>array("style"=>"text-align:center;"),

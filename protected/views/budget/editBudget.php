@@ -1,12 +1,14 @@
 <script type="text/javascript">
-function changeTab(idArea)
+function changeTab(idArea,idAreaProject)
 {
 	$('#idTabArea').val(idArea);
+	$('#idTabAreaProject').val(idAreaProject);
 }
 
 function addQty(idProduct)
 {
 	var qty = $("#qty-field-"+idProduct).val();
+	var idAreaProject = $('#idTabAreaProject').val();
 	var idArea = $('#idTabArea').val();
 	var idBudget = $('#idBudget').val();
 	var version = $('#version').val();
@@ -16,14 +18,15 @@ function addQty(idProduct)
 				version:version,
 				idProduct:idProduct,
 				idArea:idArea,
+				idAreaProject:idAreaProject,
 				qty: qty
 			}
 		).success(
 			function(data){
 				$.fn.yiiGridView.update('product-grid-add', {
-					data: $(this).serialize() + '&idArea=' + $('#idTabArea').val()
+					data: $(this).serialize() + '&idArea=' + $('#idTabArea').val()+'&idAreaProject=' + $('#idTabAreaProject').val()
 				});			
-				$.fn.yiiGridView.update("budget-item-grid_"+idArea); 
+				$.fn.yiiGridView.update("budget-item-grid_"+idAreaProject+"_"+idArea); 
 				$('#total-qty').children().text(data); 
 			});
 		return false;
@@ -32,13 +35,14 @@ function addQty(idProduct)
 function addProduct(id,version)
 {
 	$.fn.yiiGridView.update('product-grid-add', {
-		data: $(this).serialize() + '&idArea=' + $('#idTabArea').val()
+		data: $(this).serialize() + '&idArea=' + $('#idTabArea').val()+'&idAreaProject=' + $('#idTabAreaProject').val()
 	});
 	
 	$('#myModalAddProduct').append($('#container-modal-addProduct'));
 	$('#container-modal-addProduct').show();
 
 	var idArea = $('#idTabArea').val();
+	var idAreaProject = $('#idTabAreaProject').val();
 	var idBudget = $('#idBudget').val();
 	var version = $('#version').val();
 	
@@ -46,7 +50,8 @@ function addProduct(id,version)
 			{
 				idBudget:idBudget,
 				version:version,
-				idArea:idArea
+				idArea:idArea,
+				idAreaProject:idAreaProject
 			}
 		).success(
 			function(data){
