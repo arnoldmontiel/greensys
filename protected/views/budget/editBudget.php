@@ -27,6 +27,8 @@ function addQty(idProduct)
 					data: $(this).serialize() + '&idArea=' + $('#idTabArea').val()+'&idAreaProject=' + $('#idTabAreaProject').val()
 				});			
 				$.fn.yiiGridView.update("budget-item-grid_"+idAreaProject+"_"+idArea); 
+				updateGridExtras(); 
+				setTotals();	
 				$('#total-qty').children().text(data); 
 			});
 		return false;

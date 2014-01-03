@@ -269,7 +269,8 @@ function deleteBudgetItem(id,idAreaProject,idArea)
 					function(data) 
 					{
 						statusSaved();
-						 $.fn.yiiGridView.update('budget-item-grid_'+idAreaProject+"_"+idArea); 
+						 $.fn.yiiGridView.update('budget-item-grid_'+idAreaProject+"_"+idArea);
+						 updateGridExtras(); 
 					}
 				).error(function(){statusSavedError();});		
 	}	
