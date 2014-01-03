@@ -26,9 +26,13 @@ if($newState == 1 )
     	<textarea id="budget-note" rows="3" class="form-control" placeholder="<?php echo $placeholder; ?>"></textarea>
   </div>
 </form>
-<div id="status-error" style="display:none" class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i>
- Para grabar, se debe escribir alguna razón.</div>
-</div>
+
+<div id="status-error" style="display:none;"  class="estadoModal">
+	<label for="campoLineal">Estado</label>
+      	<div class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i>
+ 	Para grabar, se debe escribir alguna razón.</div>
+ 	</div>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
         <button type="button" id="btn-save-field" onclick="<?php echo $function; ?>" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
