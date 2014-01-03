@@ -90,6 +90,7 @@ class Area extends ModelAudit
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('main',$this->main);
+		$criteria->order="description";
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

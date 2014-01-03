@@ -65,7 +65,81 @@ class AreaController extends GController
 			'model'=>$model,
 		));
 	}
-
+	/**
+	 * Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
+	public function actionAjaxCreate()
+	{
+		$model=new Area;
+	
+		// Uncomment the following line if AJAX validation is needed
+		$this->performAjaxValidation($model);
+	
+		if(isset($_POST['Area']))
+		{
+			$model->attributes=$_POST['Area'];
+			if($model->save())
+				echo json_encode($model->attributes);
+		}
+	}
+	public function actionAjaxUpdate()
+	{
+		if(isset($_POST['Area']['Id']))
+		{
+			$model=$this->loadModel($_POST['Area']['Id']);
+				
+			if(isset($_POST['Area']))
+			{
+				$model->attributes=$_POST['Area'];
+				if($model->save())
+					echo json_encode($model->attributes);
+			}
+		}
+	}
+	public function actionAjaxShowCreateModal()
+	{
+		$model=new Area;
+		$field_caller ="";
+		if($_POST['field_caller'])
+			$field_caller=$_POST['field_caller'];
+		// Uncomment the following line if AJAX validation is needed
+		$this->renderPartial('_formModal',array(
+				'model'=>$model,
+				'field_caller'=>$field_caller
+		));
+	}
+	public function actionAjaxShowUpdateModal()
+	{
+		if(isset($_POST['id']))
+		{
+			$model=$this->loadModel($_POST['id']);
+			$field_caller ="";
+			if($_POST['field_caller'])
+				$field_caller=$_POST['field_caller'];
+			// Uncomment the following line if AJAX validation is needed
+			$this->renderPartial('_formModal',array(
+					'model'=>$model,
+					'field_caller'=>$field_caller
+			));
+		}
+	}
+	public function actionAjaxDelete()
+	{
+		if(Yii::app()->request->isPostRequest)
+		{
+			$id = $_POST['id'];
+			// we only allow deletion via POST request
+			$this->loadModel($id)->delete();
+	
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		}
+		else
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+	}
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.

@@ -4,7 +4,7 @@
   <h1 class="pageTitle">&Aacute;reas</h1>
   </div>
     <div class="col-sm-6 align-right">
-  <a class="btn btn-primary superBoton" data-toggle="modal" data-target="#myModalCrearArea"><i class="fa fa-plus"></i> Agregar &Aacute;rea</a>
+  <a id="createArea" class="btn btn-primary superBoton" data-toggle="modal" data-target="#myModalCrearArea"><i class="fa fa-plus"></i> Agregar &Aacute;rea</a>
   </div>
   </div>
   <div class="row">
@@ -31,8 +31,8 @@
 			),
 		),		array(
 				'header'=>'Acciones',
-				'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"updateBrand(".$data->Id.");\" ><i class=\"fa fa-pencil\"></i> Editar</button>".'.
-				'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"deleteBrand(".$data->Id.");\" ><i class=\"fa fa-trash-o\"></i> Borrar</button>"',
+				'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"updateArea(".$data->Id.");\" ><i class=\"fa fa-pencil\"></i> Editar</button>".'.
+				'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"deleteArea(".$data->Id.");\" ><i class=\"fa fa-trash-o\"></i> Borrar</button>"',
 				'type'=>'raw',
 				'htmlOptions'=>array("style"=>"text-align:right;"),
 				'headerHtmlOptions'=>array("style"=>"text-align:right;"),
@@ -48,28 +48,50 @@
 </div>
 <!-- /container --> 
 
-<!--MODAL CREAR PRESU-->
-<div class="modal fade" id="myModalCrearArea">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Agregar &Aacute;rea</h4>
-      </div>
-      <div class="modal-body">
+<script type="text/javascript">
+$('#createArea').click(
+		function(){
+			$.post(
+			'<?php echo ProductController::createUrl('area/AjaxShowCreateModal')?>',{field_caller:'area-grid'}).success(
+					function(data)
+					{
+					if(data!=null)
+					{	
+						$('#modalPlaceHolder').html(data);
+						$('#modalPlaceHolder').modal('show');
+					}
+				}
+			);
+		return false;
+		}
+		);
+function deleteArea(id)
+{
+	if(confirm("¿Seguro desea eliminar la marca?"))
+	{
+		$.post(
+				'<?php echo ProductController::createUrl('area/AjaxDelete')?>',{id:id}).success(
+						function(data)
+						{
+							$.fn.yiiGridView.update('area-grid');
+						}
+				);
+		}
+}
+function updateArea(id)
+{
+	$.post(
+			'<?php echo ProductController::createUrl('area/AjaxShowUpdateModal')?>',{id:id,field_caller:'area-grid'}).success(
+					function(data)
+					{
+					if(data!=null)
+					{	
+						$('#modalPlaceHolder').html(data);
+						$('#modalPlaceHolder').modal('show');
+					}
+				}
+			);
 
-<form role="form">
-  <div class="form-group">
-    <label for="campoDescripcion">Descripci&oacute;n</label>
-		<input type="text" id="campoNombre" class="form-control">
-  </div>
-</form>
+}
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</script>
