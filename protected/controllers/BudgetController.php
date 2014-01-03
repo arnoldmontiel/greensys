@@ -293,72 +293,83 @@ class BudgetController extends GController
 		$idAreaProject = (isset($_POST['idAreaProject']))?$_POST['idAreaProject']:null;
 		$qty = (isset($_POST['qty']))?$_POST['qty']:0;
 	
-		if(isset($idBudget) && isset($version) && isset($idProduct) && isset($idArea) && isset($idAreaProject) && $qty > 0)
+		if(isset($idBudget) && isset($version) && isset($idProduct) && isset($idArea) && isset($idAreaProject))
 		{
 			$modelBudgetItemBD =  BudgetItem::model()->findByAttributes(array('Id_budget'=>$idBudget, 'Id_area'=>$idArea, 'Id_area_project'=>$idAreaProject, 'Id_product'=>$idProduct, 'version_number'=>$version));
-			if(isset($modelBudgetItemBD))
+			
+			if($qty > 0)
 			{
-				$modelBudgetItemBD->quantity = $qty; 
-			}
-			else
-			{
-				$modelBudgetItemBD = new BudgetItem();
-				
-				$modelProduct = Product::model()->findByPk($idProduct);
-				
-				if(isset($modelProduct))
+				if(isset($modelBudgetItemBD))
 				{
-					//traigo datos de price_list (precios, shipping_type)
-					$criteria = new CDbCriteria();
-					$criteria->join = 'inner join price_list pl on (pl.Id = t.Id_price_list)';
-					$criteria->addCondition('pl.Id_price_list_type = 2'); //lista de venta
-					$criteria->addCondition('t.Id_product = '. $idProduct);
-					$criteria->addCondition('pl.description <> "FOB"');
+					$modelBudgetItemBD->quantity = $qty; 
+				}
+				else
+				{
+					$modelBudgetItemBD = new BudgetItem();
 					
-					$modelPriceListItem = PriceListItem::model()->find($criteria);
+					$modelProduct = Product::model()->findByPk($idProduct);
 					
-					if(isset($modelPriceListItem))
+					if(isset($modelProduct))
 					{
-						$modelBudgetItemBD->Id_price_list = $modelPriceListItem->Id_price_list;
-						if(isset($modelPriceListItem->maritime_cost) && $modelPriceListItem->maritime_cost > 0)
-						{
-							$modelBudgetItemBD->Id_shipping_type = 1;
-							$modelBudgetItemBD->price = $modelPriceListItem->maritime_cost;
-						}
-						else 
-						{						
-							$modelBudgetItemBD->Id_shipping_type = 2;
-							$modelBudgetItemBD->price = $modelPriceListItem->air_cost;
-						}
-					}
-					else 
-					{
+						//traigo datos de price_list (precios, shipping_type)
 						$criteria = new CDbCriteria();
 						$criteria->join = 'inner join price_list pl on (pl.Id = t.Id_price_list)';
 						$criteria->addCondition('pl.Id_price_list_type = 2'); //lista de venta
 						$criteria->addCondition('t.Id_product = '. $idProduct);
-						$criteria->addCondition('pl.description = "FOB"');
+						$criteria->addCondition('pl.description <> "FOB"');
 						
 						$modelPriceListItem = PriceListItem::model()->find($criteria);
+						
 						if(isset($modelPriceListItem))
 						{
 							$modelBudgetItemBD->Id_price_list = $modelPriceListItem->Id_price_list;
-							$modelBudgetItemBD->Id_shipping_type = 1;
-							$modelBudgetItemBD->price = $modelPriceListItem->maritime_cost;
+							if(isset($modelPriceListItem->maritime_cost) && $modelPriceListItem->maritime_cost > 0)
+							{
+								$modelBudgetItemBD->Id_shipping_type = 1;
+								$modelBudgetItemBD->price = $modelPriceListItem->maritime_cost;
+							}
+							else 
+							{						
+								$modelBudgetItemBD->Id_shipping_type = 2;
+								$modelBudgetItemBD->price = $modelPriceListItem->air_cost;
+							}
 						}
+						else 
+						{
+							$criteria = new CDbCriteria();
+							$criteria->join = 'inner join price_list pl on (pl.Id = t.Id_price_list)';
+							$criteria->addCondition('pl.Id_price_list_type = 2'); //lista de venta
+							$criteria->addCondition('t.Id_product = '. $idProduct);
+							$criteria->addCondition('pl.description = "FOB"');
+							
+							$modelPriceListItem = PriceListItem::model()->find($criteria);
+							if(isset($modelPriceListItem))
+							{
+								$modelBudgetItemBD->Id_price_list = $modelPriceListItem->Id_price_list;
+								$modelBudgetItemBD->Id_shipping_type = 1;
+								$modelBudgetItemBD->price = $modelPriceListItem->maritime_cost;
+							}
+						}
+						
+						$modelBudgetItemBD->time_programation = $modelProduct->time_programation;
+						$modelBudgetItemBD->time_instalation = $modelProduct->time_instalation;
+						$modelBudgetItemBD->Id_area = $idArea;
+						$modelBudgetItemBD->Id_area_project = $idAreaProject;
+						$modelBudgetItemBD->Id_budget = $idBudget;
+						$modelBudgetItemBD->version_number = $version;
+						$modelBudgetItemBD->Id_product = $idProduct;
+						$modelBudgetItemBD->quantity = $qty;
 					}
-					
-					$modelBudgetItemBD->time_programation = $modelProduct->time_programation;
-					$modelBudgetItemBD->time_instalation = $modelProduct->time_instalation;
-					$modelBudgetItemBD->Id_area = $idArea;
-					$modelBudgetItemBD->Id_area_project = $idAreaProject;
-					$modelBudgetItemBD->Id_budget = $idBudget;
-					$modelBudgetItemBD->version_number = $version;
-					$modelBudgetItemBD->Id_product = $idProduct;
-					$modelBudgetItemBD->quantity = $qty;
+				}
+				$modelBudgetItemBD->save();
+			}
+			else 
+			{
+				if(isset($modelBudgetItemBD))
+				{
+					$modelBudgetItemBD->delete();
 				}
 			}
-			$modelBudgetItemBD->save();
 			
 			$criteria = new CDbCriteria();
 			$criteria->select = 'sum(quantity) as quantity';
