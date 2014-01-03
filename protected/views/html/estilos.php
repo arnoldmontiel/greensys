@@ -191,6 +191,7 @@ line-height:48px;
 /* ------ BTN INITIAL FONT SIZES ------- */
 .btn{ font-size:15px;}
 .btn-lg{ font-size:18px;}
+.btn-sm{ font-size:13px;}
 /* ------ END BTN SIZES ------- */
 
 /* ------ BODY / MAIN LAYOUT ------- */
@@ -232,7 +233,6 @@ h3.tableTitle{ color: #666; text-shadow:none; background-color:#eee; padding:10p
 .panel .table.tablaIndividual{ margin-bottom:0px;}
 .panel-body{ padding:10px;}
 
-.panel-body .tablaDatosPanel{ margin-top:10px; margin-bottom:10px !important;}
 
 .marginLeft{margin-left:10px;}
 
@@ -280,6 +280,11 @@ padding:2px;
 
 .nav-tabs>li.active>a{color:#333 !important;}
 .nav-tabs>li>a:hover{ color:#666 !important;}
+
+.grid-view .sort-link{background-image:url(images/sort-desc.png); background-repeat:no-repeat; background-position:right; padding-right:20px;}
+
+.grid-view .sort-link.asc{background-image:url(images/sort-asc.png); background-repeat:no-repeat; background-position:right; padding-right:20px;}
+.grid-view .sort-link.desc{background-image:url(images/sort-desc.png); background-repeat:no-repeat; background-position:right; padding-right:20px;}
 
 /* ------ END BODY / MAIN LAYOUT ------- */
 
@@ -365,6 +370,10 @@ padding-left: 5px;}
 
 .form-control{ padding:4px;}
 
+.formHasLabel{width: 85%;
+display: inline-block;
+margin-right: 5px;}
+
 input[type="file"] {
 width:100%;
 }
@@ -395,15 +404,18 @@ padding: 6px 8px;
 .table.tablaIndividual { margin-bottom:30px;}
 .tablaIndividual td button{ margin:5px; margin-left:0px; vertical-align:middle;}
 .table.tablaIndividual th{ font-weight:600;  font-size:14px; line-height:15px; color:#555; background-color:#ddd;}
+.table.tablaIndividual th a{ font-weight:600;  font-size:14px; line-height:15px; color:#555; background-color:#ddd; font-family:"GudeaRegular"}
 .table.tablaIndividual thead>tr>th, .table.tablaIndividual tbody>tr>th, .table.tablaIndividual tfoot>tr>th, .table.tablaIndividual thead>tr>td, .table.tablaIndividual tbody>tr>td, .table.tablaIndividual tfoot>tr>td{vertical-align:middle; padding:5px;}
 
 #screenProductos .table.tablaIndividual { margin-bottom:5px;}
 
-.buttonsTableProd{min-width:177px;}
+.buttonsTableProd{min-width:158px;}
+.buttonsTablePres{min-width:380px;}
 
 .combined { width:100%;}
-.combined select{display:inline-block; width:60%;}
+.combined select{display:inline-block !important; width:60% !important;}
 .combined button{display:inline-block; width:35%; margin:0px !important;}
+
 
 /*---------- END EDIT CREATE FORM -------------*/
 
@@ -440,39 +452,52 @@ padding: 6px 8px;
 
 /* ------ CREAR PRESU ------- */
 
-#screenCrearPresupuesto{ margin-bottom:60px;}
-#campoPrecio{ width:65px; display:inline-block;}
+
+#screenCrearPresupuesto{ margin-bottom:80px;}
 #campoTipoPrecio{ width:65px; display:inline-block;}
 
 h2 a.superEdit{ position:absolute; top:10px; right:30px; cursor:pointer; font-size:20px;}
 
-td.precioTabla{position:relative;}
-td.precioTabla button{ position:absolute; top:50%; right:5px; margin-top:-12px;}
-
-td.precioTabla .precioTablaValor{padding-right:30px;}
-
-.btnAlternateView{ margin-right:20px;}
-
-#myModalAgregarProductos .modal-dialog{ width:80%;}
-#myModalAgregarProductos .label{ font-size:15px;}
-#myModalAgregarProductos .table.tablaIndividual{ margin-bottom:0px;}
-
-.inputSmall{ width:40px; display:inline-block; margin-right:5px;}
 
 
+.btnAlternateView{ margin-left:25px;}
 
-ul.superDropdown li{ width:400px;}
+#myModalNewBudget .modal-dialog{ width:600px;}
 
-.introProveedor{ padding:10px; padding-bottom:0px;}
-.introProveedor .table{ margin-bottom:0px;}
+
+#myModalAddProduct .modal-dialog{ width:80%;}
+#myModalAddProduct .label{ font-size:15px;}
+#myModalAddProduct .table.tablaIndividual{ margin-bottom:0px;}
+
+.inputSmall{ width:40px; display:inline-block; }
+.inputMed{ width:55px; display:inline-block; }
+
+
+ul.superDropdown{
+margin-left: 182px !important;
+margin-top: -186PX;}
+ul.superDropdown li{ width:300px; }
+
+
+.introProveedor{ padding:10px; padding-bottom:0px; padding-top:5px;}
+.introProveedor .table{ margin-bottom: 0px;
+border-bottom: 1px dotted #ccc;}
 .introProveedor .table th{ font-size:12px; background-color:white;}
 .introProveedor .table td{ font-size:12px;}
 .titleProveedor{ font-size:15px; font-weight:600; padding-bottom:5px;border-bottom:1px dotted #ccc; padding-left:5px;}
 
-.tableOpcionesPrecio{ padding:5px;}
-.introProveedor .tableOpcionesPrecio td{ background-color:#eee;font-size:18px;}
+.introProveedor .tableDatosProd{ margin-bottom:5px;}
 
-.precioMasBajo{ color:#5cb85c;}
+.superDropdown .fa-fw{
+font-size: 12px;
+margin-right: 5px;
+color: #666;}
+
+.tableOpcionesPrecio{ padding:5px;}
+.introProveedor .tableOpcionesPrecio td{ background-color:#eee;font-size:16px;}
+
+.superDropdown .fa-fw.masBajo{ color:#5cb85c;}
+.superDropdown .fa-fw.masAlto{ color:red;}
 
 
 .tituloFinalPresu{ font-size: 1.8em;
@@ -484,12 +509,101 @@ line-height: auto;
 padding-bottom: 20px;}
 .totalPresupuesto{ background-color:#eee; height:120px; margin-top:20px; margin-bottom:30px;}
 
+.tablePresuTotal{ background-color:white;}
+.tablePresuTotal td{ line-height:20px; vertical-align:middle !important;}
+.superTotal{ font-size:20px;}
+
+.panelPresu{ background-color:rgba(255,255,255,0.5); border:none; margin-bottom:2px;}
+.panelPresu{ padding-bottom:20px;   border-bottom-right-radius: 0px;  border-bottom-left-radius: 0px;
+}
+
+.contenedorPresu{ background-color:rgba(255,255,255,0.5); padding:0px; margin:0px;  padding-top:20px; margin-bottom:2px;}
+
+.contenedorPresu .col-sm-12{ padding-right:10px;padding-left:10px;}
+
+.panel-body .tablaDatosPanel{ margin-top:10px; margin-bottom:10px !important;}
+
+
+.navTabsPencil.nav-tabs>li a{position:relative; padding-right:35px;}
+.nav-tabs>li a.tabEdit{ padding-right:5px;position:absolute;cursor:pointer; right:5px; top:-1px; background-transparent !important; border:none 0px;}
+
+
+.nav-tabs>li.active>a.tabEdit, .nav-tabs>li.active>a.tabEdit:hover, .nav-tabs>li.active>a.tabEdit:focus { background-color:transparent !important;}
+.nav>li>a:hover.tabEdit, .nav>li>a.tabEdit:focus { background-color:transparent !important;}
+
+.nav-tabs>li a.tabEdit:hover, .nav-tabs>li.active>a.tabEdit:hover{color:#5cb85c !important; cursor:pointer;}
+
+.bloqueHoras{min-width:60px; margin-top:6px;}
+.bloqueHoras span{ display:inline-block; width:22px; margin-right:3px; font-size:14px;}
+.bloqueHoras .inputSmall{margin-top:2px;}
+
+.bloqueDescuentoHoras{min-width:135px; padding-top:1px;}
+.bloqueDescuentoHoras span{ display:inline-block; width:22px; margin-right:3px; font-size:14px;}
+
+.bloqueTotalHoras{min-width:85px; margin-top:4px;}
+.bloqueTotalHoras span{ display:inline-block; width:22px; margin-right:3px; font-size:14px;}
+
+.bloqueDescuento{min-width:110px; padding-top:1px;}
+.bloqueDescuento input{ margin-right:0px;}
+.labelPrecio{ font-size:13px;}
+
+.bloquePrecioRec{min-width:65px;}
+
+.radioTipo{display: inline-block;
+width: 50px;
+height: 40px;
+vertical-align: middle; margin-left:5px;}
+
+.radioTipo .radio{margin-bottom:0px; margin-top:0px;}
+
+.campoServicio{width:100%;}
+
+.usd{font-size:11px; display:inline-block;}
+
+
+.precioTabla{position:relative;}
+.precioTabla button.miniEdit{ position:absolute; top:50%; right:5px; margin-top:-12px !important;}
+
+.precioTablaValor{padding-right:30px;min-width:90px; line-height:12px;}
+
+
+.tableProductName{ font-size:16px; font-family: 'GudeaBold';}
+.tableProductBrand{ font-size:16px;}
+
+#product-grid-add .tablaIndividual td button{margin:0px; margin-left:5px;}
+#product-grid-add{margin-bottom:0px;}
+#myModalAddProduct .modal-body{padding:10px;}
+
+
+#myModalAddProduct .inputSmall{padding:0px 2px; height:31px;}
+
+
+.grid-view th{font-family:"GudeaRegular"; font-weight:600;}
+.grid-view td{font-family:"GudeaRegular";}
+
+.statusFloatSaving{padding: 5px;
+text-align: center;
+color:white;
+background-color: rgba(0,0,0,0.5);}
+
+.statusFloatSaved{padding: 5px;
+text-align: center;
+color:white;
+background-color: rgba(92,184,92,0.8);}
+
+
+.inlineForm{background-color:#eee; padding:5px; border-radius:5px; margin:5px 0px;}
+
+.inlineForm .table{margin-bottom:0px; }
+.inlineForm .table td{border: 0px none; }
+
+.label-info{font-size: 13px;
+font-family: "GudeaRegular";
+}
+
+.liButtonAdd{ line-height:35px; padding-left:10px;}
+
 /* ------ END CREAR PRESU ------- */
-
-  
-
-
-
 
 
 /* ----- DISPOSITIVOS --------*/
@@ -549,13 +663,6 @@ width: 199px;}
 
 .buttonGroup{ margin-top:10px; text-align:right; }
 .buttonGroup button{ margin-right:10px;}
-#myModalCambiarAfiche .modal-dialog{ width:80%;}
-
-#myModalCambiarAfiche ul.thumbnails.image_picker_selector li{width: 165px; height:240px;
-cursor:pointer;}
-
-#myModalCambiarBackdrop ul.thumbnails.image_picker_selector li {width:240px; height:155px;cursor:pointer;}
-#myModalCambiarBackdrop .modal-dialog{ width:80%;}
 
 .modal-scroll{ max-height:430px; overflow-y:auto;}
 .backdrop-on{ 	
