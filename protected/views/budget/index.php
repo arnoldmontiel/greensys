@@ -52,7 +52,7 @@ function openNewProject()
 	if($('#new-project').is(':visible'))
 	{
 		$('#Budget_Id_project').attr('disabled','disabled');
-		$('#btn-new-project').html('<i class="fa fa-minus"></i> Cancelar');
+		$('#btn-new-project').html(' Cancelar');
 		$('#create-project').val(true);
 	}
 	else
@@ -82,17 +82,18 @@ function editBudget(id,version)
 	return false;
 }
 
-function openCancelBudget(idBudget, version)
+function openChangeStateBudget(idBudget, version, newState)
 {
-	$.post("<?php echo BudgetController::createUrl('AjaxOpenCancelBudget'); ?>",
+	$.post("<?php echo BudgetController::createUrl('AjaxOpenChangeStateBudget'); ?>",
 		{
 			idBudget:idBudget,
-			version:version
+			version:version,
+			newState:newState
 		}
 	).success(
 		function(data){
-			$('#myModalCancelBudget').html(data);
-	   		$('#myModalCancelBudget').modal('show');	  
+			$('#myModalChangeStateBudget').html(data);
+	   		$('#myModalChangeStateBudget').modal('show');	  
 		});
 	return false;
 }
@@ -151,32 +152,6 @@ function exportBudget(id, version)
 	var params = "&id="+id+"&version="+version;
 	window.location = "<?php echo BudgetController::createUrl("exportToExcel")?>" + params; 
 	return false;
-}
-
-function reopenBudget(id, version, grid)
-{
-	if (confirm('¿Desea reabrir el presupuesto?')) 
-	{
-		$.post("<?php echo BudgetController::createUrl('AjaxReOpen'); ?>",
-			{
-				id:id,
-				version:version
-			}
-		).success(
-			function(data){
-				$.fn.yiiGridView.update(grid);
-				var obj = jQuery.parseJSON(data);				
-				if(obj != null)
-				{
-					$('#tab-open').children().text(obj.openQty);
-					$('#tab-waiting').children().text(obj.waitingQty);
-					$('#tab-cancelled').children().text(obj.cancelledQty);
-				}
-				
-			});
-		return false;
-	}
-	return false;	
 }
 
 function approveBudget(id, version, grid)
