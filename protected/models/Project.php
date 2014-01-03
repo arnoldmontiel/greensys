@@ -98,8 +98,8 @@ class Project extends ModelAudit
 	public function getFullDescription()
 	{
 		$value = $this->description;
-		if(!empty($this->customer->person->last_name))
-			$value = $this->customer->person->last_name . ' - ' . $value;
+		if(!empty($this->customer->contact->description))
+			$value = $this->customer->contact->description . ' - ' . $value;
 		return $value;	
 	}
 	
