@@ -551,7 +551,17 @@ class BudgetController extends GController
 		$this->render('admin',array(
 			'model'=>$model,
 		));
-	}	
+	}		
+	
+	public function actionAjaxOpenUpdateBudget()
+	{		
+		$idBudget = isset($_POST['idBudget'])?$_POST['idBudget']:null;
+		$version = isset($_POST['version'])?$_POST['version']:null;
+		
+		$model = Budget::model()->findByPk(array('Id'=>$idBudget, 'version_number'=>$version));		
+	
+		echo $this->renderPartial('_modalUpdateBudget', array('model'=>$model));
+	}
 	
 	public function actionAjaxOpenNewBudget()
 	{
@@ -604,6 +614,21 @@ class BudgetController extends GController
 			$modelBudget->save();
 		}
 		echo Budget::model()->countByAttributes(array('Id_budget_state'=>1));
+	}
+	
+	public function actionAjaxSaveUpdatedBudget()
+	{		
+		$modelBudget = null;
+		if(isset($_POST['Budget']))
+		{
+			$idBudget = $_POST['Budget']['Id'];
+			$version = $_POST['Budget']['version_number'];
+			$modelBudget = Budget::model()->findByPk(array('Id'=>$idBudget, 'version_number'=>$version));
+			
+			$modelBudget->attributes = $_POST['Budget'];
+			$modelBudget->save();
+		}
+		echo json_encode($modelBudget->attributes);		
 	}
 	
 	public function actionEditBudget($id,$version_number)
