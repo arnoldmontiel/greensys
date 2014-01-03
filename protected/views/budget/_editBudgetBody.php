@@ -269,7 +269,7 @@ function deleteBudgetItem(id,idAreaProject,idArea)
 				 },'json').success(						 
 					function(data) 
 					{
-						statusSaved();
+						 statusSaved();
 						 $.fn.yiiGridView.update('budget-item-grid_'+idAreaProject+"_"+idArea);
 						 updateGridExtras(); 
 					}
@@ -280,8 +280,7 @@ function deleteBudgetItem(id,idAreaProject,idArea)
 
 function fillAndOpenDD(id)
 {
-	statusStartSaving();	
-	$(".dropdown-menu").removeClass("open");
+	$(".precioTabla").removeClass("open");
 	$.post(
 			'<?php echo BudgetController::createUrl('ajaxFillDDPriceSelector')?>',
 			 {
@@ -289,14 +288,13 @@ function fillAndOpenDD(id)
 			 },'json').success(
 				function(data) 
 				{ 
-					statusSaved();
 					if(data!='')
 					{
 						$("#btn_price_"+id).parent().addClass("open");
 						$("#ul_price_"+id).html(data);
 					}
 				}
-			).error(function(){statusSavedError();});		
+			).error(function(){});		
 	
  	return false;
 }

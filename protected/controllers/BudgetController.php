@@ -737,6 +737,28 @@ class BudgetController extends GController
 			$this->renderPartial("_tabEditBudgetSelectPrice",array("model"=>$model));
 		}
 	}
+	
+	public function actionAjaxChangePriceList()
+	{
+		if(isset($_POST['Id_budget_item'])&&isset($_POST['shipping_type'])&&isset($_POST['Id_price_list_item']))
+		{
+			$modelBudgetItem = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
+			$modelPriceListItem = PriceListItem::model()->findByPk($_POST['Id_price_list_item']);
+			$shippingType = $_POST['shipping_type'];
+
+			$modelBudgetItem->Id_shipping_type =$shippingType; 				
+			$modelBudgetItem->Id_price_list = $modelPriceListItem->Id_price_list; 				
+			if($shippingType==1)//maritime
+			{
+				$modelBudgetItem->price =$modelPriceListItem->maritime_cost; 				
+			}
+			else//air
+			{
+				$modelBudgetItem->price =$modelPriceListItem->air_cost;				
+			}
+			$modelBudgetItem->save();
+		}
+	}
 	public function actionAjaxUpdatePercentDiscount()
 	{
 		if(isset($_POST['Id'])&&isset($_POST['version_number'])&&isset($_POST['percent_discount']))

@@ -15,7 +15,6 @@ $settings = new Settings();
 	$selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$data->price." "."<div class=\"usd\">'.$settings->getEscapedCurrencyShortDescription().'</div></div></div>"';
 	
 	$this->widget('zii.widgets.grid.CGridView', array(
-					'afterAjaxUpdate'=>'function(id, data){setTotals();}',
 					'id'=>'budget-item-generic',
 					'dataProvider'=>$modelBudgetItem->searchGenericItem(),
 					'summaryText'=>'',
