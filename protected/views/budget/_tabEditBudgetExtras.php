@@ -111,17 +111,17 @@ $settings = new Settings();
           <tr>
             <td width="20%" valign="middle"  width="20%">Subtotal</td>
             <td width="30%">&nbsp;</td>
-            <td valign="middle"  align="right" class="bold"><div class="usd"><?php echo $settings->getCurrencyShortDescription();?></div><div id="totals_total_price"><?php echo " ".$model->totalPrice?></div></td>
+            <td valign="middle"  align="right" class="bold"><div class="usd"><?php echo $settings->getCurrencyShortDescription();?></div><span id="totals_total_price"><?php echo " ".$model->totalPrice?></span></td>
           </tr>
           <tr>
             <td valign="middle" >Discount</td>
-            <td><input type="model" id="totals_percent_discount" class="form-control" value="<?php echo $model->percent_discount?>"> %</td>
-            <td align="right" valign="middle" class="bold"> <div class="usd"><?php echo $settings->getCurrencyShortDescription();?></div> <div id="totals_discount"><?php echo " ".$model->TotalDiscount?></div></td>
+            <td><input type="model" id="totals_percent_discount" class="form-control formHasLabel" value="<?php echo $model->percent_discount?>"> %</td>
+            <td align="right" valign="middle" class="bold"> <div class="usd"><?php echo $settings->getCurrencyShortDescription();?></div> <span id="totals_discount"><?php echo " ".$model->TotalDiscount?></span></td>
           </tr>
           <tr class="superTotal">
             <td valign="middle" >Total</td>
             <td>&nbsp;</td>
-            <td valign="middle"  align="right" class="bold"><?php echo $settings->getCurrencyShortDescription()." "?><div id="totals_price_w_discount"><?php echo $model->TotalPriceWithDiscount;?> </div></td>
+            <td valign="middle"  align="right" class="bold"><?php echo $settings->getCurrencyShortDescription()." "?><span id="totals_price_w_discount"><?php echo $model->TotalPriceWithDiscount;?> </span></td>
           </tr>
         </tbody>
       </table>
