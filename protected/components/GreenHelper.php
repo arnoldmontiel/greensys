@@ -136,7 +136,7 @@ class GreenHelper
 	 * @param array() $arrFields
 	 * @param string $type (boolean, int, string)
 	 */
-	private function getDataValue($data, $field, $arrFields, $type = 'string')
+	static public function getDataValue($data, $field, $arrFields, $type = 'string')
 	{
 		$returnValue = null;
 		
@@ -924,7 +924,7 @@ class GreenHelper
 		return $importLogId;
 	}
 	
-	private function setEmptyProduct($modelProduct)
+	static public function setEmptyProduct($modelProduct)
 	{	
 		//BEGIN NOMENCLATOR-------------------------------------------------
 		if(!isset($modelProduct->Id_nomenclator))
@@ -1079,7 +1079,7 @@ class GreenHelper
 		return $modelProduct; 
 	}
 	
-	private function setProduct($data, $arrFields, $importCode)
+	static public function setProduct($data, $arrFields, $importCode)
 	{
 		$modelProduct = new Product();
 		$transaction = $modelProduct->dbConnection->beginTransaction(); 
