@@ -25,7 +25,7 @@ $settings = new Settings();
 		?>
       
         <li class="pull-right">
-        <button onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
+        <button <?php echo !isset($idArea)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
           <div class="btn-group btnAlternateView">
   <button type="button" class="btn btn-default active">Áreas</button>
   <button type="button" class="btn btn-default">Servicios</button>
