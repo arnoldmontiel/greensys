@@ -27,6 +27,9 @@
           <?php if(Yii::app()->user->checkAccess('ProjectManage')):?>			          
           <li <?php if ($active=="project"){ echo 'class="active"';}?> ><a href="<?php echo Yii::app()->createUrl("project/index")?>"><i class="fa fa-building fa-fw"></i> Proyectos</a></li>
           <?php endif?>                    	
+          <?php if(Yii::app()->user->checkAccess('AreaManage')):?>			          
+          <li <?php if ($active=="area"){ echo 'class="active"';}?> ><a href="<?php echo Yii::app()->createUrl("area/index")?>"><i class="fa fa-cutlery fa-fw"></i> Areas</a></li>
+          <?php endif?>                    	
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">M&aacute;s <i class="fa fa-caret-down fa-fw"></i></a>
                         <ul class="dropdown-menu">
 				          <?php if(Yii::app()->user->checkAccess('BudgetManage')):?>			          
@@ -34,9 +37,6 @@
 				          <?php endif?>			                    	
                 	      <?php if(Yii::app()->user->checkAccess('UserManage')):?>			          
                 	      <li><a href="#">Usuarios</a></li>
-				          <?php endif?>			                    	
-                	      <?php if(Yii::app()->user->checkAccess('AreaManage')):?>			          
-                	      <li><a href="<?php echo Yii::app()->createUrl("area/index")?>">Areas</a></li>
 				          <?php endif?>			                    	
                 	      <?php if(Yii::app()->user->checkAccess('ImporterManage')):?>			          
                 	      <li><a href="<?php echo Yii::app()->createUrl("importer/index")?>">Importadores</a></li>
