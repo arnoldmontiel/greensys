@@ -115,7 +115,7 @@ $settings = new Settings();
           </tr>
           <tr>
             <td valign="middle" >Discount</td>
-            <td><input type="model" id="totals_percent_discount" class="form-control formHasLabel inputSmall" value="<?php echo $model->percent_discount?>"> %</td>
+            <td><input type="model" id="totals_percent_discount" class="form-control formHasLabel inputSmall align-right" value="<?php echo $model->percent_discount?>"> %</td>
             <td align="right" valign="middle" class="bold"> <div class="usd"><?php echo $settings->getCurrencyShortDescription();?></div> <span id="totals_discount"><?php echo " ".$model->TotalDiscount?></span></td>
           </tr>
           <tr class="superTotal">
