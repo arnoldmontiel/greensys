@@ -95,6 +95,14 @@ class Project extends ModelAudit
 		);
 	}
 
+	public function getFullDescription()
+	{
+		$value = $this->description;
+		if(!empty($this->customer->person->last_name))
+			$value = $this->customer->person->last_name . ' - ' . $value;
+		return $value;	
+	}
+	
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */

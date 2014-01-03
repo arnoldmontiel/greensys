@@ -9,7 +9,7 @@
 		'columns'=>array(	
 				array(
 					'name'=>'project_description',
-					'value'=>'$data->project->description',
+					'value'=>'$data->project->fullDescription',
 					'htmlOptions'=>array("style"=>"width:15%;"),
 				),
 				array(
