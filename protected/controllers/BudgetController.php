@@ -271,11 +271,13 @@ class BudgetController extends GController
 		$idBudget = (isset($_POST['idBudget']))?$_POST['idBudget']:null;
 		$version = (isset($_POST['version']))?$_POST['version']:null;
 		$idArea = (isset($_POST['idArea']))?$_POST['idArea']:null;
+		$idAreaProject = (isset($_POST['idAreaProject']))?$_POST['idAreaProject']:null;
 		
 		$criteria = new CDbCriteria();
 		$criteria->select = 'sum(quantity) as quantity';
 		$criteria->addCondition('Id_budget = '.$idBudget);
 		$criteria->addCondition('Id_area = '.$idArea);
+		$criteria->addCondition('Id_area_project = '.$idAreaProject);
 		$criteria->addCondition('version_number = '.$version);
 		$model = BudgetItem::model()->find($criteria);
 		
@@ -288,11 +290,12 @@ class BudgetController extends GController
 		$version = (isset($_POST['version']))?$_POST['version']:null;
 		$idProduct = (isset($_POST['idProduct']))?$_POST['idProduct']:null;
 		$idArea = (isset($_POST['idArea']))?$_POST['idArea']:null;
+		$idAreaProject = (isset($_POST['idAreaProject']))?$_POST['idAreaProject']:null;
 		$qty = (isset($_POST['qty']))?$_POST['qty']:0;
 	
-		if(isset($idBudget) && isset($version) && isset($idProduct) && isset($idArea) && $qty > 0)
+		if(isset($idBudget) && isset($version) && isset($idProduct) && isset($idArea) && isset($idAreaProject) && $qty > 0)
 		{
-			$modelBudgetItemBD =  BudgetItem::model()->findByAttributes(array('Id_budget'=>$idBudget, 'Id_area'=>$idArea, 'Id_product'=>$idProduct, 'version_number'=>$version));
+			$modelBudgetItemBD =  BudgetItem::model()->findByAttributes(array('Id_budget'=>$idBudget, 'Id_area'=>$idArea, 'Id_area_project'=>$idAreaProject, 'Id_product'=>$idProduct, 'version_number'=>$version));
 			if(isset($modelBudgetItemBD))
 			{
 				$modelBudgetItemBD->quantity = $qty; 
@@ -348,6 +351,7 @@ class BudgetController extends GController
 					$modelBudgetItemBD->time_programation = $modelProduct->time_programation;
 					$modelBudgetItemBD->time_instalation = $modelProduct->time_instalation;
 					$modelBudgetItemBD->Id_area = $idArea;
+					$modelBudgetItemBD->Id_area_project = $idAreaProject;
 					$modelBudgetItemBD->Id_budget = $idBudget;
 					$modelBudgetItemBD->version_number = $version;
 					$modelBudgetItemBD->Id_product = $idProduct;
@@ -360,6 +364,7 @@ class BudgetController extends GController
 			$criteria->select = 'sum(quantity) as quantity';
 			$criteria->addCondition('Id_budget = '.$idBudget);
 			$criteria->addCondition('Id_area = '.$idArea);
+			$criteria->addCondition('Id_area_project = '.$idAreaProject);
 			$criteria->addCondition('version_number = '.$version);
 			$model = BudgetItem::model()->find($criteria);
 			
