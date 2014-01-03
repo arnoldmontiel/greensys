@@ -288,6 +288,15 @@ class ProjectController extends GController
 			$projectArea->save();
 		}
 	}
+	public function actionAjaxAddProjectAreaFromBudget()
+	{
+		if(isset($_POST['Id_area'])&&isset($_POST['Id_project']))
+		{
+			$projectArea=new AreaProject;
+			$projectArea->attributes = array('Id_area'=>$_POST['Id_area'],'Id_project'=>$_POST['Id_project']);
+			$projectArea->save();
+		}
+	}
 	
 	public function actionAjaxRemoveProjectArea()
 	{

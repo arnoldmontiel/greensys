@@ -1213,7 +1213,16 @@ class BudgetController extends GController
 			}
 		}
 	}
-
+	public function actionAjaxFillAddAreaToProject()
+	{
+		if(isset($_POST['Id_project']))
+		{
+			$this->renderPartial('_addAreasToProject',array(
+					'Id_project'=>$_POST['Id_project'],
+			));				
+		}
+	}
+	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
