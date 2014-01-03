@@ -365,7 +365,7 @@ padding-left: 5px;}
 
 .form-control{ padding:4px;}
 
-.formHasLabel{width: 90%;
+.formHasLabel{width: 85%;
 display: inline-block;
 margin-right: 5px;}
 
