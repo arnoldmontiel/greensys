@@ -28,7 +28,8 @@
 				array(
 					'name'=>'part_number',
 					'value'=>'$data->part_number',
-					'htmlOptions'=>array("style"=>"width:10%;"),
+					'htmlOptions'=>array("width"=>"15%", "class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 					'name'=>'brand_description',
@@ -38,7 +39,8 @@
 				array(
 					'name'=>'msrp',
 					'value'=>'$data->msrp',
-					'htmlOptions'=>array("style"=>"width:5%;"),
+					'htmlOptions'=>array("width"=>"5%", "class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 					'name'=>'Id_category',
@@ -57,7 +59,7 @@
 						$value = 1;
 						if($data->qty_per_prod > 0)
 							$value = $data->qty_per_prod;
-							return '<input onkeyup="validateNumber(this);" type="text" id="qty-field-'.$data->Id.'" class="form-control inputSmall" value="'.round($value).'"><button onclick="addQty('.$data->Id.')" type="button" class="btn btn-default btn-sm"><i class="fa fa-save"></i> Aplicar</button>';						
+							return '<input onkeyup="validateNumber(this);" type="text" id="qty-field-'.$data->Id.'" class="form-control inputSmall align-right" value="'.round($value).'"><button onclick="addQty('.$data->Id.')" type="button" class="btn btn-default btn-sm"><i class="fa fa-save"></i> Aplicar</button>';						
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:center;"),

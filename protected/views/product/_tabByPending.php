@@ -26,6 +26,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 							return $value;
 						},
 						'type'=>'raw',
+					'htmlOptions'=>array("class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 						'name'=>'width',
@@ -40,6 +42,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 							return $value;
 						},
 						'type'=>'raw',
+					'htmlOptions'=>array("class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 						'name'=>'length',
@@ -54,6 +58,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 							return $value;
 						},
 						'type'=>'raw',
+					'htmlOptions'=>array("class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 						'name'=>'weight',
@@ -68,6 +74,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 							return $value;
 						},
 						'type'=>'raw',
+					'htmlOptions'=>array("class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				'profit_rate',
 				array(
@@ -83,6 +91,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 							return $value;
 						},
 						'type'=>'raw',
+					'htmlOptions'=>array("class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 						'name'=>'msrp',
@@ -97,6 +107,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 							return $value;
 						},
 						'type'=>'raw',
+					'htmlOptions'=>array("class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 						'name'=>'short_description',

@@ -15,12 +15,14 @@
 				array(
 					'name'=>'date_cancelled',
 					'value'=>'$data->date_cancelled',
-					'htmlOptions'=>array("style"=>"width:10%;"),
+					'htmlOptions'=>array("style"=>"width:10%;", "class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 					'name'=>'version_number',
 					'value'=>'$data->version_number',
-					'htmlOptions'=>array("style"=>"width:10%;"),
+					'htmlOptions'=>array("style"=>"width:10%;", "class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 					'name'=>'description',

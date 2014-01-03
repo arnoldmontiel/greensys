@@ -43,18 +43,25 @@
 </form>
 
 <!--Esto aparece una vez que le das Cargar-->
-<div class="estadoModal">
+<div id="status-wait" style="display:none;" class="estadoModal">
     <label for="campoLineal">Estado</label>
-<div id="status-wait" style="display:none" class="alert alert-info"><i class="fa fa-spinner fa-spin"></i>
- <strong>Analizando archivo</strong>, espere por favor.</div>
- 
- <div id="status-error" style="display:none" class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i>
- <strong>Se ha producido un error</strong>, revise el archivo e int�ntelo nuevamente.</div>
- 
- <div id="status-success" style="display:none" class="alert alert-success"><i class="fa fa-check"></i>
- <strong>La carga fue correcta.</strong></div>
- 
+<div class="alert alert-info"><i class="fa fa-spinner fa-spin"></i>
+ <span><strong>Analizando archivo</strong>, espere por favor.</span>
  </div>
+ </div>
+ 
+ <div id="status-error" style="display:none;" class="estadoModal">
+ <div class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i>
+ <span><strong>Se ha producido un error</strong>, revise el archivo e int�ntelo nuevamente.</span>
+ </div>
+ </div>
+ 
+ <div id="status-success" style="display:none;" class="estadoModal">
+ <div class="alert alert-success"><i class="fa fa-check"></i>
+ <span><strong>La carga fue correcta.</strong></span>
+ </div>
+ </div>
+ 
 <!--Fin notificacion-->
 
 
@@ -77,7 +84,7 @@
 
 			if(file == "")
 			{
-				$('#status-error').text("No se selecciono ningun archivo.");
+				$('#status-error .alert span').text("No se selecciono ningun archivo.");
 				$('#status-wait').hide();
 				$('#status-error').show();
 				$('#btn-upload').removeAttr('disabled');
@@ -88,7 +95,7 @@
 
 			if(extension != "xls" && extension != "xlsx")
 			{
-				$('#status-error').text("La extensiones permitidas son 'xls' o 'xlsx'.");
+				$('#status-error .alert span').text("La extensiones permitidas son 'xls' o 'xlsx'.");
 				$('#status-wait').hide();
 				$('#status-error').show();
 				$('#btn-upload').removeAttr('disabled');

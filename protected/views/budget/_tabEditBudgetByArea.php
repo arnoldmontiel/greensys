@@ -26,8 +26,10 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 					),
 					array(
 							'name'=>'quantity',
-							'value'=>'CHtml::textField("quantity",$data->quantity,array("class"=>"form-control inputSmall","onchange"=>"changeQuantity(".$data->Id.",this)"))',
-							'type'=>'raw'
+							'value'=>'CHtml::textField("quantity",$data->quantity,array("class"=>"form-control inputSmall align-right","onchange"=>"changeQuantity(".$data->Id.",this)"))',
+							'type'=>'raw',
+							'htmlOptions'=>array("class"=>"align-center"),
+							'headerHtmlOptions'=>array("class"=>"align-center"),
 					),
 					array(
 							'name'=>'service',
@@ -36,16 +38,20 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 											"prompt"=>"Servicios","id"=>$data->Id,"class"=>"form-control campoServicio","onchange"=>"changeService(".$data->Id.",this)"
 											) );',
 							'type'=>'raw',
+							'htmlOptions'=>array("class"=>"align-center"),
+							'headerHtmlOptions'=>array("class"=>"align-center"),
 					),
 					array(
 							'name'=>'price',
 							'value'=>$selectPrice,
 							'type'=>'raw',
+							'htmlOptions'=>array("class"=>"align-right"),
+							'headerHtmlOptions'=>array("class"=>"align-right"),
 					),
 					array(
 							'name'=>'discount',
 							'value'=>
-							'"<div class=\"bloqueDescuento\"> ".CHtml::textField("txtDiscount","$data->discount",array("id"=>"discount_".$data->Id,"onchange"=>"changeDiscount(".$data->Id.",this)","class"=>"form-control inputMed",))."<div class=\"radioTipo\"><div class=\"radio\">
+							'"<div class=\"bloqueDescuento\"> ".CHtml::textField("txtDiscount","$data->discount",array("id"=>"discount_".$data->Id,"onchange"=>"changeDiscount(".$data->Id.",this)","class"=>"form-control inputMed align-right",))."<div class=\"radioTipo\"><div class=\"radio\">
   <label>
     <input type=\"radio\" name=\"optionsRadios_".$data->Id."\" id=\"discount_type_".$data->Id."\" value=\"0\" onclick=\"changeDiscountType(".$data->Id.",this);\" ".($data->discount_type==0?"checked":"").">
     <div class=\"usd\">%</div>
@@ -58,7 +64,8 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
   </label>
 </div></div></div>"',
 							'type'=>'raw',
-							'htmlOptions'=>array(),
+							'htmlOptions'=>array("class"=>"align-center"),
+							'headerHtmlOptions'=>array("class"=>"align-center"),
 					),
 					array(
 							'name'=>'Total',
@@ -66,13 +73,17 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 								'CHtml::openTag("span",array("id"=>"total_price_".$data->Id, "class"=>"label label-primary labelPrecio")).$data->totalPrice." ".'.
 								'CHtml::openTag("div",array("class"=>"usd"))."'.$settings->getEscapedCurrencyShortDescription().'".CHtml::closeTag("div").CHtml::closeTag("span")',
 							'type'=>'raw',
+							'htmlOptions'=>array("class"=>"align-right"),
+							'headerHtmlOptions'=>array("class"=>"align-right"),
 					),
 					array(
 							'name'=>'Horas',
 							'value'=>
-							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."P"."</span>".CHtml::textField("time_programation",$data->time_programation,array("class"=>"form-control inputSmall"))."</div>".'.
-							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."I"."</span>".CHtml::textField("time_instalation",$data->time_instalation,array("class"=>"form-control inputSmall"))."</div>"',
+							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."P"."</span>".CHtml::textField("time_programation",$data->time_programation,array("class"=>"form-control inputSmall align-right"))."</div>".'.
+							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."I"."</span>".CHtml::textField("time_instalation",$data->time_instalation,array("class"=>"form-control inputSmall align-right"))."</div>"',
 							'type'=>'raw',
+							'htmlOptions'=>array("class"=>"align-center"),
+							'headerHtmlOptions'=>array("class"=>"align-center"),
 					),
 		array(
 							'name'=>'Acciones',

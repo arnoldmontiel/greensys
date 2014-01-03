@@ -20,6 +20,7 @@
   </div>
 
 <div id="new-project" class="inlineForm" style="display:none">
+<label>Nuevo Proyecto</label>
 	<table class="table">
 		<tr>
 			<td style="width:33%"><div>Cliente</div>			
@@ -49,7 +50,8 @@
     	echo CHtml::activeTextArea($model, 'description', array('class'=>'form-control', 'rows'=>3));
     ?>    
   </div>
-  <div class="form-group col-sm-6 limpiarPadding paddingRight">    
+  <div class="row">
+  <div class="form-group col-sm-6">    
 	<?php 
  		echo CHtml::activeLabel($model, 'date_estimated_inicialization');
  		$this->widget('zii.widgets.jui.CJuiDatePicker', array(
@@ -66,7 +68,7 @@
 		));
 	?>
   </div>
-  <div class="form-group col-sm-6 limpiarPadding paddingLeft">
+  <div class="form-group col-sm-6">
 	<?php 
  		echo CHtml::activeLabel($model, 'date_estimated_finalization');
  		$this->widget('zii.widgets.jui.CJuiDatePicker', array(
@@ -83,7 +85,7 @@
 		));
 	?>
   </div>
-  <div class="form-group col-sm-6 limpiarPadding paddingRight">
+  <div class="form-group col-sm-6 noMargin">
 	<?php 
  		echo CHtml::activeLabel($model, 'date_inicialization');
  		$this->widget('zii.widgets.jui.CJuiDatePicker', array(
@@ -100,7 +102,7 @@
 		));
 	?>
   </div>
-  <div class="form-group col-sm-6 limpiarPadding paddingLeft">    
+  <div class="form-group col-sm-6 noMargin">    
 	<?php 
  		echo CHtml::activeLabel($model, 'date_finalization');
  		$this->widget('zii.widgets.jui.CJuiDatePicker', array(
@@ -117,12 +119,13 @@
 		));
 	?>
   </div>
+  </div>
 </form>
-	<div class="estadoModal">
-      	<div id="status-error" style="display:none" class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i>
+	<div id="status-error" style="display:none;"  class="estadoModal">
+	<label for="campoLineal">Estado</label>
+      	<div class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i>
  	No se puede crear un proyecto sin descripción.</div>
  	</div>
- 	
       </div>
       
       <div class="modal-footer">

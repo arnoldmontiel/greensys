@@ -12,7 +12,7 @@ $settings = new Settings();
         <div class="tab-content">
         <div class="tab-pane active" id="tabRecargos">
         <?php
-	$selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$data->price." "."<div class=\"usd\">'.$settings->getEscapedCurrencyShortDescription().'</div></div></div>"';
+	$selectPrice='$data->price." "."<div class=\"usd\">'.$settings->getEscapedCurrencyShortDescription().'</div>"';
 	
 	$this->widget('zii.widgets.grid.CGridView', array(
 					'id'=>'budget-item-generic',
@@ -24,17 +24,21 @@ $settings = new Settings();
 							'description',
 							array(
 									'name'=>'quantity',
-									'value'=>'CHtml::textField("quantity",$data->quantity,array("class"=>"form-control inputSmall","onchange"=>"changeQuantity(".$data->Id.",this)"))',
-									'type'=>'raw'
+									'value'=>'CHtml::textField("quantity",$data->quantity,array("class"=>"form-control inputSmall align-right","onchange"=>"changeQuantity(".$data->Id.",this)"))',
+									'type'=>'raw',
+							'htmlOptions'=>array("class"=>"align-center"),
+							'headerHtmlOptions'=>array("class"=>"align-center"),
 							),					array(
 							'name'=>'price',
 							'value'=>$selectPrice,
 							'type'=>'raw',
+							'htmlOptions'=>array("class"=>"align-right"),
+							'headerHtmlOptions'=>array("class"=>"align-right"),
 					),
 					array(
 						'name'=>'discount',
 						'value'=>
-						'"<div class=\"bloqueDescuento\"> ".CHtml::textField("txtDiscount","$data->discount",array("id"=>"discount_".$data->Id,"onchange"=>"changeDiscount(".$data->Id.",this)","class"=>"form-control inputMed",))."<div class=\"radioTipo\"><div class=\"radio\">
+						'"<div class=\"bloqueDescuento\"> ".CHtml::textField("txtDiscount","$data->discount",array("id"=>"discount_".$data->Id,"onchange"=>"changeDiscount(".$data->Id.",this)","class"=>"form-control inputMed align-right",))."<div class=\"radioTipo\"><div class=\"radio\">
 				  <label>
 				    <input type=\"radio\" name=\"optionsRadios_".$data->Id."\" id=\"discount_type_".$data->Id."\" value=\"0\" onclick=\"changeDiscountType(".$data->Id.",this);\" ".($data->discount_type==0?"checked":"").">
 				    <div class=\"usd\">%</div>
@@ -47,7 +51,8 @@ $settings = new Settings();
 				  </label>
 				</div></div></div>"',
 						'type'=>'raw',
-						'htmlOptions'=>array(),
+							'htmlOptions'=>array("class"=>"align-center"),
+							'headerHtmlOptions'=>array("class"=>"align-center"),
 				),
 							
 					array(
@@ -56,6 +61,8 @@ $settings = new Settings();
 							'CHtml::openTag("span",array("id"=>"total_price_".$data->Id, "class"=>"label label-primary labelPrecio")).$data->totalPrice." ".'.
 							'CHtml::openTag("div",array("class"=>"usd"))."'.$settings->getEscapedCurrencyShortDescription().'".CHtml::closeTag("div").CHtml::closeTag("span")',
 							'type'=>'raw',
+'htmlOptions'=>array("class"=>"align-right"),
+'headerHtmlOptions'=>array("class"=>"align-right"),
 					),
 
 							),

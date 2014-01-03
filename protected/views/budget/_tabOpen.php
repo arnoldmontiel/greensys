@@ -16,7 +16,8 @@
 				array(
 					'name'=>'version_number',
 					'value'=>'$data->version_number',
-					'htmlOptions'=>array("style"=>"width:10%;"),
+					'htmlOptions'=>array("style"=>"width:10%;", "class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 					'name'=>'description',
@@ -26,17 +27,20 @@
 				array(
 					'name'=>'percent_discount',
 					'value'=>'$data->percent_discount',
-					'htmlOptions'=>array("style"=>"width:5%;"),
+					'htmlOptions'=>array("style"=>"width:5%;", "class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 					'name'=>'date_creation',
 					'value'=>'$data->date_creation',
-					'htmlOptions'=>array("style"=>"width:10%;"),
+					'htmlOptions'=>array("style"=>"width:12%;", "class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 					'name'=>'date_inicialization',
 					'value'=>'$data->date_inicialization',
-					'htmlOptions'=>array("style"=>"width:10%;"),
+					'htmlOptions'=>array("style"=>"width:10%;", "class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 						'header'=>'Acciones',

@@ -453,7 +453,7 @@ padding: 6px 8px;
 /* ------ CREAR PRESU ------- */
 
 
-#screenCrearPresupuesto{ margin-bottom:80px;}
+#screenCrearPresupuesto{ margin-bottom:40px;}
 #campoTipoPrecio{ width:65px; display:inline-block;}
 
 h2 a.superEdit{ position:absolute; top:10px; right:30px; cursor:pointer; font-size:20px;}
@@ -462,7 +462,7 @@ h2 a.superEdit{ position:absolute; top:10px; right:30px; cursor:pointer; font-si
 
 .btnAlternateView{ margin-left:25px;}
 
-#myModalNewBudget .modal-dialog{ width:600px;}
+#myModalNewBudget .modal-dialog{ width:700px;}
 
 
 #myModalAddProduct .modal-dialog{ width:80%;}
@@ -552,9 +552,12 @@ padding-bottom: 20px;}
 .radioTipo{display: inline-block;
 width: 50px;
 height: 40px;
-vertical-align: middle; margin-left:5px;}
+vertical-align: middle; margin-left:0px;}
 
-.radioTipo .radio{margin-bottom:0px; margin-top:0px;}
+.radioTipo .radio{margin-bottom:0px; margin-top:0px; text-align:left;}
+
+.radioTipo .radio input[type="radio"]{
+margin-left: -15px;}
 
 .campoServicio{width:100%;}
 
@@ -562,9 +565,9 @@ vertical-align: middle; margin-left:5px;}
 
 
 .precioTabla{position:relative;}
-.precioTabla button.miniEdit{ position:absolute; top:50%; right:5px; margin-top:-12px !important;}
+.precioTabla button.miniEdit{ position:absolute; top:50%; right:-4px; margin-top:-12px !important;}
 
-.precioTablaValor{padding-right:30px;min-width:90px; line-height:12px;}
+.precioTablaValor{padding-right:35px; line-height:12px;}
 
 
 .tableProductName{ font-size:16px; font-family: 'GudeaBold';}

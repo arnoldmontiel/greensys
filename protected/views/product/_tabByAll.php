@@ -18,18 +18,26 @@
 				array(
 		 			'name'=>'height',
 					'value'=>'$data->showVolume($data->height)',
+					'htmlOptions'=>array("class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 						'name'=>'width',
 						'value'=>'$data->showVolume($data->width)',
+					'htmlOptions'=>array("class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 						'name'=>'length',
 						'value'=>'$data->showVolume($data->length)',
+					'htmlOptions'=>array("class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 						'name'=>'weight',
 						'value'=>'$data->showWeight($data->weight)',
+					'htmlOptions'=>array("class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 						'name'=>'profit_rate',
@@ -39,10 +47,14 @@
 				array(
 						'name'=>'dealer_cost',
 						'value'=>'$data->showPrice($data->dealer_cost)',
+					'htmlOptions'=>array("class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 						'name'=>'msrp',
 						'value'=>'$data->showPrice($data->msrp)',
+					'htmlOptions'=>array("class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 						'name'=>'short_description',
