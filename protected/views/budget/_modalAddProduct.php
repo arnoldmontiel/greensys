@@ -54,7 +54,10 @@
 						'header'=>'Acciones',
 						'value'=>function($data){
 						$grid = "'budget-grid-waiting'";
-							return '<input onkeyup="validateNumber(this);" type="text" id="qty-field-'.$data->Id.'" class="form-control inputSmall" value="1"><button onclick="addQty('.$data->Id.')" type="button" class="btn btn-default btn-sm"><i class="fa fa-save"></i> Aplicar</button>';						
+						$value = 1;
+						if($data->qty_per_prod > 0)
+							$value = $data->qty_per_prod;
+							return '<input onkeyup="validateNumber(this);" type="text" id="qty-field-'.$data->Id.'" class="form-control inputSmall" value="'.round($value).'"><button onclick="addQty('.$data->Id.')" type="button" class="btn btn-default btn-sm"><i class="fa fa-save"></i> Aplicar</button>';						
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:center;"),
