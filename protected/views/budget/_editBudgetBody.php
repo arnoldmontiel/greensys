@@ -29,6 +29,8 @@ $settings = new Settings();
   <button type="button" class="btn btn-default">Servicios</button>
 </div>
         </li>
+                        <li><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Area</button></li>
+       
                 <li class="pull-right"><button onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button></li>
       </ul>
       <div class="tab-content">
