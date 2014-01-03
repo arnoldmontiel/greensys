@@ -399,6 +399,7 @@ padding: 6px 8px;
 .table.tablaIndividual { margin-bottom:30px;}
 .tablaIndividual td button{ margin:5px; margin-left:0px; vertical-align:middle;}
 .table.tablaIndividual th{ font-weight:600;  font-size:14px; line-height:15px; color:#555; background-color:#ddd;}
+.table.tablaIndividual th a{ font-weight:600;  font-size:14px; line-height:15px; color:#555; background-color:#ddd; font-family:"GudeaRegular"}
 .table.tablaIndividual thead>tr>th, .table.tablaIndividual tbody>tr>th, .table.tablaIndividual tfoot>tr>th, .table.tablaIndividual thead>tr>td, .table.tablaIndividual tbody>tr>td, .table.tablaIndividual tfoot>tr>td{vertical-align:middle; padding:5px;}
 
 #screenProductos .table.tablaIndividual { margin-bottom:5px;}
@@ -572,8 +573,8 @@ vertical-align: middle; margin-left:5px;}
 #myModalAddProduct .inputSmall{padding:0px 2px; height:31px;}
 
 
-.grid-view th{font-family:"Gudea"; font-weight:600;}
-.grid-view td{font-family:"Gudea";}
+.grid-view th{font-family:"GudeaRegular"; font-weight:600;}
+.grid-view td{font-family:"GudeaRegular";}
 
 .statusFloatSaving{padding: 5px;
 text-align: center;
@@ -590,6 +591,12 @@ background-color: rgba(92,184,92,0.8);}
 
 .inlineForm .table{margin-bottom:0px; }
 .inlineForm .table td{border: 0px none; }
+
+.label-info{font-size: 14px;
+font-family: "GudeaRegular";
+font-weight: normal;}
+
+.liButtonAdd{ line-height:35px; padding-left:10px;}
 
 /* ------ END CREAR PRESU ------- */
 
