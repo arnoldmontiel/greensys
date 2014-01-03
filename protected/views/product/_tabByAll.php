@@ -31,7 +31,11 @@
 						'name'=>'weight',
 						'value'=>'$data->showWeight($data->weight)',
 				),
-				'profit_rate',
+				array(
+						'name'=>'profit_rate',
+						'value'=>'$data->profit_rate',
+						'htmlOptions'=>array("style"=>"text-align:right"),
+				),				
 				array(
 						'name'=>'dealer_cost',
 						'value'=>'$data->showPrice($data->dealer_cost)',
