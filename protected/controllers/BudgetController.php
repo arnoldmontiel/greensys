@@ -415,6 +415,7 @@ class BudgetController extends GController
 	{
 		$id = (isset($_POST['id']))?$_POST['id']:null;
 		$version = (isset($_POST['version']))?$_POST['version']:null;
+		$note = isset($_POST['note'])?$_POST['note']:'';
 	
 		if(isset($id) && isset($version))
 		{
@@ -434,7 +435,7 @@ class BudgetController extends GController
 					$modelNewBudget->date_close = null;
 					$modelNewBudget->date_cancelled = null;
 					$modelNewBudget->date_approved = null;
-					$modelNewBudget->note = '';
+					$modelNewBudget->note = $note;
 					$modelNewBudget->version_number = $modelBudget->version_number + 1;
 					
 					if($modelNewBudget->save())
@@ -684,19 +685,21 @@ class BudgetController extends GController
 		
 	}
 	
-	public function actionAjaxOpenCancelBudget()
+	public function actionAjaxOpenChangeStateBudget()
 	{
 		$idBudget = isset($_POST['idBudget'])?$_POST['idBudget']:null;
 		$version = isset($_POST['version'])?$_POST['version']:null;
-	
+		$newState = isset($_POST['newState'])?$_POST['newState']:4; //defecto cancelado
+				
 		if(isset($idBudget) && isset($version))
 		{
 			$modelBudget = Budget::model()->findByPk(array('Id'=>$idBudget, 'version_number'=>$version));
 			if(isset($modelBudget))
 			{
-				echo $this->renderPartial('_modalCancelBudget',
+				echo $this->renderPartial('_modalChangeStateBudget',
 						array(
-								'modelBudget'=>$modelBudget
+								'modelBudget'=>$modelBudget,
+								'newState'=>$newState,
 						));
 			}
 		}
