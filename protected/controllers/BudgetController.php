@@ -622,7 +622,7 @@ class BudgetController extends GController
 		if(isset($_POST['Budget']))
 		{
 			$idBudget = $_POST['Budget']['Id'];
-			$version = $_POST['Budget']['version_number'];
+			$version = $_POST['Budget']['version_number'];			
 			$modelBudget = Budget::model()->findByPk(array('Id'=>$idBudget, 'version_number'=>$version));
 			
 			$modelBudget->attributes = $_POST['Budget'];

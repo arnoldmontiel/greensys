@@ -10,6 +10,7 @@ $settings = new Settings();
         <?php 
         $first = true;
         $idArea = null;
+        $idAreaProject = null;
         foreach($areaProjects as $item)	{ ?>
         <li class="<?php echo ($first?'active':'');?>"><a onclick="changeTab(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab"><?php echo $item->area->description?> </a><a class="tabEdit"><i class="fa fa-pencil"></i></a></li>
 		<?php if($first)

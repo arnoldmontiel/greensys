@@ -40,6 +40,9 @@ class Budget extends ModelAudit
 		$this->date_inicialization = (!empty($this->date_inicialization))?Yii::app()->lc->toDatabase($this->date_inicialization,'date','small','date',null):null;//date('Y-m-d',strtotime($this->date_validity));
 		$this->date_finalization = (!empty($this->date_finalization))?Yii::app()->lc->toDatabase($this->date_finalization,'date','small','date',null):null;//date('Y-m-d',strtotime($this->date_validity));
 		
+		if(!empty($this->date_creation))
+			$this->date_creation = Yii::app()->lc->toDatabase($this->date_creation,'date','small','date',null);
+		
 		$this->date_close = (!empty($this->date_close))?Yii::app()->lc->toDatabase($this->date_close,'date','small','date',null):null;
 		$this->date_cancelled = (!empty($this->date_cancelled))?Yii::app()->lc->toDatabase($this->date_cancelled,'date','small','date',null):null;
 		$this->date_approved = (!empty($this->date_approved))?Yii::app()->lc->toDatabase($this->date_approved,'date','small','date',null):null;		
