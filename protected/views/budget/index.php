@@ -44,6 +44,27 @@ $('#tab-cancelled').click(function(){
 ?>
 <script type="text/javascript">
 
+function openNewProject()
+{
+	//debugger;
+	$('#new-project').toggle();
+	
+	if($('#new-project').is(':visible'))
+	{
+		$('#Budget_Id_project').attr('disabled','disabled');
+		$('#btn-new-project').html('<i class="fa fa-minus"></i> Cancelar');
+		$('#create-project').val(true);
+	}
+	else
+	{
+		$('#Budget_Id_project').removeAttr('disabled');
+		$('#btn-new-project').html('<i class="fa fa-plus"></i> Nuevo');
+		$('#create-project').val(false);
+		$('#status-error').hide();
+	}
+	return false;
+}
+
 function openNewBudget()
 {
 	$.post("<?php echo BudgetController::createUrl('AjaxOpenNewBudget'); ?>"

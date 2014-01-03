@@ -7,35 +7,36 @@
       <div class="modal-body">
 
 <form id="form-new-budget" role="form">
+	<?php echo CHtml::hiddenField("create-project",false,array('id'=>'create-project'));?>
   <div class="form-group">
-    <?php
-    	echo CHtml::activeLabel($model, 'Id_project');?>
+    <?php echo CHtml::activeLabel($model, 'Id_project');?>
     	<div class="combined">
     	<?php
-    	echo CHtml::activeDropDownList($model, 'Id_project',
-    		CHtml::listData($ddlProjects, 'Id', 'LongDescription'),array('class'=>'form-control'));?>
-    		<button type="submit" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Nuevo</button>
+    		echo CHtml::activeDropDownList($model, 'Id_project',
+    			CHtml::listData($ddlProjects, 'Id', 'LongDescription'),array('class'=>'form-control'));
+		?>
+    		<button onclick="openNewProject();" id="btn-new-project" type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Nuevo</button>
   		</div>
   </div>
-    		<div class="inlineForm">
-    		<label>Nuevo Proyecto</label>
-<table class="table">
-<tr>
-<td style="width:33%"><div>Cliente</div>
-<select class="form-control">
-<option value="">Elegir Cliente</option>
-<option value="57" selected="selected">Alvear Tower</option>
-<option value="63">Ariel Wasserman</option>
-<option value="59">Armando El Golf Nordelta</option>
-<option value="51">Arq. Eduardo Burecovics</option>
-<option value="73">Arquitecto Federico Marzano</option>
-<option value="76">BBVA Directorio - Federico Arias</option>
-</select></td>
-<td style="width:33%"><div>Descripcion</div><input class="form-control" type="text" ></td>
-<td style="width:33%"><div>Direcci&oacute;n</div><input class="form-control" type="text" ></td>
-</tr>
-</table>
+
+<div id="new-project" class="inlineForm" style="display:none">
+	<table class="table">
+		<tr>
+			<td style="width:33%"><div>Cliente</div>			
+			<?php
+    		echo CHtml::activeDropDownList($modelProject, 'Id_customer',
+    				CHtml::listData($ddlCustomer, 'Id', 'Description'),array('class'=>'form-control'));?>
+			</td>
+			<td style="width:33%"><div>Descripcion</div>
+				<?php echo CHtml::activeTextField($modelProject, 'description', array('class'=>'form-control')); ?>
+			</td>
+			<td style="width:33%"><div>Direcci&oacute;n</div>
+				<?php echo CHtml::activeTextField($modelProject, 'address', array('class'=>'form-control')); ?>
+			</td>
+		</tr>
+	</table>
 </div>
+
   <div class="form-group">    
     <?php 
     	echo CHtml::activeLabel($model, 'percent_discount');
@@ -117,8 +118,13 @@
 	?>
   </div>
 </form>
-
+	<div class="estadoModal">
+      	<div id="status-error" style="display:none" class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i>
+ 	No se puede crear un proyecto sin descripción.</div>
+ 	</div>
+ 	
       </div>
+      
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
         <button onclick="save();" type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
@@ -131,6 +137,15 @@
 		{
 		    var formURL = "<?php echo BudgetController::createUrl("AjaxSaveNewBudget"); ?>";
 		    var formData = new FormData(this);
+
+			if($('#create-project').val() == "true")				
+			{
+				if($('#Project_description').val().trim() == "")
+				{
+					$('#status-error').show();
+					return false;
+				}
+			}
 			
 		    $.ajax({
 		        url: formURL,
