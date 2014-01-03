@@ -18,7 +18,7 @@
   		</div>
   </div>
     		<div class="inlineForm">
-    		
+    		<label>Nuevo Proyecto</label>
 <table class="table">
 <tr>
 <td style="width:33%"><div>Cliente</div>
