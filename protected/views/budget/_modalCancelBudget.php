@@ -28,7 +28,7 @@
         if(note != '')
         {
         	$('#status-error').hide();
-    		$.post("<?php echo ProductController::createUrl('AjaxCancelBudget'); ?>",
+    		$.post("<?php echo BudgetController::createUrl('AjaxCancelBudget'); ?>",
     			{
     				idBudget:idBudget,
     				version:version,
