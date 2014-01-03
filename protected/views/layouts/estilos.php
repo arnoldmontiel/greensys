@@ -460,7 +460,7 @@ h2 a.superEdit{ position:absolute; top:10px; right:30px; cursor:pointer; font-si
 
 
 
-.btnAlternateView{ margin-left:25px;}
+.btnAlternateView{ margin-left:5px;}
 
 #myModalNewBudget .modal-dialog{ width:700px;}
 
@@ -525,6 +525,10 @@ padding-bottom: 20px;}
 
 
 .navTabsPencil.nav-tabs>li a{position:relative; padding-right:35px;}
+.navTabsPencil{ margin-right:340px; position:relative;}
+.navTabsPencil .pull-right{ position:absolute; right:-340px; bottom:5px;}
+.nav-tabs>li {margin-bottom:0px;}
+
 .nav-tabs>li a.tabEdit{ padding-right:5px;position:absolute;cursor:pointer; right:5px; top:-1px; background-transparent !important; border:none 0px;}
 
 
