@@ -377,11 +377,9 @@ padding-left: 5px;}
 display: inline-block;
 margin-right: 5px;}
 
-.formHasClear{width: 85%;
-display: inline-block;
-margin-right: 5px;}
+.formHasClear{padding-right:29px; position:relative;}
 
-.clearBT{color:#ccc; background: none; border:0px none; font-size:24px; vertical-align:bottom;}
+.clearBT{position:absolute; top:24px; right:15px;color:#ccc; background: none; border:0px none; font-size:24px; vertical-align:bottom;}
 .clearBT:hover{color:#bbb; background: none; border:0px none; font-size:24px; vertical-align:bottom;}
 
 input[type="file"] {
