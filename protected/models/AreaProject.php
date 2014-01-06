@@ -63,10 +63,10 @@ class AreaProject extends CActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
-			'Id_area' => 'Id Area',
-			'Id_project' => 'Id Project',
-			'centralized' => 'Centralized',
-			'description' => 'Description',
+			'Id_area' => 'Área',
+			'Id_project' => 'Project',
+			'centralized' => 'Centralizado',
+			'description' => 'Descripción',
 		);
 	}
 

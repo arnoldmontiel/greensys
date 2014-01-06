@@ -82,6 +82,20 @@ class AreaController extends GController
 			if($model->save())
 				echo json_encode($model->attributes);
 		}
+	}	
+	public function actionAjaxUpdateAreaProject()
+	{
+		if(isset($_POST['AreaProject']['Id']))
+		{
+			$model=AreaProject::model()->findByAttributes(array("Id"=>$_POST['AreaProject']['Id']));
+				
+			if(isset($_POST['AreaProject']))
+			{
+				$model->attributes=$_POST['AreaProject'];
+				if($model->save())
+					echo json_encode($model->attributes);
+			}
+		}
 	}
 	public function actionAjaxUpdate()
 	{
@@ -119,6 +133,21 @@ class AreaController extends GController
 				$field_caller=$_POST['field_caller'];
 			// Uncomment the following line if AJAX validation is needed
 			$this->renderPartial('_formModal',array(
+					'model'=>$model,
+					'field_caller'=>$field_caller
+			));
+		}
+	}
+	public function actionAjaxShowUpdateModalAreaProject()
+	{
+		if(isset($_POST['id']))
+		{
+			$model=AreaProject::model()->findByAttributes(array("Id"=>$_POST['id']));
+			$field_caller ="";
+			if($_POST['field_caller'])
+				$field_caller=$_POST['field_caller'];
+			// Uncomment the following line if AJAX validation is needed
+			$this->renderPartial('_formModalAreaProject',array(
 					'model'=>$model,
 					'field_caller'=>$field_caller
 			));

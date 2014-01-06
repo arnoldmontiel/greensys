@@ -12,7 +12,7 @@ $settings = new Settings();
         $idArea = null;
         $idAreaProject = null;
         foreach($areaProjects as $item)	{ ?>
-        <li class="<?php echo ($first?'active':'');?>"><a onclick="changeTab(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab"><?php echo $item->area->description?> </a><a class="tabEdit"><i class="fa fa-pencil"></i></a></li>
+        <li class="<?php echo ($first?'active':'');?>"><a onclick="changeTab(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab"><span id="areaProjectDescription_<?php echo $item->Id?>"><?php echo ($item->description==""?$item->area->description:$item->description);?></span> </a><a onclick="editAreaProject(<?php echo $item->Id;?>);" class="tabEdit"><i class="fa fa-pencil"></i></a></li>
 		<?php if($first)
 	        {
 	        	$idArea = $item->Id_area;
@@ -108,6 +108,25 @@ $settings = new Settings();
 </div>
 
 <script type="text/javascript">
+function editAreaProject(idAreaProject)
+{
+	$.post(
+			'<?php echo BudgetController::createUrl('area/AjaxShowUpdateModalAreaProject')?>',
+			 {
+			 	id: idAreaProject,
+			 	field_caller:'areaProjectDescription_'+idAreaProject
+			 },'json').success(
+				function(data) 
+				{ 
+					if(data!='')
+					{
+						$('#modalPlaceHolder').html(data);
+						$('#modalPlaceHolder').modal('show');					
+					}
+				}
+			).error(function(){});			
+}
+    
 function updateGridExtras()
 {
 	$.fn.yiiGridView.update('budget-item-generic');	
