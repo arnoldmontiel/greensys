@@ -71,10 +71,13 @@ button {
 }
 
 .noMargin{ margin:0px !important;}
+.block{display:block !important;}
+.inline{display:inline !important;}
+.inlineBlock{display:inline-block !important;}
 
-.align-left{ text-align:left;}
-.align-center{ text-align:center;}
-.align-right{ text-align:right;}
+.align-left{ text-align:left !important;}
+.align-center{ text-align:center !important;}
+.align-right{ text-align:right !important;}
 
 .bold{ font-weight:600;}
 .list-group{ margin-left:0px; margin-bottom:0px;}
@@ -555,17 +558,19 @@ padding-bottom: 20px;}
 
 .radioTipo{display: inline-block;
 width: 50px;
-height: 40px;
+height: 34px;
 vertical-align: middle; margin-left:0px;}
 
-.radioTipo .radio{margin-bottom:0px; margin-top:0px; text-align:left;}
+.radioTipo .radio{margin:0px; text-align:left; height:17px;}
 
 .radioTipo .radio input[type="radio"]{
-margin-left: -15px;}
+margin:0px ; margin-left: -15px;}
 
 .campoServicio{width:100%;}
 
-.usd{font-size:11px; display:inline-block;}
+.radioTipo .usd{ vertical-align:top;}
+
+.usd{font-size:11px; display:inline-block;line-height:17px; height:17px; vertical-align:middle;}
 
 
 .precioTabla{position:relative;}
@@ -584,6 +589,8 @@ margin-left: -15px;}
 
 #myModalAddProduct .inputSmall{padding:0px 2px; height:31px;}
 
+#myModalAgregarRec .formHasLabel{ width:74px;}
+#myModalAgregarRec .labelPrecio {line-height: 34px;padding: 6px;}
 
 .grid-view th{font-family:"GudeaRegular"; font-weight:600;}
 .grid-view td{font-family:"GudeaRegular";}
