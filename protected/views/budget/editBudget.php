@@ -27,8 +27,8 @@ function openUpdateBudget(idBudget, version)
 			}
 		).success(
 			function(data){
-				$('#myModalUpdateBudget').html(data);
-		   		$('#myModalUpdateBudget').modal('show');	  
+				$('#myModalFormBudget').html(data);
+		   		$('#myModalFormBudget').modal('show');	  
 			});
 		return false;
 }

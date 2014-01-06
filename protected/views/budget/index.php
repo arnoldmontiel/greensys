@@ -70,8 +70,8 @@ function openNewBudget()
 	$.post("<?php echo BudgetController::createUrl('AjaxOpenNewBudget'); ?>"
 	).success(
 		function(data){
-			$('#myModalNewBudget').html(data);
-	   		$('#myModalNewBudget').modal('show');	  
+			$('#myModalFormBudget').html(data);
+	   		$('#myModalFormBudget').modal('show');	  
 		});
 }
 

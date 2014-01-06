@@ -560,8 +560,8 @@ class BudgetController extends GController
 		$version = isset($_POST['version'])?$_POST['version']:null;
 		
 		$model = Budget::model()->findByPk(array('Id'=>$idBudget, 'version_number'=>$version));		
-	
-		echo $this->renderPartial('_modalUpdateBudget', array('model'=>$model),false,true);
+
+		echo $this->renderPartial('_modalFormBudget', array('model'=>$model),false,true);
 	}
 	
 	public function actionAjaxOpenNewBudget()
@@ -584,7 +584,7 @@ class BudgetController extends GController
 		$model = new Budget();
 		$modelProject = new Project();
 		
-		echo $this->renderPartial('_modalNewBudget', array('model'=>$model,
+		echo $this->renderPartial('_modalFormBudget', array('model'=>$model,
 															'modelProject'=>$modelProject,
 															'ddlProjects'=>$ddlProjects,
 															'ddlCustomer'=>$ddlCustomer,),false,true);
