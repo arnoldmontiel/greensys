@@ -68,6 +68,38 @@ class ProjectController extends GController
 			'model'=>$model,
 		));
 	}
+	public function actionAjaxUpdateProjectService()
+	{
+		if(isset($_POST['ProjectService']['Id_project'])&&isset($_POST['ProjectService']['Id_service']))
+		{
+			$model=ProjectService::model()->findByPk(array("Id_project"=>$_POST['ProjectService']['Id_project'],'Id_service'=>$_POST['ProjectService']['Id_service']));
+				
+			if(isset($_POST['ProjectService']))
+			{
+				$model->attributes=$_POST['ProjectService'];
+				if($model->save()){
+					echo json_encode($model->attributes);
+				}
+			}
+		}
+	}
+	
+	public function actionAjaxShowUpdateModalProjectService()
+	{
+		if(isset($_POST['Id_project'])&&isset($_POST['Id_service']))
+		{
+			$model=ProjectService::model()->findByPk(array("Id_project"=>$_POST['Id_project'],'Id_service'=>$_POST['Id_service']));
+			$field_caller ="";
+			if($_POST['field_caller'])
+				$field_caller=$_POST['field_caller'];
+			// Uncomment the following line if AJAX validation is needed
+			$this->renderPartial('_formModalProjectService',array(
+					'model'=>$model,
+					'field_caller'=>$field_caller
+			));
+		}
+	}
+	
 	public function actionAjaxCreate()
 	{
 		$model=new Project;

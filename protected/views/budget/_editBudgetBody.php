@@ -339,33 +339,3 @@ $("#addAreaToProject").click(function()
 //-->
 </script>
 
-<div id="myModalAddArea" class="modal fade in" aria-hidden="false"><!--MODAL PEQUE-->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-        <h4 class="modal-title">Agregar Area</h4>
-      </div>
-      <div class="modal-body">
-
-<form role="form">
-  <div class="form-group">
-  	    <label for="area">Area</label>    	
-<select  class="form-control"name="area">
-<option value="1">Dormitorio Principal</option>
-<option value="2">Cocina</option>
-<option value="3">Living</option>
-</select>  </div>
-</form>
-</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
-        <button type="button" id="btn-save-field" onclick="updateField(1066);" class="btn btn-primary btn-lg"><i class="fa fa-plus"></i> Agregar</button>
-      </div>
-    </div><!-- /.modal-content -->
-
-</div><!-- /.modal-dialog -->
-
-<!--END MODAL PEQUE-->
-
-</div>

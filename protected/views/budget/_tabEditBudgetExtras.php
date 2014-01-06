@@ -72,36 +72,38 @@ $settings = new Settings();
 </div> 
     <!-- /.tab1 -->
 <div class="tab-pane" id="tabDescripciones">
-<table class="table table-striped table-bordered tablaIndividual">
-<thead>
-<tr>
-<th>Servicio</th>
-<th>Descripcion</th>
-<th style="text-align:center;">Acciones</th>
-</tr></thead>
-<tbody>
-<tr>
-<td>Home Theater</td>
-<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet placerat volutpat....</td>
-<td style="text-align:center;">
-<a class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModalEditarDesc"><i class="fa fa-pencil"></i> </a>
-</td>
-</tr>
-<tr>
-<td>Multiroom Audio</td>
-<td>Nam sit amet dolor at nisi dapibus lobortis. Curabitur elementum dolor a turpis...</td>
-<td style="text-align:center;">
-<a class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModalEditarDesc"><i class="fa fa-pencil"></i> </a>
-</td>
-</tr>
-<tr>
-<td>Control de Iluminaci&oacute;n</td>
-<td>Donec nec turpis</td>
-<td style="text-align:center;"> 
-<a class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModalEditarDesc"><i class="fa fa-pencil"></i> </a>
-</td>
-</tr></tbody>
-</table>
+<?php 
+$projectService = new ProjectService();
+$projectService->Id_project = $model->Id_project;
+	$this->widget('zii.widgets.grid.CGridView', array(
+					'id'=>'project-service-grid',
+					'dataProvider'=>$projectService->search(),
+					'summaryText'=>'',
+					'selectableRows' => 0,
+					'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
+					'columns'=>array(
+							array(
+									'header'=>'Servicios',
+									'value'=>'$data->service->description',
+									'type'=>'raw'
+							),					
+							array(
+									'header'=>'Descripción',
+									'value'=>'$data->long_description==""?$data->service->long_description:$data->long_description;',
+									'type'=>'raw'
+							),
+							array(
+									'name'=>'Acciones',
+									'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"editProjectService(".$data->Id_project.",".$data->Id_service.");\" ><i class=\"fa fa-pencil\"></i></button>"',
+									'type'=>'raw',
+									'htmlOptions'=>array("style"=>"text-align:center;"),
+									'headerHtmlOptions'=>array("style"=>"text-align:center;"),
+							),
+							),
+					));
+        ?>
+
+
 </div> 
     <!-- /.tab2 -->
 </div>
@@ -133,3 +135,25 @@ $settings = new Settings();
       </table>
   </div>
   </div>
+ <script type="text/javascript">
+ function editProjectService(idProject,idService)
+ {
+ 	$.post(
+ 			'<?php echo BudgetController::createUrl('project/AjaxShowUpdateModalProjectService')?>',
+ 			 {
+ 			 	Id_project: idProject,
+ 			 	Id_service: idService,
+ 			 	field_caller:'project-service-grid'
+ 			 },'json').success(
+ 				function(data) 
+ 				{ 
+ 					if(data!='')
+ 					{
+ 						$('#modalPlaceHolder').html(data);
+ 						$('#modalPlaceHolder').modal('show');					
+ 					}
+ 				}
+ 			).error(function(){});			
+ }
+  
+ </script> 

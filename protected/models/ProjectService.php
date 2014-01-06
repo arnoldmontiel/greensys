@@ -43,6 +43,8 @@ class ProjectService extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'project' => array(self::BELONGS_TO, 'Project', 'Id_project'),
+			'service' => array(self::BELONGS_TO, 'Service', 'Id_service'),
 		);
 	}
 
@@ -54,7 +56,7 @@ class ProjectService extends CActiveRecord
 		return array(
 			'Id_project' => 'Project',
 			'Id_service' => 'Service',
-			'long_description' => 'Description',
+			'long_description' => 'Descripción',
 		);
 	}
 

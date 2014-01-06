@@ -774,6 +774,7 @@ class BudgetController extends GController
 		if(isset($idArea))
 			$modelProducts->budget_area = $idArea;
 		
+		$this->GenerateProjectServiceRelation($model->project);
 		$this->render('editBudget',array(
 					'model'=>$model,
 					'modelProduct'=>$modelProduct,
@@ -791,6 +792,22 @@ class BudgetController extends GController
 // 					'areaProjects'=>$areaProjects,
 // 					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
 // 		));
+	}
+	public function GenerateProjectServiceRelation($modelProject)
+	{
+		$services = Service::model()->findAll();
+		foreach ($services as $service)
+		{
+			$projectService = ProjectService::model()->findByAttributes(array('Id_project'=>$modelProject->Id,'Id_service'=>$service->Id));
+			if(!isset($projectService))
+			{
+				$projectService = new ProjectService();
+				$projectService->Id_service = $service->Id;
+				$projectService->Id_project = $modelProject->Id;
+				$projectService->long_description = $service->long_description;
+				$projectService->save();
+			}							
+		}		
 	}
 	public function actionAjaxFillDDPriceSelector()
 	{

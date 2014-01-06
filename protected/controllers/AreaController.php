@@ -92,8 +92,13 @@ class AreaController extends GController
 			if(isset($_POST['AreaProject']))
 			{
 				$model->attributes=$_POST['AreaProject'];
-				if($model->save())
+				if($model->save()){
+					if($model->description =="")
+					{
+						$model->description =$model->area->description;
+					}
 					echo json_encode($model->attributes);
+				}
 			}
 		}
 	}
