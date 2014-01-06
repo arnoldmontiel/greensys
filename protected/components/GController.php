@@ -78,6 +78,11 @@ class GController extends SBaseController
 			$this->menu[]=array('label'=>'Actualizar', 'url'=>array('update', 'id'=>$_GET['id']));
 			$this->menu[]=array('label'=>'Ver', 'url'=>array('view', 'id'=>$_GET['id']));
 		}
+		
+		if( Yii::app()->request->isAjaxRequest ) {
+			Yii::app()->clientScript->scriptMap['jquery.js'] = false;
+		}
+		
 		return parent::beforeAction($action);
 	}	
 }
