@@ -66,8 +66,8 @@ class Service extends CActiveRecord
 	{
 		return array(
 			'Id' => 'ID',
-			'description' => 'Description',
-			'long_description' => 'Long description',
+			'description' => 'Servicio',
+			'long_description' => 'Descripción',
 		);
 	}
 
@@ -84,6 +84,7 @@ class Service extends CActiveRecord
 
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('description',$this->description,true);
+		$criteria->order="description";		
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

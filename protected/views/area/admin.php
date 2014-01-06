@@ -52,7 +52,7 @@
 $('#createArea').click(
 		function(){
 			$.post(
-			'<?php echo ProductController::createUrl('area/AjaxShowCreateModal')?>',{field_caller:'area-grid'}).success(
+			'<?php echo AreaController::createUrl('area/AjaxShowCreateModal')?>',{field_caller:'area-grid'}).success(
 					function(data)
 					{
 					if(data!=null)
@@ -67,10 +67,10 @@ $('#createArea').click(
 		);
 function deleteArea(id)
 {
-	if(confirm("¿Seguro desea eliminar la marca?"))
+	if(confirm("¿Seguro desea eliminar el área?"))
 	{
 		$.post(
-				'<?php echo ProductController::createUrl('area/AjaxDelete')?>',{id:id}).success(
+				'<?php echo AreaController::createUrl('area/AjaxDelete')?>',{id:id}).success(
 						function(data)
 						{
 							$.fn.yiiGridView.update('area-grid');
@@ -81,7 +81,7 @@ function deleteArea(id)
 function updateArea(id)
 {
 	$.post(
-			'<?php echo ProductController::createUrl('area/AjaxShowUpdateModal')?>',{id:id,field_caller:'area-grid'}).success(
+			'<?php echo AreaController::createUrl('area/AjaxShowUpdateModal')?>',{id:id,field_caller:'area-grid'}).success(
 					function(data)
 					{
 					if(data!=null)
