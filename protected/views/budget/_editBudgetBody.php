@@ -82,30 +82,6 @@ $settings = new Settings();
   <!-- /.row --> 
   
   
-  <div class="modal fade in" id="myModalEditarDesc" aria-hidden="false">
-  <div class="modal-dialog">
-  <div class="modal-content">
-  <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-        <h4 class="modal-title">Editar Descripci&oacute;n de Servicio</h4>
-      </div>
-      <div class="modal-body">
-
-<form role="form">
-  <div class="form-group">
-    <label for="campoDealerCost">Home Theater</label>
-        <textarea class="form-control"  rows="6" id="Product_output_terminals">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet placerat volutpat. Vestibulum aliquet orci sed arcu imperdiet convallis. Vivamus iaculis et leo cursus ornare. Nullam tristique adipiscing volutpat. Nulla in purus eget felis aliquam vulputate. Nunc vitae egestas diam. 
- </textarea>
-  </div>
-</form>
-</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div>
 
 <script type="text/javascript">
 function editAreaProject(idAreaProject)

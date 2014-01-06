@@ -1,8 +1,8 @@
 <?php 
 $settings = new Settings();
 ?>
-<div class="row contenedorPresu">
-    <div class="col-sm-6">
+<div class="row contenedorPresu noBorder">
+    <div class="col-sm-12">
       <div class="tituloFinalPresu">Extra</div>
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tabRecargos" data-toggle="tab">Recargos</a></li>
@@ -72,7 +72,8 @@ $settings = new Settings();
 </div> 
     <!-- /.tab1 -->
 <div class="tab-pane" id="tabDescripciones">
-<?php 
+
+  <?php 
 $projectService = new ProjectService();
 $projectService->Id_project = $model->Id_project;
 	$this->widget('zii.widgets.grid.CGridView', array(
@@ -89,7 +90,7 @@ $projectService->Id_project = $model->Id_project;
 							),					
 							array(
 									'header'=>'Descripción',
-									'value'=>'$data->long_description==""?$data->service->long_description:$data->long_description;',
+									'value'=>'GreenHelper::cutString($data->long_description==""?$data->service->long_description:$data->long_description,130)',
 									'type'=>'raw'
 							),
 							array(
@@ -102,24 +103,24 @@ $projectService->Id_project = $model->Id_project;
 							),
 					));
         ?>
-
-
 </div> 
     <!-- /.tab2 -->
 </div>
     <!-- /.tab-content -->
       </div>
-    <!-- /.col-sm-6 -->
-  <div class="col-sm-6">
+    <!-- /.col-sm-12 -->
   </div>
+  <div class="row panelPresuFinal">
+  <div class="col-sm-6"></div>
   <div class="col-sm-6">
   <div class="tituloFinalPresu">Total</div>
-<table class="table tablePresuTotal">
+  <button type="button" class="btn btn-primary btn-sm agregarImp" data-toggle="modal" data-target="#myModalAgregarImp"><i class="fa fa-plus"></i> Agregar Impuesto</button>
+<table class="table table-striped tablePresuTotal">
         <tbody>
           <tr>
             <td width="20%" valign="middle"  width="20%">Subtotal</td>
             <td width="30%">&nbsp;</td>
-            <td valign="middle"  align="right" class="bold"><div class="usd"><?php echo $settings->getCurrencyShortDescription();?></div><span id="totals_total_price"><?php echo " ".$model->totalPrice?></span></td>
+            <td valign="middle"  align="right" class="bold"><div class=" label label-default label-subtotal"><div class="usd"><?php echo $settings->getCurrencyShortDescription();?></div><span id="totals_total_price"><?php echo " ".$model->totalPrice?></span></div></td>
           </tr>
           <tr>
             <td valign="middle" >Discount</td>
@@ -129,7 +130,7 @@ $projectService->Id_project = $model->Id_project;
           <tr class="superTotal">
             <td valign="middle" >Total</td>
             <td>&nbsp;</td>
-            <td valign="middle"  align="right" class="bold"><?php echo $settings->getCurrencyShortDescription()." "?><span id="totals_price_w_discount"><?php echo $model->TotalPriceWithDiscount;?> </span></td>
+            <td valign="middle"  align="right" class="bold"><div class=" label label-primary label-total"><?php echo $settings->getCurrencyShortDescription()." "?><span id="totals_price_w_discount"><?php echo $model->TotalPriceWithDiscount;?> </span></div></td>
           </tr>
         </tbody>
       </table>

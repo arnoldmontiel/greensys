@@ -87,7 +87,7 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 					),
 		array(
 							'name'=>'Acciones',
-							'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"deleteBudgetItem(".$data->Id.",'.$areaProject->Id.','.$areaProject->Id_area.');\" ><i class=\"fa fa-trash-o\"></i></button>"',
+							'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"deleteBudgetItem(".$data->Id.",'.$areaProject->Id.','.$areaProject->Id_area.');\" ><i class=\"fa fa-trash-o\"></i> Borrar</button>"',
 							'type'=>'raw',
 							'htmlOptions'=>array("style"=>"text-align:center;"),
 							'headerHtmlOptions'=>array("style"=>"text-align:center;"),

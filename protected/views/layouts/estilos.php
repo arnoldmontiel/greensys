@@ -71,6 +71,7 @@ button {
 }
 
 .noMargin{ margin:0px !important;}
+.noBorder{ border:0px none !important;}
 .block{display:block !important;}
 .inline{display:inline !important;}
 .inlineBlock{display:inline-block !important;}
@@ -262,8 +263,8 @@ margin-bottom:10px;}
 
 .dropdown-menu{ text-align:left;}
 
-
 .grid-view {padding: 0px; margin-bottom:50px;}
+.contenedorPresu .grid-view{ margin-bottom:0px;} 
 .grid-view .summary{ display:none;}
 
 .grid-view  input{
@@ -417,6 +418,9 @@ padding: 6px 8px;
 
 #screenProductos .table.tablaIndividual { margin-bottom:5px;}
 
+.contenedorPresu .table.tablaIndividual{ margin-bottom:10px;} 
+
+
 .buttonsTableProd{min-width:158px;}
 .buttonsTablePres{min-width:380px;}
 
@@ -514,20 +518,31 @@ color: #333;
 text-align: left;
 margin: 0px;
 line-height: auto;
-padding-bottom: 20px;}
+padding-bottom: 20px; position:relative;}
+
+.agregarImp{ position:absolute; right:10px; top:0px;}
+
 .totalPresupuesto{ background-color:#eee; height:120px; margin-top:20px; margin-bottom:30px;}
 
-.tablePresuTotal{ background-color:white;}
+.tablePresuTotal{ background-color:;}
 .tablePresuTotal td{ line-height:20px; vertical-align:middle !important;}
 .superTotal{ font-size:20px;}
 
 .panelPresu{ background-color:rgba(255,255,255,0.5); border:none; margin-bottom:2px;}
-.panelPresu{ padding-bottom:20px;   border-bottom-right-radius: 0px;  border-bottom-left-radius: 0px;
+
+.panelPresu{ background-color:rgba(255,255,255,0.7); border:none; margin-bottom:0px; border:0px none;}
+
+.panelPresu{ padding-bottom:20px;  border-bottom:2px dotted #ccc;  border-radius:0px;
 }
 
 .contenedorPresu{ background-color:rgba(255,255,255,0.5); padding:0px; margin:0px;  padding-top:20px; margin-bottom:2px;}
 
-.contenedorPresu .col-sm-12{ padding-right:10px;padding-left:10px;}
+.contenedorPresu{ background-color:rgba(255,255,255,0.4); padding:0px; margin:0px; border-bottom:2px solid #ccc; padding-top:10px; padding-bottom:20px; margin-bottom:0px;}
+
+.contenedorPresu .col-sm-12{ padding-right:10px;padding-left:10px;  }
+
+.panelPresuFinal {  background-color:rgba(255,255,255,0.7); margin:0px 0px; padding-top:20px; border-top:2px dotted #ccc; }
+
 
 .panel-body .tablaDatosPanel{ margin-top:10px; margin-bottom:10px !important;}
 
@@ -558,6 +573,10 @@ padding-bottom: 20px;}
 .bloqueDescuento{min-width:110px; padding-top:1px;}
 .bloqueDescuento input{ margin-right:0px;}
 .labelPrecio{ font-size:13px;}
+
+.label-total{font-size:20px;}
+.label-subtotal{font-size:16px;}
+.label-subtotal .usd{font-size:16px; vertical-align:baseline;}
 
 .bloquePrecioRec{min-width:65px;}
 
