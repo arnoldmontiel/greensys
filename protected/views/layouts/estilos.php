@@ -377,6 +377,13 @@ padding-left: 5px;}
 display: inline-block;
 margin-right: 5px;}
 
+.formHasClear{width: 85%;
+display: inline-block;
+margin-right: 5px;}
+
+.clearBT{color:#ccc; background: none; border:0px none; font-size:24px; vertical-align:bottom;}
+.clearBT:hover{color:#bbb; background: none; border:0px none; font-size:24px; vertical-align:bottom;}
+
 input[type="file"] {
 width:100%;
 }

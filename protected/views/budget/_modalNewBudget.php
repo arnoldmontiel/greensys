@@ -2,34 +2,24 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><?php echo $model->isNewRecord ? 'Crear Presupuesto' : 'Actualizar Presupuesto'; ?></h4>
+        <h4 class="modal-title">Crear Presupuesto</h4>
       </div>
       <div class="modal-body">
 
 <form id="form-new-budget" role="form">
 	<?php echo CHtml::hiddenField("save-and-continue",false,array('id'=>'save-and-continue'));?>
 	<?php echo CHtml::hiddenField("create-project",false,array('id'=>'create-project'));?>
-	<?php echo CHtml::activeHiddenField($model, 'Id');?>
-	<?php echo CHtml::activeHiddenField($model, 'version_number');?>
   <div class="form-group">
     <?php echo CHtml::activeLabel($model, 'Id_project');?>
     	<div class="combined">
-    	<?php 
-    		if($model->isNewRecord) 
-    		{
-    			echo CHtml::activeDropDownList($model, 'Id_project',
-    					CHtml::listData($ddlProjects, 'Id', 'LongDescription'),array('class'=>'form-control'));
-				echo "<button onclick='openNewProject();' id='btn-new-project' type='button' class='btn btn-default pull-right'><i class='fa fa-plus'></i> Nuevo</button>";
-    		}
-    		else 
-    		{
-    			echo "<input type='text' disabled='disabled' class='form-control' value='". $model->project->fullDescription."'";
-    		}	
-    	?>
+    	<?php
+    		echo CHtml::activeDropDownList($model, 'Id_project',
+    			CHtml::listData($ddlProjects, 'Id', 'LongDescription'),array('class'=>'form-control'));
+		?>
+    		<button onclick="openNewProject();" id="btn-new-project" type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Nuevo</button>
   		</div>
   </div>
 
-  <?php if($model->isNewRecord):?>
 <div id="new-project" class="inlineForm" style="display:none">
 <label>Nuevo Proyecto</label>
 	<table class="table">
@@ -48,7 +38,6 @@
 		</tr>
 	</table>
 </div>
-<?php endif;?>
 
   <div class="form-group">    
     <?php 
@@ -63,7 +52,7 @@
     ?>    
   </div>
   <div class="row">
-  <div class="form-group col-sm-6">    
+  <div class="form-group col-sm-6">      
 	<?php 
  		echo CHtml::activeLabel($model, 'date_estimated_inicialization');
  		$this->widget('zii.widgets.jui.CJuiDatePicker', array(
@@ -76,12 +65,10 @@
 			 'onClose' => 'js:function (selectedDate) { $("#Budget_date_estimated_finalization").datepicker("option", "minDate", selectedDate); }',
 	     ),
 	     'htmlOptions'=>array(
-			'class'=>'form-control formHasClear',
+			'class'=>'form-control',
 	    ),
 		));
 	?>
-	  <button class="clearBT"><i class="fa fa-times-circle"></i></button>   
-	
   </div>
   <div class="form-group col-sm-6">
 	<?php 
@@ -95,11 +82,10 @@
 	         'showAnim'=>'fold',
 	     ),
 	     'htmlOptions'=>array(
-			'class'=>'form-control formHasClear',
+			'class'=>'form-control',
 	    ),
 		));
 	?>
-	  <button class="clearBT"><i class="fa fa-times-circle"></i></button>  
   </div>
   <div class="form-group col-sm-6 noMargin">
 	<?php 
@@ -114,11 +100,10 @@
 			 'onClose' => 'js:function (selectedDate) { $("#Budget_date_finalization").datepicker("option", "minDate", selectedDate); }',
 	     ),
 	     'htmlOptions'=>array(
-			'class'=>'form-control formHasClear',
+			'class'=>'form-control',
 	    ),
 		));
 	?>
-	  <button class="clearBT"><i class="fa fa-times-circle"></i></button>  
   </div>
   <div class="form-group col-sm-6 noMargin">    
 	<?php 
@@ -132,11 +117,10 @@
 	         'showAnim'=>'fold',
 	     ),
 	     'htmlOptions'=>array(
-			'class'=>'form-control formHasClear',
+			'class'=>'form-control',
 	    ),
 		));
 	?>
-	  <button class="clearBT"><i class="fa fa-times-circle"></i></button>  
   </div>
   </div>
 </form>
@@ -150,31 +134,24 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
         <button onclick="save();" type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
-        <?php if($model->isNewRecord):?>
         <a onclick="saveAndContinue();" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar y Agregar Prods.</a>
-        <?php endif;?>
       </div>
     </div><!-- /.modal-content -->
 <script type="text/javascript">
 
 		$("#form-new-budget").submit(function(e)
 		{
-			<?php if($model->isNewRecord):?>
-			    var formURL = "<?php echo BudgetController::createUrl("AjaxSaveNewBudget"); ?>";
-			    var formData = new FormData(this);
-	
-				if($('#create-project').val() == "true")				
+		    var formURL = "<?php echo BudgetController::createUrl("AjaxSaveNewBudget"); ?>";
+		    var formData = new FormData(this);
+
+			if($('#create-project').val() == "true")				
+			{
+				if($('#Project_description').val().trim() == "")
 				{
-					if($('#Project_description').val().trim() == "")
-					{
-						$('#status-error').show();
-						return false;
-					}
+					$('#status-error').show();
+					return false;
 				}
-			<?php else:?>
-				var formURL = "<?php echo BudgetController::createUrl("AjaxSaveUpdatedBudget"); ?>";
-			    var formData = new FormData(this);
-			<?php endif;?>
+			}
 			
 		    $.ajax({
 		        url: formURL,
@@ -186,34 +163,22 @@
 		        processData:false,
 		    success: function(data, textStatus, jqXHR)
 		    {		
-		    	<?php if($model->isNewRecord):?>
-			    	var obj = jQuery.parseJSON(data);				
-					if(obj != null)
+		    	var obj = jQuery.parseJSON(data);				
+				if(obj != null)
+				{
+					$('#tab-open').children().text(obj.openQty);
+
+					if($('#save-and-continue').val() == "true")
 					{
-						$('#tab-open').children().text(obj.openQty);
-	
-						if($('#save-and-continue').val() == "true")
-						{
-							var params = "&id="+obj.idBudget+"&version="+obj.version;
-				    		window.location = "<?php echo BudgetController::createUrl("addItem")?>" + params;
-				    		return false;
-						}	
-					}
-					    									    	
-			    	
-			    	$.fn.yiiGridView.update("budget-grid-open");
-			    	$('#myModalFormBudget').trigger('click');
-			    <?php else:?>
-				    var obj = jQuery.parseJSON(data);				
-					if(obj != null)
-					{
-						$('#header-budget-description').text(obj.description);
-						$('#header-budget-version-number').text(obj.version_number);
-						$('#header-budget-date-est-init').text(obj.date_estimated_inicialization);
-						$('#header-budget-date-est-fin').text(obj.date_estimated_finalization);
-					}
-			    	$('#myModalFormBudget').trigger('click');
-			    <?php endif;?>
+						var params = "&id="+obj.idBudget+"&version="+obj.version;
+			    		window.location = "<?php echo BudgetController::createUrl("addItem")?>" + params;
+			    		return false;
+					}	
+				}
+				    									    	
+		    	
+		    	$.fn.yiiGridView.update("budget-grid-open");
+		    	$('#myModalNewBudget').trigger('click');
 		    	
 		    },
 		     error: function(jqXHR, textStatus, errorThrown)
