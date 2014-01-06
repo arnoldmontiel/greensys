@@ -73,6 +73,7 @@
  		'attribute'=>'date_estimated_inicialization',
  		'options'=>array(
 	         'showAnim'=>'fold',
+			 'buttonImageOnly'=>true,
 			 'onClose' => 'js:function (selectedDate) { $("#Budget_date_estimated_finalization").datepicker("option", "minDate", selectedDate); }',
 	     ),
 	     'htmlOptions'=>array(
@@ -80,7 +81,7 @@
 	    ),
 		));
 	?>
-	  <button class="clearBT"><i class="fa fa-times-circle"></i></button>   
+	  <button onclick="$('#Budget_date_estimated_inicialization').val('');return false;" class="clearBT"><i class="fa fa-times-circle"></i></button>   
 	
   </div>
   <div class="form-group col-sm-6">
@@ -93,13 +94,14 @@
  		'attribute'=>'date_estimated_finalization',
  		'options'=>array(
 	         'showAnim'=>'fold',
+			 'buttonImageOnly'=>true,
 	     ),
 	     'htmlOptions'=>array(
 			'class'=>'form-control formHasClear',
 	    ),
 		));
 	?>
-	  <button class="clearBT"><i class="fa fa-times-circle"></i></button>  
+	  <button onclick="$('#Budget_date_estimated_finalization').val('');return false;" class="clearBT"><i class="fa fa-times-circle"></i></button>  
   </div>
   <div class="form-group col-sm-6 noMargin">
 	<?php 
@@ -111,6 +113,7 @@
  		'attribute'=>'date_inicialization',
  		'options'=>array(
 	         'showAnim'=>'fold',
+			 'buttonImageOnly'=>true,
 			 'onClose' => 'js:function (selectedDate) { $("#Budget_date_finalization").datepicker("option", "minDate", selectedDate); }',
 	     ),
 	     'htmlOptions'=>array(
@@ -118,7 +121,7 @@
 	    ),
 		));
 	?>
-	  <button class="clearBT"><i class="fa fa-times-circle"></i></button>  
+	  <button onclick="$('#Budget_date_inicialization').val('');return false;" class="clearBT"><i class="fa fa-times-circle"></i></button>  
   </div>
   <div class="form-group col-sm-6 noMargin">    
 	<?php 
@@ -130,13 +133,14 @@
  		'attribute'=>'date_finalization',
  		'options'=>array(
 	         'showAnim'=>'fold',
+			 'buttonImageOnly'=>true,
 	     ),
 	     'htmlOptions'=>array(
 			'class'=>'form-control formHasClear',
 	    ),
 		));
 	?>
-	  <button class="clearBT"><i class="fa fa-times-circle"></i></button>  
+	  <button onclick="$('#Budget_date_finalization').val('');return false;" class="clearBT"><i class="fa fa-times-circle"></i></button>  
   </div>
   </div>
 </form>
