@@ -147,7 +147,19 @@ class BudgetController extends GController
 			'modelProject'=>$modelProject,
 		));
 	}
-
+	
+	public function actionAjaxShowCreateModalBudgetItem()
+	{
+		$model=new Area;
+		$field_caller ="";
+		if($_POST['field_caller'])
+			$field_caller=$_POST['field_caller'];
+		// Uncomment the following line if AJAX validation is needed
+		$this->renderPartial('_modalAddBudgetItem',array(
+				'model'=>$model,
+				'field_caller'=>$field_caller
+		));
+	}
 	public function actionAjaxDeleteBudgetItem()
 	{
 		if(Yii::app()->request->isPostRequest)

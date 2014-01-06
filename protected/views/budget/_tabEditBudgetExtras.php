@@ -5,9 +5,9 @@ $settings = new Settings();
     <div class="col-sm-12">
       <div class="tituloFinalPresu">Extra</div>
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#tabRecargos" data-toggle="tab">Recargos</a></li>
-        <li><a href="#tabDescripciones" data-toggle="tab">Descripci&oacute;n de Servicios</a></li>
-        <li class="pull-right"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarRec"><i class="fa fa-plus"></i> Agregar</button></li>
+        <li class="active"><a id="tabExtraItems" href="#tabRecargos" data-toggle="tab">Recargos</a></li>
+        <li><a id="tabServices" href="#tabDescripciones" data-toggle="tab">Descripci&oacute;n de Servicios</a></li>
+        <li class="pull-right"><button id="addExtraItem" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarRec" onclick="addExtraItem(<?php echo $model->Id?>);"><i class="fa fa-plus"></i> Agregar</button></li>
         </ul>
         <div class="tab-content">
         <div class="tab-pane active" id="tabRecargos">
@@ -137,6 +137,26 @@ $projectService->Id_project = $model->Id_project;
   </div>
   </div>
  <script type="text/javascript">
+  
+ function addExtraItem(idBudget)
+ {
+ 	$.post(
+ 			'<?php echo BudgetController::createUrl('budget/AjaxShowCreateModalBudgetItem')?>',
+ 			 {
+ 			 	id: idBudget,
+ 			 	field_caller:'budget-item-generic'
+ 			 },'json').success(
+ 				function(data) 
+ 				{ 
+ 					if(data!='')
+ 					{
+ 						$('#modalPlaceHolder').html(data);
+ 						$('#modalPlaceHolder').modal('show');					
+ 					}
+ 				}
+ 			).error(function(){});			
+ }
+  
  function editProjectService(idProject,idService)
  {
  	$.post(
@@ -159,7 +179,6 @@ $projectService->Id_project = $model->Id_project;
 
  $("#tabServices").click(function()
  {
-	 
 	 $("#addExtraItem").hide();
  });
  $("#tabExtraItems").click(function()
