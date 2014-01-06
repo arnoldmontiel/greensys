@@ -5,9 +5,9 @@ $settings = new Settings();
     <div class="col-sm-6">
       <div class="tituloFinalPresu">Extra</div>
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#tabRecargos" data-toggle="tab">Recargos</a></li>
-        <li><a href="#tabDescripciones" data-toggle="tab">Descripci&oacute;n de Servicios</a></li>
-        <li class="pull-right"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarDesc"><i class="fa fa-plus"></i> Agregar</button></li>
+        <li class="active"><a id="tabExtraItems" href="#tabRecargos" data-toggle="tab">Recargos</a></li>
+        <li><a id="tabServices" href="#tabDescripciones" data-toggle="tab">Descripci&oacute;n de Servicios</a></li>
+        <li class="pull-right"><button id="addExtraItem" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarDesc"><i class="fa fa-plus"></i> Agregar</button></li>
         </ul>
         <div class="tab-content">
         <div class="tab-pane active" id="tabRecargos">
@@ -155,5 +155,14 @@ $projectService->Id_project = $model->Id_project;
  				}
  			).error(function(){});			
  }
-  
+
+ $("#tabServices").click(function()
+ {
+	 
+	 $("#addExtraItem").hide();
+ });
+ $("#tabExtraItems").click(function()
+ {
+	 $("#addExtraItem").show();
+ });
  </script> 
