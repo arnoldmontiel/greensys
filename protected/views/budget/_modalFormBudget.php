@@ -2,11 +2,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <?php if($model->isNewRecord):?>
-        	<h4 class="modal-title">Crear Presupuesto</h4>
-        <?php else:?>
-        	<h4 class="modal-title">Actualizar Presupuesto</h4>
-        <?php endif;?>
+        <h4 class="modal-title"><?php echo $model->isNewRecord ? 'Crear Presupuesto' : 'Actualizar Presupuesto'; ?></h4>
       </div>
       <div class="modal-body">
 
