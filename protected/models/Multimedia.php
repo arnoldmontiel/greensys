@@ -36,13 +36,10 @@ class Multimedia extends CActiveRecord
 			if($ext=="jpg"||$ext=="png"||$ext=="bmp"||$ext=="gif")
 			{
 				//save original
-	
-				move_uploaded_file($this->uploadedFile["tmp_name"],"images/" . $this->uploadedFile["name"]);
-	
 				$folder = "images/";
-	
-				$filePath = $folder . $this->uploadedFile["name"];
-	
+				$filePath = $folder .'original_'. $this->uploadedFile["name"];
+				move_uploaded_file($this->uploadedFile["tmp_name"], $filePath);
+
 				$fileNameWoExt = str_replace('.'.$ext,'',$this->uploadedFile["name"]);
 				
 				//generate medium file version
