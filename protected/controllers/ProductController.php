@@ -1276,8 +1276,9 @@ class ProductController extends GController
 			$ext = end(explode(".", $modelMultimedia->file_name));
 			$fileNameWoExt = str_replace('.'.$ext,'',$modelMultimedia->file_name);
 			
-			$brandDesc = reset(explode("_", $fileNameWoExt));
-			$productModel = end(explode("_", $fileNameWoExt));
+			$exploded = explode("_", $fileNameWoExt);
+			$brandDesc = reset($exploded);
+			$productModel = end($exploded);
 			
 			$criteria = new CDbCriteria();
 			$criteria->join = 'INNER JOIN brand b on (b.Id = t.Id_brand)';
