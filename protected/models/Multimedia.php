@@ -145,7 +145,8 @@ class Multimedia extends CActiveRecord
 		ob_start();
 		ob_implicit_flush(false);
 	
-		imagejpeg($new, '', 100);
+		if(isset($new))
+			imagejpeg($new, '', 100);
 	
 		return array('size'=>$newwidth*$newheight, 'content'=> ob_get_clean(),'width'=>$newwidth,'height'=>$newheight);
 	}
