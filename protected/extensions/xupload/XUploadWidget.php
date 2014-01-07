@@ -110,7 +110,8 @@ class XUploadWidget extends CJuiInputWidget {
 		if($this->fromGreen)
 		{
 			echo CHtml::tag("button", array('class'=>'btn btn--primary'), "Upload", true);
-			echo CHtml::tag("div", array('class'=>'uploadButton'), "Upload file", true);
+			echo CHtml::tag("div", array('class'=>'divSubir'), "Hace click para subir archivos", true);
+			echo CHtml::tag("div", array('class'=>'divArrastra'), "o Arrastr&aacute; dentro del area", true);
 		}
 		else 
 		{
