@@ -678,6 +678,13 @@ font-family: 'GudeaRegular', Arial, sans-serif;}
 right: 14px;
 top: 2px;}
 
+
+.tab-pane .superBoton2{
+	position: absolute;
+right: 195px;
+top: 2px;}
+
+
 .downloadLink{ cursor:pointer;}
 .downloadLink i{ margin-right:5px;}
 
