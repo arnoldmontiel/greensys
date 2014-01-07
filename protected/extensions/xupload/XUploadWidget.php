@@ -175,10 +175,10 @@ class XUploadWidget extends CJuiInputWidget {
 		{
 			$js = <<<EOD
 js:function (files, index) {
-	return $('<tr id="'+files.id+'" class="odd"><td style="width:25%;">' + files.name + '<\/td>' +
-    	'<td style="width:25%;">'+files.brand+'</td>' +
-		'<td style="width:25%;">'+files.model+'</td>' +
-		'<td class="align-right file_upload_cancel" style="width:25%;">' + 
+	return $('<tr id="'+files.id+'"><td class="imageUploadCont">' + files.name + '<\/td>' +
+    	'<td>'+files.brand+'</td>' +
+		'<td>'+files.model+'</td>' +
+		'<td class="align-right file_upload_cancel">' + 
 			'<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td><\/tr>');
         
 }

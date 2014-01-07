@@ -61,6 +61,7 @@ $this->widget('ext.xupload.XUploadWidget', array(
 ?>
 
 
+
 <div class="row">
 <div class="col-sm-12">
 	<?php echo CHtml::button('Listo',array('class'=>'wall-action-submit-btn','id'=>'btnReady',));?>

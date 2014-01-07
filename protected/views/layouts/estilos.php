@@ -651,7 +651,11 @@ width:auto; padding:50px; border-radius:0px; display:block;margin-right:20px;mar
 
 .xupload-form div{color:#666;}
 
-.tablaUploadImagenes img{width:100%;}
+#files{margin-top:20px;}
+
+.imageUploadCont{width:120px;}
+
+.tablaUploadImagenes .imageUploadCont img{width:100%;}
 
 /* ------ END UPLOAD IMAGENES PRODUCTO ------- */
 
