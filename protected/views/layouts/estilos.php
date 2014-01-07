@@ -613,8 +613,8 @@ margin:0px ; margin-left: -15px;}
 
 #myModalAddProduct .inputSmall{padding:0px 2px; height:31px;}
 
-#myModalAgregarRec .formHasLabel{ width:74px;}
-#myModalAgregarRec .labelPrecio {line-height: 34px;padding: 6px;}
+#modalPlaceHolder .formHasLabel{ width:74px;}
+#modalPlaceHolder .labelPrecio {line-height: 20px; font-size:14px; margin-top:4px; display:inline-block;}
 
 .grid-view th{font-family:"GudeaRegular"; font-weight:600;}
 .grid-view td{font-family:"GudeaRegular";}
@@ -642,6 +642,15 @@ font-family: "GudeaRegular";
 .liButtonAdd{ line-height:35px; padding-left:10px;}
 
 /* ------ END CREAR PRESU ------- */
+
+/* ------ UPLOAD IMAGENES PRODUCTO ------- */
+.xupload-form{ background-color:rgba(255,255,255,0.5);  font-size:16px;border: 3px dotted #eee; line-height:60px; height:250px;padding:50px; border-radius:0px; display:block; width:800px; margin-right:20px;margin-left: 20px; margin:auto; margin-top:20px;}
+
+.xupload-form.file_upload_highlight{background-color:white; font-size:16px;}
+
+.xupload-form div{color:#666;}
+
+/* ------ END UPLOAD IMAGENES PRODUCTO ------- */
 
 
 /* ----- DISPOSITIVOS --------*/
