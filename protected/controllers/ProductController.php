@@ -1273,7 +1273,8 @@ class ProductController extends GController
 		{
 			$id = $modelMultimedia->Id;
 			
-			$ext = end(explode(".", $modelMultimedia->file_name));
+			$exploded = explode(".", $modelMultimedia->file_name);
+			$ext = end($exploded);
 			$fileNameWoExt = str_replace('.'.$ext,'',$modelMultimedia->file_name);
 			
 			$exploded = explode("_", $fileNameWoExt);
