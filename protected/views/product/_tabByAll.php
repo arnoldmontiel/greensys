@@ -1,5 +1,7 @@
 <a href="<?php echo ProductController::createUrl('create'); ?>" class="btn btn-primary superBoton"><i class="fa fa-plus"></i>  Agregar Producto</a>
-      
+
+<a class="btn btn-primary superBoton2"><i class="fa fa-picture-o"></i>  Agregar Im&aacute;genes</a>
+
       <?php		
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'product-grid_all',
