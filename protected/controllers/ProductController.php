@@ -1249,4 +1249,28 @@ class ProductController extends GController
 			Yii::app()->end();
 		}
 	}
+	
+	public function actionUploadImages()
+	{
+	
+		$this->render('uploadImages');
+	}
+	
+	public function actionAjaxUploadImage()
+	{
+		$file = $_FILES['file'];
+	
+		$modelMultimedia = new Multimedia;
+			
+		$modelMultimedia->uploadedFile = $file;
+		$modelMultimedia->Id_multimedia_type = 1;
+			
+		$modelMultimedia->save();
+	
+	
+		$img = "<img alt='Click to follow' src='" ."images/" . $modelMultimedia->file_name_small . "'" ;
+		$size = round($modelMultimedia->size/1024,2);
+			
+		echo json_encode(array("name" => $img,"type" => '',"size"=> $size, "id"=>$modelMultimedia->Id));
+	}
 }

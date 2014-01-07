@@ -43,12 +43,13 @@ class Multimedia extends CActiveRecord
 	
 				$filePath = $folder . $this->uploadedFile["name"];
 	
-				$uniqueId = uniqid();
+				$fileNameWoExt = str_replace('.'.$ext,'',$this->uploadedFile["name"]);
+				
 				//generate medium file version
 				$newFile = $this->resizeFile(800,800,$filePath);
 				$content = $newFile['content'];
 				if ($content !== false) {
-					$fileName = $uniqueId.'.jpg';
+					$fileName = $fileNameWoExt.'.jpg';
 					$file = fopen($folder.$fileName, 'w');
 					fwrite($file,$content);
 					fclose($file);
@@ -62,7 +63,7 @@ class Multimedia extends CActiveRecord
 				$newFile = $this->resizeFile(320,320,$filePath);
 				$content = $newFile['content'];
 				if ($content !== false) {
-					$fileName = $uniqueId.'_small.jpg';
+					$fileName = $fileNameWoExt.'_small.jpg';
 					$file = fopen($folder.$fileName, 'w');
 					fwrite($file,$content);
 					fclose($file);
