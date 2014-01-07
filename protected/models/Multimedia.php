@@ -38,10 +38,10 @@ class Multimedia extends CActiveRecord
 			{
 				//save original
 				$folder = "images/";
-				$filePath = $folder .'original_'. $this->uploadedFile["name"];
+				$filePath = $folder .'original_'. $name;
 				move_uploaded_file($this->uploadedFile["tmp_name"], $filePath);
 
-				$fileNameWoExt = str_replace('.'.$ext,'',$this->uploadedFile["name"]);
+				$fileNameWoExt = str_replace('.'.$ext,'',$name);
 				
 				//generate medium file version
 				$newFile = $this->resizeFile(800,800,$filePath);
