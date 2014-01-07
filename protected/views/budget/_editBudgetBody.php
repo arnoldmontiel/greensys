@@ -314,7 +314,7 @@ $("#addAreaToProject").click(function()
 
 
 <!--MODAL PEQUE-->
-<div id="myModalAgregarRec" class="modal fade in" aria-hidden="false">
+<div id="myModalAgregarReca" class="modal fade in" aria-hidden="false">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

@@ -148,12 +148,54 @@ class BudgetController extends GController
 		));
 	}
 	
+	public function actionAjaxGetTotalPrice()
+	{
+		if(isset($_POST['BudgetItem']))
+		{
+			$budgetItem = new BudgetItem();
+			
+			$budgetItem->attributes = $_POST['BudgetItem'];
+			$budgetItem->discount =$_POST['BudgetItem']['discount'];
+			$budgetItem->discount_type =$_POST['BudgetItem']['discount_type'];
+			echo json_encode(array('total_price'=>$budgetItem->getTotalPrice()));						
+		}
+	}
+	public function actionAjaxCreateItem()
+	{
+		if(isset($_POST['BudgetItem']))
+		{
+			$budgetItem = new BudgetItem;
+				
+			$budgetItem->attributes = $_POST['BudgetItem'];
+			$budgetItem->discount =$_POST['BudgetItem']['discount'];
+			$budgetItem->discount_type =$_POST['BudgetItem']['discount_type'];
+				
+			if($budgetItem->save())
+				echo json_encode($budgetItem->attributes);
+		}
+		
+	}	
+	public function actionAjaxRemoveBudgetItem()
+	{
+		if($_POST['id'])
+		{
+			BudgetItem::model()->deleteByPk($_POST['id']);
+		}
+	}
 	public function actionAjaxShowCreateModalBudgetItem()
 	{
-		$model=new Area;
+		$model=new BudgetItem;
+		$model->price=0.00;
+		$model->quantity=0;
+		$model->discount=0.00;
+		
 		$field_caller ="";
 		if($_POST['field_caller'])
 			$field_caller=$_POST['field_caller'];
+		if($_POST['id'])
+			$model->Id_budget=$_POST['id'];
+		if($_POST['version_number'])
+			$model->version_number=$_POST['version_number'];
 		// Uncomment the following line if AJAX validation is needed
 		$this->renderPartial('_modalAddBudgetItem',array(
 				'model'=>$model,

@@ -7,7 +7,7 @@ $settings = new Settings();
       <ul class="nav nav-tabs">
         <li class="active"><a id="tabExtraItems" href="#tabRecargos" data-toggle="tab">Recargos</a></li>
         <li><a id="tabServices" href="#tabDescripciones" data-toggle="tab">Descripci&oacute;n de Servicios</a></li>
-        <li class="pull-right"><button id="addExtraItem" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarRec" onclick="addExtraItem(<?php echo $model->Id?>);"><i class="fa fa-plus"></i> Agregar</button></li>
+        <li class="pull-right"><button id="addExtraItem" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarRec" onclick="addExtraItem(<?php echo $model->Id?>,<?php echo $model->version_number?>);"><i class="fa fa-plus"></i> Agregar</button></li>
         </ul>
         <div class="tab-content">
         <div class="tab-pane active" id="tabRecargos">
@@ -64,6 +64,13 @@ $settings = new Settings();
 'htmlOptions'=>array("class"=>"align-right"),
 'headerHtmlOptions'=>array("class"=>"align-right"),
 					),
+							array(
+									'name'=>'Acciones',
+									'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"removeBudgetItem(".$data->Id.");\" ><i class=\"fa fa-trash-o\"></i></button>"',
+									'type'=>'raw',
+									'htmlOptions'=>array("style"=>"text-align:center;"),
+									'headerHtmlOptions'=>array("style"=>"text-align:center;"),
+							),
 
 							),
 					));
@@ -147,14 +154,32 @@ $projectService->Id_project = $model->Id_project;
   </div>
   </div>
  <script type="text/javascript">
-  
- function addExtraItem(idBudget)
+ function removeBudgetItem(id)
+ {
+	 if(confirm("¿Seguro desea eliminar este ítem?"))
+	 {
+		 
+	 	$.post(
+	 			'<?php echo BudgetController::createUrl('budget/AjaxRemoveBudgetItem')?>',
+	 			 {
+	 			 	id: id,
+	 			 },'json').success(
+	 				function(data) 
+	 				{ 
+						$.fn.yiiGridView.update('budget-item-generic');		 					
+	 				}
+	 			).error(function(){});
+	 }			
+		 
+ }
+ function addExtraItem(idBudget,versionNumber)
  {
  	$.post(
  			'<?php echo BudgetController::createUrl('budget/AjaxShowCreateModalBudgetItem')?>',
  			 {
  			 	id: idBudget,
- 			 	field_caller:'budget-item-generic'
+ 			 	version_number: versionNumber,
+ 	 			field_caller:'budget-item-generic'
  			 },'json').success(
  				function(data) 
  				{ 

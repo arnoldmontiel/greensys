@@ -228,6 +228,7 @@ class BudgetItem extends ModelAudit
 	
 	public function getChildrenTotalPrice()
 	{
+		if(!isset($this->Id)) return 0;
 		$criteria=new CDbCriteria;
 	
 		$criteria->select='sum(price * quantity) as children_total_price';
