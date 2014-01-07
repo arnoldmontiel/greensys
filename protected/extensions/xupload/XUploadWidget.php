@@ -121,12 +121,34 @@ class XUploadWidget extends CJuiInputWidget {
 
 		echo CHtml::endForm();
 
-		if($uploadTable == $downloadTable){
-			echo CHtml::tag("table", array("id" => $uploadTable), "", true);
-		}else{
-			echo CHtml::tag("table", array("id" => $uploadTable), "", true);
-			echo CHtml::tag("table", array("id" => $downloadTable), "", true);
+		if($this->fromGreen)
+		{
+			if($uploadTable == $downloadTable){
+				$content = '<thead>
+					<tr>
+						<th id="budget-grid-open_c0"><a class="sort-link">Imagen</a></th>
+						<th><a class="sort-link">Marca</a></th>
+						<th><a class="sort-link">Producto</a></th>
+						<th class="align-right">Acciones</th>
+					</tr>
+					</thead>';
+				echo CHtml::tag("table", array("id" => $uploadTable, "class"=>"table table-striped table-bordered tablaIndividual tablaUploadImagenes"), $content, true);				
+			}else{
+				echo CHtml::tag("table", array("id" => $uploadTable, "class"=>"table table-striped table-bordered tablaIndividual tablaUploadImagenes"), "", true);
+				echo CHtml::tag("table", array("id" => $downloadTable, "class"=>"table table-striped table-bordered tablaIndividual tablaUploadImagenes"), "", true);
+			}
+			
 		}
+		else 
+		{
+			if($uploadTable == $downloadTable){
+				echo CHtml::tag("table", array("id" => $uploadTable), "", true);
+			}else{
+				echo CHtml::tag("table", array("id" => $uploadTable), "", true);
+				echo CHtml::tag("table", array("id" => $downloadTable), "", true);
+			}	
+		}
+		
 
 	}
 
@@ -148,17 +170,29 @@ class XUploadWidget extends CJuiInputWidget {
 	}
 
 	private function _getBuildDownloadRow(){
+
+// 			$js = <<<EOD
+// js:function (files, index) {
+// 	return $('<tr id="'+files.id+'"><td>' + files.name + '<\/td>' +
+//     	'<td class="filesize">'+files.size+' KB</td>' +
+//     	'<td>' +
+//     	'<textarea id="photo_description" class="photo_description" placeholder="Escriba una description..." cols="30" rows="2"></textarea>' +
+//     	'<\/td>' +
+//         '<td class="file_upload_cancel">' +
+//         '<button class="ui-state-default ui-corner-all" title="Cancel">' +
+//         '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
+//         '<\/button><\/td><\/tr>');
+			
+// }
+// EOD;
 		$js = <<<EOD
 js:function (files, index) {
-	return $('<tr id="'+files.id+'"><td>' + files.name + '<\/td>' +
-    	'<td class="filesize">'+files.size+' KB</td>' +
-    	'<td>' +
-    	'<textarea id="photo_description" class="photo_description" placeholder="Escriba una description..." cols="30" rows="2"></textarea>' +
-    	'<\/td>' +
-        '<td class="file_upload_cancel">' +
-        '<button class="ui-state-default ui-corner-all" title="Cancel">' +
-        '<span class="ui-icon ui-icon-cancel">Cancel<\/span>' +
-        '<\/button><\/td><\/tr>');
+	return $('<tr id="'+files.id+'" class="odd"><td style="width:25%;">' + files.name + '<\/td>' +
+    	'<td style="width:25%;">'+files.brand+'</td>' +
+		'<td style="width:25%;">'+files.model+'</td>' +
+		'<td class="align-right file_upload_cancel" style="width:25%;">' + 
+			'<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td><\/tr>');
+        
 }
 EOD;
 		return $js;
@@ -187,6 +221,7 @@ js:function ($params) {
 	'</tr>');
 }
 EOD;
+
 		return $js;
 	}
 }

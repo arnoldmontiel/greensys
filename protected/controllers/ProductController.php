@@ -1261,7 +1261,8 @@ class ProductController extends GController
 		$file = $_FILES['file'];
 	
 		$img = "";
-		$size = 0;
+		$brandDesc = "";
+		$productModel = "";
 		$id = 0;
 		
 		$modelMultimedia = new Multimedia;
@@ -1295,12 +1296,17 @@ class ProductController extends GController
 				$modelProductMultimedia->Id_product = $modelProduct->Id;
 				$modelProductMultimedia->save();
 			}
+			else 
+			{
+				$brandDesc = "desconocido";
+				$productModel = "desconocido";
+			}
 			
 			$img = "<img alt='Click to follow' src='" ."images/" . $modelMultimedia->file_name_small . "'" ;
-			$size = round($modelMultimedia->size/1024,2);			
+			$size = 123;			
 		}
 			
-		echo json_encode(array("name" => $img,"type" => '',"size"=> $size, "id"=>$id));
+		echo json_encode(array("name" => $img,"type" => '',"brand"=> $brandDesc, "model"=>$productModel, "id"=>$id));
 	}
 	
 	public function actionAjaxRemoveImage()
