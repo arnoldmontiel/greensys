@@ -15,6 +15,7 @@ $this->widget('ext.xupload.XUploadWidget', array(
                     'url' => ProductController::createUrl('ajaxUploadImage'),
 					'multiple'=>true,
 					'name'=>'file',
+					'fromGreen'=>true, 
 					'options' => array(
 						'acceptFileTypes' => '/(\.|\/)(gif|jpeg|png)$/i',
 						'onComplete' => 'js:function (event, files, index, xhr, handler, callBack) {

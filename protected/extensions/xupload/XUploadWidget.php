@@ -22,6 +22,12 @@ class XUploadWidget extends CJuiInputWidget {
 	public $url;
 	
 	/**
+	 * indica si viene de green o tapia
+	 * @var boolean
+	 */
+	public $fromGreen = false;
+	
+	/**
 	 * set to true to use multiple file upload
 	 * @var boolean
 	 */
@@ -101,8 +107,16 @@ class XUploadWidget extends CJuiInputWidget {
 		else{
 			echo CHtml::fileField($name,$this->value, $htmlOptions);
 		}
-		echo CHtml::tag("button", array(), "Upload", true);
-		echo CHtml::tag("div", array(), "Upload file", true);
+		if($this->fromGreen)
+		{
+			echo CHtml::tag("button", array('class'=>'btn btn--primary'), "Upload", true);
+			echo CHtml::tag("div", array('class'=>'uploadButton'), "Upload file", true);
+		}
+		else 
+		{
+			echo CHtml::tag("button", array(), "Upload", true);
+			echo CHtml::tag("div", array(), "Upload file", true);
+		}
 
 		echo CHtml::endForm();
 
