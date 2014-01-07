@@ -31,7 +31,8 @@ class Multimedia extends CActiveRecord
 
 		if(isset($this->uploadedFile))
 		{
-			$ext = end(explode(".", $this->uploadedFile["name"]));
+			$name = $this->uploadedFile["name"];
+			$ext = end(explode(".", $name));
 			$ext = strtolower($ext);
 			if($ext=="jpg"||$ext=="png"||$ext=="bmp"||$ext=="gif")
 			{

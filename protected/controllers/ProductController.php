@@ -1260,17 +1260,44 @@ class ProductController extends GController
 	{
 		$file = $_FILES['file'];
 	
+		$img = "";
+		$size = 0;
+		$id = 0;
+		
 		$modelMultimedia = new Multimedia;
 			
 		$modelMultimedia->uploadedFile = $file;
 		$modelMultimedia->Id_multimedia_type = 1;
 			
-		$modelMultimedia->save();
-	
-	
-		$img = "<img alt='Click to follow' src='" ."images/" . $modelMultimedia->file_name_small . "'" ;
-		$size = round($modelMultimedia->size/1024,2);
+		if($modelMultimedia->save())
+		{
+			$id = $modelMultimedia->Id;
 			
-		echo json_encode(array("name" => $img,"type" => '',"size"=> $size, "id"=>$modelMultimedia->Id));
+			$ext = end(explode(".", $modelMultimedia->file_name));
+			$fileNameWoExt = str_replace('.'.$ext,'',$modelMultimedia->file_name);
+			
+			$brandDesc = reset(explode("_", $fileNameWoExt));
+			$productModel = end(explode("_", $fileNameWoExt));
+			
+			$criteria = new CDbCriteria();
+			$criteria->join = 'INNER JOIN brand b on (b.Id = t.Id_brand)';
+			
+			$criteria->addCondition('b.description = "'.$brandDesc.'"');
+			$criteria->addCondition('t.model = "'.$productModel.'"');
+			
+			$modelProduct = Product::model()->find($criteria);
+			if(isset($modelProduct))
+			{
+				$modelProductMultimedia = new ProductMultimedia();
+				$modelProductMultimedia->Id_multimedia = $id;
+				$modelProductMultimedia->Id_product = $modelProduct->Id;
+				$modelProductMultimedia->save();
+			}
+			
+			$img = "<img alt='Click to follow' src='" ."images/" . $modelMultimedia->file_name_small . "'" ;
+			$size = round($modelMultimedia->size/1024,2);			
+		}
+			
+		echo json_encode(array("name" => $img,"type" => '',"size"=> $size, "id"=>$id));
 	}
 }
