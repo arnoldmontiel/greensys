@@ -355,7 +355,7 @@ $("#addAreaToProject").click(function()
 </div>
   <div class="form-group col-sm-3 align-right">
   	    <label for="precio">Total</label>    	
-<span class="label label-primary labelPrecio">0.00 <div class="usd">U$D</div></span>
+<div class="label label-primary labelPrecio">0.00 <div class="usd">U$D</div></div>
 </div>
 </div>
 </form>

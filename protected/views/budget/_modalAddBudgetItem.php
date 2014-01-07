@@ -19,7 +19,7 @@ $settings = new Settings();
   	    <?php echo $form->hiddenField($model,'version_number'); ?>
   	    <div class="form-group">
   	    <label for="desc">Descripci&oacute;n</label>    	
-  	    <?php echo $form->textField($model,'description',array("class"=>"form-control formHasLabel")); ?>
+  	    <?php echo $form->textField($model,'description',array("class"=>"form-control")); ?>
 </div>
 <div class="row">
   <div class="form-group col-sm-3">
@@ -49,7 +49,7 @@ $settings = new Settings();
 </div>
   <div class="form-group col-sm-3 align-right">
   	    <label for="precio">Total</label>    	
-<span class="label label-primary labelPrecio"><span id="total_price_w_discount">0.00</span><div class="usd"><?php echo " ".$settings->getCurrencyShortDescription()?></div></span>
+<span class="label label-primary labelPrecio"><span id="total_price_w_discount">0.00</span> <div class="usd"><?php echo " ".$settings->getCurrencyShortDescription()?></div></span>
 </div>
 </div>
 <?php $this->endWidget(); ?>
