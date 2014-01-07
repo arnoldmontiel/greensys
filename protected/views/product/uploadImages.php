@@ -65,24 +65,6 @@ $this->widget('ext.xupload.XUploadWidget', array(
 <div class="col-sm-12">
 	<?php echo CHtml::button('Listo',array('class'=>'wall-action-submit-btn','id'=>'btnReady',));?>
 	
-	
-
-<table class="table table-striped table-bordered tablaIndividual tablaUploadImagenes">
-<thead>
-<tr>
-<th id="budget-grid-open_c0"><a class="sort-link">Imagen</a></th>
-<th><a class="sort-link">Marca</a></th>
-<th><a class="sort-link">Producto</a></th>
-<th class="align-right">Acciones</th></thead>
-<tbody>
-<tr class="odd">
-<td style="width:25%;">Imagen</td>
-<td style="width:25%;">RTI</td>
-<td style="width:25%;">PNOU</td>
-<td class="align-right" style="width:25%;"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
-</tr>
-</tbody>
-</table>
 
 </div>
 </div>
