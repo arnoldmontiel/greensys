@@ -25,7 +25,7 @@ $this->widget('ext.xupload.XUploadWidget', array(
 							$tr.find(".file_upload_cancel button").click(function(){
 								var target = $(this);
 											
-								$.get("'.ProductController::createUrl('ajaxRemoveImageFromNote').'",
+								$.get("'.ProductController::createUrl('ajaxRemoveImage').'",
  									{
 										IdMultimedia:$(target).parent().parent().attr("id")
  								}).success(

@@ -1302,4 +1302,24 @@ class ProductController extends GController
 			
 		echo json_encode(array("name" => $img,"type" => '',"size"=> $size, "id"=>$id));
 	}
+	
+	public function actionAjaxRemoveImage()
+	{
+			
+		$idMultimedia = isset($_GET['IdMultimedia'])?$_GET['IdMultimedia']:null;
+	
+		if(isset($idMultimedia))
+		{
+			MultimediaNote::model()->deleteAllByAttributes(array('Id_multimedia'=>$idMultimedia));
+			$model = Multimedia::model()->findByPk($idMultimedia);
+			if(isset($model))
+			{
+				unlink('images/'.$model->file_name);
+				unlink('images/'.$model->file_name_small);
+				$model->delete();
+			}
+		}
+	
+	}
+	
 }
