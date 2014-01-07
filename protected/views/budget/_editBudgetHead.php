@@ -1,8 +1,6 @@
-  <div class="row">
+  <div class="row panelPresu">
     <div class="col-sm-12">
     
-    <div class="panel panel-success panelPresu">
-        <div class="panel-body">
           <h2><?php echo  $model->project->customer->contact->description?> - <?php echo  $model->project->description?><a class="superEdit" onclick="openUpdateBudget(<?php echo $model->Id . ', '.$model->version_number;?>);" data-toggle="modal" data-target="#myModalEditarPresupuesto"><i class="fa fa-pencil"></i></a></h2>
 
         <span id="header-budget-description"><?php echo $model->description;?></span>
@@ -39,7 +37,6 @@
                </div>
                 <button onclick="closeVersion(<?php echo $model->Id . ', '.$model->version_number;?>);" type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-archive fa-fw"></i> Cerrar Versi&oacute;n</button>
                 <button onclick="exportBudget(<?php echo $model->Id . ', '.$model->version_number;?>);" type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-download fa-fw"></i> Descargar</button>
-        </div>
-        </div>
+        
     </div>
   </div>

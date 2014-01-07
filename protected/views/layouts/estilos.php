@@ -466,6 +466,12 @@ padding: 6px 8px;
 
 
 #screenCrearPresupuesto{ margin-bottom:40px;}
+
+#screenCrearPresupuesto .nav-tabs>li>a{color:#666;}
+#screenCrearPresupuesto .nav-tabs>li>a:hover{background-color:rgba(255,255,255,0.5);}
+#screenCrearPresupuesto .nav-tabs>li.active>a:hover{background-color:white; color:#333 !important;}
+
+
 #campoTipoPrecio{ width:65px; display:inline-block;}
 
 h2 a.superEdit{ position:absolute; top:10px; right:30px; cursor:pointer; font-size:20px;}
@@ -528,20 +534,14 @@ padding-bottom: 20px; position:relative;}
 .tablePresuTotal td{ line-height:20px; vertical-align:middle !important;}
 .superTotal{ font-size:20px;}
 
-.panelPresu{ background-color:rgba(255,255,255,0.5); border:none; margin-bottom:2px;}
 
-.panelPresu{ background-color:rgba(255,255,255,0.7); border:none; margin-bottom:0px; border:0px none;}
+.panelPresu{ background-color:#eee;margin:0px; border:0px none; padding-bottom:20px; padding-top:20px;  border-bottom:2px dotted #dedede;  border-radius:0px;}
 
-.panelPresu{ padding-bottom:20px;  border-bottom:2px dotted #ccc;  border-radius:0px;
-}
-
-.contenedorPresu{ background-color:rgba(255,255,255,0.5); padding:0px; margin:0px;  padding-top:20px; margin-bottom:2px;}
-
-.contenedorPresu{ background-color:rgba(255,255,255,0.4); padding:0px; margin:0px; border-bottom:1px solid #ccc; padding-top:10px; padding-bottom:20px; margin-bottom:0px;}
+.contenedorPresu{ background-color:#eee; padding:0px; margin:0px; border-bottom:1px solid #ccc; padding-top:10px; padding-bottom:20px; margin-bottom:0px;}
 
 .contenedorPresu .col-sm-12{ padding-right:10px;padding-left:10px;  }
 
-.panelPresuFinal {  background-color:rgba(255,255,255,0.7); margin:0px 0px; padding-top:20px; border-top:2px dotted #ccc; }
+.panelPresuFinal { background-color:#eee; margin:0px 0px; padding-top:20px; border-top:2px dotted #dedede; }
 
 
 .panel-body .tablaDatosPanel{ margin-top:10px; margin-bottom:10px !important;}
@@ -644,11 +644,14 @@ font-family: "GudeaRegular";
 /* ------ END CREAR PRESU ------- */
 
 /* ------ UPLOAD IMAGENES PRODUCTO ------- */
-.xupload-form{ background-color:rgba(255,255,255,0.5);  font-size:16px;border: 3px dotted #eee; line-height:60px; height:250px;padding:50px; border-radius:0px; display:block; width:800px; margin-right:20px;margin-left: 20px; margin:auto; margin-top:20px;}
+.xupload-form{ background-color:rgba(255,255,255,0.5);  font-size:16px;border: 3px dotted #eee; line-height:60px; height:250px; 
+width:auto; padding:50px; border-radius:0px; display:block;margin-right:20px;margin-left: 20px; margin:auto;}
 
 .xupload-form.file_upload_highlight{background-color:white; font-size:16px;}
 
 .xupload-form div{color:#666;}
+
+.tablaUploadImagenes img{width:100%;}
 
 /* ------ END UPLOAD IMAGENES PRODUCTO ------- */
 
