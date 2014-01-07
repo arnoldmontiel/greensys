@@ -14,6 +14,7 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 		'id'=>'budget-item-grid_'.$areaProject->Id."_".$areaProject->Id_area,
 		'dataProvider'=>$modelBudgetItem->search(),
 		'selectableRows' => 0,
+		'emptyText' => 'A&uacute;n sin productos.',
 		'summaryText'=>'',	
 		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
 		'columns'=>array(
