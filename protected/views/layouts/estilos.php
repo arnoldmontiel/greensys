@@ -537,7 +537,7 @@ padding-bottom: 20px; position:relative;}
 
 .contenedorPresu{ background-color:rgba(255,255,255,0.5); padding:0px; margin:0px;  padding-top:20px; margin-bottom:2px;}
 
-.contenedorPresu{ background-color:rgba(255,255,255,0.4); padding:0px; margin:0px; border-bottom:2px solid #ccc; padding-top:10px; padding-bottom:20px; margin-bottom:0px;}
+.contenedorPresu{ background-color:rgba(255,255,255,0.4); padding:0px; margin:0px; border-bottom:1px solid #ccc; padding-top:10px; padding-bottom:20px; margin-bottom:0px;}
 
 .contenedorPresu .col-sm-12{ padding-right:10px;padding-left:10px;  }
 
