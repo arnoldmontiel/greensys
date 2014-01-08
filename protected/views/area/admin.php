@@ -25,7 +25,7 @@
  			'filter'=>CHtml::listData(
 				array(
 					array('id'=>'0','value'=>'No'),
-					array('id'=>'1','value'=>'Yes')
+					array('id'=>'1','value'=>'Si')
 					)
 					,'id','value'
 			),

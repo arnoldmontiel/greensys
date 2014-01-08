@@ -17,11 +17,16 @@
   <?php echo $form->hiddenField($model,'Id'); ?>
   <?php echo $form->labelEx($model,'description'); ?>
     <?php echo $form->textField($model,'description',array("class"=>"form-control")); ?>
+	
   </div>
+  <div class="form-group">
+		<?php echo $form->labelEx($model,'main'); ?>
+		<?php echo $form->checkBox($model,'main'); ?>
+	</div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
-        <button id ="saveArea" type="button" class="btn btn-primary btn-lg"><i class="fa fa-upload"></i> Cargar</button>
+        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>        
+        <button id ="saveArea" type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

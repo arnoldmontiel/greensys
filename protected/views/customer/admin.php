@@ -18,6 +18,10 @@
 	'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
 		'columns'=>array(
 				array(
+						'name'=>'description',
+						'value'=>'$data->contact->description',
+				),
+				array(
 						'name'=>'last_name',
 						'value'=>'$data->person->last_name',
 				),
