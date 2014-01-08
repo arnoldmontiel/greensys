@@ -47,7 +47,7 @@ class GreenHelper
 				{
 					$criteria = new CDbCriteria;
 					$criteria->compare('Id_importer',$importer->Id);
-					$criteria->compare('Id_price_list_type',2); //compra
+					$criteria->compare('Id_price_list_type',2); //venta
 				
 					$priceList = PriceList::model()->find($criteria);
 					if(!isset($priceList))
@@ -72,7 +72,7 @@ class GreenHelper
 						$priceListItem->Id_price_list = $priceList->Id;
 						$priceListItem->Id_product = $product->Id;
 					}
-					$priceListItem->msrp = $priceListItem->msrp;
+					$priceListItem->msrp = $product->msrp;
 					$priceListItem->dealer_cost = $product->dealer_cost;
 					$priceListItem->profit_rate = $product->profit_rate;
 				
