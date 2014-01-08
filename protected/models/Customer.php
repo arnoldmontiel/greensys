@@ -21,6 +21,7 @@ class Customer extends ModelAudit
 	public $last_name;
 	public $telephone_1;
 	public $email;
+	public $description;
 	//from tapia
 	public $Id_user_group;
 	public $username;
@@ -103,7 +104,7 @@ class Customer extends ModelAudit
 			array('Id_person, Id_contact', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_person, Id_contact, name, last_name, telephone_1, email', 'safe', 'on'=>'search'),
+			array('Id, Id_person, Id_contact, name, last_name, telephone_1, email, description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -135,6 +136,11 @@ class Customer extends ModelAudit
 			'Id' => 'ID',
 			'Id_person' => 'Id Person',
 			'Id_contact' => 'Id Contact',
+			'description' => 'Designaci&oacute;n',
+			'name' => 'Nombre',
+			'last_name' => 'Apellido',
+			'telephone_1' => 'Tel&eacute;fono 1',
+			'email' => 'Correo',
 		);
 	}
 
@@ -186,11 +192,17 @@ class Customer extends ModelAudit
 		$criteria->with[]='contact';
 		$criteria->addSearchCondition("contact.telephone_1",$this->telephone_1);
 		$criteria->addSearchCondition("contact.email",$this->email);
+		$criteria->addSearchCondition("contact.description",$this->description);
+				
 		//$criteria->order="contact.description";		
 		// Create a custom sort
 		$sort=new CSort;
 		$sort->defaultOrder ="last_name";
-		$sort->attributes=array(
+		$sort->attributes=array(				
+				'description' => array(
+						'asc' => 'contact.description',
+						'desc' => 'contact.description DESC',
+				),
 			'name' => array(
 									        'asc' => 'person.name',
 									        'desc' => 'person.name DESC',

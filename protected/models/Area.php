@@ -71,7 +71,7 @@ class Area extends ModelAudit
 	{
 		return array(
 			'Id' => 'ID',
-			'description' => 'Description',
+			'description' => 'Descripción',
 			'main' => 'Main',
 		);
 	}
