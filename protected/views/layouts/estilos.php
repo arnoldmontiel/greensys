@@ -76,6 +76,8 @@ button {
 .inline{display:inline !important;}
 .inlineBlock{display:inline-block !important;}
 
+.clear{clear:both;}
+
 .align-left{ text-align:left !important;}
 .align-center{ text-align:center !important;}
 .align-right{ text-align:right !important;}
