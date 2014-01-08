@@ -98,7 +98,7 @@ $projectService->Id_project = $model->Id_project;
 									'type'=>'raw'
 							),					
 							array(
-									'header'=>'Descripción',
+									'header'=>'Descripci&oacute;n',
 									'value'=>'GreenHelper::cutString($data->long_description==""?$data->service->long_description:$data->long_description,130)',
 									'type'=>'raw'
 							),
