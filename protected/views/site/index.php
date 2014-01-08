@@ -112,10 +112,10 @@
 <ul class="list-group">
 <li class="list-group-item"><span class="listNumber done">1</span> Cargar Areas <span class="label label-success pull-right"><i class="fa fa-check fa-fw"></i> Hecho</span></li>
   <li class="list-group-item"><span class="listNumber">2</span> Cargar Servicios <a href="<?php echo Yii::app()->createUrl('service')?>" class="btn btn-default pull-right">Completar</a></li>
-  <li class="list-group-item"><span class="listNumber">2</span> Cargar Marcas <a href="<?php echo Yii::app()->createUrl('brand')?>" class="btn btn-default pull-right">Completar</a></li>
-  <li class="list-group-item"><span class="listNumber">2</span> Cargar Productos <a href="<?php echo Yii::app()->createUrl('product')?>" class="btn btn-default pull-right">Completar</a></li>
-  <li class="list-group-item"><span class="listNumber">2</span> Cargar Clientes <a href="<?php echo Yii::app()->createUrl('customer')?>" class="btn btn-default pull-right">Completar</a></li>
-  <li class="list-group-item"><span class="listNumber">3</span> Cargar Proyectos <a href="<?php echo Yii::app()->createUrl('project')?>" class="btn btn-default pull-right">Completar</a></li>
+  <li class="list-group-item"><span class="listNumber">3</span> Cargar Marcas <a href="<?php echo Yii::app()->createUrl('brand')?>" class="btn btn-default pull-right">Completar</a></li>
+  <li class="list-group-item"><span class="listNumber">4</span> Cargar Productos <a href="<?php echo Yii::app()->createUrl('product')?>" class="btn btn-default pull-right">Completar</a></li>
+  <li class="list-group-item"><span class="listNumber">5</span> Cargar Clientes <a href="<?php echo Yii::app()->createUrl('customer')?>" class="btn btn-default pull-right">Completar</a></li>
+  <li class="list-group-item"><span class="listNumber">6</span> Cargar Proyectos <a href="<?php echo Yii::app()->createUrl('project')?>" class="btn btn-default pull-right">Completar</a></li>
 </ul>
         <div class="panel-body">
    <div class="alert alert-success">
