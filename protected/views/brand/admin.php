@@ -40,7 +40,7 @@
 $('#createBrand').click(
 		function(){
 			$.post(
-			'<?php echo ProductController::createUrl('brand/AjaxShowCreateModal')?>',{field_caller:'brand-grid'}).success(
+			'<?php echo BrandController::createUrl('brand/AjaxShowCreateModal')?>',{field_caller:'brand-grid'}).success(
 					function(data)
 					{
 					if(data!=null)
@@ -58,7 +58,7 @@ function deleteBrand(id)
 	if(confirm("¿Seguro desea eliminar la marca?"))
 	{
 		$.post(
-				'<?php echo ProductController::createUrl('brand/AjaxDelete')?>',{id:id}).success(
+				'<?php echo BrandController::createUrl('brand/AjaxDelete')?>',{id:id}).success(
 						function(data)
 						{
 							$.fn.yiiGridView.update('brand-grid');
@@ -69,7 +69,7 @@ function deleteBrand(id)
 function updateBrand(id)
 {
 	$.post(
-			'<?php echo ProductController::createUrl('brand/AjaxShowUpdateModal')?>',{id:id,field_caller:'brand-grid'}).success(
+			'<?php echo BrandController::createUrl('brand/AjaxShowUpdateModal')?>',{id:id,field_caller:'brand-grid'}).success(
 					function(data)
 					{
 					if(data!=null)
