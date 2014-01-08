@@ -24,3 +24,5 @@ $this->menu=array(
 	'dataProvider'=>$dataProviderSale,
 	'itemView'=>'_viewSale',
 )); ?>
+
+
