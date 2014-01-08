@@ -5,10 +5,8 @@
           <i class="fa fa-caret-down fa-fw"></i>
           </a>
           <ul class="dropdown-menu">
-				          			          
-                	      <li><a href="#">TAPIA</a></li>
-				          			                    	
-                	      </ul>
+			<li><a href="<?php echo Yii::app()->createUrl('site')?>">TAPIA</a></li>
+          </ul>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -58,7 +56,7 @@
           </li>
           </ul>
           <ul class="nav navbar-nav pull-right">
-          <li><a><i class="fa fa-sign-out fa-fw"></i> Salir</a></li>
+          <li><a href="<?php echo Yii::app()->createUrl('site/logout')?>"><i class="fa fa-sign-out fa-fw"></i> Salir</a></li>
           </ul>
 
         </div><!-- /.navbar-collapse -->

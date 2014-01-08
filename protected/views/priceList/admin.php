@@ -118,42 +118,25 @@
 </div><!-- /.row --> 
 </div><!-- /.container --> 
 
-<?php
-$this->breadcrumbs=array(
-	'Price Lists'=>array('index'),
-	'Manage',
-);
-
-$this->menu=array(
-	array('label'=>'Create PriceList', 'url'=>array('create')),
-	array('label'=>'Manage Import Purch List', 'url'=>array('adminPurchListImport')),
-	array('label'=>'Import Purch List from Excel', 'url'=>array('importPurchListFromExcel')),
-	//array('label'=>'Clone PriceList', 'url'=>array('clonePriceList')),
-);
-
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('price-list-grid', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
-?>
-
-<h1>Manage Price Lists</h1>
-
-<?php
-$names=$model->attributeNames();
- $this->widget('zii.widgets.grid.CGridView', array(
+<div class="container" id="screenCustomers">
+  <div class="row">
+    <div class="col-sm-6">
+  <h1 class="pageTitle">Clientes</h1>
+  </div>
+    <div class="col-sm-6 align-right">
+  <a id="createCostomer" class="btn btn-primary superBoton" data-toggle="modal" data-target="#myModalCrearCustomer"><i class="fa fa-plus"></i> Agregar &Aacute;rea</a>
+  </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+    <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'price-list-grid',
 	'dataProvider'=>$model->searchSummary(),
 	'filter'=>$model,
-	'columns'=>array(
+	'selectableRows' => 0,
+	'summaryText'=>'',		
+	'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
+		'columns'=>array(
  		array(
   			'name'=>"Id_price_list_type",//$model->getAttributeLabel('validity'),
   			'type'=>'raw',
@@ -190,7 +173,71 @@ $names=$model->attributeNames();
  			),
  		),		
 		array(
-			'class'=>'CButtonColumn',
+				'header'=>'Acciones',
+				'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"updateCustomer(".$data->Id.");\" ><i class=\"fa fa-pencil\"></i> Editar</button>"',
+				'type'=>'raw',
+				'htmlOptions'=>array("style"=>"text-align:right;"),
+				'headerHtmlOptions'=>array("style"=>"text-align:right;"),
 		),
+array(
+		'class'=>'CButtonColumn',
+),
+
+				
 	),
 )); ?>
+    
+    </div>
+    <!-- /.col-sm-12 --> 
+  </div>
+  <!-- /.row --> 
+</div>
+<!-- /container --> 
+
+<script type="text/javascript">
+$('#createCustomer').click(
+		function(){
+			$.post(
+			'<?php echo CustomerController::createUrl('customer/AjaxShowCreateModal')?>',{field_caller:'custoemr-grid'}).success(
+					function(data)
+					{
+					if(data!=null)
+					{	
+						$('#modalPlaceHolder').html(data);
+						$('#modalPlaceHolder').modal('show');
+					}
+				}
+			);
+		return false;
+		}
+		);
+function deleteCustomer(id)
+{
+	if(confirm("¿Seguro desea eliminar el cliente?"))
+	{
+		$.post(
+				'<?php echo CustomerController::createUrl('customer/AjaxDelete')?>',{id:id}).success(
+						function(data)
+						{
+							$.fn.yiiGridView.update('customer-grid');
+						}
+				);
+		}
+}
+function updateCustomer(id)
+{
+	$.post(
+			'<?php echo CustomerController::createUrl('customer/AjaxShowUpdateModal')?>',{id:id,field_caller:'customer-grid'}).success(
+					function(data)
+					{
+					if(data!=null)
+					{	
+						$('#modalPlaceHolder').html(data);
+						$('#modalPlaceHolder').modal('show');
+					}
+				}
+			);
+
+}
+
+</script>
