@@ -138,14 +138,14 @@ class Project extends ModelAudit
 		//$criteria->order="con.description, t.description";
 		
 		$sort=new CSort;
-		//$sort->defaultOrder ="contact_description";
-// 		$sort->attributes=array(
-// 				'contact_description' => array(
-// 						'asc' => 'con.description',
-// 						'desc' => 'con.description DESC',
-// 				),
-// 				'*',
-// 		);
+		$sort->attributes=array(
+				'contact_description' => array(
+						'asc' => 'con.description',
+						'desc' => 'con.description DESC',
+				),
+				'*',
+		);
+		$sort->defaultOrder ="con.description";
 		
 		
 		return new CActiveDataProvider($this, array(
