@@ -399,7 +399,9 @@ class GreenHelper
 				$sheet->getStyle($indexProductFooter['totalDesc'].$row)->getFont()->setBold(true);
 				$sheet->setCellValue($indexProductFooter['total'].$row, $currency .' '. $budgetItem->getTotalPriceWOChildern());
 				$sheet->getStyle($indexProductFooter['total'].$row)->getFont()->setBold(true);
-				$serviceTotalPrice = $serviceTotalPrice + $budgetItem->getTotalPriceWOChildern();
+				
+				$serviceTotalPrice = $serviceTotalPrice + (float)str_replace(",", "", $budgetItem->getTotalPriceWOChildern());				
+				
 				$row++;
 				$row = $row + 2;
 			}
@@ -503,9 +505,12 @@ class GreenHelper
 		$rowSummary++;
 		foreach($arrayServiceTotal as $currentService)
 		{
-			$sheet->setCellValue($indexSummary['service'].$rowSummary, $currentService['serviceName']);
-			$sheet->setCellValue($indexSummary['total'].$rowSummary, $currency . ' ' .$currentService['total']);
-			$rowSummary++;
+			if($currentService['total'] > 0)
+			{
+				$sheet->setCellValue($indexSummary['service'].$rowSummary, $currentService['serviceName']);
+				$sheet->setCellValue($indexSummary['total'].$rowSummary, $currency . ' ' .$currentService['total']);
+				$rowSummary++;
+			}
 		}
 		//set column auto-size		
 // 		foreach(range($indexProduct['quantity'],$indexProduct['total']) as $columnID) {
