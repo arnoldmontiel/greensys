@@ -110,13 +110,24 @@
           <p>Completa los siguientes pasos en orden para comenzar a presupuestar:</p>
         </div>
 <ul class="list-group">
-<li class="list-group-item"><span class="listNumber done">1</span> Cargar Productos <span class="label label-success pull-right"><i class="fa fa-check fa-fw"></i> Hecho</span></li>
-  <li class="list-group-item"><span class="listNumber">2</span> Cargar Marcas <button type="button" class="btn btn-default pull-right">Completar</button></li>
-  <li class="list-group-item"><span class="listNumber">3</span> Cargar Clientes <button type="button" class="btn btn-default pull-right">Completar</button></li>
-  <li class="list-group-item"><span class="listNumber">4</span> Cargar Excel de Marca <button type="button" class="btn btn-default pull-right">Completar</button></li>
+<li class="list-group-item"><span class="listNumber done">1</span> Cargar Areas <span class="label label-success pull-right"><i class="fa fa-check fa-fw"></i> Hecho</span></li>
+  <li class="list-group-item"><span class="listNumber">2</span> Cargar Servicios <button type="button" class="btn btn-default pull-right">Completar</button></li>
+  <li class="list-group-item"><span class="listNumber">2</span> Cargar Proveedores <button type="button" class="btn btn-default pull-right">Completar</button></li>
+  <li class="list-group-item"><span class="listNumber">2</span> Cargar Productos <button type="button" class="btn btn-default pull-right">Completar</button></li>
+  <li class="list-group-item"><span class="listNumber">2</span> Cargar Clientes <button type="button" class="btn btn-default pull-right">Completar</button></li>
+  <li class="list-group-item"><span class="listNumber">3</span> Cargar Proyectos <button type="button" class="btn btn-default pull-right">Completar</button></li>
 </ul>
+        <div class="panel-body">
+   <div class="alert alert-success">
+        <h4>Setup Completo!</h4>
+        <p>Ya podes comenzar a presupuestar:</p>
+        <p>
+          <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Crear Presupuesto</button>
+        </p>
+      </div>
+      </div>
         </div>
-    <!-- /.panel-body -->
+    <!-- /.panel -->
     </div>
     <!-- /.col-md-4 --> 
     
