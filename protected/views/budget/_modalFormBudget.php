@@ -49,13 +49,7 @@
 	</table>
 </div>
 <?php endif;?>
-
-  <div class="form-group">    
-    <?php 
-    	echo CHtml::activeLabel($model, 'percent_discount');
-    	echo CHtml::activeTextField($model, 'percent_discount', array('class'=>'form-control', 'onkeyup'=>'validateNumber(this);'));    	
-    ?>
-  </div>
+  
   <div class="form-group">
   	<?php 
     	echo CHtml::activeLabel($model, 'description');
