@@ -111,18 +111,18 @@
         </div>
 <ul class="list-group">
 <li class="list-group-item"><span class="listNumber done">1</span> Cargar Areas <span class="label label-success pull-right"><i class="fa fa-check fa-fw"></i> Hecho</span></li>
-  <li class="list-group-item"><span class="listNumber">2</span> Cargar Servicios <button type="button" class="btn btn-default pull-right">Completar</button></li>
-  <li class="list-group-item"><span class="listNumber">2</span> Cargar Proveedores <button type="button" class="btn btn-default pull-right">Completar</button></li>
-  <li class="list-group-item"><span class="listNumber">2</span> Cargar Productos <button type="button" class="btn btn-default pull-right">Completar</button></li>
-  <li class="list-group-item"><span class="listNumber">2</span> Cargar Clientes <button type="button" class="btn btn-default pull-right">Completar</button></li>
-  <li class="list-group-item"><span class="listNumber">3</span> Cargar Proyectos <button type="button" class="btn btn-default pull-right">Completar</button></li>
+  <li class="list-group-item"><span class="listNumber">2</span> Cargar Servicios <a href="<?php echo Yii::app()->createUrl('service')?>" class="btn btn-default pull-right">Completar</a></li>
+  <li class="list-group-item"><span class="listNumber">2</span> Cargar Marcas <a href="<?php echo Yii::app()->createUrl('brand')?>" class="btn btn-default pull-right">Completar</a></li>
+  <li class="list-group-item"><span class="listNumber">2</span> Cargar Productos <a href="<?php echo Yii::app()->createUrl('product')?>" class="btn btn-default pull-right">Completar</a></li>
+  <li class="list-group-item"><span class="listNumber">2</span> Cargar Clientes <a href="<?php echo Yii::app()->createUrl('customer')?>" class="btn btn-default pull-right">Completar</a></li>
+  <li class="list-group-item"><span class="listNumber">3</span> Cargar Proyectos <a href="<?php echo Yii::app()->createUrl('project')?>" class="btn btn-default pull-right">Completar</a></li>
 </ul>
         <div class="panel-body">
    <div class="alert alert-success">
         <h4>Setup Completo!</h4>
         <p>Ya podes comenzar a presupuestar:</p>
         <p>
-          <button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Crear Presupuesto</button>
+          <a href="<?php echo Yii::app()->createUrl('budget')?>" class="btn btn-primary"><i class="fa fa-plus"></i> Crear Presupuesto</a>
         </p>
       </div>
       </div>
