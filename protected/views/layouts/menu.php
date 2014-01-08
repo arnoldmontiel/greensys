@@ -1,7 +1,14 @@
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation"  id="Menu">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <a class="navbar-brand" href="#" id="MenuLogo">Green</a>
+          <a class="navbar-brand dropdown-toggle" data-toggle="dropdown" href="#" id="MenuLogo">Green
+          <i class="fa fa-caret-down fa-fw"></i>
+          </a>
+          <ul class="dropdown-menu">
+				          			          
+                	      <li><a href="#">TAPIA</a></li>
+				          			                    	
+                	      </ul>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -49,6 +56,9 @@
 				          <?php endif?>			                    	
                 	      </ul>
           </li>
+          </ul>
+          <ul class="nav navbar-nav pull-right">
+          <li><a><i class="fa fa-sign-out fa-fw"></i> Salir</a></li>
           </ul>
 
         </div><!-- /.navbar-collapse -->
