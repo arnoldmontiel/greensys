@@ -16,6 +16,7 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 		'selectableRows' => 0,
 		'emptyText' => 'A&uacute;n sin productos.',
 		'summaryText'=>'',	
+		'afterAjaxUpdate'=>'js:function(id, data){setTotals();}',				
 		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
 		'columns'=>array(
 					array(

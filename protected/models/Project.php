@@ -135,9 +135,22 @@ class Project extends ModelAudit
 		$criteria->join='INNER JOIN `customer` `c` ON (`c`.`Id`=`t`.`Id_customer`)
 						INNER JOIN 	`contact` `con` ON (`con`.`Id`=`c`.`Id_contact`)';
 		$criteria->compare('con.description',$this->contact_description,true);
-		$criteria->order="con.description, t.description";
+		//$criteria->order="con.description, t.description";
+		
+		$sort=new CSort;
+		//$sort->defaultOrder ="contact_description";
+// 		$sort->attributes=array(
+// 				'contact_description' => array(
+// 						'asc' => 'con.description',
+// 						'desc' => 'con.description DESC',
+// 				),
+// 				'*',
+// 		);
+		
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+				'sort'=>$sort,
 		));
 	}
 	public function getLongDescription()

@@ -20,6 +20,8 @@ $settings = new Settings();
 					'summaryText'=>'',
 					'selectableRows' => 0,
 					'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
+					'afterAjaxUpdate'=>'js:function(id, data){setTotals();}',
+					'emptyText' => 'A&uacute;n sin recargos.',				
 					'columns'=>array(
 							'description',
 							array(
@@ -166,7 +168,7 @@ $projectService->Id_project = $model->Id_project;
 	 			 },'json').success(
 	 				function(data) 
 	 				{ 
-						$.fn.yiiGridView.update('budget-item-generic');		 					
+						$.fn.yiiGridView.update('budget-item-generic');		 		
 	 				}
 	 			).error(function(){});
 	 }			

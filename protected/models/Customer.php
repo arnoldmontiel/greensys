@@ -186,11 +186,11 @@ class Customer extends ModelAudit
 		$criteria->with[]='contact';
 		$criteria->addSearchCondition("contact.telephone_1",$this->telephone_1);
 		$criteria->addSearchCondition("contact.email",$this->email);
-		$criteria->order="contact.description";
+		//$criteria->order="contact.description";		
 		// Create a custom sort
 		$sort=new CSort;
+		$sort->defaultOrder ="last_name";
 		$sort->attributes=array(
-		// For each relational attribute, create a 'virtual attribute' using the public variable name
 			'name' => array(
 									        'asc' => 'person.name',
 									        'desc' => 'person.name DESC',
