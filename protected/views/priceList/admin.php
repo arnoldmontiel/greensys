@@ -340,7 +340,7 @@ array(
 $('#createCustomer').click(
 		function(){
 			$.post(
-			'<?php echo CustomerController::createUrl('customer/AjaxShowCreateModal')?>',{field_caller:'custoemr-grid'}).success(
+			'<?php echo SiteController::createUrl('customer/AjaxShowCreateModal')?>',{field_caller:'customer-grid'}).success(
 					function(data)
 					{
 					if(data!=null)
@@ -358,7 +358,7 @@ function deleteCustomer(id)
 	if(confirm("¿Seguro desea eliminar el cliente?"))
 	{
 		$.post(
-				'<?php echo CustomerController::createUrl('customer/AjaxDelete')?>',{id:id}).success(
+				'<?php echo SiteController::createUrl('customer/AjaxDelete')?>',{id:id}).success(
 						function(data)
 						{
 							$.fn.yiiGridView.update('customer-grid');
@@ -369,7 +369,7 @@ function deleteCustomer(id)
 function updateCustomer(id)
 {
 	$.post(
-			'<?php echo CustomerController::createUrl('customer/AjaxShowUpdateModal')?>',{id:id,field_caller:'customer-grid'}).success(
+			'<?php echo SiteController::createUrl('customer/AjaxShowUpdateModal')?>',{id:id,field_caller:'customer-grid'}).success(
 					function(data)
 					{
 					if(data!=null)
