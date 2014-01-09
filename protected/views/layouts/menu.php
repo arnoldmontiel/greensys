@@ -52,6 +52,9 @@
                 	      <?php if(Yii::app()->user->checkAccess('ServiceManage')):?>			          
                 	      <li><a href="<?php echo Yii::app()->createUrl("service/index")?>">Servicios</a></li>
 				          <?php endif?>			                    	
+				          <?php if(Yii::app()->user->checkAccess('CurrencyManage')):?>			          
+                	      <li><a href="<?php echo Yii::app()->createUrl("currency/index")?>">Monedas</a></li>
+				          <?php endif?>
                 	      </ul>
           </li>
           </ul>
