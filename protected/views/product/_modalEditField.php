@@ -22,7 +22,7 @@
 				$placeholder = $modelProduct->measurementUnitLinear->short_description;
 		        break;
 			case "weight":
-				$placeholder = $modelProduct->measurementUnitLinear->short_description;
+				$placeholder = $modelProduct->measurementUnitWeight->short_description;
 		        break;
 	        case "msrp":
 	        	$settings = Setting::getInstance();
