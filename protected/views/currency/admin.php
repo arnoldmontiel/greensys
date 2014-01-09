@@ -4,7 +4,7 @@
   <h1 class="pageTitle">Monedas</h1>
   </div>
     <div class="col-sm-6 align-right">
-  <a onclick="createCurrency()" id="createService" class="btn btn-primary superBoton" data-toggle="modal" data-target="#myModalCrearService"><i class="fa fa-plus"></i> Agregar Moneda</a>
+  <a onclick="createCurrency()" class="btn btn-primary superBoton" data-toggle="modal" data-target="#myModalCrearService"><i class="fa fa-plus"></i> Agregar Moneda</a>
   </div>
   </div>
   <div class="row">
