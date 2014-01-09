@@ -18,12 +18,18 @@
 	'summaryText'=>'',		
 	'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
 		'columns'=>array(
-		'description',
-		'long_description',
+		'description',				
+		array(
+			'header'=>'Descripci&oacute;n',
+			'value'=>'GreenHelper::cutString($data->long_description==""?$data->service->long_description:$data->long_description,250)',
+			'type'=>'raw',
+			'htmlOptions'=>array("width"=>"70%;"),
+			'headerHtmlOptions'=>array("width"=>"70%;"),
+		),
 		array(
 				'header'=>'Acciones',
-				'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"updateService(".$data->Id.");\" ><i class=\"fa fa-pencil\"></i> Editar</button>".'.
-				'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"deleteServices(".$data->Id.");\" ><i class=\"fa fa-trash-o\"></i> Borrar</button>"',
+				'value'=>'"<div class=\"buttonsTableProd\"><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"updateService(".$data->Id.");\" ><i class=\"fa fa-pencil\"></i> Editar</button>".'.
+				'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"deleteServices(".$data->Id.");\" ><i class=\"fa fa-trash-o\"></i> Borrar</button></div>"',
 				'type'=>'raw',
 				'htmlOptions'=>array("style"=>"text-align:right;"),
 				'headerHtmlOptions'=>array("style"=>"text-align:right;"),
