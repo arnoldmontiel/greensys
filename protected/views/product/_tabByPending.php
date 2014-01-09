@@ -119,7 +119,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 						'header'=>'Acciones',
 						'value'=>function($data){
 							$grid = "'product-grid_pending'";
-							return '<div class="buttonsTableProd"><a href="'.Yii::app()->createUrl("product/update",array('id'=>$data->Id)).'"> <div class="buttonsTableProd"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button></a>
+							return '<div class="buttonsTableProd"><a href="'.Yii::app()->createUrl("product/update",array('id'=>$data->Id)).'" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</a>
 									<button type="button" onclick="removeProduct('.$data->Id.', '.$grid.');" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></div>';
 						},
 						'type'=>'raw',
