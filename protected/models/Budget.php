@@ -19,8 +19,10 @@
  * @property string $date_close
  * @property string $date_cancelled
  * @property string $date_approved
+ * @property integer $Id_currency
  * 
  * The followings are the available model relations:
+ * @property Currency $currency
  * @property BudgetState $idBudgetState
  * @property Project $idProject
  * @property BudgetItem[] $budgetItems
@@ -95,7 +97,7 @@ class Budget extends ModelAudit
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id, Id_project, Id_budget_state, version_number', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
+			array('Id, Id_project, Id_budget_state, version_number, Id_currency', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_project, Id_budget_state, version_number', 'numerical', 'integerOnly'=>true),
 			array('percent_discount', 'length', 'max'=>10),
 			array('date_creation, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, date_close, date_cancelled, date_approved', 'safe'),
@@ -116,6 +118,7 @@ class Budget extends ModelAudit
 		return array(
 			'budgetState' => array(self::BELONGS_TO, 'BudgetState', 'Id_budget_state'),
 			'project' => array(self::BELONGS_TO, 'Project', 'Id_project'),
+			'currency' => array(self::BELONGS_TO, 'Currency', 'Id_currency'),
 			'budgetItems' => array(self::HAS_MANY, 'BudgetItem', 'Id_budget'),
 			'notes' => array(self::HAS_MANY, 'GNote', 'budget_Id'),
 			'trackings' => array(self::HAS_MANY, 'Tracking', 'Id_budget'),

@@ -11,6 +11,7 @@
 	<?php echo CHtml::hiddenField("create-project",false,array('id'=>'create-project'));?>
 	<?php echo CHtml::activeHiddenField($model, 'Id');?>
 	<?php echo CHtml::activeHiddenField($model, 'version_number');?>
+	<?php echo CHtml::activeHiddenField($model, 'Id_currency');?>
   <div class="form-group">
     <?php echo CHtml::activeLabel($model, 'Id_project');?>
     	<div class="combined">

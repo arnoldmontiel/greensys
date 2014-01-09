@@ -659,6 +659,7 @@ class BudgetController extends GController
 			{
 				$modelProject = new Project();
 				$modelProject->attributes = $_POST['Project'];
+				
 				$modelProject->save();
 				$modelBudget->Id_project = $modelProject->Id; 
 			}
@@ -668,6 +669,11 @@ class BudgetController extends GController
 			//Solo para la creacion la version 1
 			$modelBudget->version_number = 1;
 			$modelBudget->Id_budget_state = 1;
+			
+			//la moneda lo tomo de settings
+			$modelSettings = Setting::model()->findByPk(1);
+			if(isset($modelSettings))
+				$modelBudget->Id_currency = $modelSettings->Id_currency;
 			
 			$modelBudget->save();
 			
