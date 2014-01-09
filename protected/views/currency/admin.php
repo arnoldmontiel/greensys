@@ -62,7 +62,7 @@ function deleteCurrency(id)
 				'<?php echo CurrencyController::createUrl('currency/AjaxDelete')?>',{id:id}).success(
 						function(data)
 						{
-							$.fn.yiiGridView.update('service-grid');
+							$.fn.yiiGridView.update('currency-grid');
 						}
 				);
 		}

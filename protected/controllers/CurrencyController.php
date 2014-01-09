@@ -183,13 +183,29 @@ class CurrencyController extends GController
 		{
 			$model=$this->loadModel($_POST['Currency']['Id']);
 	
-			if(isset($_POST['Area']))
+			if(isset($_POST['Currency']))
 			{
 				$model->attributes=$_POST['Currency'];
 				if($model->save())
 					echo json_encode($model->attributes);
 			}
 		}
+	}
+	
+	public function actionAjaxDelete()
+	{
+		if(Yii::app()->request->isPostRequest)
+		{
+			$id = $_POST['id'];
+			// we only allow deletion via POST request
+			$this->loadModel($id)->delete();
+	
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		}
+		else
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 	
 	/**
