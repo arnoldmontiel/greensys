@@ -3,7 +3,14 @@ class GreenHelper
 {
 	static public function convertCurrency($valueToConvert, $convertFrom, $convertTo)
 	{
+		if($convertFrom==$convertTo) return $valueToConvert;
 		
+		$currenecyConverter = CurrencyConverter::model()->findByAttribures(array('Id_currency_from'=>$convertFrom,'Id_currency_to'=>$convertTos));
+		if(isset($currenecyConverter))
+		{
+			return $valueToConvert*$currenecyConverter->factor;				
+		}
+		return 0;
 		
 	}
 	static public function generateListPrices($product)
