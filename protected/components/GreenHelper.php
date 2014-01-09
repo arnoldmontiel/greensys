@@ -34,6 +34,7 @@ class GreenHelper
 					$priceList->Id_price_list_type = 1;
 					$priceList->Id_supplier = $product->Id_supplier;
 					$priceList->description = "Generada automaticamente";
+					$priceList->Id_currency = $product->Id_currency;
 					$priceList->save();
 				
 				}
