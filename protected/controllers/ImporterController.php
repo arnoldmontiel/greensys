@@ -113,6 +113,83 @@ class ImporterController extends GController
 		));
 	}
 
+	public function actionAjaxOpenNewImporter()
+	{
+		$model=new Importer;
+		$modelContact=new Contact;
+		$modelShippingParameter =  new ShippingParameter;
+		$modelShippingParameterAir = new ShippingParameterAir;
+		$modelShippingParameterMaritime = new ShippingParameterMaritime;
+		
+		
+		if(
+		isset($_POST['Contact'])
+		&&isset($_POST['ShippingParameter'])
+		&&isset($_POST['ShippingParameterAir'])
+		&&isset($_POST['ShippingParameterMaritime'])
+		){
+			$modelContact->attributes=$_POST['Contact'];
+			$modelShippingParameter->attributes=$_POST['ShippingParameter'];
+			$modelShippingParameterAir->attributes=$_POST['ShippingParameterAir'];
+			$modelShippingParameterMaritime->attributes=$_POST['ShippingParameterMaritime'];
+			// Uncomment the following line if AJAX validation is needed
+			$this->performAjaxValidation($model,$modelContact,$modelShippingParameter,$modelShippingParameterAir,$modelShippingParameterMaritime);
+		
+			$transaction = $model->dbConnection->beginTransaction();
+			try {
+				if($modelContact->save())
+				{
+					$model->Id_contact = $modelContact->Id;
+					if($model->save())
+					{
+						if($modelShippingParameterAir->save()&&$modelShippingParameterMaritime->save())
+						{
+							$modelShippingParameter->Id_importer = $model->Id;
+							$modelShippingParameter->Id_shipping_parameter_air = $modelShippingParameterAir->Id;
+							$modelShippingParameter->Id_shipping_parameter_maritime = $modelShippingParameterMaritime->Id;
+							if($modelShippingParameter->save())
+							{
+								$transaction->commit();
+								$this->redirect(array('view','id'=>$model->Id));
+							}
+		
+						}
+					}
+				}
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
+		}
+		
+		echo $this->renderPartial('_modalFormImporter', array('model'=>$model,
+							'modelContact'=>$modelContact,
+							'modelShippingParameterMaritime'=>$modelShippingParameterMaritime,
+							'modelShippingParameterAir'=>$modelShippingParameterAir,
+							'modelShippingParameter'=>$modelShippingParameter,
+							));
+				
+	}
+	
+	public function actionAjaxOpenUpdateImporter()
+	{
+		$id = isset($_POST['id'])?$_POST['id']:null;
+	
+	
+		$model=$this->loadModel($id);
+		$modelContact=$this->loadModelContact($model->Id_contact);
+		
+		$modelShippingParameter =  $this->loadModelShippingParameter($model->Id);
+		$modelShippingParameterAir = $this->loadModelShippingParameterAir($modelShippingParameter->Id_shipping_parameter_air);
+		$modelShippingParameterMaritime = $this->loadModelShippingParameterMaritime($modelShippingParameter->Id_shipping_parameter_maritime);
+		
+		echo $this->renderPartial('_modalFormImporter', array('model'=>$model,
+				'modelContact'=>$modelContact,
+				'modelShippingParameterMaritime'=>$modelShippingParameterMaritime,
+				'modelShippingParameterAir'=>$modelShippingParameterAir,
+				'modelShippingParameter'=>$modelShippingParameter,
+		));
+	}
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
