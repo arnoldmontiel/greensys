@@ -168,7 +168,7 @@ class PriceList extends ModelAudit
 		$criteria->with[]='supplier';
 		$criteria->addSearchCondition('supplier.business_name',$this->supplier_business_name);
 		
-		$sort=new CSort;
+		$sort=new CSort;		
 		$sort->attributes=array(
 			'Id',
 			'date_creation',

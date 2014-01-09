@@ -102,6 +102,8 @@ class ProductController extends GController
 			} catch (Exception $e) {
 				$transaction->rollback();
 			}			
+			$model->refresh();
+			GreenHelper::generateListPrices($model);				
 		}
 
 		if(isset($_POST['Product']))
@@ -295,6 +297,8 @@ class ProductController extends GController
 			
 			//$this->createCode($model);
 			if($model->save()){
+				$model->refresh();
+				GreenHelper::generateListPrices($model);
 				
 				//update links
 				if(isset($_POST['links'])){

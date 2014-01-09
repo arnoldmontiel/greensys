@@ -543,6 +543,7 @@ class Product extends ModelAudit
 		
 		// Create a custom sort
 		$sort=new CSort;
+		$sort->defaultOrder="model";
 		$sort->attributes=array(
 				'code',
 				'model',

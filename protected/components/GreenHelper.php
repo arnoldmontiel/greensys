@@ -45,6 +45,10 @@ class GreenHelper
 				$importers = Importer::model()->findAll();
 				foreach ($importers as $importer)
 				{
+					if($importer->contact->description!="FOB")
+					{
+						if($product->getVolume() == 0 ||!$product->hasWeight())	continue;						
+					}
 					$criteria = new CDbCriteria;
 					$criteria->compare('Id_importer',$importer->Id);
 					$criteria->compare('Id_price_list_type',2); //venta
@@ -89,15 +93,15 @@ class GreenHelper
 						}
 						else
 						{
-							$maritime_cost = 0;
+							$maritime_cost = $priceListItem->dealer_cost;
 						}
-						if($product->hasWeight()!=0)
+						if($product->hasWeight())
 						{
 							$air_cost = $priceListItem->dealer_cost+($air->cost_measurement_unit*$weight);
 						}
 						else
 						{
-							$air_cost = 0;
+							$air_cost = $priceListItem->dealer_cost;
 						}
 						$priceListItem->maritime_cost = $maritime_cost * $product->profit_rate;
 						$priceListItem->air_cost= $air_cost * $product->profit_rate;
