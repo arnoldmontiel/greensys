@@ -647,13 +647,13 @@ font-family: "GudeaRegular";
 
 /* ------ CREAR IMPORTADOR ------- */
 
-#myModalNewImporter .modal-dialog{width:800px;}
+#myModalFormImporter .modal-dialog{width:800px;}
 
-#myModalNewImporter .modal-body{padding:10px;}
+#myModalFormImporter .modal-body{padding:10px;}
 
-#myModalNewImporter h4{margin-top:15px;}
+#myModalFormImporter h4{margin-top:15px;}
 
-#myModalNewImporter .form-group{margin-bottom:5px;}
+#myModalFormImporter .form-group{margin-bottom:5px;}
 
 
 .grupoAereo{background-color:#eee; border-right:2px solid #fff; margin-top:5px;}
