@@ -1,6 +1,11 @@
 <?php
 class GreenHelper
 {
+	static public function convertCurrency($valueToConvert, $convertFrom, $convertTo)
+	{
+		
+		
+	}
 	static public function generateListPrices($product)
 	{
 		if(get_class($product)=="Product")
@@ -89,22 +94,28 @@ class GreenHelper
 						$weight = $product->getWeightConverted();
 						if($volume != 0)
 						{
-							$maritime_cost = $priceListItem->dealer_cost+($maritime->cost_measurement_unit*$volume);
+							//$maritime_cost = $priceListItem->dealer_cost+($maritime->cost_measurement_unit*$volume);
+							$maritime_cost = $maritime->cost_measurement_unit*$volume;
 						}
 						else
 						{
-							$maritime_cost = $priceListItem->dealer_cost;
+							//$maritime_cost = $priceListItem->dealer_cost;
+							$maritime_cost = 0;
 						}
 						if($product->hasWeight())
 						{
-							$air_cost = $priceListItem->dealer_cost+($air->cost_measurement_unit*$weight);
+							//$air_cost = $priceListItem->dealer_cost+($air->cost_measurement_unit*$weight);
+							$air_cost = $air->cost_measurement_unit*$weight;
 						}
 						else
 						{
-							$air_cost = $priceListItem->dealer_cost;
+							//$air_cost = $priceListItem->dealer_cost;
+							$air_cost = 0;
 						}
-						$priceListItem->maritime_cost = $maritime_cost * $product->profit_rate;
-						$priceListItem->air_cost= $air_cost * $product->profit_rate;
+						//$priceListItem->maritime_cost = $maritime_cost * $product->profit_rate;
+						//$priceListItem->air_cost= $air_cost * $product->profit_rate;
+ 						$priceListItem->maritime_cost = $maritime_cost;
+ 						$priceListItem->air_cost= $air_cost;
 					}
 					$priceListItem->save();
 				

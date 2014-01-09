@@ -380,12 +380,12 @@ class BudgetController extends GController
 							if(isset($modelPriceListItem->maritime_cost) && $modelPriceListItem->maritime_cost > 0)
 							{
 								$modelBudgetItemBD->Id_shipping_type = 1;
-								$modelBudgetItemBD->price = $modelPriceListItem->maritime_cost;
+								$modelBudgetItemBD->price = $modelPriceListItem->getMaritimeSalePrice();
 							}
 							else 
 							{						
 								$modelBudgetItemBD->Id_shipping_type = 2;
-								$modelBudgetItemBD->price = $modelPriceListItem->air_cost;
+								$modelBudgetItemBD->price = $modelPriceListItem->getAirSalePrice;
 							}
 						}
 						else 
@@ -401,7 +401,7 @@ class BudgetController extends GController
 							{
 								$modelBudgetItemBD->Id_price_list = $modelPriceListItem->Id_price_list;
 								$modelBudgetItemBD->Id_shipping_type = 1;
-								$modelBudgetItemBD->price = $modelPriceListItem->maritime_cost;
+								$modelBudgetItemBD->price = $modelPriceListItem->getMaritimeSalePrice();
 							}
 						}
 						
@@ -890,11 +890,11 @@ class BudgetController extends GController
 			$modelBudgetItem->Id_price_list = $modelPriceListItem->Id_price_list; 				
 			if($shippingType==1)//maritime
 			{
-				$modelBudgetItem->price =$modelPriceListItem->maritime_cost; 				
+				$modelBudgetItem->price =$modelPriceListItem->getMaritimeSalePrice(); 				
 			}
 			else//air
 			{
-				$modelBudgetItem->price =$modelPriceListItem->air_cost;				
+				$modelBudgetItem->price =$modelPriceListItem->getAirSalePrice();				
 			}
 			$modelBudgetItem->save();
 		}
@@ -1278,7 +1278,7 @@ class BudgetController extends GController
 			$modelBudgetItem->version_number = $idVersion;
 			$modelBudgetItem->Id_area = $idArea;
 			$modelBudgetItem->Id_area_project = $idAreaProject;
-			$modelBudgetItem->price = ($idShippingType==1)?$modelPriceListItem->maritime_cost:$modelPriceListItem->air_cost;
+			$modelBudgetItem->price = ($idShippingType==1)?$modelPriceListItem->getMaritimeSalePrice():$modelPriceListItem->getAirSalePrice();
 			$modelBudgetItem->save();
 			
 			$productGroups = ProductGroup::model()->findAllByAttributes(array('Id_product_parent'=>$idProduct));

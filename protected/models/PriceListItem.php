@@ -270,22 +270,24 @@ class PriceListItem extends ModelAudit
 			}						
 		}
 	}
-	public function getAirPurchaseCost()
+	public function getMaritimeSalePrice()
 	{
-		if(!isset($this->priceList))	return;		
-		$importer = $this->priceList->importer;
-		if(isset($importer))
-		{
-			if(!empty($importer->shippingParameters))
-			{
-				$shippingParameter = $importer->shippingParameters[0];
-				$air = $shippingParameter->shippingParameterAir;
-				if (isset($this)&&isset($shippingParameter)&&isset($air)&&isset($this->product))
-				{
-					$cost = $this->dealer_cost+($air->cost_measurement_unit*$this->product->weight);		
-					return number_format(round($cost,4),2);
-				}
-			}						
-		}
+		$settings= new Settings();
+		$shippingParameter = $this->priceList->importer->shippingParameters[0];
+		
+		$dealerCost = GreenHelper::convertCurrency($this->dealer_cost,$this->priceList->Id_currency,$settings->Id_currency);
+		$maritimeCost = GreenHelper::convertCurrency($this->maritime_cost,$shippingParameter->Id_currency,$settings->Id_currency);
+		$price = ($dealerCost*$this->profit_rate)+$maritimeCost;
+		return number_format(round($price,4),2);
+	}
+	public function getAirSalePrice()
+	{
+		$settings= new Settings();
+		$shippingParameter = $this->priceList->importer->shippingParameters[0];
+		
+		$dealerCost = GreenHelper::convertCurrency($this->dealer_cost,$this->priceList->Id_currency,$settings->Id_currency);
+		$airCost = GreenHelper::convertCurrency($this->air_cost,$shippingParameter->Id_currency,$settings->Id_currency);
+		$price = ($dealerCost*$this->profit_rate)+airCost;
+		return number_format(round($price,4),2);
 	}
 }
