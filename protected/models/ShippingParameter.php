@@ -76,7 +76,7 @@ class ShippingParameter extends ModelAudit
 	{
 		return array(
 			'Id' => 'ID',
-			'description' => 'Description',
+			'description' => 'Descripción',
 			'Id_importer' => 'Id Importer',
 			'Id_shipping_parameter_air' => 'Id Shipping Parameter Air',
 			'Id_shipping_parameter_maritime' => 'Id Shipping Parameter Maritime',

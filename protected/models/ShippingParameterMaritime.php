@@ -70,9 +70,9 @@ class ShippingParameterMaritime extends ModelAudit
 	{
 		return array(
 			'Id' => 'ID',
-			'cost_measurement_unit' => 'Cost Measurement Unit',
-			'Id_measurement_unit_cost' => 'Id Measurement Unit Cost',
-			'days' => 'Days',
+			'cost_measurement_unit' => 'Costo por Medida de Unidad',
+			'Id_measurement_unit_cost' => 'Unidad',
+			'days' => 'D&iacute;as',
 		);
 	}
 

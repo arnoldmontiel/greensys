@@ -78,15 +78,15 @@ class ShippingParameterAir extends ModelAudit
 	{
 		return array(
 			'Id' => 'ID',
-			'cost_measurement_unit' => 'Cost Measurement Unit',
-			'Id_measurement_unit_cost' => 'Id Measurement Unit Cost',
-			'weight_max' => 'Weight Max',
-			'length_max' => 'Length Max',
-			'width_max' => 'Width Max',
-			'height_max' => 'Height Max',
-			'volume_max' => 'Volume Max',
-			'Id_measurement_unit_sizes_max' => 'Id Measurement Unit Sizes Max',
-			'days' => 'Days',
+			'cost_measurement_unit' => 'Costo por Medida de Unidad',
+			'Id_measurement_unit_cost' => 'Unidad',
+			'weight_max' => 'Peso Max',
+			'length_max' => 'Largo Max',
+			'width_max' => 'Ancho Max',
+			'height_max' => 'Alto Max',
+			'volume_max' => 'Vol Max',
+			'Id_measurement_unit_sizes_max' => 'Unidad Max',
+			'days' => 'Dias',
 		);
 	}
 

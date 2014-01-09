@@ -95,6 +95,11 @@ class Importer extends ModelAudit
 		return array(
 			'Id' => 'ID',
 			'Id_contact' => 'Id Contact',
+			'contact_telephone_1' =>'Tel&eacute;fono 1',
+			'contact_telephone_2' =>'Tel&eacute;fono 2',
+			'contact_telephone_3' =>'Tel&eacute;fono 3',
+			'contact_description' =>'Contacto',
+			'contact_email' =>'Correo',
 		);
 	}
 
