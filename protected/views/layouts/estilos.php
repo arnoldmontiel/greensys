@@ -645,6 +645,23 @@ font-family: "GudeaRegular";
 
 /* ------ END CREAR PRESU ------- */
 
+/* ------ CREAR IMPORTADOR ------- */
+
+#myModalNewImporter .modal-dialog{width:800px;}
+
+#myModalNewImporter .modal-body{padding:10px;}
+
+#myModalNewImporter h4{margin-top:15px;}
+
+#myModalNewImporter .form-group{margin-bottom:5px;}
+
+
+.grupoAereo{background-color:#eee; border-right:2px solid #fff; margin-top:5px;}
+.grupoMaritimo{background-color:#eee; margin-top:5px;}
+
+/* ------ END CREAR IMPORTADOR ------- */
+
+
 /* ------ UPLOAD IMAGENES PRODUCTO ------- */
 .xupload-form{ background-color:rgba(255,255,255,0.5);  font-size:16px;border: 3px dotted #eee; line-height:60px; height:250px; 
 width:auto; padding:50px; border-radius:0px; display:block;margin-right:20px;margin-left: 20px; margin:auto;}
