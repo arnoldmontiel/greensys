@@ -56,7 +56,7 @@
 
 function createImporter()
 {
-	$.post("<?php echo ProductController::createUrl('AjaxOpenNewImporter'); ?>"
+	$.post("<?php echo ImporterController::createUrl('AjaxOpenNewImporter'); ?>"
 	).success(
 		function(data){
 			$('#myModalFormImporter').html(data);
@@ -66,7 +66,7 @@ function createImporter()
 
 function updateImporter(id)
 {
-	$.post("<?php echo BudgetController::createUrl('AjaxOpenUpdateImporter'); ?>",
+	$.post("<?php echo ImporterController::createUrl('AjaxOpenUpdateImporter'); ?>",
 		{
 			id:id
 		}
