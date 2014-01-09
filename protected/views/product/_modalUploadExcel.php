@@ -40,7 +40,14 @@
 		CHtml::listData($ddlMeasurementUnitLinear, 'Id', 'short_description')); 
 	?>
   </div>
-</form>
+  <div class="form-group">
+  	<label for="Id_curreny">Moneda</label>
+      <?php				
+		echo CHtml::activeDropDownList($modelProductImportLog, 'Id_currency', 
+		CHtml::listData($ddlCurrency, 'Id', 'short_description')); 
+	?>
+  </div>
+  </form>
 
 <!--Esto aparece una vez que le das Cargar-->
 <div id="status-wait" style="display:none;" class="estadoModal">

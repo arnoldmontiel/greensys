@@ -385,7 +385,7 @@ class BudgetController extends GController
 							else 
 							{						
 								$modelBudgetItemBD->Id_shipping_type = 2;
-								$modelBudgetItemBD->price = $modelPriceListItem->getAirSalePrice;
+								$modelBudgetItemBD->price = $modelPriceListItem->getAirSalePrice();
 							}
 						}
 						else 

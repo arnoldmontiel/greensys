@@ -992,15 +992,17 @@ class ProductController extends GController
 			{
 				$modelProductImportLogDB = ProductImportLog::model()->findByAttributes(array('Id_brand'=>$modelProductImportLog->Id_brand));
 				if(isset($modelProductImportLogDB))
-				{
+				{						
 					$modelProductImportLogDB->Id_measurement_unit_linear = $modelProductImportLog->Id_measurement_unit_linear;
 					$modelProductImportLogDB->Id_measurement_unit_weight = $modelProductImportLog->Id_measurement_unit_weight;
+					$modelProductImportLogDB->Id_currency = $modelProductImportLog->Id_currency;
 					GreenHelper::importProductFromExcel($modelExcel, $modelProductImportLogDB);
 				}
 				else
 					GreenHelper::importProductFromExcel($modelExcel, $modelProductImportLog);
 								
 			}
+				
 		}
 		
 		$criteria = new CDbCriteria();
@@ -1088,6 +1090,8 @@ class ProductController extends GController
 		$criteria->order = "t.description ASC";
 		
 		$ddlBrand = Brand::model()->findAll($criteria);
+		
+		$ddlCurrency = Currency::model()->findAll();
 	
 		echo $this->renderPartial('_modalUploadExcel', 
 								array(
@@ -1095,6 +1099,7 @@ class ProductController extends GController
 									'modelProductImportLog'=>$modelProductImportLog,
 									'ddlMeasurementUnitLinear'=>$ddlMeasurementUnitLinear,
 									'ddlMeasurementUnitWeight'=>$ddlMeasurementUnitWeight,
+									'ddlCurrency'=>$ddlCurrency,
 									'ddlBrand'=>$ddlBrand,
 									'isUpdate'=>false));
 	}
@@ -1128,13 +1133,16 @@ class ProductController extends GController
 		$criteria->addCondition('t.Id = '.$idBrand);		
 		
 		$ddlBrand = Brand::model()->findAll($criteria);	
-	
+		
+		$ddlCurrency = Currency::model()->findAll();
+		
 		echo $this->renderPartial('_modalUploadExcel',
 				array(
 						'modelExcel'=>$modelExcel,
 						'modelProductImportLog'=>$modelProductImportLog,
 						'ddlMeasurementUnitLinear'=>$ddlMeasurementUnitLinear,
 						'ddlMeasurementUnitWeight'=>$ddlMeasurementUnitWeight,
+						'ddlCurrency'=>$ddlCurrency,
 						'ddlBrand'=>$ddlBrand,
 						'isUpdate'=>true));
 	}

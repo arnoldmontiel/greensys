@@ -42,12 +42,12 @@ class ProductImportLog extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_brand, Id_measurement_unit_linear, Id_measurement_unit_weight', 'required'),
-			array('Id_brand, Id_measurement_unit_linear, Id_measurement_unit_weight', 'numerical', 'integerOnly'=>true),
+			array('Id_brand, Id_measurement_unit_linear, Id_measurement_unit_weight, Id_currency', 'required'),
+			array('Id_brand, Id_measurement_unit_linear, Id_measurement_unit_weight, Id_currency', 'numerical', 'integerOnly'=>true),
 			array('last_import_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('Id, last_import_date, Id_brand, Id_measurement_unit_linear, Id_measurement_unit_weight, brand_description', 'safe', 'on'=>'search'),
+			array('Id, last_import_date, Id_brand, Id_measurement_unit_linear, Id_measurement_unit_weight, Id_currency, brand_description', 'safe', 'on'=>'search'),
 		);
 	}
 

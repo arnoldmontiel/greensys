@@ -5,10 +5,10 @@ class GreenHelper
 	{
 		if($convertFrom==$convertTo) return $valueToConvert;
 		
-		$currenecyConverter = CurrencyConverter::model()->findByAttribures(array('Id_currency_from'=>$convertFrom,'Id_currency_to'=>$convertTos));
-		if(isset($currenecyConverter))
+		$currenecyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertFrom,'Id_currency_to'=>$convertTo));
+		if(isset($currenecyConversor))
 		{
-			return $valueToConvert*$currenecyConverter->factor;				
+			return $valueToConvert*$currenecyConversor->factor;				
 		}
 		return 0;
 		
@@ -17,9 +17,9 @@ class GreenHelper
 	{
 		if(get_class($product)=="Product")
 		{
+			if($product->dealer_cost == 0 ||$product->msrp==0)	return false;
 			$transaction = Yii::app()->db->beginTransaction();
 			try {
-				if($product->dealer_cost == 0 ||$product->msrp==0)	return false;
 				//compras
 				$criteria = new CDbCriteria;
 				$criteria->compare('Id_supplier',$product->Id_supplier);
@@ -34,12 +34,16 @@ class GreenHelper
 					$priceList->Id_price_list_type = 1;
 					$priceList->Id_supplier = $product->Id_supplier;
 					$priceList->description = "Generada automaticamente";
-					$priceList->Id_currency = $product->Id_currency;
+					$priceList->Id_currency = $product->Id_currency;					
 					$priceList->save();
 				
 				}
+				if($priceList->Id_currency != $product->Id_currency)
+				{
+					$priceList->Id_currency = $product->Id_currency;
+					$priceList->save();						
+				}
 				$criteria = new CDbCriteria;
-					
 				$criteria->compare('Id_product',$product->Id);
 				$criteria->compare('Id_price_list',$priceList->Id);
 				$priceListItem = PriceListItem::model()->find($criteria);
@@ -49,6 +53,7 @@ class GreenHelper
 					$priceListItem->Id_price_list = $priceList->Id;
 					$priceListItem->Id_product = $product->Id;
 				}
+				
 				$priceListItem->msrp = $product->msrp;
 				$priceListItem->dealer_cost = $product->dealer_cost;
 				$priceListItem->profit_rate = $product->profit_rate;
@@ -75,9 +80,15 @@ class GreenHelper
 						//$priceList->date_validity = new CDbExpression('NOW()');
 						$priceList->Id_importer = $importer->Id;
 						$priceList->description = "Generada automaticamente";
+						$priceList->Id_currency = $product->Id_currency;						
 						$priceList->save();
-				
 					}
+					if($priceList->Id_currency != $product->Id_currency)
+					{
+						$priceList->Id_currency = $product->Id_currency;
+						$priceList->save();
+					}
+						
 					$criteria = new CDbCriteria;
 						
 					$criteria->compare('Id_product',$product->Id);
@@ -1408,7 +1419,8 @@ class GreenHelper
 	{
 		$Id_linear = $modelProductImportLog->Id_measurement_unit_linear;
 		$Id_weight =  $modelProductImportLog->Id_measurement_unit_weight;
-	
+		$Id_currency =  $modelProductImportLog->Id_currency;
+		
 		$file=CUploadedFile::getInstance($modelUpload,'file');
 		$sheet_array = Yii::app()->yexcel->readActiveSheet($file->tempName);
 		
@@ -1436,6 +1448,7 @@ class GreenHelper
 					self::setProductAttributes($modelProductDB, $excelCols, $row);
 					$modelProductDB->Id_measurement_unit_linear = $Id_linear;
 					$modelProductDB->Id_measurement_unit_weight = $Id_weight;
+					$modelProductDB->Id_currency = $Id_currency;
 					$modelProductDB->save();
 					self::generateListPrices($modelProductDB);
 				}
@@ -1446,6 +1459,7 @@ class GreenHelper
 					self::setProductAttributes($modelProduct, $excelCols, $row);
 					$modelProduct->Id_measurement_unit_linear = $Id_linear;
 					$modelProduct->Id_measurement_unit_weight = $Id_weight;
+					$modelProduct->Id_currency = $Id_currency;
 					$modelProduct->save();
 					self::generateListPrices($modelProduct);
 				}

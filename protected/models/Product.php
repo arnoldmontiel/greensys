@@ -180,8 +180,8 @@ class Product extends ModelAudit
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_brand, Id_category, Id_nomenclator, Id_product_type, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, Id_category, Id_sub_category', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
-			array('Id_volts,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, need_rack, unit_rack, unit_fan, from_dtools, verified, Id_product, need_ups', 'numerical', 'integerOnly'=>true),
+			array('Id_brand, Id_currency, Id_category, Id_nomenclator, Id_product_type, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, Id_category, Id_sub_category', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
+			array('Id_volts, Id_currency,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, need_rack, unit_rack, unit_fan, from_dtools, verified, Id_product, need_ups', 'numerical', 'integerOnly'=>true),
 			array('description_customer, description_supplier, short_description, part_number, url, tags, 
 				accounting_item_name, summarize, sales_tax, labor_sales_tax, dispersion, bulk_wire, model, vendor, default_broker, default_send_format, commercial_name, accessory_a, accessory_b, accessory_c, accessory_d, attached', 'length', 'max'=>255),
 			array('code, code_supplier, color, other', 'length', 'max'=>45),
