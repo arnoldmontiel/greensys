@@ -20,21 +20,57 @@
 		'description',
 		'short_description',
 		array(
+				'header'=>'Relaciones',
+				'value'=>function($data){				
+					return '      <table class="table table-condensed">
+<thead>
+<tr>
+<th>Relacion</th>
+<th>Cambio</th>
+<th>Actualizacion</th>
+<th class="align-right">Acciones</th>
+</thead>
+<tbody>
+      <tr>
+      <td>Canadiense</td>
+      <td>1.10</td>
+      <td>10/12/2013</td>
+      <td class="align-right"><a class="btn btn-default btn-sm"><i class="fa fa-pencil"></i></a><a class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></a></td>
+      </tr>
+      <tr>
+      <td>Peso</td>
+      <td>1.10</td>
+      <td>10/12/2013</td>
+      <td class="align-right"><a class="btn btn-default btn-sm"><i class="fa fa-pencil"></i></a><a class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></a></td>
+      </tr>
+      </tbody>
+    </table>
+    ';
+				},
+				'type'=>'raw',
+				'htmlOptions'=>array("width"=>"30%"),
+		),	
+		array(
 				'header'=>'Acciones',
 				'value'=>function($data){				
 					return '<button onclick="updateCurrency('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
+							<button onclick="updateCurrency('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> Agregar Relacion</button>
     						<button onclick="deleteCurrency('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>';
 				},
 				'type'=>'raw',
 				'htmlOptions'=>array("style"=>"text-align:right;"),
+				'headerHtmlOptions'=>array("style"=>"text-align:right;"),
 		),	
 	),
 )); ?>
     
+
     </div>
     <!-- /.col-sm-12 --> 
   </div>
   <!-- /.row --> 
+  	
+  
 </div>
 <!-- /container --> 
 

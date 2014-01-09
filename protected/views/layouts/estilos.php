@@ -233,6 +233,8 @@ font-family:'GudeaRegular', Arial, sans-serif;
 
 h3.tableTitle{ color: #666; text-shadow:none; background-color:#eee; padding:10px; margin-bottom:0px;}
 
+#screenInicio .panel .alert{margin-bottom:0px;}
+
 .panel-heading h3 { text-shadow:none; color:#333;}
 .panel-primary .panel-heading h3 {  color:white;}
 
