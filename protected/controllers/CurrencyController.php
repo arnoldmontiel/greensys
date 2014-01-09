@@ -1,6 +1,6 @@
 <?php
 
-class CurrencyController extends Controller
+class CurrencyController extends GController
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -115,10 +115,7 @@ class CurrencyController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Currency');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		$this->redirect(array('admin'));
 	}
 
 	/**
@@ -136,6 +133,65 @@ class CurrencyController extends Controller
 		));
 	}
 
+	public function actionAjaxShowCreateModal()
+	{
+		$model = new Currency();
+		$field_caller ="";
+		
+		if($_POST['field_caller'])
+			$field_caller=$_POST['field_caller'];
+		
+		$this->renderPartial('_formModal',array(
+				'model'=>$model,
+				'field_caller'=>$field_caller
+		));
+	}
+	public function actionAjaxShowUpdateModal()
+	{
+		if(isset($_POST['id']))
+		{
+			$model=$this->loadModel($_POST['id']);
+			$field_caller ="";
+			if($_POST['field_caller'])
+				$field_caller=$_POST['field_caller'];
+			// Uncomment the following line if AJAX validation is needed
+			$this->renderPartial('_formModal',array(
+					'model'=>$model,
+					'field_caller'=>$field_caller
+			));
+		}
+	}
+	
+	public function actionAjaxCreate()
+	{
+		$model = new Currency();
+	
+		// Uncomment the following line if AJAX validation is needed
+		$this->performAjaxValidation($model);
+	
+		if(isset($_POST['Currency']))
+		{
+			$model->attributes=$_POST['Currency'];
+			if($model->save())
+				echo json_encode($model->attributes);
+		}
+	}
+	
+	public function actionAjaxUpdate()
+	{
+		if(isset($_POST['Currency']['Id']))
+		{
+			$model=$this->loadModel($_POST['Currency']['Id']);
+	
+			if(isset($_POST['Area']))
+			{
+				$model->attributes=$_POST['Currency'];
+				if($model->save())
+					echo json_encode($model->attributes);
+			}
+		}
+	}
+	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
