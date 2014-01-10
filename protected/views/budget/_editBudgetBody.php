@@ -34,11 +34,11 @@ $settings = new Settings();
        <li id="addAreaToProject" class="liButtonAdd"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ><i class="fa fa-plus"></i> Agregar Area</button></li>
       </ul>
       <div class="tab-content">
-      
+      <?php if(!isset($idArea)):?>
        <div class="alert alert-warning fade in" id="warningEmpty">
         Para poder agregar productos, primero debes <strong>agregar &aacute;reas</strong>.
       </div>
-      
+      <?php endif;?>
         <?php
         $first = true;
         foreach($areaProjects as $item)	{ ?>
