@@ -216,7 +216,7 @@
 						$.fn.yiiGridView.update("importer-grid");
 				    	$('#myModalFormImporter').trigger('click');
 					}
-				}		    	
+				}
 		    	
 		    },
 		     error: function(jqXHR, textStatus, errorThrown)

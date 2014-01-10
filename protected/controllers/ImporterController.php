@@ -126,6 +126,8 @@ class ImporterController extends GController
 	
 	public function actionAjaxSaveUpdatedImporter()
 	{
+		$response = array('hasError'=>0);
+		
 		if(
 		isset($_POST['Contact'])
 		&&isset($_POST['ShippingParameter'])
@@ -137,30 +139,36 @@ class ImporterController extends GController
 			$modelContact = Contact::model()->findByPk($id);
 				
 			$modelContact->attributes = $_POST['Contact'];
-			$modelContact->save();
 			
-			//save shipping parameter
-			$id = $_POST['ShippingParameter']['Id'];
-			$modelShippingParameter = ShippingParameter::model()->findByPk($id);
-			
-			$modelShippingParameter->attributes = $_POST['ShippingParameter'];
-			$modelShippingParameter->save();
-			
-			//save shipping parameter AIR
-			$id = $_POST['ShippingParameterAir']['Id'];
-			$modelShippingParameterAir = ShippingParameterAir::model()->findByPk($id);
+			if($modelContact->validate())
+			{
+				$modelContact->save();
 				
-			$modelShippingParameterAir->attributes = $_POST['ShippingParameterAir'];
-			$modelShippingParameterAir->save();
-			
-			//save shipping parameter MARITIME
-			$id = $_POST['ShippingParameterMaritime']['Id'];
-			$modelShippingParameterMaritime = ShippingParameterMaritime::model()->findByPk($id);
+				//save shipping parameter
+				$id = $_POST['ShippingParameter']['Id'];
+				$modelShippingParameter = ShippingParameter::model()->findByPk($id);
 				
-			$modelShippingParameterMaritime->attributes = $_POST['ShippingParameterMaritime'];
-			$modelShippingParameterMaritime->save();
-			
+				$modelShippingParameter->attributes = $_POST['ShippingParameter'];
+				$modelShippingParameter->save();
+				
+				//save shipping parameter AIR
+				$id = $_POST['ShippingParameterAir']['Id'];
+				$modelShippingParameterAir = ShippingParameterAir::model()->findByPk($id);
+					
+				$modelShippingParameterAir->attributes = $_POST['ShippingParameterAir'];
+				$modelShippingParameterAir->save();
+				
+				//save shipping parameter MARITIME
+				$id = $_POST['ShippingParameterMaritime']['Id'];
+				$modelShippingParameterMaritime = ShippingParameterMaritime::model()->findByPk($id);
+					
+				$modelShippingParameterMaritime->attributes = $_POST['ShippingParameterMaritime'];
+				$modelShippingParameterMaritime->save();
+			}
+			else 
+				$response = array('hasError'=>1, 'message'=>$modelContact->getError('email'));
 		}
+		echo json_encode($response);
 	}
 	
 
