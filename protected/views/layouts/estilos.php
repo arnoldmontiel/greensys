@@ -653,7 +653,7 @@ font-family: "GudeaRegular";
 
 /* ------ CREAR IMPORTADOR ------- */
 
-#myModalFormImporter .modal-dialog{width:800px;}
+#myModalFormImporter .modal-dialog{width:850px;}
 
 #myModalFormImporter .modal-body{padding:10px;}
 
