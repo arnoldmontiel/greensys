@@ -44,7 +44,7 @@
   	<label for="Id_curreny">Moneda</label>
       <?php				
 		echo CHtml::activeDropDownList($modelProductImportLog, 'Id_currency', 
-		CHtml::listData($ddlCurrency, 'Id', 'short_description')); 
+		CHtml::listData($ddlCurrency, 'Id', 'description')); 
 	?>
   </div>
   </form>
@@ -123,7 +123,6 @@
 		    	$('#status-success').show();
 		    	$.fn.yiiGridView.update("product-grid_brand");
 		    	$('#tab-pending').children().text(data);
-		    	$('#btn-upload').removeAttr('disabled');
 				
 		    	<?php if($isUpdate): ?> 		    		
 		    	 	setTimeout(function () {
@@ -131,6 +130,7 @@
 		    	    }, 3000);		    				    		
 		    	<?php else: ?> 
 		    		$("#ProductImportLog_Id_brand option[value='"+selectedBrand+"']").remove();
+		    		$('#UploadExcel_file').val('');
 		    		$('#btn-upload').removeAttr('disabled');
 		    	<?php endif; ?>
 		    },
