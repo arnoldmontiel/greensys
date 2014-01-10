@@ -1108,8 +1108,13 @@ class ProductController extends GController
 	{
 		$idBrand = $_POST['idBrand'];
 		
-		$modelProductImportLog = new ProductImportLog();
-		$modelProductImportLog->Id_brand = $idBrand;
+		$modelProductImportLog = ProductImportLog::model()->findByAttributes(array('Id_brand'=>$idBrand));
+		if(!isset($modelProductImportLog))
+		{
+			$modelProductImportLog = new ProductImportLog();
+			$modelProductImportLog->Id_brand = $idBrand;				
+		}
+		
 		$modelExcel = new UploadExcel();
 	
 		$measureType = MeasurementType::model()->findByAttributes(array('description'=>'linear'));
