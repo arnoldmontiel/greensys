@@ -11,12 +11,12 @@
 				array(
 					'name'=>'project_description',
 					'value'=>'$data->project->fullDescription',
-					'htmlOptions'=>array("style"=>"width:15%;"),
+					'htmlOptions'=>array("style"=>"width:27%;"),
 				),
 				array(
 					'name'=>'version_number',
 					'value'=>'$data->version_number',
-					'htmlOptions'=>array("style"=>"width:10%;", "class"=>"align-right"),
+					'htmlOptions'=>array("style"=>"width:12%;", "class"=>"align-right"),
 					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
@@ -33,13 +33,13 @@
 				array(
 					'name'=>'date_creation',
 					'value'=>'$data->date_creation',
-					'htmlOptions'=>array("style"=>"width:12%;", "class"=>"align-right"),
+					'htmlOptions'=>array("style"=>"width:15%;", "class"=>"align-right"),
 					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(
 					'name'=>'date_inicialization',
 					'value'=>'$data->date_inicialization',
-					'htmlOptions'=>array("style"=>"width:10%;", "class"=>"align-right"),
+					'htmlOptions'=>array("style"=>"width:15%;", "class"=>"align-right"),
 					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(

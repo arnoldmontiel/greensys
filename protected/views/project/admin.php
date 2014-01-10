@@ -4,7 +4,7 @@
   <h1 class="pageTitle">Proyectos</h1>
   </div>
     <div class="col-sm-6 align-right">
-  <a id="createCostomer" class="btn btn-primary superBoton" data-toggle="modal" data-target="#myModalCrearProject"><i class="fa fa-plus"></i> Agregar Projecto</a>
+  <a id="createCostomer" class="btn btn-primary superBoton" data-toggle="modal" data-target="#myModalCrearProject"><i class="fa fa-plus"></i> Agregar Proyecto</a>
   </div>
   </div>
   <div class="row">

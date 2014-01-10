@@ -104,7 +104,7 @@ function removeProduct(idProduct, grid)
       <ul class="nav nav-tabs">
         <li class="active"><a id="tab-all" href="#tabTodos" data-toggle="tab">Todos</a></li>
         <li><a id="tab-pending" href="#tabPendientes" data-toggle="tab">Datos Incompletos <span class="badge"><?php echo $pendingQty; ?></span></a></li>
-        <li><a id="tab-brand" href="#tabPorMarca" data-toggle="tab">por Marca </a></li>
+        <li><a id="tab-brand" href="#tabPorMarca" data-toggle="tab">Archivos Excel </a></li>
       </ul>
       <div class="tab-content">
 	  	  <div class="tab-pane active" id="tabTodos">

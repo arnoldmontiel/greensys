@@ -10,7 +10,6 @@
 				array(
 					'name'=>'project_description',
 					'value'=>'$data->project->fullDescription',
-					'htmlOptions'=>array("style"=>"width:15%;"),
 				),
 				array(
 					'name'=>'date_close',
@@ -38,7 +37,7 @@
 				array(
 					'name'=>'date_creation',
 					'value'=>'$data->date_creation',
-					'htmlOptions'=>array("style"=>"width:10%;", "class"=>"align-right"),
+					'htmlOptions'=>array("style"=>"width:15%;", "class"=>"align-right"),
 					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
 				array(

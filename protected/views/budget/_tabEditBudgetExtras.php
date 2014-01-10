@@ -70,8 +70,8 @@ $settings = new Settings();
 									'name'=>'Acciones',
 									'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"removeBudgetItem(".$data->Id.");\" ><i class=\"fa fa-trash-o\"></i> Borrar</button>"',
 									'type'=>'raw',
-									'htmlOptions'=>array("style"=>"text-align:center;"),
-									'headerHtmlOptions'=>array("style"=>"text-align:center;"),
+									'htmlOptions'=>array("style"=>"text-align:right;"),
+									'headerHtmlOptions'=>array("style"=>"text-align:right;"),
 							),
 
 							),
@@ -104,10 +104,10 @@ $projectService->Id_project = $model->Id_project;
 							),
 							array(
 									'name'=>'Acciones',
-									'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"editProjectService(".$data->Id_project.",".$data->Id_service.");\" ><i class=\"fa fa-pencil\"></i></button>"',
+									'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"editProjectService(".$data->Id_project.",".$data->Id_service.");\" ><i class=\"fa fa-pencil\"></i> Editar</button>"',
 									'type'=>'raw',
-									'htmlOptions'=>array("style"=>"text-align:center;"),
-									'headerHtmlOptions'=>array("style"=>"text-align:center;"),
+									'htmlOptions'=>array("style"=>"text-align:right;"),
+									'headerHtmlOptions'=>array("style"=>"text-align:right;"),
 							),
 							),
 					));

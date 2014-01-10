@@ -10,7 +10,6 @@
 				array(
 					'name'=>'project_description',
 					'value'=>'$data->project->fullDescription',
-					'htmlOptions'=>array("style"=>"width:15%;"),
 				),
 				array(
 					'name'=>'date_cancelled',
