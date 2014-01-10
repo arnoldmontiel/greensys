@@ -8,13 +8,13 @@ class GreenHelper
 		$currenecyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertFrom,'Id_currency_to'=>$convertTo));
 		if(isset($currenecyConversor))
 		{
-			return $valueToConvert*$currenecyConversor->factor;				
+			return number_format($valueToConvert*$currenecyConversor->factor,2);				
 		}
 		else
 		{
 			$currenecyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertTo,'Id_currency_to'=>$convertFrom));
 			if(isset($currenecyConversor))
-				return $valueToConvert/$currenecyConversor->factor;				
+				return number_format($valueToConvert/$currenecyConversor->factor,2);				
 		}
 		return 0;
 		
@@ -433,7 +433,7 @@ class GreenHelper
 				$sheet->getStyle($indexProductFooter['qty'].$row)->getFont()->setBold(true);
 				$sheet->setCellValue($indexProductFooter['unitPriceDesc'].$row, "Precio Unitario");
 				$sheet->getStyle($indexProductFooter['unitPriceDesc'].$row)->getFont()->setBold(true);
-				$sheet->setCellValue($indexProductFooter['unitPrice'].$row, $currency .' '. $budgetItem->price);
+				$sheet->setCellValue($indexProductFooter['unitPrice'].$row, $currency .' '. $budgetItem->getPriceCurrencyConverted());
 				$sheet->getStyle($indexProductFooter['unitPrice'].$row)->getFont()->setBold(true);
 				$sheet->setCellValue($indexProductFooter['totalDesc'].$row, "Total:");
 				$sheet->getStyle($indexProductFooter['totalDesc'].$row)->getFont()->setBold(true);
@@ -492,7 +492,7 @@ class GreenHelper
 				$sheet->setCellValue($indexExtra['descriptionStart'].$row, $budgetItem->description);
 				$sheet->getStyle($indexExtra['descriptionStart'].$row)->getAlignment()->setWrapText(true);
 				$sheet->setCellValue($indexExtra['quantity'].$row, $budgetItem->quantity);
-				$sheet->setCellValue($indexExtra['price'].$row, $currency . ' ' .$budgetItem->price);
+				$sheet->setCellValue($indexExtra['price'].$row, $currency . ' ' .$budgetItem->getPriceCurrencyConverted());
 				$sheet->setCellValue($indexExtra['discount'].$row, $budgetItem->getDiscountType().' '. $budgetItem->discount);
 				$sheet->setCellValue($indexExtra['total'].$row, $currency . ' ' . $budgetItem->getTotalPriceWOChildernCurrencyConverted());
 				$sheet->getStyle($indexExtra['descriptionStart'].$row.':'.$indexExtra['total'].$row)->applyFromArray($style_border);
@@ -515,7 +515,7 @@ class GreenHelper
 			self::cellColor($sheet, $indexTotal['descriptionStart'].$row.':'.$indexTotal['descriptionStart'].$row, 'e6e6fa');
 			$sheet->getStyle($indexTotal['total'].$row)->applyFromArray($style_num);
 			$sheet->getStyle($indexTotal['descriptionStart'].$row.':'.$indexTotal['total'].$row)->applyFromArray($style_border);
-			$sheet->setCellValue($indexTotal['total'].$row, $currency . ' ' . $modelBudget->totalPrice);
+			$sheet->setCellValue($indexTotal['total'].$row, $currency . ' ' . $modelBudget->TotalPriceCurrencyConverted);
 			$row++;
 			
 			//sub total
@@ -524,7 +524,7 @@ class GreenHelper
 			self::cellColor($sheet, $indexTotal['descriptionStart'].$row.':'.$indexTotal['descriptionStart'].$row, 'e6e6fa');
 			$sheet->getStyle($indexTotal['total'].$row)->applyFromArray($style_num);
 			$sheet->getStyle($indexTotal['descriptionStart'].$row.':'.$indexTotal['total'].$row)->applyFromArray($style_border);			
-			$sheet->setCellValue($indexTotal['total'].$row, $currency .' ' . $modelBudget->TotalDiscount);
+			$sheet->setCellValue($indexTotal['total'].$row, $currency .' ' . $modelBudget->TotalDiscountCurrencyConverted);
 			$row++;
 			
 			//sub total
@@ -533,7 +533,7 @@ class GreenHelper
 			self::cellColor($sheet, $indexTotal['descriptionStart'].$row.':'.$indexTotal['descriptionStart'].$row, 'e6e6fa');
 			$sheet->getStyle($indexTotal['total'].$row)->applyFromArray($style_num);
 			$sheet->getStyle($indexTotal['descriptionStart'].$row.':'.$indexTotal['total'].$row)->applyFromArray($style_border);
-			$sheet->setCellValue($indexTotal['total'].$row, $currency . ' ' .$modelBudget->TotalPriceWithDiscount);
+			$sheet->setCellValue($indexTotal['total'].$row, $currency . ' ' .$modelBudget->TotalPriceWithDiscountCurrencyConverted);
 			$row++;
 						
 			$project = isset($modelBudget->project)?$modelBudget->project->description:"";

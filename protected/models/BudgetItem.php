@@ -343,6 +343,12 @@ class BudgetItem extends ModelAudit
 		
 		return $discountType;
 	}
+	
+	public function getPriceCurrencyConverted()
+	{
+		return GreenHelper::convertCurrency($this->price, $this->budget->Id_currency, $this->budget->Id_currency_view);
+	}
+	
 	public function getTotalPriceWOChildernCurrencyConverted()
 	{
 		return GreenHelper::convertCurrency($this->getTotalPriceWOChildern(), $this->budget->Id_currency, $this->budget->Id_currency_view);
@@ -366,7 +372,7 @@ class BudgetItem extends ModelAudit
 					$discount = $this->discount;
 			}
 		}
-		return number_format((($this->price)*$this->quantity) - $discount , 2);
+		return round((($this->price)*$this->quantity) - $discount , 2);
 	}
 	
 	public function getDoNotWarning()
