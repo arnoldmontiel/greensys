@@ -197,10 +197,11 @@ function changeDiscount(id, object)
 {
 	statusStartSaving();	
 	validateNumber(object);
+	var discountType = $('#discount_type_'+id).val();
 	$.post(
 			"<?php echo BudgetController::createUrl('AjaxSaveDiscountValue')?>",
 			{
-				Id_budget_item: id,discount:$(object).val()
+				Id_budget_item: id,discount:$(object).val(),discountType:discountType
 			}
 			).success(function(data)
 			{

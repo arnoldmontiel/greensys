@@ -1267,12 +1267,13 @@ class BudgetController extends GController
 	}
 	public function actionAjaxSaveDiscountValue()
 	{
-		if(isset($_POST['Id_budget_item'])&&isset($_POST['discount']))
+		if(isset($_POST['Id_budget_item'])&&isset($_POST['discount'])&&isset($_POST['discountType']))
 		{
 			$budgetItem = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
 			if(isset($budgetItem))
 			{
 				$budgetItem->discount= $_POST['discount'];
+				$budgetItem->discount_type= $_POST['discountType'];
 				if($budgetItem->save())
 				{
 					$budgetItem->refresh();
