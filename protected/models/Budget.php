@@ -139,7 +139,7 @@ class Budget extends ModelAudit
 			'percent_discount' => 'Descuento',
 			'date_creation' => 'Fecha Creación',
 			'Id_budget_state' => 'State',
-			'Id_currency_view'=>'Moneda para exportar',
+			'Id_currency_view'=>'Moneda para descarga',
 			'date_inicialization' => 'Fecha Inicio',
 			'date_finalization' => 'Fecha Finalización',
 			'date_estimated_inicialization' => 'Fecha Estimada Inicio',
