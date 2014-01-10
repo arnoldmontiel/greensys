@@ -3,7 +3,7 @@ class GreenHelper
 {
 	static public function convertCurrency($valueToConvert, $convertFrom, $convertTo)
 	{
-		if($convertFrom==$convertTo) return $valueToConvert;
+		if($convertFrom==$convertTo) return number_format($valueToConvert,2);
 		
 		$currenecyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertFrom,'Id_currency_to'=>$convertTo));
 		if(isset($currenecyConversor))
@@ -548,7 +548,7 @@ class GreenHelper
 			if($currentService['total'] > 0)
 			{
 				$sheet->setCellValue($indexSummary['service'].$rowSummary, $currentService['serviceName']);
-				$sheet->setCellValue($indexSummary['total'].$rowSummary, $currency . ' ' .$currentService['total']);
+				$sheet->setCellValue($indexSummary['total'].$rowSummary, $currency . ' ' . number_format($currentService['total'],2));
 				$rowSummary++;
 			}
 		}
