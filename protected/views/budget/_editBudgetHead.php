@@ -3,10 +3,11 @@
     
           <h2><?php echo  $model->project->customer->contact->description?> - <?php echo  $model->project->description?><a class="superEdit" onclick="openUpdateBudget(<?php echo $model->Id . ', '.$model->version_number;?>);" data-toggle="modal" data-target="#myModalEditarPresupuesto"><i class="fa fa-pencil"></i></a></h2>
 
-        <span id="header-budget-description"><?php echo $model->description;?></span>
+        <div id="header-budget-description"><?php echo $model->description;?></div>
+        
 <div class="row">
                 
-    <div class="col-sm-6">
+    <div class="col-sm-2">
         <table class="table table-striped table-bordered tablaIndividual tablaDatosPanel" width="50%">
         <tbody>
             <tr>
@@ -34,6 +35,16 @@
         </tbody>
       </table>
                 </div>
+    <div class="col-sm-4">
+    <form role="form">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Moneda para descarga</label>
+    <select class="form-control">
+<option value="">Dolar</option>
+<option value="1">Pesos</option>
+</select>
+</div></form>
+    </div>
                </div>
                 <button onclick="closeVersion(<?php echo $model->Id . ', '.$model->version_number;?>);" type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-archive fa-fw"></i> Cerrar Versi&oacute;n</button>
                 <button onclick="exportBudget(<?php echo $model->Id . ', '.$model->version_number;?>);" type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-download fa-fw"></i> Descargar</button>

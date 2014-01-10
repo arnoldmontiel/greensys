@@ -480,7 +480,9 @@ padding: 6px 8px;
 
 h2 a.superEdit{ position:absolute; top:10px; right:30px; cursor:pointer; font-size:20px;}
 
-
+#header-budget-description{padding-bottom: 10px;
+font-size: 18px;
+margin-top: -5px;}
 
 .btnAlternateView{ margin-left:5px;}
 
