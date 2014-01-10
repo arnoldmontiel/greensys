@@ -652,6 +652,24 @@ class BudgetController extends GController
 															false,true);
 	}
 	
+	public function actionAjaxChangeCurrencyView()
+	{
+		$id = isset($_POST['id'])?$_POST['id']:null;
+		$version = isset($_POST['version'])?$_POST['version']:null;
+		$idCurrencyView = isset($_POST['idCurrencyView'])?$_POST['idCurrencyView']:null;
+	
+		if(isset($id) && isset($idCurrencyView) && isset($version))
+		{
+			$model = Budget::model()->findByPk(array('Id'=>$id, 'version_number'=>$version));
+			if(isset($model))
+			{
+				$model->Id_currency_view = $idCurrencyView;
+				$model->save();
+			}
+		}
+	
+	}
+	
 	public function actionAjaxSaveNewBudget()
 	{
 		$modelBudget = new Budget();		
