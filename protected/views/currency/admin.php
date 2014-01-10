@@ -32,8 +32,8 @@
 					</thead>
 					<tbody>';
 					$criteria = new CDbCriteria();
-					$criteria->addCondition('Id_currency_from='.$data->Id);
-					$criteria->group='Id_currency_from';
+					$criteria->addCondition('Id in (select Max(Id) from currency_conversor where Id_currency_from = '.$data->Id.' group by Id_currency_from, Id_currency_to)');
+					
 					$currencyConversors = CurrencyConversor::model()->findAll($criteria); 
 					foreach ($currencyConversors as $currencyConversor)
 					{

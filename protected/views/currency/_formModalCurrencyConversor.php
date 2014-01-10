@@ -70,6 +70,17 @@ $("form").bind("keypress", function (e) {
     }
 });
 
+$("#CurrencyConversor_factor").change(function()
+{
+	validateNumber($(this));
+	if($(this).val()=="")
+	{
+		$('#btn-save-currency-conversor').attr('disabled','disabled');	
+	}else
+	{
+		$('#btn-save-currency-conversor').removeAttr('disabled');
+	}
+});
 function saveCurrencyConversor()
 {
 	$('#btn-save-currency-conversor').attr('disabled','disabled');

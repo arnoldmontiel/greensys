@@ -167,7 +167,11 @@ class CurrencyController extends GController
 			$field_caller ="";
 			$model = new CurrencyConversor();
 			$model->Id_currency_from=$_POST['idCurrencyFrom'];
+			$model->validity_date = Yii::app()->dateFormatter->formatDateTime(time(),'small',null);
+			$model->factor = "0.0000";
+				
 			$modelCurrencyFrom=$this->loadModel($_POST['idCurrencyFrom']);
+			
 			
 			if($_POST['field_caller'])
 				$field_caller=$_POST['field_caller'];
@@ -181,8 +185,7 @@ class CurrencyController extends GController
 					'modelCurrencyFrom'=>$modelCurrencyFrom,
 					'ddlCurrency'=>$ddlCurrency,
 					'field_caller'=>$field_caller
-			)/*parametros extras para que funcione CJuiDatePicker*/,false, true);
-				
+			)/*parametros extras para que funcione CJuiDatePicker*/,false, true);				
 		}
 	}
 	
@@ -233,6 +236,8 @@ class CurrencyController extends GController
 			if(isset($_POST['CurrencyConversor']))
 			{
 				$model->attributes=$_POST['CurrencyConversor'];
+				$model->Id = null;
+				$model->setIsNewRecord(true);
 				if($model->save())
 					echo json_encode($model->attributes);
 			}

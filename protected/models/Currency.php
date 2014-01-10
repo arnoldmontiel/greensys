@@ -88,9 +88,12 @@ class Currency extends ModelAudit
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('short_description',$this->short_description,true);
-
+		$sort=new CSort;
+		$sort->defaultOrder='description';
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+				'sort'=>$sort,
 		));
 	}
 }
