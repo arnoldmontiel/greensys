@@ -59,12 +59,16 @@
   </div>
   
   <?php if($model->isNewRecord):?>
-  <div class="form-group">
+  <div class="row">
+  <div class="form-group col-sm-6">   
   	<?php 
     	echo CHtml::activeLabel($model, 'Id_currency_view');
     	echo CHtml::activeDropDownList($model, 'Id_currency_view',
     					CHtml::listData($ddlCurrency, 'Id', 'short_description'),array('class'=>'form-control'));
     ?>    
+  </div>
+  <div class="form-group col-sm-6">   
+  </div>
   </div>
   <?php else:?>
   	<?php echo CHtml::activeHiddenField($model, 'Id_currency_view');?>
