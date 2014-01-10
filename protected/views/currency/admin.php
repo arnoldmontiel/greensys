@@ -22,7 +22,7 @@
 		array(
 				'header'=>'Cotizaciones',
 				'value'=>function($data){				
-					$value= '<table class="table table-condensed">
+					$value= '<table class="table table-condensed miniTableCurrency">
 					<thead>
 					<tr>
 					<th>Moneda</th>
@@ -56,7 +56,7 @@
 				'header'=>'Acciones',
 				'value'=>function($data){				
 					return '<button onclick="updateCurrency('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
-							<button onclick="createCurrencyConversor('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> Agregar Relacion</button>
+							<button onclick="createCurrencyConversor('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> Agregar Cotizaci&oacute;n</button>
     						<button onclick="deleteCurrency('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>';
 				},
 				'type'=>'raw',
