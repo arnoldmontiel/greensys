@@ -552,7 +552,7 @@ padding-bottom: 20px; position:relative;}
 
 
 .navTabsPencil.nav-tabs>li a{position:relative; padding-right:35px;}
-.navTabsPencil{ margin-right:340px; position:relative; height:43px;}
+.navTabsPencil{ margin-right:340px; position:relative; height:45px; border:0px none;}
 .navTabsPencil .pull-right{ position:absolute; right:-340px; bottom:5px;}
 .nav-tabs>li {margin-bottom:0px;}
 
@@ -647,7 +647,7 @@ font-family: "GudeaRegular";
 
 .liButtonAdd{ line-height:35px; padding-left:10px;}
 
-#warningEmpty{ margin:5px 10px;;}
+#warningEmpty{ margin:5px 0px;}
 
 /* ------ END CREAR PRESU ------- */
 
