@@ -57,6 +57,8 @@
     	echo CHtml::activeTextArea($model, 'description', array('class'=>'form-control', 'rows'=>3));
     ?>    
   </div>
+  
+  <?php if($model->isNewRecord):?>
   <div class="form-group">
   	<?php 
     	echo CHtml::activeLabel($model, 'Id_currency_view');
@@ -64,6 +66,10 @@
     					CHtml::listData($ddlCurrency, 'Id', 'short_description'),array('class'=>'form-control'));
     ?>    
   </div>
+  <?php else:?>
+  	<?php echo CHtml::activeHiddenField($model, 'Id_currency_view');?>
+  <?php endif;?>
+  
   <div class="row">
   <div class="form-group col-sm-6">    
 	<?php 
