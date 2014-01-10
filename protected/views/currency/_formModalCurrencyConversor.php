@@ -4,33 +4,34 @@
 	'action'=>Yii::app()->createUrl("currency/ajaxCreateCurrencyConversor")		
 )); ?>
 
-  <div class="modal-dialog">
+  <div class="modal-dialog" id="conversorMonedas">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title"><?php echo ($model->isNewRecord)?'Agregar Cotizaci&oacute;n':'Editar Cotizaci&oacute;n: '.$model->currencyFrom->description ?></h4>
       </div>
       <div class="modal-body">
-
-  <div class="form-group">
+<div class="row">
+  <div class="form-group col-sm-6">
   <?php echo $form->hiddenField($model,'Id_currency_from'); ?>
-  <?php echo $form->textField($modelCurrencyFrom, 'description',array('class'=>'form-control','disabled'=>'disabled'));
-      ?>
+  <?php echo $form->textField($modelCurrencyFrom, 'description',array('class'=>'form-control formHasLabel','disabled'=>'disabled'));
+      ?> VS
   </div>
-      <div class="form-group">
+      <div class="form-group col-sm-6">
       <?php echo CHtml::activeDropDownList($model, 'Id_currency_to',
-    					CHtml::listData($ddlCurrency, 'Id', 'description'),array('class'=>'form-control'));
+    CHtml::listData($ddlCurrency, 'Id', 'description'),array('class'=>'form-control'));
       ?>
   </div>
-  <div class="form-group">
+  </div>
+<div class="row">
+  <div class="form-group col-sm-6">
   <?php echo CHtml::hiddenField('field_caller',$field_caller,array('id'=>'field_caller'))?>
   <?php echo CHtml::hiddenField('validity_date_from',Yii::app()->dateFormatter->formatDateTime(date(time()),'small',null),array('id'=>'validity_date_from'))?>
   <?php echo $form->hiddenField($model,'Id'); ?>
   <?php echo $form->labelEx($model,'factor'); ?>
   <?php echo $form->textField($model,'factor',array("class"=>"form-control")); ?>	
   </div>
-  <div class="form-group">
-    <div class="form-group col-sm-6">
+  <div class="form-group col-sm-6">
   
   <?php echo $form->labelEx($model,'date_validity'); ?>
   <?php 
