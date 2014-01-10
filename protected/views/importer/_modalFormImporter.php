@@ -70,7 +70,7 @@
 			<?php
 				echo CHtml::activeLabelEx($modelShippingParameter, 'Id_currency'); 
 				echo CHtml::activeDropDownList($modelShippingParameter, 'Id_currency', CHtml::listData(
-						Currency::model()->findAll(), 'Id', 'short_description'));
+						Currency::model()->findAll(), 'Id', 'description'));
 			?>	  
   		</div>
   	</div>
