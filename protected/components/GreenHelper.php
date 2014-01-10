@@ -437,17 +437,17 @@ class GreenHelper
 				$sheet->getStyle($indexProductFooter['unitPrice'].$row)->getFont()->setBold(true);
 				$sheet->setCellValue($indexProductFooter['totalDesc'].$row, "Total:");
 				$sheet->getStyle($indexProductFooter['totalDesc'].$row)->getFont()->setBold(true);
-				$sheet->setCellValue($indexProductFooter['total'].$row, $currency .' '. $budgetItem->getTotalPriceWOChildern());
+				$sheet->setCellValue($indexProductFooter['total'].$row, $currency .' '. $budgetItem->getTotalPriceWOChildernCurrencyConverted());
 				$sheet->getStyle($indexProductFooter['total'].$row)->getFont()->setBold(true);
 				
-				$serviceTotalPrice = $serviceTotalPrice + (float)str_replace(",", "", $budgetItem->getTotalPriceWOChildern());				
+				$serviceTotalPrice = $serviceTotalPrice + (float)str_replace(",", "", $budgetItem->getTotalPriceWOChildernCurrencyConverted());				
 				
 				$row++;
 				$row = $row + 2;
 			}
 				
 			$row++;
-			$arrayServiceTotal[] = array('serviceName'=>$serviceName, 'total'=>$serviceTotalPrice);
+			$arrayServiceTotal[] = array('serviceName'=>$serviceName, 'total'=>round($serviceTotalPrice,2));
 		}
 		//END BODY BUDGET ITEM---------------------------------------------------------------
 		
@@ -494,7 +494,7 @@ class GreenHelper
 				$sheet->setCellValue($indexExtra['quantity'].$row, $budgetItem->quantity);
 				$sheet->setCellValue($indexExtra['price'].$row, $currency . ' ' .$budgetItem->price);
 				$sheet->setCellValue($indexExtra['discount'].$row, $budgetItem->getDiscountType().' '. $budgetItem->discount);
-				$sheet->setCellValue($indexExtra['total'].$row, $currency . ' ' . $budgetItem->getTotalPriceWOChildern());
+				$sheet->setCellValue($indexExtra['total'].$row, $currency . ' ' . $budgetItem->getTotalPriceWOChildernCurrencyConverted());
 				$sheet->getStyle($indexExtra['descriptionStart'].$row.':'.$indexExtra['total'].$row)->applyFromArray($style_border);
 				
 				$sheet->getStyle($indexExtra['quantity'].$row.':'.$indexExtra['total'].$row)->applyFromArray($style_num);
