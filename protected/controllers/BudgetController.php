@@ -1200,6 +1200,10 @@ class BudgetController extends GController
 			$model->save();
 		}
 	}
+	public function actionReadOnly()
+	{
+		$this->render('readOnly');		
+	}
 	
 	public function actionAjaxNewVersion()
 	{
