@@ -198,6 +198,7 @@ line-height:48px;
 .btn{ font-size:15px;}
 .btn-lg{ font-size:18px;}
 .btn-sm{ font-size:13px;}
+.btn-xs{ font-size:13px;}
 /* ------ END BTN SIZES ------- */
 
 /* ------ BODY / MAIN LAYOUT ------- */
