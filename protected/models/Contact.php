@@ -53,10 +53,10 @@ class Contact extends ModelAudit
 			array('description, address', 'length', 'max'=>100),
 			//array('telephone_1, description, email', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('tel1_description, tel2_description, tel3_description', 'length', 'max'=>255),
-			array('email', 'unique'),				
+			array('email', 'unique', 'message'=>'El correo {value} ya ha sido utilizado'),				
 			array('telephone_1, telephone_2, telephone_3, email', 'length', 'max'=>45),
 			array('comment', 'length', 'max'=>512),
-			array('email', 'email', 'allowEmpty'=>true),
+			array('email', 'email', 'allowEmpty'=>true, 'message'=>'El correo ingresado no es una dirección valida'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, description, telephone_1, telephone_2, telephone_3, email, address, tel1_description, tel2_description, tel3_description, comment', 'safe', 'on'=>'search'),

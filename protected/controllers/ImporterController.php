@@ -51,6 +51,7 @@ class ImporterController extends GController
 	
 	public function actionAjaxSaveNewImporter()
 	{
+		$response = array('hasError'=>0);
 		$model=new Importer;
 		$modelContact=new Contact;
 		$modelShippingParameter =  new ShippingParameter;
@@ -70,31 +71,38 @@ class ImporterController extends GController
 			
 			// Uncomment the following line if AJAX validation is needed
 			//$this->performAjaxValidation($model,$modelContact,$modelShippingParameter,$modelShippingParameterAir,$modelShippingParameterMaritime);
-		
-			$transaction = $model->dbConnection->beginTransaction();
-			try {
-				if($modelContact->save())
-				{
-					$model->Id_contact = $modelContact->Id;
-					if($model->save())
+			if($modelContact->validate())
+			{
+				$transaction = $model->dbConnection->beginTransaction();
+				try {				
+					if($modelContact->save())
 					{
-						if($modelShippingParameterAir->save()&&$modelShippingParameterMaritime->save())
-						{							
-							$modelShippingParameter->Id_importer = $model->Id;
-							$modelShippingParameter->Id_shipping_parameter_air = $modelShippingParameterAir->Id;
-							$modelShippingParameter->Id_shipping_parameter_maritime = $modelShippingParameterMaritime->Id;
-							if($modelShippingParameter->save())
-							{								
-								$transaction->commit();								
+						$model->Id_contact = $modelContact->Id;
+						if($model->save())
+						{
+							if($modelShippingParameterAir->save()&&$modelShippingParameterMaritime->save())
+							{							
+								$modelShippingParameter->Id_importer = $model->Id;
+								$modelShippingParameter->Id_shipping_parameter_air = $modelShippingParameterAir->Id;
+								$modelShippingParameter->Id_shipping_parameter_maritime = $modelShippingParameterMaritime->Id;
+								if($modelShippingParameter->save())
+								{								
+									$transaction->commit();								
+								}
+			
 							}
-		
 						}
 					}
+				} catch (Exception $e) {
+					$transaction->rollback();
 				}
-			} catch (Exception $e) {
-				$transaction->rollback();
 			}
+			else
+				$response = array('hasError'=>1, 'message'=>$modelContact->getError('email'));
 		}
+				
+		
+		echo json_encode($response);
 	}
 	
 	public function actionAjaxOpenUpdateImporter()

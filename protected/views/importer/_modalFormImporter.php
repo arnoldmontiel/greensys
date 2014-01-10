@@ -176,7 +176,7 @@
 	<div id="status-error" style="display:none;"  class="estadoModal">
 	<label for="campoLineal">Estado</label>
       	<div class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i>
- 	No se puede crear un proyecto sin descripción.</div>
+ 	<span id="error-message"></span></div>
  	</div>
       </div>
       
@@ -207,8 +207,20 @@
 		        processData:false,
 		    success: function(data, textStatus, jqXHR)
 		    {		
-		    	$.fn.yiiGridView.update("importer-grid");
-		    	$('#myModalFormImporter').trigger('click');
+		    	var obj = jQuery.parseJSON(data);				
+				if(obj != null)
+				{
+					if(obj.hasError == 1)
+					{
+						$('#error-message').text(obj.message);
+						$('#status-error').show();
+					}
+					else
+					{
+						$.fn.yiiGridView.update("importer-grid");
+				    	$('#myModalFormImporter').trigger('click');
+					}
+				}		    	
 		    	
 		    },
 		     error: function(jqXHR, textStatus, errorThrown)
