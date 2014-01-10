@@ -225,6 +225,7 @@ class Product extends ModelAudit
 			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
 			'productRequirements' => array(self::MANY_MANY, 'ProductRequirement', 'product_requirement_product(Id_product, Id_product_requirement)'),
 			'supplier' => array(self::BELONGS_TO, 'Supplier', 'Id_supplier'),
+			'currency' => array(self::BELONGS_TO, 'Currency', 'Id_currency'),
 			'measurementUnitWeight' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_weight'),
 			'measurementUnitLinear' => array(self::BELONGS_TO, 'MeasurementUnit', 'Id_measurement_unit_linear'),
 		);
@@ -340,13 +341,8 @@ class Product extends ModelAudit
 	}
 
 	public function showPrice($value)
-	{
-		$settings = Setting::getInstance();
-		$currency = '$';
-		if(isset($settings))
-			$currency = $settings->currency->short_description;
-		
-		return $value . " " . $currency; 
+	{		
+		return $value . " " . $this->currency->short_description; 
 	}
 	
 	public function showVolume($value)

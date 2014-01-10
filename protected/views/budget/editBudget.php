@@ -1,6 +1,7 @@
 <script type="text/javascript">
 function changeCurrencyView(obj, id, version)
 {
+	statusStartSaving();	
 	$.post("<?php echo BudgetController::createUrl('AjaxChangeCurrencyView'); ?>",
 			{
 				id:id,
@@ -10,7 +11,7 @@ function changeCurrencyView(obj, id, version)
 		).success(
 			function(data){
 				statusSaved();
-			});
+			}).error(function(){statusSavedError();});
 		return false;
 }
 
