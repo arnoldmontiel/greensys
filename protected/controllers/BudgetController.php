@@ -454,6 +454,17 @@ class BudgetController extends GController
 			{
 				$modelBudget->Id_budget_state = 2;
 				$modelBudget->date_close = new CDbExpression('NOW()');
+				$criteria = new CDbCriteria;
+				$criteria->addCondition('Id_currency_from='.$modelBudget->Id_currency);
+				$criteria->addCondition('Id_currency_to='.$modelBudget->Id_currency_view);
+				$criteria->order='validity_date DESC';
+				$currencyConversor= CurrencyConversor::model()->find($criteria);
+				if(!isset($currencyConversor))
+				{
+					$modelBudget->Id_currency_conversor =$currencyConversor->Id; 
+					$modelBudget->Id_currency_from_currency_conversor =$currencyConversor->Id_currency_from; 
+					$modelBudget->Id_currency_to_currency_conversor =$currencyConversor->Id_currency_to; 
+				}
 				$modelBudget->save();
 			}
 		}
@@ -1210,6 +1221,9 @@ class BudgetController extends GController
 			$model->date_creation = new CDbExpression('NOW()');
 			$model->version_number = $model->version_number + 1;
 			$model->note = '';
+			$model->Id_currency_conversor =null;
+			$model->Id_currency_from_currency_conversor =null;
+			$model->Id_currency_to_currency_conversor =null;
 			
 			if($model->save())
 			{
