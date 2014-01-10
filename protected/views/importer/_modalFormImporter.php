@@ -8,7 +8,10 @@
 
 <form id="form-new-importer" role="form">
 	<?php echo CHtml::activeHiddenField($model, 'Id');?>
-	
+	<?php echo CHtml::activeHiddenField($modelContact, 'Id');?>
+	<?php echo CHtml::activeHiddenField($modelShippingParameter, 'Id');?>
+	<?php echo CHtml::activeHiddenField($modelShippingParameterAir, 'Id');?>
+	<?php echo CHtml::activeHiddenField($modelShippingParameterMaritime, 'Id');?>
 	<div class="row">
   		<div class="form-group col-sm-4">    
 			<?php
@@ -177,22 +180,13 @@
     </div><!-- /.modal-content -->
 <script type="text/javascript">
 
-		$("#form-new-budget").submit(function(e)
+		$("#form-new-importer").submit(function(e)
 		{
 			<?php if($model->isNewRecord):?>
-			    var formURL = "<?php echo BudgetController::createUrl("AjaxSaveNewBudget"); ?>";
+			    var formURL = "<?php echo ImporterController::createUrl("AjaxSaveNewImporter"); ?>";
 			    var formData = new FormData(this);
-	
-				if($('#create-project').val() == "true")				
-				{
-					if($('#Project_description').val().trim() == "")
-					{
-						$('#status-error').show();
-						return false;
-					}
-				}
 			<?php else:?>
-				var formURL = "<?php echo BudgetController::createUrl("AjaxSaveUpdatedBudget"); ?>";
+				var formURL = "<?php echo ImporterController::createUrl("AjaxSaveUpdatedImporter"); ?>";
 			    var formData = new FormData(this);
 			<?php endif;?>
 			
@@ -206,34 +200,8 @@
 		        processData:false,
 		    success: function(data, textStatus, jqXHR)
 		    {		
-		    	<?php if($model->isNewRecord):?>
-			    	var obj = jQuery.parseJSON(data);				
-					if(obj != null)
-					{
-						$('#tab-open').children().text(obj.openQty);
-	
-						if($('#save-and-continue').val() == "true")
-						{
-							var params = "&id="+obj.idBudget+"&version="+obj.version;
-				    		window.location = "<?php echo BudgetController::createUrl("addItem")?>" + params;
-				    		return false;
-						}	
-					}
-					    									    	
-			    	
-			    	$.fn.yiiGridView.update("budget-grid-open");
-			    	$('#myModalFormBudget').trigger('click');
-			    <?php else:?>
-				    var obj = jQuery.parseJSON(data);				
-					if(obj != null)
-					{
-						$('#header-budget-description').text(obj.description);
-						$('#header-budget-version-number').text(obj.version_number);
-						$('#header-budget-date-est-init').text(obj.date_estimated_inicialization);
-						$('#header-budget-date-est-fin').text(obj.date_estimated_finalization);
-					}
-			    	$('#myModalFormBudget').trigger('click');
-			    <?php endif;?>
+		    	$.fn.yiiGridView.update("importer-grid");
+		    	$('#myModalFormImporter').trigger('click');
 		    	
 		    },
 		     error: function(jqXHR, textStatus, errorThrown)
@@ -245,12 +213,7 @@
 	
 	function save()
 	{				
-		$('#form-new-budget').submit();
-	}
-	function saveAndContinue()
-	{
-		$('#save-and-continue').val(true);
-		$('#form-new-budget').submit();
+		$('#form-new-importer').submit();
 	}
 </script>
   </div><!-- /.modal-dialog -->

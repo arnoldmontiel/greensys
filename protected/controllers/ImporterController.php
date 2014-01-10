@@ -121,6 +121,22 @@ class ImporterController extends GController
 		$modelShippingParameterAir = new ShippingParameterAir;
 		$modelShippingParameterMaritime = new ShippingParameterMaritime;
 		
+		echo $this->renderPartial('_modalFormImporter', array('model'=>$model,
+							'modelContact'=>$modelContact,
+							'modelShippingParameterMaritime'=>$modelShippingParameterMaritime,
+							'modelShippingParameterAir'=>$modelShippingParameterAir,
+							'modelShippingParameter'=>$modelShippingParameter,
+							));
+				
+	}
+	
+	public function actionAjaxSaveNewImporter()
+	{
+		$model=new Importer;
+		$modelContact=new Contact;
+		$modelShippingParameter =  new ShippingParameter;
+		$modelShippingParameterAir = new ShippingParameterAir;
+		$modelShippingParameterMaritime = new ShippingParameterMaritime;
 		
 		if(
 		isset($_POST['Contact'])
@@ -132,8 +148,9 @@ class ImporterController extends GController
 			$modelShippingParameter->attributes=$_POST['ShippingParameter'];
 			$modelShippingParameterAir->attributes=$_POST['ShippingParameterAir'];
 			$modelShippingParameterMaritime->attributes=$_POST['ShippingParameterMaritime'];
+			
 			// Uncomment the following line if AJAX validation is needed
-			$this->performAjaxValidation($model,$modelContact,$modelShippingParameter,$modelShippingParameterAir,$modelShippingParameterMaritime);
+			//$this->performAjaxValidation($model,$modelContact,$modelShippingParameter,$modelShippingParameterAir,$modelShippingParameterMaritime);
 		
 			$transaction = $model->dbConnection->beginTransaction();
 			try {
@@ -149,8 +166,7 @@ class ImporterController extends GController
 							$modelShippingParameter->Id_shipping_parameter_maritime = $modelShippingParameterMaritime->Id;
 							if($modelShippingParameter->save())
 							{
-								$transaction->commit();
-								$this->redirect(array('view','id'=>$model->Id));
+								$transaction->commit();								
 							}
 		
 						}
@@ -160,14 +176,6 @@ class ImporterController extends GController
 				$transaction->rollback();
 			}
 		}
-		
-		echo $this->renderPartial('_modalFormImporter', array('model'=>$model,
-							'modelContact'=>$modelContact,
-							'modelShippingParameterMaritime'=>$modelShippingParameterMaritime,
-							'modelShippingParameterAir'=>$modelShippingParameterAir,
-							'modelShippingParameter'=>$modelShippingParameter,
-							));
-				
 	}
 	
 	public function actionAjaxOpenUpdateImporter()
@@ -188,6 +196,45 @@ class ImporterController extends GController
 				'modelShippingParameterAir'=>$modelShippingParameterAir,
 				'modelShippingParameter'=>$modelShippingParameter,
 		));
+	}
+	
+	public function actionAjaxSaveUpdatedImporter()
+	{
+		if(
+		isset($_POST['Contact'])
+		&&isset($_POST['ShippingParameter'])
+		&&isset($_POST['ShippingParameterAir'])
+		&&isset($_POST['ShippingParameterMaritime'])
+		){
+			//save contact
+			$id = $_POST['Contact']['Id'];
+			$modelContact = Contact::model()->findByPk($id);
+				
+			$modelContact->attributes = $_POST['Contact'];
+			$modelContact->save();
+			
+			//save shipping parameter
+			$id = $_POST['ShippingParameter']['Id'];
+			$modelShippingParameter = ShippingParameter::model()->findByPk($id);
+			
+			$modelShippingParameter->attributes = $_POST['ShippingParameter'];
+			$modelShippingParameter->save();
+			
+			//save shipping parameter AIR
+			$id = $_POST['ShippingParameterAir']['Id'];
+			$modelShippingParameterAir = ShippingParameterAir::model()->findByPk($id);
+				
+			$modelShippingParameterAir->attributes = $_POST['ShippingParameterAir'];
+			$modelShippingParameterAir->save();
+			
+			//save shipping parameter MARITIME
+			$id = $_POST['ShippingParameterMaritime']['Id'];
+			$modelShippingParameterMaritime = ShippingParameterMaritime::model()->findByPk($id);
+				
+			$modelShippingParameterMaritime->attributes = $_POST['ShippingParameterMaritime'];
+			$modelShippingParameterMaritime->save();
+			
+		}
 	}
 	
 	/**
