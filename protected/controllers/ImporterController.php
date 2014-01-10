@@ -32,87 +32,6 @@ class ImporterController extends GController
 		);
 	}
 
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$model = $this->loadModel($id);
-		$modelShippingParameter =  $this->loadModelShippingParameter($model->Id);
-		$modelShippingParameterAir = $this->loadModelShippingParameterAir($modelShippingParameter->Id_shipping_parameter_air);
-		$modelShippingParameterMaritime = $this->loadModelShippingParameterMaritime($modelShippingParameter->Id_shipping_parameter_maritime);
-				
-		$this->render('view',array(
-			'model'=>$model,
-			'modelContact'=>$this->loadModelContact($model->Id_contact),
-			'modelShippingParameter'=>$modelShippingParameter,
-			'modelShippingParameterAir'=>$modelShippingParameterAir,
-			'modelShippingParameterMaritime'=>$modelShippingParameterMaritime,
-		));
-	}
-
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate()
-	{
-		$model=new Importer;
-		$modelContact=new Contact;
-		$modelShippingParameter =  new ShippingParameter;
-		$modelShippingParameterAir = new ShippingParameterAir;
-		$modelShippingParameterMaritime = new ShippingParameterMaritime;
-		
-
-		if(
-			isset($_POST['Contact'])
-			&&isset($_POST['ShippingParameter'])
-			&&isset($_POST['ShippingParameterAir'])
-			&&isset($_POST['ShippingParameterMaritime'])
-		){
-			$modelContact->attributes=$_POST['Contact'];
-			$modelShippingParameter->attributes=$_POST['ShippingParameter'];
-			$modelShippingParameterAir->attributes=$_POST['ShippingParameterAir'];
-			$modelShippingParameterMaritime->attributes=$_POST['ShippingParameterMaritime'];
-			// Uncomment the following line if AJAX validation is needed
-			$this->performAjaxValidation($model,$modelContact,$modelShippingParameter,$modelShippingParameterAir,$modelShippingParameterMaritime);
-				
-			$transaction = $model->dbConnection->beginTransaction();
-			try {
-				if($modelContact->save())
-				{
-					$model->Id_contact = $modelContact->Id; 
-					if($model->save())
-					{
-						if($modelShippingParameterAir->save()&&$modelShippingParameterMaritime->save())
-						{
-							$modelShippingParameter->Id_importer = $model->Id;
-							$modelShippingParameter->Id_shipping_parameter_air = $modelShippingParameterAir->Id;
-							$modelShippingParameter->Id_shipping_parameter_maritime = $modelShippingParameterMaritime->Id;
-							if($modelShippingParameter->save())
-							{
-								$transaction->commit();
-								$this->redirect(array('view','id'=>$model->Id));								
-							}
-								
-						}						
-					}
-				}				
-			} catch (Exception $e) {
-				$transaction->rollback();
-			}
-		}
-		
-		$this->render('create',array(
-			'model'=>$model,
-			'modelContact'=>$modelContact,
-			'modelShippingParameterMaritime'=>$modelShippingParameterMaritime,
-			'modelShippingParameterAir'=>$modelShippingParameterAir,
-			'modelShippingParameter'=>$modelShippingParameter,		
-		));
-	}
-
 	public function actionAjaxOpenNewImporter()
 	{
 		$model=new Importer;
@@ -160,12 +79,12 @@ class ImporterController extends GController
 					if($model->save())
 					{
 						if($modelShippingParameterAir->save()&&$modelShippingParameterMaritime->save())
-						{
+						{							
 							$modelShippingParameter->Id_importer = $model->Id;
 							$modelShippingParameter->Id_shipping_parameter_air = $modelShippingParameterAir->Id;
 							$modelShippingParameter->Id_shipping_parameter_maritime = $modelShippingParameterMaritime->Id;
 							if($modelShippingParameter->save())
-							{
+							{								
 								$transaction->commit();								
 							}
 		
@@ -181,7 +100,6 @@ class ImporterController extends GController
 	public function actionAjaxOpenUpdateImporter()
 	{
 		$id = isset($_POST['id'])?$_POST['id']:null;
-	
 	
 		$model=$this->loadModel($id);
 		$modelContact=$this->loadModelContact($model->Id_contact);
@@ -237,78 +155,17 @@ class ImporterController extends GController
 		}
 	}
 	
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-		$modelContact=$this->loadModelContact($model->Id_contact);
-		
-		$modelShippingParameter =  $this->loadModelShippingParameter($model->Id);
-		$modelShippingParameterAir = $this->loadModelShippingParameterAir($modelShippingParameter->Id_shipping_parameter_air);
-		$modelShippingParameterMaritime = $this->loadModelShippingParameterMaritime($modelShippingParameter->Id_shipping_parameter_maritime);
-		
-		if(
-			isset($_POST['Contact'])
-			&&isset($_POST['ShippingParameter'])
-			&&isset($_POST['ShippingParameterAir'])
-			&&isset($_POST['ShippingParameterMaritime'])
-		){
-
-			$modelContact->attributes=$_POST['Contact'];
-			$modelShippingParameter->attributes=$_POST['ShippingParameter'];
-			$modelShippingParameterAir->attributes=$_POST['ShippingParameterAir'];
-			$modelShippingParameterMaritime->attributes=$_POST['ShippingParameterMaritime'];
-			// Uncomment the following line if AJAX validation is needed
-			$this->performAjaxValidation($model,$modelContact,$modelShippingParameter,$modelShippingParameterAir,$modelShippingParameterMaritime);
-				
-			$transaction = $model->dbConnection->beginTransaction();
-			try {
-				if($modelContact->save())
-				{
-					$model->Id_contact = $modelContact->Id; 
-					if($model->save())
-					{
-						if($modelShippingParameterAir->save()&&$modelShippingParameterMaritime->save())
-						{
-							$modelShippingParameter->Id_importer = $model->Id;
-							$modelShippingParameter->Id_shipping_parameter_air = $modelShippingParameterAir->Id;
-							$modelShippingParameter->Id_shipping_parameter_maritime = $modelShippingParameterMaritime->Id;
-							if($modelShippingParameter->save())
-							{
-								$transaction->commit();
-								$this->redirect(array('view','id'=>$model->Id));								
-							}
-								
-						}						
-					}
-				}				
-			} catch (Exception $e) {
-				$transaction->rollback();
-			}
-		}
-		
-		$this->render('create',array(
-			'model'=>$model,
-			'modelContact'=>$modelContact,
-			'modelShippingParameterMaritime'=>$modelShippingParameterMaritime,
-			'modelShippingParameterAir'=>$modelShippingParameterAir,
-			'modelShippingParameter'=>$modelShippingParameter,		
-		));
-	}
 
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+	public function actionAjaxDelete()
 	{
-		// we only allow deletion via POST request
-		if(Yii::app()->request->isPostRequest)
+		$id = isset($_POST['id'])?$_POST['id']:null;
+		
+		if(isset($id))
 		{
 			$model = $this->loadModel($id);
 			$transaction = $model->dbConnection->beginTransaction();
@@ -326,10 +183,7 @@ class ImporterController extends GController
 				$modelShippingParameterMaritime->delete();
 				$model->delete(); 
 
-				$transaction->commit();						
-				// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-				if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+				$transaction->commit();										
 				
 			} catch (Exception $e) {
 				$transaction->rollback();				

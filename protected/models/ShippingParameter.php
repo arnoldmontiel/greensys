@@ -10,8 +10,10 @@
  * @property integer $Id_shipping_parameter_air
  * @property integer $Id_shipping_parameter_maritime
  * @property integer $current
+ * @property integer $Id_currency
  *
  * The followings are the available model relations:
+ * @property Currency $currency
  * @property PurchaseOrder[] $purchaseOrders
  * @property Importer $idImporter
  * @property ShippingParameterAir $idShippingParameterAir
@@ -45,12 +47,12 @@ class ShippingParameter extends ModelAudit
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id_importer, Id_shipping_parameter_air, Id_shipping_parameter_maritime', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
-			array('Id_importer, Id_shipping_parameter_air, Id_shipping_parameter_maritime, current', 'numerical', 'integerOnly'=>true),
+			array('Id_importer, Id_shipping_parameter_air, Id_shipping_parameter_maritime, Id_currency', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
+			array('Id_importer, Id_shipping_parameter_air, Id_shipping_parameter_maritime, current, Id_currency', 'numerical', 'integerOnly'=>true),
 			array('description', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description, Id_importer, Id_shipping_parameter_air, Id_shipping_parameter_maritime, current', 'safe', 'on'=>'search'),
+			array('Id, description, Id_importer, Id_shipping_parameter_air, Id_shipping_parameter_maritime, current, Id_currency', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,6 +64,7 @@ class ShippingParameter extends ModelAudit
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'currency' => array(self::BELONGS_TO, 'Currency', 'Id_currency'),
 			'purchaseOrders' => array(self::HAS_MANY, 'PurchaseOrder', 'Id_shipping_parameter'),
 			'importer' => array(self::BELONGS_TO, 'Importer', 'Id_importer'),
 			'shippingParameterAir' => array(self::BELONGS_TO, 'ShippingParameterAir', 'Id_shipping_parameter_air'),
@@ -77,6 +80,7 @@ class ShippingParameter extends ModelAudit
 		return array(
 			'Id' => 'ID',
 			'description' => 'Descripción',
+			'Id_currency'=>'Moneda',
 			'Id_importer' => 'Id Importer',
 			'Id_shipping_parameter_air' => 'Id Shipping Parameter Air',
 			'Id_shipping_parameter_maritime' => 'Id Shipping Parameter Maritime',
