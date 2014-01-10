@@ -10,6 +10,12 @@ class GreenHelper
 		{
 			return $valueToConvert*$currenecyConversor->factor;				
 		}
+		else
+		{
+			$currenecyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertTo,'Id_currency_to'=>$convertFrom));
+			if(isset($currenecyConversor))
+				return $valueToConvert/$currenecyConversor->factor;				
+		}
 		return 0;
 		
 	}

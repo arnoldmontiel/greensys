@@ -17,6 +17,16 @@
  */
 class CurrencyConversor extends CActiveRecord
 {
+	public function beforeSave()
+	{
+		$this->validity_date = (!empty($this->validity_date))?Yii::app()->lc->toDatabase($this->validity_date,'date','small','date',null):null;//date('Y-m-d',strtotime($this->validity_date));
+		return parent::beforeSave();
+	}
+	protected function afterFind()
+	{
+		$this->validity_date = isset($this->validity_date)?Yii::app()->dateFormatter->formatDateTime($this->validity_date,'small',null):null;
+		$this->creation_date = isset($this->creation_date)?Yii::app()->dateFormatter->formatDateTime($this->creation_date,'small',null):null;
+	}
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.

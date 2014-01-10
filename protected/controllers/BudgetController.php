@@ -615,7 +615,8 @@ class BudgetController extends GController
 		
 		$model = Budget::model()->findByPk(array('Id'=>$idBudget, 'version_number'=>$version));		
 
-		echo $this->renderPartial('_modalFormBudget', array('model'=>$model),false,true);
+		echo $this->renderPartial('_modalFormBudget', array('model'=>$model),
+		/*parametros extras para que funcione CJuiDatePicker*/false,true);
 	}
 	
 	public function actionAjaxOpenNewBudget()

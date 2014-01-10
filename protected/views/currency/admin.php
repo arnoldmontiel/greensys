@@ -20,14 +20,14 @@
 		'description',
 		'short_description',
 		array(
-				'header'=>'Relaciones',
+				'header'=>'Cotizaciones',
 				'value'=>function($data){				
 					$value= '<table class="table table-condensed">
 <thead>
 <tr>
-<th>Relacion</th>
-<th>Cambio</th>
-<th>Actualizacion</th>
+<th>Moneda</th>
+<th>Cotizaci&oacute;n</th>
+<th>Actualizaci&oacute;n</th>
 <th class="align-right">Acciones</th>
 </thead>
 <tbody>';

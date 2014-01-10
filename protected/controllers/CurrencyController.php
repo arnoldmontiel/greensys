@@ -220,7 +220,7 @@ class CurrencyController extends GController
 					'modelCurrencyFrom'=>$model->currencyFrom,
 					'ddlCurrency'=>$ddlCurrency,
 					'field_caller'=>$field_caller
-			));
+			)/*parametros extras para que funcione CJuiDatePicker*/,false, true);
 		}
 	}
 	
