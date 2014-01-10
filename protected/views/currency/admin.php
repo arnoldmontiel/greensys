@@ -22,7 +22,7 @@
 		array(
 				'header'=>'Relaciones',
 				'value'=>function($data){				
-					return '      <table class="table table-condensed">
+					$value= '<table class="table table-condensed">
 <thead>
 <tr>
 <th>Relacion</th>
@@ -30,23 +30,21 @@
 <th>Actualizacion</th>
 <th class="align-right">Acciones</th>
 </thead>
-<tbody>
-      <tr>
-      <td>Canadiense</td>
-      <td>1.10</td>
-      <td>10/12/2013</td>
-      <td class="align-right"><a class="btn btn-default btn-sm"><i class="fa fa-pencil"></i></a><a class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></a></td>
-      </tr>
-      <tr>
-      <td>Peso</td>
-      <td>1.10</td>
-      <td>10/12/2013</td>
-      <td class="align-right"><a class="btn btn-default btn-sm"><i class="fa fa-pencil"></i></a><a class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></a></td>
-      </tr>
-      </tbody>
+<tbody>';
+foreach ($data->currencyConversor as $currencyConversor)
+{
+	$value.=' <tr>
+      <td>'.$currencyConversor->currencyTo->description.'</td>
+      <td>'.$currencyConversor->factor.'</td>
+      <td>'.$currencyConversor->validity_date.'</td>
+      <td class="align-right"><a class="btn btn-default btn-sm" onclick="editCurrencyCoversor('.$currencyConversor->Id.')"><i class="fa fa-pencil"></i></a><a class="btn btn-default btn-sm" onclick="deleteCurrencyCoversor('.$currencyConversor->Id.')"><i class="fa fa-trash-o"></i></a></td>
+      </tr>';    		
+}
+      $value.='</tbody>
     </table>
     ';
-				},
+return $value;
+},
 				'type'=>'raw',
 				'htmlOptions'=>array("width"=>"30%"),
 		),	
@@ -54,7 +52,7 @@
 				'header'=>'Acciones',
 				'value'=>function($data){				
 					return '<button onclick="updateCurrency('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
-							<button onclick="updateCurrency('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> Agregar Relacion</button>
+							<button onclick="createCurrencyConversor('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> Agregar Relacion</button>
     						<button onclick="deleteCurrency('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>';
 				},
 				'type'=>'raw',
@@ -75,6 +73,49 @@
 <!-- /container --> 
 
 <script type="text/javascript">
+function editCurrencyCoversor(id)
+{
+	$.post(
+			'<?php echo CurrencyController::createUrl('currency/AjaxShowUpdateModalCurrencyConversor')?>',{id:id,field_caller:'currency-grid'}).success(
+					function(data)
+					{
+					if(data!=null)
+					{	
+						$('#modalPlaceHolder').html(data);
+						$('#modalPlaceHolder').modal('show');
+					}
+				}
+			);	
+}
+function deleteCurrencyCoversor(id)
+{
+	if(confirm("¿Seguro desea eliminar la cotización?"))
+	{
+		$.post(
+				'<?php echo CurrencyController::createUrl('currency/AjaxDeleteCurrencyConversor')?>',{id:id}).success(
+						function(data)
+						{
+							$.fn.yiiGridView.update('currency-grid');
+						}
+				);
+	}	
+}
+function createCurrencyConversor(idCurrencyFrom)
+{
+	$.post(
+			'<?php echo CurrencyController::createUrl('currency/AjaxShowCreateModalCurrencyConversor')?>',{idCurrencyFrom:idCurrencyFrom,field_caller:'currency-grid'}).success(
+					function(data)
+					{
+					if(data!=null)
+					{	
+						$('#modalPlaceHolder').html(data);
+						$('#modalPlaceHolder').modal('show');
+					}
+				}
+			);
+		return false;
+}
+
 function createCurrency()
 {
 	$.post(
@@ -116,7 +157,6 @@ function updateCurrency(id)
 					}
 				}
 			);
-
 }
 
 </script>

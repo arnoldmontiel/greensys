@@ -146,6 +146,46 @@ class CurrencyController extends GController
 				'field_caller'=>$field_caller
 		));
 	}
+	
+	public function actionAjaxCreateCurrencyConversor()	
+	{
+		$model = new CurrencyConversor();
+		
+		if(isset($_POST['CurrencyConversor']))
+		{
+			$model->attributes=$_POST['CurrencyConversor'];
+			if($model->save())
+				echo json_encode($model->attributes);
+		}
+		
+	}
+	public function actionAjaxShowCreateModalCurrencyConversor()
+	{
+	
+		if($_POST['idCurrencyFrom'])
+		{
+			$field_caller ="";
+			$model = new CurrencyConversor();
+			$model->Id_currency_from=$_POST['idCurrencyFrom'];
+			$modelCurrencyFrom=$this->loadModel($_POST['idCurrencyFrom']);
+			
+			if($_POST['field_caller'])
+				$field_caller=$_POST['field_caller'];
+			$criteria=new CDbCriteria;
+			$criteria->addCondition('Id!='.$modelCurrencyFrom->Id);
+			$criteria->order="description";
+			$ddlCurrency = Currency::model()->findAll($criteria);
+			
+			$this->renderPartial('_formModalCurrencyConversor',array(
+					'model'=>$model,
+					'modelCurrencyFrom'=>$modelCurrencyFrom,
+					'ddlCurrency'=>$ddlCurrency,
+					'field_caller'=>$field_caller
+			));
+				
+		}
+	}
+	
 	public function actionAjaxShowUpdateModal()
 	{
 		if(isset($_POST['id']))
@@ -159,6 +199,43 @@ class CurrencyController extends GController
 					'model'=>$model,
 					'field_caller'=>$field_caller
 			));
+		}
+	}
+	public function actionAjaxShowUpdateModalCurrencyConversor()
+	{
+		if(isset($_POST['id']))
+		{
+			$model=CurrencyConversor::model()->findByAttributes(array('Id'=>$_POST['id']));
+			$field_caller ="";
+			if($_POST['field_caller'])
+				$field_caller=$_POST['field_caller'];
+
+			$criteria=new CDbCriteria;
+			$criteria->addCondition('Id!='.$model->currencyFrom->Id);
+			
+			$criteria->order="description";
+			$ddlCurrency = Currency::model()->findAll($criteria);
+			$this->renderPartial('_formModalCurrencyConversor',array(
+					'model'=>$model,
+					'modelCurrencyFrom'=>$model->currencyFrom,
+					'ddlCurrency'=>$ddlCurrency,
+					'field_caller'=>$field_caller
+			));
+		}
+	}
+	
+	public function actionAjaxUpdateCurrencyConversor()
+	{
+		if(isset($_POST['CurrencyConversor']['Id']))
+		{
+			$model =CurrencyConversor::model()->findByAttributes(array('Id'=>$_POST['CurrencyConversor']['Id']));
+
+			if(isset($_POST['CurrencyConversor']))
+			{
+				$model->attributes=$_POST['CurrencyConversor'];
+				if($model->save())
+					echo json_encode($model->attributes);
+			}
 		}
 	}
 	
@@ -207,6 +284,21 @@ class CurrencyController extends GController
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
+	public function actionAjaxDeleteCurrencyConversor()
+	{
+		if(Yii::app()->request->isPostRequest)
+		{
+			$id = $_POST['id'];
+			// we only allow deletion via POST request
+			CurrencyConversor::model()->deleteAllByAttributes(array('Id'=>$_POST['id']));
+	
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		}
+		else
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+	}	
 	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

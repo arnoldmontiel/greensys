@@ -61,8 +61,8 @@ class CurrencyConversor extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idCurrencyFrom' => array(self::BELONGS_TO, 'Currency', 'Id_currency_from'),
-			'idCurrencyTo' => array(self::BELONGS_TO, 'Currency', 'Id_currency_to'),
+			'currencyFrom' => array(self::BELONGS_TO, 'Currency', 'Id_currency_from'),
+			'currencyTo' => array(self::BELONGS_TO, 'Currency', 'Id_currency_to'),
 		);
 	}
 
@@ -76,8 +76,8 @@ class CurrencyConversor extends CActiveRecord
 			'Id_currency_from' => 'Id Currency From',
 			'Id_currency_to' => 'Id Currency To',
 			'creation_date' => 'Creation Date',
-			'validity_date' => 'Validity Date',
-			'factor' => 'Factor',
+			'validity_date' => 'Fecha',
+			'factor' => 'Cotizaci&oacute;n',
 		);
 	}
 

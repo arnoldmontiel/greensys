@@ -57,6 +57,8 @@ class Currency extends ModelAudit
 		// class name for the relations automatically generated below.
 		return array(
 			'settings' => array(self::HAS_MANY, 'Setting', 'Id_currency'),
+			'currencyConversor' => array(self::HAS_MANY, 'CurrencyConversor', 'Id_currency_from'),
+			'currencyConversorTo' => array(self::HAS_MANY, 'CurrencyConversor', 'Id_currency_to'),
 		);
 	}
 
