@@ -176,7 +176,8 @@ class CurrencyController extends GController
 			if($_POST['field_caller'])
 				$field_caller=$_POST['field_caller'];
 			$criteria=new CDbCriteria;
-			$criteria->addCondition('Id!='.$modelCurrencyFrom->Id);
+			$criteria->addCondition('Id!='.$modelCurrencyFrom->Id,'OR');
+			$criteria->addCondition('Id not in (select Id_currency_to from currency_conversor where Id_currency_from = '.$modelCurrencyFrom->Id.')');
 			$criteria->order="description";
 			$ddlCurrency = Currency::model()->findAll($criteria);
 			
