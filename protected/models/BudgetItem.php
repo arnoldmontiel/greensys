@@ -226,6 +226,10 @@ class BudgetItem extends ModelAudit
 		return ProductItem::model()->countByAttributes(array('Id_product'=>$this->Id_product,'Id_budget_item'=>$this->Id)) > 0;
 	}
 	
+	public function getChildrenTotalPriceCurrencyConverted()
+	{
+		return GreenHelper::convertCurrency($this->getChildrenTotalPrice(), $this->budget->Id_currency, $this->budget->Id_currency_view);
+	}	
 	public function getChildrenTotalPrice()
 	{
 		if(!isset($this->Id)) return 0;
@@ -237,11 +241,18 @@ class BudgetItem extends ModelAudit
 		$modelTotal = BudgetItem::model()->find($criteria);
 	
 		return $modelTotal->children_total_price;
+	}	
+	public function getTotalPriceCurrencyConverted()
+	{
+		return number_format(GreenHelper::convertCurrency($this->getTotalPrice(), $this->budget->Id_currency, $this->budget->Id_currency_view), 2);
 	}
-	
 	public function getTotalPrice()
 	{
 		return number_format($this->getTotalPriceNotFormated(), 2);
+	}
+	public function getTotalPriceNotFormatedCurrencyConverted()
+	{
+		return GreenHelper::convertCurrency($this->getTotalPriceNotFormated(), $this->budget->Id_currency, $this->budget->Id_currency_view);
 	}
 	public function getTotalPriceNotFormated()
 	{
@@ -255,6 +266,10 @@ class BudgetItem extends ModelAudit
 		}
 		return (($this->getChildrenTotalPrice() + $this->price)*$this->quantity) - $discount;
 	}
+	public function getTotalDiscountCurrencyConverted()
+	{
+		return GreenHelper::convertCurrency($this->getTotalDiscount(), $this->budget->Id_currency, $this->budget->Id_currency_view);
+	}
 	public function getTotalDiscount()
 	{
 		if($this->discount_type ==0)
@@ -267,6 +282,10 @@ class BudgetItem extends ModelAudit
 		}
 		return number_format($discount , 2);
 	}
+	public function getTotalDiscountNotFormatedCurrencyConverted()
+	{
+		return GreenHelper::convertCurrency($this->getTotalDiscountNotFormated(), $this->budget->Id_currency, $this->budget->Id_currency_view);
+	}
 	public function getTotalDiscountNotFormated()
 	{
 		if($this->discount_type ==0)
@@ -278,6 +297,11 @@ class BudgetItem extends ModelAudit
 			$discount = $this->discount;
 		}
 		return $discount;
+	}
+	
+	public function getDiscountCurrencyConverted()
+	{
+		return GreenHelper::convertCurrency($this->getDiscount(), $this->budget->Id_currency, $this->budget->Id_currency_view);
 	}
 	
 	public function getDiscount()
@@ -318,6 +342,10 @@ class BudgetItem extends ModelAudit
 		}
 		
 		return $discountType;
+	}
+	public function getTotalPriceWOChildernCurrencyConverted()
+	{
+		return GreenHelper::convertCurrency($this->getTotalPriceWOChildern(), $this->budget->Id_currency, $this->budget->Id_currency_view);
 	}
 	
 	public function getTotalPriceWOChildern()

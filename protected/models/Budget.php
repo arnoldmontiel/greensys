@@ -215,6 +215,11 @@ class Budget extends ModelAudit
 		}
 		return number_format($totalPrice,2);
 	}
+	public function getTotalPriceCurrencyConverted()
+	{
+		$totalPrice = $this->getTotalPrice();
+		return number_format(GreenHelper::convertCurrency($totalPrice, $this->Id_currency, $this->Id_currency_view),2);
+	}
 	public function getTotalDiscount()
 	{
 		$criteria=new CDbCriteria;
@@ -232,6 +237,11 @@ class Budget extends ModelAudit
 		}
 		return number_format(($totalPrice*$this->percent_discount/100),2);
 		
+	}
+	public function getTotalDiscountCurrencyConverted()
+	{
+		$totalDiscount = $this->getTotalDiscount();
+		return number_format(GreenHelper::convertCurrency($totalDiscount, $this->Id_currency, $this->Id_currency_view),2);
 	}
 	
 	public function getTotalPriceWithDiscount()
@@ -251,6 +261,11 @@ class Budget extends ModelAudit
 			$totalPrice += $item->getTotalPriceNotFormated();
 		}
 		return number_format($totalPrice-($totalPrice*$this->percent_discount/100),2);
+	}
+	public function getTotalPriceWithDiscountCurrencyConverted()
+	{
+		$totalPriceWDiscount = $this->getTotalDiscount();
+		return number_format(GreenHelper::convertCurrency($totalPriceWDiscount, $this->Id_currency, $this->Id_currency_view),2);
 	}
 	
 	/**
