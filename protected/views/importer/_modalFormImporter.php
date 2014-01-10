@@ -128,16 +128,12 @@
 					?>
   				</div>
   				<div class="form-group col-sm-3">  
-					<label>Ancho Max</label>
-					<input class="form-control" type="text">
 					<?php
 						echo CHtml::activeLabelEx($modelShippingParameterAir, 'width_max'); 
 						echo CHtml::activeTextField($modelShippingParameterAir, 'width_max', array('class'=>'form-control')); 
 					?>
   				</div>
   				<div class="form-group col-sm-3">  
-					<label>Unidad Max</label>
-					<input class="form-control" type="text">
 					<?php				
 						echo CHtml::activeLabelEx($modelShippingParameterAir, 'Id_measurement_unit_sizes_max');
 						$measureType = MeasurementType::model()->findByAttributes(array('description'=>'linear'));
