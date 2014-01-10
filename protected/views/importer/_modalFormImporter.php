@@ -60,13 +60,13 @@
   	</div>
   	
     <div class="row">
-  		<div class="form-group col-sm-6">
+  		<div class="form-group col-sm-8">
 			<?php
 				echo CHtml::activeLabelEx($modelShippingParameter, 'description'); 
 				echo CHtml::activeTextField($modelShippingParameter, 'description', array('class'=>'form-control')); 
 			?>
   		</div>
-  		<div class="form-group col-sm-6">    
+  		<div class="form-group col-sm-4">    
 			<?php
 				echo CHtml::activeLabelEx($modelShippingParameter, 'Id_currency'); 
 				echo CHtml::activeDropDownList($modelShippingParameter, 'Id_currency', CHtml::listData(
