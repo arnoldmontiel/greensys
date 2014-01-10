@@ -24,6 +24,7 @@
   </div>
   <div class="form-group">
   <?php echo CHtml::hiddenField('field_caller',$field_caller,array('id'=>'field_caller'))?>
+  <?php echo CHtml::hiddenField('validity_date_from',Yii::app()->dateFormatter->formatDateTime(date(time()),'small',null),array('id'=>'validity_date_from'))?>
   <?php echo $form->hiddenField($model,'Id'); ?>
   <?php echo $form->labelEx($model,'factor'); ?>
   <?php echo $form->textField($model,'factor',array("class"=>"form-control")); ?>	
@@ -42,6 +43,7 @@
  		'options'=>array(
 	         'showAnim'=>'fold',
 			 'buttonImageOnly'=>true,
+			'minDate'=>-2,
 	     ),
 	     'htmlOptions'=>array(
 			'class'=>'form-control formHasClear',

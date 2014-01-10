@@ -23,28 +23,32 @@
 				'header'=>'Cotizaciones',
 				'value'=>function($data){				
 					$value= '<table class="table table-condensed">
-<thead>
-<tr>
-<th>Moneda</th>
-<th>Cotizaci&oacute;n</th>
-<th>Actualizaci&oacute;n</th>
-<th class="align-right">Acciones</th>
-</thead>
-<tbody>';
-foreach ($data->currencyConversor as $currencyConversor)
-{
-	$value.=' <tr>
-      <td>'.$currencyConversor->currencyTo->description.'</td>
-      <td>'.$currencyConversor->factor.'</td>
-      <td>'.$currencyConversor->validity_date.'</td>
-      <td class="align-right"><a class="btn btn-default btn-sm" onclick="editCurrencyCoversor('.$currencyConversor->Id.')"><i class="fa fa-pencil"></i></a><a class="btn btn-default btn-sm" onclick="deleteCurrencyCoversor('.$currencyConversor->Id.')"><i class="fa fa-trash-o"></i></a></td>
-      </tr>';    		
-}
-      $value.='</tbody>
-    </table>
-    ';
-return $value;
-},
+					<thead>
+					<tr>
+					<th>Moneda</th>
+					<th>Cotizaci&oacute;n</th>
+					<th>Actualizaci&oacute;n</th>
+					<th class="align-right">Acciones</th>
+					</thead>
+					<tbody>';
+					$criteria = new CDbCriteria();
+					$criteria->addCondition('Id_currency_from='.$data->Id);
+					$criteria->group='Id_currency_from';
+					$currencyConversors = CurrencyConversor::model()->findAll($criteria); 
+					foreach ($currencyConversors as $currencyConversor)
+					{
+						$value.=' <tr>
+					      <td>'.$currencyConversor->currencyTo->description.'</td>
+					      <td>'.$currencyConversor->factor.'</td>
+					      <td>'.$currencyConversor->validity_date.'</td>
+					      <td class="align-right"><a class="btn btn-default btn-sm" onclick="editCurrencyCoversor('.$currencyConversor->Id.')"><i class="fa fa-pencil"></i></a><a class="btn btn-default btn-sm" onclick="deleteCurrencyCoversor('.$currencyConversor->Id.')"><i class="fa fa-trash-o"></i></a></td>
+					      </tr>';    		
+					}
+					$value.='</tbody>
+					</table>
+					';
+					return $value;
+				},
 				'type'=>'raw',
 				'htmlOptions'=>array("width"=>"30%"),
 		),	

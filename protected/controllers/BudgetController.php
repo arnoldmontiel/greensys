@@ -642,7 +642,9 @@ class BudgetController extends GController
 		echo $this->renderPartial('_modalFormBudget', array('model'=>$model,
 															'modelProject'=>$modelProject,
 															'ddlProjects'=>$ddlProjects,
-															'ddlCustomer'=>$ddlCustomer,),false,true);
+															'ddlCustomer'=>$ddlCustomer,),
+															/*parametros extras para que funcione CJuiDatePicker*/
+															false,true);
 	}
 	
 	public function actionAjaxSaveNewBudget()
