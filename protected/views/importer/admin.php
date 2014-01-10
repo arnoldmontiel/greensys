@@ -78,5 +78,21 @@ function updateImporter(id)
 	return false;
 }
 
+function deleteImporter(id)
+{
+	if (confirm("¿Está seguro de eliminar este importador?")) 
+	{
+		$.post("<?php echo ImporterController::createUrl('AjaxDelete'); ?>",
+			{
+				id:id
+			}
+		).success(
+			function(data){
+				$.fn.yiiGridView.update("importer-grid");
+			});
+		return false;
+	}
+	return false;
+}
 </script>
 
