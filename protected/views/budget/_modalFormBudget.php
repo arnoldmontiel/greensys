@@ -57,6 +57,13 @@
     	echo CHtml::activeTextArea($model, 'description', array('class'=>'form-control', 'rows'=>3));
     ?>    
   </div>
+  <div class="form-group">
+  	<?php 
+    	echo CHtml::activeLabel($model, 'Id_currency_view');
+    	echo CHtml::activeDropDownList($model, 'Id_currency_view',
+    					CHtml::listData($ddlCurrency, 'Id', 'short_description'),array('class'=>'form-control'));
+    ?>    
+  </div>
   <div class="row">
   <div class="form-group col-sm-6">    
 	<?php 

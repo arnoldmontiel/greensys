@@ -612,10 +612,12 @@ class BudgetController extends GController
 	{		
 		$idBudget = isset($_POST['idBudget'])?$_POST['idBudget']:null;
 		$version = isset($_POST['version'])?$_POST['version']:null;
-		
+				
 		$model = Budget::model()->findByPk(array('Id'=>$idBudget, 'version_number'=>$version));		
 
-		echo $this->renderPartial('_modalFormBudget', array('model'=>$model),
+		$ddlCurrency = Currency::model()->findAll();
+		
+		echo $this->renderPartial('_modalFormBudget', array('model'=>$model,'ddlCurrency'=>$ddlCurrency),
 		/*parametros extras para que funcione CJuiDatePicker*/false,true);
 	}
 	
@@ -639,10 +641,13 @@ class BudgetController extends GController
 		$model = new Budget();
 		$modelProject = new Project();
 		
+		$ddlCurrency = Currency::model()->findAll();
+		
 		echo $this->renderPartial('_modalFormBudget', array('model'=>$model,
 															'modelProject'=>$modelProject,
 															'ddlProjects'=>$ddlProjects,
-															'ddlCustomer'=>$ddlCustomer,),
+															'ddlCustomer'=>$ddlCustomer,
+															'ddlCurrency'=>$ddlCurrency,),
 															/*parametros extras para que funcione CJuiDatePicker*/
 															false,true);
 	}

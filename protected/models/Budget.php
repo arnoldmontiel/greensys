@@ -20,6 +20,7 @@
  * @property string $date_cancelled
  * @property string $date_approved
  * @property integer $Id_currency
+ * @property integer $Id_currency_view
  * 
  * The followings are the available model relations:
  * @property Currency $currency
@@ -97,14 +98,14 @@ class Budget extends ModelAudit
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Id, Id_project, Id_budget_state, version_number, Id_currency', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
-			array('Id_project, Id_budget_state, version_number', 'numerical', 'integerOnly'=>true),
+			array('Id, Id_project, Id_budget_state, version_number, Id_currency, Id_currency_view', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
+			array('Id_project, Id_budget_state, version_number, Id_currency, Id_currency_view', 'numerical', 'integerOnly'=>true),
 			array('percent_discount', 'length', 'max'=>10),
 			array('date_creation, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, date_close, date_cancelled, date_approved', 'safe'),
 			array('description, note', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_project, percent_discount, date_creation, Id_budget_state, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, version_number, totPrice, note, project_description, date_close, date_cancelled, date_approved', 'safe', 'on'=>'search'),
+			array('Id, Id_project, percent_discount, date_creation, Id_budget_state, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, version_number, totPrice, note, project_description, date_close, date_cancelled, date_approved, Id_currency, Id_currency_view', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -119,6 +120,7 @@ class Budget extends ModelAudit
 			'budgetState' => array(self::BELONGS_TO, 'BudgetState', 'Id_budget_state'),
 			'project' => array(self::BELONGS_TO, 'Project', 'Id_project'),
 			'currency' => array(self::BELONGS_TO, 'Currency', 'Id_currency'),
+			'currencyView' => array(self::BELONGS_TO, 'Currency', 'Id_currency_view'),
 			'budgetItems' => array(self::HAS_MANY, 'BudgetItem', 'Id_budget'),
 			'notes' => array(self::HAS_MANY, 'GNote', 'budget_Id'),
 			'trackings' => array(self::HAS_MANY, 'Tracking', 'Id_budget'),
@@ -137,6 +139,7 @@ class Budget extends ModelAudit
 			'percent_discount' => 'Descuento',
 			'date_creation' => 'Fecha Creación',
 			'Id_budget_state' => 'State',
+			'Id_currency_view'=>'Moneda para exportar',
 			'date_inicialization' => 'Fecha Inicio',
 			'date_finalization' => 'Fecha Finalización',
 			'date_estimated_inicialization' => 'Fecha Estimada Inicio',
