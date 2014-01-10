@@ -64,7 +64,7 @@
   	<?php 
     	echo CHtml::activeLabel($model, 'Id_currency_view');
     	echo CHtml::activeDropDownList($model, 'Id_currency_view',
-    					CHtml::listData($ddlCurrency, 'Id', 'short_description'),array('class'=>'form-control'));
+    					CHtml::listData($ddlCurrency, 'Id', 'description'),array('class'=>'form-control'));
     ?>    
   </div>
   <div class="form-group col-sm-6">   

@@ -1,4 +1,19 @@
 <script type="text/javascript">
+function changeCurrencyView(obj, id, version)
+{
+	$.post("<?php echo BudgetController::createUrl('AjaxChangeCurrencyView'); ?>",
+			{
+				id:id,
+				version:version,
+				idCurrencyView:obj.value				
+			}
+		).success(
+			function(data){
+				statusSaved();
+			});
+		return false;
+}
+
 function closeVersion(id, version)
 {
 	if (confirm('¿Desea cerrar esta versión y enviarla a "Esperando Respuesta"?')) 

@@ -39,10 +39,10 @@
     <form role="form">
   <div class="form-group">
     <label for="exampleInputEmail1">Moneda para descarga</label>
-    <select class="form-control">
-<option value="">Dolar</option>
-<option value="1">Pesos</option>
-</select>
+    <?php 
+    	echo CHtml::activeDropDownList($model, 'Id_currency_view',
+    		CHtml::listData(Currency::model()->findAll(), 'Id', 'description'),array('class'=>'form-control', 'onchange'=>'changeCurrencyView(this,'.$model->Id.', '.$model->version_number.')'));
+    ?>
 </div></form>
     </div>
                </div>
