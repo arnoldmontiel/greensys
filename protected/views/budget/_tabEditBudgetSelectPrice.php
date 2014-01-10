@@ -1,4 +1,11 @@
-		<div class="arrow"></div>
+<?php 
+      	$criteria= new CDbCriteria;
+      	$criteria->with[]="priceList";
+      	$criteria->addCondition('Id_product = '.$model->Id_product);
+      	$criteria->addCondition('priceList.Id_price_list_type = 1');
+      	$priceListItem = PriceListItem::model()->find($criteria);
+?>
+<div class="arrow"></div>
 		<li role="presentation" class="introProveedor">
 			<table class="table tableDatosProd">
 				<thead>
@@ -10,9 +17,9 @@
         		</thead>
         	<tbody>
           	<tr>
-            <td><?php echo $model->product->msrp?></td>
-            <td style="text-align:center;"><?php echo  $model->product->dealer_cost?></td>
-            <td style="text-align:right;"><?php echo $model->product->profit_rate?></td>
+            <td><?php echo $priceListItem->msrp." ".$priceListItem->priceList->currency->short_description;?></td>
+            <td style="text-align:center;"><?php echo  $priceListItem->dealer_cost." ".$priceListItem->priceList->currency->short_description;?></td>
+            <td style="text-align:right;"><?php echo $priceListItem->profit_rate?></td>
             </tr>
         </tbody>
       </table>
@@ -21,7 +28,7 @@
       	$criteria= new CDbCriteria;
       	$criteria->with[]="priceList";
       	$criteria->addCondition('Id_product = '.$model->Id_product);
-      	$criteria->addCondition('priceList.Id_importer is not null');
+      	$criteria->addCondition('priceList.Id_price_list_type = 2');
       	$priceListItems = PriceListItem::model()->findAll($criteria);
       	$settings = new Settings;
       ?>

@@ -90,6 +90,7 @@ class PriceList extends ModelAudit
 			'supplier' => array(self::BELONGS_TO, 'Supplier', 'Id_supplier'),
 			'importer' => array(self::BELONGS_TO, 'Importer', 'Id_importer'),				
 			'priceListItems' => array(self::HAS_MANY, 'PriceListItem', 'Id_price_list'),
+			'currency' => array(self::BELONGS_TO, 'Currency', 'Id_currency'),				
 		);
 	}
 
