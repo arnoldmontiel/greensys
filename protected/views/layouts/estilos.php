@@ -665,6 +665,13 @@ font-family: "GudeaRegular";
 
 /* ------ END CREAR IMPORTADOR ------- */
 
+/* ------ CURRENCY ------- */
+
+.table .miniTableCurrency thead th{font-family:'GudeaRegular'; font-size:12px; background-color:#eee; border-color:#eee;}
+
+.table .miniTableCurrency .btn{margin-left:5px;}
+/* ------ END CURRENCY ------- */
+
 
 /* ------ UPLOAD IMAGENES PRODUCTO ------- */
 .xupload-form{ background-color:rgba(255,255,255,0.5);  font-size:16px;border: 3px dotted #eee; line-height:60px; height:250px; 
