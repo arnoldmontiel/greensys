@@ -618,6 +618,8 @@ margin:0px ; margin-left: -15px;}
 #myModalAddProduct .inputSmall{padding:0px 2px; height:31px;}
 
 #modalPlaceHolder .formHasLabel{ width:74px;}
+#conversorMonedas .formHasLabel{width:84%;}
+
 #modalPlaceHolder .labelPrecio {line-height: 20px; font-size:14px; margin-top:4px; display:inline-block;}
 
 .grid-view th{font-family:"GudeaRegular"; font-weight:600;}
