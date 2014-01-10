@@ -34,6 +34,11 @@ $settings = new Settings();
        <li id="addAreaToProject" class="liButtonAdd"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ><i class="fa fa-plus"></i> Agregar Area</button></li>
       </ul>
       <div class="tab-content">
+      
+       <div class="alert alert-warning fade in" id="warningEmpty">
+        Para poder agregar productos, primero debes <strong>agregar &aacute;reas</strong>.
+      </div>
+      
         <?php
         $first = true;
         foreach($areaProjects as $item)	{ ?>
@@ -41,7 +46,7 @@ $settings = new Settings();
         <?php 
 	        
         	if($first)
-        		$first = false;
+        	$first = false;
 	        $modelBudgetItem->Id_area = $item->Id_area;
 	        $modelBudgetItem->Id_area_project = $item->Id;
 	        
