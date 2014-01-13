@@ -236,7 +236,7 @@ $html2pdf->Output('exemple.pdf');
 
 echo '
 <div class="align-right">
-<a href="http://localhost:8888/GreenCliente/index.php?r=budget/readOnly&download=true" class="btn btn-primary" style="margin-bottom:15px;margin-right:15px;">Generar PDF</a>
+<a href="'.Yii::app()->createUrl("budget/readOnly",array('download'=>true)).'" class="btn btn-primary" style="margin-bottom:15px;margin-right:15px;">Generar PDF</a>
 </div>';
 
 echo $htmlCode;
