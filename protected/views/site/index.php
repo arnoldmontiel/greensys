@@ -116,7 +116,13 @@
 <?php $product = Product::model()->find();?>
 <?php $customer = Customer::model()->find();?>
 <?php $project = Project::model()->find();?>
-  <li class="list-group-item"><span class="listNumber <?php echo (isset($area)?"done":"");?>">2</span> Cargar Áreas
+<?php
+$criteria = new CDbCriteria;
+$criteria->with[]='contact';
+$criteria->addCondition('contact.description != "FOB"'); 
+$importer = Importer::model()->find();
+?>
+<li class="list-group-item"><span class="listNumber <?php echo (isset($area)?"done":"");?>">1</span> Cargar Áreas
 	 <?php if(isset($area)):?>
 	<span class="label label-success pull-right">
 	<i class="fa fa-check fa-fw"></i> Hecho</span>	 
@@ -133,7 +139,15 @@
 	 <a href="<?php echo Yii::app()->createUrl('service')?>" class="btn btn-default pull-right">Completar</a>
 	 <?php endif?>
   </li>
-  <li class="list-group-item"><span class="listNumber <?php echo (isset($brand)?"done":"");?>">3</span> Cargar Marcas
+  <li class="list-group-item"><span class="listNumber <?php echo (isset($importer)?"done":"");?>">3</span> Cargar Importadores
+	 <?php if(isset($importer)):?>
+	<span class="label label-success pull-right">
+	<i class="fa fa-check fa-fw"></i> Hecho</span>	 
+	 <?php else:?>
+	 <a href="<?php echo Yii::app()->createUrl('brand')?>" class="btn btn-default pull-right">Completar</a>
+	 <?php endif?>
+   </li>
+  <li class="list-group-item"><span class="listNumber <?php echo (isset($brand)?"done":"");?>">4</span> Cargar Marcas
 	 <?php if(isset($brand)):?>
 	<span class="label label-success pull-right">
 	<i class="fa fa-check fa-fw"></i> Hecho</span>	 
@@ -142,7 +156,7 @@
 	 <?php endif?>
    </li>
 
-  <li class="list-group-item"><span class="listNumber <?php echo (isset($product)?"done":"");?>">4</span> Cargar Productos 
+  <li class="list-group-item"><span class="listNumber <?php echo (isset($product)?"done":"");?>">5</span> Cargar Productos 
   	 <?php if(isset($product)):?>
 	<span class="label label-success pull-right">
 	<i class="fa fa-check fa-fw"></i> Hecho</span>	 
@@ -151,7 +165,7 @@
 	 <?php endif?>
    </li>
 
-  <li class="list-group-item"><span class="listNumber <?php echo (isset($customer)?"done":"");?>">5</span> Cargar Clientes 
+  <li class="list-group-item"><span class="listNumber <?php echo (isset($customer)?"done":"");?>">6</span> Cargar Clientes 
   	 <?php if(isset($customer)):?>
 	<span class="label label-success pull-right">
 	<i class="fa fa-check fa-fw"></i> Hecho</span>	 
@@ -160,7 +174,7 @@
 	 <?php endif?>
   </li>
 
-  <li class="list-group-item"><span class="listNumber <?php echo (isset($project)?"done":"");?>">6</span> Cargar Proyectos
+  <li class="list-group-item"><span class="listNumber <?php echo (isset($project)?"done":"");?>">7</span> Cargar Proyectos
   	 <?php if(isset($project)):?>
 	<span class="label label-success pull-right">
 	<i class="fa fa-check fa-fw"></i> Hecho</span>	 
