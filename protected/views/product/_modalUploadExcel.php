@@ -59,7 +59,7 @@
  
  <div id="status-error" style="display:none;" class="estadoModal">
  <div class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i>
- <span><strong>Se ha producido un error</strong>, revise el archivo e int�ntelo nuevamente.</span>
+ <span><strong>Se ha producido un error</strong>, revise el archivo e int&eacute;ntelo nuevamente.</span>
  </div>
  </div>
  
