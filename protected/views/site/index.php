@@ -120,7 +120,7 @@
 $criteria = new CDbCriteria;
 $criteria->with[]='contact';
 $criteria->addCondition('contact.description != "FOB"'); 
-$importer = Importer::model()->find();
+$importer = Importer::model()->find($criteria);
 ?>
 <li class="list-group-item"><span class="listNumber <?php echo (isset($area)?"done":"");?>">1</span> Cargar Áreas
 	 <?php if(isset($area)):?>
