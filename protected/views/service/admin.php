@@ -30,7 +30,7 @@
 		array(
 				'header'=>'Acciones',
 				'value'=>'"<div class=\"buttonsTableProd\"><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"updateService(".$data->Id.");\" ><i class=\"fa fa-pencil\"></i> Editar</button>".'.
-				'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"deleteServices(".$data->Id.");\" ><i class=\"fa fa-trash-o\"></i> Borrar</button></div>"',
+				'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"deleteService(".$data->Id.");\" ><i class=\"fa fa-trash-o\"></i> Borrar</button></div>"',
 				'type'=>'raw',
 				'htmlOptions'=>array("style"=>"text-align:right;"),
 				'headerHtmlOptions'=>array("style"=>"text-align:right;"),
