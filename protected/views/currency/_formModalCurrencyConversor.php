@@ -33,7 +33,6 @@
   </div>
   <div class="form-group col-sm-6">
   
-  <?php echo $form->labelEx($model,'date_validity'); ?>
   <?php 
  		echo CHtml::activeLabel($model, 'validity_date');
  		$this->widget('zii.widgets.jui.CJuiDatePicker', array(
