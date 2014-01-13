@@ -442,7 +442,7 @@ class GreenHelper
 				{
 					$sheet->setCellValue($indexProductFooter['discountDesc'].$row, "Descuento");
 					$sheet->getStyle($indexProductFooter['discountDesc'].$row)->getFont()->setBold(true);
-					$sheet->setCellValue($indexProductFooter['discount'].$row, $budgetItem->getDiscountType().' '. $budgetItem->discount);
+					$sheet->setCellValue($indexProductFooter['discount'].$row, $budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()));
 					$sheet->getStyle($indexProductFooter['discount'].$row)->getFont()->setBold(true);
 					
 					$sheet->setCellValue($indexProductFooter['totalDesc'].$row, "Total:");
@@ -512,7 +512,7 @@ class GreenHelper
 				$sheet->getStyle($indexExtra['descriptionStart'].$row)->getAlignment()->setWrapText(true);
 				$sheet->setCellValue($indexExtra['quantity'].$row, $budgetItem->quantity);
 				$sheet->setCellValue($indexExtra['price'].$row, $currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()));
-				$sheet->setCellValue($indexExtra['discount'].$row, $budgetItem->getDiscountType().' '. $budgetItem->discount);
+				$sheet->setCellValue($indexExtra['discount'].$row, $budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()));
 				$sheet->setCellValue($indexExtra['total'].$row, $currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()));
 				$sheet->getStyle($indexExtra['descriptionStart'].$row.':'.$indexExtra['total'].$row)->applyFromArray($style_border);
 				
