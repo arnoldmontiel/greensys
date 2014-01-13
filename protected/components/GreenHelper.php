@@ -235,7 +235,7 @@ class GreenHelper
 		$indexProductHeader = array('shortDescription'=>'A');
 		$indexProductBody = array('image'=>'A', 'description'=>'D', 'descriptionEnd'=>'K');
 		$indexProductFooter = array('qtyDesc'=>'A', 'qty'=>'B', 'unitPriceDesc'=>'D', 'unitPrice'=>'F',
-										'totalDesc'=>'H', 'total'=>'I');
+										'discountDesc'=>'H', 'discount'=>'I', 'totalDesc'=>'K', 'total'=>'L');
 		$indexExtra	  = array('descriptionStart'=>'A', 'descriptionEnd'=>'E', 'quantity'=>'F', 'price'=>'G',
 										'discount'=>'H','total'=>'I');
 		$indexTotal	  = array('descriptionStart'=>'F','descriptionEnd'=>'H','total'=>'I');
@@ -437,10 +437,26 @@ class GreenHelper
 				$sheet->getStyle($indexProductFooter['unitPriceDesc'].$row)->getFont()->setBold(true);
 				$sheet->setCellValue($indexProductFooter['unitPrice'].$row, $currency .' '. self::showPrice($budgetItem->getPriceCurrencyConverted()));
 				$sheet->getStyle($indexProductFooter['unitPrice'].$row)->getFont()->setBold(true);
-				$sheet->setCellValue($indexProductFooter['totalDesc'].$row, "Total:");
-				$sheet->getStyle($indexProductFooter['totalDesc'].$row)->getFont()->setBold(true);
-				$sheet->setCellValue($indexProductFooter['total'].$row, $currency .' '. self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()));
-				$sheet->getStyle($indexProductFooter['total'].$row)->getFont()->setBold(true);
+				
+				if($budgetItem->discount > 0)
+				{
+					$sheet->setCellValue($indexProductFooter['discountDesc'].$row, "Descuento");
+					$sheet->getStyle($indexProductFooter['discountDesc'].$row)->getFont()->setBold(true);
+					$sheet->setCellValue($indexProductFooter['discount'].$row, $budgetItem->getDiscountType().' '. $budgetItem->discount);
+					$sheet->getStyle($indexProductFooter['discount'].$row)->getFont()->setBold(true);
+					
+					$sheet->setCellValue($indexProductFooter['totalDesc'].$row, "Total:");
+					$sheet->getStyle($indexProductFooter['totalDesc'].$row)->getFont()->setBold(true);
+					$sheet->setCellValue($indexProductFooter['total'].$row, $currency .' '. self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()));
+					$sheet->getStyle($indexProductFooter['total'].$row)->getFont()->setBold(true);
+				}
+				else 
+				{
+					$sheet->setCellValue($indexProductFooter['discountDesc'].$row, "Total:");
+					$sheet->getStyle($indexProductFooter['discountDesc'].$row)->getFont()->setBold(true);
+					$sheet->setCellValue($indexProductFooter['discount'].$row, $currency .' '. self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()));
+					$sheet->getStyle($indexProductFooter['discount'].$row)->getFont()->setBold(true);
+				}
 				
 				$serviceTotalPrice = $serviceTotalPrice + $budgetItem->getTotalPriceWOChildernCurrencyConverted();				
 				
