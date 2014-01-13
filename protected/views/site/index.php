@@ -116,6 +116,7 @@
 <?php $product = Product::model()->find();?>
 <?php $customer = Customer::model()->find();?>
 <?php $project = Project::model()->find();?>
+<?php $currencyConversor = CurrencyConversor::model()->find();?>
 <?php
 $criteria = new CDbCriteria;
 $criteria->with[]='contact';
@@ -182,8 +183,16 @@ $importer = Importer::model()->find($criteria);
 	 <a href="<?php echo Yii::app()->createUrl('project')?>" class="btn btn-default pull-right">Completar</a>
 	 <?php endif?>
    </li>
-</ul>
-<?php if(isset($area)&&isset($service)&&isset($brand)&&isset($product)&&isset($customer)&&isset($project)):?>
+  <li class="list-group-item"><span class="listNumber <?php echo (isset($currencyConversor)?"done":"");?>">8</span> Cargar Monedas
+  	 <?php if(isset($currencyConversor)):?>
+	<span class="label label-success pull-right">
+	<i class="fa fa-check fa-fw"></i> Hecho</span>	 
+	 <?php else:?>
+	 <a href="<?php echo Yii::app()->createUrl('currency')?>" class="btn btn-default pull-right">Completar</a>
+	 <?php endif?>
+   </li>
+   </ul>
+<?php if(isset($area)&&isset($service)&&isset($brand)&&isset($product)&&isset($customer)&&isset($project)&&isset($currencyConversor)&&isset($importer)):?>
         <div class="panel-body">
    <div class="alert alert-success">
         <h4>Setup Completo!</h4>
