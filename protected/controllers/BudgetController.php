@@ -367,10 +367,11 @@ class BudgetController extends GController
 					{
 						//traigo datos de price_list (precios, shipping_type)
 						$criteria = new CDbCriteria();
-						$criteria->join = 'inner join price_list pl on (pl.Id = t.Id_price_list)';
+						$criteria->join = 'inner join price_list pl on (pl.Id = t.Id_price_list)
+								inner join shipping_parameter sp on (sp.Id_importer = pl.Id_importer)';
 						$criteria->addCondition('pl.Id_price_list_type = 2'); //lista de venta
 						$criteria->addCondition('t.Id_product = '. $idProduct);
-						$criteria->addCondition('pl.description <> "FOB"');
+						$criteria->addCondition('sp.description <> "FOB"');
 						
 						$modelPriceListItem = PriceListItem::model()->find($criteria);
 						
@@ -391,10 +392,11 @@ class BudgetController extends GController
 						else 
 						{
 							$criteria = new CDbCriteria();
-							$criteria->join = 'inner join price_list pl on (pl.Id = t.Id_price_list)';
+							$criteria->join = 'inner join price_list pl on (pl.Id = t.Id_price_list)
+									inner join shipping_parameter sp on (sp.Id_importer = pl.Id_importer)';
 							$criteria->addCondition('pl.Id_price_list_type = 2'); //lista de venta
 							$criteria->addCondition('t.Id_product = '. $idProduct);
-							$criteria->addCondition('pl.description = "FOB"');
+							$criteria->addCondition('sp.description = "FOB"');
 							
 							$modelPriceListItem = PriceListItem::model()->find($criteria);
 							if(isset($modelPriceListItem))
