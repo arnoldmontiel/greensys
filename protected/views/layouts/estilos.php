@@ -433,7 +433,7 @@ padding: 6px 8px;
 
 
 .buttonsTableProd{min-width:158px;}
-.buttonsTablePres{min-width:380px;}
+.buttonsTablePres{min-width:405px;}
 
 .combined { width:100%;}
 .combined select{display:inline-block !important; width:60% !important;}
