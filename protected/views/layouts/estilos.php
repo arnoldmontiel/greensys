@@ -550,6 +550,13 @@ padding-bottom: 20px; position:relative;}
 
 .panelPresu{ background-color:#eee;margin:0px; border:0px none; padding-bottom:20px; padding-top:20px;  border-bottom:2px dotted #dedede;  border-radius:0px;}
 
+.panelPresu h2{margin-bottom:10px;}
+.panelPresu .versionDrop{display:block; margin:0px;margin-bottom:15px;text-shadow:none; color:#666;font-size: 24px;
+font-weight: 100;
+font-family:'GudeaRegular', Arial, sans-serif;}
+
+.panelPresu .table td{padding:3px;}
+
 .contenedorPresu{ background-color:#eee; padding:0px; margin:0px; border-bottom:2px dotted #dedede; padding-top:10px; padding-bottom:20px; margin-bottom:0px;}
 
 .contenedorPresu .col-sm-12{ padding-right:10px;padding-left:10px;  }
@@ -702,6 +709,9 @@ width:auto; padding:50px; border-radius:0px; display:block;margin-right:20px;mar
 
 
 /* ------ READ ONLY ------- */
+@page *{
+    margin:0px;
+}
 
 #screenReadOnly{ font-size:14px; background-color:white;padding-top:30px; padding-bottom:30px;}
 
@@ -713,12 +723,13 @@ width:auto; padding:50px; border-radius:0px; display:block;margin-right:20px;mar
 .budgetSubtitle{ font-weight:bold; padding:5px; background-color:#eee;}
 .budgetDesc{  padding:5px;  margin:10px 0px;}
 
+#screenReadOnly .table td{border-top: 1px solid #ddd; padding:5px;}
 
 .budgetMono{font-family:'Mono';}
 
-.budgetMono .label{font-size:13px;}
+.label-small{font-size:15px;color:white; background-color:#ccc; display:inline-block; padding:5px; font-weight: bold;}
 
-.budgetMono .label-big{font-size:16px; margin:5px;}
+.label-big{font-size:18px; margin:5px; color:white; background-color:gray;display:inline-block;padding:5px; font-weight: bold;}
 
 /* ------ END READ ONLY ------- */
 
