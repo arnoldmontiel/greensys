@@ -141,7 +141,9 @@ class Importer extends ModelAudit
 		$criteria->addSearchCondition("contact.telephone_2",$this->contact_telephone_2);
 		$criteria->addSearchCondition("contact.telephone_3",$this->contact_telephone_3);
 		$criteria->addSearchCondition("contact.email",$this->contact_email);
-
+		
+		$criteria->addCondition('contact.description!="FOB"');
+		
 // 		$criteria->with[]='shippingParameter';
 // 		$criteria->addSearchCondition("shippingParameter.description",$this->shippingParameter_description);
 
