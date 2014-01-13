@@ -144,7 +144,7 @@ $importer = Importer::model()->find();
 	<span class="label label-success pull-right">
 	<i class="fa fa-check fa-fw"></i> Hecho</span>	 
 	 <?php else:?>
-	 <a href="<?php echo Yii::app()->createUrl('brand')?>" class="btn btn-default pull-right">Completar</a>
+	 <a href="<?php echo Yii::app()->createUrl('importer')?>" class="btn btn-default pull-right">Completar</a>
 	 <?php endif?>
    </li>
   <li class="list-group-item"><span class="listNumber <?php echo (isset($brand)?"done":"");?>">4</span> Cargar Marcas
