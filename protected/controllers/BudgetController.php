@@ -868,6 +868,8 @@ class BudgetController extends GController
 		
 		$modelProducts->budget_id = $id;
 		$modelProducts->budget_version = $version;
+		if(isset($_GET['idAreaProject']))
+			$modelProducts->budget_area_project = $_GET['idAreaProject']; 
 		if(isset($idArea))
 			$modelProducts->budget_area = $idArea;
 		

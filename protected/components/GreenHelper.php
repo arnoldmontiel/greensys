@@ -3,18 +3,18 @@ class GreenHelper
 {
 	static public function convertCurrency($valueToConvert, $convertFrom, $convertTo)
 	{
-		if($convertFrom==$convertTo) return number_format($valueToConvert,2);
+		if($convertFrom==$convertTo) return round($valueToConvert,2);
 		
 		$currenecyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertFrom,'Id_currency_to'=>$convertTo));
 		if(isset($currenecyConversor))
 		{
-			return number_format($valueToConvert*$currenecyConversor->factor,2);				
+			return round($valueToConvert*$currenecyConversor->factor,2);				
 		}
 		else
 		{
 			$currenecyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertTo,'Id_currency_to'=>$convertFrom));
 			if(isset($currenecyConversor))
-				return number_format($valueToConvert/$currenecyConversor->factor,2);				
+				return round($valueToConvert/$currenecyConversor->factor,2);				
 		}
 		return 0;
 		
@@ -207,6 +207,11 @@ class GreenHelper
 		));
 	}
 	
+	static public function showPrice($number)
+	{
+		return number_format($number,2);
+	}
+	
 	static public function exportBudgetToExcel($idBudget, $versionNumber)
 	{
 		
@@ -219,11 +224,6 @@ class GreenHelper
 		->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
 		->setKeywords("office 2007 openxml php")
 		->setCategory("Test result file");
-		
-		$modelSettings = Setting::model()->findByPk(1);
-		$currency = "$";
-		if(isset($modelSettings))
-			$currency = $modelSettings->currency->short_description;
 		
 		$arrayServiceTotal = array();
 		//INDICES EXCEL
@@ -269,8 +269,11 @@ class GreenHelper
 		
 		//MAIN HEADER---------------------------------------------------------------
 		$modelBudget = Budget::model()->findByAttributes(array('Id'=>$idBudget,'version_number'=>$versionNumber));
+		$currency = "$";
 		if(isset($modelBudget))
 		{
+			$currency = $modelBudget->currencyView->short_description;
+			
 			$objDrawingPType = new PHPExcel_Worksheet_Drawing();
 			$objDrawingPType->setWorksheet($sheet);
 			$objDrawingPType->setName("Pareto By Type");
@@ -411,7 +414,6 @@ class GreenHelper
 						$objDrawingPType->setCoordinates($indexProductBody['image'].$row);
 						$objDrawingPType->setOffsetX(1);
 						$objDrawingPType->setOffsetY(1);
-						//$objDrawingPType->setHeight(95);
 						$objDrawingPType->setResizeProportional(true);
 						$objDrawingPType->setWidthAndHeight(150,150);
 					}
@@ -433,21 +435,22 @@ class GreenHelper
 				$sheet->getStyle($indexProductFooter['qty'].$row)->getFont()->setBold(true);
 				$sheet->setCellValue($indexProductFooter['unitPriceDesc'].$row, "Precio Unitario");
 				$sheet->getStyle($indexProductFooter['unitPriceDesc'].$row)->getFont()->setBold(true);
-				$sheet->setCellValue($indexProductFooter['unitPrice'].$row, $currency .' '. $budgetItem->getPriceCurrencyConverted());
+				$sheet->setCellValue($indexProductFooter['unitPrice'].$row, $currency .' '. self::showPrice($budgetItem->getPriceCurrencyConverted()));
 				$sheet->getStyle($indexProductFooter['unitPrice'].$row)->getFont()->setBold(true);
 				$sheet->setCellValue($indexProductFooter['totalDesc'].$row, "Total:");
 				$sheet->getStyle($indexProductFooter['totalDesc'].$row)->getFont()->setBold(true);
-				$sheet->setCellValue($indexProductFooter['total'].$row, $currency .' '. $budgetItem->getTotalPriceWOChildernCurrencyConverted());
+				$sheet->setCellValue($indexProductFooter['total'].$row, $currency .' '. self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()));
 				$sheet->getStyle($indexProductFooter['total'].$row)->getFont()->setBold(true);
 				
-				$serviceTotalPrice = $serviceTotalPrice + (float)str_replace(",", "", $budgetItem->getTotalPriceWOChildernCurrencyConverted());				
+				$serviceTotalPrice = $serviceTotalPrice + $budgetItem->getTotalPriceWOChildernCurrencyConverted();				
 				
 				$row++;
 				$row = $row + 2;
 			}
 				
 			$row++;
-			$arrayServiceTotal[] = array('serviceName'=>$serviceName, 'total'=>round($serviceTotalPrice,2));
+			$arrayServiceTotal[] = array('serviceName'=>$serviceName, 'total'=>$serviceTotalPrice);
+			
 		}
 		//END BODY BUDGET ITEM---------------------------------------------------------------
 		
@@ -492,9 +495,9 @@ class GreenHelper
 				$sheet->setCellValue($indexExtra['descriptionStart'].$row, $budgetItem->description);
 				$sheet->getStyle($indexExtra['descriptionStart'].$row)->getAlignment()->setWrapText(true);
 				$sheet->setCellValue($indexExtra['quantity'].$row, $budgetItem->quantity);
-				$sheet->setCellValue($indexExtra['price'].$row, $currency . ' ' .$budgetItem->getPriceCurrencyConverted());
+				$sheet->setCellValue($indexExtra['price'].$row, $currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()));
 				$sheet->setCellValue($indexExtra['discount'].$row, $budgetItem->getDiscountType().' '. $budgetItem->discount);
-				$sheet->setCellValue($indexExtra['total'].$row, $currency . ' ' . $budgetItem->getTotalPriceWOChildernCurrencyConverted());
+				$sheet->setCellValue($indexExtra['total'].$row, $currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()));
 				$sheet->getStyle($indexExtra['descriptionStart'].$row.':'.$indexExtra['total'].$row)->applyFromArray($style_border);
 				
 				$sheet->getStyle($indexExtra['quantity'].$row.':'.$indexExtra['total'].$row)->applyFromArray($style_num);
@@ -515,7 +518,7 @@ class GreenHelper
 			self::cellColor($sheet, $indexTotal['descriptionStart'].$row.':'.$indexTotal['descriptionStart'].$row, 'e6e6fa');
 			$sheet->getStyle($indexTotal['total'].$row)->applyFromArray($style_num);
 			$sheet->getStyle($indexTotal['descriptionStart'].$row.':'.$indexTotal['total'].$row)->applyFromArray($style_border);
-			$sheet->setCellValue($indexTotal['total'].$row, $currency . ' ' . $modelBudget->TotalPriceCurrencyConverted);
+			$sheet->setCellValue($indexTotal['total'].$row, $currency . ' ' . self::showPrice($modelBudget->TotalPriceCurrencyConverted));
 			$row++;
 			
 			//sub total
@@ -524,7 +527,7 @@ class GreenHelper
 			self::cellColor($sheet, $indexTotal['descriptionStart'].$row.':'.$indexTotal['descriptionStart'].$row, 'e6e6fa');
 			$sheet->getStyle($indexTotal['total'].$row)->applyFromArray($style_num);
 			$sheet->getStyle($indexTotal['descriptionStart'].$row.':'.$indexTotal['total'].$row)->applyFromArray($style_border);			
-			$sheet->setCellValue($indexTotal['total'].$row, $currency .' ' . $modelBudget->TotalDiscountCurrencyConverted);
+			$sheet->setCellValue($indexTotal['total'].$row, $currency .' ' . self::showPrice($modelBudget->TotalDiscountCurrencyConverted));
 			$row++;
 			
 			//sub total
@@ -533,7 +536,7 @@ class GreenHelper
 			self::cellColor($sheet, $indexTotal['descriptionStart'].$row.':'.$indexTotal['descriptionStart'].$row, 'e6e6fa');
 			$sheet->getStyle($indexTotal['total'].$row)->applyFromArray($style_num);
 			$sheet->getStyle($indexTotal['descriptionStart'].$row.':'.$indexTotal['total'].$row)->applyFromArray($style_border);
-			$sheet->setCellValue($indexTotal['total'].$row, $currency . ' ' .$modelBudget->TotalPriceWithDiscountCurrencyConverted);
+			$sheet->setCellValue($indexTotal['total'].$row, $currency . ' ' . self::showPrice($modelBudget->TotalPriceWithDiscountCurrencyConverted));
 			$row++;
 						
 			$project = isset($modelBudget->project)?$modelBudget->project->description:"";
@@ -548,31 +551,17 @@ class GreenHelper
 			if($currentService['total'] > 0)
 			{
 				$sheet->setCellValue($indexSummary['service'].$rowSummary, $currentService['serviceName']);
-				$sheet->setCellValue($indexSummary['total'].$rowSummary, $currency . ' ' . number_format($currentService['total'],2));
+				$sheet->setCellValue($indexSummary['total'].$rowSummary, $currency . ' ' . self::showPrice($currentService['total']));
 				$rowSummary++;
 			}
 		}
-		//set column auto-size		
-// 		foreach(range($indexProduct['quantity'],$indexProduct['total']) as $columnID) {
-// 			$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
-// 			->setAutoSize(true);
-// 		}
-		
+
 		// Rename worksheet
 		$objPHPExcel->getActiveSheet()->setTitle('Simple');
 		
 		
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$objPHPExcel->setActiveSheetIndex(0);
-		
-		// 		$objDrawingPType = new PHPExcel_Worksheet_Drawing();
-		// 		$objDrawingPType->setWorksheet($objPHPExcel->setActiveSheetIndex(0));
-		// 		$objDrawingPType->setName("Pareto By Type");
-		// 		//$objDrawingPType->setPath(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/519538c3763c2.jpg");
-		// 		$objDrawingPType->setCoordinates('C5');
-		// 		$objDrawingPType->setOffsetX(0);
-		// 		$objDrawingPType->setOffsetY(0);
-		// 		$objDrawingPType->setWidth(200);
 		
 		// Redirect output to a client web browser (Excel5)
 		header('Content-Type: application/vnd.ms-excel');

@@ -127,6 +127,7 @@ class Product extends ModelAudit
 	public $budget_id;
 	public $budget_version;
 	public $budget_area;
+	public $budget_area_project;
 	public $qty_per_prod;	
 	
 	public function beforeSave()
@@ -191,7 +192,7 @@ class Product extends ModelAudit
 			array('Id_volts, time_instalation, time_programation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, Id_sub_category', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_brand, Id_category, Id_nomenclator, Id_product_type, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation,time_programation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color, other, Id_category, power, current, need_rack, unit_rack, from_dtools, verified, model, vendor, Id_product, default_broker, default_send_format, shipping_box_lenght, shipping_box_width, shipping_box_height, shipping_box_volume, shipping_box_weight, dimensional_weight_IATA, dimensional_weight_FEDEX, dimensional_weight_DHL, dimensional_weight_UPS, dimensional_weight_custom1, dimensional_weight_custom2, dimensional_weight_custom3, off, off_category_a, off_category_b, off_category_c, off_category_d, deale_distributor_price, need_ups, commercial_name, commercial_description, accessory_a, accessory_b, accessory_c, accessory_d, attached, budget_id, budget_version qty_per_prod, budget_area', 'safe', 'on'=>'search'),
+			array('Id, Id_brand, Id_category, Id_nomenclator, Id_product_type, description_customer, description_supplier, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation,time_programation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color, other, Id_category, power, current, need_rack, unit_rack, from_dtools, verified, model, vendor, Id_product, default_broker, default_send_format, shipping_box_lenght, shipping_box_width, shipping_box_height, shipping_box_volume, shipping_box_weight, dimensional_weight_IATA, dimensional_weight_FEDEX, dimensional_weight_DHL, dimensional_weight_UPS, dimensional_weight_custom1, dimensional_weight_custom2, dimensional_weight_custom3, off, off_category_a, off_category_b, off_category_c, off_category_d, deale_distributor_price, need_ups, commercial_name, commercial_description, accessory_a, accessory_b, accessory_c, accessory_d, attached, budget_id, budget_version qty_per_prod, budget_area, budget_area_project', 'safe', 'on'=>'search'),
 		
 			
 		);
@@ -1082,6 +1083,8 @@ class Product extends ModelAudit
 			$filter .= ' and bi.version_number = '. $this->budget_version;
 		if(isset($this->budget_area))
 			$filter .= ' and bi.Id_area = '. $this->budget_area;
+		if(isset($this->budget_area_project))
+			$filter .= ' and bi.Id_area_project = '. $this->budget_area_project;
 		
 		$criteria->join = 'INNER JOIN brand on (t.Id_brand = brand.Id)
 							INNER JOIN category on (t.Id_category = category.Id)
