@@ -21,7 +21,8 @@
 		'description',				
 		array(
 			'header'=>'Descripci&oacute;n',
-			'value'=>'GreenHelper::cutString($data->long_description==""?$data->service->long_description:$data->long_description,250)',
+				'name'=>'long_description',
+			'value'=>'GreenHelper::cutString($data->long_description==""?$data->long_description:$data->long_description,250)',
 			'type'=>'raw',
 			'htmlOptions'=>array("width"=>"70%;"),
 			'headerHtmlOptions'=>array("width"=>"70%;"),

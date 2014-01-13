@@ -84,10 +84,13 @@ class Service extends CActiveRecord
 
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('description',$this->description,true);
-		$criteria->order="description";		
-
+		$criteria->compare('long_description',$this->long_description,true);
+		
+		$sort=new CSort;
+		$sort->defaultOrder="description";
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+				'criteria'=>$criteria,
+				'sort'=>$sort,
 		));
-	}
+			}
 }
