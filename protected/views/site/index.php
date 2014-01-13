@@ -110,13 +110,66 @@
           <p>Completa los siguientes pasos en orden para comenzar a presupuestar:</p>
         </div>
 <ul class="list-group">
-<li class="list-group-item"><span class="listNumber done">1</span> Cargar Areas <span class="label label-success pull-right"><i class="fa fa-check fa-fw"></i> Hecho</span></li>
-  <li class="list-group-item"><span class="listNumber">2</span> Cargar Servicios <a href="<?php echo Yii::app()->createUrl('service')?>" class="btn btn-default pull-right">Completar</a></li>
-  <li class="list-group-item"><span class="listNumber">3</span> Cargar Marcas <a href="<?php echo Yii::app()->createUrl('brand')?>" class="btn btn-default pull-right">Completar</a></li>
-  <li class="list-group-item"><span class="listNumber">4</span> Cargar Productos <a href="<?php echo Yii::app()->createUrl('product')?>" class="btn btn-default pull-right">Completar</a></li>
-  <li class="list-group-item"><span class="listNumber">5</span> Cargar Clientes <a href="<?php echo Yii::app()->createUrl('customer')?>" class="btn btn-default pull-right">Completar</a></li>
-  <li class="list-group-item"><span class="listNumber">6</span> Cargar Proyectos <a href="<?php echo Yii::app()->createUrl('project')?>" class="btn btn-default pull-right">Completar</a></li>
+<?php $area = Area::model()->find();?>
+<?php $service = Service::model()->find();?>
+<?php $brand = Brand::model()->find();?>
+<?php $product = Product::model()->find();?>
+<?php $customer = Customer::model()->find();?>
+<?php $project = Project::model()->find();?>
+  <li class="list-group-item"><span class="listNumber <?php echo (isset($area)?"done":"");?>">2</span> Cargar Áreas
+	 <?php if(isset($area)):?>
+	<span class="label label-success pull-right">
+	<i class="fa fa-check fa-fw"></i> Hecho</span>	 
+	 <?php else:?>
+	 <a href="<?php echo Yii::app()->createUrl('area')?>" class="btn btn-default pull-right">Completar</a>
+	 <?php endif?>
+  </li>
+  
+  <li class="list-group-item"><span class="listNumber <?php echo (isset($service)?"done":"");?>">2</span> Cargar Servicios
+	 <?php if(isset($service)):?>
+	<span class="label label-success pull-right">
+	<i class="fa fa-check fa-fw"></i> Hecho</span>	 
+	 <?php else:?>
+	 <a href="<?php echo Yii::app()->createUrl('service')?>" class="btn btn-default pull-right">Completar</a>
+	 <?php endif?>
+  </li>
+  <li class="list-group-item"><span class="listNumber <?php echo (isset($brand)?"done":"");?>">3</span> Cargar Marcas
+	 <?php if(isset($brand)):?>
+	<span class="label label-success pull-right">
+	<i class="fa fa-check fa-fw"></i> Hecho</span>	 
+	 <?php else:?>
+	 <a href="<?php echo Yii::app()->createUrl('brand')?>" class="btn btn-default pull-right">Completar</a>
+	 <?php endif?>
+   </li>
+
+  <li class="list-group-item"><span class="listNumber <?php echo (isset($product)?"done":"");?>">4</span> Cargar Productos 
+  	 <?php if(isset($product)):?>
+	<span class="label label-success pull-right">
+	<i class="fa fa-check fa-fw"></i> Hecho</span>	 
+	 <?php else:?>
+	 <a href="<?php echo Yii::app()->createUrl('product')?>" class="btn btn-default pull-right">Completar</a>
+	 <?php endif?>
+   </li>
+
+  <li class="list-group-item"><span class="listNumber <?php echo (isset($customer)?"done":"");?>">5</span> Cargar Clientes 
+  	 <?php if(isset($customer)):?>
+	<span class="label label-success pull-right">
+	<i class="fa fa-check fa-fw"></i> Hecho</span>	 
+	 <?php else:?>
+	 <a href="<?php echo Yii::app()->createUrl('customer')?>" class="btn btn-default pull-right">Completar</a>
+	 <?php endif?>
+  </li>
+
+  <li class="list-group-item"><span class="listNumber <?php echo (isset($project)?"done":"");?>">6</span> Cargar Proyectos
+  	 <?php if(isset($project)):?>
+	<span class="label label-success pull-right">
+	<i class="fa fa-check fa-fw"></i> Hecho</span>	 
+	 <?php else:?>
+	 <a href="<?php echo Yii::app()->createUrl('project')?>" class="btn btn-default pull-right">Completar</a>
+	 <?php endif?>
+   </li>
 </ul>
+<?php if(isset($area)&&isset($service)&&isset($brand)&&isset($product)&&isset($customer)&&isset($project)):?>
         <div class="panel-body">
    <div class="alert alert-success">
         <h4>Setup Completo!</h4>
@@ -126,6 +179,7 @@
         </p>
       </div>
       </div>
+      <?php endif?>
         </div>
     <!-- /.panel -->
     </div>
