@@ -41,6 +41,12 @@ font-weight: normal;
 font-style: normal;
 }
 
+ @font-face {
+font-family: 'Mono';
+src: url('fonts/DejaVuSansMono.ttf');
+font-weight: normal;
+font-style: normal;
+}
 a {
   outline: 0 none !important;
   color:#333 ;
@@ -693,6 +699,28 @@ width:auto; padding:50px; border-radius:0px; display:block;margin-right:20px;mar
 .tablaUploadImagenes .imageUploadCont img{width:100%;}
 
 /* ------ END UPLOAD IMAGENES PRODUCTO ------- */
+
+
+/* ------ READ ONLY ------- */
+
+#screenReadOnly{ font-size:14px; background-color:white;padding-top:30px; padding-bottom:30px;}
+
+.budgetLogo{margin:auto; display:inline-block;width:300px; height:100px; background-color:black; background-size:80%; background-repeat:no-repeat; background-position:center; background-image:url(images/logo.png);}
+
+.budgetCabecera{color:#333; font-family:'GudeaRegular'; border-bottom:1px dotted #ccc; padding-bottom:20px; margin-bottom:20px;}
+.budgetName{font-size:20px;	}
+
+.budgetSubtitle{ font-weight:bold; padding:5px; background-color:#eee;}
+.budgetDesc{  padding:5px;  margin:10px 0px;}
+
+
+.budgetMono{font-family:'Mono';}
+
+.budgetMono .label{font-size:13px;}
+
+.budgetMono .label-big{font-size:16px; margin:5px;}
+
+/* ------ END READ ONLY ------- */
 
 
 /* ----- DISPOSITIVOS --------*/
