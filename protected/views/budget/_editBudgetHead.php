@@ -2,17 +2,8 @@
     <div class="col-sm-12">
     
           <h2><?php echo  $model->project->customer->contact->description?> - <?php echo  $model->project->description?><a class="superEdit" onclick="openUpdateBudget(<?php echo $model->Id . ', '.$model->version_number;?>);" data-toggle="modal" data-target="#myModalEditarPresupuesto"><i class="fa fa-pencil"></i></a></h2>
-<div class="dropdown">
-        <a class="versionDrop dropdown-toggle" data-toggle="dropdown" href="#" id="header-budget-version-number">Versi&oacute;n <?php echo $model->version_number?> (abierta) <i class="fa fa-caret-down fa-fw"></i></a>
+        <div class="versionDrop" id="header-budget-version-number">Versi&oacute;n <?php echo $model->version_number?></div>
 
-  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Versi&oacute;n 1</a></li>
-        <li role="presentation" class="divider"></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Versi&oacute;n 2</a></li>
-        <li role="presentation" class="divider"></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Versi&oacute;n 3</a></li>
-  </ul>
-</div>
 
         
 <div class="row">
@@ -50,8 +41,15 @@
 </div></form>
     </div>
                </div>
+               <div class="dropdown pull-right">
+                <button type="button" data-toggle="dropdown" class="btn btn-primary marginLeft dropdown-toggle"><i class="fa fa-clock-o fa-fw"></i> Versiones Anteriores <i class="fa fa-caret-down fa-fw"></i></button>
+                <ul class="dropdown-menu" role="menu">
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Version 1</a></li>
+    <li role="presentation" class="divider"></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Version 2</a></li>
+  </ul>
+                </div>
                 <button onclick="closeVersion(<?php echo $model->Id . ', '.$model->version_number;?>);" type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-archive fa-fw"></i> Cerrar Versi&oacute;n</button>
                 <button onclick="exportBudget(<?php echo $model->Id . ', '.$model->version_number;?>);" type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-download fa-fw"></i> Descargar</button>
-        
     </div>
   </div>
