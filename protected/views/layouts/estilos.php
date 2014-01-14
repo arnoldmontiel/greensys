@@ -717,19 +717,26 @@ width:auto; padding:50px; border-radius:0px; display:block;margin-right:20px;mar
 
 .budgetLogo{margin:auto; display:inline-block;width:300px; height:100px; background-color:black; background-size:80%; background-repeat:no-repeat; background-position:center; background-image:url(images/logo.png);}
 
-.budgetCabecera{color:#333; font-family:'GudeaRegular'; border-bottom:1px dotted #ccc; padding-bottom:20px; margin-bottom:20px;}
-.budgetName{font-size:20px;	}
+.budgetCabecera{ text-transform:uppercase; letter-spacing:2px; color:#333; }
+
+.budgetBloque{ font-family:'GudeaRegular'; border-bottom:1px dotted #ccc; padding-bottom:20px; margin-bottom:20px;}
+
+.budgetProduct{font-family:'GudeaBold';	 text-transform:uppercase;}
+
+.budgetPropuesta{ text-transform:uppercase; letter-spacing:2px;}
+.budgetName{font-size:18px; font-family:'GudeaBold';	 text-transform:uppercase; letter-spacing:initial; margin:3px -2px;}
 
 .budgetSubtitle{ font-weight:bold; padding:5px; background-color:#eee;}
 .budgetDesc{  padding:5px;  margin:10px 0px;}
 
 #screenReadOnly .table td{border-top: 1px solid #ddd; padding:5px;}
+#screenReadOnly .table th{ padding:5px;}
 
 .budgetMono{font-family:'Mono';}
 
-.label-small{font-size:15px;color:white; background-color:#ccc; display:inline-block; padding:5px; font-weight: bold;}
+.label-small{font-size:15px;color:white; background-color:#ccc; display:inline-block; padding:3px 5px; font-weight: bold;}
 
-.label-big{font-size:18px; margin:5px; color:white; background-color:gray;display:inline-block;padding:5px; font-weight: bold;}
+.label-big{font-size:18px; margin:0px; color:white; background-color:gray;display:inline-block;padding:3px 5px; font-weight: bold;}
 
 /* ------ END READ ONLY ------- */
 
