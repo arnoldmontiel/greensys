@@ -44,6 +44,13 @@ $('#tab-cancelled').click(function(){
 ?>
 <script type="text/javascript">
 
+function viewBudget(id, version)
+{
+	var params = "&id="+id+"&version="+version;
+	window.location = "<?php echo BudgetController::createUrl("view")?>" + params; 
+	return false;
+}
+
 function openNewProject()
 {
 	//debugger;
