@@ -1793,4 +1793,244 @@ class GreenHelper
 		}
 		return $result;
 	}
+	
+	static public function generateBudgetPDF($modelBudget)
+	{
+		
+		$idBudget = $modelBudget->Id;
+		$versionNumber = $modelBudget->version_number;
+		$currency = $modelBudget->currencyView->short_description;
+		
+		$serviceContent = "";
+		$serviceContentHeader = "";
+		$serviceContentBody = "";
+		
+		$serviceSummaryContent = "";
+		$serviceSummaryContentBody = "";
+		
+		$extraContent = "";
+		$extraContentBody = "";
+		
+		$arrayServiceTotal = array();
+		
+		$criteria = new CDbCriteria();
+		$criteria->addCondition('Id_budget = '.$idBudget);
+		$criteria->addCondition('version_number = '.$versionNumber);
+		$criteria->group = 'Id_service';
+		$budgetItemServices = BudgetItem::model()->findAll($criteria);
+		
+		foreach($budgetItemServices as $budgetItemService)
+		{
+			$criteria = new CDbCriteria();
+			$criteria->addCondition('Id_budget = '.$idBudget);
+			$criteria->addCondition('version_number = '.$versionNumber);
+		
+			$serviceCondition = '';
+			if(isset($budgetItemService->Id_service))
+			{
+				$serviceCondition = 'Id_service = '.$budgetItemService->Id_service. ' OR
+															(Id_budget_item in (select Id from budget_item bi
+															where Id_budget = '.$idBudget .'
+															and version_number = '.$versionNumber .'
+															and Id_product is not null
+															and Id_service = '.$budgetItemService->Id_service.' )
+														AND is_included = 1)';
+			}
+			else
+				$serviceCondition = '(Id_service is null and Id_budget_item is null)';
+		
+			$criteria->addCondition($serviceCondition);
+			$criteria->addCondition('Id_product is not null');
+				
+			$budgetItems = BudgetItem::model()->findAll($criteria);
+				
+			//SERVICE---------------------------------------------------------------
+			$serviceName = '';
+			if(count($budgetItems)>0)
+			{
+				$serviceName = 'General';
+				$serviceDesc = 'Items sin agrupar en servicios';
+				if(isset($budgetItemService->service))
+				{
+					$serviceName = $budgetItemService->service->description;
+					$serviceDesc = $budgetItemService->service->long_description;
+						
+					$projectServiceDB = ProjectService::model()->findByAttributes(array('Id_project'=>$budgetItemService->budget->Id_project,
+							'Id_service'=>$budgetItemService->Id_service));
+					if(isset($projectServiceDB))
+						$serviceDesc = $projectServiceDB->long_description;
+				}
+		
+				$serviceContentHeader = '
+									<div class="budgetSubtitle">'.$serviceName.'</div>
+									<div class="budgetDesc">'.$serviceDesc.' </div>';
+				
+		
+			}
+			//END SERVICE---------------------------------------------------------------
+			
+			//ITEMS---------------------------------------------------------------
+			$serviceContentBody = '<table class="table">
+									<tbody>';
+			
+			$serviceTotalPrice = 0;
+			foreach($budgetItems as $budgetItem)
+			{
+				$prodHeader = $budgetItem->product->brand->description .' '. $budgetItem->product->model;
+				
+				$serviceContentBody = $serviceContentBody . '<tr>';
+				$serviceContentBody = $serviceContentBody . '<td class="budgetMono" width="5%" valign="top" align="center">'.$budgetItem->quantity.'</td>';
+				$serviceContentBody = $serviceContentBody . '<td><div class="bold">'.$prodHeader.'</div>';
+				$serviceContentBody = $serviceContentBody . '<div>'.$budgetItem->product->short_description.'</div></td>';
+				$serviceContentBody = $serviceContentBody . '<td class="budgetMono" width="15%" valign="top" align="right">'.$currency .' '. self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>';				
+				$serviceContentBody = $serviceContentBody . '<td class="align-right budgetMono" width="15%" valign="top" align="right">';
+				$serviceContentBody = $serviceContentBody . '<div class="label-small">'.$currency .' '. self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</div></td>';
+				$serviceContentBody = $serviceContentBody . '</tr>';
+				
+				$serviceTotalPrice = $serviceTotalPrice + $budgetItem->getTotalPriceWOChildernCurrencyConverted();
+			}
+			$serviceContentBody = $serviceContentBody . '</tbody></table>';
+			
+			$serviceContent = $serviceContent . $serviceContentHeader . $serviceContentBody;
+			
+			$arrayServiceTotal[] = array('serviceName'=>$serviceName, 'total'=>$serviceTotalPrice);
+			//END ITEMS---------------------------------------------------------------
+			
+		}
+		
+		//EXTRAS---------------------------------------------------------------
+		$criteria = new CDbCriteria();
+		$criteria->addCondition('Id_budget = '.$idBudget);
+		$criteria->addCondition('version_number = '.$versionNumber);
+		$criteria->addCondition('Id_service is null');
+		$criteria->addCondition('Id_product is null');
+			
+		$budgetItems = BudgetItem::model()->findAll($criteria);
+	
+		if(count($budgetItems)>0)
+		{
+			//BODY EXTRAS---------------------------------------------------------------
+			foreach($budgetItems as $budgetItem)
+			{
+				$extraContentBody = '<tr>';
+				$extraContentBody = $extraContentBody . '<td>'.$budgetItem->description.'</td>';
+				$extraContentBody = $extraContentBody . '<td class="budgetMono">'.$budgetItem->quantity.'</td>';
+				$extraContentBody = $extraContentBody . '<td class="budgetMono">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>';
+				$extraContentBody = $extraContentBody . '<td class="budgetMono">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()).'</td>';
+				$extraContentBody = $extraContentBody . '<td class="align-right budgetMono">';
+				$extraContentBody = $extraContentBody . '<div class="label-small">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</div></td>';
+				$extraContentBody = $extraContentBody . '</tr>';		
+
+				$extraContent = $extraContent. $extraContentBody; 
+			}
+			//END BODY EXTRAS---------------------------------------------------------------
+		}
+		//END EXTRAS---------------------------------------------------------------
+		
+		//END SERVICE SUMMARY---------------------------------------------------------------
+		foreach($arrayServiceTotal as $currentService)
+		{
+			if($currentService['total'] > 0)
+			{
+				$serviceSummaryContentBody = '<tr>';
+				$serviceSummaryContentBody = $serviceSummaryContentBody . '<td>'.$currentService['serviceName'].'</td>';
+				$serviceSummaryContentBody = $serviceSummaryContentBody . '<td class="align-right budgetMono">'.$currency . ' ' . self::showPrice($currentService['total']).'</td>';
+				$serviceSummaryContentBody = $serviceSummaryContentBody . '</tr>';
+				
+				$serviceSummaryContent = $serviceSummaryContent . $serviceSummaryContentBody; 
+			}
+		}
+		//END SERVICE SUMMARY---------------------------------------------------------------
+		
+		$content = '<div class="container" id="screenReadOnly">
+				
+						<div class="row budgetCabecera budgetBloque">
+							<div class="col-sm-12">
+								<table width="100%">
+									<tbody>
+										<tr>
+											<td width="50%">		
+												<div class="budgetPropuesta">Propuesta</div>
+												<div class="budgetName">'.$modelBudget->description.'</div>
+												<div>'.$modelBudget->project->fullDescription.'</div>
+												<div>Versi&oacute;n '.$modelBudget->version_number.'</div>
+												<div>'.date("d/m/Y").'</div>
+											</td>
+											<td width="50%" align="right">
+												<img src="images/logo.jpg" width="200" height="56"/>
+											</td>
+										</tr>
+									</tbody>
+								</table>		
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="budgetSubtitle">Resumen de propuesta</div>
+								<table class="table">
+        							<tbody>
+									'.$serviceSummaryContent.'
+						        	</tbody>
+						      	</table>
+							</div>
+							<div class="col-sm-6"></div>
+						</div>
+
+						<div class="row budgetBloque">
+							<div class="col-sm-12">
+								'.$serviceContent.'
+
+							</div>
+						</div>
+
+						<div class="row budgetBloque">
+							<div class="col-sm-12">
+								<div class="budgetSubtitle">Extras</div>
+									<div class="budgetDesc">Items. </div>
+										<table class="table">
+											<thead>
+												<tr>
+													<th>Descripci&oacute;n</th>
+													<th>Cantidad</th>
+													<th>Precio</th>
+													<th>Descuento</th>
+													<th>Total</th>
+												</tr>
+											</thead>
+									        <tbody>
+									          '.$extraContent.'
+									        </tbody>
+     	 								</table>
+									</div>
+								</div>
+
+								<div class="row budgetCabecera">
+									<div class="col-sm-6"></div>
+									<div class="col-sm-6">
+										<div class="budgetSubtitle">Total</div>
+										<table class="table">
+        									<tbody>
+          										<tr>
+            										<td class="bold">Sub Total</td>
+          											<td colspan="2" class="align-right budgetMono">'.$currency . ' ' . self::showPrice($modelBudget->TotalPriceCurrencyConverted).'</td>
+          										</tr>
+          										<tr>
+            										<td>Descuento</td>
+          											<td class="budgetMono">'.$modelBudget->percent_discount.'%</td>
+         											<td class="align-right budgetMono">'.$currency .' ' . self::showPrice($modelBudget->TotalDiscountCurrencyConverted).'</td>
+         										</tr>
+         										<tr>
+           											<td class="bold">Total</td>
+           											<td class="align-right budgetMono" colspan="2">
+           												<div class="label-big">'.$currency . ' ' . self::showPrice($modelBudget->TotalPriceWithDiscountCurrencyConverted).'</div>
+         											</td>
+         										</tr>
+        									</tbody>
+      									</table>
+									</div>
+								</div>
+</div>';
+		return $content;
+	}
 }
