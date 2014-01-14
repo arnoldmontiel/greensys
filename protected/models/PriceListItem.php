@@ -212,6 +212,7 @@ class PriceListItem extends ModelAudit
 		
 		// Create a custom sort
 		$sort=new CSort;
+		$sort->defaultOrder="p.model";
 		$sort->attributes=array(
 		      'cost',
 		// For each relational attribute, create a 'virtual attribute' using the public variable name

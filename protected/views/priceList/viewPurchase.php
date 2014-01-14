@@ -5,7 +5,7 @@
 <div class="row panelPresu">
     <div class="col-sm-12">
     
-          <h2 class="pull-left">Venta - <?php echo $model->importer->contact->description;?></h2>
+          <h2 class="pull-left">Compra - <?php echo $model->supplier->business_name;?></h2>
 <button type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-download fa-fw"></i> Descargar</button>
 <div class="clear"></div>
           <div>Creacion: <?php echo $model->date_creation;?> - Validez: <?php echo $model->date_validity;?></div>
@@ -32,11 +32,6 @@
 				'value'=>'$data->product->part_number',
 		),
 		array(
-				'header'=>'Marca',
-				'name'=>'brand_description',
-				'value'=>'$data->product->brand->description',
-		),
-				array(
 				'header'=>'Dealer Cost',
 				'name'=>'dealer_cost',
 				'value'=>
@@ -58,27 +53,6 @@
 				'value'=>'$data->msrp." ".$data->priceList->currency->short_description',
 				'htmlOptions'=>array('class'=>'align-right')
 		),
-		array(
-				'header'=>'Costo Aereo',
-				'name'=>'air_cost',
-				'value'=>
-				function($data){
-					return '<span class="label label-primary labelPrecio"><i class="fa fa-plane fa-fw"></i>'.$data->air_cost.' <div class="usd">'.$data->priceList->currency->short_description.'</div></span>';
-				},
-				'type'=>'raw',
-				'htmlOptions'=>array('style'=>'text-align: right;'),
-		),
-		array(
-				'header'=>'Costo Maritimo',
-				'name'=>'maritime_cost',
-				'value'=>
-				function($data){
-					return '<span class="label label-primary labelPrecio"><i class="fa fa-anchor fa-fw"></i>'.$data->maritime_cost.' <div class="usd">'.$data->priceList->currency->short_description.'</div></span>';
-				},
-				'type'=>'raw',
-				'htmlOptions'=>array('style'=>'text-align: right;'),
-		),
-
 	),
 	));
  ?>
@@ -86,4 +60,3 @@
 </div><!-- /.col-sm-12 --> 
 </div><!-- /.row --> 
 </div><!-- /.container --> 
-

@@ -101,14 +101,14 @@ class PriceList extends ModelAudit
 	{
 		return array(
 			'Id' => 'ID',
-			'date_creation' => 'Date Creation',
-			'date_validity' => 'Date Validity',
-			'validity' => 'Validity',
-			'Id_supplier' => 'Supplier',
-			'Id_importer'=>'Importer',
-			'Id_price_list_type' => 'Price List Type',
-			'description' => 'Description',
-			'supplier_business_name'=>'Supplier',
+			'date_creation' => 'Fecha Creación',
+			'date_validity' => 'Fecha validez',
+			'validity' => 'Validez',
+			'Id_supplier' => 'Proveedor',
+			'Id_importer'=>'Importador',
+			'Id_price_list_type' => 'Type',
+			'description' => 'Decripción',
+			'supplier_business_name'=>'Proveedor',
 		
 		);
 	}

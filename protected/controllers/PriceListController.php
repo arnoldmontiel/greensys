@@ -32,7 +32,37 @@ class PriceListController extends GController
 			),
 		);
 	}
-
+	
+	public function actionViewSale($id)
+	{
+		$model = $this->loadModel($id);
+		$modelPriceListItem = new PriceListItem();
+		$modelPriceListItem->unsetAttributes();		
+		if(isset($_GET['PriceListItem']))
+		{
+			$modelPriceListItem->attributes = $_GET['PriceListItem'];
+		}		
+		$modelPriceListItem->Id_price_list = $model->Id;
+		$this->render("viewSale",array(
+			'model'=>$model,
+			'modelPriceListItem'=>$modelPriceListItem,
+		));
+	}
+	public function actionViewPurchase($id)
+	{
+		$model = $this->loadModel($id);
+		$modelPriceListItem = new PriceListItem();
+		$modelPriceListItem->unsetAttributes();
+		if(isset($_GET['PriceListItem']))
+		{
+			$modelPriceListItem->attributes = $_GET['PriceListItem'];
+		}		
+		$modelPriceListItem->Id_price_list = $model->Id;
+		$this->render("viewPurchase",array(
+			'model'=>$model,
+			'modelPriceListItem'=>$modelPriceListItem,
+		));
+	}
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
