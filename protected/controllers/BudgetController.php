@@ -478,7 +478,7 @@ class BudgetController extends GController
 				$criteria->addCondition('Id_currency_to='.$modelBudget->Id_currency_view);
 				$criteria->order='validity_date DESC';
 				$currencyConversor= CurrencyConversor::model()->find($criteria);
-				if(!isset($currencyConversor))
+				if(isset($currencyConversor))
 				{
 					$modelBudget->Id_currency_conversor =$currencyConversor->Id; 
 					$modelBudget->Id_currency_from_currency_conversor =$currencyConversor->Id_currency_from; 
