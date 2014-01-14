@@ -4,6 +4,7 @@
   <h1 class="pageTitle">Clientes</h1>
   </div>
     <div class="col-sm-6 align-right">
+    <a href="<?php echo Yii::app()->createUrl("customer/view");?>" class="btn btn-primary superBoton" ><i class="fa fa-plus"></i> AAAAAA</a>
   <a id="createCostomer" class="btn btn-primary superBoton" data-toggle="modal" data-target="#myModalCrearCustomer"><i class="fa fa-plus"></i> Agregar &Aacute;rea</a>
   </div>
   </div>
