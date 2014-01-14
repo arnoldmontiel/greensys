@@ -4,7 +4,7 @@
 <?php
 
 $htmlCode='<div class="container" id="screenReadOnly">
-<div class="row budgetCabecera">
+<div class="row budgetCabecera budgetBloque">
 <div class="col-sm-12">
 		
 		<table width="100%">
@@ -12,10 +12,10 @@ $htmlCode='<div class="container" id="screenReadOnly">
 		<tr>
 		<td width="50%">
 		
-		<div>Propuesta</div>
+		<div class="budgetPropuesta">Propuesta</div>
 <div class="budgetName">Departamento Madero</div>
 <div>Juan Perez</div>
-<div>Revisi&oacute;n 1</div>
+<div>Versi&oacute;n 1</div>
 <div>20/10/2014</div>
 		
 		</td>
@@ -57,7 +57,7 @@ $htmlCode='<div class="container" id="screenReadOnly">
 </div>
 
 
-<div class="row budgetCabecera">
+<div class="row budgetBloque">
 <div class="col-sm-12">
 <div class="budgetSubtitle">Home Theater</div>
 <div class="budgetDesc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum molestie vestibulum eros sit amet pellentesque. 
@@ -76,7 +76,7 @@ a. Integer a faucibus ligula, nec. </div>
           </tr>
           <tr>
           <td class="budgetMono" valign="top" align="center">2</td>
-            <td><div class="bold">RTI PP2-33</div>
+            <td><div class="budgetProduct">RTI PP2-33</div>
             <div>enean pulvinar, est eu tristique sodales, purus erat sollicitudin elit, et tempus sem augue eleifend velit.  </div>
             </td>
           <td class="budgetMono" width="15%" valign="top" align="right">U$D 200.23</td>
@@ -85,7 +85,7 @@ a. Integer a faucibus ligula, nec. </div>
           </tr>
           <tr>
           <td class="budgetMono" valign="top" align="center">2</td>
-            <td><div class="bold">RTI 99887</div>
+            <td><div class="budgetProduct">RTI 99887</div>
             <div>Etiam ac est non elit mattis malesuada laoreet ut arcu.</div>
             </td>
           <td class="budgetMono" width="15%" valign="top" align="right">U$D 200.23</td>
@@ -103,7 +103,7 @@ Cras convallis a mauris quis malesuada.  </div>
         <tbody>
           <tr>
           <td class="budgetMono" width="5%" valign="top" align="center">1</td>
-            <td><div class="bold">RTI SURFER</div>
+            <td><div class="budgetProduct">RTI SURFER</div>
             <div>Companion Remote for Smartphones and Tablets using RTPI Panel Software</div>
             </td>
           <td class="budgetMono" width="15%" valign="top" align="right">U$D 200.23</td>
@@ -112,7 +112,7 @@ Cras convallis a mauris quis malesuada.  </div>
           </tr>
           <tr>
           <td class="budgetMono" valign="top" align="center">1</td>
-            <td><div class="bold" width="15%" valign="top" align="right">RTI PP2-33</div>
+            <td><div class="budgetProduct">RTI PP2-33</div>
             <div>enean pulvinar, est eu tristique sodales, purus erat sollicitudin elit, et tempus sem augue eleifend velit.  </div>
             </td>
           <td class="budgetMono" width="15%" valign="top" align="right">U$D 200.23</td>
@@ -121,7 +121,7 @@ Cras convallis a mauris quis malesuada.  </div>
           </tr>
           <tr>
           <td class="budgetMono" valign="top" align="center">1</td>
-            <td><div class="bold" width="15%" valign="top" align="right">RTI 99887</div>
+            <td><div class="budgetProduct">RTI 99887</div>
             <div>Etiam ac est non elit mattis malesuada laoreet ut arcu.</div>
             </td>
           <td class="budgetMono" width="15%" valign="top" align="right">U$D 200.23</td>
@@ -130,7 +130,7 @@ Cras convallis a mauris quis malesuada.  </div>
           </tr>
           <tr>
           <td class="budgetMono" valign="top" align="center">1</td>
-            <td><div class="bold">Cable HDMI</div>
+            <td><div class="budgetProduct">Cable HDMI</div>
             </td>
           <td class="budgetMono" width="15%" valign="top" align="right">U$D 200.23</td>
             <td class="align-right budgetMono" width="15%" valign="top" align="right">
@@ -141,7 +141,7 @@ Cras convallis a mauris quis malesuada.  </div>
 </div>
 </div>
 
-<div class="row budgetCabecera">
+<div class="row budgetBloque">
 <div class="col-sm-12">
 <div class="budgetSubtitle">Extras</div>
 <div class="budgetDesc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum molestie vestibulum eros sit amet pellentesque. 
