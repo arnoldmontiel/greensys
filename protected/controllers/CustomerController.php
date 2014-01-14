@@ -36,14 +36,9 @@ class CustomerController extends GController
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView()
 	{
-		$model = $this->loadModel($id);
-		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_contact'=>$model->Id_contact,'Id_entity_type'=>$this->getEntityType()));
-		$this->render('view',array(
-					'model'=>$model,
-					'modelHyperlink'=>$modelHyperlink
-		));
+		$this->render('view');
 	}
 
 	/**
