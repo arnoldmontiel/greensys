@@ -41,15 +41,18 @@
 </div></form>
     </div>
  </div>
+ 	<?php 
+	     $criteria = new CDbCriteria();
+	     $criteria->addCondition('version_number <> '. $model->version_number);
+	     $criteria->addCondition('Id = '. $model->Id);
+	     $modelBudgets = Budget::model()->findAll($criteria);
+	     $count = count($modelBudgets);
+	     if($count > 0):
+     ?>
      <div class="dropdown pull-right">
      	<button type="button" data-toggle="dropdown" class="btn btn-primary marginLeft dropdown-toggle"><i class="fa fa-clock-o fa-fw"></i> Versiones Anteriores <i class="fa fa-caret-down fa-fw"></i></button>
         	<ul class="dropdown-menu" role="menu">
         	<?php 
-				$criteria = new CDbCriteria();
-	        	$criteria->addCondition('version_number <> '. $model->version_number);
-	        	$criteria->addCondition('Id = '. $model->Id);
-	        	$modelBudgets = Budget::model()->findAll($criteria);
-	        	$count = count($modelBudgets);
 	        	$index = 1;
 	        	foreach ($modelBudgets as $item)
 	       		{
@@ -63,6 +66,7 @@
 			?>
   			</ul>
     	 </div>
+    	 <?php endif; ?>
 		<button onclick="closeVersion(<?php echo $model->Id . ', '.$model->version_number;?>);" type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-archive fa-fw"></i> Cerrar Versi&oacute;n</button>
     	<button onclick="exportBudget(<?php echo $model->Id . ', '.$model->version_number;?>);" type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-download fa-fw"></i> Descargar</button>
     </div>
