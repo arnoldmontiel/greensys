@@ -40,16 +40,30 @@
     ?>
 </div></form>
     </div>
-               </div>
-               <div class="dropdown pull-right">
-                <button type="button" data-toggle="dropdown" class="btn btn-primary marginLeft dropdown-toggle"><i class="fa fa-clock-o fa-fw"></i> Versiones Anteriores <i class="fa fa-caret-down fa-fw"></i></button>
-                <ul class="dropdown-menu" role="menu">
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Version 1</a></li>
-    <li role="presentation" class="divider"></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Version 2</a></li>
-  </ul>
-                </div>
-                <button onclick="closeVersion(<?php echo $model->Id . ', '.$model->version_number;?>);" type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-archive fa-fw"></i> Cerrar Versi&oacute;n</button>
-                <button onclick="exportBudget(<?php echo $model->Id . ', '.$model->version_number;?>);" type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-download fa-fw"></i> Descargar</button>
+ </div>
+     <div class="dropdown pull-right">
+     	<button type="button" data-toggle="dropdown" class="btn btn-primary marginLeft dropdown-toggle"><i class="fa fa-clock-o fa-fw"></i> Versiones Anteriores <i class="fa fa-caret-down fa-fw"></i></button>
+        	<ul class="dropdown-menu" role="menu">
+        	<?php 
+				$criteria = new CDbCriteria();
+	        	$criteria->addCondition('version_number <> '. $model->version_number);
+	        	$criteria->addCondition('Id = '. $model->Id);
+	        	$modelBudgets = Budget::model()->findAll($criteria);
+	        	$count = count($modelBudgets);
+	        	$index = 1;
+	        	foreach ($modelBudgets as $item)
+	       		{
+	        		echo '<li role="presentation"><a onclick="downloadPDF('.$item->Id.', '.$item->version_number.')" role="menuitem" tabindex="-1" href="#">Version '.$item->version_number.'</a></li>';
+	        		
+	        		if($index != $count)
+	    				echo '<li role="presentation" class="divider"></li>';
+	        		
+	        		$index++;
+	    	    }
+			?>
+  			</ul>
+    	 </div>
+		<button onclick="closeVersion(<?php echo $model->Id . ', '.$model->version_number;?>);" type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-archive fa-fw"></i> Cerrar Versi&oacute;n</button>
+    	<button onclick="exportBudget(<?php echo $model->Id . ', '.$model->version_number;?>);" type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-download fa-fw"></i> Descargar</button>
     </div>
   </div>

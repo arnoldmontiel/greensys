@@ -1,4 +1,12 @@
 <script type="text/javascript">
+
+function downloadPDF(id, version)
+{
+	var params = "&id="+id+"&version="+version;
+	window.open("<?php echo BudgetController::createUrl('DownloadPDF'); ?>" + params, "_blank");
+	return false;	
+}
+
 function changeCurrencyView(obj, id, version)
 {
 	statusStartSaving();	
