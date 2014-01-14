@@ -21,8 +21,14 @@
  * @property string $date_approved
  * @property integer $Id_currency
  * @property integer $Id_currency_view
+ * @property integer $Id_currency_conversor
+ * @property integer $Id_currency_from_currency_conversor
+ * @property integer $Id_currency_to_currency_conversor
  * 
  * The followings are the available model relations:
+ * @property CurrencyConversor $currencyConversor
+ * @property CurrencyConversor $currencyFromCurrencyConversor
+ * @property CurrencyConversor $currencyToCurrencyConversor
  * @property Currency $currency
  * @property BudgetState $idBudgetState
  * @property Project $idProject
@@ -99,13 +105,13 @@ class Budget extends ModelAudit
 		// will receive user inputs.
 		return array(
 			array('Id, Id_project, Id_budget_state, version_number, Id_currency, Id_currency_view', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
-			array('Id_project, Id_budget_state, version_number, Id_currency, Id_currency_view', 'numerical', 'integerOnly'=>true),
+			array('Id_project, Id_budget_state, version_number, Id_currency, Id_currency_view, Id_currency_conversor, Id_currency_from_currency_conversor, Id_currency_to_currency_conversor', 'numerical', 'integerOnly'=>true),
 			array('percent_discount', 'length', 'max'=>10),
 			array('date_creation, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, date_close, date_cancelled, date_approved', 'safe'),
 			array('description, note', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_project, percent_discount, date_creation, Id_budget_state, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, version_number, totPrice, note, project_description, date_close, date_cancelled, date_approved, Id_currency, Id_currency_view', 'safe', 'on'=>'search'),
+			array('Id, Id_project, percent_discount, date_creation, Id_budget_state, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, version_number, totPrice, note, project_description, date_close, date_cancelled, date_approved, Id_currency, Id_currency_view, Id_currency_conversor, Id_currency_from_currency_conversor, Id_currency_to_currency_conversor', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -124,6 +130,10 @@ class Budget extends ModelAudit
 			'budgetItems' => array(self::HAS_MANY, 'BudgetItem', 'Id_budget'),
 			'notes' => array(self::HAS_MANY, 'GNote', 'budget_Id'),
 			'trackings' => array(self::HAS_MANY, 'Tracking', 'Id_budget'),
+			'currencyConversor' => array(self::BELONGS_TO, 'CurrencyConversor', 'Id_currency_conversor'),
+			'currencyFromCurrencyConversor' => array(self::BELONGS_TO, 'CurrencyConversor', 'Id_currency_from_currency_conversor'),
+			'currencyToCurrencyConversor' => array(self::BELONGS_TO, 'CurrencyConversor', 'Id_currency_to_currency_conversor'),
+					
 		);
 	}
 
