@@ -37,23 +37,40 @@ class BudgetController extends GController
 	 * @param integer $id the ID of the model to be displayed
 	 */
 	public function actionView($id, $version)
-	{
-		$modelBudgetItem = new BudgetItem('search');
-		$modelBudgetItem->unsetAttributes();  // clear any default values
-		if(isset($_GET['BudgetItem']))
-		{
-			$modelBudgetItem->attributes =$_GET['BudgetItem'];
-		}
-		
-		//seteo el presupuesto y su version
-		$modelBudgetItem->Id_budget = $id;
-		$modelBudgetItem->version_number = $version;
-		
+	{	
 		
 		$this->render('view',array(
-			'model'=>$this->loadModel($id, $version),
-			'modelBudgetItem'=>$modelBudgetItem,
+			'modelBudget'=>$this->loadModel($id, $version),
 		));
+	}
+	
+	public function actionDownloadPDF($id, $version)
+	{		
+		
+		if(isset($id) && isset($version))
+		{
+			$modelBudget = $this->loadModel($id, $version);
+			if(isset($modelBudget))
+			{
+				include('js/mpdf/mpdf.php');
+				ob_end_clean();
+				
+				$mpdf=new mPDF('utf-8','A4');
+				$stylesheet = file_get_contents('css/bootstrap.min.css');
+				$stylesheet2 = file_get_contents('protected/views/layouts/estilos.php');
+				$mpdf->setHeader('{DATE j-m-Y}');
+				$mpdf->setFooter('{PAGENO}');
+				$mpdf->WriteHTML($stylesheet,1);
+				$mpdf->WriteHTML($stylesheet2,1);
+				$mpdf->WriteHTML(GreenHelper::generateBudgetPDF($modelBudget),2);
+				$mpdf->Output();
+			}
+		}
+	}
+	
+	public function actionReadOnly()
+	{
+		$this->render('readOnly');
 	}
 	
 	public function actionViewService($id, $version)
@@ -1203,10 +1220,6 @@ class BudgetController extends GController
 			$model->is_included = 0;
 			$model->save();
 		}
-	}
-	public function actionReadOnly()
-	{
-		$this->render('readOnly');		
 	}
 	
 	public function actionAjaxNewVersion()
