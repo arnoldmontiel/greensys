@@ -444,7 +444,8 @@ padding: 6px 8px;
 .ulEditImagen li{min-width:150px; width:150px;}
 .ulEditImagen li img{width:100%;}
 
-.dropdownEditImagen{font-size:20px; color:#777; cursor:pointer;}
+.dropdownEditImagen{ color:#777; cursor:pointer; text-decoration:underline;}
+.dropdownEditImagen i { text-decoration:none; margin-right:6px;}
 /*---------- END EDIT CREATE FORM -------------*/
 
 /* ------ MODALS ------- */

@@ -27,14 +27,10 @@
 						'header'=>'Imagen',
 						'value'=>function($data){
 						$grid = "'product-grid_all'";
-							return '<div class="dropdown"><a class="dropdown-toggle dropdownEditImagen" data-toggle="dropdown" ><i class="fa fa-picture-o"></i></a>
+							return '<div class="dropdown"><a class="dropdown-toggle dropdownEditImagen" data-toggle="dropdown" ><i class="fa fa-picture-o"></i>Mostrar</a>
   <ul class="dropdown-menu ulEditImagen" role="menu">
     <li class="align-center"><img  src="images/RTI_AD-4.jpg"/></li>
-    <li class="align-center"><div class="form-group">
-          <label for="exampleInputFile">Pisar Imagen</label>
-          <input type="file" id="exampleInputFile">
-        </div></li>
-    <li class="align-center">&oacute; <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></li>
+    <li class="align-center"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></li>
   </ul>
 				</div>';
 						},
