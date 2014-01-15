@@ -25,7 +25,9 @@
               <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> Listas de Precios</h3>
             </div>
             <div class="panel-body">
-              <div class="list-group"> <a href="<?php echo Yii::app()->createUrl('priceList/admin')?>" class="list-group-item">Ver Precios Compra <i class="fa fa-list fa-fw pull-right"></i></a> <a href="<?php echo Yii::app()->createUrl('priceList/admin')?>" class="list-group-item">Ver Precios Venta <i class="fa fa-list fa-fw pull-right"></i></a> </div>
+              <div class="list-group"> 
+              <a href="<?php echo Yii::app()->createUrl('priceList/admin')?>" class="list-group-item">Ver Lista de precios <i class="fa fa-list fa-fw pull-right"></i></a> 
+              </div>
             </div>
           </div>
         </div>

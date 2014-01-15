@@ -91,6 +91,7 @@ class PriceList extends ModelAudit
 			'importer' => array(self::BELONGS_TO, 'Importer', 'Id_importer'),				
 			'priceListItems' => array(self::HAS_MANY, 'PriceListItem', 'Id_price_list'),
 			'currency' => array(self::BELONGS_TO, 'Currency', 'Id_currency'),				
+			'currencyConversor' => array(self::BELONGS_TO, 'Currency', 'Id_currency_conversor, Id_currency_from, Id_currency_to'),				
 		);
 	}
 

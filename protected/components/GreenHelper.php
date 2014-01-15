@@ -19,6 +19,25 @@ class GreenHelper
 		return 0;
 		
 	}
+	static public function convertCurrency($valueToConvert, $convertFrom, $convertTo, $currencyConversor)
+	{
+		if(!isset($currencyConversor))	return self::convertCurrency($valueToConvert, $convertFrom, $convertTo);
+
+		if($convertFrom==$convertTo) return round($valueToConvert,2);
+		
+		if($currencyConversor->Id_currency_from == $convertFrom && $currencyConversor->Id_currency_from == $convertTo)
+		{
+			return round($valueToConvert*$currenecyConversor->factor,2);				
+		}
+		else if($currencyConversor->Id_currency_from == $convertTo && $currencyConversor->Id_currency_from == $convertFrom)
+		{
+			$currenecyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertTo,'Id_currency_to'=>$convertFrom));
+			if(isset($currenecyConversor))
+				return round($valueToConvert/$currenecyConversor->factor,2);				
+		}
+		return 0;
+		
+	}
 	static public function generateListPrices($product)
 	{
 		if(get_class($product)=="Product")

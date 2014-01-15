@@ -484,6 +484,20 @@ class BudgetController extends GController
 					$modelBudget->Id_currency_from_currency_conversor =$currencyConversor->Id_currency_from; 
 					$modelBudget->Id_currency_to_currency_conversor =$currencyConversor->Id_currency_to; 
 				}
+				else 
+				{
+					$criteria = new CDbCriteria;
+					$criteria->addCondition('Id_currency_from='.$modelBudget->Id_currency_view);
+					$criteria->addCondition('Id_currency_to='.$modelBudget->Id_currency);
+					$criteria->order='validity_date DESC';
+					$currencyConversor= CurrencyConversor::model()->find($criteria);
+					if(isset($currencyConversor))
+					{
+						$modelBudget->Id_currency_conversor =$currencyConversor->Id;
+						$modelBudget->Id_currency_from_currency_conversor =$currencyConversor->Id_currency_from;
+						$modelBudget->Id_currency_to_currency_conversor =$currencyConversor->Id_currency_to;
+					}					
+				}
 				$modelBudget->save();
 			}
 		}

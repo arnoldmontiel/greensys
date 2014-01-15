@@ -31,10 +31,6 @@
 				'htmlOptions'=>array("style"=>"text-align:right;"),
 				'headerHtmlOptions'=>array("style"=>"text-align:right;"),
 		),
-array(
-		'class'=>'CButtonColumn',
-),
-
 				
 	),
 )); ?>
@@ -73,12 +69,7 @@ array(
 				'type'=>'raw',
 				'htmlOptions'=>array("style"=>"text-align:right;"),
 				'headerHtmlOptions'=>array("style"=>"text-align:right;"),
-		),
-array(
-		'class'=>'CButtonColumn',
-),
-
-				
+		),				
 	),
 )); ?>
 
@@ -92,22 +83,6 @@ array(
 
 
 <script type="text/javascript">
-$('#createCustomer').click(
-		function(){
-			$.post(
-			'<?php echo PriceListController::createUrl('customer/AjaxShowCreateModal')?>',{field_caller:'customer-grid'}).success(
-					function(data)
-					{
-					if(data!=null)
-					{	
-						$('#modalPlaceHolder').html(data);
-						$('#modalPlaceHolder').modal('show');
-					}
-				}
-			);
-		return false;
-		}
-		);
 function viewSale(id)
 {
 	window.location = "<?php echo PriceListController::createUrl("viewSale")?>&id="+id;
@@ -115,21 +90,6 @@ function viewSale(id)
 function viewPruchase(id)
 {
 	window.location = "<?php echo PriceListController::createUrl("viewPurchase")?>&id="+id;
-}
-function updateCustomer(id)
-{
-	$.post(
-			'<?php echo PriceListController::createUrl('customer/AjaxShowUpdateModal')?>',{id:id,field_caller:'customer-grid'}).success(
-					function(data)
-					{
-					if(data!=null)
-					{	
-						$('#modalPlaceHolder').html(data);
-						$('#modalPlaceHolder').modal('show');
-					}
-				}
-			);
-
 }
 
 </script>

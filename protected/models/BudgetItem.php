@@ -32,6 +32,7 @@
  */
 class BudgetItem extends ModelAudit
 {
+	public $currencyConversor;
 	public $product_model;
 	public $product_part_number;	
 	public $product_code;
@@ -225,10 +226,18 @@ class BudgetItem extends ModelAudit
 	{
 		return ProductItem::model()->countByAttributes(array('Id_product'=>$this->Id_product,'Id_budget_item'=>$this->Id)) > 0;
 	}
-	
+	public function getCurrencyConversor()
+	{	
+		if(isset($this->currencyConversor))
+		{
+			return $this->currencyConversor;
+		}			
+		$this->currencyConversor = $this->priceList->currencyConversor;
+		return $this->currencyConversor; 		
+	}
 	public function getChildrenTotalPriceCurrencyConverted()
 	{
-		return GreenHelper::convertCurrency($this->getChildrenTotalPrice(), $this->budget->Id_currency, $this->budget->Id_currency_view);
+		return GreenHelper::convertCurrency($this->getChildrenTotalPrice(), $this->budget->Id_currency, $this->budget->Id_currency_view,$this->getCurrencyConversor());
 	}	
 	public function getChildrenTotalPrice()
 	{
@@ -244,7 +253,7 @@ class BudgetItem extends ModelAudit
 	}	
 	public function getTotalPriceCurrencyConverted()
 	{
-		return number_format(GreenHelper::convertCurrency($this->getTotalPrice(), $this->budget->Id_currency, $this->budget->Id_currency_view), 2);
+		return number_format(GreenHelper::convertCurrency($this->getTotalPrice(), $this->budget->Id_currency, $this->budget->Id_currency_view,$this->getCurrencyConversor()), 2);
 	}
 	public function getTotalPrice()
 	{
@@ -252,7 +261,7 @@ class BudgetItem extends ModelAudit
 	}
 	public function getTotalPriceNotFormatedCurrencyConverted()
 	{
-		return GreenHelper::convertCurrency($this->getTotalPriceNotFormated(), $this->budget->Id_currency, $this->budget->Id_currency_view);
+		return GreenHelper::convertCurrency($this->getTotalPriceNotFormated(), $this->budget->Id_currency, $this->budget->Id_currency_view,$this->getCurrencyConversor());
 	}
 	public function getTotalPriceNotFormated()
 	{
@@ -268,7 +277,7 @@ class BudgetItem extends ModelAudit
 	}
 	public function getTotalDiscountCurrencyConverted()
 	{
-		return GreenHelper::convertCurrency($this->getTotalDiscount(), $this->budget->Id_currency, $this->budget->Id_currency_view);
+		return GreenHelper::convertCurrency($this->getTotalDiscount(), $this->budget->Id_currency, $this->budget->Id_currency_view,$this->getCurrencyConversor());
 	}
 	public function getTotalDiscount()
 	{
@@ -284,7 +293,7 @@ class BudgetItem extends ModelAudit
 	}
 	public function getTotalDiscountNotFormatedCurrencyConverted()
 	{
-		return GreenHelper::convertCurrency($this->getTotalDiscountNotFormated(), $this->budget->Id_currency, $this->budget->Id_currency_view);
+		return GreenHelper::convertCurrency($this->getTotalDiscountNotFormated(), $this->budget->Id_currency, $this->budget->Id_currency_view,$this->getCurrencyConversor());
 	}
 	public function getTotalDiscountNotFormated()
 	{
@@ -301,7 +310,7 @@ class BudgetItem extends ModelAudit
 	
 	public function getDiscountCurrencyConverted()
 	{
-		return GreenHelper::convertCurrency($this->getDiscount(), $this->budget->Id_currency, $this->budget->Id_currency_view);
+		return GreenHelper::convertCurrency($this->getDiscount(), $this->budget->Id_currency, $this->budget->Id_currency_view,$this->getCurrencyConversor());
 	}
 	
 	public function getDiscount()
@@ -341,12 +350,12 @@ class BudgetItem extends ModelAudit
 	
 	public function getPriceCurrencyConverted()
 	{
-		return GreenHelper::convertCurrency($this->price, $this->budget->Id_currency, $this->budget->Id_currency_view);
+		return GreenHelper::convertCurrency($this->price, $this->budget->Id_currency, $this->budget->Id_currency_view,$this->getCurrencyConversor());
 	}
 	
 	public function getTotalPriceWOChildernCurrencyConverted()
 	{
-		return GreenHelper::convertCurrency($this->getTotalPriceWOChildern(), $this->budget->Id_currency, $this->budget->Id_currency_view);
+		return GreenHelper::convertCurrency($this->getTotalPriceWOChildern(), $this->budget->Id_currency, $this->budget->Id_currency_view,$this->getCurrencyConversor());
 	}
 	
 	public function getTotalPriceWOChildern()
