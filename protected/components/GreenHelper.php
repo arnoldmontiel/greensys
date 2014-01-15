@@ -4,15 +4,23 @@ class GreenHelper
 	static public function convertCurrencyTo($valueToConvert, $convertFrom, $convertTo)
 	{
 		if($convertFrom==$convertTo) return round($valueToConvert,2);
+		$criteria = new CDbCriteria();
+		$criteria->addCondition('Id_currency_from='.$convertFrom);
+		$criteria->addCondition('Id_currency_to='.$convertTo);
+		$criteria->order = 'Id DESC';
 		
-		$currencyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertFrom,'Id_currency_to'=>$convertTo));
+		$currencyConversor= CurrencyConversor::model()->find($criteria);
 		if(isset($currencyConversor))
 		{
 			return round($valueToConvert*$currencyConversor->factor,2);				
 		}
 		else
 		{
-			$currencyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertTo,'Id_currency_to'=>$convertFrom));
+			$criteria = new CDbCriteria();
+			$criteria->addCondition('Id_currency_from='.$convertTo);
+			$criteria->addCondition('Id_currency_to='.$convertFrom);
+			$criteria->order = 'Id DESC';
+			$currencyConversor= CurrencyConversor::model()->find($criteria);
 			if(isset($currencyConversor))
 				return round($valueToConvert/$currencyConversor->factor,2);				
 		}
