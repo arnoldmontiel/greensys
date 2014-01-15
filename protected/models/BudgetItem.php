@@ -232,7 +232,7 @@ class BudgetItem extends ModelAudit
 		{
 			return $this->currencyConversor;
 		}			
-		$this->currencyConversor = $this->priceList->currencyConversor;
+		$this->currencyConversor = $this->budget->currencyConversor;
 		return $this->currencyConversor; 		
 	}
 	public function getChildrenTotalPriceCurrencyConverted()
