@@ -32,7 +32,7 @@
  */
 class BudgetItem extends ModelAudit
 {
-	public $currencyConversor;
+	public $currencyConversor = null;
 	public $product_model;
 	public $product_part_number;	
 	public $product_code;
