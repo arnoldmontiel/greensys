@@ -21,7 +21,7 @@ class GreenHelper
 	}
 	static public function convertCurrency($valueToConvert, $convertFrom, $convertTo, $currencyConversor)
 	{
-		if(!isset($currencyConversor))	return self::convertCurrency($valueToConvert, $convertFrom, $convertTo);
+		if(!isset($currencyConversor))	return self::convertCurrencyOld($valueToConvert, $convertFrom, $convertTo);
 
 		if($convertFrom==$convertTo) return round($valueToConvert,2);
 		
