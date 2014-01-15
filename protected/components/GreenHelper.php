@@ -5,16 +5,16 @@ class GreenHelper
 	{
 		if($convertFrom==$convertTo) return round($valueToConvert,2);
 		
-		$currenecyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertFrom,'Id_currency_to'=>$convertTo));
-		if(isset($currenecyConversor))
+		$currencyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertFrom,'Id_currency_to'=>$convertTo));
+		if(isset($currencyConversor))
 		{
-			return round($valueToConvert*$currenecyConversor->factor,2);				
+			return round($valueToConvert*$currencyConversor->factor,2);				
 		}
 		else
 		{
-			$currenecyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertTo,'Id_currency_to'=>$convertFrom));
-			if(isset($currenecyConversor))
-				return round($valueToConvert/$currenecyConversor->factor,2);				
+			$currencyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertTo,'Id_currency_to'=>$convertFrom));
+			if(isset($currencyConversor))
+				return round($valueToConvert/$currencyConversor->factor,2);				
 		}
 		return 0;
 		
@@ -22,19 +22,17 @@ class GreenHelper
 	static public function convertCurrency($valueToConvert, $convertFrom, $convertTo, $currencyConversor)
 	{
 		if(!isset($currencyConversor))	return self::convertCurrencyTo($valueToConvert, $convertFrom, $convertTo);
-		return $currencyConversor->Id;
 
 		if($convertFrom==$convertTo) return round($valueToConvert,2);
-		
-		if($currencyConversor->Id_currency_from == $convertFrom && $currencyConversor->Id_currency_from == $convertTo)
+		if($currencyConversor->Id_currency_from == $convertFrom && $currencyConversor->Id_currency_to == $convertTo)
 		{
-			return round($valueToConvert*$currenecyConversor->factor,2);				
+			return round($valueToConvert*$currencyConversor->factor,2);				
 		}
-		else if($currencyConversor->Id_currency_from == $convertTo && $currencyConversor->Id_currency_from == $convertFrom)
+		else if($currencyConversor->Id_currency_from == $convertTo && $currencyConversor->Id_currency_to == $convertFrom)
 		{
-			$currenecyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertTo,'Id_currency_to'=>$convertFrom));
-			if(isset($currenecyConversor))
-				return round($valueToConvert/$currenecyConversor->factor,2);				
+			$currencyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertTo,'Id_currency_to'=>$convertFrom));
+			if(isset($currencyConversor))
+				return round($valueToConvert/$currencyConversor->factor,2);				
 		}
 		return 0;
 		
