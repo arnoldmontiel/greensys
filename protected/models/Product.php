@@ -342,8 +342,11 @@ class Product extends ModelAudit
 	}
 
 	public function showPrice($value)
-	{		
-		return $value . " " . $this->currency->short_description; 
+	{	$currency = 'U$D';
+		if(isset($this->currency))
+			$currency = $this->currency->short_description;
+		
+		return $value . " " . $currency; 
 	}
 	
 	public function showVolume($value)
