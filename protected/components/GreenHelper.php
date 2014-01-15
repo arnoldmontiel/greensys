@@ -1818,7 +1818,10 @@ class GreenHelper
 		
 		$idBudget = $modelBudget->Id;
 		$versionNumber = $modelBudget->version_number;
-		$currency = $modelBudget->currencyView->short_description;
+		$currency = '$';
+		
+		if(isset($modelBudget->currencyView))
+			$currency = $modelBudget->currencyView->short_description;
 		
 		$serviceContent = "";
 		$serviceContentHeader = "";
