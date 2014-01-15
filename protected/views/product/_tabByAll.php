@@ -1,6 +1,12 @@
+
+<script>$(function(){
+    $('#hola').tooltip({
+        placement: 'right'
+    });
+});</script>
 <a href="<?php echo ProductController::createUrl('create'); ?>" class="btn btn-primary superBoton"><i class="fa fa-plus"></i>  Agregar Producto</a>
 
-<a href="<?php echo ProductController::createUrl('uploadImages'); ?>" class="btn btn-primary superBoton2"><i class="fa fa-picture-o"></i>  Agregar Im&aacute;genes</a>
+<a href="<?php echo ProductController::createUrl('uploadImages'); ?>" class="btn btn-primary superBoton2"><i class="fa fa-picture-o"></i>  Administrador de Im&aacute;genes</a>
 
       <?php		
 	$this->widget('zii.widgets.grid.CGridView', array(
@@ -12,10 +18,29 @@
 		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
 		'columns'=>array(	
 				'model',
-				'part_number',				 
+				'part_number',	
 				array(
 		 			'name'=>'brand_description',
 					'value'=>'$data->brand->description'
+				),
+				array(
+						'header'=>'Imagen',
+						'value'=>function($data){
+						$grid = "'product-grid_all'";
+							return '<div class="dropdown"><a class="dropdown-toggle dropdownEditImagen" data-toggle="dropdown" ><i class="fa fa-picture-o"></i></a>
+  <ul class="dropdown-menu ulEditImagen" role="menu">
+    <li class="align-center"><img  src="images/RTI_AD-4.jpg"/></li>
+    <li class="align-center"><div class="form-group">
+          <label for="exampleInputFile">Pisar Imagen</label>
+          <input type="file" id="exampleInputFile">
+        </div></li>
+    <li class="align-center">&oacute; <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></li>
+  </ul>
+				</div>';
+						},
+						'type'=>'raw',
+					'htmlOptions'=>array("class"=>"align-center"),
+					'headerHtmlOptions'=>array("class"=>"align-center"),
 				),
 				array(
 		 			'name'=>'height',

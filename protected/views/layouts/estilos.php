@@ -440,6 +440,11 @@ padding: 6px 8px;
 .combined button{display:inline-block; width:35%; margin:0px !important;}
 
 
+.ulEditImagen{min-width:160px; width:150px; padding:5px;}
+.ulEditImagen li{min-width:150px; width:150px;}
+.ulEditImagen li img{width:100%;}
+
+.dropdownEditImagen{font-size:20px; color:#777; cursor:pointer;}
 /*---------- END EDIT CREATE FORM -------------*/
 
 /* ------ MODALS ------- */
