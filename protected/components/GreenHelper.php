@@ -1910,7 +1910,7 @@ class GreenHelper
 				$serviceContentBody = $serviceContentBody . '<tr>';
 				$serviceContentBody = $serviceContentBody . '<td class="budgetMono" width="5%" valign="top" align="center">'.$budgetItem->quantity.'</td>';
 				$serviceContentBody = $serviceContentBody . '<td><div class="bold">'.$prodHeader.'</div>';
-				$serviceContentBody = $serviceContentBody . '<div>'.$budgetItem->product->short_description.'</div></td>';
+				$serviceContentBody = $serviceContentBody . '<div>'.$budgetItem->product->description_customer.'</div></td>';
 				$serviceContentBody = $serviceContentBody . '<td class="budgetMono" width="15%" valign="top" align="right">'.$currency .' '. self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>';				
 				$serviceContentBody = $serviceContentBody . '<td class="align-right budgetMono" width="15%" valign="top" align="right">';
 				$serviceContentBody = $serviceContentBody . '<div class="label-small">'.$currency .' '. self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</div></td>';
