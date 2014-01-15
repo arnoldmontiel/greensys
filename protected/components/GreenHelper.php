@@ -1,7 +1,7 @@
 <?php
 class GreenHelper
 {
-	static public function convertCurrency($valueToConvert, $convertFrom, $convertTo)
+	static public function convertCurrencyOld($valueToConvert, $convertFrom, $convertTo)
 	{
 		if($convertFrom==$convertTo) return round($valueToConvert,2);
 		
