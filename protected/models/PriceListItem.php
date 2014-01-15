@@ -280,8 +280,8 @@ class PriceListItem extends ModelAudit
 	{
 		$shippingParameter = $this->priceList->importer->shippingParameters[0];
 		
-		$dealerCost = GreenHelper::convertCurrency($this->dealer_cost,$this->priceList->Id_currency,$idCurrency);
-		$maritimeCost = GreenHelper::convertCurrency($this->maritime_cost,$shippingParameter->Id_currency,$idCurrency);
+		$dealerCost = GreenHelper::convertCurrencyTo($this->dealer_cost,$this->priceList->Id_currency,$idCurrency);
+		$maritimeCost = GreenHelper::convertCurrencyTo($this->maritime_cost,$shippingParameter->Id_currency,$idCurrency);
 		$price = ($dealerCost+$maritimeCost)*$this->profit_rate;
 
 		return number_format(round($price,4),2);
@@ -295,8 +295,8 @@ class PriceListItem extends ModelAudit
 	{
 		$shippingParameter = $this->priceList->importer->shippingParameters[0];
 		
-		$dealerCost = GreenHelper::convertCurrency($this->dealer_cost,$this->priceList->Id_currency,$idCurrency);
-		$airCost = GreenHelper::convertCurrency($this->air_cost,$shippingParameter->Id_currency,$idCurrency);
+		$dealerCost = GreenHelper::convertCurrencyTo($this->dealer_cost,$this->priceList->Id_currency,$idCurrency);
+		$airCost = GreenHelper::convertCurrencyTo($this->air_cost,$shippingParameter->Id_currency,$idCurrency);
 		$price = ($dealerCost+$airCost)*$this->profit_rate;
 
 		return number_format(round($price,4),2);
