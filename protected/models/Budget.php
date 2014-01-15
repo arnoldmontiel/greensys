@@ -228,7 +228,7 @@ class Budget extends ModelAudit
 	public function getTotalPriceCurrencyConverted()
 	{
 		$totalPrice = $this->getTotalPrice();
-		return GreenHelper::convertCurrency($totalPrice, $this->Id_currency, $this->Id_currency_view);
+		return GreenHelper::convertCurrency($totalPrice, $this->Id_currency, $this->Id_currency_view,$this->currencyConversor);
 	}
 	public function getTotalDiscount()
 	{
@@ -251,7 +251,7 @@ class Budget extends ModelAudit
 	public function getTotalDiscountCurrencyConverted()
 	{
 		$totalDiscount = $this->getTotalDiscount();
-		return GreenHelper::convertCurrency($totalDiscount, $this->Id_currency, $this->Id_currency_view);
+		return GreenHelper::convertCurrency($totalDiscount, $this->Id_currency, $this->Id_currency_view,$this->currencyConversor);
 	}
 	
 	public function getTotalPriceWithDiscount()
@@ -275,7 +275,7 @@ class Budget extends ModelAudit
 	public function getTotalPriceWithDiscountCurrencyConverted()
 	{
 		$totalPriceWDiscount = $this->getTotalPriceWithDiscount();
-		return GreenHelper::convertCurrency($totalPriceWDiscount, $this->Id_currency, $this->Id_currency_view);
+		return GreenHelper::convertCurrency($totalPriceWDiscount, $this->Id_currency, $this->Id_currency_view,$this->currencyConversor);
 	}
 	
 	/**
