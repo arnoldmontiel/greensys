@@ -535,6 +535,10 @@ class BudgetController extends GController
 					$modelNewBudget->date_approved = null;
 					$modelNewBudget->note = $note;
 					$modelNewBudget->version_number = $modelBudget->version_number + 1;
+					$modelNewBudget->Id_currency_conversor = null;
+					$modelNewBudget->Id_currency_from_currency_conversor = null;
+					$modelNewBudget->Id_currency_to_currency_conversor = null;
+						
 					
 					if($modelNewBudget->save())
 					{
