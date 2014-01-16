@@ -310,7 +310,15 @@ class BudgetItem extends ModelAudit
 	
 	public function getDiscountCurrencyConverted()
 	{
-		return GreenHelper::convertCurrency($this->getDiscount(), $this->budget->Id_currency, $this->budget->Id_currency_view,$this->getCurrencyConversor());
+		if($this->discount_type ==0)
+		{
+			$discount = $this->discount;
+		}
+		else
+		{
+			$discount = GreenHelper::convertCurrency($this->getDiscount(), $this->budget->Id_currency, $this->budget->Id_currency_view,$this->getCurrencyConversor());
+		}
+		return $discount;
 	}
 	
 	public function getDiscount()

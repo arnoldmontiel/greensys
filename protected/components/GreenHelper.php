@@ -1932,10 +1932,33 @@ class GreenHelper
 				$serviceContentBody = $serviceContentBody . '<div class="label-small">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</div></td>';
 				$serviceContentBody = $serviceContentBody . '</tr>';
 				*/
+				$criteria = new CDbCriteria();
+				$criteria->join = 'inner join product_multimedia pm on (pm.Id_multimedia = t.Id)';
+				$criteria->addCondition('t.Id_multimedia_type = 1');
+				$criteria->addCondition('pm.Id_product = '. $budgetItem->Id_product);
+				
+				$modelMultimediaDB = Multimedia::model()->find($criteria);
+				$img = '<i class="fa fa-picture-o"></i>';
+				if(isset($modelMultimediaDB))
+				{
+					$imagePath = '';
+					if(file_exists(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $modelMultimediaDB->file_name_small))
+						$imagePath = "images/". $modelMultimediaDB->file_name_small;
+					elseif(file_exists(Yii::app()->basePath.DIRECTORY_SEPARATOR."../images/". $budgetItem->product->brand->description . '_' . $budgetItem->product->model.".jpg"))
+						$imagePath = "images/". $budgetItem->product->brand->description . '_' . $budgetItem->product->model.".jpg";
+						
+					if(!empty($imagePath))
+						$img = '<img class="imgTD" src="'.$imagePath.'"/>';					
+				}
+				
 				
 				$serviceContentBody = $serviceContentBody . '<tr>';
-				$serviceContentBody = $serviceContentBody . '<td><div class="bold">'.$prodHeader.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120"><img class="imgTD" src="images/RTI_AD-4.jpg"/></td><td>'.$budgetItem->product->short_description.'</td></tr></tbody></table>';
-				$serviceContentBody = $serviceContentBody . '<table width="100%" class="tablaLimpia2 conDesc">
+				$serviceContentBody = $serviceContentBody . '<td><div class="bold">'.$prodHeader.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120">'.$img.'</td><td>'.$budgetItem->product->short_description.'</td></tr></tbody></table>';
+				
+				
+				if($budgetItem->getDiscountCurrencyConverted() > 0)
+				{
+					$serviceContentBody = $serviceContentBody . '<table width="100%" class="tablaLimpia2 conDesc">
 						<tbody><tr>
 						<td class="align-left">Cantidad:</td>
 						<td class="align-left">'.$budgetItem->quantity.'</td>
@@ -1946,6 +1969,20 @@ class GreenHelper
 						<td class="align-right">Total:</td>
 						<td class="align-right bold">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
 						</tr></tbody></table></div>';
+				}
+				else 
+				{
+					$serviceContentBody = $serviceContentBody . '<table width="100%" class="tablaLimpia2 sinDesc">
+						<tbody><tr>
+						<td class="align-left">Cantidad:</td>
+						<td class="align-left">'.$budgetItem->quantity.'</td>
+						<td class="align-left">Precio Unitario:</td>
+						<td class="align-left">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
+						<td class="align-right">Total:</td>
+						<td class="align-right bold">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
+						</tr></tbody></table></div>';
+				}
+				
 				$serviceContentBody = $serviceContentBody . '</td>';
 				$serviceContentBody = $serviceContentBody . '</tr>';
 				
