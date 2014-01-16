@@ -725,24 +725,47 @@ width:auto; padding:50px; border-radius:0px; display:block;margin-right:20px;mar
 
 .budgetCabecera{ text-transform:uppercase; letter-spacing:2px; color:#333; }
 
+
 .budgetBloque{ font-family:'GudeaRegular'; border-bottom:1px dotted #ccc; padding-bottom:20px; margin-bottom:20px;}
 
 .budgetProduct{font-family:'GudeaBold';	 text-transform:uppercase;}
 
 .budgetPropuesta{ text-transform:uppercase; letter-spacing:2px;}
 .budgetName{font-size:18px; font-family:'GudeaBold';	 text-transform:uppercase; letter-spacing:initial; margin:3px -2px;}
+.budgetClient{ text-transform:uppercase;}
+.budgetVersion{ text-transform:uppercase;}
+.budgetDate{ text-transform:uppercase;}
 
-.budgetSubtitle{ font-weight:bold; padding:5px; background-color:#eee;}
+.budgetSubtitle{ font-weight:normal; letter-spacing:1px; padding:5px; background-color:#eee; text-transform:uppercase;font-family:'GudeaRegular';}
+
 .budgetDesc{  padding:5px;  margin:10px 0px;}
 
-#screenReadOnly .table td{border-top: 1px solid #ddd; padding:5px;}
-#screenReadOnly .table th{ padding:5px;}
+#screenReadOnly .table td{border-top: 1px solid #ddd; font-size:13px;padding:5px 10px;}
+#screenReadOnly .table th{  font-size:0.8em; padding:5px 10px;}
 
 .budgetMono{font-family:'Mono';}
 
-.label-small{font-size:15px;color:white; background-color:#ccc; display:inline-block; padding:3px 5px; font-weight: bold;}
+.label-small{/*font-size:15px;color:white; background-color:#ccc; display:inline-block; padding:3px 5px; */ font-weight: bold;}
 
 .label-big{font-size:18px; margin:0px; color:white; background-color:gray;display:inline-block;padding:3px 5px; font-weight: bold;}
+
+
+#screenReadOnly .table td.budgetImgCont{ padding-right:10px;}
+.imgTD{width:100px;}
+
+ div.bold{font-family:'GudeaBold'; font-weight:bold;}
+ 
+.table .tablaLimpia td{border-top: 0px transparent; }
+#screenReadOnly .table .tablaLimpia td{border-top: 0px transparent;  }
+
+.tablaLimpia2 {border-top: 0px transparent; width:100%}
+.table .tablaLimpia2 td{border-top: 0px transparent;}
+#screenReadOnly .table .tablaLimpia2 td{border-top: 0px transparent;   }
+
+.table .conDesc td{width:12%; }
+.table .sinDesc td{width:16%;}
+
+.table .tablaLimpia2 td.bold{font-family:'GudeaBold'; font-weight:bold;}
 
 /* ------ END READ ONLY ------- */
 
