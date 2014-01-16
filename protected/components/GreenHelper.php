@@ -1900,20 +1900,53 @@ class GreenHelper
 			
 			//ITEMS---------------------------------------------------------------
 			$serviceContentBody = '<table class="table">
-									<tbody>';
-			
+					
+									<tbody>
+					';
+
+			/*
+			 <thead>
+			<tr>
+			<th colspan="2">Producto</th>
+			<th class="align-right">Cantidad</th>
+			<th class="align-right">Precio</th>
+			<th class="align-right">Descuento</th>
+			<th class="align-right">Total</th>
+			</tr>
+			</thead>
+			*/
 			$serviceTotalPrice = 0;
 			foreach($budgetItems as $budgetItem)
 			{
 				$prodHeader = $budgetItem->product->brand->description .' '. $budgetItem->product->model;
 				
+
+				
+				/*$serviceContentBody = $serviceContentBody . '<tr>';
+				$serviceContentBody = $serviceContentBody . '<td class="budgetImgCont"><img class="imgTD" src="images/RTI_AD-4.jpg"/></td>';
+				$serviceContentBody = $serviceContentBody . '<td><div class="bold">'.$prodHeader.'</div><div>'.$budgetItem->product->short_description.'</div></td>';
+				$serviceContentBody = $serviceContentBody . '<td class="budgetMono align-right">'.$budgetItem->quantity.'</td>';
+				$serviceContentBody = $serviceContentBody . '<td class="budgetMono align-right">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>';
+				$serviceContentBody = $serviceContentBody . '<td class="budgetMono align-right">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()).'</td>';
+				$serviceContentBody = $serviceContentBody . '<td class="align-right budgetMono">';
+				$serviceContentBody = $serviceContentBody . '<div class="label-small">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</div></td>';
+				$serviceContentBody = $serviceContentBody . '</tr>';
+				*/
+				
 				$serviceContentBody = $serviceContentBody . '<tr>';
-				$serviceContentBody = $serviceContentBody . '<td class="budgetMono" width="5%" valign="top" align="center">'.$budgetItem->quantity.'</td>';
-				$serviceContentBody = $serviceContentBody . '<td><div class="bold">'.$prodHeader.'</div>';
-				$serviceContentBody = $serviceContentBody . '<div>'.$budgetItem->product->description_customer.'</div></td>';
-				$serviceContentBody = $serviceContentBody . '<td class="budgetMono" width="15%" valign="top" align="right">'.$currency .' '. self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>';				
-				$serviceContentBody = $serviceContentBody . '<td class="align-right budgetMono" width="15%" valign="top" align="right">';
-				$serviceContentBody = $serviceContentBody . '<div class="label-small">'.$currency .' '. self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</div></td>';
+				$serviceContentBody = $serviceContentBody . '<td><div class="bold">'.$prodHeader.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120"><img class="imgTD" src="images/RTI_AD-4.jpg"/></td><td>'.$budgetItem->product->short_description.'</td></tr></tbody></table>';
+				$serviceContentBody = $serviceContentBody . '<table width="100%" class="tablaLimpia2 conDesc">
+						<tbody><tr>
+						<td class="align-left">Cantidad:</td>
+						<td class="align-left">'.$budgetItem->quantity.'</td>
+						<td class="align-left">Precio Unitario:</td>
+						<td class="align-left">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
+						<td class="align-left">Descuento:</td>
+						<td class="align-left">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()).'</td>
+						<td class="align-right">Total:</td>
+						<td class="align-right bold">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
+						</tr></tbody></table></div>';
+				$serviceContentBody = $serviceContentBody . '</td>';
 				$serviceContentBody = $serviceContentBody . '</tr>';
 				
 				$serviceTotalPrice = $serviceTotalPrice + $budgetItem->getTotalPriceWOChildernCurrencyConverted();
@@ -1943,9 +1976,9 @@ class GreenHelper
 			{
 				$extraContentBody = '<tr>';
 				$extraContentBody = $extraContentBody . '<td>'.$budgetItem->description.'</td>';
-				$extraContentBody = $extraContentBody . '<td class="budgetMono">'.$budgetItem->quantity.'</td>';
-				$extraContentBody = $extraContentBody . '<td class="budgetMono">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>';
-				$extraContentBody = $extraContentBody . '<td class="budgetMono">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()).'</td>';
+				$extraContentBody = $extraContentBody . '<td class="budgetMono align-right">'.$budgetItem->quantity.'</td>';
+				$extraContentBody = $extraContentBody . '<td class="budgetMono align-right">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>';
+				$extraContentBody = $extraContentBody . '<td class="budgetMono align-right">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()).'</td>';
 				$extraContentBody = $extraContentBody . '<td class="align-right budgetMono">';
 				$extraContentBody = $extraContentBody . '<div class="label-small">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</div></td>';
 				$extraContentBody = $extraContentBody . '</tr>';		
@@ -1981,9 +2014,9 @@ class GreenHelper
 											<td width="50%">		
 												<div class="budgetPropuesta">Propuesta</div>
 												<div class="budgetName">'.$modelBudget->description.'</div>
-												<div>'.$modelBudget->project->fullDescription.'</div>
-												<div>Versi&oacute;n '.$modelBudget->version_number.'</div>
-												<div>'.date("d/m/Y").'</div>
+												<div class="budgetClient">'.$modelBudget->project->fullDescription.'</div>
+												<div class="budgetVersion">Versi&oacute;n '.$modelBudget->version_number.'</div>
+												<div class="budgetDate">'.date("d/m/Y").'</div>
 											</td>
 											<td width="50%" align="right">
 												<img src="images/logo.jpg" width="200" height="56"/>
@@ -1995,17 +2028,15 @@ class GreenHelper
 						</div>
 						
 						<div class="row">
-							<div class="col-sm-6">
+							<div class="col-sm-12">
 								<div class="budgetSubtitle">Resumen de propuesta</div>
 								<table class="table">
         							<tbody>
 									'.$serviceSummaryContent.'
 						        	</tbody>
-						      	</table>
+						      	</table>	
 							</div>
-							<div class="col-sm-6"></div>
 						</div>
-
 						<div class="row budgetBloque">
 							<div class="col-sm-12">
 								'.$serviceContent.'
@@ -2016,15 +2047,14 @@ class GreenHelper
 						<div class="row budgetBloque">
 							<div class="col-sm-12">
 								<div class="budgetSubtitle">Extras</div>
-									<div class="budgetDesc">Items. </div>
 										<table class="table">
 											<thead>
 												<tr>
 													<th>Descripci&oacute;n</th>
-													<th>Cantidad</th>
-													<th>Precio</th>
-													<th>Descuento</th>
-													<th>Total</th>
+													<th class="align-right">Cantidad</th>
+													<th class="align-right">Precio</th>
+													<th class="align-right">Descuento</th>
+													<th class="align-right">Total</th>
 												</tr>
 											</thead>
 									        <tbody>
@@ -2035,9 +2065,8 @@ class GreenHelper
 								</div>
 
 								<div class="row budgetCabecera">
-									<div class="col-sm-6"></div>
-									<div class="col-sm-6">
-										<div class="budgetSubtitle">Total</div>
+									<div class="col-sm-12 align-right">
+									          		<div class="budgetSubtitle">Total</div>
 										<table class="table">
         									<tbody>
           										<tr>
@@ -2057,7 +2086,7 @@ class GreenHelper
          										</tr>
         									</tbody>
       									</table>
-									</div>
+										</div>
 								</div>
 </div>';
 		return $content;
