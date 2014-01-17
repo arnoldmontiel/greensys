@@ -1269,8 +1269,13 @@ class ProductController extends GController
 	
 	public function actionUploadImages()
 	{
-	
-		$this->render('uploadImages');
+
+		$modelProducts = new Product('search');
+		$modelProducts->unsetAttributes();
+		if(isset($_GET['Product']))
+			$modelProducts->attributes=$_GET['Product'];
+		
+		$this->render('uploadImages',array('modelProducts'=>$modelProducts));
 	}
 	
 	public function actionAjaxUploadImage()
@@ -1302,12 +1307,13 @@ class ProductController extends GController
 			$criteria = new CDbCriteria();
 			$criteria->join = 'INNER JOIN brand b on (b.Id = t.Id_brand)';
 			
-			$criteria->addCondition('b.description = "'.$brandDesc.'"');
-			$criteria->addCondition('t.model = "'.$productModel.'"');
+			$criteria->addCondition('b.description like "'.$brandDesc.'"');
+			$criteria->addCondition('t.model like "'.$productModel.'"');
 			
 			$modelProduct = Product::model()->find($criteria);
 			if(isset($modelProduct))
 			{
+				ProductMultimedia::model()->deleteAllByAttributes(array('Id_product'=>$modelProduct->Id));
 				$modelProductMultimedia = new ProductMultimedia();
 				$modelProductMultimedia->Id_multimedia = $id;
 				$modelProductMultimedia->Id_product = $modelProduct->Id;
@@ -1320,7 +1326,6 @@ class ProductController extends GController
 			}
 			
 			$img = "<img alt='Click to follow' src='" ."images/" . $modelMultimedia->file_name_small . "'" ;
-			$size = 123;			
 		}
 			
 		echo json_encode(array("name" => $img,"type" => '',"brand"=> $brandDesc, "model"=>$productModel, "id"=>$id));
@@ -1328,12 +1333,11 @@ class ProductController extends GController
 	
 	public function actionAjaxRemoveImage()
 	{
-			
-		$idMultimedia = isset($_GET['IdMultimedia'])?$_GET['IdMultimedia']:null;
+		$idMultimedia = isset($_POST['IdMultimedia'])?$_POST['IdMultimedia']:null;
 	
 		if(isset($idMultimedia))
 		{
-			MultimediaNote::model()->deleteAllByAttributes(array('Id_multimedia'=>$idMultimedia));
+			ProductMultimedia::model()->deleteAllByAttributes(array('Id_multimedia'=>$idMultimedia));
 			$model = Multimedia::model()->findByPk($idMultimedia);
 			if(isset($model))
 			{

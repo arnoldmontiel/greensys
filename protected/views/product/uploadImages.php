@@ -1,3 +1,21 @@
+<script type="text/javascript">
+function removeImage(idMultimedia)
+{
+	if (confirm("¿Está seguro de eliminar esta imagen?")) 
+	{
+		$.post("<?php echo ProductController::createUrl('ajaxRemoveImage'); ?>",
+			{
+				IdMultimedia:idMultimedia
+			}
+		).success(
+			function(data){
+				$.fn.yiiGridView.update("product-grid-images");
+			});
+		return false;
+	}
+	return false;
+}
+</script>
 <div class="container">
 <h1 class="pageTitle">Administrador de Imagenes</h1>
 <ul class="nav nav-tabs">
@@ -22,95 +40,59 @@ $('#btnReady').click(function(){
 $this->widget('ext.xupload.XUploadWidget', array(
                     'url' => ProductController::createUrl('ajaxUploadImage'),
 					'multiple'=>true,
-					'name'=>'file',
+					'name'=>'file',					
 					'fromGreen'=>true, 
 					'options' => array(
-						'acceptFileTypes' => '/(\.|\/)(gif|jpeg|png)$/i',
+						'acceptFileTypes' => '/(\.|\/)(gif|jpeg|png)$/i',						
 						'onComplete' => 'js:function (event, files, index, xhr, handler, callBack) {
-
+							
+							$.fn.yiiGridView.update("product-grid-images");
+							
 							id = jQuery.parseJSON(xhr.response).id;
 							$tr = $(document).find("#"+id);
+							
+// 							if($("#files > tbody").length > 0)
+// 								$("#files").show();
+							
 							$tr.find(".file_upload_cancel button").click(function(){
 								var target = $(this);
-											
-								$.get("'.ProductController::createUrl('ajaxRemoveImage').'",
- 									{
-										IdMultimedia:$(target).parent().parent().attr("id")
- 								}).success(
- 									function(data) 
- 									{
- 										
- 										$(target).parent().parent().attr("style","display:none");	
- 									}
- 								);
+								if (confirm("¿Está seguro de eliminar esta imagen?")) 
+								{
+									$.post("'.ProductController::createUrl('ajaxRemoveImage').'",
+	 									{
+											IdMultimedia:$(target).parent().parent().attr("id")
+	 								}).success(
+	 									function(data) 
+	 									{
+	 										$.fn.yiiGridView.update("product-grid-images");
+	 										$(target).parent().parent().attr("style","display:none");	
+	 									}
+	 								);
+								}
+								return false;
                          		
  							});
  							
- 							$tr.find("#photo_description").change(function(){
-								var target = $(this);
-								
-								$.get("'.ProductController::createUrl('ajaxAddImageDescription').'",
- 									{
-										IdMultimedia:$(target).parent().parent().attr("id"),
-										description:$(this).val()
- 								}).success(
- 									function(data) 
- 									{
- 										
- 									}
- 								);
-                         		
- 							});
+
                          }'
 					),
 ));
 ?>
 
+	</div>
+  	<div class="tab-pane" id="tabImagenes">
+		<div class="row">
+			<div class="col-sm-12">
+				<?php echo $this->renderPartial('_tabImages',array('modelProducts'=>$modelProducts)); ?>
+			</div>
+		</div>
+	</div>
 </div>
-  <div class="tab-pane" id="tabImagenes">
-<div class="row">
-<div class="col-sm-12">
-
-<table id="files" class="table table-striped table-bordered tablaIndividual tablaUploadImagenes"><thead>
-					<tr>
-						<th>Imagen</th>
-						<th>Marca</th>
-						<th>Producto</th>
-						<th class="align-right">Acciones</th>
-					</tr>
-					</thead><tbody>
-					<tr>
-					<td class="imageUploadCont">
-					<img  src="images/Captura de pantalla 2012-03-04 a las 01.58.08_small.jpg" />
-					</td>
-					<td>RTI</td>
-					<td>PDF-993</td>
-					<td class="align-right file_upload_cancel">
-					<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>
-					</td>
-					</tr>
-					<tr>
-					<td class="imageUploadCont">
-					<img  src="images/Captura de pantalla 2012-03-04 a las 01.58.08_small.jpg" />
-					</td>
-					<td>RTI</td>
-					<td>PDF-33333</td>
-					<td class="align-right file_upload_cancel">
-					<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>
-					</td>
-					</tr>
-					</tbody></table>
-
-</div>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-sm-12">
-	<?php echo CHtml::button('Listo',array('class'=>'wall-action-submit-btn','id'=>'btnReady',));?>
 	
-
-</div>
-</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<?php echo CHtml::button('Listo',array('class'=>'wall-action-submit-btn','id'=>'btnReady',));?>
+		</div>
+	</div>
 
 </div>
