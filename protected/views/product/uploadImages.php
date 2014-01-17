@@ -1,5 +1,11 @@
 <div class="container">
-<h1 class="pageTitle">Agregar de Imagenes</h1>
+<h1 class="pageTitle">Administrador de Imagenes</h1>
+<ul class="nav nav-tabs">
+        <li class="active"><a href="#tabUpload" data-toggle="tab">Upload</a></li>
+        <li><a href="#tabImagenes" data-toggle="tab">Todas las Im&aacute;genes</a></li>
+      </ul>
+      <div class="tab-content">
+  <div class="tab-pane active" id="tabUpload">
 <?php
 Yii::app()->clientScript->registerScript('UploadImages', "
 
@@ -60,8 +66,45 @@ $this->widget('ext.xupload.XUploadWidget', array(
 ));
 ?>
 
+</div>
+  <div class="tab-pane" id="tabImagenes">
+<div class="row">
+<div class="col-sm-12">
 
+<table id="files" class="table table-striped table-bordered tablaIndividual tablaUploadImagenes"><thead>
+					<tr>
+						<th>Imagen</th>
+						<th>Marca</th>
+						<th>Producto</th>
+						<th class="align-right">Acciones</th>
+					</tr>
+					</thead><tbody>
+					<tr>
+					<td class="imageUploadCont">
+					<img  src="images/Captura de pantalla 2012-03-04 a las 01.58.08_small.jpg" />
+					</td>
+					<td>RTI</td>
+					<td>PDF-993</td>
+					<td class="align-right file_upload_cancel">
+					<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>
+					</td>
+					</tr>
+					<tr>
+					<td class="imageUploadCont">
+					<img  src="images/Captura de pantalla 2012-03-04 a las 01.58.08_small.jpg" />
+					</td>
+					<td>RTI</td>
+					<td>PDF-33333</td>
+					<td class="align-right file_upload_cancel">
+					<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>
+					</td>
+					</tr>
+					</tbody></table>
 
+</div>
+</div>
+</div>
+</div>
 <div class="row">
 <div class="col-sm-12">
 	<?php echo CHtml::button('Listo',array('class'=>'wall-action-submit-btn','id'=>'btnReady',));?>
