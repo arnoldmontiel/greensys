@@ -206,6 +206,29 @@ class Budget extends ModelAudit
 	
 		return (isset($modelBudgetItem))?$modelBudgetItem->total_unit_fan: 0;
 	}
+	public function getTotalPriceByService($Id_service)
+	{
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('t.Id_budget',$this->Id);
+		$criteria->compare('t.version_number',$this->version_number);
+		$criteria->addCondition('(t.Id_budget_item is null)');
+		$criteria->addCondition('(t.Id_product is not null)');
+		
+		if(isset($Id_service))
+			$criteria->addCondition('t.Id_service='.$Id_service);
+		else
+			$criteria->addCondition('(t.Id_service is null)');				
+				
+		$modelBudgetItem = BudgetItem::model()->findAll($criteria);
+		$totalPrice = 0;
+		foreach ($modelBudgetItem as $item)
+		{
+			$totalPrice += $item->getTotalPriceNotFormated();
+		}
+		return round($totalPrice,2);
+	}
 	
 	public function getTotalPrice()
 	{

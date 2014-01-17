@@ -34,7 +34,8 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 							'value'=>'CHtml::openTag("div",array("class"=>"tableProductName")).$data->product->model."</div>"
 							.CHtml::openTag("div",array("class"=>"tableProductBrand")).$data->product->brand->description."</div>"
 							.CHtml::openTag("div")."PN: ".$data->product->part_number."</div>"',
-							'type'=>'raw'
+							'type'=>'raw',
+							'footer'=>'Totales'
 					),
 					array(
 							'name'=>'quantity',
@@ -61,17 +62,17 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 							'name'=>'discount',
 							'value'=>
 							'"<div class=\"bloqueDescuento\"> ".CHtml::textField("txtDiscount","$data->discount",array("id"=>"discount_".$data->Id,"onchange"=>"changeDiscount(".$data->Id.",this)","class"=>"form-control inputMed align-right",))."<div class=\"radioTipo\"><div class=\"radio\">
-  <label>
-    <input type=\"radio\" name=\"optionsRadios_".$data->Id."\" id=\"discount_type_".$data->Id."\" value=\"0\" onclick=\"changeDiscountType(".$data->Id.",this);\" ".($data->discount_type==0?"checked":"").">
-    <div class=\"usd\">%</div>
-  </label>
-</div>
-<div class=\"radio\">
-  <label>
-    <input type=\"radio\" name=\"optionsRadios_".$data->Id."\" id=\"discount_type_".$data->Id."\" value=\"1\" onclick=\"changeDiscountType(".$data->Id.",this);\" ".($data->discount_type==1?"checked":"").">
-    <div class=\"usd\">USD</div>
-  </label>
-</div></div></div>"',
+							  <label>
+							    <input type=\"radio\" name=\"optionsRadios_".$data->Id."\" id=\"discount_type_".$data->Id."\" value=\"0\" onclick=\"changeDiscountType(".$data->Id.",this);\" ".($data->discount_type==0?"checked":"").">
+							    <div class=\"usd\">%</div>
+							  </label>
+							</div>
+							<div class=\"radio\">
+							  <label>
+							    <input type=\"radio\" name=\"optionsRadios_".$data->Id."\" id=\"discount_type_".$data->Id."\" value=\"1\" onclick=\"changeDiscountType(".$data->Id.",this);\" ".($data->discount_type==1?"checked":"").">
+							    <div class=\"usd\">USD</div>
+							  </label>
+							</div></div></div>"',
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-center"),
 							'headerHtmlOptions'=>array("class"=>"align-center"),
@@ -84,6 +85,9 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-right"),
 							'headerHtmlOptions'=>array("class"=>"align-right"),
+							'footerHtmlOptions'=>array("class"=>"align-right"),
+							'footer'=>'<span id="total_price" class="label label-primary labelPrecio"> '.number_format($model->getTotalPriceByService($modelBudgetItem->Id_service), 2).' <div class="usd">U$D</div></span>',
+								
 					),
 					array(
 							'name'=>'Horas',
@@ -92,9 +96,18 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."I"."</span>".CHtml::textField("time_instalation",$data->time_instalation,array("class"=>"form-control inputSmall align-right"))."</div>"',
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-center"),
+							'footerHtmlOptions'=>array("class"=>"align-center"),
 							'headerHtmlOptions'=>array("class"=>"align-center"),
-					),
-		array(
+							'footer'=>'<div class="bloqueHoras noMargin">
+								<span class="label label-default">P</span>
+								<input id="time_instalation" class="form-control inputSmall align-right" type="text" name="time_instalation" value="0.00">
+								</div>
+							<div class="bloqueHoras noMargin">
+								<span class="label label-default">I</span>
+								<input id="time_instalation" class="form-control inputSmall align-right" type="text" name="time_instalation" value="0.00">
+								</div>'
+							),
+					array(
 							'name'=>'Acciones',
 							'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"deleteBudgetItemByService(".$data->Id.",'.$idService.');\" ><i class=\"fa fa-trash-o\"></i> Borrar</button>"',
 							'type'=>'raw',
