@@ -106,11 +106,3 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 ");
 ?>
-<table class="table table-striped table-bordered tablaIndividual">
-<tbody>
-<tr>
-<td colspan="5" align="right">Totales: </td>
-<td>USD 187900 </td>
-<td colspan="2">20.30 </td>
-</tr></tbody>
-</table>
