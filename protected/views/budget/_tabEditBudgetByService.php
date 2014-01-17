@@ -119,3 +119,35 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 ");
 ?>
+
+<div class="tituloFinalPresu" style="margin-top:20px;font-size:1.4em;">Subtotales por Servicio</div>
+<table class="table table-striped table-bordered tablaIndividual">
+<thead>
+<tr>
+<th>Servicio</th>
+<th class="align-right">Totales</th>
+<th class="align-right">Horas Totales</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>General</td>
+<td style="text-align:right;">
+USD 50009
+</td>
+<td style="text-align:right;">
+500 x 8.50 =  USD 300
+</td>
+</tr>
+<tr>
+<td>Home Theater</td>
+<td style="text-align:right;">
+USD 50009
+</td>
+<td style="text-align:right;">
+500 x 8.50 =  USD 300
+</td>
+</tr>
+</tbody>
+</table>
+
