@@ -862,7 +862,7 @@ class BudgetController extends GController
 			}
 		}
 	}	
-	public function actionAddItem($id, $version, $idArea=null)
+	public function actionAddItem($id, $version, $byService=false)
 	{
 		$model = $this->loadModel($id, $version);
 		
@@ -906,9 +906,10 @@ class BudgetController extends GController
 		$modelProducts->budget_id = $id;
 		$modelProducts->budget_version = $version;
 		if(isset($_GET['idAreaProject']))
-			$modelProducts->budget_area_project = $_GET['idAreaProject']; 
-		if(isset($idArea))
-			$modelProducts->budget_area = $idArea;
+			$modelProducts->budget_area_project = $_GET['idAreaProject'];
+		//deprecated
+// 		if(isset($idArea))
+// 			$modelProducts->budget_area = $idArea;
 		
 		$this->GenerateProjectServiceRelation($model->project);
 		$this->render('editBudget',array(
@@ -919,15 +920,8 @@ class BudgetController extends GController
 					'priceListItemSale'=>$priceListItemSale,
 					'areaProjects'=>$areaProjects,
 					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
+					'byService'=>$byService,
 		));
-// 		$this->render('addItem',array(
-// 					'model'=>$model,
-// 					'modelProduct'=>$modelProduct,
-// 					'modelBudgetItem'=>$modelBudgetItem,
-// 					'priceListItemSale'=>$priceListItemSale,
-// 					'areaProjects'=>$areaProjects,
-// 					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
-// 		));
 	}
 	public function GenerateProjectServiceRelation($modelProject)
 	{

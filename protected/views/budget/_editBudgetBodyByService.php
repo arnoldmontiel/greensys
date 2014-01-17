@@ -9,53 +9,47 @@ $settings = new Settings();
       <ul class="nav nav-tabs navTabsPencil">
         <?php 
         $first = true;
-        $idArea = null;
-        $idAreaProject = null;
-        foreach($areaProjects as $item)	{ ?>
-        <li class="<?php echo ($first?'active':'');?>"><a onclick="changeTab(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab"><span id="areaProjectDescription_<?php echo $item->Id?>"><?php echo ($item->description==""?$item->area->description:$item->description);?></span> </a><a onclick="editAreaProject(<?php echo $item->Id;?>);" class="tabEdit"><i class="fa fa-pencil"></i></a></li>
+        $criteria = new CDbCriteria();
+        $criteria->group="Id_service";
+        $services = BudgetItem::model()->findAll($criteria);
+        foreach($services as $item)	{ ?>
+        <li class="<?php echo ($first?'active':'');?>">
+        	<a onclick="changeTabByService(<?php echo (isset($item->Id_service)?$item->Id_service:0);?>)" href="#itemService_<?php echo (isset($item->Id_service)?$item->Id_service:0);?>" data-toggle="tab">
+        		<span id="areaProjectDescription_<?php echo $item->Id?>"><?php echo (isset($item->service)?$item->service->description:"General");?></span>
+        	</a>
+        </li>
 		<?php if($first)
 	        {
-	        	$idArea = $item->Id_area;
-	        	$idAreaProject = $item->Id;
 	        	$first= false;
 	        }
 		}
-		echo CHtml::hiddenField("idTabArea",$idArea, array('id'=>'idTabArea'));
-		echo CHtml::hiddenField("idTabAreaProject",$idAreaProject, array('id'=>'idTabAreaProject'));
 		?>
       
         <li class="pull-right">
-        <button <?php echo !isset($idArea)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
+        <!-- <button <?php echo !isset($idArea)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button> -->
           <div class="btn-group btnAlternateView">
-		  <button onclick="editBudget(<?php echo $model->Id?>,<?php echo $model->version_number?>)" type="button" class="btn btn-default active">Áreas</button>
-		  <button onclick="editBudgetByService(<?php echo $model->Id?>,<?php echo $model->version_number?>)" type="button" class="btn btn-default">Servicios</button>
+		  <button onclick="editBudget(<?php echo $model->Id?>,<?php echo $model->version_number?>)" type="button" class="btn btn-default">Áreas</button>
+		  <button onclick="editBudgetByService(<?php echo $model->Id?>,<?php echo $model->version_number?>)" type="button" class="btn btn-default active">Servicios</button>
           </div>
         </li>
-       <li id="addAreaToProject" class="liButtonAdd"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ><i class="fa fa-plus"></i> Agregar Area</button></li>
+       <!-- <li id="addAreaToProject" class="liButtonAdd"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ><i class="fa fa-plus"></i> Agregar Area</button></li> -->
       </ul>
       <div class="tab-content">
-      <?php if(!isset($idArea)):?>
-       <div class="alert alert-warning fade in" id="warningEmpty">
-        Para poder agregar productos, primero debes <strong>agregar &aacute;reas</strong>.
-      </div>
-      <?php endif;?>
         <?php
         $first = true;
-        foreach($areaProjects as $item)	{ ?>
-        <div class="tab-pane <?php echo $first?'active':'';?>" id="itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>">
+        foreach($services as $item)	{ ?>
+        <div class="tab-pane <?php echo $first?'active':'';?>" id="itemService_<?php echo (isset($item->Id_service)?$item->Id_service:0);?>">
         <?php 
 	        
         	if($first)
         	$first = false;
-	        $modelBudgetItem->Id_area = $item->Id_area;
-	        $modelBudgetItem->Id_area_project = $item->Id;
+	        $modelBudgetItem->Id_service = $item->Id_service;
 	        
-	        echo $this->renderPartial('_tabEditBudgetByArea',array(
+	        echo $this->renderPartial('_tabEditBudgetByService',array(
 						'model'=>$model,
 						'modelProduct'=>$modelProduct,
 						'modelBudgetItem'=>$modelBudgetItem,
 						'priceListItemSale'=>$priceListItemSale,
-						'areaProject'=>$item,
 						'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
 			));
 		?>
@@ -257,6 +251,27 @@ function changeDiscountType(id, object)
 			{
 			statusSavedError();				
 		},"json");	
+}
+
+function deleteBudgetItemByService(id,idService)
+{
+	if(confirm("¿Esta seguro que desea eliminar este ítem?"))
+	{
+		statusStartSaving();
+			$.post(
+				'<?php echo BudgetController::createUrl('AjaxDeleteBudgetItem')?>',
+				 {
+				 	id: id,
+				 },'json').success(						 
+					function(data) 
+					{
+						 statusSaved();
+						 $.fn.yiiGridView.update('budget-item-grid_'+idService);
+						 updateGridExtras(); 
+					}
+				).error(function(){statusSavedError();});		
+	}	
+ 	return false;
 }
 function deleteBudgetItem(id,idAreaProject,idArea)
 {

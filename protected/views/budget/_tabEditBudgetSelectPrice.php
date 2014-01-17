@@ -92,7 +92,13 @@
 				).success(function(data)
 				{
 					statusSaved();
-					$.fn.yiiGridView.update('budget-item-grid_'+<?php echo $model->Id_area_project?>+"_"+<?php echo $model->Id_area?>);
+					if($('#budget-item-grid_'+<?php echo $model->Id_area_project?>+"_"+<?php echo $model->Id_area?>).length)
+					{
+						$.fn.yiiGridView.update('budget-item-grid_'+<?php echo $model->Id_area_project?>+"_"+<?php echo $model->Id_area?>);
+					}else
+					{
+						$.fn.yiiGridView.update('budget-item-grid_'+<?php echo (isset($model->Id_service)?$model->Id_service:0)?>);
+					}	
 					setTotals();
 			}).error(function(data)
 				{

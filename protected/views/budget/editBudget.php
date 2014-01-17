@@ -57,6 +57,10 @@ function openUpdateBudget(idBudget, version)
 		return false;
 }
 
+function changeTabByService(idService)
+{
+	return true;	
+}
 function changeTab(idArea,idAreaProject)
 {
 	$('#idTabArea').val(idArea);
@@ -129,6 +133,12 @@ function editBudget(id,version)
 	window.location = "<?php echo BudgetController::createUrl("addItem")?>" + params; 
 	return false;
 }
+function editBudgetByService(id,version)
+{
+	var params = "&id="+id+"&version="+version+"&byService=true";
+	window.location = "<?php echo BudgetController::createUrl("addItem")?>" + params; 
+	return false;
+}
 
 function exportBudget(id, version)
 {
@@ -142,14 +152,30 @@ function exportBudget(id, version)
   	<?php echo CHtml::hiddenField("idBudget",$model->Id,array("id"=>"idBudget"));?>
   	<?php echo CHtml::hiddenField("version",$model->version_number,array("id"=>"version"));?>
 	<?php $this->renderPartial('_editBudgetHead',array('model'=>$model));?>
-	<?php $this->renderPartial('_editBudgetBody',array(
+	<?php 
+	if($byService)
+	{
+		$this->renderPartial('_editBudgetBodyByService',array(
 					'model'=>$model,
 					'modelProduct'=>$modelProduct,
 					'modelBudgetItem'=>$modelBudgetItem,
 					'priceListItemSale'=>$priceListItemSale,
 					'areaProjects'=>$areaProjects,
 					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
-		));?>
+		));
+	}
+	else 
+	{
+		$this->renderPartial('_editBudgetBody',array(
+					'model'=>$model,
+					'modelProduct'=>$modelProduct,
+					'modelBudgetItem'=>$modelBudgetItem,
+					'priceListItemSale'=>$priceListItemSale,
+					'areaProjects'=>$areaProjects,
+					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
+		));
+	}
+	?>
   
 </div>
 

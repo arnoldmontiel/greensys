@@ -168,6 +168,7 @@ class BudgetItem extends ModelAudit
 			'budgetItems' => array(self::HAS_MANY, 'BudgetItem', 'Id_budget_item'),
 			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
 			'area' => array(self::BELONGS_TO, 'Area', 'Id_area'),
+			'areaProject' => array(self::BELONGS_TO, 'AreaProject', 'Id_area_project'),
 			'service' => array(self::BELONGS_TO, 'Service', 'Id_service'),				
 			'priceList' => array(self::BELONGS_TO, 'PriceList', 'Id_price_list'),
 			'shippingType' => array(self::BELONGS_TO, 'ShippingType', 'Id_shipping_type'),
@@ -501,6 +502,112 @@ class BudgetItem extends ModelAudit
 													'sort'=>$sort,
 		));
 	}
+	public function searchGeneralService()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('t.Id',$this->Id);
+		$criteria->compare('t.Id_product',$this->Id_product);
+		$criteria->compare('t.Id_area',$this->Id_area);
+		$criteria->compare('t.Id_area_project',$this->Id_area_project);
+		$criteria->compare('t.Id_service',$this->Id_service);
+		$criteria->compare('t.Id_budget',$this->Id_budget);
+		$criteria->compare('t.version_number',$this->version_number);
+		$criteria->compare('t.Id_budget_item',$this->Id_budget_item);
+		$criteria->compare('t.price',$this->price,true);
+		$criteria->compare('t.Id_price_list',$this->Id_price_list);
+		$criteria->compare('t.Id_shipping_type',$this->Id_shipping_type);
+		$criteria->compare('quantity',$this->quantity);
+	
+		$criteria->addCondition('t.Id_product is not null');
+		
+		$criteria->addCondition('t.Id_service is null');
+		
+		if(!isset($this->Id_budget_item))
+			$criteria->addCondition('isnull(t.Id_budget_item)');
+	
+		$criteria->join =	"LEFT OUTER JOIN product p ON p.Id=t.Id_product
+												 LEFT OUTER JOIN brand b ON p.Id_brand=b.Id
+												 LEFT OUTER JOIN area a ON a.Id = t.Id_area
+												 LEFT OUTER JOIN service se ON se.Id = t.Id_service
+												 LEFT OUTER JOIN supplier s ON p.Id_supplier=s.Id
+												 LEFT OUTER JOIN (select Id_budget_item, count(*) as child
+												 	from budget_item group by Id_budget_item) bud on
+													t.Id =  bud.Id_budget_item
+												 LEFT OUTER JOIN (select Id_budget_item, count(*) as child
+												 	from budget_item where is_included = 1
+												 	group by Id_budget_item) bud2 on
+													t.Id =  bud2.Id_budget_item";
+	
+	
+	
+		$criteria->addSearchCondition("p.code",$this->product_code);
+		$criteria->addSearchCondition("p.model",$this->product_model);
+		$criteria->addSearchCondition("p.part_number",$this->product_part_number);
+		$criteria->addSearchCondition("p.code_supplier",$this->product_code_supplier);
+		$criteria->addSearchCondition("p.description_customer",$this->product_customer_desc);
+		$criteria->addSearchCondition("b.description",$this->product_brand_desc);
+		$criteria->addSearchCondition("s.business_name",$this->product_supplier_name);
+		$criteria->addSearchCondition("a.description",$this->area_desc);
+		$criteria->addSearchCondition("bud.child",$this->children_count);
+		$criteria->addSearchCondition("bud2.child",$this->children_included);
+	
+	
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+				'product_code' => array(
+						'asc' => 'p.code',
+						'desc' => 'p.code DESC',
+				),
+				'product_model' => array(
+						'asc' => 'p.model',
+						'desc' => 'p.model DESC',
+				),
+				'product_part_number' => array(
+						'asc' => 'p.part_number',
+						'desc' => 'p.part_number DESC',
+				),
+				'children_count' => array(
+						'asc' => 'bud.child',
+						'desc' => 'bud.child DESC',
+				),
+				'children_included' => array(
+						'asc' => 'bud2.child',
+						'desc' => 'bud2.child DESC',
+				),
+				'product_code_supplier' => array(
+						'asc' => 'p.code_supplier',
+						'desc' => 'p.code_supplier DESC',
+				),
+				'area_desc' => array(
+						'asc' => 'a.description',
+						'desc' => 'a.description DESC',
+				),
+				'product_customer_desc' => array(
+						'asc' => 'p.description_customer',
+						'desc' => 'p.description_customer DESC',
+				),
+				'product_brand_desc'=> array(
+						'asc'=>'b.description',
+						'desc'=>'b.description DESC'
+				),
+				'product_supplier_name'=> array(
+						'asc'=>'s.business_name',
+						'desc'=>'s.business_name DESC'
+				),
+				'*',
+		);
+	
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+				'sort'=>$sort,
+		));
+	}
+	
 	public function searchByProductsPending()
 	{
 		// Warning: Please modify the following code to remove attributes that

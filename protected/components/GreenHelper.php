@@ -43,7 +43,6 @@ class GreenHelper
 				return round($valueToConvert/$currencyConversor->factor,2);				
 		}
 		return 0;
-		
 	}
 	static public function generateListPrices($product)
 	{
