@@ -1311,6 +1311,38 @@ class BudgetController extends GController
 				}
 			}
 		}
+	}	
+	public function actionAjaxSaveTimeProgramation()
+	{
+		if(isset($_POST['Id_budget_item'])&&isset($_POST['time_programation']))
+		{
+			$budgetItem = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
+			if(isset($budgetItem))
+			{
+				$budgetItem->time_programation= $_POST['time_programation'];
+				if($budgetItem->save())
+				{
+					$budgetItem->refresh();
+					echo json_encode($budgetItem->attributes);						
+				}
+			}
+		}
+	}
+	public function actionAjaxSaveTimeInstalation()
+	{
+		if(isset($_POST['Id_budget_item'])&&isset($_POST['time_instalation']))
+		{
+			$budgetItem = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
+			if(isset($budgetItem))
+			{
+				$budgetItem->time_instalation= $_POST['time_instalation'];
+				if($budgetItem->save())
+				{
+					$budgetItem->refresh();
+					echo json_encode($budgetItem->attributes);						
+				}
+			}
+		}
 	}
 	public function actionAjaxSaveQuantity()
 	{

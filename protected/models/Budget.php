@@ -206,6 +206,70 @@ class Budget extends ModelAudit
 	
 		return (isset($modelBudgetItem))?$modelBudgetItem->total_unit_fan: 0;
 	}
+	
+	public function getTotalTimeProgramationByService($Id_service)
+	{
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('t.Id_budget',$this->Id);
+		$criteria->compare('t.version_number',$this->version_number);
+		$criteria->addCondition('(t.Id_budget_item is null)');
+		$criteria->addCondition('(t.Id_product is not null)');
+		
+		if(isset($Id_service))
+			$criteria->addCondition('t.Id_service='.$Id_service);
+		else
+			$criteria->addCondition('(t.Id_service is null)');				
+				
+		$modelBudgetItem = BudgetItem::model()->findAll($criteria);
+		$totalTimeProgramation = 0;
+		foreach ($modelBudgetItem as $item)
+		{
+			$totalTimeProgramation += $item->time_programation;
+		}
+		return round($totalTimeProgramation,2);
+	}
+	public function getTotalTimeInstalationByService($Id_service)
+	{
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('t.Id_budget',$this->Id);
+		$criteria->compare('t.version_number',$this->version_number);
+		$criteria->addCondition('(t.Id_budget_item is null)');
+		$criteria->addCondition('(t.Id_product is not null)');
+		
+		if(isset($Id_service))
+			$criteria->addCondition('t.Id_service='.$Id_service);
+		else
+			$criteria->addCondition('(t.Id_service is null)');				
+				
+		$modelBudgetItem = BudgetItem::model()->findAll($criteria);
+		$totalTime = 0;
+		foreach ($modelBudgetItem as $item)
+		{
+			$totalTime += $item->time_instalation;
+		}
+		return round($totalTime,2);
+	}
+	
+	public function getTotalPriceTimeProgramationByService($Id_service)
+	{
+		$totalTime = $this->getTotalTimeProgramationByService($Id_service);
+		$settings = new Settings();
+		$setting = $settings->getSetting();		
+		return round($totalTime*$setting->time_programation_price,2);
+		
+	}
+	public function getTotalPriceTimeInstalationByService($Id_service)
+	{
+		$totalTime = $this->getTotalTimeInstalationByService($Id_service);
+		$settings = new Settings();
+		$setting = $settings->getSetting();
+		return round($totalTime*$setting->time_instalation_price,2);
+		
+	}
 	public function getTotalPriceByService($Id_service)
 	{
 	

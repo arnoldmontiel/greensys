@@ -105,8 +105,8 @@ class BudgetItem extends ModelAudit
 		$timeInstalation = 0.0;
 		foreach ($modelItems as $item)
 		{
-			$timeProgramation += $item->product->time_programation*$item->quantity;
-			$timeInstalation += $item->product->time_instalation*$item->quantity;
+			$timeProgramation += $item->time_programation*$item->quantity;
+			$timeInstalation += $item->time_instalation*$item->quantity;
 		}
 		$modelProgramingHours->quantity = $timeProgramation;
 		$modelInstalationHours->quantity = $timeInstalation;
@@ -116,8 +116,8 @@ class BudgetItem extends ModelAudit
 		$modelProgramingHours->price = $setting->time_programation_price;
 		$modelInstalationHours->price = $setting->time_instalation_price;
 		
-		$modelProgramingHours->save();
-		$modelInstalationHours->save();		
+		$modelInstalationHours->save();
+		$modelProgramingHours->save();				
 	}
 	
 	/**

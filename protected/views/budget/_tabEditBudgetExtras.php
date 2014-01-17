@@ -26,7 +26,7 @@ $settings = new Settings();
 							'description',
 							array(
 									'name'=>'quantity',
-									'value'=>'CHtml::textField("quantity",$data->quantity,array("class"=>"form-control inputSmall align-right","onchange"=>"changeQuantity(".$data->Id.",this)"))',
+									'value'=>'CHtml::textField("quantity",$data->quantity,array("class"=>"form-control inputMed align-right","onchange"=>"changeQuantity(".$data->Id.",this)"))',
 									'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-center"),
 							'headerHtmlOptions'=>array("class"=>"align-center"),

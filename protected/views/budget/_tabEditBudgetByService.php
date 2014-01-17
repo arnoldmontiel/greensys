@@ -39,7 +39,7 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 					),
 					array(
 							'name'=>'quantity',
-							'value'=>'CHtml::textField("quantity",$data->quantity,array("class"=>"form-control inputSmall align-right","onchange"=>"changeQuantity(".$data->Id.",this)"))',
+							'value'=>'CHtml::textField("quantity",$data->quantity,array("class"=>"form-control inputMed align-right","onchange"=>"changeQuantity(".$data->Id.",this)"))',
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-center"),
 							'headerHtmlOptions'=>array("class"=>"align-center"),
@@ -92,19 +92,19 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 					array(
 							'name'=>'Horas',
 							'value'=>
-							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."P"."</span>".CHtml::textField("time_programation",$data->time_programation,array("class"=>"form-control inputSmall align-right"))."</div>".'.
-							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."I"."</span>".CHtml::textField("time_instalation",$data->time_instalation,array("class"=>"form-control inputSmall align-right"))."</div>"',
+							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."P"."</span>".CHtml::textField("time_programation",$data->time_programation,array("class"=>"form-control inputMed align-right","onchange"=>"changeTimeProgramation(".$data->Id.",this,\"budget-item-grid_'.$idService.'\" )"))."</div>".'.
+							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."I"."</span>".CHtml::textField("time_instalation",$data->time_instalation,array("class"=>"form-control inputMed align-right","onchange"=>"changeTimeInstalation(".$data->Id.",this,\"budget-item-grid_'.$idService.'\" )"  ))."</div>"',
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-center"),
 							'footerHtmlOptions'=>array("class"=>"align-center"),
 							'headerHtmlOptions'=>array("class"=>"align-center"),
 							'footer'=>'<div class="bloqueHoras noMargin">
 								<span class="label label-default">P</span>
-								<input id="time_instalation" class="form-control inputSmall align-right" type="text" name="time_instalation" value="0.00">
+								'.number_format($model->getTotalTimeProgramationByService($modelBudgetItem->Id_service), 2).'='.number_format($model->getTotalPriceTimeProgramationByService($modelBudgetItem->Id_service), 2).'
 								</div>
 							<div class="bloqueHoras noMargin">
 								<span class="label label-default">I</span>
-								<input id="time_instalation" class="form-control inputSmall align-right" type="text" name="time_instalation" value="0.00">
+								'.number_format($model->getTotalTimeInstalationByService($modelBudgetItem->Id_service), 2).'='.number_format($model->getTotalPriceTimeInstalationByService($modelBudgetItem->Id_service), 2).'
 								</div>'
 							),
 					array(

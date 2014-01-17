@@ -232,6 +232,48 @@ function changeQuantity(id, object)
 			statusSavedError();				
 		},"json");	
 }
+function changeTimeProgramation(id, object,grid)
+{
+	statusStartSaving();	
+	validateNumber(object);
+	$.post(
+			"<?php echo BudgetController::createUrl('AjaxSaveTimeProgramation')?>",
+			{
+				Id_budget_item: id,time_programation:$(object).val()
+			}
+			).success(function(data)
+			{
+				statusSaved();
+				var response = jQuery.parseJSON(data);
+				$.fn.yiiGridView.update(grid);
+				updateGridExtras();
+				//alert("success");				
+		}).error(function(data)
+			{
+			statusSavedError();				
+		},"json");	
+}
+function changeTimeInstalation(id, object,grid)
+{
+	statusStartSaving();	
+	validateNumber(object);
+	$.post(
+			"<?php echo BudgetController::createUrl('AjaxSaveTimeInstalation')?>",
+			{
+				Id_budget_item: id,time_instalation:$(object).val()
+			}
+			).success(function(data)
+			{
+				statusSaved();
+				var response = jQuery.parseJSON(data);
+				$.fn.yiiGridView.update(grid);
+				updateGridExtras();
+				//alert("success");				
+		}).error(function(data)
+			{
+			statusSavedError();				
+		},"json");	
+}
 
 function changeDiscountType(id, object)
 {
