@@ -26,17 +26,26 @@
 				array(
 						'header'=>'Imagen',
 						'value'=>function($data){
-						$grid = "'product-grid_all'";
-							return '<div class="dropdown"><a class="dropdown-toggle dropdownEditImagen" data-toggle="dropdown" ><i class="fa fa-picture-o"></i>Mostrar</a>
-  <ul class="dropdown-menu ulEditImagen" role="menu">
-    <li class="align-center"><img  src="images/RTI_AD-4.jpg"/></li>
-    <li class="align-center"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></li>
-  </ul>
-				</div>';
+						
+						$criteria = new CDbCriteria();
+						$criteria->join = "INNER JOIN product_multimedia pm on (pm.Id_multimedia = t.Id)";
+						$criteria->addCondition('pm.Id_product = '. $data->Id);
+						$modelMultimedia = Multimedia::model()->find($criteria);
+						
+						$value = '';
+						if(isset($modelMultimedia))
+							$value = '<div class="dropdown"><a class="dropdown-toggle dropdownEditImagen" data-toggle="dropdown" ><i class="fa fa-picture-o"></i>Mostrar</a>
+									  <ul class="dropdown-menu ulEditImagen" role="menu">
+									    <li class="align-center"><img  src="images/'.$modelMultimedia->file_name_small.'"/></li>
+									  </ul>
+													</div>';
+							
+						return $value;
+							
 						},
 						'type'=>'raw',
-					'htmlOptions'=>array("class"=>"align-center"),
-					'headerHtmlOptions'=>array("class"=>"align-center"),
+						'htmlOptions'=>array("class"=>"align-center"),
+						'headerHtmlOptions'=>array("class"=>"align-center"),
 				),
 				array(
 		 			'name'=>'height',
