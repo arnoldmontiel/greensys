@@ -43,16 +43,17 @@ $this->widget('ext.xupload.XUploadWidget', array(
 					'name'=>'file',					
 					'fromGreen'=>true, 
 					'options' => array(
-						'acceptFileTypes' => '/(\.|\/)(gif|jpeg|png)$/i',						
+						'acceptFileTypes' => '/(\.|\/)(gif|jpeg|png)$/i',		
+						'beforeSend' => 'js:function (event, files, index, xhr, handler, callBack) {
+								$("#files").show();
+								callBack();
+							}',
 						'onComplete' => 'js:function (event, files, index, xhr, handler, callBack) {
 							
 							$.fn.yiiGridView.update("product-grid-images");
 							
 							id = jQuery.parseJSON(xhr.response).id;
 							$tr = $(document).find("#"+id);
-							
-// 							if($("#files > tbody").length > 0)
-// 								$("#files").show();
 							
 							$tr.find(".file_upload_cancel button").click(function(){
 								var target = $(this);
@@ -66,6 +67,9 @@ $this->widget('ext.xupload.XUploadWidget', array(
 	 									{
 	 										$.fn.yiiGridView.update("product-grid-images");
 	 										$(target).parent().parent().attr("style","display:none");	
+											
+// 											if($("#files > tbody").length == 0)
+// 												$("#files").hide();
 	 									}
 	 								);
 								}

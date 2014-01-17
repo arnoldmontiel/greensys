@@ -132,7 +132,7 @@ class XUploadWidget extends CJuiInputWidget {
 						<th class="align-right">Acciones</th>
 					</tr>
 					</thead>';
-				echo CHtml::tag("table", array("id" => $uploadTable, "class"=>"table table-striped table-bordered tablaIndividual tablaUploadImagenes"), $content, true);				
+				echo CHtml::tag("table", array("id" => $uploadTable, "style"=>"display:none", "class"=>"table table-striped table-bordered tablaIndividual tablaUploadImagenes"), $content, true);				
 			}else{
 				echo CHtml::tag("table", array("id" => $uploadTable, "class"=>"table table-striped table-bordered tablaIndividual tablaUploadImagenes"), "", true);
 				echo CHtml::tag("table", array("id" => $downloadTable, "class"=>"table table-striped table-bordered tablaIndividual tablaUploadImagenes"), "", true);
