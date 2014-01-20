@@ -26,7 +26,16 @@ $settings = new Settings();
 							'description',
 							array(
 									'name'=>'quantity',
-									'value'=>'CHtml::textField("quantity",$data->quantity,array("class"=>"form-control inputMed align-right","onchange"=>"changeQuantity(".$data->Id.",this)"))',
+									'value'=>function($data){
+										if($data->description=="Horas de programación"||$data->description=="Horas de instalación")
+										{
+											return $data->quantity;
+												
+										}else {
+											return CHtml::textField("quantity",$data->quantity,array("class"=>"form-control inputMed align-right","onchange"=>"changeQuantity(".$data->Id.",this)"));
+												
+										}
+									},
 									'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-center"),
 							'headerHtmlOptions'=>array("class"=>"align-center"),
