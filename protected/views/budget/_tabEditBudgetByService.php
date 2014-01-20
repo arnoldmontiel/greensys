@@ -35,7 +35,6 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 							.CHtml::openTag("div",array("class"=>"tableProductBrand")).$data->product->brand->description."</div>"
 							.CHtml::openTag("div")."PN: ".$data->product->part_number."</div>"',
 							'type'=>'raw',
-							'footer'=>'Totales'
 					),
 					array(
 							'name'=>'quantity',
@@ -85,27 +84,15 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-right"),
 							'headerHtmlOptions'=>array("class"=>"align-right"),
-							'footerHtmlOptions'=>array("class"=>"align-right"),
-							'footer'=>'<span id="total_price" class="label label-primary labelPrecio"> '.number_format($model->getTotalPriceByService($modelBudgetItem->Id_service), 2).' <div class="usd">U$D</div></span>',
-								
 					),
 					array(
 							'name'=>'Horas',
 							'value'=>
-							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."P"."</span>".CHtml::textField("time_programation",$data->time_programation,array("class"=>"form-control inputMed align-right","onchange"=>"changeTimeProgramation(".$data->Id.",this,\"budget-item-grid_'.$idService.'\" )"))."</div>".'.
-							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."I"."</span>".CHtml::textField("time_instalation",$data->time_instalation,array("class"=>"form-control inputMed align-right","onchange"=>"changeTimeInstalation(".$data->Id.",this,\"budget-item-grid_'.$idService.'\" )"  ))."</div>"',
+							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."P"."</span>".CHtml::textField("time_programation",$data->time_programation,array("class"=>"form-control inputMed align-right","onchange"=>"changeTimeProgramation(".$data->Id.",this,\"totals-services-grid\" )"))."</div>".'.
+							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."I"."</span>".CHtml::textField("time_instalation",$data->time_instalation,array("class"=>"form-control inputMed align-right","onchange"=>"changeTimeInstalation(".$data->Id.",this,\"totals-services-grid\" )"  ))."</div>"',
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-center"),
-							'footerHtmlOptions'=>array("class"=>"align-center"),
 							'headerHtmlOptions'=>array("class"=>"align-center"),
-							'footer'=>'<div class="bloqueHoras noMargin">
-								<span class="label label-default">P</span>
-								'.number_format($model->getTotalTimeProgramationByService($modelBudgetItem->Id_service), 2).'='.number_format($model->getTotalPriceTimeProgramationByService($modelBudgetItem->Id_service), 2).'
-								</div>
-							<div class="bloqueHoras noMargin">
-								<span class="label label-default">I</span>
-								'.number_format($model->getTotalTimeInstalationByService($modelBudgetItem->Id_service), 2).'='.number_format($model->getTotalPriceTimeInstalationByService($modelBudgetItem->Id_service), 2).'
-								</div>'
 							),
 					array(
 							'name'=>'Acciones',
@@ -119,35 +106,4 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 Yii::app()->clientScript->registerScript(__CLASS__.'add-item-budget', "
 ");
 ?>
-
-<div class="tituloFinalPresu" style="margin-top:20px;font-size:1.4em;">Subtotales por Servicio</div>
-<table class="table table-striped table-bordered tablaIndividual">
-<thead>
-<tr>
-<th>Servicio</th>
-<th class="align-right">Totales</th>
-<th class="align-right">Horas Totales</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>General</td>
-<td style="text-align:right;">
-USD 50009
-</td>
-<td style="text-align:right;">
-500 x 8.50 =  USD 300
-</td>
-</tr>
-<tr>
-<td>Home Theater</td>
-<td style="text-align:right;">
-USD 50009
-</td>
-<td style="text-align:right;">
-500 x 8.50 =  USD 300
-</td>
-</tr>
-</tbody>
-</table>
 

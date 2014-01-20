@@ -60,12 +60,9 @@ class BudgetItem extends ModelAudit
 	}
 	public function afterDelete()
 	{
-		if($this->description == "Horas de programación"||$this->description == "Horas de instalación")
-		{
-			return parent::afterDelete();
-		}
+		parent::afterDelete();
+		
 		$this->calculateTimes();
-		return parent::afterDelete();
 	}
 	public function calculateTimes()
 	{

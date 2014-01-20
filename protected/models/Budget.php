@@ -226,7 +226,7 @@ class Budget extends ModelAudit
 		$totalTimeProgramation = 0;
 		foreach ($modelBudgetItem as $item)
 		{
-			$totalTimeProgramation += $item->time_programation;
+			$totalTimeProgramation += $item->time_programation*$item->quantity;
 		}
 		return round($totalTimeProgramation,2);
 	}
@@ -249,7 +249,7 @@ class Budget extends ModelAudit
 		$totalTime = 0;
 		foreach ($modelBudgetItem as $item)
 		{
-			$totalTime += $item->time_instalation;
+			$totalTime += $item->time_instalation*$item->quantity;
 		}
 		return round($totalTime,2);
 	}
@@ -293,7 +293,10 @@ class Budget extends ModelAudit
 		}
 		return round($totalPrice,2);
 	}
-	
+	public function getTotalPriceByServiceWithHours($Id_service)
+	{
+		return round($this->getTotalPriceByService($Id_service)+$this->getTotalPriceTimeInstalationByService($Id_service)+$this->getTotalPriceTimeProgramationByService($Id_service),2);
+	}
 	public function getTotalPrice()
 	{
 		

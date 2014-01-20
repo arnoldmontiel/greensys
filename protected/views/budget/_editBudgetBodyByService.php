@@ -10,6 +10,8 @@ $settings = new Settings();
         <?php 
         $first = true;
         $criteria = new CDbCriteria();
+        $criteria->addCondition('Id_budget='.$model->Id);
+        $criteria->addCondition('version_number='.$model->version_number);
         $criteria->group="Id_service";
         $services = BudgetItem::model()->findAll($criteria);
         foreach($services as $item)	{ ?>
@@ -55,7 +57,85 @@ $settings = new Settings();
 		?>
 
    </div>
-  		<?php } ?>   
+  		<?php } ?>
+  		<div class="tituloFinalPresu" style="margin-top:20px;font-size:1.4em;">Subtotales por Servicio</div>
+
+<?php 
+$modelBudgetItemService = New BudgetItem();
+$sort=new CSort;
+
+$dataProvider = new CActiveDataProvider($modelBudgetItemService, array(
+		'criteria'=>$criteria,
+		'sort'=>$sort,
+));
+
+$this->widget('zii.widgets.grid.CGridView', array(
+		'id'=>'totals-services-grid',
+		'dataProvider'=>$dataProvider,
+		'selectableRows' => 0,
+		'emptyText' => 'A&uacute;n sin servicios.',
+		'summaryText'=>'',	
+		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
+		'columns'=>array(
+					array(
+							'name'=>'Servicio',
+							'value'=>function($data)
+								{
+									return isset($data->service)?$data->service->description:"General";
+									//return number_format($model->getTotalPriceByService($data->Id), 2);
+								},
+							'type'=>'raw',
+					),
+					array(
+							'name'=>'Subtotal',
+							'value'=>
+								function($data)
+								{
+									return number_format($data->budget->getTotalPriceByService($data->Id_service), 2).' '.$data->budget->currency->short_description;
+								},
+							'type'=>'raw',
+							'htmlOptions'=>array("class"=>"align-right"),								
+					),
+					array(
+							'name'=>'Horas Programación',
+							'value'=>
+							function($data)
+							{
+								$settings = new Settings();
+								$setting = $settings->getSetting();								
+								return number_format($data->budget->getTotalTimeProgramationByService($data->Id_service), 2).' x '.$setting->time_programation_price.' '.$data->budget->currency->short_description.' = '.number_format($data->budget->getTotalPriceTimeProgramationByService($data->Id_service), 2).' '.$data->budget->currency->short_description;
+								//return number_format($data->budget->getTotalPriceByService($data->Id), 2);
+							},
+							'type'=>'raw',
+							'htmlOptions'=>array("class"=>"align-right"),								
+					),
+					array(
+							'name'=>'Horas Instalación',
+							'value'=>
+							function($data)
+							{
+								$settings = new Settings();
+								$setting = $settings->getSetting();
+								return number_format($data->budget->getTotalTimeInstalationByService($data->Id_service), 2).' x '.$setting->time_instalation_price.' '.$data->budget->currency->short_description.' = '.number_format($data->budget->getTotalPriceTimeInstalationByService($data->Id_service), 2).' '.$data->budget->currency->short_description;
+							},
+							'type'=>'raw',
+							'htmlOptions'=>array("class"=>"align-right"),
+					),
+					array(
+							'name'=>'Total',
+							'value'=>
+							function($data)
+							{
+								$settings = new Settings();
+								$setting = $settings->getSetting();
+									return number_format($data->budget->getTotalPriceByServiceWithHours($data->Id_service), 2).' '.$data->budget->currency->short_description;
+							},
+							'type'=>'raw',
+							'htmlOptions'=>array("class"=>"align-right"),
+					),
+			),
+		));
+?>		
    </div>
     </div>
     </div>
@@ -105,6 +185,7 @@ function editAreaProject(idAreaProject)
 function updateGridExtras()
 {
 	$.fn.yiiGridView.update('budget-item-generic');	
+	$.fn.yiiGridView.update('totals-services-grid');	
 }
     
     function statusStartSaving()
@@ -245,7 +326,6 @@ function changeTimeProgramation(id, object,grid)
 			{
 				statusSaved();
 				var response = jQuery.parseJSON(data);
-				$.fn.yiiGridView.update(grid);
 				updateGridExtras();
 				//alert("success");				
 		}).error(function(data)
@@ -266,7 +346,6 @@ function changeTimeInstalation(id, object,grid)
 			{
 				statusSaved();
 				var response = jQuery.parseJSON(data);
-				$.fn.yiiGridView.update(grid);
 				updateGridExtras();
 				//alert("success");				
 		}).error(function(data)

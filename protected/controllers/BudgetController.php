@@ -196,7 +196,8 @@ class BudgetController extends GController
 	{
 		if($_POST['id'])
 		{
-			BudgetItem::model()->deleteByPk($_POST['id']);
+			$budgetItem = BudgetItem::model()->findByPk($_POST['id']);
+			$budgetItem->delete();
 		}
 	}
 	public function actionAjaxShowCreateModalBudgetItem()
@@ -230,7 +231,7 @@ class BudgetController extends GController
 			try {
 				
 				BudgetItem::model()->deleteAllByAttributes(array('Id_budget_item'=>$id));
-				$model->deleteByPk($id);
+				$model->delete();
 				
 				$transaction->commit();
 								
