@@ -94,7 +94,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 									return number_format($data->budget->getTotalPriceByService($data->Id_service), 2).' '.$data->budget->currency->short_description;
 								},
 							'type'=>'raw',
-							'htmlOptions'=>array("class"=>"align-right"),								
+							'htmlOptions'=>array("class"=>"align-right"),		
+							'headerHtmlOptions'=>array("class"=>"align-right"),								
 					),
 					array(
 							'name'=>'Horas Programación',
@@ -107,7 +108,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 								//return number_format($data->budget->getTotalPriceByService($data->Id), 2);
 							},
 							'type'=>'raw',
-							'htmlOptions'=>array("class"=>"align-right"),								
+							'htmlOptions'=>array("class"=>"align-right"),
+							'headerHtmlOptions'=>array("class"=>"align-right"),								
 					),
 					array(
 							'name'=>'Horas Instalación',
@@ -120,6 +122,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 							},
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-right"),
+							'headerHtmlOptions'=>array("class"=>"align-right"),
 					),
 					array(
 							'name'=>'Total',
@@ -128,10 +131,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
 							{
 								$settings = new Settings();
 								$setting = $settings->getSetting();
-									return number_format($data->budget->getTotalPriceByServiceWithHours($data->Id_service), 2).' '.$data->budget->currency->short_description;
+									return "<span class='label label-primary labelPrecio'>".number_format($data->budget->getTotalPriceByServiceWithHours($data->Id_service), 2).' <div class="usd">'.$data->budget->currency->short_description."</div></span>";
 							},
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-right"),
+							'headerHtmlOptions'=>array("class"=>"align-right"),								
 					),
 			),
 		));
@@ -313,47 +317,6 @@ function changeQuantity(id, object)
 			statusSavedError();				
 		},"json");	
 }
-function changeTimeProgramation(id, object,grid)
-{
-	statusStartSaving();	
-	validateNumber(object);
-	$.post(
-			"<?php echo BudgetController::createUrl('AjaxSaveTimeProgramation')?>",
-			{
-				Id_budget_item: id,time_programation:$(object).val()
-			}
-			).success(function(data)
-			{
-				statusSaved();
-				var response = jQuery.parseJSON(data);
-				updateGridExtras();
-				//alert("success");				
-		}).error(function(data)
-			{
-			statusSavedError();				
-		},"json");	
-}
-function changeTimeInstalation(id, object,grid)
-{
-	statusStartSaving();	
-	validateNumber(object);
-	$.post(
-			"<?php echo BudgetController::createUrl('AjaxSaveTimeInstalation')?>",
-			{
-				Id_budget_item: id,time_instalation:$(object).val()
-			}
-			).success(function(data)
-			{
-				statusSaved();
-				var response = jQuery.parseJSON(data);
-				updateGridExtras();
-				//alert("success");				
-		}).error(function(data)
-			{
-			statusSavedError();				
-		},"json");	
-}
-
 function changeDiscountType(id, object)
 {
 	statusStartSaving();	
