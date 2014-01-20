@@ -1955,7 +1955,7 @@ class GreenHelper
 				
 				
 				$serviceContentBody = $serviceContentBody . '<tr>';
-				$serviceContentBody = $serviceContentBody . '<td><div class="bold">'.$budgetItem->product->short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120" class="descContainer">'.$img.'</td><td width="610">'.$budgetItem->product->long_description.'</td></tr></tbody></table>';
+				$serviceContentBody = $serviceContentBody . '<td><div class="bold">'.$budgetItem->product->description_customer.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120" class="descContainer">'.$img.'</td><td width="610">'.$budgetItem->product->long_description.'</td></tr></tbody></table>';
 				
 				
 				if($budgetItem->getDiscountCurrencyConverted() > 0)
