@@ -1836,6 +1836,9 @@ class GreenHelper
 		$serviceSummaryContent = "";
 		$serviceSummaryContentBody = "";
 		
+		$serviceSummaryContentNoPrice = "";
+		$serviceSummaryContentBodyNoPrice = "";
+		
 		$extraContent = "";
 		$extraContentBody = "";
 		
@@ -1890,7 +1893,8 @@ class GreenHelper
 				}
 		
 				$serviceContentHeader = '
-									<div class="budgetSubtitle">'.$serviceName.'</div>
+						<div  style="page-break-after: always;">
+									<div class="budgetTitle">'.$serviceName.'</div>
 									<div class="budgetDesc">'.$serviceDesc.' </div>';
 				
 		
@@ -1898,10 +1902,9 @@ class GreenHelper
 			//END SERVICE---------------------------------------------------------------
 			
 			//ITEMS---------------------------------------------------------------
-			$serviceContentBody = '<table class="table">
-					
-									<tbody>
-					';
+			$serviceContentBody = '<div class="budgetSubtitle">EQUIPOS</div>
+					<table class="table tableReadOnly">
+									<tbody>';
 
 			/*
 			 <thead>
@@ -1952,34 +1955,34 @@ class GreenHelper
 				
 				
 				$serviceContentBody = $serviceContentBody . '<tr>';
-				$serviceContentBody = $serviceContentBody . '<td><div class="bold">'.$prodHeader.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120">'.$img.'</td><td>'.$budgetItem->product->short_description.'</td></tr></tbody></table>';
+				$serviceContentBody = $serviceContentBody . '<td><div class="bold">'.$budgetItem->product->short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120" class="descContainer">'.$img.'</td><td width="610">'.$budgetItem->product->long_description.'</td></tr></tbody></table>';
 				
 				
 				if($budgetItem->getDiscountCurrencyConverted() > 0)
 				{
 					$serviceContentBody = $serviceContentBody . '<table width="100%" class="tablaLimpia2 conDesc">
 						<tbody><tr>
-						<td class="align-left">Cantidad:</td>
-						<td class="align-left">'.$budgetItem->quantity.'</td>
-						<td class="align-left">Precio Unitario:</td>
-						<td class="align-left">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
-						<td class="align-left">Descuento:</td>
-						<td class="align-left">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()).'</td>
-						<td class="align-right">Total:</td>
-						<td class="align-right bold">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
-						</tr></tbody></table></div>';
+						<td class="align-left" width="91">Cantidad:</td>
+						<td class="align-left" width="91">'.$budgetItem->quantity.'</td>
+						<td class="align-left" width="91">Precio Unitario:</td>
+						<td class="align-left" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
+						<td class="align-left" width="91">Descuento:</td>
+						<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()).'</td>
+						<td class="align-right" width="91">Total:</td>
+						<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
+						</tr></tbody></table>';
 				}
 				else 
 				{
 					$serviceContentBody = $serviceContentBody . '<table width="100%" class="tablaLimpia2 sinDesc">
 						<tbody><tr>
-						<td class="align-left">Cantidad:</td>
-						<td class="align-left">'.$budgetItem->quantity.'</td>
-						<td class="align-left">Precio Unitario:</td>
-						<td class="align-left">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
-						<td class="align-right">Total:</td>
-						<td class="align-right bold">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
-						</tr></tbody></table></div>';
+						<td class="align-left" width="121">Cantidad:</td>
+						<td class="align-left" width="121">'.$budgetItem->quantity.'</td>
+						<td class="align-left" width="121">Precio Unitario:</td>
+						<td class="align-left" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
+						<td class="align-right" width="121">Precio Final:</td>
+						<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
+						</tr></tbody></table>';
 				}
 				
 				$serviceContentBody = $serviceContentBody . '</td>';
@@ -1987,7 +1990,75 @@ class GreenHelper
 				
 				$serviceTotalPrice = $serviceTotalPrice + $budgetItem->getTotalPriceWOChildernCurrencyConverted();
 			}
-			$serviceContentBody = $serviceContentBody . '</tbody></table>';
+			$serviceContentBody = $serviceContentBody . '</tbody></table>
+					
+								<table class="table tableReadOnly tablaDatos">
+					<tbody>
+										
+										<tr>
+										<td class="bold lastRow">TOTAL</td>
+										<td class="align-right bold lastRow">USD 1350</td>
+										</tr></tbody>
+										</table>
+					
+					<div class="budgetSubtitle">Extras '.$serviceName.'</div>
+						<table class="table tableReadOnly tablaDatos">
+					<thead>
+					<tr>
+					<th width="50%">Descripci&oacute;n</th>
+					<th class="align-right" width="50%">Valor</th>
+					</tr>
+					</thead>
+					<tbody>
+										<tr>
+										<td>Horas de Programacion (2.00 x USD 50)</td>
+										<td class="align-right bold">USD 100</td>
+										</tr>
+										<tr>
+										<td>Mano de Obra</td>
+										<td class="align-right bold">USD 200</td>
+										</tr>
+										<tr>
+										<td>Flete</td>
+										<td class="align-right bold">USD 50</td>
+										</tr>
+										<tr>
+										<td class="bold lastRow">TOTAL</td>
+										<td class="align-right bold lastRow">USD 350</td>
+										</tr>
+					</tbody>
+										</table>
+							
+							<div class="budgetSubtitle">TOTAL '.$serviceName.'</div>
+						<table class="table tableReadOnly tablaDatos">
+					<thead>
+					<tr>
+					<th width="50%">Descripci&oacute;n</th>
+					<th class="align-right" width="50%">Valor</th>
+					</tr>
+					</thead>
+					<tbody>
+										<tr>
+										<td>EQUIPOS</td>
+										<td class="align-right bold">USD 10.0000</td>
+										</tr>
+										<tr>
+										<td>ACCESORIOS</td>
+										<td class="align-right bold">USD 200</td>
+										</tr>
+										<tr>
+										<td>EXTRAS</td>
+										<td class="align-right bold">USD 350</td>
+										</tr>
+										<tr>
+										<td class="bold lastRow">TOTAL</td>
+										<td class="align-right bold lastRow">USD 15.55050</td>
+										</tr>
+					</tbody>
+										</table>
+
+					</div><! -- cierre page break -->
+					';
 			
 			$serviceContent = $serviceContent . $serviceContentHeader . $serviceContentBody;
 			
@@ -2036,10 +2107,56 @@ class GreenHelper
 				$serviceSummaryContentBody = $serviceSummaryContentBody . '</tr>';
 				
 				$serviceSummaryContent = $serviceSummaryContent . $serviceSummaryContentBody; 
+				
+				$serviceSummaryContentBodyNoPrice = '<tr>';
+				$serviceSummaryContentBodyNoPrice = $serviceSummaryContentBodyNoPrice . '<td>&bull; '.$currentService['serviceName'].'</td>';
+				$serviceSummaryContentBodyNoPrice = $serviceSummaryContentBodyNoPrice . '</tr>';
+				
+				$serviceSummaryContentNoPrice = $serviceSummaryContentNoPrice . $serviceSummaryContentBodyNoPrice;
 			}
 		}
 		//END SERVICE SUMMARY---------------------------------------------------------------
 		
+		$caratula = '
+				<div class="container" id="screenReadOnlyCaratula">
+				<div class="logoBig"><img src="images/logoBIG.jpg" width="244" height="67"/></div>
+				<table class="mainInfo">
+				<tr>
+				<td class="bigBold">'.$modelBudget->description.'</td>
+				</tr>
+				<tr>
+				<td>'.$modelBudget->project->fullDescription.'</td>
+				</tr>
+				<tr>
+				<td>Versi&oacute;n '.$modelBudget->version_number.'</td>
+				</tr>
+				<tr>
+				<td>'.date("d/m/Y").'</td>
+				</tr>
+				</table>
+						<div class="caratulaResumen">
+					<div class="budgetSubtitle">Resumen de propuesta</div>
+								<table class="table">
+        							<tbody>
+									'.$serviceSummaryContentNoPrice.'
+						        	</tbody>
+						      	</table>	
+							</div>
+											</div>
+						
+		</div>';
+		
+		$resumen ='
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="budgetSubtitle">Resumen de propuesta</div>
+								<table class="table">
+        							<tbody>
+									'.$serviceSummaryContent.'
+						        	</tbody>
+						      	</table>	
+							</div>
+						</div>';
 		$content = '<div class="container" id="screenReadOnly">
 				
 						<div class="row budgetCabecera budgetBloque">
@@ -2055,22 +2172,11 @@ class GreenHelper
 												<div class="budgetDate">'.date("d/m/Y").'</div>
 											</td>
 											<td width="50%" align="right">
-												<img src="images/logo.jpg" width="200" height="56"/>
+												<img src="images/logoBIG.jpg" width="200" height="56"/>
 											</td>
 										</tr>
 									</tbody>
 								</table>		
-							</div>
-						</div>
-						
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="budgetSubtitle">Resumen de propuesta</div>
-								<table class="table">
-        							<tbody>
-									'.$serviceSummaryContent.'
-						        	</tbody>
-						      	</table>	
 							</div>
 						</div>
 						<div class="row budgetBloque">
@@ -2078,15 +2184,15 @@ class GreenHelper
 								'.$serviceContent.'
 
 							</div>
-						</div>
+							</div>
 
 						<div class="row budgetBloque">
 							<div class="col-sm-12">
 								<div class="budgetSubtitle">Extras</div>
-										<table class="table">
+										<table class="table tableReadOnly tablaDatos">
 											<thead>
 												<tr>
-													<th>Descripci&oacute;n</th>
+													<th class="align-left">Descripci&oacute;n</th>
 													<th class="align-right">Cantidad</th>
 													<th class="align-right">Precio</th>
 													<th class="align-right">Descuento</th>
@@ -2101,9 +2207,9 @@ class GreenHelper
 								</div>
 
 								<div class="row budgetCabecera">
-									<div class="col-sm-12 align-right">
+									<div class="col-sm-12">
 									          		<div class="budgetSubtitle">Total</div>
-										<table class="table">
+										<table class="table tableReadOnly tablaDatos">
         									<tbody>
           										<tr>
             										<td class="bold">Sub Total</td>
