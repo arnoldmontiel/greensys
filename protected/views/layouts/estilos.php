@@ -723,7 +723,6 @@ width:auto; padding:50px; border-radius:0px; display:block;margin-right:20px;mar
 {
 body {background-color:white;}
 
-.grupo { page-break-inside:avoid; }
 
 
 
@@ -733,6 +732,7 @@ body {background-color:white;}
 .tableReadOnly .conDesc th{width:inherit !important; }
 .tableReadOnly .sinDesc th{width:inherit !important;}
 }
+
 
 
 .tableReadOnly .conDesc td{width:12% !important; }
@@ -759,7 +759,11 @@ body {background-color:white;}
 
 .budgetTitle{ letter-spacing:1px;  color:#999; font-size:30px;}
 
-.budgetSubtitle{ font-weight:normal; letter-spacing:1px; padding:5px; background-color:#eee; text-transform:uppercase;font-family:'GudeaRegular';}
+.budgetSubtitle{ font-weight:normal; letter-spacing:1px; padding:5px; background-color:#eee; text-transform:uppercase;font-family:'GudeaRegular'; text-align:left;}
+
+.budgetNota{padding-bottom:20px; margin-bottom:40px; border-bottom:1px dotted #ccc;}
+
+.superTotal{background-color:#666; color:#fff;letter-spacing:1px; padding:5px; font-size:17px;}
 
 .budgetDesc{   margin-bottom:15px; padding: 0px 5px;}
 
@@ -802,12 +806,14 @@ body {background-color:white;}
 
 .tableReadOnly  td.bold{font-family:'GudeaBold'; font-weight:bold;}
 
-.tableReadOnly  td.lastRow{border-top:1px solid #000;}
+.tableReadOnly  td.lastRow{border-top:1px solid #000; text-transform:uppercase;}
 
 
 .table .tablaLimpia2 td.bold{font-family:'GudeaBold'; font-weight:bold;}
 
 #screenReadOnlyCaratula{ text-align:center; background-color:white; padding-top:150px;}
+#screenReadOnlyCaratulaFinal{ text-align:center; background-color:white; padding-top:20px;}
+
 .logoBig{ margin:auto; }
 .mainInfo{border-left: 1px solid #333; margin:auto;  text-align:left; margin-top:20px;}
 .mainInfo td{padding-left:10px;text-transform:uppercase;}
