@@ -716,8 +716,29 @@ width:auto; padding:50px; border-radius:0px; display:block;margin-right:20px;mar
 
 /* ------ READ ONLY ------- */
 @page *{
-    margin:0px;
+    margin:0px; background-color:white;
 }
+
+@media print
+{
+body {background-color:white;}
+
+.grupo { page-break-inside:avoid; }
+
+
+
+.tableReadOnly .conDesc td{width:inherit !important; }
+.tableReadOnly .sinDesc td{width:inherit !important;}
+
+.tableReadOnly .conDesc th{width:inherit !important; }
+.tableReadOnly .sinDesc th{width:inherit !important;}
+}
+
+
+.tableReadOnly .conDesc td{width:12% !important; }
+.tableReadOnly .sinDesc td{width:16% !important;}
+
+.descContainer{width:inherit !important;}
 
 #screenReadOnly{ font-size:14px; background-color:white;padding-top:30px; padding-bottom:30px;}
 
@@ -736,12 +757,20 @@ width:auto; padding:50px; border-radius:0px; display:block;margin-right:20px;mar
 .budgetVersion{ text-transform:uppercase;}
 .budgetDate{ text-transform:uppercase;}
 
+.budgetTitle{ letter-spacing:1px;  color:#999; font-size:30px;}
+
 .budgetSubtitle{ font-weight:normal; letter-spacing:1px; padding:5px; background-color:#eee; text-transform:uppercase;font-family:'GudeaRegular';}
 
-.budgetDesc{  padding:5px;  margin:10px 0px;}
+.budgetDesc{   margin-bottom:15px; padding: 0px 5px;}
 
-#screenReadOnly .table td{border-top: 1px solid #ddd; font-size:13px;padding:5px 10px;}
-#screenReadOnly .table th{  font-size:0.8em; padding:5px 10px;}
+.tableReadOnly{width:100%; margin-bottom:0px;}
+.tableReadOnly td{border-top: 0.1px solid #ddd; font-size:13px;padding:10px 5px; }
+.tableReadOnly th{ padding:10px 5px;}
+
+.tablaDatos {margin-bottom:20px;}
+.tablaDatos td{ padding:10px 5px; }
+.tablaDatos th{ padding:10px 5px;}
+
 
 .budgetMono{font-family:'Mono';}
 
@@ -750,22 +779,44 @@ width:auto; padding:50px; border-radius:0px; display:block;margin-right:20px;mar
 .label-big{font-size:18px; margin:0px; color:white; background-color:gray;display:inline-block;padding:3px 5px; font-weight: bold;}
 
 
-#screenReadOnly .table td.budgetImgCont{ padding-right:10px;}
+.tableReadOnly  td.budgetImgCont{ padding-right:10px;}
 .imgTD{width:100px;}
 
  div.bold{font-family:'GudeaBold'; font-weight:bold;}
  
 .table .tablaLimpia td{border-top: 0px transparent; }
-#screenReadOnly .table .tablaLimpia td{border-top: 0px transparent;  }
+.tableReadOnly .tablaLimpia{width:100%;}
+.tableReadOnly .tablaLimpia td{border-top: 0px transparent;   }
 
-.tablaLimpia2 {border-top: 0px transparent; width:100%}
-.table .tablaLimpia2 td{border-top: 0px transparent;}
-#screenReadOnly .table .tablaLimpia2 td{border-top: 0px transparent;   }
+.tablaLimpia2 {border-top: 0px transparent;  width:100%;}
+.tableReadOnly .tablaLimpia2{width:100%;}
+.tableReadOnly .tablaLimpia2 td{border-top: 0px transparent;}
+.tableReadOnly  .tablaLimpia2 td{border-top: 0px transparent;   }
 
-.table .conDesc td{width:12%; }
-.table .sinDesc td{width:16%;}
+.tableReadOnly .conDesc{ width:100%; }
+.tableReadOnly .sinDesc{width:100%; }
+
+/*
+.tableReadOnly .conDesc td{width:12%; }
+.tableReadOnly .sinDesc td{width:16%;}*/
+
+.tableReadOnly  td.bold{font-family:'GudeaBold'; font-weight:bold;}
+
+.tableReadOnly  td.lastRow{border-top:1px solid #000;}
+
 
 .table .tablaLimpia2 td.bold{font-family:'GudeaBold'; font-weight:bold;}
+
+#screenReadOnlyCaratula{ text-align:center; background-color:white; padding-top:150px;}
+.logoBig{ margin:auto; }
+.mainInfo{border-left: 1px solid #333; margin:auto;  text-align:left; margin-top:20px;}
+.mainInfo td{padding-left:10px;text-transform:uppercase;}
+
+.mainInfo td.bigBold{font-weight:bold; font-size:1em;}
+
+.caratulaResumen{ margin-top:100px; text-align:left; }
+.caratulaResumen .table td{border-top: 1px solid #ddd; font-size:13px;padding:5px 10px;}
+.caratulaResumen .table th{ padding:5px 10px;}
 
 /* ------ END READ ONLY ------- */
 
