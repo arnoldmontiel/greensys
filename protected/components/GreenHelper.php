@@ -1905,35 +1905,11 @@ class GreenHelper
 			$serviceContentBody = '<div class="budgetSubtitle">EQUIPOS</div>
 					<table class="table tableReadOnly">
 									<tbody>';
-
-			/*
-			 <thead>
-			<tr>
-			<th colspan="2">Producto</th>
-			<th class="align-right">Cantidad</th>
-			<th class="align-right">Precio</th>
-			<th class="align-right">Descuento</th>
-			<th class="align-right">Total</th>
-			</tr>
-			</thead>
-			*/
 			$serviceTotalPrice = 0;
 			foreach($budgetItems as $budgetItem)
 			{
 				$prodHeader = $budgetItem->product->brand->description .' '. $budgetItem->product->model;
 				
-
-				
-				/*$serviceContentBody = $serviceContentBody . '<tr>';
-				$serviceContentBody = $serviceContentBody . '<td class="budgetImgCont"><img class="imgTD" src="images/RTI_AD-4.jpg"/></td>';
-				$serviceContentBody = $serviceContentBody . '<td><div class="bold">'.$prodHeader.'</div><div>'.$budgetItem->product->short_description.'</div></td>';
-				$serviceContentBody = $serviceContentBody . '<td class="budgetMono align-right">'.$budgetItem->quantity.'</td>';
-				$serviceContentBody = $serviceContentBody . '<td class="budgetMono align-right">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>';
-				$serviceContentBody = $serviceContentBody . '<td class="budgetMono align-right">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()).'</td>';
-				$serviceContentBody = $serviceContentBody . '<td class="align-right budgetMono">';
-				$serviceContentBody = $serviceContentBody . '<div class="label-small">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</div></td>';
-				$serviceContentBody = $serviceContentBody . '</tr>';
-				*/
 				$criteria = new CDbCriteria();
 				$criteria->join = 'inner join product_multimedia pm on (pm.Id_multimedia = t.Id)';
 				$criteria->addCondition('t.Id_multimedia_type = 1');
@@ -2000,7 +1976,6 @@ class GreenHelper
 										<td class="align-right bold lastRow">USD 1350</td>
 										</tr></tbody>
 										</table>
-					
 					<div class="budgetSubtitle">Extras '.$serviceName.'</div>
 						<table class="table tableReadOnly tablaDatos">
 					<thead>
@@ -2028,8 +2003,7 @@ class GreenHelper
 										</tr>
 					</tbody>
 										</table>
-							
-							<div class="budgetSubtitle">TOTAL '.$serviceName.'</div>
+							<div class="budgetSubtitle superTotal">TOTAL '.$serviceName.'</div>
 						<table class="table tableReadOnly tablaDatos">
 					<thead>
 					<tr>
@@ -2039,15 +2013,15 @@ class GreenHelper
 					</thead>
 					<tbody>
 										<tr>
-										<td>EQUIPOS</td>
+										<td>Equipos</td>
 										<td class="align-right bold">USD 10.0000</td>
 										</tr>
 										<tr>
-										<td>ACCESORIOS</td>
+										<td>Accesorios</td>
 										<td class="align-right bold">USD 200</td>
 										</tr>
 										<tr>
-										<td>EXTRAS</td>
+										<td>Extras</td>
 										<td class="align-right bold">USD 350</td>
 										</tr>
 										<tr>
@@ -2056,7 +2030,10 @@ class GreenHelper
 										</tr>
 					</tbody>
 										</table>
-
+					<div class="budgetNota">NOTA: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis hendrerit, nisl vitae scelerisque tempus, 
+									dolor lorem pharetra est, ut condimentum metus arcu eget lectus. 
+									Quisque aliquet, velit sed tempor suscipit, ipsum nibh malesuada lectus, 
+									in scelerisque mi massa eu quam. Nam non tempus mi.</div>
 					</div><! -- cierre page break -->
 					';
 			
@@ -2103,8 +2080,9 @@ class GreenHelper
 			{
 				$serviceSummaryContentBody = '<tr>';
 				$serviceSummaryContentBody = $serviceSummaryContentBody . '<td>'.$currentService['serviceName'].'</td>';
-				$serviceSummaryContentBody = $serviceSummaryContentBody . '<td class="align-right budgetMono">'.$currency . ' ' . self::showPrice($currentService['total']).'</td>';
+				$serviceSummaryContentBody = $serviceSummaryContentBody . '<td class="align-right budgetMono bold">'.$currency . ' ' . self::showPrice($currentService['total']).'</td>';
 				$serviceSummaryContentBody = $serviceSummaryContentBody . '</tr>';
+				
 				
 				$serviceSummaryContent = $serviceSummaryContent . $serviceSummaryContentBody; 
 				
@@ -2117,7 +2095,7 @@ class GreenHelper
 		}
 		//END SERVICE SUMMARY---------------------------------------------------------------
 		
-		$caratula = '
+		$caratula = '<div  style="page-break-after: always;">
 				<div class="container" id="screenReadOnlyCaratula">
 				<div class="logoBig"><img src="images/logoBIG.jpg" width="244" height="67"/></div>
 				<table class="mainInfo">
@@ -2136,7 +2114,7 @@ class GreenHelper
 				</table>
 						<div class="caratulaResumen">
 					<div class="budgetSubtitle">Resumen de propuesta</div>
-								<table class="table">
+								<table class="table tableReadOnly">
         							<tbody>
 									'.$serviceSummaryContentNoPrice.'
 						        	</tbody>
@@ -2144,9 +2122,10 @@ class GreenHelper
 							</div>
 											</div>
 						
-		</div>';
+		</div>
+											</div>';
 		
-		$resumen ='
+		$nada ='
 						<div class="row">
 							<div class="col-sm-12">
 								<div class="budgetSubtitle">Resumen de propuesta</div>
@@ -2185,8 +2164,39 @@ class GreenHelper
 
 							</div>
 							</div>
-
-						<div class="row budgetBloque">
+							</div><!-- CIERRE CONTAINER -->';
+		
+		$resumen = '<div class="container" id="screenReadOnlyCaratulaFinal">
+				<div class="row budgetBloque">
+							<div class="col-sm-12">
+				<div class="logoBig"><img src="images/logoBIG.jpg" width="244" height="67"/></div>
+				<table class="mainInfo">
+				<tr>
+				<td class="bigBold">'.$modelBudget->description.'</td>
+				</tr>
+				<tr>
+				<td>'.$modelBudget->project->fullDescription.'</td>
+				</tr>
+				<tr>
+				<td>Versi&oacute;n '.$modelBudget->version_number.'</td>
+				</tr>
+				<tr>
+				<td>'.date("d/m/Y").'</td>
+				</tr>
+				</table>
+						<div class="caratulaResumen">
+					<div class="budgetSubtitle">Resumen de propuesta</div>
+								<table class="table tableReadOnly">
+        							<tbody>
+									'.$serviceSummaryContent.'
+									<tr><td class="bold lastRow">TOTAL</td><td class="align-right bold lastRow">USD 15.55050</td></tr>
+						        	</tbody>
+						      	</table>
+											</div>
+							</div>
+							</div>
+											
+			<div class="row budgetBloque">
 							<div class="col-sm-12">
 								<div class="budgetSubtitle">Extras</div>
 										<table class="table tableReadOnly tablaDatos">
@@ -2196,19 +2206,20 @@ class GreenHelper
 													<th class="align-right">Cantidad</th>
 													<th class="align-right">Precio</th>
 													<th class="align-right">Descuento</th>
-													<th class="align-right">Total</th>
+													<th class="align-right">Valor</th>
 												</tr>
 											</thead>
 									        <tbody>
 									          '.$extraContent.'
+												<tr><td class="bold lastRow" colspan="3">TOTAL</td><td colspan="2" class="align-right bold lastRow">USD 15.55050</td></tr>
 									        </tbody>
      	 								</table>
 									</div>
-								</div>
+									          		</div>
 
 								<div class="row budgetCabecera">
 									<div class="col-sm-12">
-									          		<div class="budgetSubtitle">Total</div>
+									          		<div class="budgetSubtitle superTotal">Total</div>
 										<table class="table tableReadOnly tablaDatos">
         									<tbody>
           										<tr>
@@ -2230,7 +2241,53 @@ class GreenHelper
       									</table>
 										</div>
 								</div>
-</div>';
+											
+											</div><!-- CIERRE CONTAINER -->
+											';
+		$clausulas = '<div  style="page-break-after: always;">
+				<div class="budgetTitle">Cl&aacute;usulas del Contrato</div>
+				<div class="budgetDesc">Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.
+				</div>
+				<div class="budgetSubtitle">Pago</div>
+				<table class="table tableReadOnly tablaDatos">
+        									<tbody>
+          									<tr>
+           											<td>Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.</td>
+         										</tr>
+        									</tbody>
+      									</table>
+				
+				
+				<div class="budgetSubtitle">DURACI&Oacute;N DE LA OFERTA</div>
+				<table class="table tableReadOnly tablaDatos">
+        									<tbody>
+          									<tr>
+           											<td>Praesent urna augue, volutpat eleifend neque eu, tristique iaculis massa. Maec.</td>
+         										</tr>
+        									</tbody>
+      									</table>
+				<div class="budgetSubtitle">TIPO DE CAMBIO</div>
+				<table class="table tableReadOnly tablaDatos">
+        									<tbody>
+          									<tr>
+           											<td>Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.</td>
+         										</tr>
+        									</tbody>
+      									</table>
+				
+				
+				<div class="budgetSubtitle">LEGALES</div>
+				<table class="table tableReadOnly tablaDatos">
+        									<tbody>
+          									<tr>
+           											<td>Praesent urna augue, volutpat eleifend neque eu, tristique iaculis massa. Maec. Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet.</td>
+         										</tr>
+        									</tbody>
+      									</table>
+				</div>
+				';
+		
+		$content= $caratula.$content.$resumen.$clausulas;
 		return $content;
 	}
 }
