@@ -37,6 +37,7 @@
 							$value = '<div class="dropdown"><a class="dropdown-toggle dropdownEditImagen" data-toggle="dropdown" ><i class="fa fa-picture-o"></i>Mostrar</a>
 									  <ul class="dropdown-menu ulEditImagen" role="menu">
 									    <li class="align-center"><img  src="images/'.$modelMultimedia->file_name_small.'"/></li>
+								    	<li class="align-center"><button onclick="removeImage('.$modelMultimedia->Id.', this)" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></li>
 									  </ul>
 													</div>';
 							

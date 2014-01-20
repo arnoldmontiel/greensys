@@ -35,6 +35,25 @@ $('#tab-pending').click(function(){
 ?>
 <script type="text/javascript">
 
+function removeImage(idMultimedia, obj)
+{
+	
+	if (confirm("¿Está seguro de eliminar esta imagen?")) 
+	{
+		
+		$.post("<?php echo ProductController::createUrl('ajaxRemoveImage'); ?>",
+			{
+				IdMultimedia:idMultimedia
+			}
+		).success(
+			function(data){
+				obj.parentNode.parentNode.parentNode.remove();
+			});
+		return false;
+	}
+	return false;
+}
+
 function openExcelLoader()
 {
 	$.post("<?php echo ProductController::createUrl('AjaxOpenExcelLoader'); ?>"
