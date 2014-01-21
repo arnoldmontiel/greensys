@@ -7,6 +7,7 @@ $settings = new Settings();
       <ul class="nav nav-tabs">
         <li class="active"><a id="tabExtraItems" href="#tabRecargos" data-toggle="tab">Recargos</a></li>
         <li><a id="tabServices" href="#tabDescripciones" data-toggle="tab">Descripci&oacute;n de Servicios</a></li>
+        <li><a id="tabServicesNote" href="#tabNotas" data-toggle="tab">Nota de Servicios</a></li>
         <li class="pull-right"><button id="addExtraItem" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarRec" onclick="addExtraItem(<?php echo $model->Id?>,<?php echo $model->version_number?>);"><i class="fa fa-plus"></i> Agregar</button></li>
         </ul>
         <div class="tab-content">
@@ -123,6 +124,40 @@ $projectService->Id_project = $model->Id_project;
         ?>
 </div> 
     <!-- /.tab2 -->
+<div class="tab-pane" id="tabNotas">
+
+  <?php 
+$projectService = new ProjectService();
+$projectService->Id_project = $model->Id_project;
+	$this->widget('zii.widgets.grid.CGridView', array(
+					'id'=>'project-service-note-grid',
+					'dataProvider'=>$projectService->search(),
+					'summaryText'=>'',
+					'selectableRows' => 0,
+					'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
+					'columns'=>array(
+							array(
+									'header'=>'Servicios',
+									'value'=>'$data->service->description',
+									'type'=>'raw'
+							),					
+							array(
+									'header'=>'Notas',
+									'value'=>'GreenHelper::cutString($data->note==""?$data->service->note:$data->note,130)',
+									'type'=>'raw'
+							),
+							array(
+									'name'=>'Acciones',
+									'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"editProjectServiceNote(".$data->Id_project.",".$data->Id_service.");\" ><i class=\"fa fa-pencil\"></i> Editar</button>"',
+									'type'=>'raw',
+									'htmlOptions'=>array("style"=>"text-align:right;"),
+									'headerHtmlOptions'=>array("style"=>"text-align:right;"),
+							),
+							),
+					));
+        ?>
+</div> 
+    <!-- /.tab3 -->
 </div>
     <!-- /.tab-content -->
       </div>
@@ -223,7 +258,31 @@ $projectService->Id_project = $model->Id_project;
  			).error(function(){});			
  }
 
+ function editProjectServiceNote(idProject,idService)
+ {
+ 	$.post(
+ 			'<?php echo BudgetController::createUrl('project/AjaxShowUpdateModalProjectServiceNote')?>',
+ 			 {
+ 			 	Id_project: idProject,
+ 			 	Id_service: idService,
+ 			 	field_caller:'project-service-note-grid'
+ 			 },'json').success(
+ 				function(data) 
+ 				{ 
+ 					if(data!='')
+ 					{
+ 						$('#modalPlaceHolder').html(data);
+ 						$('#modalPlaceHolder').modal('show');					
+ 					}
+ 				}
+ 			).error(function(){});			
+ }
+ 
  $("#tabServices").click(function()
+ {
+	 $("#addExtraItem").hide();
+ });
+ $("#tabServicesNote").click(function()
  {
 	 $("#addExtraItem").hide();
  });

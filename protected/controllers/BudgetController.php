@@ -936,6 +936,7 @@ class BudgetController extends GController
 				$projectService->Id_service = $service->Id;
 				$projectService->Id_project = $modelProject->Id;
 				$projectService->long_description = $service->long_description;
+				$projectService->note = $service->note;
 				$projectService->save();
 			}							
 		}		
