@@ -28,11 +28,6 @@
   </div><!-- /.modal-dialog -->
 <?php $this->endWidget(); ?>
 <script type="text/javascript">
-$("form").bind("keypress", function (e) {
-    if (e.keyCode == 13) {
-        return false;
-    }
-});
 
 $('#saveProjectService').unbind('click');
 $('#saveProjectService').click(function()
