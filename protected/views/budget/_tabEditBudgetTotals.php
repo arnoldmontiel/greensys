@@ -2,6 +2,8 @@
 $settings = new Settings();
 ?>
 
+
+
   <div class="row panelPresuFinal">
   <div class="col-sm-6"></div>
   <div class="col-sm-6">

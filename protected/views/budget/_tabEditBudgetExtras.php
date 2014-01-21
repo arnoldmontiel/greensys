@@ -3,11 +3,11 @@ $settings = new Settings();
 ?>
 <div class="row contenedorPresu noBorder">
     <div class="col-sm-12">
-      <div class="tituloFinalPresu">Extra</div>
+      <div class="tituloFinalPresu">Configurar Servicios</div>
       <ul class="nav nav-tabs">
         <li class="active"><a id="tabExtraItems" href="#tabRecargos" data-toggle="tab">Recargos</a></li>
-        <li><a id="tabServices" href="#tabDescripciones" data-toggle="tab">Descripci&oacute;n de Servicios</a></li>
-        <li><a id="tabServicesNote" href="#tabNotas" data-toggle="tab">Nota de Servicios</a></li>
+        <li><a id="tabServices" href="#tabDescripciones" data-toggle="tab">Descripciones</a></li>
+        <li><a id="tabServicesNote" href="#tabNotas" data-toggle="tab">Notas</a></li>
         <li class="pull-right"><button id="addExtraItem" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarRec" onclick="addExtraItem(<?php echo $model->Id?>,<?php echo $model->version_number?>);"><i class="fa fa-plus"></i> Agregar</button></li>
         </ul>
         <div class="tab-content">

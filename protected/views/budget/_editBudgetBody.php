@@ -11,7 +11,7 @@ $settings = new Settings();
 
    <div class="row contenedorPresu">
     <div class="col-sm-12">
-      <div class="tituloFinalPresu">Productos</div>
+      <div class="tituloFinalPresu">Equipos por &Aacute;rea</div>
     
       <ul class="nav nav-tabs navTabsPencil">
         <?php 
