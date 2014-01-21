@@ -89,4 +89,15 @@
         <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-check"></i> Listo</button>
       </div>
     </div><!-- /.modal-content -->
+<script type="text/javascript">
+
+	$('#myModalAddProduct').on('hidden.bs.modal', function () 
+	{
+		var idAreaProject = $('#idTabAreaProject').val();
+		var idArea = $('#idTabArea').val();
+	  	$.fn.yiiGridView.update("budget-item-grid_"+idAreaProject+"_"+idArea); 
+	  	updateGridExtras(); 
+	  	setTotals();	
+	});
+</script>
 </div><!-- /.modal-dialog -->
