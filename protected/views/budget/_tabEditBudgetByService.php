@@ -20,6 +20,7 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 	{
 		$dataProvider =$modelBudgetItem->searchGeneralService();
 	}
+	$dataProvider->pagination = false;
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'budget-item-grid_'.$idService,
 		'dataProvider'=>$dataProvider,

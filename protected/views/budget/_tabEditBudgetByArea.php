@@ -10,9 +10,11 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 	'"<ul id=\"ul_price_".$data->Id."\" class=\"popover right dropdown-menu superDropdown\" role=\"menu\" aria-labelledby=\"dropdownMenu1\">
  </ul>"';
 
-	$this->widget('zii.widgets.grid.CGridView', array(
+	$dataProvider = $modelBudgetItem->search();
+	$dataProvider->pagination = false;
+		$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'budget-item-grid_'.$areaProject->Id."_".$areaProject->Id_area,
-		'dataProvider'=>$modelBudgetItem->search(),
+		'dataProvider'=>$dataProvider,
 		'selectableRows' => 0,
 		'emptyText' => 'A&uacute;n sin productos.',
 		'summaryText'=>'',	
