@@ -404,6 +404,14 @@ $('#deleteIcon').click(function(){
 			?></td>
           </tr>
           <tr>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'is_accessory'); ?></td>
+            <td><div class="checkbox">
+                <label>
+                  <?php echo $form->checkBox($model,'is_accessory'); ?>
+                  S&iacute; </label>
+              </div></td>
+          </tr>
+          <tr>
             <td style="text-align:right;"><?php echo $form->labelEx($model,'unit_fan'); ?></td>
             <td><?php $racks = CHtml::listData($ddlRacks, 'Id', 'description');?>
 		<?php
