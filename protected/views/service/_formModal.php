@@ -8,7 +8,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><?php echo ($model->isNewRecord)?'Agregar Marca':'Editar Marca'; ?></h4>
+        <h4 class="modal-title"><?php echo ($model->isNewRecord)?'Agregar Servicio':'Editar Servicio'; ?></h4>
       </div>
       <div class="modal-body">
 
@@ -20,7 +20,11 @@
   </div>
   <div class="form-group">
   <?php echo $form->labelEx($model,'long_description'); ?>
-    <?php echo $form->textArea($model,'long_description',array("class"=>"form-control","rows"=>'12')); ?>
+    <?php echo $form->textArea($model,'long_description',array("class"=>"form-control","rows"=>'8')); ?>
+  </div>
+  <div class="form-group">
+  <?php echo $form->labelEx($model,'note'); ?>
+    <?php echo $form->textArea($model,'note',array("class"=>"form-control","rows"=>'8')); ?>
   </div>
   </div>
       <div class="modal-footer">

@@ -24,8 +24,16 @@
 				'name'=>'long_description',
 			'value'=>'GreenHelper::cutString($data->long_description==""?$data->long_description:$data->long_description,250)',
 			'type'=>'raw',
-			'htmlOptions'=>array("width"=>"70%;"),
-			'headerHtmlOptions'=>array("width"=>"70%;"),
+			'htmlOptions'=>array("width"=>"40%;"),
+			'headerHtmlOptions'=>array("width"=>"40%;"),
+		),
+		array(
+				'header'=>'Nota',
+				'name'=>'note',
+				'value'=>'GreenHelper::cutString($data->note==""?$data->note:$data->note,250)',
+				'type'=>'raw',
+				'htmlOptions'=>array("width"=>"40%;"),
+				'headerHtmlOptions'=>array("width"=>"40%;"),
 		),
 		array(
 				'header'=>'Acciones',

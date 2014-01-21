@@ -6,6 +6,8 @@
  * The followings are the available columns in table 'service':
  * @property integer $Id
  * @property string $description
+ * @property string $long_description
+ * @property string $note
  *
  * The followings are the available model relations:
  * @property Area[] $areas
@@ -39,10 +41,10 @@ class Service extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('description', 'length', 'max'=>100),
-			array('long_description', 'safe'),
+			array('long_description, note', 'safe'),
 				// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description, long_description', 'safe', 'on'=>'search'),
+			array('Id, description, long_description, note', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,6 +70,7 @@ class Service extends CActiveRecord
 			'Id' => 'ID',
 			'description' => 'Servicio',
 			'long_description' => 'Descripción',
+			'note' => 'Nota',
 		);
 	}
 
@@ -85,6 +88,7 @@ class Service extends CActiveRecord
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('description',$this->description,true);
 		$criteria->compare('long_description',$this->long_description,true);
+		$criteria->compare('note',$this->note,true);
 		
 		$sort=new CSort;
 		$sort->defaultOrder="description";
