@@ -2051,26 +2051,32 @@ class GreenHelper
 											</tbody>
 										</table>';
 			
-			$serviceContentBodyTotal = '<div class="budgetSubtitle">Instalaci&oacute;n y Programaci&oacute;n</div>
+			$serviceContentBodyTotal = '<div class="budgetSubtitle">Adicionales</div>
 											<table class="table tableReadOnly tablaDatos">
 												<thead>
 													<tr>
-														<th width="50%">Descripci&oacute;n</th>
-														<th class="align-right" width="50%">Valor</th>
+														<th width="25%">Descripci&oacute;n</th>
+														<th class="align-right" width="25%">Valor</th>
+														<th class="align-right" width="25%">Descuento</th>
+														<th class="align-right" width="25%">Valor Final</th>
 													</tr>
 												</thead>
 											<tbody>
 												<tr>
 													<td>Programaci&oacute;n</td>
+													<td class="align-right">USD '.$totalProgramationHs.'</td>
+													<td class="align-right">10% (200 USD)</td>
 													<td class="align-right bold">USD '.$totalProgramationHs.'</td>
 												</tr>
 												<tr>
 													<td>Instalaci&oacute;n</td>
+													<td class="align-right">USD '.$totalInstalationHs.'</td>
+													<td class="align-right">10% (200 USD)</td>
 													<td class="align-right bold">USD '.$totalInstalationHs.'</td>
 												</tr>
 												<tr>
-													<td class="bold lastRow">TOTAL</td>
-													<td class="align-right bold lastRow">USD 350</td>
+													<td class="bold lastRow" colspan="2">TOTAL</td>
+													<td class="align-right bold lastRow" colspan="2">USD 350</td>
 												</tr>
 											</tbody>
 										</table>
@@ -2092,7 +2098,7 @@ class GreenHelper
 														<td class="align-right bold">'.$currency . ' ' . self::showPrice($totalAccessoryPrice).'</td>
 													</tr>
 													<tr>
-														<td>Instalaci&oacute;n y Programaci&oacute;n</td>
+														<td>Adicionales</td>
 														<td class="align-right bold">USD 350</td>
 													</tr>
 													<tr>
