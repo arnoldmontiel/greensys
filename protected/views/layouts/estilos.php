@@ -434,6 +434,8 @@ padding: 6px 8px;
 
 .buttonsTableProd{min-width:158px;}
 .buttonsTablePres{min-width:405px;}
+.buttonsTableOrder{width:52px;}
+.buttonsTableOrder button{margin-top:0px;}
 
 .combined { width:100%;}
 .combined select{display:inline-block !important; width:60% !important;}
@@ -814,6 +816,8 @@ body {background-color:white;}
 #screenReadOnlyCaratula{ text-align:center; background-color:white; padding-top:150px;}
 #screenReadOnlyCaratulaFinal{ text-align:center; background-color:white; padding-top:20px;}
 
+
+
 .logoBig{ margin:auto; }
 .mainInfo{border-left: 1px solid #333; margin:auto;  text-align:left; margin-top:20px;}
 .mainInfo td{padding-left:10px;text-transform:uppercase;}
@@ -823,6 +827,8 @@ body {background-color:white;}
 .caratulaResumen{ margin-top:100px; text-align:left; }
 .caratulaResumen .table td{border-top: 1px solid #ddd; font-size:13px;padding:5px 10px;}
 .caratulaResumen .table th{ padding:5px 10px;}
+
+#screenReadOnlyCaratulaFinal .caratulaResumen{margin-top:60px;}
 
 /* ------ END READ ONLY ------- */
 

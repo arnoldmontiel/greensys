@@ -29,6 +29,16 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 		'afterAjaxUpdate'=>'js:function(id, data){setTotals();}',				
 		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
 		'columns'=>array(
+				array(
+						'header'=>'Orden',
+						'value'=>function($data){
+						$grid = "'budget-grid-orden'";
+							return '<div class="buttonsTableOrder"><button type="button" class="btn btn-primary btn-xs" ><i class="fa fa-angle-down fa-lg"></i></i></button><button type="button" class="btn btn-primary btn-xs noMargin" ><i class="fa fa-angle-up fa-lg"></i></i></button><br/><button type="button" class="btn btn-default btn-xs" ><i class="fa fa-angle-double-down fa-lg"></i></i></button><button type="button" class="btn btn-default btn-xs noMargin" ><i class="fa fa-angle-double-up fa-lg"></i></i></button></div>';						
+						},
+						'type'=>'raw',
+							'htmlOptions'=>array("style"=>"width:52px;"),
+							'headerHtmlOptions'=>array("style"=>"width:52px;"),
+				),
 					array(
 							'name'=>'Producto',
 							'value'=>'CHtml::openTag("div",array("class"=>"tableProductName")).$data->product->model."</div>"
