@@ -1,6 +1,13 @@
 <?php 
 $settings = new Settings();
 ?>
+    <?php echo $this->renderPartial('_tabEditBudgetExtras',array(
+						'model'=>$model,
+						'modelProduct'=>$modelProduct,
+						'modelBudgetItem'=>$modelBudgetItem,
+						'priceListItemSale'=>$priceListItemSale,
+						'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,));
+    ?>
 
    <div class="row contenedorPresu">
     <div class="col-sm-12">
@@ -143,7 +150,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
    </div>
     </div>
     </div>
-    <?php echo $this->renderPartial('_tabEditBudgetExtras',array(
+    <?php echo $this->renderPartial('_tabEditBudgetTotals',array(
 						'model'=>$model,
 						'modelProduct'=>$modelProduct,
 						'modelBudgetItem'=>$modelBudgetItem,
