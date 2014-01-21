@@ -35,13 +35,6 @@
   </div><!-- /.modal-dialog -->
 <?php $this->endWidget(); ?>
 <script type="text/javascript">
-$("form").bind("keypress", function (e) {
-    if (e.keyCode == 13) {
-        alert();
-        return true;
-    }
-});
-
 $('#saveService').unbind('click');
 $('#saveService').click(function()
 		{
