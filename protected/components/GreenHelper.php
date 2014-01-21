@@ -1832,6 +1832,9 @@ class GreenHelper
 		$serviceContent = "";
 		$serviceContentHeader = "";
 		$serviceContentBody = "";
+		$serviceContentBodyItem = "";
+		$serviceContentBodyAccessory = "";
+		$serviceContentBodyTotal = "";
 		
 		$serviceSummaryContent = "";
 		$serviceSummaryContentBody = "";
@@ -1877,6 +1880,7 @@ class GreenHelper
 				
 			//SERVICE---------------------------------------------------------------
 			$serviceName = '';
+			$serviceNote = '';
 			if(count($budgetItems)>0)
 			{
 				$serviceName = 'General';
@@ -1885,11 +1889,15 @@ class GreenHelper
 				{
 					$serviceName = $budgetItemService->service->description;
 					$serviceDesc = $budgetItemService->service->long_description;
-						
+					$serviceNote = $budgetItemService->service->note;
+					
 					$projectServiceDB = ProjectService::model()->findByAttributes(array('Id_project'=>$budgetItemService->budget->Id_project,
 							'Id_service'=>$budgetItemService->Id_service));
 					if(isset($projectServiceDB))
+					{
 						$serviceDesc = $projectServiceDB->long_description;
+						$serviceNote = $projectServiceDB->note;
+					}
 				}
 		
 				$serviceContentHeader = '
@@ -1902,13 +1910,23 @@ class GreenHelper
 			//END SERVICE---------------------------------------------------------------
 			
 			//ITEMS---------------------------------------------------------------
-			$serviceContentBody = '<div class="budgetSubtitle">EQUIPOS</div>
-					<table class="table tableReadOnly">
-									<tbody>';
+			$serviceContentBodyItem = '<div class="budgetSubtitle">EQUIPOS</div>
+										<table class="table tableReadOnly">
+											<tbody>';
+			$serviceContentBodyAccessory = '<div class="budgetSubtitle">ACCESORIOS</div>
+												<table class="table tableReadOnly">
+													<tbody>';
+			
+			$hasItems = false;
+			$hasAccessory = false;
 			$serviceTotalPrice = 0;
+			$totalItemPrice = 0;
+			$totalAccessoryPrice = 0;
+			$totalProgramationHs = 0;
+			$totalInstalationHs = 0;
+			
 			foreach($budgetItems as $budgetItem)
 			{
-				$prodHeader = $budgetItem->product->brand->description .' '. $budgetItem->product->model;
 				
 				$criteria = new CDbCriteria();
 				$criteria->join = 'inner join product_multimedia pm on (pm.Id_multimedia = t.Id)';
@@ -1929,110 +1947,171 @@ class GreenHelper
 						$img = '<img class="imgTD" src="'.$imagePath.'"/>';					
 				}
 				
-				
-				$serviceContentBody = $serviceContentBody . '<tr>';
-				$serviceContentBody = $serviceContentBody . '<td><div class="bold">'.$budgetItem->product->description_customer.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120" class="descContainer">'.$img.'</td><td width="610">'.$budgetItem->product->long_description.'</td></tr></tbody></table>';
-				
-				
-				if($budgetItem->getDiscountCurrencyConverted() > 0)
+				if($budgetItem->product->is_accessory == 0)
 				{
-					$serviceContentBody = $serviceContentBody . '<table width="100%" class="tablaLimpia2 conDesc">
-						<tbody><tr>
-						<td class="align-left" width="91">Cantidad:</td>
-						<td class="align-left" width="91">'.$budgetItem->quantity.'</td>
-						<td class="align-left" width="91">Precio Unitario:</td>
-						<td class="align-left" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
-						<td class="align-left" width="91">Descuento:</td>
-						<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()).'</td>
-						<td class="align-right" width="91">Total:</td>
-						<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
-						</tr></tbody></table>';
+					$hasItems = true;					
+					$serviceContentBodyItem = $serviceContentBodyItem . '<tr>';
+					$serviceContentBodyItem = $serviceContentBodyItem . '<td><div class="bold">'.$budgetItem->product->description_customer.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120" class="descContainer">'.$img.'</td><td width="610">'.$budgetItem->product->long_description.'</td></tr></tbody></table>';
+					
+					
+					if($budgetItem->getDiscountCurrencyConverted() > 0)
+					{
+						$serviceContentBodyItem = $serviceContentBodyItem . '<table width="100%" class="tablaLimpia2 conDesc">
+							<tbody><tr>
+							<td class="align-left" width="91">Cantidad:</td>
+							<td class="align-left" width="91">'.$budgetItem->quantity.'</td>
+							<td class="align-left" width="91">Precio Unitario:</td>
+							<td class="align-left" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
+							<td class="align-left" width="91">Descuento:</td>
+							<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()).'</td>
+							<td class="align-right" width="91">Total:</td>
+							<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
+							</tr></tbody></table>';
+					}
+					else 
+					{
+						$serviceContentBodyItem = $serviceContentBodyItem . '<table width="100%" class="tablaLimpia2 sinDesc">
+							<tbody><tr>
+							<td class="align-left" width="121">Cantidad:</td>
+							<td class="align-left" width="121">'.$budgetItem->quantity.'</td>
+							<td class="align-left" width="121">Precio Unitario:</td>
+							<td class="align-left" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
+							<td class="align-right" width="121">Precio Final:</td>
+							<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
+							</tr></tbody></table>';
+					}
+					
+					$serviceContentBodyItem = $serviceContentBodyItem . '</td>';
+					$serviceContentBodyItem = $serviceContentBodyItem . '</tr>';
+
+					$totalItemPrice = $totalItemPrice + $budgetItem->getTotalPriceWOChildernCurrencyConverted();
 				}
 				else 
 				{
-					$serviceContentBody = $serviceContentBody . '<table width="100%" class="tablaLimpia2 sinDesc">
-						<tbody><tr>
-						<td class="align-left" width="121">Cantidad:</td>
-						<td class="align-left" width="121">'.$budgetItem->quantity.'</td>
-						<td class="align-left" width="121">Precio Unitario:</td>
-						<td class="align-left" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
-						<td class="align-right" width="121">Precio Final:</td>
-						<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
-						</tr></tbody></table>';
+					$hasAccessory = true;
+					
+					$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<tr>';
+					$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<td><div class="bold">'.$budgetItem->product->description_customer.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120" class="descContainer">'.$img.'</td><td width="610">'.$budgetItem->product->long_description.'</td></tr></tbody></table>';
+						
+						
+					if($budgetItem->getDiscountCurrencyConverted() > 0)
+					{
+						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<table width="100%" class="tablaLimpia2 conDesc">
+							<tbody><tr>
+							<td class="align-left" width="91">Cantidad:</td>
+							<td class="align-left" width="91">'.$budgetItem->quantity.'</td>
+							<td class="align-left" width="91">Precio Unitario:</td>
+							<td class="align-left" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
+							<td class="align-left" width="91">Descuento:</td>
+							<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()).'</td>
+							<td class="align-right" width="91">Total:</td>
+							<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
+							</tr></tbody></table>';
+					}
+					else
+					{
+						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<table width="100%" class="tablaLimpia2 sinDesc">
+							<tbody><tr>
+							<td class="align-left" width="121">Cantidad:</td>
+							<td class="align-left" width="121">'.$budgetItem->quantity.'</td>
+							<td class="align-left" width="121">Precio Unitario:</td>
+							<td class="align-left" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
+							<td class="align-right" width="121">Precio Final:</td>
+							<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
+							</tr></tbody></table>';
+					}
+						
+					$serviceContentBodyAccessory = $serviceContentBodyAccessory . '</td>';
+					$serviceContentBodyAccessory = $serviceContentBodyAccessory . '</tr>';
+					
+					$totalAccessoryPrice = $totalAccessoryPrice + $budgetItem->getTotalPriceWOChildernCurrencyConverted();
 				}
 				
-				$serviceContentBody = $serviceContentBody . '</td>';
-				$serviceContentBody = $serviceContentBody . '</tr>';
+				$totalProgramationHs = $totalProgramationHs + $budgetItem->time_programation;
+				$totalInstalationHs = $totalInstalationHs  + $budgetItem->time_instalation;
 				
 				$serviceTotalPrice = $serviceTotalPrice + $budgetItem->getTotalPriceWOChildernCurrencyConverted();
 			}
-			$serviceContentBody = $serviceContentBody . '</tbody></table>
-					
-								<table class="table tableReadOnly tablaDatos">
-					<tbody>
-										
-										<tr>
-										<td class="bold lastRow">TOTAL</td>
-										<td class="align-right bold lastRow">USD 1350</td>
-										</tr></tbody>
-										</table>
-					<div class="budgetSubtitle">Instalaci&oacute;n y Programaci&oacute;n</div>
-						<table class="table tableReadOnly tablaDatos">
-					<thead>
-					<tr>
-					<th width="50%">Descripci&oacute;n</th>
-					<th class="align-right" width="50%">Valor</th>
-					</tr>
-					</thead>
-					<tbody>
-										<tr>
-										<td>Programaci&oacute;n</td>
-										<td class="align-right bold">USD 100</td>
-										</tr>
-										<tr>
-										<td>Instalaci&oacute;n</td>
-										<td class="align-right bold">USD 5000</td>
-										</tr>
-										<tr>
-										<td class="bold lastRow">TOTAL</td>
-										<td class="align-right bold lastRow">USD 350</td>
-										</tr>
-					</tbody>
-										</table>
-							<div class="budgetSubtitle superTotal">TOTAL &bull; '.$serviceName.'</div>
-						<table class="table tableReadOnly tablaDatos">
-					<thead>
-					<tr>
-					<th width="50%">Descripci&oacute;n</th>
-					<th class="align-right" width="50%">Valor</th>
-					</tr>
-					</thead>
-					<tbody>
-										<tr>
-										<td>Equipos</td>
-										<td class="align-right bold">USD 10.0000</td>
-										</tr>
-										<tr>
-										<td>Accesorios</td>
-										<td class="align-right bold">USD 200</td>
-										</tr>
-										<tr>
-										<td>Instalaci&oacute;n y Programaci&oacute;n</td>
-										<td class="align-right bold">USD 350</td>
-										</tr>
-										<tr>
-										<td class="bold lastRow">TOTAL</td>
-										<td class="align-right bold lastRow">USD 10.55050</td>
-										</tr>
-					</tbody>
-										</table>
-					<div class="budgetNota">NOTA: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis hendrerit, nisl vitae scelerisque tempus, 
-									dolor lorem pharetra est, ut condimentum metus arcu eget lectus. 
-									Quisque aliquet, velit sed tempor suscipit, ipsum nibh malesuada lectus, 
-									in scelerisque mi massa eu quam. Nam non tempus mi.</div>
-					</div><! -- cierre page break -->
-					';
+			$serviceContentBodyItem = $serviceContentBodyItem . '</tbody></table>
+										<table class="table tableReadOnly tablaDatos">
+											<tbody>										
+												<tr>
+													<td class="bold lastRow">TOTAL</td>
+													<td class="align-right bold lastRow">'.$currency . ' ' . self::showPrice($totalItemPrice).'</td>
+												</tr>
+											</tbody>
+										</table>';
+			$serviceContentBodyAccessory = $serviceContentBodyAccessory . '</tbody></table>
+										<table class="table tableReadOnly tablaDatos">
+											<tbody>
+												<tr>
+													<td class="bold lastRow">TOTAL</td>
+													<td class="align-right bold lastRow">'.$currency . ' ' . self::showPrice($totalAccessoryPrice).'</td>
+												</tr>
+											</tbody>
+										</table>';
 			
+			$serviceContentBodyTotal = '<div class="budgetSubtitle">Instalaci&oacute;n y Programaci&oacute;n</div>
+											<table class="table tableReadOnly tablaDatos">
+												<thead>
+													<tr>
+														<th width="50%">Descripci&oacute;n</th>
+														<th class="align-right" width="50%">Valor</th>
+													</tr>
+												</thead>
+											<tbody>
+												<tr>
+													<td>Programaci&oacute;n</td>
+													<td class="align-right bold">USD '.$totalProgramationHs.'</td>
+												</tr>
+												<tr>
+													<td>Instalaci&oacute;n</td>
+													<td class="align-right bold">USD '.$totalInstalationHs.'</td>
+												</tr>
+												<tr>
+													<td class="bold lastRow">TOTAL</td>
+													<td class="align-right bold lastRow">USD 350</td>
+												</tr>
+											</tbody>
+										</table>
+										<div class="budgetSubtitle superTotal">TOTAL &bull; '.$serviceName.'</div>
+											<table class="table tableReadOnly tablaDatos">
+												<thead>
+													<tr>
+														<th width="50%">Descripci&oacute;n</th>
+														<th class="align-right" width="50%">Valor</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Equipos</td>
+														<td class="align-right bold">'.$currency . ' ' . self::showPrice($totalItemPrice).'</td>
+													</tr>
+													<tr>
+														<td>Accesorios</td>
+														<td class="align-right bold">'.$currency . ' ' . self::showPrice($totalAccessoryPrice).'</td>
+													</tr>
+													<tr>
+														<td>Instalaci&oacute;n y Programaci&oacute;n</td>
+														<td class="align-right bold">USD 350</td>
+													</tr>
+													<tr>
+														<td class="bold lastRow">TOTAL</td>
+														<td class="align-right bold lastRow">USD 10.55050</td>
+													</tr>
+												</tbody>
+											</table>
+										<div class="budgetNota">NOTA: '.$serviceNote.'</div>
+									</div><! -- cierre page break -->
+									';
+			
+			if(!$hasItems)
+				$serviceContentBodyItem = '';
+			
+ 			if(!$hasAccessory)
+ 				$serviceContentBodyAccessory = '';
+			
+			$serviceContentBody = $serviceContentBodyItem . $serviceContentBodyAccessory . $serviceContentBodyTotal;
 			$serviceContent = $serviceContent . $serviceContentHeader . $serviceContentBody;
 			
 			$arrayServiceTotal[] = array('serviceName'=>$serviceName, 'total'=>$serviceTotalPrice);
@@ -2253,7 +2332,7 @@ class GreenHelper
 				</div>
 				';
 		
-		$content= $caratula.$content.$resumen.$clausulas;
-		return $content;
+		$contenta= $caratula.$content.$resumen.$clausulas;
+		return $contenta;
 	}
 }
