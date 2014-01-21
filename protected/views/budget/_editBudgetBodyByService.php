@@ -167,6 +167,77 @@ $this->widget('zii.widgets.grid.CGridView', array(
   
 
 <script type="text/javascript">
+function downItemToBottom(id,grid)
+{
+	statusStartSaving();
+	
+	alert("downItemToBottom: "+id);
+	$.post(
+			'<?php echo BudgetController::createUrl('area/AjaxDownBudgetItem')?>',
+			 {
+			 	id: id,
+			 },'json').success(
+				function(data)				 
+				{ 
+					statusSaved();
+					$.fn.yiiGridView.update(grid);											
+				}
+			).error(function(){statusSavedError();});			
+}
+    
+function downItem(id,grid)
+{
+	statusStartSaving();
+	
+	alert("downItem: "+id);
+	$.post(
+			'<?php echo BudgetController::createUrl('area/AjaxDownBudgetItem')?>',
+			 {
+			 	id: id,
+			 },'json').success(
+				function(data)				 
+				{ 
+					statusSaved();
+					$.fn.yiiGridView.update(grid);											
+				}
+			).error(function(){statusSavedError();});			
+}
+function upItemToAbove(id,grid)
+{
+	statusStartSaving();
+	
+	alert("upItemToAbove: "+id);
+	$.post(
+			'<?php echo BudgetController::createUrl('area/AjaxDownBudgetItem')?>',
+			 {
+			 	id: id,
+			 },'json').success(
+				function(data)				 
+				{ 
+					statusSaved();
+					$.fn.yiiGridView.update(grid);											
+				}
+			).error(function(){statusSavedError();});			
+}
+    
+function upItem(id,grid)
+{
+	statusStartSaving();
+	
+	alert("upItem: "+id);
+	$.post(
+			'<?php echo BudgetController::createUrl('area/AjaxDownBudgetItem')?>',
+			 {
+			 	id: id,
+			 },'json').success(
+				function(data)				 
+				{ 
+					statusSaved();
+					$.fn.yiiGridView.update(grid);											
+				}
+			).error(function(){statusSavedError();});			
+}
+
 function editAreaProject(idAreaProject)
 {
 	$.post(

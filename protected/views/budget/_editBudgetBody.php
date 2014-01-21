@@ -1,6 +1,13 @@
 <?php 
 $settings = new Settings();
 ?>
+    <?php echo $this->renderPartial('_tabEditBudgetExtras',array(
+						'model'=>$model,
+						'modelProduct'=>$modelProduct,
+						'modelBudgetItem'=>$modelBudgetItem,
+						'priceListItemSale'=>$priceListItemSale,
+						'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,));
+    ?>
 
    <div class="row contenedorPresu">
     <div class="col-sm-12">
@@ -65,7 +72,7 @@ $settings = new Settings();
    </div>
     </div>
     </div>
-    <?php echo $this->renderPartial('_tabEditBudgetExtras',array(
+    <?php echo $this->renderPartial('_tabEditBudgetTotals',array(
 						'model'=>$model,
 						'modelProduct'=>$modelProduct,
 						'modelBudgetItem'=>$modelBudgetItem,
@@ -316,4 +323,95 @@ $("#addAreaToProject").click(function()
 				}
 			).error(function(){});		
 })
+
+function removeBudgetItem(id)
+ {
+	 if(confirm("¿Seguro desea eliminar este ítem?"))
+	 {
+		 
+	 	$.post(
+	 			'<?php echo BudgetController::createUrl('budget/AjaxRemoveBudgetItem')?>',
+	 			 {
+	 			 	id: id,
+	 			 },'json').success(
+	 				function(data) 
+	 				{ 
+						$.fn.yiiGridView.update('budget-item-generic');		 		
+	 				}
+	 			).error(function(){});
+	 }			
+		 
+ }
+ function addExtraItem(idBudget,versionNumber)
+ {
+ 	$.post(
+ 			'<?php echo BudgetController::createUrl('budget/AjaxShowCreateModalBudgetItem')?>',
+ 			 {
+ 			 	id: idBudget,
+ 			 	version_number: versionNumber,
+ 	 			field_caller:'budget-item-generic'
+ 			 },'json').success(
+ 				function(data) 
+ 				{ 
+ 					if(data!='')
+ 					{
+ 						$('#modalPlaceHolder').html(data);
+ 						$('#modalPlaceHolder').modal('show');					
+ 					}
+ 				}
+ 			).error(function(){});			
+ }
+  
+ function editProjectService(idProject,idService)
+ {
+ 	$.post(
+ 			'<?php echo BudgetController::createUrl('project/AjaxShowUpdateModalProjectService')?>',
+ 			 {
+ 			 	Id_project: idProject,
+ 			 	Id_service: idService,
+ 			 	field_caller:'project-service-grid'
+ 			 },'json').success(
+ 				function(data) 
+ 				{ 
+ 					if(data!='')
+ 					{
+ 						$('#modalPlaceHolder').html(data);
+ 						$('#modalPlaceHolder').modal('show');					
+ 					}
+ 				}
+ 			).error(function(){});			
+ }
+
+ function editProjectServiceNote(idProject,idService)
+ {
+ 	$.post(
+ 			'<?php echo BudgetController::createUrl('project/AjaxShowUpdateModalProjectServiceNote')?>',
+ 			 {
+ 			 	Id_project: idProject,
+ 			 	Id_service: idService,
+ 			 	field_caller:'project-service-note-grid'
+ 			 },'json').success(
+ 				function(data) 
+ 				{ 
+ 					if(data!='')
+ 					{
+ 						$('#modalPlaceHolder').html(data);
+ 						$('#modalPlaceHolder').modal('show');					
+ 					}
+ 				}
+ 			).error(function(){});			
+ }
+ 
+ $("#tabServices").click(function()
+ {
+	 $("#addExtraItem").hide();
+ });
+ $("#tabServicesNote").click(function()
+ {
+	 $("#addExtraItem").hide();
+ });
+ $("#tabExtraItems").click(function()
+ {
+	 $("#addExtraItem").show();
+ });
 </script>
