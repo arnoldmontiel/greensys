@@ -1976,7 +1976,7 @@ class GreenHelper
 										<td class="align-right bold lastRow">USD 1350</td>
 										</tr></tbody>
 										</table>
-					<div class="budgetSubtitle">Extras '.$serviceName.'</div>
+					<div class="budgetSubtitle">Instalaci&oacute;n y Programaci&oacute;n</div>
 						<table class="table tableReadOnly tablaDatos">
 					<thead>
 					<tr>
@@ -1986,16 +1986,12 @@ class GreenHelper
 					</thead>
 					<tbody>
 										<tr>
-										<td>Horas de Programacion (2.00 x USD 50)</td>
+										<td>Programaci&oacute;n</td>
 										<td class="align-right bold">USD 100</td>
 										</tr>
 										<tr>
-										<td>Mano de Obra</td>
-										<td class="align-right bold">USD 200</td>
-										</tr>
-										<tr>
-										<td>Flete</td>
-										<td class="align-right bold">USD 50</td>
+										<td>Instalaci&oacute;n</td>
+										<td class="align-right bold">USD 5000</td>
 										</tr>
 										<tr>
 										<td class="bold lastRow">TOTAL</td>
@@ -2003,7 +1999,7 @@ class GreenHelper
 										</tr>
 					</tbody>
 										</table>
-							<div class="budgetSubtitle superTotal">TOTAL '.$serviceName.'</div>
+							<div class="budgetSubtitle superTotal">TOTAL &bull; '.$serviceName.'</div>
 						<table class="table tableReadOnly tablaDatos">
 					<thead>
 					<tr>
@@ -2021,12 +2017,12 @@ class GreenHelper
 										<td class="align-right bold">USD 200</td>
 										</tr>
 										<tr>
-										<td>Extras</td>
+										<td>Instalaci&oacute;n y Programaci&oacute;n</td>
 										<td class="align-right bold">USD 350</td>
 										</tr>
 										<tr>
 										<td class="bold lastRow">TOTAL</td>
-										<td class="align-right bold lastRow">USD 15.55050</td>
+										<td class="align-right bold lastRow">USD 10.55050</td>
 										</tr>
 					</tbody>
 										</table>
@@ -2125,17 +2121,6 @@ class GreenHelper
 		</div>
 											</div>';
 		
-		$nada ='
-						<div class="row">
-							<div class="col-sm-12">
-								<div class="budgetSubtitle">Resumen de propuesta</div>
-								<table class="table">
-        							<tbody>
-									'.$serviceSummaryContent.'
-						        	</tbody>
-						      	</table>	
-							</div>
-						</div>';
 		$content = '<div class="container" id="screenReadOnly">
 				
 						<div class="row budgetCabecera budgetBloque">
@@ -2189,7 +2174,7 @@ class GreenHelper
 								<table class="table tableReadOnly">
         							<tbody>
 									'.$serviceSummaryContent.'
-									<tr><td class="bold lastRow">TOTAL</td><td class="align-right bold lastRow">USD 15.55050</td></tr>
+									<tr><td class="bold lastRow">TOTAL</td><td class="align-right bold lastRow">USD 10.000</td></tr>
 						        	</tbody>
 						      	</table>
 											</div>
@@ -2198,25 +2183,6 @@ class GreenHelper
 											
 			<div class="row budgetBloque">
 							<div class="col-sm-12">
-								<div class="budgetSubtitle">Extras</div>
-										<table class="table tableReadOnly tablaDatos">
-											<thead>
-												<tr>
-													<th class="align-left">Descripci&oacute;n</th>
-													<th class="align-right">Cantidad</th>
-													<th class="align-right">Precio</th>
-													<th class="align-right">Descuento</th>
-													<th class="align-right">Valor</th>
-												</tr>
-											</thead>
-									        <tbody>
-									          '.$extraContent.'
-												<tr><td class="bold lastRow" colspan="3">TOTAL</td><td colspan="2" class="align-right bold lastRow">USD 15.55050</td></tr>
-									        </tbody>
-     	 								</table>
-									</div>
-									          		</div>
-
 								<div class="row budgetCabecera">
 									<div class="col-sm-12">
 									          		<div class="budgetSubtitle superTotal">Total</div>
@@ -2244,7 +2210,7 @@ class GreenHelper
 											
 											</div><!-- CIERRE CONTAINER -->
 											';
-		$clausulas = '<div  style="page-break-after: always;">
+		$clausulas = '<div  style="page-break-before: always;">
 				<div class="budgetTitle">Cl&aacute;usulas del Contrato</div>
 				<div class="budgetDesc">Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.
 				</div>
