@@ -8,7 +8,7 @@ $settings = new Settings();
   <div class="col-sm-6"></div>
   <div class="col-sm-6">
   <div class="tituloFinalPresu">Total</div>
-  <button type="button" class="btn btn-primary btn-sm agregarImp" data-toggle="modal" data-target="#myModalAgregarImp"><i class="fa fa-plus"></i> Agregar Impuesto</button>
+ <!-- <button type="button" class="btn btn-primary btn-sm agregarImp" data-toggle="modal" data-target="#myModalAgregarImp"><i class="fa fa-plus"></i> Agregar Impuesto</button> --> 
 <table class="table table-striped tablePresuTotal">
         <tbody>
           <tr>

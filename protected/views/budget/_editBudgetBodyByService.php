@@ -75,7 +75,7 @@ $settings = new Settings();
   
   <div class="row contenedorPresu">
     <div class="col-sm-12">
-<div class="tituloFinalPresu">Recargos</div>
+<div class="tituloFinalPresu">Adicionales</div>
 
 
 

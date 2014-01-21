@@ -29,6 +29,12 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 							'type'=>'raw'
 					),
 					array(
+							'name'=>'Accesorio',
+							'value'=>
+							'"<label><input type=\"checkbox\"> S&iacute;</label>"',
+							'type'=>'raw',
+					),
+					array(
 							'name'=>'quantity',
 							'value'=>'CHtml::textField("quantity",$data->quantity,array("class"=>"form-control inputSmall align-right","onchange"=>"changeQuantity(".$data->Id.",this)"))',
 							'type'=>'raw',
