@@ -13,7 +13,7 @@
         <tbody>
             <tr>
                 <td width="30%" class="bold">Descripci&oacute;n</td>
-                <td><span id="header-budget-state"><?php echo $model->description;?></span></td>
+                <td><span id="header-budget-description"><?php echo $model->description;?></span></td>
             </tr>
             <tr>
                 <td width="30%" class="bold">Estado</td>
