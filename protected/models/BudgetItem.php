@@ -450,6 +450,7 @@ class BudgetItem extends ModelAudit
 		
 		// Create a custom sort
 		$sort=new CSort;
+		$sort->defaultOrder="order_by_service";
 		$sort->attributes=array(
 											      'product_code' => array(
 											        'asc' => 'p.code',
@@ -555,6 +556,7 @@ class BudgetItem extends ModelAudit
 	
 		// Create a custom sort
 		$sort=new CSort;
+		$sort->defaultOrder="order_by_service";		
 		$sort->attributes=array(
 				'product_code' => array(
 						'asc' => 'p.code',
