@@ -49,6 +49,34 @@ class BudgetItem extends ModelAudit
 	public $children_count;
 	public $children_included;
 	public $stock;	
+	public function beforeSave()
+	{
+		$criteria = new CDbCriteria();
+		if(isset($this->Id_product))
+		{
+			$criteria->addCondition('Id_product is not null');
+			if(isset($this->Id_service))
+			{
+				$criteria->addCondition('Id_service ='.$this->Id_service);
+			}
+			else
+			{
+				$criteria->addCondition('Id_service is null');
+			
+			}
+			$criteria->order="order_by_service DESC";
+			$budgetItem = BudgetItem::model()->find($criteria);
+			if(isset($budgetItem))
+			{
+				$this->order_by_service = $budgetItem->order_by_service + 1;
+			}
+			else
+			{
+				$this->order_by_service = 1;
+			}				
+		}
+		return parent::beforeSave();
+	}
 	public function afterSave()
 	{
 		if($this->description == "Horas de programación"||$this->description == "Horas de instalación")

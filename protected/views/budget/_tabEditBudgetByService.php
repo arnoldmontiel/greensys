@@ -36,12 +36,12 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 							return '<div class="buttonsTableOrder">
 										<button type="button" class="btn btn-primary btn-xs" onclick="downItem('.$data->Id.',\'budget-item-grid_'.$idService.'\')">
 											<i class="fa fa-angle-down fa-lg"></i></i>
-										</button><button type="button" class="btn btn-primary btn-xs noMargin" >
+										</button><button type="button" class="btn btn-primary btn-xs noMargin" onclick="upItem('.$data->Id.',\'budget-item-grid_'.$idService.'\')">
 											<i class="fa fa-angle-up fa-lg"></i></i>
 										</button><br/>
-										<button type="button" class="btn btn-default btn-xs" >
+										<button type="button" class="btn btn-default btn-xs" onclick="downItemToBottom('.$data->Id.',\'budget-item-grid_'.$idService.'\')">
 											<i class="fa fa-angle-double-down fa-lg"></i></i>
-										</button><button type="button" class="btn btn-default btn-xs noMargin" >
+										</button><button type="button" class="btn btn-default btn-xs noMargin" onclick="upItemToAbove('.$data->Id.',\'budget-item-grid_'.$idService.'\')">
 											<i class="fa fa-angle-double-up fa-lg"></i></i></button>
 									</div>';						
 						},
