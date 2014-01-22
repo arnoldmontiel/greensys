@@ -32,7 +32,8 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 		'columns'=>array(
 				array(
 						'header'=>'Orden',
-						'value'=>function($data,$idService){
+						'value'=>function($data,$index){
+							$idService = isset($data->Id_service)?$data->Id_service:"0";
 							return '<div class="buttonsTableOrder">
 										<button type="button" class="btn btn-primary btn-xs" onclick="downItem('.$data->Id.',\'budget-item-grid_'.$idService.'\')">
 											<i class="fa fa-angle-down fa-lg"></i></i>

@@ -218,7 +218,7 @@ function downItemToBottom(id,grid)
 	
 	alert("downItemToBottom: "+id);
 	$.post(
-			'<?php echo BudgetController::createUrl('area/AjaxDownBudgetItem')?>',
+			'<?php echo BudgetController::createUrl('AjaxDownBudgetItem')?>',
 			 {
 			 	id: id,
 			 },'json').success(
@@ -234,9 +234,8 @@ function downItem(id,grid)
 {
 	statusStartSaving();
 	
-	alert("downItem: "+id);
 	$.post(
-			'<?php echo BudgetController::createUrl('area/AjaxDownBudgetItem')?>',
+			'<?php echo BudgetController::createUrl('AjaxDownBudgetItem')?>',
 			 {
 			 	id: id,
 			 },'json').success(
@@ -253,7 +252,7 @@ function upItemToAbove(id,grid)
 	
 	alert("upItemToAbove: "+id);
 	$.post(
-			'<?php echo BudgetController::createUrl('area/AjaxDownBudgetItem')?>',
+			'<?php echo BudgetController::createUrl('AjaxDownBudgetItem')?>',
 			 {
 			 	id: id,
 			 },'json').success(
@@ -268,10 +267,8 @@ function upItemToAbove(id,grid)
 function upItem(id,grid)
 {
 	statusStartSaving();
-	
-	alert("upItem: "+id);
 	$.post(
-			'<?php echo BudgetController::createUrl('area/AjaxDownBudgetItem')?>',
+			'<?php echo BudgetController::createUrl('AjaxUpBudgetItem')?>',
 			 {
 			 	id: id,
 			 },'json').success(

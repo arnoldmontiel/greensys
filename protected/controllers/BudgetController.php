@@ -1384,12 +1384,85 @@ class BudgetController extends GController
 			$modelBudgetItem = BudgetItem::model()->findByPk($_POST['id']);
 			if(isset($modelBudgetItem->order_by_service))
 			{
-				
+				$criteria = new CDbCriteria();
+				if(isset($modelBudgetItem->Id_product))
+				{
+					$criteria->addCondition('Id_product is not null');
+					if(isset($modelBudgetItem->Id_service))
+					{
+						$criteria->addCondition('Id_service ='.$modelBudgetItem->Id_service);
+					}
+					else
+					{
+						$criteria->addCondition('Id_service is null');
+							
+					}
+					$criteria->addCondition('order_by_service > '.$modelBudgetItem->order_by_service);
+					$criteria->order="order_by_service ASC";
+					$budgetItem = BudgetItem::model()->find($criteria);
+					if(isset($budgetItem))
+					{
+						$transaction = $modelBudgetItem->dbConnection->beginTransaction();
+						try {
+							$orderAux=$budgetItem->order_by_service;
+							$budgetItem->order_by_service = $modelBudgetItem->order_by_service;
+							$modelBudgetItem->order_by_service = $orderAux;
+							$modelBudgetItem->save();
+							$budgetItem->save();
+							$transaction->commit();
+						} catch (Exception $e) {
+							$transaction->rollback();
+						}
+					}
+				}
 			}
 			
 		}
-		
 	}
+	public function actionAjaxUpBudgetItem()
+	{
+		if(isset($_POST['id']))
+		{
+			$modelBudgetItem = BudgetItem::model()->findByPk($_POST['id']);
+			if(isset($modelBudgetItem->order_by_service))
+			{
+				$criteria = new CDbCriteria();
+				if(isset($modelBudgetItem->Id_product))
+				{
+					$criteria->addCondition('Id_product is not null');
+					if(isset($modelBudgetItem->Id_service))
+					{
+						$criteria->addCondition('Id_service ='.$modelBudgetItem->Id_service);
+					}
+					else
+					{
+						$criteria->addCondition('Id_service is null');
+							
+					}
+					$criteria->addCondition('order_by_service < '.$modelBudgetItem->order_by_service);
+					$criteria->order="order_by_service DESC";
+					$budgetItem = BudgetItem::model()->find($criteria);
+					if(isset($budgetItem))
+					{
+						$transaction = $modelBudgetItem->dbConnection->beginTransaction();
+						try {
+							$orderAux=$budgetItem->order_by_service;
+							$budgetItem->order_by_service = $modelBudgetItem->order_by_service;
+							$modelBudgetItem->order_by_service = $orderAux;
+							$modelBudgetItem->save();
+							$budgetItem->save();
+							$transaction->commit();
+						} catch (Exception $e) {
+							$transaction->rollback();
+						}
+					}
+				}
+			}
+				
+		}
+	
+	}
+	
 	public function actionAjaxAddBudgetItem()
 	{
 		$idPriceList = isset($_POST['IdPriceList'])?$_POST['IdPriceList']:'';
