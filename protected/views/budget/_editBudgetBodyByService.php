@@ -250,7 +250,7 @@ function upItemToAbove(id,grid)
 	statusStartSaving();
 	
 	$.post(
-			'<?php echo BudgetController::createUrl('AjaxDownBudgetItem')?>',
+			'<?php echo BudgetController::createUrl('AjaxUpToAboveBudgetItem')?>',
 			 {
 			 	id: id,
 			 },'json').success(
