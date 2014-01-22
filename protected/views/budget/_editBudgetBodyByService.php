@@ -9,10 +9,10 @@ $settings = new Settings();
 						'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,));
     ?>
 
-   <div class="row contenedorPresu noBorder">
+	<section id="PRODUCTS"></section>    
+    <div class="row contenedorPresu noBorder">
     <div class="col-sm-12">
       <div class="tituloFinalPresu">Equipos por Servicio</div>
-    
       <ul class="nav nav-tabs">
         <?php 
         $first = true;

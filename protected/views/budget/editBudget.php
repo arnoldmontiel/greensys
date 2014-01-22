@@ -149,13 +149,13 @@ function addProduct(id,version)
 
 function editBudget(id,version)
 {
-	var params = "&id="+id+"&version="+version;
+	var params = "&id="+id+"&version="+version+"#PRODUCTS";;
 	window.location = "<?php echo BudgetController::createUrl("addItem")?>" + params; 
 	return false;
 }
 function editBudgetByService(id,version)
 {
-	var params = "&id="+id+"&version="+version+"&byService=true";
+	var params = "&id="+id+"&version="+version+"&byService=true#PRODUCTS";
 	window.location = "<?php echo BudgetController::createUrl("addItem")?>" + params; 
 	return false;
 }

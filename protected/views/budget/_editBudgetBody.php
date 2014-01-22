@@ -8,8 +8,8 @@ $settings = new Settings();
 						'priceListItemSale'=>$priceListItemSale,
 						'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,));
     ?>
-
-   <div class="row contenedorPresu">
+	<section id="PRODUCTS"></section>        
+	<div class="row contenedorPresu">
     <div class="col-sm-12">
       <div class="tituloFinalPresu">Equipos por &Aacute;rea</div>
     
