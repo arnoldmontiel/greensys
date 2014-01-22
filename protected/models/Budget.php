@@ -78,6 +78,34 @@ class Budget extends ModelAudit
 		return true;
 	}
 	
+	public function afterSave()
+	{ 
+		if($this->isNewRecord)
+		{
+			
+			$modelServices = Service::model()->findAll();
+			foreach($modelServices as $modelService)
+			{
+				$modelBudgetItem = new BudgetItem();
+				$modelBudgetItem->version_number = $this->version_number;
+				$modelBudgetItem->Id_budget = $this->Id;
+				$modelBudgetItem->Id_service = $modelService->Id;
+				$modelBudgetItem->description = 'Programación';
+				$modelBudgetItem->save();
+				
+				$modelBudgetItem = new BudgetItem();
+				$modelBudgetItem->version_number = $this->version_number;
+				$modelBudgetItem->Id_budget = $this->Id;
+				$modelBudgetItem->Id_service = $modelService->Id;
+				$modelBudgetItem->description = 'Instalación';
+				$modelBudgetItem->save();
+			}
+			
+			
+		}
+		return parent::afterSave();
+	}
+	
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
