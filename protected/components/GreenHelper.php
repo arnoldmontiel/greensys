@@ -1844,7 +1844,6 @@ class GreenHelper
 		$serviceSummaryContentBodyNoPrice = "";
 		
 		$extraContent = "";
-		$extraContentBody = "";
 		
 		$arrayServiceTotal = array();
 		
@@ -2159,36 +2158,9 @@ class GreenHelper
 			
 		}
 		
-		//EXTRAS---------------------------------------------------------------
-		$criteria = new CDbCriteria();
-		$criteria->addCondition('Id_budget = '.$idBudget);
-		$criteria->addCondition('version_number = '.$versionNumber);
-		$criteria->addCondition('Id_service is null');
-		$criteria->addCondition('Id_product is null');
-			
-		$budgetItems = BudgetItem::model()->findAll($criteria);
-	
-		if(count($budgetItems)>0)
-		{
-			//BODY EXTRAS---------------------------------------------------------------
-			foreach($budgetItems as $budgetItem)
-			{
-				$extraContentBody = '<tr>';
-				$extraContentBody = $extraContentBody . '<td>'.$budgetItem->description.'</td>';
-				$extraContentBody = $extraContentBody . '<td class="budgetMono align-right">'.$budgetItem->quantity.'</td>';
-				$extraContentBody = $extraContentBody . '<td class="budgetMono align-right">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>';
-				$extraContentBody = $extraContentBody . '<td class="budgetMono align-right">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()).'</td>';
-				$extraContentBody = $extraContentBody . '<td class="align-right budgetMono">';
-				$extraContentBody = $extraContentBody . '<div class="label-small">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</div></td>';
-				$extraContentBody = $extraContentBody . '</tr>';		
-
-				$extraContent = $extraContent. $extraContentBody; 
-			}
-			//END BODY EXTRAS---------------------------------------------------------------
-		}
-		//END EXTRAS---------------------------------------------------------------
 		
 		//END SERVICE SUMMARY---------------------------------------------------------------
+		$totalServices = 0;
 		foreach($arrayServiceTotal as $currentService)
 		{
 			if($currentService['total'] > 0)
@@ -2206,6 +2178,8 @@ class GreenHelper
 				$serviceSummaryContentBodyNoPrice = $serviceSummaryContentBodyNoPrice . '</tr>';
 				
 				$serviceSummaryContentNoPrice = $serviceSummaryContentNoPrice . $serviceSummaryContentBodyNoPrice;
+				
+				$totalServices = $totalServices + $currentService['total'];
 			}
 		}
 		//END SERVICE SUMMARY---------------------------------------------------------------
@@ -2293,7 +2267,7 @@ class GreenHelper
 								<table class="table tableReadOnly">
         							<tbody>
 									'.$serviceSummaryContent.'
-									<tr><td class="bold lastRow">TOTAL</td><td class="align-right bold lastRow">USD 10.000</td></tr>
+									<tr><td class="bold lastRow">TOTAL</td><td class="align-right bold lastRow">'.$currency . ' ' . self::showPrice($totalServices).'</td></tr>
 						        	</tbody>
 						      	</table>
 											</div>
