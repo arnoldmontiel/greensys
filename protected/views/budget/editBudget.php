@@ -1,5 +1,24 @@
 <script type="text/javascript">
 
+function setAccessory(idProduct, obj)
+{
+	var value = 0;
+	if($(obj).is(':checked'))
+		value = 1;
+	
+	statusStartSaving();
+	$.post("<?php echo BudgetController::createUrl('AjaxSetAccessoryProduct'); ?>",
+			{
+				idProduct:idProduct,
+				value:value				
+			}
+		).success(
+			function(data){
+				statusSaved();
+			}).error(function(){statusSavedError();});
+		return false;
+}
+
 function downloadPDF(id, version)
 {
 	var params = "&id="+id+"&version="+version;
@@ -135,13 +154,6 @@ function editBudgetByService(id,version)
 {
 	var params = "&id="+id+"&version="+version+"&byService=true";
 	window.location = "<?php echo BudgetController::createUrl("addItem")?>" + params; 
-	return false;
-}
-
-function exportBudget(id, version)
-{
-	var params = "&id="+id+"&version="+version;
-	window.location = "<?php echo BudgetController::createUrl("exportToExcel")?>" + params; 
 	return false;
 }
 

@@ -49,7 +49,7 @@
 							return '<div class="buttonsTablePres"><button onclick="editBudget('.$data->Id.', '.$data->version_number.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
 									<button onclick="removeBudget('.$data->Id.', '.$data->version_number.', '.$grid.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>
             						<button onclick="closeVersion('.$data->Id.', '.$data->version_number.', '.$grid.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-archive"></i> Cerrar</button>
-            						<button onclick="exportBudget('.$data->Id.', '.$data->version_number.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar</button>
+            						<button onclick="downloadPDF('.$data->Id.', '.$data->version_number.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> PDF</button>
             						<a onclick="viewBudget('.$data->Id.', '.$data->version_number.');" class="btn btn-default btn-sm"><i class="fa fa-eye"></i> Ver</a></div>';						
 						},
 						'type'=>'raw',

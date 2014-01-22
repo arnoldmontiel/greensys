@@ -41,7 +41,7 @@
 						'value'=>function($data){
 							$grid = "'budget-grid-cancelled'";
 							return '<button onclick="openChangeStateBudget('.$data->Id.', '.$data->version_number.', 1);" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i> Re-Abrir</button>
-									<button onclick="exportBudget('.$data->Id.', '.$data->version_number.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar</button>';						
+									<button onclick="downloadPDF('.$data->Id.', '.$data->version_number.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> PDF</button>';						
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:right;"),

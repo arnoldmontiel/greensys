@@ -177,6 +177,20 @@ class BudgetController extends GController
 			echo json_encode(array('total_price'=>$budgetItem->getTotalPrice()));						
 		}
 	}
+	
+	public function actionAjaxSetAccessoryProduct()
+	{
+		$idProduct = (isset($_POST['idProduct']))?$_POST['idProduct']:null;
+		$value = (isset($_POST['value']))?$_POST['value']:0;
+		
+		if(isset($idProduct))
+		{
+			$modelProduct = Product::model()->findByPk($idProduct);
+			$modelProduct->is_accessory = $value;
+			$modelProduct->save();
+		}
+	}
+	
 	public function actionAjaxCreateItem()
 	{
 		if(isset($_POST['BudgetItem']))

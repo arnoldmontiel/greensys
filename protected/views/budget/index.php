@@ -44,6 +44,13 @@ $('#tab-cancelled').click(function(){
 ?>
 <script type="text/javascript">
 
+function downloadPDF(id, version)
+{
+	var params = "&id="+id+"&version="+version;
+	window.open("<?php echo BudgetController::createUrl('DownloadPDF'); ?>" + params, "_blank");
+	return false;	
+}
+
 function viewBudget(id, version)
 {
 	var params = "&id="+id+"&version="+version;
@@ -152,13 +159,6 @@ function closeVersion(id, version, grid)
 		return false;
 	}
 	return false;	
-}
-
-function exportBudget(id, version)
-{
-	var params = "&id="+id+"&version="+version;
-	window.location = "<?php echo BudgetController::createUrl("exportToExcel")?>" + params; 
-	return false;
 }
 
 function approveBudget(id, version, grid)

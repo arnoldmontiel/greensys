@@ -58,7 +58,7 @@
 										        <li><a onclick="openChangeStateBudget('.$data->Id.', '.$data->version_number.', 4)" href="#"><i class="fa fa-times-circle"></i> Cancelado</button></a></li>
 										    </ul>
 									</div>
-            						<button onclick="exportBudget('.$data->Id.', '.$data->version_number.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> Descargar</button>';						
+            						<button onclick="downloadPDF('.$data->Id.', '.$data->version_number.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> PDF</button>';						
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:right;"),
