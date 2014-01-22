@@ -84,6 +84,8 @@ function changeTab(idArea,idAreaProject)
 {
 	$('#idTabArea').val(idArea);
 	$('#idTabAreaProject').val(idAreaProject);
+
+	$.fn.yiiGridView.update('budget-item-grid_' + idAreaProject + '_' + idArea);
 }
 
 function addQty(idProduct)
