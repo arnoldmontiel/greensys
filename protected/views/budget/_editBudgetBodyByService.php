@@ -216,9 +216,8 @@ function downItemToBottom(id,grid)
 {
 	statusStartSaving();
 	
-	alert("downItemToBottom: "+id);
 	$.post(
-			'<?php echo BudgetController::createUrl('AjaxDownBudgetItem')?>',
+			'<?php echo BudgetController::createUrl('AjaxDownToBottomBudgetItem')?>',
 			 {
 			 	id: id,
 			 },'json').success(
@@ -250,7 +249,6 @@ function upItemToAbove(id,grid)
 {
 	statusStartSaving();
 	
-	alert("upItemToAbove: "+id);
 	$.post(
 			'<?php echo BudgetController::createUrl('AjaxDownBudgetItem')?>',
 			 {

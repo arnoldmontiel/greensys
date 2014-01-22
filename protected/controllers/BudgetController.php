@@ -1419,6 +1419,64 @@ class BudgetController extends GController
 			
 		}
 	}
+	public function actionAjaxDownToBottomBudgetItem()
+	{
+		if(isset($_POST['id']))
+		{
+			$modelBudgetItem = BudgetItem::model()->findByPk($_POST['id']);
+			if(isset($modelBudgetItem->order_by_service))
+			{
+				$criteria = new CDbCriteria();
+				if(isset($modelBudgetItem->Id_product))
+				{
+					$criteria->addCondition('Id_product is not null');
+					if(isset($modelBudgetItem->Id_service))
+					{
+						$criteria->addCondition('Id_service ='.$modelBudgetItem->Id_service);
+					}
+					else
+					{
+						$criteria->addCondition('Id_service is null');
+							
+					}
+					$criteria->addCondition('order_by_service > '.$modelBudgetItem->order_by_service);
+					$criteria->order="order_by_service DESC";
+					$budgetItems = BudgetItem::model()->findAll($criteria);
+					if(!empty($budgetItems))
+					{
+						$transaction = $modelBudgetItem->dbConnection->beginTransaction();
+						try {
+							$isFistTime = true;
+							$currentPos= $modelBudgetItem->order_by_service;
+							$prevItem = null;
+							foreach ($budgetItems as $item)
+							{
+								if($isFistTime)
+								{
+									$isFistTime = false;
+									$modelBudgetItem->order_by_service = $item->order_by_service;
+									$modelBudgetItem->save();
+								}
+								else
+								{									
+									$prevItem->order_by_service = $item->order_by_service;
+									$prevItem->save();
+								}
+								$prevItem = $item;
+							}
+							$item->order_by_service = $currentPos;
+							$item->save();
+							$transaction->commit();								
+						} catch (Exception $e) {
+							$transaction->rollback();
+							var_dump($e);
+						}
+					}
+				}
+			}
+			
+		}
+	}
 	public function actionAjaxUpBudgetItem()
 	{
 		if(isset($_POST['id']))
