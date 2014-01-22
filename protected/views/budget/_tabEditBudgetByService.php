@@ -57,9 +57,13 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 							'type'=>'raw',
 					),
 					array(
-							'name'=>'Accesorio',
-							'value'=>
-							'"<label><input type=\"checkbox\"> S&iacute;</label>"',
+							'header'=>'Accesorio',
+							'value'=>function($data){
+								$value = '<label><input onchange="setAccessory('.$data->Id_product.', this);" type="checkbox"> S&iacute;</label>';
+								if($data->product->is_accessory == 1)
+									$value = '<label><input onchange="setAccessory('.$data->Id_product.', this);" checked type="checkbox"> S&iacute;</label>';
+								return $value;
+							},
 							'type'=>'raw',
 					),
 					array(

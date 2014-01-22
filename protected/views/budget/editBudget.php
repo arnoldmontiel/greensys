@@ -78,6 +78,7 @@ function openUpdateBudget(idBudget, version)
 
 function changeTabByService(idService)
 {
+	$.fn.yiiGridView.update('budget-item-grid_' + idService);
 	return true;	
 }
 function changeTab(idArea,idAreaProject)
