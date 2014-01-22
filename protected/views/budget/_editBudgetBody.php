@@ -1,7 +1,7 @@
 <?php 
 $settings = new Settings();
 ?>
-    <?php echo $this->renderPartial('_tabEditBudgetExtras',array(
+    <?php echo $this->renderPartial('_tabBudgetServiceConfig',array(
 						'model'=>$model,
 						'modelProduct'=>$modelProduct,
 						'modelBudgetItem'=>$modelBudgetItem,

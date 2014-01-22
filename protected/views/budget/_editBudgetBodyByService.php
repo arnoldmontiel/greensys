@@ -1,7 +1,7 @@
 <?php 
 $settings = new Settings();
 ?>
-    <?php echo $this->renderPartial('_tabEditBudgetExtras',array(
+    <?php echo $this->renderPartial('_tabBudgetServiceConfig',array(
 						'model'=>$model,
 						'modelProduct'=>$modelProduct,
 						'modelBudgetItem'=>$modelBudgetItem,
@@ -73,146 +73,19 @@ $settings = new Settings();
   </div>
   <!-- /.row --> 
   
-  <div class="row contenedorPresu">
+<div class="row contenedorPresu">
     <div class="col-sm-12">
-<div class="tituloFinalPresu">Adicionales</div>
-
-
-
-  <ul class="nav nav-tabs">
-                <li class="active">
-        	<a onclick="changeTabByService(0)" href="#itemService_00" data-toggle="tab">
-        		<span id="areaProjectDescription_162">General</span>
-        	</a>
-        </li>
-		        <li class="">
-        	<a onclick="changeTabByService(1)" href="#itemService_01" data-toggle="tab">
-        		<span id="areaProjectDescription_161">Home Theater</span>
-        	</a>
-        </li>
-		        <li class="">
-        	<a onclick="changeTabByService(2)" href="#itemService_02" data-toggle="tab">
-        		<span id="areaProjectDescription_166">Multiroom Audio</span>
-        	</a>
-        </li>
-		        <li class="">
-        	<a onclick="changeTabByService(3)" href="#itemService_30" data-toggle="tab">
-        		<span id="areaProjectDescription_168">Control de iluminaci&oacute;n</span>
-        	</a>
-        </li>
-        <li class="pull-right"><button  type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Agregar</button></li>
-         </ul>
-  
-  <div class="tab-content">
-                <div class="tab-pane active" id="itemService_00">
-                
-                <table class="table table-striped table-bordered tablaIndividual">
-<thead>
-<tr>
-<th>Descripci&oacute;n</th>
-<th>Horas</th>
-<th>Precio</th>
-<th>Descuento</th>
-<th>Total</th>
-<th class="align-right">Acciones</th>
-</thead>
-<tbody>
-<tr>
-<td>Programaci—n</td>
-<td class="align-center">0.00</td>
-<td class="align-right">25.00 <div class="usd">U$D</div></td>
-<td class="align-center">
-<div class="bloqueDescuento">
-<input id="discount_162" class="form-control inputMed align-right" type="text" value="0.00" name="txtDiscount">
-<div class="radioTipo">
-<div class="radio">
-<label>
-<input type="radio" name="optionsRadios_162" id="discount_type_162" value="0"checked="">
-<div class="usd">%</div>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="optionsRadios_162" id="discount_type_162" value="1" >
-<div class="usd">USD</div>
- </label>
-</div>
-</div>
-</div>
-</td>
-<td class="align-right">
-<span id="total_price_162" class="label label-primary labelPrecio">0.00 <div class="usd">U$D</div></span>
-</td>
-<td style="text-align:right;"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
-</tr>
-<tr>
-<td>Instalaci—n</td>
-<td class="align-center">330.00</td>
-<td class="align-right">25.00 <div class="usd">U$D</div></td>
-<td class="align-center">
-<div class="bloqueDescuento">
-<input id="discount_162" class="form-control inputMed align-right" type="text" value="0.00" name="txtDiscount">
-<div class="radioTipo">
-<div class="radio">
-<label>
-<input type="radio" name="optionsRadios_162" id="discount_type_162" value="0"checked="">
-<div class="usd">%</div>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="optionsRadios_162" id="discount_type_162" value="1" >
-<div class="usd">USD</div>
- </label>
-</div>
-</div>
-</div>
-</td>
-<td class="align-right">
-<span id="total_price_162" class="label label-primary labelPrecio">40.00 <div class="usd">U$D</div></span>
-</td>
-<td style="text-align:right;"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
-</tr>
-<tr>
-<td>Calibracion</td>
-<td class="align-center">&nbsp;</td>
-<td class="align-right"><input id="discount_162" class="form-control inputMed align-right" type="text" value="0.00" name="txtDiscount"> <span class="usd">U$D</span></td>
-<td class="align-center">
-<div class="bloqueDescuento">
-<input id="discount_162" class="form-control inputMed align-right" type="text" value="0.00" name="txtDiscount">
-<div class="radioTipo">
-<div class="radio">
-<label>
-<input type="radio" name="optionsRadios_162" id="discount_type_162" value="0"checked="">
-<div class="usd">%</div>
-</label>
-</div>
-<div class="radio">
-<label>
-<input type="radio" name="optionsRadios_162" id="discount_type_162" value="1" >
-<div class="usd">USD</div>
- </label>
-</div>
-</div>
-</div>
-</td>
-<td class="align-right">
-<span id="total_price_162" class="label label-primary labelPrecio">0.00 <div class="usd">U$D</div></span>
-</td>
-<td style="text-align:right;"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
-</tr>
-</tbody>
-</table>
-                </div>
-                <div class="tab-pane" id="itemService_01"> TAB2</div>
-                <div class="tab-pane" id="itemService_02">TAB3</div>
-                <div class="tab-pane" id="itemService_03"> TAB4</div>
-  
-  		   </div>  <!-- /.tab-content --> 
+		<div class="tituloFinalPresu">Adicionales</div>
+			<?php 
+					$this->renderPartial('_tabEditBudgetServiceExtras',array(
+											'model'=>$model,
+											'modelBudgetItem'=>$modelBudgetItem,
+											));
+			?>
     </div>
     <!-- /.col-sm-12 --> 
-  </div>
-  <!-- /.row --> 
+</div>
+<!-- /.row --> 
   
    <div class="row contenedorPresu">
     <div class="col-sm-12">
