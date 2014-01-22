@@ -1377,7 +1377,19 @@ class BudgetController extends GController
 			}
 		}
 	}
-	
+	public function actionAjaxDownBudgetItem()
+	{
+		if(isset($_POST['id']))
+		{
+			$modelBudgetItem = BudgetItem::model()->findByPk($_POST['id']);
+			if(isset($modelBudgetItem->order_by_service))
+			{
+				
+			}
+			
+		}
+		
+	}
 	public function actionAjaxAddBudgetItem()
 	{
 		$idPriceList = isset($_POST['IdPriceList'])?$_POST['IdPriceList']:'';
