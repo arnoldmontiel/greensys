@@ -2159,7 +2159,7 @@ class GreenHelper
 		}
 		
 		
-		//END SERVICE SUMMARY---------------------------------------------------------------
+		//SERVICE SUMMARY---------------------------------------------------------------
 		$totalServices = 0;
 		foreach($arrayServiceTotal as $currentService)
 		{
@@ -2184,38 +2184,59 @@ class GreenHelper
 		}
 		//END SERVICE SUMMARY---------------------------------------------------------------
 		
+		//TOTAL SUMMARY---------------------------------------------------------------
+		$gridTotalSummary = '';
+		
+		$totalBudgetDiscount = 0;
+		if($modelBudget->percent_discount > 0)
+			$totalBudgetDiscount = round($totalServices * $modelBudget->percent_discount/100,2);
+		
+							$gridTotalSummary = '<tr>';
+			$gridTotalSummary = $gridTotalSummary . '<td class="bold">Sub Total</td>';
+			$gridTotalSummary = $gridTotalSummary . '<td colspan="2" class="align-right budgetMono">'.$currency . ' ' . self::showPrice($totalServices).'</td>';
+		$gridTotalSummary = $gridTotalSummary . '</tr>';
+		$gridTotalSummary = $gridTotalSummary . '<tr>';
+			$gridTotalSummary = $gridTotalSummary . '<td>Descuento</td>';
+			$gridTotalSummary = $gridTotalSummary . '<td class="budgetMono">'.$modelBudget->percent_discount.'%</td>';
+			$gridTotalSummary = $gridTotalSummary . '<td class="align-right budgetMono">'.$currency .' ' . self::showPrice($totalBudgetDiscount).'</td>';
+		$gridTotalSummary = $gridTotalSummary . '</tr>';
+		$gridTotalSummary = $gridTotalSummary . '<tr>';
+			$gridTotalSummary = $gridTotalSummary . '<td class="bold">Total</td>';
+			$gridTotalSummary = $gridTotalSummary . '<td class="align-right budgetMono" colspan="2">';
+			$gridTotalSummary = $gridTotalSummary . '<div class="label-big">'.$currency . ' ' . self::showPrice($totalServices - $totalBudgetDiscount).'</div>';
+			$gridTotalSummary = $gridTotalSummary . '</td>';
+		$gridTotalSummary = $gridTotalSummary . '</tr>';
+		//END TOTAL SUMMARY---------------------------------------------------------------
+		
 		$caratula = '<div  style="page-break-after: always;">
-				<div class="container" id="screenReadOnlyCaratula">
-				<div class="logoBig"><img src="images/logoBIG.jpg" width="244" height="67"/></div>
-				<table class="mainInfo">
-				<tr>
-				<td class="bigBold">'.$modelBudget->description.'</td>
-				</tr>
-				<tr>
-				<td>'.$modelBudget->project->fullDescription.'</td>
-				</tr>
-				<tr>
-				<td>Versi&oacute;n '.$modelBudget->version_number.'</td>
-				</tr>
-				<tr>
-				<td>'.date("d/m/Y").'</td>
-				</tr>
-				</table>
-						<div class="caratulaResumen">
-					<div class="budgetSubtitle">Resumen de propuesta</div>
+						<div class="container" id="screenReadOnlyCaratula">
+							<div class="logoBig"><img src="images/logoBIG.jpg" width="244" height="67"/></div>
+							<table class="mainInfo">
+								<tr>
+									<td class="bigBold">'.$modelBudget->description.'</td>
+								</tr>
+								<tr>
+									<td>'.$modelBudget->project->fullDescription.'</td>
+								</tr>
+								<tr>
+									<td>Versi&oacute;n '.$modelBudget->version_number.'</td>
+								</tr>
+								<tr>
+									<td>'.date("d/m/Y").'</td>
+								</tr>
+							</table>
+							<div class="caratulaResumen">
+								<div class="budgetSubtitle">Resumen de propuesta</div>
 								<table class="table tableReadOnly">
-        							<tbody>
-									'.$serviceSummaryContentNoPrice.'
-						        	</tbody>
-						      	</table>	
+	        						<tbody>
+										'.$serviceSummaryContentNoPrice.'
+							        </tbody>
+							    </table>	
 							</div>
-											</div>
-						
-		</div>
-											</div>';
+						</div>
+					</div>';
 		
 		$content = '<div class="container" id="screenReadOnly">
-				
 						<div class="row budgetCabecera budgetBloque">
 							<div class="col-sm-12">
 								<table width="100%">
@@ -2239,114 +2260,94 @@ class GreenHelper
 						<div class="row budgetBloque">
 							<div class="col-sm-12">
 								'.$serviceContent.'
-
 							</div>
-							</div>
-							</div><!-- CIERRE CONTAINER -->';
+						</div>
+					</div><!-- CIERRE CONTAINER -->';
 		
 		$resumen = '<div class="container" id="screenReadOnlyCaratulaFinal">
-				<div class="row budgetBloque">
+						<div class="row budgetBloque">
 							<div class="col-sm-12">
-				<div class="logoBig"><img src="images/logoBIG.jpg" width="244" height="67"/></div>
-				<table class="mainInfo">
-				<tr>
-				<td class="bigBold">'.$modelBudget->description.'</td>
-				</tr>
-				<tr>
-				<td>'.$modelBudget->project->fullDescription.'</td>
-				</tr>
-				<tr>
-				<td>Versi&oacute;n '.$modelBudget->version_number.'</td>
-				</tr>
-				<tr>
-				<td>'.date("d/m/Y").'</td>
-				</tr>
-				</table>
-						<div class="caratulaResumen">
-					<div class="budgetSubtitle">Resumen de propuesta</div>
-								<table class="table tableReadOnly">
-        							<tbody>
-									'.$serviceSummaryContent.'
-									<tr><td class="bold lastRow">TOTAL</td><td class="align-right bold lastRow">'.$currency . ' ' . self::showPrice($totalServices).'</td></tr>
-						        	</tbody>
-						      	</table>
-											</div>
+								<div class="logoBig"><img src="images/logoBIG.jpg" width="244" height="67"/></div>
+								<table class="mainInfo">
+									<tr>
+										<td class="bigBold">'.$modelBudget->description.'</td>
+									</tr>
+									<tr>
+										<td>'.$modelBudget->project->fullDescription.'</td>
+									</tr>
+									<tr>
+										<td>Versi&oacute;n '.$modelBudget->version_number.'</td>
+									</tr>
+									<tr>
+										<td>'.date("d/m/Y").'</td>
+									</tr>
+								</table>
+								<div class="caratulaResumen">
+									<div class="budgetSubtitle">Resumen de propuesta</div>
+									<table class="table tableReadOnly">
+	        							<tbody>
+										'.$serviceSummaryContent.'
+										<tr><td class="bold lastRow">TOTAL</td><td class="align-right bold lastRow">'.$currency . ' ' . self::showPrice($totalServices).'</td></tr>
+							        	</tbody>
+							      	</table>
+								</div>
 							</div>
-							</div>
-											
-			<div class="row budgetBloque">
+						</div>
+						<div class="row budgetBloque">
 							<div class="col-sm-12">
 								<div class="row budgetCabecera">
 									<div class="col-sm-12">
-									          		<div class="budgetSubtitle superTotal">Total</div>
+									    <div class="budgetSubtitle superTotal">Total</div>
 										<table class="table tableReadOnly tablaDatos">
         									<tbody>
-          										<tr>
-            										<td class="bold">Sub Total</td>
-          											<td colspan="2" class="align-right budgetMono">'.$currency . ' ' . self::showPrice($modelBudget->TotalPriceCurrencyConverted).'</td>
-          										</tr>
-          										<tr>
-            										<td>Descuento</td>
-          											<td class="budgetMono">'.$modelBudget->percent_discount.'%</td>
-         											<td class="align-right budgetMono">'.$currency .' ' . self::showPrice($modelBudget->TotalDiscountCurrencyConverted).'</td>
-         										</tr>
-         										<tr>
-           											<td class="bold">Total</td>
-           											<td class="align-right budgetMono" colspan="2">
-           												<div class="label-big">'.$currency . ' ' . self::showPrice($modelBudget->TotalPriceWithDiscountCurrencyConverted).'</div>
-         											</td>
-         										</tr>
+          										'.$gridTotalSummary.'
         									</tbody>
       									</table>
-										</div>
+									</div>
 								</div>
 											
-											</div><!-- CIERRE CONTAINER -->
-											';
-		$clausulas = '<div  style="page-break-before: always;">
-				<div class="budgetTitle">Cl&aacute;usulas del Contrato</div>
-				<div class="budgetDesc">Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.
-				</div>
-				<div class="budgetSubtitle">Pago</div>
-				<table class="table tableReadOnly tablaDatos">
-        									<tbody>
-          									<tr>
-           											<td>Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.</td>
-         										</tr>
-        									</tbody>
-      									</table>
-				
-				
-				<div class="budgetSubtitle">DURACI&Oacute;N DE LA OFERTA</div>
-				<table class="table tableReadOnly tablaDatos">
-        									<tbody>
-          									<tr>
-           											<td>Praesent urna augue, volutpat eleifend neque eu, tristique iaculis massa. Maec.</td>
-         										</tr>
-        									</tbody>
-      									</table>
-				<div class="budgetSubtitle">TIPO DE CAMBIO</div>
-				<table class="table tableReadOnly tablaDatos">
-        									<tbody>
-          									<tr>
-           											<td>Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.</td>
-         										</tr>
-        									</tbody>
-      									</table>
-				
-				
-				<div class="budgetSubtitle">LEGALES</div>
-				<table class="table tableReadOnly tablaDatos">
-        									<tbody>
-          									<tr>
-           											<td>Praesent urna augue, volutpat eleifend neque eu, tristique iaculis massa. Maec. Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet.</td>
-         										</tr>
-        									</tbody>
-      									</table>
+							</div><!-- CIERRE CONTAINER -->';
+		
+	$clausulas = '<div  style="page-break-before: always;">
+					<div class="budgetTitle">Cl&aacute;usulas del Contrato</div>
+					<div class="budgetDesc">Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.
+					</div>
+					<div class="budgetSubtitle">Pago</div>
+					<table class="table tableReadOnly tablaDatos">
+        				<tbody>
+          					<tr>
+           						<td>Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.</td>
+         					</tr>
+        				</tbody>
+      				</table>
+					<div class="budgetSubtitle">DURACI&Oacute;N DE LA OFERTA</div>
+					<table class="table tableReadOnly tablaDatos">
+        				<tbody>
+          					<tr>
+           						<td>Praesent urna augue, volutpat eleifend neque eu, tristique iaculis massa. Maec.</td>
+         					</tr>
+        				</tbody>
+      				</table>
+					<div class="budgetSubtitle">TIPO DE CAMBIO</div>
+					<table class="table tableReadOnly tablaDatos">
+        				<tbody>
+							<tr>
+           						<td>Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.</td>
+         					</tr>
+        				</tbody>
+      				</table>
+					<div class="budgetSubtitle">LEGALES</div>
+					<table class="table tableReadOnly tablaDatos">
+        				<tbody>
+          					<tr>
+           						<td>Praesent urna augue, volutpat eleifend neque eu, tristique iaculis massa. Maec. Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet.</td>
+       						</tr>
+        				</tbody>
+      				</table>
 				</div>
 				';
 		
-		$contenta= $caratula.$content.$resumen.$clausulas;
-		return $contenta;
+		$result = $caratula.$content.$resumen.$clausulas;
+		return $result;
 	}
 }
