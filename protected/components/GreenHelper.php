@@ -2052,7 +2052,9 @@ class GreenHelper
 				
 				if(isset($budgetItemService->Id_service))
 					$criteria->addCondition('Id_service = '.$budgetItemService->Id_service);
-
+				else
+					$criteria->addCondition('Id_service is null');
+					
 				$criteria->addCondition('Id_product is null');
 				
 				$budgetItemAdditionals = BudgetItem::model()->findAll($criteria);
