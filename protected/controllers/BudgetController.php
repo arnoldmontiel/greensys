@@ -999,9 +999,9 @@ class BudgetController extends GController
 				$model->percent_discount = $_POST['percent_discount'];
 				if($model->save())
 				{
-					$result['total_price_with_discount']=$model->TotalPriceWithDiscount;
-					$result['total_discount']=$model->TotalDiscount;
-					$result['total_price']=$model->totalPrice;					
+					$result['total_price_with_discount']=$model->TotalPriceWithDiscountFormated;
+					$result['total_discount']=$model->TotalDiscountFormated;
+					$result['total_price']=$model->totalPriceFormated;					
 					echo json_encode(array_merge($model->attributes,$result)); 
 				}				
 			}			
@@ -1014,9 +1014,9 @@ class BudgetController extends GController
 			$model = Budget::model()->findByPk(array('Id'=>$_POST['Id'],'version_number'=>$_POST['version_number']));
 			if(isset($model))
 			{
-				$result['total_price_with_discount']=$model->TotalPriceWithDiscount;
-				$result['total_discount']=$model->TotalDiscount;
-				$result['total_price']=$model->totalPrice;
+				$result['total_price_with_discount']=$model->TotalPriceWithDiscountFormated;
+				$result['total_discount']=$model->TotalDiscountFormated;
+				$result['total_price']=$model->totalPriceFormated;
 				echo json_encode(array_merge($model->attributes,$result));
 			}
 		}

@@ -17,14 +17,14 @@ $settings = new Settings();
             <td valign="middle"  align="right" class="bold">
             	<div class=" label label-default label-subtotal">
             			<?php echo $settings->getCurrencyShortDescription()." ";?>
-            			<span id="totals_total_price"><?php echo $model->totalPrice?></span>
+            			<span id="totals_total_price"><?php echo $model->totalPriceFormated?></span>
             	</div>
             </td>
           </tr>
           <tr>
             <td valign="middle" >Discount</td>
             <td><input type="model" id="totals_percent_discount" class="form-control formHasLabel inputSmall align-right" value="<?php echo $model->percent_discount?>"> %</td>
-            <td align="right" valign="middle" class="bold"> <div class="usd"><?php echo $settings->getCurrencyShortDescription()." ";?></div> <span id="totals_discount"><?php echo $model->TotalDiscount?></span></td>
+            <td align="right" valign="middle" class="bold"> <div class="usd"><?php echo $settings->getCurrencyShortDescription()." ";?></div> <span id="totals_discount"><?php echo $model->TotalDiscountFormated?></span></td>
           </tr>
           <tr class="superTotal">
             <td valign="middle" >Total</td>
@@ -32,7 +32,7 @@ $settings = new Settings();
             <td valign="middle"  align="right" class="bold">
             	<div class=" label label-primary label-total">
             		<?php echo $settings->getCurrencyShortDescription()." "?>
-            		<span id="totals_price_w_discount"><?php echo $model->TotalPriceWithDiscount;?> </span>
+            		<span id="totals_price_w_discount"><?php echo $model->TotalPriceWithDiscountFormated;?> </span>
             	</div>
             </td>
           </tr>

@@ -345,6 +345,10 @@ class Budget extends ModelAudit
 		}
 		return round($totalPrice,2);
 	}
+	public function getTotalPriceFormated()
+	{
+		return number_format($this->getTotalPrice(),2);
+	}
 	public function getTotalPriceCurrencyConverted()
 	{
 		$totalPrice = $this->getTotalPrice();
@@ -367,6 +371,11 @@ class Budget extends ModelAudit
 		}
 		return round(($totalPrice*$this->percent_discount/100),2);
 		
+	}
+	
+	public function getTotalDiscountFormated()
+	{
+		return number_format($this->getTotalDiscount(),2);
 	}
 	public function getTotalDiscountCurrencyConverted()
 	{
@@ -391,6 +400,10 @@ class Budget extends ModelAudit
 			$totalPrice += $item->getTotalPriceNotFormated();
 		}
 		return round($totalPrice-($totalPrice*$this->percent_discount/100),2);
+	}
+	public function getTotalPriceWithDiscountFormated()
+	{
+		return number_format($this->getTotalPriceWithDiscount(),2);
 	}
 	public function getTotalPriceWithDiscountCurrencyConverted()
 	{
