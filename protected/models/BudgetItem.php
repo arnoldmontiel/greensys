@@ -478,6 +478,16 @@ class BudgetItem extends ModelAudit
 		return round((($this->price)*$this->quantity) - $discount , 2);
 	}
 	
+	public function getTotalPriceWODiscountCurrencyConverted()
+	{
+		return GreenHelper::convertCurrency($this->getTotalPriceWODiscount(), $this->budget->Id_currency, $this->budget->Id_currency_view,$this->getCurrencyConversor());
+	}
+	
+	public function getTotalPriceWODiscount()
+	{
+		return round((($this->price)*$this->quantity) , 2);
+	}
+	
 	public function getDoNotWarning()
 	{
 		if($this->getChildrenCount()==0)

@@ -2078,8 +2078,8 @@ class GreenHelper
 				{
 					$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<tr>';
 						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td>'.$budgetItemAdditional->description.'</td>';
-						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right">'.$currency . ' ' . self::showPrice($budgetItemAdditional->getPriceCurrencyConverted()).'</td>';
-						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItemAdditional->getDiscountCurrencyConverted()).'</td>';
+						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right">'.$currency . ' ' . self::showPrice($budgetItemAdditional->getTotalPriceWODiscountCurrencyConverted()).'</td>';
+						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right">'.$budgetItemAdditional->getDiscountType().' '. self::showPrice($budgetItemAdditional->getDiscountCurrencyConverted()).'</td>';
 						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right bold">'.$currency . ' ' . self::showPrice($budgetItemAdditional->getTotalPriceWOChildernCurrencyConverted()).'</td>';
 					$serviceContentBodyAdditional = $serviceContentBodyAdditional . '</tr>';
 					
