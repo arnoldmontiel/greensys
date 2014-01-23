@@ -174,9 +174,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					array(
 							'name'=>'Otros Recargos',
 							'value'=>function($data){
-	$grid = "'budget-grid-otrosRec'";
-	return '';
-},
+								return number_format($data->budget->getTotalPriceAdditionalByService($data->Id_service), 2).' '.$data->budget->currency->short_description;
+							},
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-right"),
 							'headerHtmlOptions'=>array("class"=>"align-right"),
@@ -348,6 +347,7 @@ function setTotals()
 					$('#totals_price_w_discount').html(response.total_price_with_discount);					
 					$('#totals_discount').html(response.total_discount);
 					$('#totals_total_price').html(response.total_price);
+					$.fn.yiiGridView.update('totals-services-grid');
 				}
 			}
 		);		

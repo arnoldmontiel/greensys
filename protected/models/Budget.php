@@ -245,19 +245,19 @@ class Budget extends ModelAudit
 		$criteria->compare('t.Id_budget',$this->Id);
 		$criteria->compare('t.version_number',$this->version_number);
 		$criteria->addCondition('(t.Id_budget_item is null)');
-		$criteria->addCondition('(t.Id_product is not null)');
+		$criteria->addCondition('(t.Id_product is null)');
+		$criteria->addCondition('t.description like "Programación"');
 		
 		if(isset($Id_service))
 			$criteria->addCondition('t.Id_service='.$Id_service);
 		else
 			$criteria->addCondition('(t.Id_service is null)');				
 				
-		$modelBudgetItem = BudgetItem::model()->findAll($criteria);
+		$modelBudgetItem = BudgetItem::model()->find($criteria);
 		$totalTimeProgramation = 0;
-		foreach ($modelBudgetItem as $item)
-		{
-			$totalTimeProgramation += $item->time_programation*$item->quantity;
-		}
+		if(isset($modelBudgetItem))
+			$totalTimeProgramation = $modelBudgetItem->quantity;
+		
 		return round($totalTimeProgramation,2);
 	}
 	public function getTotalTimeInstalationByService($Id_service)
@@ -268,37 +268,118 @@ class Budget extends ModelAudit
 		$criteria->compare('t.Id_budget',$this->Id);
 		$criteria->compare('t.version_number',$this->version_number);
 		$criteria->addCondition('(t.Id_budget_item is null)');
-		$criteria->addCondition('(t.Id_product is not null)');
+		$criteria->addCondition('(t.Id_product is null)');
+		$criteria->addCondition('t.description like "Instalación"');
 		
 		if(isset($Id_service))
 			$criteria->addCondition('t.Id_service='.$Id_service);
 		else
 			$criteria->addCondition('(t.Id_service is null)');				
 				
-		$modelBudgetItem = BudgetItem::model()->findAll($criteria);
+		$modelBudgetItem = BudgetItem::model()->find($criteria);
 		$totalTime = 0;
-		foreach ($modelBudgetItem as $item)
-		{
-			$totalTime += $item->time_instalation*$item->quantity;
-		}
+		if(isset($modelBudgetItem))
+			$totalTime = $modelBudgetItem->quantity;
+		
 		return round($totalTime,2);
 	}
 	
 	public function getTotalPriceTimeProgramationByService($Id_service)
 	{
-		$totalTime = $this->getTotalTimeProgramationByService($Id_service);
-		$settings = new Settings();
-		$setting = $settings->getSetting();		
-		return round($totalTime*$setting->time_programation_price,2);
+		$criteria=new CDbCriteria;
+		
+		$criteria->compare('t.Id_budget',$this->Id);
+		$criteria->compare('t.version_number',$this->version_number);
+		$criteria->addCondition('(t.Id_budget_item is null)');
+		$criteria->addCondition('(t.Id_product is null)');
+		$criteria->addCondition('t.description like "Programación"');
+		
+		if(isset($Id_service))
+			$criteria->addCondition('t.Id_service='.$Id_service);
+		else
+			$criteria->addCondition('(t.Id_service is null)');
+		
+		$modelBudgetItem = BudgetItem::model()->find($criteria);
+		$total = 0;
+		if(isset($modelBudgetItem))
+		{
+			$settings = new Settings();
+			$setting = $settings->getSetting();
+			
+			$discount = 0;
+			if($modelBudgetItem->discount_type ==0)
+			{
+				$discount = (($modelBudgetItem->price)*$modelBudgetItem->quantity )* $modelBudgetItem->discount/100;
+			}
+			else
+			{
+				$discount = $modelBudgetItem->discount;
+			}
+			$total = (($modelBudgetItem->price)*$modelBudgetItem->quantity) - $discount;
+		}
+		
+		return round($total,2);
 		
 	}
 	public function getTotalPriceTimeInstalationByService($Id_service)
 	{
-		$totalTime = $this->getTotalTimeInstalationByService($Id_service);
-		$settings = new Settings();
-		$setting = $settings->getSetting();
-		return round($totalTime*$setting->time_instalation_price,2);
+		$criteria=new CDbCriteria;
 		
+		$criteria->compare('t.Id_budget',$this->Id);
+		$criteria->compare('t.version_number',$this->version_number);
+		$criteria->addCondition('(t.Id_budget_item is null)');
+		$criteria->addCondition('(t.Id_product is null)');
+		$criteria->addCondition('t.description like "Instalación"');
+		
+		if(isset($Id_service))
+			$criteria->addCondition('t.Id_service='.$Id_service);
+		else
+			$criteria->addCondition('(t.Id_service is null)');
+		
+		$modelBudgetItem = BudgetItem::model()->find($criteria);
+		$total = 0;
+		if(isset($modelBudgetItem))
+		{
+			$settings = new Settings();
+			$setting = $settings->getSetting();
+			
+			$discount = 0;
+			if($modelBudgetItem->discount_type ==0)
+			{
+				$discount = (($modelBudgetItem->price)*$modelBudgetItem->quantity )* $modelBudgetItem->discount/100;
+			}
+			else
+			{
+				$discount = $modelBudgetItem->discount;
+			}
+			$total = (($modelBudgetItem->price)*$modelBudgetItem->quantity) - $discount;
+		}
+		
+		return round($total,2);
+	}
+	public function getTotalPriceAdditionalByService($Id_service)
+	{
+		$criteria=new CDbCriteria;
+		
+		$criteria->compare('t.Id_budget',$this->Id);
+		$criteria->compare('t.version_number',$this->version_number);
+		$criteria->addCondition('(t.Id_budget_item is null)');
+		$criteria->addCondition('(t.Id_product is null)');
+		$criteria->addCondition('t.description not like "Programación"');
+		$criteria->addCondition('t.description not like "Instalación"');
+		
+		if(isset($Id_service))
+			$criteria->addCondition('t.Id_service='.$Id_service);
+		else
+			$criteria->addCondition('(t.Id_service is null)');
+		
+		$modelBudgetItem = BudgetItem::model()->findAll($criteria);
+		$totalTime = 0;
+		foreach ($modelBudgetItem as $item)
+		{
+			$totalTime += $item->price*$item->quantity;
+		}
+		return round($totalTime,2);
 	}
 	public function getTotalPriceByService($Id_service)
 	{
