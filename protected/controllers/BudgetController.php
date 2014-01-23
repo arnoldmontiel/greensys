@@ -872,6 +872,7 @@ class BudgetController extends GController
 			$budgetItem = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
 			if(isset($budgetItem))
 			{
+				$budgetItem->calcTimeBeforeChangeService();
 				$budgetItem->Id_service = $_POST['Id_service'];
 				$budgetItem->save();				
 			}

@@ -76,9 +76,13 @@ function openUpdateBudget(idBudget, version)
 		return false;
 }
 
-function changeTabByService(idService)
+function changeTabByService(idService, serviceDesc)
 {
 	$.fn.yiiGridView.update('budget-item-grid_' + idService);
+	$.fn.yiiGridView.update('budget-item-additional-grid_' + idService);
+	$("#additional-toggle").attr("href", "#additional_" + idService);
+	$("#additional-toggle").click();
+	$("#additional-description").text(serviceDesc);
 	return true;	
 }
 function changeTab(idArea,idAreaProject)

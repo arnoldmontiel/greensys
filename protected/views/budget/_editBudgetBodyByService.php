@@ -23,7 +23,7 @@ $settings = new Settings();
         $services = BudgetItem::model()->findAll($criteria);
         foreach($services as $item)	{ ?>
         <li class="<?php echo ($first?'active':'');?>">
-        	<a onclick="changeTabByService(<?php echo (isset($item->Id_service)?$item->Id_service:0);?>)" href="#itemService_<?php echo (isset($item->Id_service)?$item->Id_service:0);?>" data-toggle="tab">
+        	<a onclick="changeTabByService(<?php echo (isset($item->Id_service)?$item->Id_service:0);?>, '<?php echo (isset($item->service)?$item->service->description:"General");?>')" href="#itemService_<?php echo (isset($item->Id_service)?$item->Id_service:0);?>" data-toggle="tab">
         		<span id="areaProjectDescription_<?php echo $item->Id?>"><?php echo (isset($item->service)?$item->service->description:"General");?></span>
         	</a>
         </li>
@@ -73,13 +73,25 @@ $settings = new Settings();
   
 <div class="row contenedorPresu">
     <div class="col-sm-12">
-		<div class="tituloFinalPresu">Adicionales</div>
+		<div class="tituloFinalPresu">Adicionales - <span id="additional-description">General</span></div>
+		<a data-toggle="tab" href="#" id="additional-toggle"></a>
+		<div class="tab-content">
 			<?php 
-					$this->renderPartial('_tabEditBudgetServiceExtras',array(
-											'model'=>$model,
-											'modelBudgetItem'=>$modelBudgetItem,
-											));
+			$first = true;
+			foreach($services as $item)	{?>
+			<div class="tab-pane <?php echo $first?'active':'';?>" id="additional_<?php echo (isset($item->Id_service)?$item->Id_service:0);?>">
+			<?php 
+				if($first)
+					$first = false;
+				$modelBudgetItem->Id_service = $item->Id_service;
+				$this->renderPartial('_tabEditBudgetServiceExtras',array(
+										'model'=>$model,
+										'modelBudgetItem'=>$modelBudgetItem,
+										));
 			?>
+			</div>
+		<?php } ?>
+		</div>
     </div>
     <!-- /.col-sm-12 --> 
 </div>

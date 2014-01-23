@@ -4,8 +4,14 @@ $settings = new Settings();
 
 	$selectPrice='$data->price." "."<div class=\"usd\">'.$settings->getEscapedCurrencyShortDescription().'</div>"';
 	
+	$idService = 0;
+	if(isset($modelBudgetItem->Id_service))
+	{
+		$idService = $modelBudgetItem->Id_service;
+	}
+	
 	$this->widget('zii.widgets.grid.CGridView', array(
-					'id'=>'budget-item-generic',
+					'id'=>'budget-item-additional-grid_'.$idService,
 					'dataProvider'=>$modelBudgetItem->searchGenericItem(),
 					'summaryText'=>'',
 					'selectableRows' => 0,
