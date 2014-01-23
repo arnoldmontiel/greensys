@@ -17,6 +17,7 @@ $settings = new Settings();
   	    <?php echo CHtml::hiddenField("field_caller",$field_caller); ?>
 		<?php echo $form->hiddenField($model,'Id_budget'); ?>
   	    <?php echo $form->hiddenField($model,'version_number'); ?>
+  	    <?php echo $form->hiddenField($model,'Id_service'); ?>
   	    <div class="form-group">
   	    <label for="desc">Descripci&oacute;n</label>    	
   	    <?php echo $form->textField($model,'description',array("class"=>"form-control")); ?>

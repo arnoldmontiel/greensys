@@ -228,6 +228,9 @@ class BudgetController extends GController
 			$model->Id_budget=$_POST['id'];
 		if($_POST['version_number'])
 			$model->version_number=$_POST['version_number'];
+		if($_POST['idService'])
+			$model->Id_service=$_POST['idService'];
+		
 		// Uncomment the following line if AJAX validation is needed
 		$this->renderPartial('_modalAddBudgetItem',array(
 				'model'=>$model,

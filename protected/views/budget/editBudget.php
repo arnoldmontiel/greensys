@@ -83,6 +83,7 @@ function changeTabByService(idService, serviceDesc)
 	$("#additional-toggle").attr("href", "#additional_" + idService);
 	$("#additional-toggle").click();
 	$("#additional-description").text(serviceDesc);
+	$('#idTabService').val(idService);
 	return true;	
 }
 function changeTab(idArea,idAreaProject)
@@ -216,7 +217,7 @@ function removeBudgetItem(id)
 	 			 },'json').success(
 	 				function(data) 
 	 				{ 
-						$.fn.yiiGridView.update('budget-item-generic');		 		
+						$.fn.yiiGridView.update('budget-item-additional-grid_'+$("#idTabService").val());		 		
 	 				}
 	 			).error(function(){});
 	 }			
@@ -229,7 +230,8 @@ function addExtraItem(idBudget,versionNumber)
 			 {
 			 	id: idBudget,
 			 	version_number: versionNumber,
-	 			field_caller:'budget-item-generic'
+			 	idService: $("#idTabService").val(),
+	 			field_caller:'budget-item-additional-grid_'+$("#idTabService").val()
 			 },'json').success(
 				function(data) 
 				{ 

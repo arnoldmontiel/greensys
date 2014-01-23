@@ -91,6 +91,7 @@ class Budget extends ModelAudit
 				$modelBudgetItem->Id_budget = $this->Id;
 				$modelBudgetItem->Id_service = $modelService->Id;
 				$modelBudgetItem->description = 'Programación';
+				$modelBudgetItem->quantity = 0;
 				$modelBudgetItem->save();
 				
 				$modelBudgetItem = new BudgetItem();
@@ -98,6 +99,7 @@ class Budget extends ModelAudit
 				$modelBudgetItem->Id_budget = $this->Id;
 				$modelBudgetItem->Id_service = $modelService->Id;
 				$modelBudgetItem->description = 'Instalación';
+				$modelBudgetItem->quantity = 0;
 				$modelBudgetItem->save();
 			}
 			

@@ -117,7 +117,7 @@ function editAreaProject(idAreaProject)
     
 function updateGridExtras()
 {
-	$.fn.yiiGridView.update('budget-item-generic');	
+	
 }
     
     function statusStartSaving()

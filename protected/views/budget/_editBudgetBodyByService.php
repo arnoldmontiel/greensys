@@ -44,12 +44,16 @@ $settings = new Settings();
       <div class="tab-content">
         <?php
         $first = true;
+        $idTabService = 0;
         foreach($services as $item)	{ ?>
         <div class="tab-pane <?php echo $first?'active':'';?>" id="itemService_<?php echo (isset($item->Id_service)?$item->Id_service:0);?>">
         <?php 
 	        
         	if($first)
-        	$first = false;
+        	{
+        		$first = false;
+        		$idTabService = isset($item->Id_service)?$item->Id_service:0;
+        	}
 	        $modelBudgetItem->Id_service = $item->Id_service;
 	        
 	        echo $this->renderPartial('_tabEditBudgetByService',array(
@@ -62,7 +66,9 @@ $settings = new Settings();
 		?>
 
    </div>  <!-- /.tab-pane --> 
-  		<?php } ?>
+  		<?php } 
+  		echo CHtml::hiddenField("idTabService",$idTabService, array('id'=>'idTabService'));
+  		?>
   		
   		
   		   </div>  <!-- /.tab-content --> 
@@ -309,7 +315,7 @@ function editAreaProject(idAreaProject)
     
 function updateGridExtras()
 {
-	$.fn.yiiGridView.update('budget-item-generic');	
+	$.fn.yiiGridView.update('budget-item-additional-grid_' + $("#idTabService").val());
 	$.fn.yiiGridView.update('totals-services-grid');	
 }
     

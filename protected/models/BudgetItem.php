@@ -89,8 +89,8 @@ class BudgetItem extends ModelAudit
 	public function afterDelete()
 	{
 		parent::afterDelete();
-		
-		$this->calculateTimes();
+		if($this->description != "Programación" && $this->description != "Instalación")
+			$this->calculateTimes();
 	}
 	
 	public function calcTimeBeforeChangeService()
@@ -102,14 +102,16 @@ class BudgetItem extends ModelAudit
 		$modelProgramingHours = BudgetItem::model()->findByAttributes(array('Id_service'=>$this->Id_service, 'Id_budget'=>$this->Id_budget,'version_number'=>$version,'description'=>'Programación'));
 		if(isset($modelProgramingHours))
 		{
-			$modelProgramingHours->quantity = $modelProgramingHours->quantity - $this->quantity;
+			$qty = $modelProgramingHours->quantity - $this->quantity;
+			$modelProgramingHours->quantity = ($qty > 0)?$qty:0;
 			$modelProgramingHours->save();
 		}
 		
 		$modelInstalationHours = BudgetItem::model()->findByAttributes(array('Id_service'=>$this->Id_service, 'Id_budget'=>$this->Id_budget,'description'=>'Instalación'));
 		if(isset($modelInstalationHours))
 		{
-			$modelInstalationHours->quantity = $modelInstalationHours->quantity - $this->quantity;
+			$qty = $modelInstalationHours->quantity - $this->quantity;
+			$modelInstalationHours->quantity = ($qty > 0)?$qty:0;
 			$modelInstalationHours->save();
 		}
 	}
@@ -120,7 +122,21 @@ class BudgetItem extends ModelAudit
 		$modelBudget->Id =$this->Id_budget;
 		$version = $modelBudget->getCurrentVersion();
 		
-		$modelProgramingHours = BudgetItem::model()->findByAttributes(array('Id_service'=>$this->Id_service, 'Id_budget'=>$this->Id_budget,'version_number'=>$version,'description'=>'Programación'));
+		$criteria=new CDbCriteria;
+		$criteria->compare('t.Id_budget',$this->Id_budget);
+		$criteria->compare('t.version_number',$version);
+		$criteria->compare('t.description','Programación');
+		if(isset($this->Id_service))
+		{
+			if($this->Id_service != 0)
+				$criteria->compare('t.Id_service',$this->Id_service);
+			else 
+				$criteria->addCondition('t.Id_service is null');
+		}
+		else 
+			$criteria->addCondition('t.Id_service is null');
+		
+		$modelProgramingHours = BudgetItem::model()->find($criteria);
 		if(!isset($modelProgramingHours))
 		{
 			$modelProgramingHours = new BudgetItem();
@@ -131,7 +147,21 @@ class BudgetItem extends ModelAudit
 		
 		}
 		
-		$modelInstalationHours = BudgetItem::model()->findByAttributes(array('Id_service'=>$this->Id_service, 'Id_budget'=>$this->Id_budget,'description'=>'Instalación'));
+		$criteria=new CDbCriteria;
+		$criteria->compare('t.Id_budget',$this->Id_budget);
+		$criteria->compare('t.version_number',$version);
+		$criteria->compare('t.description','Instalación');
+		if(isset($this->Id_service))
+		{
+			if($this->Id_service != 0)
+				$criteria->compare('t.Id_service',$this->Id_service);
+			else
+				$criteria->addCondition('t.Id_service is null');
+		}
+		else
+			$criteria->addCondition('t.Id_service is null');
+		
+		$modelInstalationHours = BudgetItem::model()->find($criteria);
 		if(!isset($modelInstalationHours))
 		{
 			$modelInstalationHours = new BudgetItem();
@@ -146,7 +176,17 @@ class BudgetItem extends ModelAudit
 		
 		$criteria->compare('t.Id_budget',$this->Id_budget);
 		$criteria->compare('t.version_number',$version);
-		$criteria->compare('t.Id_service',$this->Id_service);
+		
+		if(isset($this->Id_service))
+		{
+			if($this->Id_service != 0)
+				$criteria->compare('t.Id_service',$this->Id_service);
+			else 
+				$criteria->addCondition('t.Id_service is null');
+		}
+		else 
+			$criteria->addCondition('t.Id_service is null');
+		
 		$criteria->addCondition('t.Id_product is not null and (t.Id_budget_item is null OR t.is_included=1)');
 		
 		$modelItems = BudgetItem::model()->findAll($criteria);
