@@ -1875,7 +1875,7 @@ class GreenHelper
 		
 			$criteria->addCondition($serviceCondition);
 			$criteria->addCondition('Id_product is not null');
-				
+			$criteria->order = 't.order_by_service';
 			$budgetItems = BudgetItem::model()->findAll($criteria);
 				
 			//SERVICE---------------------------------------------------------------
