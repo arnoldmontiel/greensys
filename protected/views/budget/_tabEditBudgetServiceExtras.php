@@ -23,7 +23,7 @@ $settings = new Settings();
 							array(
 									'name'=>'quantity',
 									'value'=>function($data){
-										if($data->description=="Horas de programación"||$data->description=="Horas de instalación")
+										if($data->description=="Programación"||$data->description=="Instalación")
 										{
 											return $data->quantity;
 												
