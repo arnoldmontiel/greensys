@@ -41,7 +41,7 @@
 				'name'=>'dealer_cost',
 				'value'=>
 				function($data){
-					return '<span class="label label-primary labelPrecio">'.$data->dealer_cost.' <div class="usd">'.$data->priceList->currency->short_description.'</div></span>';
+					return '<span class="label label-primary labelPrecio"><div class="usd">'.$data->priceList->currency->short_description.'</div> '.$data->dealer_cost.' </span>';
 				},
 				'type'=>'raw',				
 				'htmlOptions'=>array('class'=>'align-right')
@@ -55,7 +55,7 @@
 		array(
 				'header'=>'MSRP',
 				'name'=>'msrp',
-				'value'=>'$data->msrp." ".$data->priceList->currency->short_description',
+				'value'=>'$data->priceList->currency->short_description." ".$data->msrp',
 				'htmlOptions'=>array('class'=>'align-right')
 		),
 		array(
@@ -63,7 +63,7 @@
 				'name'=>'air_cost',
 				'value'=>
 				function($data){
-					return '<span class="label label-primary labelPrecio"><i class="fa fa-plane fa-fw"></i>'.$data->air_cost.' <div class="usd">'.$data->priceList->currency->short_description.'</div></span>';
+					return '<span class="label label-primary labelPrecio"><i class="fa fa-plane fa-fw"></i><div class="usd">'.$data->priceList->importer->shippingParameters[0]->currency->short_description.'</div> '.$data->air_cost.'</span>';
 				},
 				'type'=>'raw',
 				'htmlOptions'=>array('style'=>'text-align: right;'),
@@ -73,7 +73,7 @@
 				'name'=>'maritime_cost',
 				'value'=>
 				function($data){
-					return '<span class="label label-primary labelPrecio"><i class="fa fa-anchor fa-fw"></i>'.$data->maritime_cost.' <div class="usd">'.$data->priceList->currency->short_description.'</div></span>';
+					return '<span class="label label-primary labelPrecio"><i class="fa fa-anchor fa-fw"></i><div class="usd">'.$data->priceList->importer->shippingParameters[0]->currency->short_description.'</div> '.$data->maritime_cost.' </span>';
 				},
 				'type'=>'raw',
 				'htmlOptions'=>array('style'=>'text-align: right;'),

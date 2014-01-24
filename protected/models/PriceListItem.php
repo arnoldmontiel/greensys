@@ -282,7 +282,8 @@ class PriceListItem extends ModelAudit
 		
 		$dealerCost = GreenHelper::convertCurrencyTo($this->dealer_cost,$this->priceList->Id_currency,$idCurrency);
 		$maritimeCost = GreenHelper::convertCurrencyTo($this->maritime_cost,$shippingParameter->Id_currency,$idCurrency);
-		$price = ($dealerCost+$maritimeCost)*$this->profit_rate;
+		$priceOverDealerCost = $dealerCost*$shippingParameter->shippingParameterMaritime->percent_over_dealer_cost/100; 
+		$price = ($dealerCost+$maritimeCost+$priceOverDealerCost)*$this->profit_rate;
 
 		return number_format(round($price,4),2);
 	}

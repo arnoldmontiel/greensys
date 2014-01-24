@@ -164,6 +164,7 @@ class GreenHelper
 						}
 						//$priceListItem->maritime_cost = $maritime_cost * $product->profit_rate;
 						//$priceListItem->air_cost= $air_cost * $product->profit_rate;
+						//$maritime_cost = $maritime_cost + ($priceListItem->dealer_cost*$maritime->percent_over_dealer_cost/100); 
  						$priceListItem->maritime_cost = $maritime_cost;
  						$priceListItem->air_cost= $air_cost;
 					}

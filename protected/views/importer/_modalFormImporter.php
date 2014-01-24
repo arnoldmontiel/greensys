@@ -152,6 +152,12 @@
 				?>
   			</div>
   			<div class="form-group">
+				<?php
+					echo CHtml::activeLabelEx($modelShippingParameterMaritime, 'percent_over_dealer_cost'); 
+					echo CHtml::activeTextField($modelShippingParameterMaritime, 'percent_over_dealer_cost', array('class'=>'form-control')); 
+				?>
+  			</div>  			
+  			<div class="form-group">
 				<?php				
 					echo CHtml::activeLabelEx($modelShippingParameterMaritime, 'Id_measurement_unit_cost');
 					$measureType = MeasurementType::model()->findByAttributes(array('description'=>'volume'));

@@ -42,11 +42,11 @@ class ShippingParameterMaritime extends ModelAudit
 		// will receive user inputs.
 		return array(
 			array('Id_measurement_unit_cost', 'required'),
-			array('Id_measurement_unit_cost, days', 'numerical', 'integerOnly'=>true),
+			array('Id_measurement_unit_cost, days, percent_over_dealer_cost', 'numerical', 'integerOnly'=>true),
 			array('cost_measurement_unit', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, cost_measurement_unit, Id_measurement_unit_cost, days', 'safe', 'on'=>'search'),
+			array('Id, cost_measurement_unit, percent_over_dealer_cost, Id_measurement_unit_cost, days', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -73,6 +73,8 @@ class ShippingParameterMaritime extends ModelAudit
 			'cost_measurement_unit' => 'Costo por Medida de Unidad',
 			'Id_measurement_unit_cost' => 'Unidad',
 			'days' => 'D&iacute;as',
+			'percent_over_dealer_cost'=>'% sobre valor de mercader&iacute;a'
+				
 		);
 	}
 
