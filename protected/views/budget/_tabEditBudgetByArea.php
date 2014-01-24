@@ -1,15 +1,4 @@
-<?php 
-$settings = new Settings();
-?>
-
 <?php
-$selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$data->price." "."<div class=\"usd\">'.$settings->getEscapedCurrencyShortDescription().'</div></div>'.
-	'<button id=\"btn_price_".$data->Id."\" type=\"button\" class=\"btn btn-primary btn-xs pull-right dropdown-toggle miniEdit\" onclick=\"fillAndOpenDD(".$data->Id.");\">
-             <i class=\"fa fa-pencil\"></i>
-             </button>".'.
-	'"<ul id=\"ul_price_".$data->Id."\" class=\"popover right dropdown-menu superDropdown\" role=\"menu\" aria-labelledby=\"dropdownMenu1\">
- </ul>"';
-
 	$dataProvider = $modelBudgetItem->search();
 	$dataProvider->pagination = false;
 		$this->widget('zii.widgets.grid.CGridView', array(
@@ -57,7 +46,15 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 					),
 					array(
 							'name'=>'price',
-							'value'=>$selectPrice,
+							'value'=>function($data){
+							$settings = new Settings();
+								return '<div class="precioTabla">
+											<div class="precioTablaValor"><div class="usd">'.$settings->getCurrencyShortDescription().'</div> '.$data->price.'</div>
+											<button id="btn_price_'.$data->Id.'" type="button" class="btn btn-primary btn-xs pull-right dropdown-toggle miniEdit" onclick="fillAndOpenDD('.$data->Id.');"><i class="fa fa-pencil">
+											</i></button>
+												<ul id="ul_price_'.$data->Id.'" class="popover right dropdown-menu superDropdown" role="menu" aria-labelledby="dropdownMenu1">
+ 											</ul>';
+							},
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-right"),
 							'headerHtmlOptions'=>array("class"=>"align-right"),
@@ -83,9 +80,12 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 					),
 					array(
 							'name'=>'Total',
-							'value'=>
-								'CHtml::openTag("span",array("id"=>"total_price_".$data->Id, "class"=>"label label-primary labelPrecio")).$data->totalPrice." ".'.
-								'CHtml::openTag("div",array("class"=>"usd"))."'.$settings->getEscapedCurrencyShortDescription().'".CHtml::closeTag("div").CHtml::closeTag("span")',
+							'value'=>function($data){
+								$settings = new Settings();
+								
+								return '<span id="total_price_'.$data->Id.'" class="label label-primary labelPrecio"><div class="usd">'.$settings->getCurrencyShortDescription().'</div> '.$data->totalPrice.'
+										</span>';
+							},
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-right"),
 							'headerHtmlOptions'=>array("class"=>"align-right"),

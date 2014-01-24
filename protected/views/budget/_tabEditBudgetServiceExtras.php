@@ -1,8 +1,6 @@
 <button id="addExtraItem" type="button" class="btn btn-primary superBoton" data-toggle="modal" data-target="#myModalAgregarRec" onclick="addExtraItem(<?php echo $model->Id?>,<?php echo $model->version_number?>);"><i class="fa fa-plus"></i> Agregar</button>
 <?php 
 $settings = new Settings();
-
-	$selectPrice='$data->price." "."<div class=\"usd\">'.$settings->getEscapedCurrencyShortDescription().'</div>"';
 	
 	$idService = 0;
 	if(isset($modelBudgetItem->Id_service))
@@ -33,14 +31,18 @@ $settings = new Settings();
 										}
 									},
 									'type'=>'raw',
-							'htmlOptions'=>array("class"=>"align-center"),
-							'headerHtmlOptions'=>array("class"=>"align-center"),
-							),					array(
-							'name'=>'price',
-							'value'=>$selectPrice,
-							'type'=>'raw',
-							'htmlOptions'=>array("class"=>"align-right"),
-							'headerHtmlOptions'=>array("class"=>"align-right"),
+									'htmlOptions'=>array("class"=>"align-center"),
+									'headerHtmlOptions'=>array("class"=>"align-center"),
+							),					
+							array(
+								'name'=>'price',
+								'value'=>function($data){
+									$settings = new Settings();
+									return '<div class="precioTablaValor"><div class="usd">'.$settings->getCurrencyShortDescription().'</div> '.$data->price.'</div>';								
+								},
+								'type'=>'raw',
+								'htmlOptions'=>array("class"=>"align-right"),
+								'headerHtmlOptions'=>array("class"=>"align-right"),
 					),
 					array(
 						'name'=>'discount',
@@ -64,12 +66,14 @@ $settings = new Settings();
 							
 					array(
 							'name'=>'Total',
-							'value'=>
-							'CHtml::openTag("span",array("id"=>"total_price_".$data->Id, "class"=>"label label-primary labelPrecio")).$data->totalPrice." ".'.
-							'CHtml::openTag("div",array("class"=>"usd"))."'.$settings->getEscapedCurrencyShortDescription().'".CHtml::closeTag("div").CHtml::closeTag("span")',
+							'value'=>function($data){
+								$settings = new Settings();
+								return '<span id="total_price_'.$data->Id.'" class="label label-primary labelPrecio"><div class="usd">'.$settings->getCurrencyShortDescription().'</div> '.$data->totalPrice.'</span>';
+								
+							},
 							'type'=>'raw',
-'htmlOptions'=>array("class"=>"align-right"),
-'headerHtmlOptions'=>array("class"=>"align-right"),
+							'htmlOptions'=>array("class"=>"align-right"),
+							'headerHtmlOptions'=>array("class"=>"align-right"),
 					),
 							array(
 									'name'=>'Acciones',
