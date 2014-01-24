@@ -137,6 +137,8 @@ class BudgetController extends GController
 
 		$modelBudgetState = BudgetState::model()->findAll();
 		$criteria = new CDbCriteria;		
+		$criteria->with[]="Contact";
+		$criteria->addCondition("t.description!= 'Contacto Inicial'");
 		$criteria->order = 't.description ASC';
 		$modelProject = Project::model()->findAll($criteria);
 		
@@ -267,9 +269,13 @@ class BudgetController extends GController
 	public function actionUpdate($id, $version)
 	{
 		$model=$this->loadModel($id, $version);
-
+		$criteria = new CDbCriteria();
+		$criteria->with[]="Contact";
+		$criteria->addCondition("t.description!= 'Contacto Inicial'");
+		
 		$modelBudgetState = BudgetState::model()->findAll();
-		$modelProject = Project::model()->findAll();
+		
+		$modelProject = Project::model()->findAll($criteria);
 		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -691,6 +697,7 @@ class BudgetController extends GController
 		$criteria->select ="t.*, contact.description designacion";
 		$criteria->join =" INNER JOIN customer c on (t.Id_customer = c.Id)
 					INNER JOIN contact contact on (c.Id_contact = contact.Id)";
+		$criteria->addCondition("t.description != 'Contacto Inicial'");
 		$criteria->order="designacion, t.description";
 		
 		$ddlProjects = Project::model()->findAll($criteria);
