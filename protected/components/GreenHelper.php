@@ -2095,7 +2095,7 @@ class GreenHelper
 				
 				
 				$totalServicePrice = 0;
-				$serviceContentBodyTotal = '<div class="budgetSubtitle superTotal">TOTAL &bull; '.$serviceName.'</div>
+				$serviceContentBodyTotal = '<div class="budgetSubtitle superBudgetTotal">TOTAL &bull; '.$serviceName.'</div>
 												<table class="table tableReadOnly tablaDatos">
 													<thead>
 														<tr>
@@ -2238,7 +2238,14 @@ class GreenHelper
 						</div>
 					</div>';
 		
-		$content = '<div class="container" id="screenReadOnly">
+		$content = '
+				<htmlpageheader name="myHeaderHide" style="display:none">
+<div style="text-align: right;  font-size: 12px;">'.$modelBudget->description.' &bull; '.$modelBudget->version_number.'</div>
+</htmlpageheader>
+				<htmlpagefooter name="myFooter" style="display:none">
+				<div style="text-align:center;  font-size: 12px;">P&aacute;gina {PAGENO} de {nbpg}</div>
+				</htmlpagefooter>
+				<div class="container" id="screenReadOnly">
 						<div class="row budgetCabecera budgetBloque">
 							<div class="col-sm-12">
 								<table width="100%">

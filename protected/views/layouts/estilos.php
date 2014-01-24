@@ -719,6 +719,17 @@ width:auto; padding:50px; border-radius:0px; display:block;margin-right:20px;mar
 /* ------ READ ONLY ------- */
 @page *{
     margin:0px; background-color:white;
+    
+}
+
+@page{
+  footer: html_myFooter;
+  margin-top: 1cm;
+  margin-bottom: 1cm;
+  margin-left: 1cm;
+  margin-right: 1cm;
+  margin-header: 5mm; 
+  margin-footer: 5mm; 
 }
 
 @media print
@@ -765,7 +776,7 @@ body {background-color:white;}
 
 .budgetNota{padding-bottom:20px; margin-bottom:40px; border-bottom:1px dotted #ccc;}
 
-.budgetSubtitle.superTotal{background-color:#666; color:#fff; letter-spacing:1px; padding:5px; font-size:17px;}
+.superBudgetTotal{background-color:#666; color:#fff; letter-spacing:1px; padding:5px; font-size:17px;}
 
 .budgetDesc{   margin-bottom:15px; padding: 0px 5px;}
 
