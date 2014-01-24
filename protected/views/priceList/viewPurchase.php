@@ -1,6 +1,6 @@
 <div class="container" id="screenlistaPrecio">
 <h1 class="pageTitle pull-left">Listas de Precios</h1>
-         <button type="button" class="btn btn-default marginLeft pull-right""><i class="fa fa-arrow-left fa-fw"></i> Volver</button>
+         <button type="button" class="btn btn-default marginLeft pull-right" onclick="window.location = '<?php echo PriceListController::createUrl('admin')?>'"><i class="fa fa-arrow-left fa-fw"></i> Volver</button>
 <div class="clear"></div>
 <div class="row panelPresu">
     <div class="col-sm-12">

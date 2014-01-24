@@ -1,6 +1,6 @@
 <div class="container" id="screenlistaPrecio">
 <h1 class="pageTitle pull-left">Listas de Precios</h1>
-         <button type="button" class="btn btn-default marginLeft pull-right""><i class="fa fa-arrow-left fa-fw"></i> Volver</button>
+         <button type="button" class="btn btn-default marginLeft pull-right" onclick="window.location = '<?php echo PriceListController::createUrl('admin')?>'"><i class="fa fa-arrow-left fa-fw"></i> Volver</button>
 <div class="clear"></div>
 <div class="row panelPresu">
     <div class="col-sm-12">
@@ -9,7 +9,8 @@
 <button type="button" class="btn btn-primary marginLeft pull-right"><i class="fa fa-download fa-fw"></i> Descargar</button>
 <div class="clear"></div>
           <div>Creacion: <?php echo $model->date_creation;?> - Validez: <?php echo $model->date_validity;?></div>
-</div></div>
+          <div>Procentaje sobre valor de los productos en envios mar&iacute;timos: <?php echo $model->importer->shippingParameters[0]->shippingParameterMaritime->percent_over_dealer_cost;?> %</div>
+	</div></div>
 <div class="row contenedorPresu">
     <div class="col-sm-12">
  <?php
