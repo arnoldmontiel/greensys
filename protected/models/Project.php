@@ -121,6 +121,40 @@ class Project extends ModelAudit
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
+	
+	public function searchWithOutContactoInicial()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('t.Id',$this->Id);
+		$criteria->compare('t.Id_customer',$this->Id_customer);
+		$criteria->compare('t.description !="Contacto Inicial"',true);
+		$criteria->compare('t.address',$this->address,true);
+		$criteria->join='INNER JOIN `customer` `c` ON (`c`.`Id`=`t`.`Id_customer`)
+						INNER JOIN 	`contact` `con` ON (`con`.`Id`=`c`.`Id_contact`)';
+		$criteria->compare('con.description',$this->contact_description,true);
+		//$criteria->order="con.description, t.description";
+	
+		$sort=new CSort;
+		$sort->attributes=array(
+				'contact_description' => array(
+						'asc' => 'con.description',
+						'desc' => 'con.description DESC',
+				),
+				'*',
+		);
+		$sort->defaultOrder ="con.description";
+	
+	
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+				'sort'=>$sort,
+		));
+	}
+	
 	public function search()
 	{
 		// Warning: Please modify the following code to remove attributes that

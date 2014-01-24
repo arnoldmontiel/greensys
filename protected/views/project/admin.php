@@ -11,7 +11,7 @@
     <div class="col-sm-12">
     <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'project-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$model->searchWithOutContactoInicial(),
 	'filter'=>$model,
 	'selectableRows' => 0,
 	'summaryText'=>'',		
