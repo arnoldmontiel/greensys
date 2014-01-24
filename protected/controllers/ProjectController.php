@@ -77,6 +77,18 @@ class ProjectController extends GController
 			if(isset($_POST['ProjectService']))
 			{
 				$model->attributes=$_POST['ProjectService'];
+				if(empty($model->note))
+				{
+					$modelService = Service::model()->findByPk($model->Id_service);
+					if(isset($modelService))
+						$model->note = $modelService->note;
+				}
+				if(empty($model->long_description))
+				{
+					$modelService = Service::model()->findByPk($model->Id_service);
+					if(isset($modelService))
+						$model->long_description = $modelService->long_description;
+				}
 				if($model->save()){
 					echo json_encode($model->attributes);
 				}
