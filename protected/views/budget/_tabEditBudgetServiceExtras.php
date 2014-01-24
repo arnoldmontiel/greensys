@@ -73,7 +73,12 @@ $settings = new Settings();
 					),
 							array(
 									'name'=>'Acciones',
-									'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"removeBudgetItem(".$data->Id.");\" ><i class=\"fa fa-trash-o\"></i> Borrar</button>"',
+									'value'=>function($data){									
+										if($data->description=="Programación"||$data->description=="Instalación")
+											return '';
+										else
+											return '<button type="button" class="btn btn-default btn-sm" onclick="removeBudgetItem('.$data->Id.');" ><i class="fa fa-trash-o"></i> Borrar</button>';
+									},
 									'type'=>'raw',
 									'htmlOptions'=>array("style"=>"text-align:right;"),
 									'headerHtmlOptions'=>array("style"=>"text-align:right;"),
