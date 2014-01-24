@@ -98,8 +98,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		));
 ?>		
 
-?>		
-
 
     </div>
     <!-- /.col-sm-12 --> 
