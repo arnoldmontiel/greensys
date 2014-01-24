@@ -16,10 +16,13 @@ $settings = new Settings();
       <ul class="nav nav-tabs">
         <?php 
         $first = true;
+        
         $criteria = new CDbCriteria();
+        $criteria->with[]="service";
         $criteria->addCondition('Id_budget='.$model->Id);
         $criteria->addCondition('version_number='.$model->version_number);
         $criteria->group="Id_service";
+        $criteria->order="service.description";
         $services = BudgetItem::model()->findAll($criteria);
         foreach($services as $item)	{ ?>
         <li class="<?php echo ($first?'active':'');?>">
@@ -102,14 +105,7 @@ $settings = new Settings();
     <!-- /.col-sm-12 --> 
 </div>
 <!-- /.row --> 
-  
-   <div class="row contenedorPresu">
-    <div class="col-sm-12">
-<div class="tituloFinalPresu">Subtotales por Servicio</div>
-    <p>En esta tabla se muestran los n&uacute;meros finales con descuentos ya aplicados.</p>
-<?php 
-$modelBudgetItemService = New BudgetItem();
-$sort=new CSort;
+
 
 $dataProvider = new CActiveDataProvider($modelBudgetItemService, array(
 		'criteria'=>$criteria,
@@ -387,6 +383,7 @@ function changeService(id, object)
 			}
 			).success(function(data)					
 			{
+				$.fn.yiiGridView.update('totals-services-grid');
 				statusSaved();
 			}).error(function(data)
 			{
