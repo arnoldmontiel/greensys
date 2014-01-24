@@ -1,7 +1,8 @@
 <?php 
 $settings = new Settings();
 ?>
-    <?php echo $this->renderPartial('_tabBudgetServiceConfig',array(
+    <?php
+    echo $this->renderPartial('_tabBudgetServiceConfig',array(
 						'model'=>$model,
 						'modelProduct'=>$modelProduct,
 						'modelBudgetItem'=>$modelBudgetItem,
@@ -26,7 +27,7 @@ $settings = new Settings();
 	        	$idAreaProject = $item->Id;
 	        	$first= false;
 	        }
-		}
+		}		
 		echo CHtml::hiddenField("idTabArea",$idArea, array('id'=>'idTabArea'));
 		echo CHtml::hiddenField("idTabAreaProject",$idAreaProject, array('id'=>'idTabAreaProject'));
 		?>
@@ -56,7 +57,6 @@ $settings = new Settings();
         	$first = false;
 	        $modelBudgetItem->Id_area = $item->Id_area;
 	        $modelBudgetItem->Id_area_project = $item->Id;
-	        
 	        echo $this->renderPartial('_tabEditBudgetByArea',array(
 						'model'=>$model,
 						'modelProduct'=>$modelProduct,
@@ -73,7 +73,8 @@ $settings = new Settings();
     </div>
     </div>
   
-    <?php echo $this->renderPartial('_tabEditBudgetTotals',array(
+    <?php 
+    echo $this->renderPartial('_tabEditBudgetTotals',array(
 						'model'=>$model,
 						'modelProduct'=>$modelProduct,
 						'modelBudgetItem'=>$modelBudgetItem,

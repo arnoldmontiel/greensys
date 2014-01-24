@@ -96,15 +96,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 					),
 			),
 		));
-?>		
-    <?php echo $this->renderPartial('_tabEditBudgetTotals',array(
-						'model'=>$model,
-						'modelProduct'=>$modelProduct,
-						'modelBudgetItem'=>$modelBudgetItem,
-						'priceListItemSale'=>$priceListItemSale,
-						'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,));
-    ?>
-
+?>
 
     </div>
     <!-- /.col-sm-12 --> 
