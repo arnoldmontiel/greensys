@@ -148,11 +148,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
 							'name'=>'Programación',
 							'value'=>
 							function($data)
-							{
-								$settings = new Settings();
-								$setting = $settings->getSetting();								
-								return number_format($data->budget->getTotalTimeProgramationByService($data->Id_service), 2).' x '.$setting->time_programation_price.' '.$data->budget->currency->short_description.' = '.number_format($data->budget->getTotalPriceTimeProgramationByService($data->Id_service), 2).' '.$data->budget->currency->short_description;
-								//return number_format($data->budget->getTotalPriceByService($data->Id), 2);
+							{							
+								return number_format($data->budget->getTotalPriceTimeProgramationByService($data->Id_service), 2).' '.$data->budget->currency->short_description;
 							},
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-right"),
@@ -163,9 +160,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 							'value'=>
 							function($data)
 							{
-								$settings = new Settings();
-								$setting = $settings->getSetting();
-								return number_format($data->budget->getTotalTimeInstalationByService($data->Id_service), 2).' x '.$setting->time_instalation_price.' '.$data->budget->currency->short_description.' = '.number_format($data->budget->getTotalPriceTimeInstalationByService($data->Id_service), 2).' '.$data->budget->currency->short_description;
+								return number_format($data->budget->getTotalPriceTimeInstalationByService($data->Id_service), 2).' '.$data->budget->currency->short_description;
 							},
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-right"),

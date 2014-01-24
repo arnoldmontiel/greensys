@@ -237,53 +237,6 @@ class Budget extends ModelAudit
 		return (isset($modelBudgetItem))?$modelBudgetItem->total_unit_fan: 0;
 	}
 	
-	public function getTotalTimeProgramationByService($Id_service)
-	{
-	
-		$criteria=new CDbCriteria;
-	
-		$criteria->compare('t.Id_budget',$this->Id);
-		$criteria->compare('t.version_number',$this->version_number);
-		$criteria->addCondition('(t.Id_budget_item is null)');
-		$criteria->addCondition('(t.Id_product is null)');
-		$criteria->addCondition('t.description like "Programación"');
-		
-		if(isset($Id_service))
-			$criteria->addCondition('t.Id_service='.$Id_service);
-		else
-			$criteria->addCondition('(t.Id_service is null)');				
-				
-		$modelBudgetItem = BudgetItem::model()->find($criteria);
-		$totalTimeProgramation = 0;
-		if(isset($modelBudgetItem))
-			$totalTimeProgramation = $modelBudgetItem->quantity;
-		
-		return round($totalTimeProgramation,2);
-	}
-	public function getTotalTimeInstalationByService($Id_service)
-	{
-	
-		$criteria=new CDbCriteria;
-	
-		$criteria->compare('t.Id_budget',$this->Id);
-		$criteria->compare('t.version_number',$this->version_number);
-		$criteria->addCondition('(t.Id_budget_item is null)');
-		$criteria->addCondition('(t.Id_product is null)');
-		$criteria->addCondition('t.description like "Instalación"');
-		
-		if(isset($Id_service))
-			$criteria->addCondition('t.Id_service='.$Id_service);
-		else
-			$criteria->addCondition('(t.Id_service is null)');				
-				
-		$modelBudgetItem = BudgetItem::model()->find($criteria);
-		$totalTime = 0;
-		if(isset($modelBudgetItem))
-			$totalTime = $modelBudgetItem->quantity;
-		
-		return round($totalTime,2);
-	}
-	
 	public function getTotalPriceTimeProgramationByService($Id_service)
 	{
 		$criteria=new CDbCriteria;
@@ -303,9 +256,6 @@ class Budget extends ModelAudit
 		$total = 0;
 		if(isset($modelBudgetItem))
 		{
-			$settings = new Settings();
-			$setting = $settings->getSetting();
-			
 			$discount = 0;
 			if($modelBudgetItem->discount_type ==0)
 			{
@@ -340,9 +290,6 @@ class Budget extends ModelAudit
 		$total = 0;
 		if(isset($modelBudgetItem))
 		{
-			$settings = new Settings();
-			$setting = $settings->getSetting();
-			
 			$discount = 0;
 			if($modelBudgetItem->discount_type ==0)
 			{
@@ -377,7 +324,16 @@ class Budget extends ModelAudit
 		$totalTime = 0;
 		foreach ($modelBudgetItem as $item)
 		{
-			$totalTime += $item->price*$item->quantity;
+			$discount = 0;
+			if($item->discount_type ==0)
+			{
+				$discount = (($item->price)*$item->quantity )* $item->discount/100;
+			}
+			else
+			{
+				$discount = $item->discount;
+			}
+			$totalTime += (($item->price)*$item->quantity) - $discount;
 		}
 		return round($totalTime,2);
 	}
@@ -406,7 +362,7 @@ class Budget extends ModelAudit
 	}
 	public function getTotalPriceByServiceWithHours($Id_service)
 	{
-		return round($this->getTotalPriceByService($Id_service)+$this->getTotalPriceTimeInstalationByService($Id_service)+$this->getTotalPriceTimeProgramationByService($Id_service),2);
+		return round($this->getTotalPriceByService($Id_service)+$this->getTotalPriceTimeInstalationByService($Id_service)+$this->getTotalPriceTimeProgramationByService($Id_service)+  $this->getTotalPriceAdditionalByService($Id_service) ,2);
 	}
 	public function getTotalPrice()
 	{
