@@ -765,7 +765,7 @@ body {background-color:white;}
 
 .budgetNota{padding-bottom:20px; margin-bottom:40px; border-bottom:1px dotted #ccc;}
 
-.superTotal{background-color:#666; letter-spacing:1px; padding:5px; font-size:17px;}
+.budgetSubtitle.superTotal{background-color:#666; color:#fff; letter-spacing:1px; padding:5px; font-size:17px;}
 
 .budgetDesc{   margin-bottom:15px; padding: 0px 5px;}
 
