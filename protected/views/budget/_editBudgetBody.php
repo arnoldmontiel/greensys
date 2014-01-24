@@ -72,6 +72,105 @@ $settings = new Settings();
    </div>
     </div>
     </div>
+    
+     <div class="row contenedorPresu">
+    <div class="col-sm-12">
+<div class="tituloFinalPresu">Subtotales por Servicio</div>
+    <p>En esta tabla se muestran los n&uacute;meros finales con descuentos ya aplicados.</p>
+<?php 
+$modelBudgetItemService = New BudgetItem();
+$sort=new CSort;
+$criteria = new CDbCriteria();
+$criteria->addCondition('Id_budget='.$model->Id);
+$criteria->addCondition('version_number='.$model->version_number);
+$criteria->group="Id_service";
+$dataProvider = new CActiveDataProvider($modelBudgetItemService, array(
+		'criteria'=>$criteria,
+		'sort'=>$sort,
+));
+
+$this->widget('zii.widgets.grid.CGridView', array(
+		'id'=>'totals-services-grid',
+		'dataProvider'=>$dataProvider,
+		'selectableRows' => 0,
+		'emptyText' => 'A&uacute;n sin servicios.',
+		'summaryText'=>'',	
+		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
+		'columns'=>array(
+					array(
+							'name'=>'Servicio',
+							'value'=>function($data)
+								{
+									return isset($data->service)?$data->service->description:"General";
+									//return number_format($model->getTotalPriceByService($data->Id), 2);
+								},
+							'type'=>'raw',
+					),
+					array(
+							'name'=>'Equipos',
+							'value'=>
+								function($data)
+								{
+									return number_format($data->budget->getTotalPriceByService($data->Id_service), 2).' '.$data->budget->currency->short_description;
+								},
+							'type'=>'raw',
+							'htmlOptions'=>array("class"=>"align-right"),		
+							'headerHtmlOptions'=>array("class"=>"align-right"),								
+					),
+					array(
+							'name'=>'Programación',
+							'value'=>
+							function($data)
+							{							
+								return number_format($data->budget->getTotalPriceTimeProgramationByService($data->Id_service), 2).' '.$data->budget->currency->short_description;
+							},
+							'type'=>'raw',
+							'htmlOptions'=>array("class"=>"align-right"),
+							'headerHtmlOptions'=>array("class"=>"align-right"),								
+					),
+					array(
+							'name'=>'Instalación',
+							'value'=>
+							function($data)
+							{
+								return number_format($data->budget->getTotalPriceTimeInstalationByService($data->Id_service), 2).' '.$data->budget->currency->short_description;
+							},
+							'type'=>'raw',
+							'htmlOptions'=>array("class"=>"align-right"),
+							'headerHtmlOptions'=>array("class"=>"align-right"),
+					),
+					array(
+							'name'=>'Otros Recargos',
+							'value'=>function($data){
+								return number_format($data->budget->getTotalPriceAdditionalByService($data->Id_service), 2).' '.$data->budget->currency->short_description;
+							},
+							'type'=>'raw',
+							'htmlOptions'=>array("class"=>"align-right"),
+							'headerHtmlOptions'=>array("class"=>"align-right"),
+					),
+					array(
+							'name'=>'Total',
+							'value'=>
+							function($data)
+							{
+								$settings = new Settings();
+								$setting = $settings->getSetting();
+									return "<span class='label label-primary labelPrecio'>".number_format($data->budget->getTotalPriceByServiceWithHours($data->Id_service), 2).' <div class="usd">'.$data->budget->currency->short_description."</div></span>";
+							},
+							'type'=>'raw',
+							'htmlOptions'=>array("class"=>"align-right"),
+							'headerHtmlOptions'=>array("class"=>"align-right"),								
+					),
+			),
+		));
+?>		
+
+
+    </div>
+    <!-- /.col-sm-12 --> 
+  </div>
+  <!-- /.row --> 
+  
     <?php echo $this->renderPartial('_tabEditBudgetTotals',array(
 						'model'=>$model,
 						'modelProduct'=>$modelProduct,
@@ -117,7 +216,7 @@ function editAreaProject(idAreaProject)
     
 function updateGridExtras()
 {
-	
+	$.fn.yiiGridView.update('totals-services-grid');
 }
     
     function statusStartSaving()
@@ -149,6 +248,7 @@ function setTotals()
 					$('#totals_price_w_discount').html(response.total_price_with_discount);					
 					$('#totals_discount').html(response.total_discount);
 					$('#totals_total_price').html(response.total_price);
+					$.fn.yiiGridView.update('totals-services-grid');
 				}
 			}
 		);		
@@ -193,6 +293,7 @@ function changeService(id, object)
 			}
 			).success(function(data)					
 			{
+				updateGridExtras();
 				statusSaved();
 			}).error(function(data)
 			{
