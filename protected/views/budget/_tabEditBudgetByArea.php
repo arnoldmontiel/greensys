@@ -46,10 +46,10 @@ $selectPrice='"<div class=\"precioTabla\"><div class=\"precioTablaValor\">".$dat
 							'headerHtmlOptions'=>array("class"=>"align-center"),
 					),
 					array(
-							'name'=>'service',
+							'header'=>'Servicio',
 							'value'=>'
 											CHtml::dropDownList("Id_service", $data->Id_service,CHtml::listData(Service::model()->findAll(), "Id", "description"),array(
-											"prompt"=>"Servicios","id"=>$data->Id,"class"=>"form-control campoServicio","onchange"=>"changeService(".$data->Id.",this)"
+											"prompt"=>"General","id"=>$data->Id,"class"=>"form-control campoServicio","onchange"=>"changeService(".$data->Id.",this)"
 											) );',
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-center"),
