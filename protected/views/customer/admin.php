@@ -40,7 +40,7 @@
 				),				
 				array(
 				'header'=>'Acciones',
-				'value'=>'"<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"updateCustomer(".$data->Id.");\" ><i class=\"fa fa-pencil\"></i> Editar</button>"',
+				'value'=>'"<div class=\"buttonsTable\"><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"updateCustomer(".$data->Id.");\" ><i class=\"fa fa-pencil\"></i> Editar</button></div>"',
 				'type'=>'raw',
 				'htmlOptions'=>array("style"=>"text-align:right;"),
 				'headerHtmlOptions'=>array("style"=>"text-align:right;"),

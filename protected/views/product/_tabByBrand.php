@@ -42,8 +42,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				array(
 						'header'=>'Acciones',
 						'value'=>function($data){
-							return "<button type='button' onclick='downloadExcel(".$data->Id.");' class='btn btn-default btn-sm'><i class='fa fa-download'></i> Descargar Excel</button>
-									<button type='button' onclick='updateExcel(".$data->Id_brand.");' class='btn btn-default btn-sm'><i class='fa fa-upload'></i> Cargar Actualizaci&oacute;n</button>";
+							return "<button type='button' onclick='downloadExcel(".$data->Id.");' class='btn btn-default btn-sm'><i class='fa fa-download'></i> Descargar Excel</button>	<button type='button' onclick='updateExcel(".$data->Id_brand.");' class='btn btn-default btn-sm'><i class='fa fa-upload'></i> Cargar Actualizaci&oacute;n</button>";
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:right;"),

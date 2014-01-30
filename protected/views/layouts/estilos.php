@@ -1,6 +1,6 @@
 <style>
 /*!
- * Pelicano v1.1.1
+ * Green v1.1.1
  *
  * Copyright 2013 
  */
@@ -106,6 +106,7 @@ body{
 	color:#333;
 	background-color:#ccc;	
 	padding-top:85px;
+	background: #ECF0F1;
 	 }
 
 
@@ -142,18 +143,19 @@ border-color: #24D900;}
 .btn-primary.disabled, .btn-primary[disabled], fieldset[disabled] .btn-primary, .btn-primary.disabled:hover, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary:hover, .btn-primary.disabled:focus, .btn-primary[disabled]:focus, fieldset[disabled] .btn-primary:focus, .btn-primary.disabled:active, .btn-primary[disabled]:active, fieldset[disabled] .btn-primary:active, .btn-primary.disabled.active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary.active {
 color:#eee;
 background-color: #96d896;
-border-color: #7fc47f;
+border-color: #96d896;
 }
-    .btn-default{
-  color: #5cb85c;
-background-color: #eee;
-border-color: #ddd;
+  .btn-default{
+  color: #ffffff;
+background-color: #7F8C8D;
+font-weight:600;
+border-color: #7F8C8D;
 }
-.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
-color: #fff;
-background-color: #5cb85c;
-border-color: #00A395;
-}
+  .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
+color: #ffffff;
+background-color: #666;
+border-color: #666;}
+
     .btn-danger{
   color: #d9534f;
 background-color: #eee;
@@ -162,10 +164,11 @@ border-color: #ddd;
 
 
 .btn-default.disabled, .btn-default[disabled], fieldset[disabled] .btn-default, .btn-default.disabled:hover, .btn-default[disabled]:hover, fieldset[disabled] .btn-default:hover, .btn-default.disabled:focus, .btn-default[disabled]:focus, fieldset[disabled] .btn-default:focus, .btn-default.disabled:active, .btn-default[disabled]:active, fieldset[disabled] .btn-default:active, .btn-default.disabled.active, .btn-default[disabled].active, fieldset[disabled] .btn-default.active {
-background-color:#ebebeb;
+background-color:#ccc;
 border-color: #ccc;
-color:#888;
+color:#fff;
 }
+
 
 body.modal-open {
     overflow: hidden;
@@ -181,7 +184,7 @@ body.modal-open {
 
 ul.nav{ margin-left:0px;}
 
-#Menu{ margin-top: 10px; margin-left:10px; margin-right:10px; border-top: 5px solid #24D900; height:55px;z-index:1060;}
+#Menu{ margin-top: 10px; margin-left:10px; margin-right:10px; border-top: 5px solid #24D900; height:55px;z-index:1060; background-color:#ECF0F1;}
 #MenuLogo{
 	margin-left: 0px;
 font-family: 'LatoRegular', sans-serif;
@@ -194,6 +197,9 @@ line-height:48px;
 
 #Menu .navbar-collapse{ padding-right:0px;}
 #Menu .navbar-nav>li>a{padding: 2px 15px;line-height: 45px;}
+
+#Menu .navbar-nav>li.active>a{background-color:rgba(255,255,255,0.6);}
+
 
 .popover{width:300px; max-width:300px;}
 .popoverButtons{ border-top:1px dotted #ccc; margin-top:10px; padding-top:10px;}
@@ -226,10 +232,12 @@ margin-bottom:15px;
 
 h1.pageTitle{font-size: 2em;
 font-weight: normal;
-color: #fff;
+color: #7F8C8D;
 text-align:left;
 margin:0px;
 line-height:auto; padding-bottom:20px; }
+
+#screenCrearPresupuesto h1.pageTitle{ padding-bottom:0px;}
 
 h3{font-size: 24px;
 font-weight: 100;
@@ -242,8 +250,10 @@ h3.tableTitle{ color: #666; text-shadow:none; background-color:#eee; padding:10p
 
 #screenInicio .panel .alert{margin-bottom:0px;}
 
-.panel-heading h3 { text-shadow:none; color:#333;}
-.panel-primary .panel-heading h3 {  color:white;}
+.panel-default>.panel-heading { background-color:#7F8C8D; border-color:#7F8C8D;}
+
+.panel-heading h3 { text-shadow:none; color:white;}
+.panel-success>.panel-heading h3 {  color:#333;}
 
 .panel .table.tablaIndividual{ margin-bottom:0px;}
 .panel-body{ padding:10px;}
@@ -289,12 +299,16 @@ padding:2px;
 }
 
 
-.nav-tabs>li>a{font-size:16px; color:white;  font-weight:600;}
+.nav-tabs{border-bottom:1px solid #ddd;}
 
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{ border:none;}
+.nav-tabs>li>a{font-size:16px; color:#7F8C8D;  font-weight:600;}
 
-.nav-tabs>li.active>a{color:#333 !important;}
-.nav-tabs>li>a:hover{ color:#666 !important;}
+.nav-tabs>li>a .badge{background-color:#fff; color:#7F8C8D;}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{  background-color:#7F8C8D; color:white !important; cursor:default; border:1px solid #7F8C8D;}
+
+.nav-tabs>li.active>a{ background-color:#7F8C8D;color:#fff !important;}
+.nav-tabs>li>a:hover{ color:#666 !important; background-color:white;}
 
 .grid-view .sort-link{background-image:url(images/sort-desc.png); background-repeat:no-repeat; background-position:right; padding-right:20px;}
 
@@ -431,11 +445,12 @@ padding: 6px 8px;
 
 .contenedorPresu .table.tablaIndividual{ margin-bottom:10px;} 
 
-
-.buttonsTableProd{min-width:158px;}
-.buttonsTablePres{min-width:405px;}
+.buttonsTable button:last-child{margin-right:0px;}
+.buttonsTableProd{min-width:160px;}
+.buttonsTablePres{min-width:396px;}
 .buttonsTableOrder{width:52px;}
 .buttonsTableOrder button{margin-top:0px;}
+.buttonsTablePresWait{width:150px;}
 
 .combined { width:100%;}
 .combined select{display:inline-block !important; width:60% !important;}
@@ -458,9 +473,7 @@ padding: 6px 8px;
 .modal-footer {padding: 9px 15px;}
 .modal-body{ overflow:hidden;}
 .modal-backdrop{z-index:1060;}
-.modal .nav-tabs li a{ color:#333;}
 
-.modal .nav-tabs>li.active>a { background-color:#ccc; color:#fff !important;}
 
 /* ------ END MODALS ------- */
 
@@ -556,7 +569,7 @@ padding-bottom: 20px; position:relative;}
 .superTotal{ font-size:20px;}
 
 
-.panelPresu{ background-color:#eee;margin:0px; border:0px none; padding-bottom:20px; padding-top:20px;  border-bottom:2px dotted #dedede;  border-radius:0px;}
+.panelPresu{/* background-color:#eee;*/margin:0px; border:0px none; padding-bottom:20px; padding-top:20px;  border-bottom:2px dotted #dedede;  border-radius:0px;}
 
 .panelPresu h2{margin-bottom:10px;}
 .panelPresu .versionDrop{display:block; margin:0px;margin-bottom:15px;text-shadow:none; color:#666;font-size: 24px;
@@ -565,11 +578,11 @@ font-family:'GudeaRegular', Arial, sans-serif;}
 
 .panelPresu .table td{padding:3px;}
 
-.contenedorPresu{ background-color:#eee; padding:0px; margin:0px; border-bottom:2px dotted #dedede; padding-top:10px; padding-bottom:20px; margin-bottom:0px;}
+.contenedorPresu{ /*background-color:#eee;*/ padding:0px; margin:0px; border-bottom:2px dotted #dedede; padding-top:10px; padding-bottom:20px; margin-bottom:0px;}
 
 .contenedorPresu .col-sm-12{ padding-right:10px;padding-left:10px;  }
 
-.panelPresuFinal { background-color:#eee; margin:0px 0px; padding-top:20px; border-top:2px dotted #dedede; }
+.panelPresuFinal { /*background-color:#eee;*/ margin:0px 0px; padding-top:20px; border-top:2px dotted #dedede; }
 
 
 .panel-body .tablaDatosPanel{ margin-top:10px; margin-bottom:10px !important;}

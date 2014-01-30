@@ -50,7 +50,7 @@
 						'header'=>'Acciones',
 						'value'=>function($data){
 						$grid = "'budget-grid-waiting'";
-							return '<div class="btn-group">
+							return '<div class="buttonsTable buttonsTablePresWait"><div class="btn-group">
     									<button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">Estado <i class="fa fa-caret-down"></i></button>
     										<ul class="dropdown-menu">
 										        <li><a onclick="openChangeStateBudget('.$data->Id.', '.$data->version_number.', 1)" href="#"><i class="fa fa-refresh"></i> Re-Abrir</a></li>
@@ -58,7 +58,7 @@
 										        <li><a onclick="openChangeStateBudget('.$data->Id.', '.$data->version_number.', 4)" href="#"><i class="fa fa-times-circle"></i> Cancelado</button></a></li>
 										    </ul>
 									</div>
-            						<button onclick="downloadPDF('.$data->Id.', '.$data->version_number.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> PDF</button>';						
+            						<button onclick="downloadPDF('.$data->Id.', '.$data->version_number.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i> PDF</button></div>';						
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:right;"),

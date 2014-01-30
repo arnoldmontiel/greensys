@@ -298,7 +298,11 @@ $("#tabExtraItems").click(function()
 });
 </script>
 <div class="container" id="screenCrearPresupuesto">
-  <h1 class="pageTitle">Presupuesto</h1>
+  <div class"row">
+  <div class="col-md-12">
+   <h1 class="pageTitle">Presupuesto</h1>
+  </div>
+  </div>
   	<?php echo CHtml::hiddenField("idBudget",$model->Id,array("id"=>"idBudget"));?>
   	<?php echo CHtml::hiddenField("version",$model->version_number,array("id"=>"version"));?>
 	<?php $this->renderPartial('_editBudgetHead',array('model'=>$model));?>
