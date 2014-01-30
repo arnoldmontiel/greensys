@@ -446,7 +446,7 @@ padding: 6px 8px;
 .contenedorPresu .table.tablaIndividual{ margin-bottom:10px;} 
 
 .buttonsTable button:last-child{margin-right:0px;}
-.buttonsTableProd{min-width:160px;}
+.buttonsTableProd{min-width:163px;}
 .buttonsTablePres{min-width:400px;}
 .buttonsTableOrder{width:52px;}
 .buttonsTableOrder button{margin-top:0px;}
