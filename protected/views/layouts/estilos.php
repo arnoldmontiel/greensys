@@ -447,7 +447,7 @@ padding: 6px 8px;
 
 .buttonsTable button:last-child{margin-right:0px;}
 .buttonsTableProd{min-width:160px;}
-.buttonsTablePres{min-width:396px;}
+.buttonsTablePres{min-width:400px;}
 .buttonsTableOrder{width:52px;}
 .buttonsTableOrder button{margin-top:0px;}
 .buttonsTablePresWait{width:150px;}
