@@ -3,7 +3,7 @@ Yii::app()->clientScript->registerScript('form-note', "
 		
 $('#Note_note').change(function(){
 	$.post(
-		'".NoteController::createUrl('note/AjaxUpdateNoteDesc')."',
+		'".Yii::app()->createUrl('note/AjaxUpdateNoteDesc')."',
 		{
 			id: $('#Note_Id_note').val(),
 			note:$(this).val()
@@ -61,7 +61,7 @@ $('#Note_need_confirmation').change(function(){
 				'id'=>'delete_'.$item->Id,
 				'ajax'=> array(
 					'type'=>'GET',
-					'url'=>NoteController::createUrl('note/AjaxRemoveResourceFromNote',array('IdMultimedia'=>$item->Id, 'IdNote'=>$model->Id)),
+					'url'=>Yii::app()->createUrl('note/AjaxRemoveResourceFromNote',array('IdMultimedia'=>$item->Id, 'IdNote'=>$model->Id)),
 					'beforeSend'=>'function(){
 						if(!confirm("\u00BFEst\u00e1 seguro de eliminar?")) 
 							return false;
