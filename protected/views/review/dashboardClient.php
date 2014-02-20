@@ -324,7 +324,7 @@ $('#btnPublicAlbum').click(function(){
 
 $('#btnCancelAlbum').click(function(){
 	$('#loading').addClass('loading');
-	$.post('".AlbumController::createUrl('album/AjaxCancelAlbum')."', 
+	$.post('".Yii::app()->createUrl('album/AjaxCancelAlbum')."', 
 		$('#Album_Id_album').serialize()
 	).success(
 	function(data){
@@ -348,11 +348,11 @@ $('#btnAlbum').click(function(){
 		SelectAButton($(this));
 
 		$('#loading').addClass('loading');
-		var url = '".AlbumController::createUrl('album/AjaxCreateAlbum')."';
+		var url = '".Yii::app()->createUrl('album/AjaxCreateAlbum')."';
 
 		if('".$browser['browser']."'=='IE')
 		{
-			url = '".AlbumController::createUrl('album/AjaxCreateAlbumIE')."';
+			url = '".Yii::app()->createUrl('album/AjaxCreateAlbumIE')."';
 		}
 		$.post(url, 
 			{
@@ -364,14 +364,14 @@ $('#btnAlbum').click(function(){
 		function(data){
 			$('#loading').removeClass('loading');
 			var param = '&idAlbum='+data+'&idCustomer='+".$Id_customer."+'&idProject='+".$Id_project.";
-			$('#XUploadWidget_form').attr('action','".AlbumController::createUrl('album/AjaxUpload')."'+param);
+			$('#XUploadWidget_form').attr('action','".Yii::app()->createUrl('album/AjaxUpload')."'+param);
 			$('#Album_Id_album').val(data);
 			$('#uploader').html(data);
 			if('".$browser['browser']."'=='IE')
 			{
 				$('#file_upload').uploadify({
 			        'swf'      : '".Yii::app()->request->baseUrl."/js/uploadify.swf',
-			        'uploader' : '".AlbumController::createUrl('album/AjaxUploadify')."&idAlbum='+$('#uploadify_id_album').val()+'&idCustomer='+$('#uploadify_id_customer').val()+'&idProject='+$('#uploadify_id_project').val(),
+			        'uploader' : '".Yii::app()->createUrl('album/AjaxUploadify')."&idAlbum='+$('#uploadify_id_album').val()+'&idCustomer='+$('#uploadify_id_customer').val()+'&idProject='+$('#uploadify_id_project').val(),
 			        // Put your options here
 			        'buttonText' : 'Seleccione',
 			        'onUploadSuccess' : function(file, data, response) {
@@ -381,7 +381,7 @@ $('#btnAlbum').click(function(){
 						target = $('.album-view-image:first');
 						$(target).animate({opacity: 'show'},400);
 						$(target).find('#photo_description').change(function(){
-							$.get('".AlbumController::createUrl('album/AjaxAddImageDescription')."',
+							$.get('".Yii::app()->createUrl('album/AjaxAddImageDescription')."',
  							{
 								IdMultimedia:$(target).attr('id'),
 								description:$(this).val()
@@ -393,7 +393,7 @@ $('#btnAlbum').click(function(){
 						});
 						$(target).find('#photo_cancel').click(function(){
 								
-							$.get('".AlbumController::createUrl('album/AjaxRemoveImage')."',
+							$.get('".Yii::app()->createUrl('album/AjaxRemoveImage')."',
  							{
 								IdMultimedia:$(target).attr('id')
 							}).success(
@@ -519,7 +519,7 @@ $(document).keypress(function(e) {
 			
 			
 			echo CHtml::link('Administrador',
-				InitCustomerController::createUrl('initCustomer/admin'),
+				Yii::app()->createUrl('initCustomer/admin'),
 				array('class'=>'index-review-single-link', 'id'=>'linkAdminInitCust')
 				);
 			
