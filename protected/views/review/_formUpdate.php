@@ -439,7 +439,7 @@ function bindEvents(item)
 		$.ajax({
 				type : 'POST',
 				data : 'id='+idMainNote,
-				url : '" . NoteController::createUrl('note/AjaxDelete') ."',
+				url : '" . Yii::app()->createUrl('note/AjaxDelete') ."',
 				beforeSend : function(){
 							if(!confirm('\u00BFSeguro que quiere borrar la nota entera?')) 
 								return false;
@@ -602,11 +602,11 @@ $('#btnAlbum').click(function(){
 		SelectAButton($(this));
 
 		$('#loading').addClass('loading');
-		var url = '".AlbumController::createUrl('album/AjaxCreateAlbum')."';
+		var url = '".Yii::app()->createUrl('album/AjaxCreateAlbum')."';
 
 		if('".$browser['browser']."'=='IE')
 		{
-			url = '".AlbumController::createUrl('album/AjaxCreateAlbumIE')."';
+			url = '".Yii::app()->createUrl('album/AjaxCreateAlbumIE')."';
 		}
 		$('#dialogProcessing').dialog('open');
 
@@ -621,14 +621,14 @@ $('#btnAlbum').click(function(){
 			$('#dialogProcessing').dialog('close');
 			$('#loading').removeClass('loading');
 			var param = '&idAlbum='+data+'&idCustomer='+".$model->Id_customer."+'&idProject='+".$model->Id_project.";
-			$('#XUploadWidget_form').attr('action','".AlbumController::createUrl('album/AjaxUpload')."'+param);
+			$('#XUploadWidget_form').attr('action','".Yii::app()->createUrl('album/AjaxUpload')."'+param);
 			$('#Album_Id_album').val(data);
 			$('#uploader').html(data);
 			if('".$browser['browser']."'=='IE')
 			{
 				$('#file_upload').uploadify({
 			        'swf'      : '".Yii::app()->request->baseUrl."/js/uploadify.swf',
-			        'uploader' : '".AlbumController::createUrl('album/AjaxUploadify')."&idAlbum='+$('#uploadify_id_album').val()+'&idCustomer='+$('#uploadify_id_customer').val(),
+			        'uploader' : '".Yii::app()->createUrl('album/AjaxUploadify')."&idAlbum='+$('#uploadify_id_album').val()+'&idCustomer='+$('#uploadify_id_customer').val(),
 			        // Put your options here
 			        'buttonText' : 'Seleccione',
 			        'onUploadSuccess' : function(file, data, response) {
@@ -638,7 +638,7 @@ $('#btnAlbum').click(function(){
 						target = $('.album-view-image:first');
 						$(target).animate({opacity: 'show'},400);
 						$(target).find('#photo_description').change(function(){
-							$.get('".AlbumController::createUrl('album/AjaxAddImageDescription')."',
+							$.get('".Yii::app()->createUrl('album/AjaxAddImageDescription')."',
  							{
 								IdMultimedia:$(target).attr('id'),
 								description:$(this).val()
@@ -650,7 +650,7 @@ $('#btnAlbum').click(function(){
 						});
 						$(target).find('#photo_cancel').click(function(){
 								
-							$.get('".AlbumController::createUrl('album/AjaxRemoveImage')."',
+							$.get('".Yii::app()->createUrl('album/AjaxRemoveImage')."',
  							{
 								IdMultimedia:$(target).attr('id')
 							}).success(
@@ -689,7 +689,7 @@ $('#btnNote').click(function(){
 	SelectAButton($(this));
 
 	$('#loading').addClass('loading');
-	$.post('".NoteController::createUrl('note/AjaxCreateNote')."', 
+	$.post('".Yii::app()->createUrl('note/AjaxCreateNote')."', 
 		{
 			idCustomer: ".$model->Id_customer.",
 			idProject: ".$model->Id_project.",
@@ -756,7 +756,7 @@ $('#btnPublicAlbum').click(function(){
 $('#btnCancelNote').click(function(){
 	$('#loading').addClass('loading');
 	$('#dialogProcessing').dialog('open');
-	$.post('".NoteController::createUrl('note/AjaxCancelNote')."', 
+	$.post('".Yii::app()->createUrl('note/AjaxCancelNote')."', 
 		$('#Note_Id_note').serialize()
 	).success(
 	function(data){
@@ -777,7 +777,7 @@ $('#btnCancelNote').click(function(){
 $('#btnCancelAlbum').click(function(){
 	$('#loading').addClass('loading');
 	$('#dialogProcessing').dialog('open');
-	$.post('".AlbumController::createUrl('album/AjaxCancelAlbum')."', 
+	$.post('".Yii::app()->createUrl('album/AjaxCancelAlbum')."', 
 		$('#Album_Id_album').serialize()
 	).success(
 	function(data){
