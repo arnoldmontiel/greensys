@@ -2,8 +2,13 @@
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation"  id="Menu">
         <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#" id="MenuLogo">Green</a>
+           <div class="navbar-header">
+          <a class="navbar-brand dropdown-toggle" data-toggle="dropdown" href="#" id="MenuLogo">GREEN
+          <i class="fa fa-caret-down fa-fw"></i>
+          </a>
+          <ul class="dropdown-menu">
+			<li><a href="tapia.php">TAPIA</a></li>
+          </ul>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->

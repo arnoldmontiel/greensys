@@ -1,6 +1,6 @@
 <style>
 /*!
- * Pelicano v1.1.1
+ * Green v1.1.1
  *
  * Copyright 2013 
  */
@@ -41,6 +41,12 @@ font-weight: normal;
 font-style: normal;
 }
 
+ @font-face {
+font-family: 'Mono';
+src: url('fonts/DejaVuSansMono.ttf');
+font-weight: normal;
+font-style: normal;
+}
 a {
   outline: 0 none !important;
   color:#333 ;
@@ -71,15 +77,21 @@ button {
 }
 
 .noMargin{ margin:0px !important;}
+.noBorder{ border:0px none !important;}
+.block{display:block !important;}
+.inline{display:inline !important;}
+.inlineBlock{display:inline-block !important;}
 
-.align-left{ text-align:left;}
-.align-center{ text-align:center;}
-.align-right{ text-align:right;}
+.clear{clear:both;}
+
+.align-left{ text-align:left !important;}
+.align-center{ text-align:center !important;}
+.align-right{ text-align:right !important;}
 
 .bold{ font-weight:600;}
 .list-group{ margin-left:0px; margin-bottom:0px;}
 
-.list-group .label{ font-size:14px; line-height:26px;}
+.list-group .label{ font-size:13px;}
 
 .panel>.list-group .list-group-item {
 min-height: 48px;
@@ -94,6 +106,7 @@ body{
 	color:#333;
 	background-color:#ccc;	
 	padding-top:85px;
+	background: #ECF0F1;
 	 }
 
 
@@ -114,6 +127,81 @@ margin-right:10px; margin-left:10px; z-index:1050;
 }
 
 
+/* ----- LOGIN ------*/
+.loginBody{background:transparent; background-color:#5cb85c; padding:0px;}
+.loginPanel{
+background-color: #f8f8f8;
+border: 1px solid #d9d9d9;
+-moz-box-shadow: 0 0 16px -4px rgba(0, 0, 0, 0.5);
+-webkit-box-shadow: 0 0 16px -4px rgba(0, 0, 0, 0.5);
+box-shadow: 0 0 16px -4px rgba(0, 0, 0, 0.5);
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+vertical-align:middle;
+text-align:center;
+padding:20px;
+display:inline-block;
+margin:auto;
+}
+.loginBrand{font-family: 'LatoRegular', sans-serif;
+font-size: 28px;
+text-transform: uppercase;
+letter-spacing: 1px;
+line-height: 48px;
+ text-align:center;
+color:#fff;
+margin-bottom:15px;
+}
+
+.loginWrapper{ margin-bottom:200px; margin:auto;
+margin-top:100px; text-align:center;
+}
+.loginBody .inputLogin {
+margin: 5px;
+padding: 0 10px;
+width: 300px;
+height: 34px;
+color: #404040;
+background: white;
+border: 1px solid;
+border-color: #c4c4c4 #d1d1d1 #d4d4d4;
+border-radius: 2px;
+outline: 5px solid #eff4f7;
+-moz-outline-radius: 3px;
+-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
+box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+.loginForm{display:inline-block; margin:auto;}
+
+.loginForm .rememberMe{color:#999; line-height:18px;}
+
+.loginForm .rememberMe label{margin:0px; vertical-align:middle;}
+.loginForm .rememberMe input{margin:0px; vertical-align:middle;}
+
+.loginForm .btn{margin-top:20px;}
+
+.separatorLine{border-top:1px dotted #ddd;}
+
+.loginFooter{color:white; text-align:center; margin-top:40px;}
+
+.loginGoogle{padding:30px 10px; 
+background-color: #e7e7e7;
+border-radius: 2px;
+-moz-outline-radius: 3px;
+width:200px;
+text-align:center;
+}
+.loginGoogle .services{margin:0px; padding:0px; margin:auto; display:inline-block;}
+.loginGoogle .auth-services{margin:0px; padding:0px;}
+.loginGoogle .auth-services li{margin:0px; padding:0px;}
+
+
+.loginGoogle .auth-services a{color:#666;}
+.loginGoogle .auth-services a:hover{text-decoration:none; color:#999;}
+
+/* ----- END LOGIN ------*/
+
   /* ----- NEW BUTTONS ------*/
   .btn-primary{
   color: #ffffff;
@@ -129,19 +217,20 @@ border-color: #24D900;}
 
 .btn-primary.disabled, .btn-primary[disabled], fieldset[disabled] .btn-primary, .btn-primary.disabled:hover, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary:hover, .btn-primary.disabled:focus, .btn-primary[disabled]:focus, fieldset[disabled] .btn-primary:focus, .btn-primary.disabled:active, .btn-primary[disabled]:active, fieldset[disabled] .btn-primary:active, .btn-primary.disabled.active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary.active {
 color:#eee;
-background-color: #26ada1;
-border-color: #21988e;
+background-color: #96d896;
+border-color: #96d896;
 }
-    .btn-default{
-  color: #5cb85c;
-background-color: #eee;
-border-color: #ddd;
+  .btn-default{
+  color: #ffffff;
+background-color: #7F8C8D;
+font-weight:600;
+border-color: #7F8C8D;
 }
-.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
-color: #fff;
-background-color: #5cb85c;
-border-color: #00A395;
-}
+  .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
+color: #ffffff;
+background-color: #666;
+border-color: #666;}
+
     .btn-danger{
   color: #d9534f;
 background-color: #eee;
@@ -150,10 +239,11 @@ border-color: #ddd;
 
 
 .btn-default.disabled, .btn-default[disabled], fieldset[disabled] .btn-default, .btn-default.disabled:hover, .btn-default[disabled]:hover, fieldset[disabled] .btn-default:hover, .btn-default.disabled:focus, .btn-default[disabled]:focus, fieldset[disabled] .btn-default:focus, .btn-default.disabled:active, .btn-default[disabled]:active, fieldset[disabled] .btn-default:active, .btn-default.disabled.active, .btn-default[disabled].active, fieldset[disabled] .btn-default.active {
-background-color:#ebebeb;
+background-color:#ccc;
 border-color: #ccc;
-color:#888;
+color:#fff;
 }
+
 
 body.modal-open {
     overflow: hidden;
@@ -169,7 +259,10 @@ body.modal-open {
 
 ul.nav{ margin-left:0px;}
 
-#Menu{ margin-top: 10px; margin-left:10px; margin-right:10px; border-top: 5px solid #24D900; height:55px;z-index:1060;}
+#Menu{ margin-top: 10px; margin-left:10px; margin-right:10px; border-top: 5px solid #24D900; height:55px;z-index:1060; background-color:#ECF0F1;}
+#Menu.menuTapia{/*border-top:5px solid #BB251C;*/ border-top:5px solid #FFAC6C;}
+
+
 #MenuLogo{
 	margin-left: 0px;
 font-family: 'LatoRegular', sans-serif;
@@ -183,6 +276,9 @@ line-height:48px;
 #Menu .navbar-collapse{ padding-right:0px;}
 #Menu .navbar-nav>li>a{padding: 2px 15px;line-height: 45px;}
 
+#Menu .navbar-nav>li.active>a{background-color:rgba(255,255,255,0.6);}
+
+
 .popover{width:300px; max-width:300px;}
 .popoverButtons{ border-top:1px dotted #ccc; margin-top:10px; padding-top:10px;}
 .popoverButtons button{  width:110px; margin-right:10px;}
@@ -192,6 +288,7 @@ line-height:48px;
 .btn{ font-size:15px;}
 .btn-lg{ font-size:18px;}
 .btn-sm{ font-size:13px;}
+.btn-xs{ font-size:13px;}
 /* ------ END BTN SIZES ------- */
 
 /* ------ BODY / MAIN LAYOUT ------- */
@@ -213,10 +310,12 @@ margin-bottom:15px;
 
 h1.pageTitle{font-size: 2em;
 font-weight: normal;
-color: #fff;
+color: #7F8C8D;
 text-align:left;
 margin:0px;
 line-height:auto; padding-bottom:20px; }
+
+#screenCrearPresupuesto h1.pageTitle{ padding-bottom:0px;}
 
 h3{font-size: 24px;
 font-weight: 100;
@@ -227,8 +326,12 @@ font-family:'GudeaRegular', Arial, sans-serif;
 
 h3.tableTitle{ color: #666; text-shadow:none; background-color:#eee; padding:10px; margin-bottom:0px;}
 
-.panel-heading h3 { text-shadow:none; color:#333;}
-.panel-primary .panel-heading h3 {  color:white;}
+#screenInicio .panel .alert{margin-bottom:0px;}
+
+.panel-default>.panel-heading { background-color:#7F8C8D; border-color:#7F8C8D;}
+
+.panel-heading h3 { text-shadow:none; color:white;}
+.panel-success>.panel-heading h3 {  color:#333;}
 
 .panel .table.tablaIndividual{ margin-bottom:0px;}
 .panel-body{ padding:10px;}
@@ -259,8 +362,8 @@ margin-bottom:10px;}
 
 .dropdown-menu{ text-align:left;}
 
-
 .grid-view {padding: 0px; margin-bottom:50px;}
+.contenedorPresu .grid-view{ margin-bottom:0px;} 
 .grid-view .summary{ display:none;}
 
 .grid-view  input{
@@ -274,12 +377,16 @@ padding:2px;
 }
 
 
-.nav-tabs>li>a{font-size:16px; color:white;  font-weight:600;}
+.nav-tabs{border-bottom:1px solid #ddd;}
 
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{ border:none;}
+.nav-tabs>li>a{font-size:16px; color:#7F8C8D;  font-weight:600;}
 
-.nav-tabs>li.active>a{color:#333 !important;}
-.nav-tabs>li>a:hover{ color:#666 !important;}
+.nav-tabs>li>a .badge{background-color:#fff; color:#7F8C8D;}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{  background-color:#7F8C8D; color:white !important; cursor:default; border:1px solid #7F8C8D;}
+
+.nav-tabs>li.active>a{ background-color:#7F8C8D;color:#fff !important;}
+.nav-tabs>li>a:hover{ color:#666 !important; background-color:white;}
 
 .grid-view .sort-link{background-image:url(images/sort-desc.png); background-repeat:no-repeat; background-position:right; padding-right:20px;}
 
@@ -287,6 +394,8 @@ padding:2px;
 .grid-view .sort-link.desc{background-image:url(images/sort-desc.png); background-repeat:no-repeat; background-position:right; padding-right:20px;}
 
 /* ------ END BODY / MAIN LAYOUT ------- */
+
+
 
 /* ------ PAGINADOR------- */
 ul.yiiPager .page a {
@@ -374,6 +483,11 @@ padding-left: 5px;}
 display: inline-block;
 margin-right: 5px;}
 
+.formHasClear{padding-right:29px; position:relative;}
+
+.clearBT{position:absolute; top:24px; right:15px;color:#ccc; background: none; border:0px none; font-size:24px; vertical-align:bottom;}
+.clearBT:hover{color:#bbb; background: none; border:0px none; font-size:24px; vertical-align:bottom;}
+
 input[type="file"] {
 width:100%;
 }
@@ -409,14 +523,26 @@ padding: 6px 8px;
 
 #screenProductos .table.tablaIndividual { margin-bottom:5px;}
 
-.buttonsTableProd{min-width:158px;}
-.buttonsTablePres{min-width:380px;}
+.contenedorPresu .table.tablaIndividual{ margin-bottom:10px;} 
+
+.buttonsTable button:last-child{margin-right:0px;}
+.buttonsTableProd{min-width:163px;}
+.buttonsTablePres{min-width:400px;}
+.buttonsTableOrder{width:52px;}
+.buttonsTableOrder button{margin-top:0px;}
+.buttonsTablePresWait{width:150px;}
 
 .combined { width:100%;}
 .combined select{display:inline-block !important; width:60% !important;}
 .combined button{display:inline-block; width:35%; margin:0px !important;}
 
 
+.ulEditImagen{min-width:160px; width:150px; padding:5px;}
+.ulEditImagen li{min-width:150px; width:150px;}
+.ulEditImagen li img{width:100%;}
+
+.dropdownEditImagen{ color:#777; cursor:pointer; text-decoration:underline;}
+.dropdownEditImagen i { text-decoration:none; margin-right:6px;}
 /*---------- END EDIT CREATE FORM -------------*/
 
 /* ------ MODALS ------- */
@@ -427,9 +553,7 @@ padding: 6px 8px;
 .modal-footer {padding: 9px 15px;}
 .modal-body{ overflow:hidden;}
 .modal-backdrop{z-index:1060;}
-.modal .nav-tabs li a{ color:#333;}
 
-.modal .nav-tabs>li.active>a { background-color:#ccc; color:#fff !important;}
 
 /* ------ END MODALS ------- */
 
@@ -453,16 +577,24 @@ padding: 6px 8px;
 /* ------ CREAR PRESU ------- */
 
 
-#screenCrearPresupuesto{ margin-bottom:80px;}
+#screenCrearPresupuesto{ margin-bottom:40px;}
+
+#screenCrearPresupuesto .nav-tabs>li>a{color:#666;}
+#screenCrearPresupuesto .nav-tabs>li>a:hover{background-color:rgba(255,255,255,0.5);}
+#screenCrearPresupuesto .nav-tabs>li.active>a:hover{background-color:white; color:#333 !important;}
+
+
 #campoTipoPrecio{ width:65px; display:inline-block;}
 
 h2 a.superEdit{ position:absolute; top:10px; right:30px; cursor:pointer; font-size:20px;}
 
+#header-budget-description{padding-bottom: 10px;
+font-size: 18px;
+margin-top: -5px;}
 
+.btnAlternateView{ margin-left:5px;}
 
-.btnAlternateView{ margin-left:25px;}
-
-#myModalNewBudget .modal-dialog{ width:600px;}
+#myModalFormBudget .modal-dialog{ width:700px;}
 
 
 #myModalAddProduct .modal-dialog{ width:80%;}
@@ -506,25 +638,41 @@ color: #333;
 text-align: left;
 margin: 0px;
 line-height: auto;
-padding-bottom: 20px;}
+padding-bottom: 20px; position:relative;}
+
+.agregarImp{ position:absolute; right:10px; top:0px;}
+
 .totalPresupuesto{ background-color:#eee; height:120px; margin-top:20px; margin-bottom:30px;}
 
-.tablePresuTotal{ background-color:white;}
+.tablePresuTotal{ background-color:;}
 .tablePresuTotal td{ line-height:20px; vertical-align:middle !important;}
 .superTotal{ font-size:20px;}
 
-.panelPresu{ background-color:rgba(255,255,255,0.5); border:none; margin-bottom:2px;}
-.panelPresu{ padding-bottom:20px;   border-bottom-right-radius: 0px;  border-bottom-left-radius: 0px;
-}
 
-.contenedorPresu{ background-color:rgba(255,255,255,0.5); padding:0px; margin:0px;  padding-top:20px; margin-bottom:2px;}
+.panelPresu{/* background-color:#eee;*/margin:0px; border:0px none; padding-bottom:20px; padding-top:20px;  border-bottom:2px dotted #dedede;  border-radius:0px;}
 
-.contenedorPresu .col-sm-12{ padding-right:10px;padding-left:10px;}
+.panelPresu h2{margin-bottom:10px;}
+.panelPresu .versionDrop{display:block; margin:0px;margin-bottom:15px;text-shadow:none; color:#666;font-size: 24px;
+font-weight: 100;
+font-family:'GudeaRegular', Arial, sans-serif;}
+
+.panelPresu .table td{padding:3px;}
+
+.contenedorPresu{ /*background-color:#eee;*/ padding:0px; margin:0px; border-bottom:2px dotted #dedede; padding-top:10px; padding-bottom:20px; margin-bottom:0px;}
+
+.contenedorPresu .col-sm-12{ padding-right:10px;padding-left:10px;  }
+
+.panelPresuFinal { /*background-color:#eee;*/ margin:0px 0px; padding-top:20px; border-top:2px dotted #dedede; }
+
 
 .panel-body .tablaDatosPanel{ margin-top:10px; margin-bottom:10px !important;}
 
 
 .navTabsPencil.nav-tabs>li a{position:relative; padding-right:35px;}
+.navTabsPencil{ margin-right:340px; position:relative; height:45px; border:0px none;}
+.navTabsPencil .pull-right{ position:absolute; right:-340px; bottom:5px;}
+.nav-tabs>li {margin-bottom:0px;}
+
 .nav-tabs>li a.tabEdit{ padding-right:5px;position:absolute;cursor:pointer; right:5px; top:-1px; background-transparent !important; border:none 0px;}
 
 
@@ -547,24 +695,33 @@ padding-bottom: 20px;}
 .bloqueDescuento input{ margin-right:0px;}
 .labelPrecio{ font-size:13px;}
 
+.label-total{font-size:20px;}
+.label-subtotal{font-size:16px;}
+.label-subtotal .usd{font-size:16px; vertical-align:baseline;}
+
 .bloquePrecioRec{min-width:65px;}
 
 .radioTipo{display: inline-block;
 width: 50px;
-height: 40px;
-vertical-align: middle; margin-left:5px;}
+height: 34px;
+vertical-align: middle; margin-left:0px;}
 
-.radioTipo .radio{margin-bottom:0px; margin-top:0px;}
+.radioTipo .radio{margin:0px; text-align:left; height:17px;}
+
+.radioTipo .radio input[type="radio"]{
+margin:0px ; margin-left: -15px;}
 
 .campoServicio{width:100%;}
 
-.usd{font-size:11px; display:inline-block;}
+.radioTipo .usd{ vertical-align:top;}
+
+.usd{font-size:11px; display:inline-block;line-height:17px; height:17px; vertical-align:middle;}
 
 
 .precioTabla{position:relative;}
-.precioTabla button.miniEdit{ position:absolute; top:50%; right:5px; margin-top:-12px !important;}
+.precioTabla button.miniEdit{ position:absolute; top:50%; right:-4px; margin-top:-12px !important;}
 
-.precioTablaValor{padding-right:30px;min-width:90px; line-height:12px;}
+.precioTablaValor{padding-right:35px; line-height:12px;}
 
 
 .tableProductName{ font-size:16px; font-family: 'GudeaBold';}
@@ -577,6 +734,10 @@ vertical-align: middle; margin-left:5px;}
 
 #myModalAddProduct .inputSmall{padding:0px 2px; height:31px;}
 
+#modalPlaceHolder .formHasLabel{ width:74px;}
+#conversorMonedas .formHasLabel{width:84%;}
+
+#modalPlaceHolder .labelPrecio {line-height: 20px; font-size:14px; margin-top:4px; display:inline-block;}
 
 .grid-view th{font-family:"GudeaRegular"; font-weight:600;}
 .grid-view td{font-family:"GudeaRegular";}
@@ -603,7 +764,177 @@ font-family: "GudeaRegular";
 
 .liButtonAdd{ line-height:35px; padding-left:10px;}
 
+#warningEmpty{ margin:5px 0px;}
+
 /* ------ END CREAR PRESU ------- */
+
+/* ------ CREAR IMPORTADOR ------- */
+
+#myModalFormImporter .modal-dialog{width:850px;}
+
+#myModalFormImporter .modal-body{padding:10px;}
+
+#myModalFormImporter h4{margin-top:15px;}
+
+#myModalFormImporter .form-group{margin-bottom:5px;}
+
+
+.grupoAereo{background-color:#eee; border-right:2px solid #fff; margin-top:5px;}
+.grupoMaritimo{background-color:#eee; margin-top:5px;}
+
+/* ------ END CREAR IMPORTADOR ------- */
+
+/* ------ CURRENCY ------- */
+
+.table .miniTableCurrency thead th{font-family:'GudeaRegular'; font-size:12px; background-color:#eee; border-color:#eee;}
+
+.table .miniTableCurrency .btn{margin-left:5px;}
+/* ------ END CURRENCY ------- */
+
+
+/* ------ UPLOAD IMAGENES PRODUCTO ------- */
+.xupload-form{ background-color:rgba(255,255,255,0.5);  font-size:16px;border: 3px dotted #eee; line-height:60px; height:250px; 
+width:auto; padding:50px; border-radius:0px; display:block;margin-right:20px;margin-left: 20px; margin:auto;}
+
+.xupload-form.file_upload_highlight{background-color:white; font-size:16px;}
+
+.xupload-form div{color:#666;}
+
+#files{margin-top:20px;}
+
+.imageUploadCont{width:120px;}
+
+.tablaUploadImagenes .imageUploadCont img{width:100%;}
+
+/* ------ END UPLOAD IMAGENES PRODUCTO ------- */
+
+
+/* ------ READ ONLY ------- */
+@page *{
+    margin:0px; background-color:white;
+    
+}
+
+@page{
+  footer: html_myFooter;
+  margin-top: 1cm;
+  margin-bottom: 1cm;
+  margin-left: 1cm;
+  margin-right: 1cm;
+  margin-header: 5mm; 
+  margin-footer: 5mm; 
+}
+
+@media print
+{
+body {background-color:white;}
+
+
+
+
+.tableReadOnly .conDesc td{width:inherit !important; }
+.tableReadOnly .sinDesc td{width:inherit !important;}
+
+.tableReadOnly .conDesc th{width:inherit !important; }
+.tableReadOnly .sinDesc th{width:inherit !important;}
+}
+
+
+
+.tableReadOnly .conDesc td{width:12% !important; }
+.tableReadOnly .sinDesc td{width:16% !important;}
+
+.descContainer{width:inherit !important;}
+
+#screenReadOnly{ font-size:14px; background-color:white;padding-top:30px; padding-bottom:30px;}
+
+.budgetLogo{margin:auto; display:inline-block;width:300px; height:100px; background-color:black; background-size:80%; background-repeat:no-repeat; background-position:center; background-image:url(images/logo.png);}
+
+.budgetCabecera{ text-transform:uppercase; letter-spacing:2px; color:#333; }
+
+
+.budgetBloque{ font-family:'GudeaRegular'; border-bottom:1px dotted #ccc; padding-bottom:20px; margin-bottom:20px;}
+
+.budgetProduct{font-family:'GudeaBold';	 text-transform:uppercase;}
+
+.budgetPropuesta{ text-transform:uppercase; letter-spacing:2px;}
+.budgetName{font-size:18px; font-family:'GudeaBold';	 text-transform:uppercase; letter-spacing:initial; margin:3px -2px;}
+.budgetClient{ text-transform:uppercase;}
+.budgetVersion{ text-transform:uppercase;}
+.budgetDate{ text-transform:uppercase;}
+
+.budgetTitle{ letter-spacing:1px;  color:#999; font-size:30px;}
+
+.budgetSubtitle{ font-weight:normal; letter-spacing:1px; padding:5px; background-color:#eee; text-transform:uppercase;font-family:'GudeaRegular'; text-align:left;}
+
+.budgetNota{padding-bottom:20px; margin-bottom:40px; border-bottom:1px dotted #ccc;}
+
+.superBudgetTotal{background-color:#666; color:#fff; letter-spacing:1px; padding:5px; font-size:17px;}
+
+.budgetDesc{   margin-bottom:15px; padding: 0px 5px;}
+
+.tableReadOnly{width:100%; margin-bottom:0px;}
+.tableReadOnly td{border-top: 0.1px solid #ddd; font-size:13px;padding:10px 5px; }
+.tableReadOnly th{ padding:10px 5px;}
+
+.tablaDatos {margin-bottom:20px;}
+.tablaDatos td{ padding:10px 5px; }
+.tablaDatos th{ padding:10px 5px;}
+
+
+.budgetMono{font-family:'Mono';}
+
+.label-small{/*font-size:15px;color:white; background-color:#ccc; display:inline-block; padding:3px 5px; */ font-weight: bold;}
+
+.label-big{font-size:18px; margin:0px; color:white; background-color:gray;display:inline-block;padding:3px 5px; font-weight: bold;}
+
+
+.tableReadOnly  td.budgetImgCont{ padding-right:10px;}
+.imgTD{width:100px;}
+
+ div.bold{font-family:'GudeaBold'; font-weight:bold;}
+ 
+.table .tablaLimpia td{border-top: 0px transparent; }
+.tableReadOnly .tablaLimpia{width:100%;}
+.tableReadOnly .tablaLimpia td{border-top: 0px transparent;   }
+
+.tablaLimpia2 {border-top: 0px transparent;  width:100%;}
+.tableReadOnly .tablaLimpia2{width:100%;}
+.tableReadOnly .tablaLimpia2 td{border-top: 0px transparent;}
+.tableReadOnly  .tablaLimpia2 td{border-top: 0px transparent;   }
+
+.tableReadOnly .conDesc{ width:100%; }
+.tableReadOnly .sinDesc{width:100%; }
+
+/*
+.tableReadOnly .conDesc td{width:12%; }
+.tableReadOnly .sinDesc td{width:16%;}*/
+
+.tableReadOnly  td.bold{font-family:'GudeaBold'; font-weight:bold;}
+
+.tableReadOnly  td.lastRow{border-top:1px solid #000; text-transform:uppercase;}
+
+
+.table .tablaLimpia2 td.bold{font-family:'GudeaBold'; font-weight:bold;}
+
+#screenReadOnlyCaratula{ text-align:center; background-color:white; padding-top:150px;}
+#screenReadOnlyCaratulaFinal{ text-align:center; background-color:white; padding-top:20px;}
+
+
+
+.logoBig{ margin:auto; }
+.mainInfo{border-left: 1px solid #333; margin:auto;  text-align:left; margin-top:20px;}
+.mainInfo td{padding-left:10px;text-transform:uppercase;}
+
+.mainInfo td.bigBold{font-weight:bold; font-size:1em;}
+
+.caratulaResumen{ margin-top:100px; text-align:left; }
+.caratulaResumen .table td{border-top: 1px solid #ddd; font-size:13px;padding:5px 10px;}
+.caratulaResumen .table th{ padding:5px 10px;}
+
+#screenReadOnlyCaratulaFinal .caratulaResumen{margin-top:60px;}
+
+/* ------ END READ ONLY ------- */
 
 
 /* ----- DISPOSITIVOS --------*/
@@ -639,6 +970,13 @@ font-family: 'GudeaRegular', Arial, sans-serif;}
 	position: absolute;
 right: 14px;
 top: 2px;}
+
+
+.tab-pane .superBoton2{
+	position: absolute;
+right: 195px;
+top: 2px;}
+
 
 .downloadLink{ cursor:pointer;}
 .downloadLink i{ margin-right:5px;}
@@ -708,6 +1046,62 @@ box-shadow: 0px 0px 2px rgba(0,0,0,0.8); background-color:rgba(0,0,0,0.5); paddi
 
 
 /*---------- END EDIT PELICULA -------------*/
+
+/*---------- /////////////TAPIAAA///////////// -------------*/
+/* ------ MONITOR------- */
+.labelMonitor{width:150px; display:inline-block; margin-bottom:5px; margin-right:10px;}
+
+
+.labelMonitorType{width:150px; display:inline-block; margin-bottom:0px; margin-right:10px; background-color:white;}
+
+
+.labelMonitorType.typeTecnico{}
+.labelMonitorType.typeImplementacion{color:blue;}
+.labelMonitorType.typeCotizacion{color:red;}
+
+#screenMonitor .list-group-item{padding:3px 2px; margin-bottom:3px; border-radius:45px; }
+
+#screenMonitor .list-group-item.odd{background-color:#f9f9f9;}
+
+
+.monitorInfo{line-height:24px;}
+.monitorInfoTitle{font-family:'GudeaBold'; font-size:17px;}
+.monitorInfoTitle .label-warning{color:white; font-family:'GudeaRegular';}
+
+
+.btnDeleteMonitor{margin-top:5px; margin-right:5px; border-radius:40px;}
+
+#screenMonitor .panel-group .panel-default>.panel-heading{background-color:#ddd; color:#555; padding:5px; }
+#screenMonitor .panel-group .panel-default>.panel-heading h4{line-height:30px;}
+
+.circle{
+height: 45px;
+border-radius: 45px;
+width: 45px;
+margin-left: 3px;
+margin-top: 1px;
+margin-right:5px;}
+
+.circlePendiente{background-color: #d9534f;}
+.circleFinalizado{background-color: #CCC;}
+.circleStandBy{background-color: #FFC36E;}
+.circleEjecucion{background-color: green;}
+
+.progressResumenMonitor{height:7px;
+width:300px;
+-webkit-box-shadow: none;
+box-shadow: none;
+margin:auto;
+margin-top:10px;
+margin-bottom:0px;
+}
+
+.progressResumenMonitor .progress-bar{
+-webkit-box-shadow: none;
+box-shadow: none;}
+
+/* ------ END MONITOR------- */
+/*---------- /////////////END TAPIAAA///////////// -------------*/
 
 
 </style>
