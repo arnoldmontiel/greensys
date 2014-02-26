@@ -1082,7 +1082,8 @@ border-radius: 45px;
 width: 45px;
 margin-left: 3px;
 margin-top: 1px;
-margin-right:5px;}
+margin-right:5px;
+display:inline-block;}
 
 .circlePendiente{background-color: #d9534f;}
 .circleFinalizado{background-color: #CCC;}
@@ -1107,19 +1108,19 @@ padding-right:10px;
 }
 
 .progressResumenMonitor{height:7px;
-width:300px;
 -webkit-box-shadow: none;
 box-shadow: none;
 margin:auto;
 margin-bottom:0px;
 margin-top:3px;
+margin-right:30px;
 }
-.
+
 .progressResumenMonitor .progress-bar{
 -webkit-box-shadow: none !important;
 box-shadow: none !important;}
 
-.progressResumenMonitorNum{width:300px; font-size:13px; text-align:right; margin:auto; color:#777; text-align:center;}
+.progressResumenMonitorNum{font-size:13px; text-align:right; margin:auto; color:#777; text-align:center;margin-right:30px;}
 
 .navTabsMonitor{margin-bottom:10px; border-bottom:1px solid #f9f9f9;}
 .navTabsMonitor li a{line-height:14px;}
