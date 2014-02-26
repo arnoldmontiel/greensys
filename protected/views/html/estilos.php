@@ -1049,6 +1049,13 @@ box-shadow: 0px 0px 2px rgba(0,0,0,0.8); background-color:rgba(0,0,0,0.5); paddi
 
 /*---------- /////////////TAPIAAA///////////// -------------*/
 /* ------ MONITOR------- */
+.formSearch{width:250px; border-radius:20px; padding-left:10px;}
+
+.formSearch::-webkit-input-placeholder::before { font-family: FontAwesome; content:'\f002'; }
+.formSearch::-moz-placeholder::before  { font-family: FontAwesome; content:'\f002'; } /* firefox 19+ */
+.formSearch:-ms-input-placeholder::before  { font-family: FontAwesome; content:'\f002'; } /* ie */
+input.formSearch:-moz-placeholder::before  { font-family: FontAwesome; content:'\f002';  }
+
 .labelMonitor{width:150px; display:inline-block; margin-bottom:5px; margin-right:10px;}
 
 

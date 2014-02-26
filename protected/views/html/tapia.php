@@ -37,7 +37,10 @@ $('#accordion').on('show.bs.collapse', function (e) {
 $active='tinicio';
 include('menuTapia.php');?>
 <div class="container" id="screenMonitor">
-  <h1 class="pageTitle">Monitor</h1>
+<div class="row">
+<div class="col-sm-6"><h1 class="pageTitle">Monitor</h1></div>
+<div class="col-sm-6 clearfix"><input type="text" class="form-control pull-right formSearch" placeholder=" Buscar"></div>
+</div>
   <div class="row">
     <div class="col-sm-12">
       
