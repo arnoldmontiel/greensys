@@ -1078,11 +1078,12 @@ box-shadow: 0px 0px 2px rgba(0,0,0,0.8); background-color:rgba(0,0,0,0.5); paddi
 
 .circle{
 height: 45px;
-border-radius: 45px;
-width: 45px;
+border-top-left-radius: 45px;
+border-bottom-left-radius: 45px;
+width: 30px;
 margin-left: 3px;
 margin-top: 1px;
-margin-right:5px;
+margin-right:10px;
 display:inline-block;}
 
 .circlePendiente{background-color: #d9534f;}
