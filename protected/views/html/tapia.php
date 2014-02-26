@@ -10,6 +10,27 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <?php include('estilos.php');?>
 <script src="js/jquery.js"></script>
+
+<script>
+
+$(document).ready(function() {
+
+	
+	
+$('#accordion').on('show.bs.collapse', function (e) {
+  //  alert('Event fired on #' + e.currentTarget.id);
+  
+//$('body').stop(true,true).animate({ scrollTop: $(this).offset().top - 70}, 200);  
+
+//var posTop = $(this).offset().top - 30;
+
+//$('body').offset({ top: posTop, left: 0)});
+
+
+ });
+});
+
+</script>
 </head>
 <body>
 <?php 
@@ -22,398 +43,334 @@ include('menuTapia.php');?>
       
     <div class="panel-group" id="accordion">
   <div class="panel panel-default">
-    <div class="panel-heading">
-    
+    <div class="panel-heading container-fluid">
     <div class="row">
-    <div class="col-md-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Cohen - La Angostura</a></h4></div>
-    <div class="col-md-4 text-right">  <div class="progress progressResumenMonitor">
-      <div class="progress-bar progress-bar-success" style="width: 35%">
+    <div class="col-md-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Cohen - La Angostura</a></h4></div>
+    <div class="col-md-4 text-right"> 
+    <div class="clearfix progressResumenMonitorNum">
+      <span class="badge circleEjecucion pull-left">80</span> 
+      <span class="badge circleStandBy">1</span>
+      <span class="badge circlePendiente">1</span> 
+      <span class="badge pull-right">10</span>
+    </div> 
+    <div class="progress progressResumenMonitor">
+      <div class="progress-bar progress-bar-success" style="width: 80%">
         <span class="sr-only">35% Complete (success)</span>
       </div>
-      <div class="progress-bar progress-bar-warning" style="width: 20%">
+      <div class="progress-bar progress-bar-warning" style="width: 1%">
         <span class="sr-only">20% Complete (warning)</span>
       </div>
-      <div class="progress-bar progress-bar-danger" style="width: 10%">
+      <div class="progress-bar progress-bar-danger" style="width: 1%">
         <span class="sr-only">10% Complete (danger)</span>
       </div>
     </div></div>
-    <div class="col-md-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver todo</button>
+    <div class="col-md-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver Proyecto</button>
     </div>
     </div>
     
     </div>
-    <div id="collapseOne" class="panel-collapse collapse in">
-      <div class="panel-body">
-
-      <ul class="list-group">
-  <li href="#" class="list-group-item clearfix">
-  <div class="pull-left"><div class="circle circlePendiente"></div></div>
-  <div class="pull-left hidden">
-  <span class="label label-success labelMonitor">En Ejecuci&oacute;n</span><br/>
-  <span class="label label-warning labelMonitorType typeTecnico">Servicio T&eacute;cnico</span></div>
-   <div class="pull-left monitorInfo">
-   <div class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en PC de Rack <span class="label label-warning">Servicio T&eacute;cnico</span> </div>
- 11/12/2013 20:35:40 - Matias Montiel</div>
-    <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
-  </li>
-  <li href="#" class="list-group-item clearfix odd">
-  <div class="pull-left"><div class="circle circleFinalizado"></div></div>
-  <div class="pull-left hidden">
-  <span class="label label-danger labelMonitor">Pendiente</span><br/>
-  <span class="label label-warning labelMonitorType typeImplementacion">Implementaci&oacute;n</span></div>
-   <div class="pull-left monitorInfo">
-   <div class="monitorInfoTitle">Implementar sistema de audio <span class="label label-info">Pedido Cotizaci&oacute;n</span> </div>
- 11/12/2013 20:35:40 - Matias Montiel</div>
-    <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
-  </li>
-  <li href="#" class="list-group-item clearfix">
-  <div class="pull-left"><div class="circle circlePendiente"></div></div>
-  <div class="pull-left hidden">
-  <span class="label label-default labelMonitor">Finalizado</span><br/>
-  <span class="label label-warning labelMonitorType typeCotizacion">Pedido Cotizaci&oacute;n</span></div>
-   <div class="pull-left monitorInfo">
-   <div class="monitorInfoTitle">Perforaci&oacute;n - Suite <span class="label label-info">Pedido Cotizaci&oacute;n</span></div>
- 11/12/2013 20:35:40 - Matias Montiel</div>
-    <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
-  </li>
-  <li href="#" class="list-group-item clearfix odd">
-  <div class="pull-left"><div class="circle circleStandBy"></div></div>
-  <div class="pull-left hidden">
-  <span class="label label-success labelMonitor">En Ejecuci&oacute;n</span><br/>
-  <span class="label label-warning labelMonitorType">Servicio T&eacute;cnico</span></div>
-   <div class="pull-left monitorInfo">
-   <div class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en otro lado <span class="label label-success">Implementacion</span></div>
- 11/12/2013 20:35:40 - Matias Montiel</div>
-    <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
-  </li>
-  <li href="#" class="list-group-item clearfix ">
-  <div class="pull-left"><div class="circle circleEjecucion"></div></div>
-  <div class="pull-left hidden">
-  <span class="label label-danger labelMonitor">Pendiente</span><br/>
-  <span class="label label-warning labelMonitorType typeImplementacion">Implementaci&oacute;n</span></div>
-   <div class="pull-left monitorInfo">
-   <div class="monitorInfoTitle">Apple TV no funciona en Ipad de Juan <span class="label label-info">Pedido Cotizaci&oacute;n</span></div>
- 11/12/2013 20:35:40 - Matias Montiel</div>
-    <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
-  </li>
-  <li href="#" class="list-group-item clearfix odd">
-  <div class="pull-left"><div class="circle circleStandBy"></div></div>
-  <div class="pull-left hidden">
-  <span class="label label-default labelMonitor">Finalizado</span><br/>
-  <span class="label label-warning labelMonitorType typeCotizacion">Pedido Cotizaci&oacute;n</span></div>
-   <div class="pull-left monitorInfo">
-   <div class="monitorInfoTitle">Agregar Iphone al sistema <span class="label label-info">Pedido Cotizaci&oacute;n</span></div>
- 11/12/2013 20:35:40 - Matias Montiel</div>
-    <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
-  </li>
+    <div id="collapse1" class="panel-collapse collapse in">
+      <div class="panel-body container-fluid">
+      <div class="row">
+      <div class="col-sm-8">
+      <ul class="nav nav-tabs navTabsMonitor">
+  <li class="active"><a href="#">&Uacute;ltimas</a></li>
+  <li><a href="#">Pendientes</a></li>
+  <li><a href="#">Stand By</a></li>
+  <li><a href="#">Activas</a></li>
+  <li><a href="#">Finalizadas</a></li>
 </ul>
-      
-      
-            </div>
-    </div>
+<div class="tab-content">
+<div class="tab-pane active">
+      <ul class="list-group">
+      <!-- Empieza Tarea -->
+  <li href="#" class="list-group-item container-fluid">
+  <div class="row">
+  <div class="col-sm-8">
+  <div class="pull-left"><div class="circle circlePendiente hidden"></div> 
+  <span class="circularLabel circlePendiente">Pendiente</span></div>
+  <div class="pull-left monitorInfo">
+   <a class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en PC de Rack</a>
+ 11/12/2013 20:35:40 - Matias Montiel
+ </div>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-    <div class="row">
-    <div class="col-md-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Sigal - Residencia</a></h4></div>
-    <div class="col-md-4 text-right">  <div class="progress progressResumenMonitor">
-      <div class="progress-bar progress-bar-success" style="width: 35%">
-        <span class="sr-only">35% Complete (success)</span>
-      </div>
-      <div class="progress-bar progress-bar-warning" style="width: 20%">
-        <span class="sr-only">20% Complete (warning)</span>
-      </div>
-      <div class="progress-bar progress-bar-danger" style="width: 10%">
-        <span class="sr-only">10% Complete (danger)</span>
-      </div>
-    </div></div>
-    <div class="col-md-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver todo</button>
-    </div>
-    </div>
-    </div>
-    <div id="collapseTwo" class="panel-collapse collapse">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
+  <div class="col-sm-4">
+  <span class="label label-warning labelTask pull-left">Servicio T&eacute;cnico</span>
+  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-    <div class="row">
-    <div class="col-md-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Nombre del proyecto</a></h4></div>
-    <div class="col-md-4 text-right">  <div class="progress progressResumenMonitor">
-      <div class="progress-bar progress-bar-success" style="width: 20%">
-        <span class="sr-only">35% Complete (success)</span>
-      </div>
-      <div class="progress-bar progress-bar-warning" style="width: 10%">
-        <span class="sr-only">20% Complete (warning)</span>
-      </div>
-      <div class="progress-bar progress-bar-danger" style="width: 10%">
-        <span class="sr-only">10% Complete (danger)</span>
-      </div>
-    </div></div>
-    <div class="col-md-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver todo</button>
-    </div>
-    </div>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-    <div class="row">
-    <div class="col-md-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Nombre del proyecto</a></h4></div>
-    <div class="col-md-4 text-right">  <div class="progress progressResumenMonitor">
-      <div class="progress-bar progress-bar-success" style="width: 20%">
-        <span class="sr-only">35% Complete (success)</span>
-      </div>
-      <div class="progress-bar progress-bar-warning" style="width: 10%">
-        <span class="sr-only">20% Complete (warning)</span>
-      </div>
-      <div class="progress-bar progress-bar-danger" style="width: 10%">
-        <span class="sr-only">10% Complete (danger)</span>
-      </div>
-    </div></div>
-    <div class="col-md-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver todo</button>
-    </div>
-    </div>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
+  </li>
+      <!-- Termina Tarea -->
+      <!-- Empieza Tarea -->
+  <li href="#" class="list-group-item container-fluid">
+ <div class="row">
+  <div class="col-sm-8">
+  <div class="pull-left"><div class="circle circleFinalizado hidden"></div>
+  <span class="circularLabel circleFinalizado">Finalizado</span></div>
+  <div class="pull-left monitorInfo">
+   <a class="monitorInfoTitle titleDone">Perforaci&oacute;n - Suite </a>
+ 11/12/2013 20:35:40 - Matias Montiel
+ </div>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-    <div class="row">
-    <div class="col-md-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Nombre del proyecto</a></h4></div>
-    <div class="col-md-4 text-right">  <div class="progress progressResumenMonitor">
-      <div class="progress-bar progress-bar-success" style="width: 20%">
-        <span class="sr-only">35% Complete (success)</span>
-      </div>
-      <div class="progress-bar progress-bar-warning" style="width: 10%">
-        <span class="sr-only">20% Complete (warning)</span>
-      </div>
-      <div class="progress-bar progress-bar-danger" style="width: 10%">
-        <span class="sr-only">10% Complete (danger)</span>
-      </div>
-    </div></div>
-    <div class="col-md-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver todo</button>
-    </div>
-    </div>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
+  <div class="col-sm-4">
+  <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
+  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-    <div class="row">
-    <div class="col-md-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Nombre del proyecto</a></h4></div>
-    <div class="col-md-4 text-right">  <div class="progress progressResumenMonitor">
-      <div class="progress-bar progress-bar-success" style="width: 20%">
-        <span class="sr-only">35% Complete (success)</span>
-      </div>
-      <div class="progress-bar progress-bar-warning" style="width: 10%">
-        <span class="sr-only">20% Complete (warning)</span>
-      </div>
-      <div class="progress-bar progress-bar-danger" style="width: 10%">
-        <span class="sr-only">10% Complete (danger)</span>
-      </div>
-    </div></div>
-    <div class="col-md-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver todo</button>
-    </div>
-    </div>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
+  </div>  
+  </li>
+      <!-- Termina Tarea -->
+      <!-- Empieza Tarea -->
+  <li href="#" class="list-group-item container-fluid">
+ <div class="row">
+  <div class="col-sm-8">
+  <div class="pull-left"><div class="circle circleFinalizado hidden"></div>
+  <span class="circularLabel circleFinalizado">Finalizado</span></div>
+  <div class="pull-left monitorInfo">
+   <a class="monitorInfoTitle titleDone">Agregar Iphone al sistema  </a>
+ 11/12/2013 20:35:40 - Matias Montiel
+ </div>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-    <div class="row">
-    <div class="col-md-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Nombre del proyecto</a></h4></div>
-    <div class="col-md-4 text-right">  <div class="progress progressResumenMonitor">
-      <div class="progress-bar progress-bar-success" style="width: 20%">
-        <span class="sr-only">35% Complete (success)</span>
-      </div>
-      <div class="progress-bar progress-bar-warning" style="width: 10%">
-        <span class="sr-only">20% Complete (warning)</span>
-      </div>
-      <div class="progress-bar progress-bar-danger" style="width: 10%">
-        <span class="sr-only">10% Complete (danger)</span>
-      </div>
-    </div></div>
-    <div class="col-md-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver todo</button>
-    </div>
-    </div>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
+  <div class="col-sm-4">
+  <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
+  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-    <div class="row">
-    <div class="col-md-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Nombre del proyecto</a></h4></div>
-    <div class="col-md-4 text-right">  <div class="progress progressResumenMonitor">
-      <div class="progress-bar progress-bar-success" style="width: 20%">
-        <span class="sr-only">35% Complete (success)</span>
-      </div>
-      <div class="progress-bar progress-bar-warning" style="width: 10%">
-        <span class="sr-only">20% Complete (warning)</span>
-      </div>
-      <div class="progress-bar progress-bar-danger" style="width: 10%">
-        <span class="sr-only">10% Complete (danger)</span>
-      </div>
-    </div></div>
-    <div class="col-md-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver todo</button>
-    </div>
-    </div>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
+  </div>  
+  </li>
+      <!-- Termina Tarea -->
+      <!-- Empieza Tarea -->
+  <li href="#" class="list-group-item container-fluid">
+ <div class="row">
+  <div class="col-sm-8">
+  <div class="pull-left"><div class="circle circleStandBy hidden"></div>
+  <span class="circularLabel circleStandBy">Stand By</span></div>
+  <div class="pull-left monitorInfo">
+   <a class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en otro lado </a>
+ 11/12/2013 20:35:40 - Matias Montiel
+ </div>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-    <div class="row">
-    <div class="col-md-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Nombre del proyecto</a></h4></div>
-    <div class="col-md-4 text-right">  <div class="progress progressResumenMonitor">
-      <div class="progress-bar progress-bar-success" style="width: 20%">
-        <span class="sr-only">35% Complete (success)</span>
-      </div>
-      <div class="progress-bar progress-bar-warning" style="width: 10%">
-        <span class="sr-only">20% Complete (warning)</span>
-      </div>
-      <div class="progress-bar progress-bar-danger" style="width: 10%">
-        <span class="sr-only">10% Complete (danger)</span>
-      </div>
-    </div></div>
-    <div class="col-md-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver todo</button>
-    </div>
-    </div>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
+  <div class="col-sm-4">
+  <span class="label label-primary labelTask pull-left">Implementaci&oacute;n</span>
+  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-    <div class="row">
-    <div class="col-md-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Nombre del proyecto</a></h4></div>
-    <div class="col-md-4 text-right">  <div class="progress progressResumenMonitor">
-      <div class="progress-bar progress-bar-success" style="width: 20%">
-        <span class="sr-only">35% Complete (success)</span>
-      </div>
-      <div class="progress-bar progress-bar-warning" style="width: 10%">
-        <span class="sr-only">20% Complete (warning)</span>
-      </div>
-      <div class="progress-bar progress-bar-danger" style="width: 10%">
-        <span class="sr-only">10% Complete (danger)</span>
-      </div>
-    </div></div>
-    <div class="col-md-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver todo</button>
-    </div>
-    </div>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
+  </div>  
+  </li>
+      <!-- Termina Tarea -->
+      <!-- Empieza Tarea -->
+  <li href="#" class="list-group-item container-fluid">
+ <div class="row">
+  <div class="col-sm-8">
+  <div class="pull-left"><div class="circle circleEjecucion hidden"></div>
+  <span class="circularLabel circleEjecucion">En Ejecuci&oacute;n</span></div>
+  <div class="pull-left monitorInfo">
+   <a class="monitorInfoTitle">Apple TV no funciona en Ipad de Juan  </a>
+ 11/12/2013 20:35:40 - Matias Montiel
+ </div>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-    <div class="row">
-    <div class="col-md-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Nombre del proyecto</a></h4></div>
-    <div class="col-md-4 text-right">  <div class="progress progressResumenMonitor">
-      <div class="progress-bar progress-bar-success" style="width: 20%">
-        <span class="sr-only">35% Complete (success)</span>
-      </div>
-      <div class="progress-bar progress-bar-warning" style="width: 10%">
-        <span class="sr-only">20% Complete (warning)</span>
-      </div>
-      <div class="progress-bar progress-bar-danger" style="width: 10%">
-        <span class="sr-only">10% Complete (danger)</span>
-      </div>
-    </div></div>
-    <div class="col-md-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver todo</button>
-    </div>
-    </div>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
+  <div class="col-sm-4">
+  <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
+  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-    <div class="row">
-    <div class="col-md-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Nombre del proyecto</a></h4></div>
-    <div class="col-md-4 text-right">  <div class="progress progressResumenMonitor">
-      <div class="progress-bar progress-bar-success" style="width: 20%">
-        <span class="sr-only">35% Complete (success)</span>
+  </div>  
+  </li>
+      <!-- Termina Tarea -->
+</ul>
       </div>
-      <div class="progress-bar progress-bar-warning" style="width: 10%">
-        <span class="sr-only">20% Complete (warning)</span>
-      </div>
-      <div class="progress-bar progress-bar-danger" style="width: 10%">
-        <span class="sr-only">10% Complete (danger)</span>
-      </div>
-    </div></div>
-    <div class="col-md-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver todo</button>
-    </div>
-    </div>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-    <div class="row">
-    <div class="col-md-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Nombre del proyecto</a></h4></div>
-    <div class="col-md-4 text-right">  <div class="progress progressResumenMonitor">
-      <div class="progress-bar progress-bar-success" style="width: 20%">
-        <span class="sr-only">35% Complete (success)</span>
-      </div>
-      <div class="progress-bar progress-bar-warning" style="width: 10%">
-        <span class="sr-only">20% Complete (warning)</span>
-      </div>
-      <div class="progress-bar progress-bar-danger" style="width: 10%">
-        <span class="sr-only">10% Complete (danger)</span>
-      </div>
-    </div></div>
-    <div class="col-md-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver todo</button>
-    </div>
-    </div>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-</div>
      
+      </div>
+            </div>
+      <div class="col-sm-4 align-center"><img src="img/pieChart.jpg" style="margin-top:40px;"/></div>
+    </div>
+    </div><!-- /tab-pane -->
+    </div><!-- /tab-content -->
+  </div><!-- /panel-default -->
+  
+  <div class="panel panel-default">
+    <div class="panel-heading container-fluid">
+    <div class="row">
+    <div class="col-md-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Proyecto 2</a></h4></div>
+    <div class="col-md-4 text-right"> 
+    <div class="clearfix progressResumenMonitorNum">
+      <span class="badge circleEjecucion pull-left">10</span> 
+      <span class="badge circleStandBy">5</span>
+      <span class="badge circlePendiente">10</span> 
+      <span class="badge pull-right">75</span>
+    </div> 
+    <div class="progress progressResumenMonitor">
+      <div class="progress-bar progress-bar-success" style="width: 10%">
+        <span class="sr-only">35% Complete (success)</span>
+      </div>
+      <div class="progress-bar progress-bar-warning" style="width: 5%">
+        <span class="sr-only">20% Complete (warning)</span>
+      </div>
+      <div class="progress-bar progress-bar-danger" style="width: 10%">
+        <span class="sr-only">10% Complete (danger)</span>
+      </div>
+    </div></div>
+    <div class="col-md-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver Proyecto</button>
+    </div>
+    </div>
+    
+    </div>
+    <div id="collapse2" class="panel-collapse collapse">
+      <div class="panel-body container-fluid">
+      <div class="row">
+      <div class="col-sm-8">
+      <ul class="nav nav-tabs navTabsMonitor">
+  <li class="active"><a href="#">&Uacute;ltimas</a></li>
+  <li><a href="#">Pendientes</a></li>
+  <li><a href="#">Stand By</a></li>
+  <li><a href="#">Activas</a></li>
+  <li><a href="#">Finalizadas</a></li>
+</ul>
+<div class="tab-content">
+<div class="tab-pane active">
+      <ul class="list-group">
+      <!-- Empieza Tarea -->
+  <li href="#" class="list-group-item container-fluid">
+  <div class="row">
+  <div class="col-sm-8">
+  <div class="pull-left"><div class="circle circlePendiente hidden"></div> 
+  <span class="circularLabel circlePendiente">Pendiente</span></div>
+  <div class="pull-left monitorInfo">
+   <a class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en PC de Rack</a>
+ 11/12/2013 20:35:40 - Matias Montiel
+ </div>
+  </div>
+  <div class="col-sm-4">
+  <span class="label label-warning labelTask pull-left">Servicio T&eacute;cnico</span>
+  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
+  </div>
+  </div>
+  </li>
+      <!-- Termina Tarea -->
+      <!-- Empieza Tarea -->
+  <li href="#" class="list-group-item container-fluid">
+ <div class="row">
+  <div class="col-sm-8">
+  <div class="pull-left"><div class="circle circleFinalizado hidden"></div>
+  <span class="circularLabel circleFinalizado">Finalizado</span></div>
+  <div class="pull-left monitorInfo">
+   <a class="monitorInfoTitle titleDone">Perforaci&oacute;n - Suite </a>
+ 11/12/2013 20:35:40 - Matias Montiel
+ </div>
+  </div>
+  <div class="col-sm-4">
+  <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
+  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
+  </div>
+  </div>  
+  </li>
+      <!-- Termina Tarea -->
+      <!-- Empieza Tarea -->
+  <li href="#" class="list-group-item container-fluid">
+ <div class="row">
+  <div class="col-sm-8">
+  <div class="pull-left"><div class="circle circleFinalizado hidden"></div>
+  <span class="circularLabel circleFinalizado">Finalizado</span></div>
+  <div class="pull-left monitorInfo">
+   <a class="monitorInfoTitle titleDone">Agregar Iphone al sistema  </a>
+ 11/12/2013 20:35:40 - Matias Montiel
+ </div>
+  </div>
+  <div class="col-sm-4">
+  <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
+  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
+  </div>
+  </div>  
+  </li>
+      <!-- Termina Tarea -->
+      <!-- Empieza Tarea -->
+  <li href="#" class="list-group-item container-fluid">
+ <div class="row">
+  <div class="col-sm-8">
+  <div class="pull-left"><div class="circle circleStandBy hidden"></div>
+  <span class="circularLabel circleStandBy">Stand By</span></div>
+  <div class="pull-left monitorInfo">
+   <a class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en otro lado </a>
+ 11/12/2013 20:35:40 - Matias Montiel
+ </div>
+  </div>
+  <div class="col-sm-4">
+  <span class="label label-primary labelTask pull-left">Implementaci&oacute;n</span>
+  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
+  </div>
+  </div>  
+  </li>
+      <!-- Termina Tarea -->
+      <!-- Empieza Tarea -->
+  <li href="#" class="list-group-item container-fluid">
+ <div class="row">
+  <div class="col-sm-8">
+  <div class="pull-left"><div class="circle circleEjecucion hidden"></div>
+  <span class="circularLabel circleEjecucion">En Ejecuci&oacute;n</span></div>
+  <div class="pull-left monitorInfo">
+   <a class="monitorInfoTitle">Apple TV no funciona en Ipad de Juan  </a>
+ 11/12/2013 20:35:40 - Matias Montiel
+ </div>
+  </div>
+  <div class="col-sm-4">
+  <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
+  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
+  </div>
+  </div>  
+  </li>
+      <!-- Termina Tarea -->
+</ul>
+      </div>
+     
+      </div>
+            </div>
+      <div class="col-sm-4 align-center"><img src="img/pieChart.jpg" style="margin-top:40px;"/></div>
+    </div>
+    </div><!-- /tab-pane -->
+    </div><!-- /tab-content -->
+  </div><!-- /panel-default -->
+  
+  <div class="panel panel-default">
+    <div class="panel-heading container-fluid">
+    <div class="row">
+    <div class="col-md-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Proyecto 3</a></h4></div>
+    <div class="col-md-4 text-right"> 
+    <div class="clearfix progressResumenMonitorNum">
+      <span class="badge circleEjecucion pull-left">90</span> 
+      <span class="badge circleStandBy">0</span>
+      <span class="badge circlePendiente">0</span> 
+      <span class="badge pull-right">10</span>
+    </div> 
+    <div class="progress progressResumenMonitor">
+      <div class="progress-bar progress-bar-success" style="width: 90%">
+        <span class="sr-only">35% Complete (success)</span>
+      </div>
+      <div class="progress-bar progress-bar-warning" style="width: 0%">
+        <span class="sr-only">20% Complete (warning)</span>
+      </div>
+      <div class="progress-bar progress-bar-danger" style="width: 0%">
+        <span class="sr-only">10% Complete (danger)</span>
+      </div>
+    </div></div>
+    <div class="col-md-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver Proyecto</button>
+    </div>
+    </div>
+    </div>
+    <div id="collapse3" class="panel-collapse collapse">
+      <div class="panel-body container-fluid">
+      <div class="row">
+      <div class="col-sm-8">
+      <ul class="nav nav-tabs navTabsMonitor">
+  <li class="active"><a href="#">&Uacute;ltimas</a></li>
+  <li><a href="#">Pendientes</a></li>
+  <li><a href="#">Stand By</a></li>
+  <li><a href="#">Activas</a></li>
+  <li><a href="#">Finalizadas</a></li>
+</ul>
+<div class="tab-content">
+<div class="tab-pane active">
+   contenido
+    </div><!-- /tab-pane -->
+    </div><!-- /tab-content -->
+  </div><!-- /panel-default -->
+  
+</div><!-- /panel-group -->     
     </div>
     <!-- /.col-md-12 -->
   </div>

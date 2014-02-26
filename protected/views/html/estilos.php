@@ -1059,15 +1059,17 @@ box-shadow: 0px 0px 2px rgba(0,0,0,0.8); background-color:rgba(0,0,0,0.5); paddi
 .labelMonitorType.typeImplementacion{color:blue;}
 .labelMonitorType.typeCotizacion{color:red;}
 
-#screenMonitor .list-group-item{padding:3px 2px; margin-bottom:3px; border-radius:45px; }
+#screenMonitor .list-group-item{padding:3px 2px; margin:0px;margin-bottom:3px; border-radius:45px; }
 
 #screenMonitor .list-group-item.odd{background-color:#f9f9f9;}
 
 
 .monitorInfo{line-height:24px;}
-.monitorInfoTitle{font-family:'GudeaBold'; font-size:17px;}
+.monitorInfoTitle{font-family:'GudeaBold'; font-size:17px; display:block; cursor:pointer;}
+.monitorInfoTitle.titleDone{text-decoration:line-through;}
 .monitorInfoTitle .label-warning{color:white; font-family:'GudeaRegular';}
 
+.labelTask{ margin-top:13px;}
 
 .btnDeleteMonitor{margin-top:5px; margin-right:5px; border-radius:40px;}
 
@@ -1087,18 +1089,43 @@ margin-right:5px;}
 .circleStandBy{background-color: #FFC36E;}
 .circleEjecucion{background-color: green;}
 
+.circularLabel{margin-right: 10px;
+border-radius: 25px;
+height: 48px;
+margin-top: 0px;
+line-height: 44px;
+border-bottom-right-radius: 0px;
+border-top-right-radius: 0px;
+display:inline-block;
+color:white;
+font-size:13px;
+letter-spacing:1px;
+text-transform:uppercase;
+width:120px;
+text-align:right;
+padding-right:10px;
+}
+
 .progressResumenMonitor{height:7px;
 width:300px;
 -webkit-box-shadow: none;
 box-shadow: none;
 margin:auto;
-margin-top:10px;
 margin-bottom:0px;
+margin-top:3px;
 }
-
+.
 .progressResumenMonitor .progress-bar{
--webkit-box-shadow: none;
-box-shadow: none;}
+-webkit-box-shadow: none !important;
+box-shadow: none !important;}
+
+.progressResumenMonitorNum{width:300px; font-size:13px; text-align:right; margin:auto; color:#777; text-align:center;}
+
+.navTabsMonitor{margin-bottom:10px; border-bottom:1px solid #f9f9f9;}
+.navTabsMonitor li a{line-height:14px;}
+.navTabsMonitor li.active a{background-color:#ddd; border-color:#ddd;}
+
+#screenMonitor .tab-pane{overflow-y:auto; max-height:300px;}
 
 /* ------ END MONITOR------- */
 /*---------- /////////////END TAPIAAA///////////// -------------*/
