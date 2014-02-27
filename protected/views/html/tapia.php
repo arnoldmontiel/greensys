@@ -38,8 +38,8 @@ $active='tinicio';
 include('menuTapia.php');?>
 <div class="container" id="screenMonitor">
 <div class="row">
-<div class="col-sm-6 col-xs-12"><h1 class="pageTitle">Monitor</h1></div>
-<div class="col-sm-6 col-xs-12 clearfix"><input type="text" class="form-control pull-right formSearch" placeholder=" Buscar"></div>
+<div class="col-xs-6"><h1 class="pageTitle">Monitor</h1></div>
+<div class="col-xs-6 clearfix"><input type="text" class="form-control pull-right formSearch" placeholder=" Buscar"></div>
 </div>
   <div class="row">
     <div class="col-sm-12">
