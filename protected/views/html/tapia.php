@@ -38,8 +38,8 @@ $active='tinicio';
 include('menuTapia.php');?>
 <div class="container" id="screenMonitor">
 <div class="row">
-<div class="col-sm-6"><h1 class="pageTitle">Monitor</h1></div>
-<div class="col-sm-6 clearfix"><input type="text" class="form-control pull-right formSearch" placeholder=" Buscar"></div>
+<div class="col-sm-6 col-xs-12"><h1 class="pageTitle">Monitor</h1></div>
+<div class="col-sm-6 col-xs-12 clearfix"><input type="text" class="form-control pull-right formSearch" placeholder=" Buscar"></div>
 </div>
   <div class="row">
     <div class="col-sm-12">
@@ -48,8 +48,8 @@ include('menuTapia.php');?>
   <div class="panel panel-default">
     <div class="panel-heading container-fluid">
     <div class="row">
-    <div class="col-sm-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Cohen - La Angostura</a></h4></div>
-    <div class="col-sm-4 text-right"> 
+    <div class="col-xs-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Cohen - La Angostura</a></h4></div>
+    <div class="col-xs-4 text-right"> 
     <div class="clearfix progressResumenMonitorNum">
       <span class="badge circleEjecucion pull-left">80</span> 
       <span class="badge circleStandBy">1</span>
@@ -58,16 +58,13 @@ include('menuTapia.php');?>
     </div> 
     <div class="progress progressResumenMonitor">
       <div class="progress-bar progress-bar-success" style="width: 80%">
-        <span class="sr-only">35% Complete (success)</span>
       </div>
       <div class="progress-bar progress-bar-warning" style="width: 1%">
-        <span class="sr-only">20% Complete (warning)</span>
       </div>
       <div class="progress-bar progress-bar-danger" style="width: 1%">
-        <span class="sr-only">10% Complete (danger)</span>
       </div>
     </div></div>
-    <div class="col-sm-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver Proyecto</button>
+    <div class="col-xs-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver Proyecto</button>
     </div>
     </div>
     
@@ -82,7 +79,7 @@ include('menuTapia.php');?>
   <li><a href="#">Stand By</a></li>
   <li><a href="#">Activas</a></li>
   <li><a href="#">Finalizadas</a></li>
-  <li class="visible-sm"><a href="#">Gr&aacute;fico</a></li>
+  <li class="visible-sm visible-xs"><a href="#">Gr&aacute;fico</a></li>
 </ul>
 <div class="tab-content">
 <div class="tab-pane active">
@@ -90,15 +87,15 @@ include('menuTapia.php');?>
       <!-- Empieza Tarea -->
   <li href="#" class="list-group-item container-fluid">
   <div class="row">
-  <div class="col-sm-8">
-  <div class="pull-left"><div class="circle circlePendiente visible-sm"></div> 
-  <span class="circularLabel circlePendiente hidden-sm">Pendiente</span></div>
+  <div class="col-xs-8">
+  <div class="pull-left"><div class="circle circlePendiente visible-sm visible-xs"></div> 
+  <span class="circularLabel circlePendiente hidden-sm hidden-xs">Pendiente</span></div>
   <div class="pull-left monitorInfo">
    <a class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en PC de Rack</a>
  11/12/2013 20:35:40 - Matias Montiel
  </div>
   </div>
-  <div class="col-sm-4">
+  <div class="col-xs-4">
   <span class="label label-warning labelTask pull-left">Servicio T&eacute;cnico</span>
   <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
@@ -108,15 +105,15 @@ include('menuTapia.php');?>
       <!-- Empieza Tarea -->
   <li href="#" class="list-group-item container-fluid">
  <div class="row">
-  <div class="col-sm-8">
-  <div class="pull-left"><div class="circle circleFinalizado visible-sm"></div>
-  <span class="circularLabel circleFinalizado hidden-sm">Finalizado</span></div>
+  <div class="col-xs-8">
+  <div class="pull-left"><div class="circle circleFinalizado visible-sm visible-xs"></div>
+  <span class="circularLabel circleFinalizado hidden-sm hidden-xs">Finalizado</span></div>
   <div class="pull-left monitorInfo">
    <a class="monitorInfoTitle titleDone">Perforaci&oacute;n - Suite </a>
  11/12/2013 20:35:40 - Matias Montiel
  </div>
   </div>
-  <div class="col-sm-4">
+  <div class="col-xs-4">
   <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
   <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
@@ -126,15 +123,15 @@ include('menuTapia.php');?>
       <!-- Empieza Tarea -->
   <li href="#" class="list-group-item container-fluid">
  <div class="row">
-  <div class="col-sm-8">
-  <div class="pull-left"><div class="circle circleFinalizado visible-sm"></div>
-  <span class="circularLabel circleFinalizado hidden-sm">Finalizado</span></div>
+  <div class="col-xs-8">
+  <div class="pull-left"><div class="circle circleFinalizado visible-sm visible-xs"></div>
+  <span class="circularLabel circleFinalizado hidden-sm hidden-xs">Finalizado</span></div>
   <div class="pull-left monitorInfo">
    <a class="monitorInfoTitle titleDone">Agregar Iphone al sistema  </a>
  11/12/2013 20:35:40 - Matias Montiel
  </div>
   </div>
-  <div class="col-sm-4">
+  <div class="col-xs-4">
   <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
   <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
@@ -144,15 +141,15 @@ include('menuTapia.php');?>
       <!-- Empieza Tarea -->
   <li href="#" class="list-group-item container-fluid">
  <div class="row">
-  <div class="col-sm-8">
-  <div class="pull-left"><div class="circle circleStandBy visible-sm"></div>
-  <span class="circularLabel circleStandBy hidden-sm">Stand By</span></div>
+  <div class="col-xs-8">
+  <div class="pull-left"><div class="circle circleStandBy visible-sm visible-xs"></div>
+  <span class="circularLabel circleStandBy hidden-sm hidden-xs">Stand By</span></div>
   <div class="pull-left monitorInfo">
    <a class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en otro lado </a>
  11/12/2013 20:35:40 - Matias Montiel
  </div>
   </div>
-  <div class="col-sm-4">
+  <div class="col-xs-4">
   <span class="label label-primary labelTask pull-left">Implementaci&oacute;n</span>
   <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
@@ -162,15 +159,15 @@ include('menuTapia.php');?>
       <!-- Empieza Tarea -->
   <li href="#" class="list-group-item container-fluid">
  <div class="row">
-  <div class="col-sm-8">
-  <div class="pull-left"><div class="circle circleEjecucion visible-sm"></div>
-  <span class="circularLabel circleEjecucion hidden-sm">En Ejecuci&oacute;n</span></div>
+  <div class="col-xs-8">
+  <div class="pull-left"><div class="circle circleEjecucion visible-sm visible-xs"></div>
+  <span class="circularLabel circleEjecucion hidden-sm hidden-xs">En Ejecuci&oacute;n</span></div>
   <div class="pull-left monitorInfo">
    <a class="monitorInfoTitle">Apple TV no funciona en Ipad de Juan  </a>
  11/12/2013 20:35:40 - Matias Montiel
  </div>
   </div>
-  <div class="col-sm-4">
+  <div class="col-xs-4">
   <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
   <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
@@ -182,35 +179,33 @@ include('menuTapia.php');?>
      
       </div>
             </div>
-      <div class="col-md-3 hidden-sm align-center"><img src="img/pieChart.jpg" style="margin-top:40px;"/></div>
+      <div class="col-md-3 hidden-sm hidden-xs align-center"><img src="img/pieChart.jpg" style="margin-top:40px;"/></div>
     </div>
     </div><!-- /tab-pane -->
     </div><!-- /tab-content -->
   </div><!-- /panel-default -->
   
-  <div class="panel panel-default">
+  
+    <div class="panel panel-default">
     <div class="panel-heading container-fluid">
     <div class="row">
-    <div class="col-sm-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Proyecto 2</a></h4></div>
-    <div class="col-sm-4 text-right"> 
+    <div class="col-xs-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Proyecto 2</a></h4></div>
+    <div class="col-xs-4 text-right"> 
     <div class="clearfix progressResumenMonitorNum">
-      <span class="badge circleEjecucion pull-left">80</span> 
-      <span class="badge circleStandBy">1</span>
-      <span class="badge circlePendiente">1</span> 
-      <span class="badge pull-right">10</span>
+      <span class="badge circleEjecucion pull-left">5</span> 
+      <span class="badge circleStandBy">5</span>
+      <span class="badge circlePendiente">5</span> 
+      <span class="badge pull-right">85</span>
     </div> 
     <div class="progress progressResumenMonitor">
-      <div class="progress-bar progress-bar-success" style="width: 80%">
-        <span class="sr-only">35% Complete (success)</span>
+      <div class="progress-bar progress-bar-success" style="width: 5%">
       </div>
-      <div class="progress-bar progress-bar-warning" style="width: 1%">
-        <span class="sr-only">20% Complete (warning)</span>
+      <div class="progress-bar progress-bar-warning" style="width: 5%">
       </div>
-      <div class="progress-bar progress-bar-danger" style="width: 1%">
-        <span class="sr-only">10% Complete (danger)</span>
+      <div class="progress-bar progress-bar-danger" style="width: 5%">
       </div>
     </div></div>
-    <div class="col-sm-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver Proyecto</button>
+    <div class="col-xs-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver Proyecto</button>
     </div>
     </div>
     
@@ -218,13 +213,14 @@ include('menuTapia.php');?>
     <div id="collapse2" class="panel-collapse collapse">
       <div class="panel-body container-fluid">
       <div class="row">
-      <div class="col-sm-9">
+      <div class="col-md-9 col-sm-12">
       <ul class="nav nav-tabs navTabsMonitor">
   <li class="active"><a href="#">&Uacute;ltimas</a></li>
   <li><a href="#">Pendientes</a></li>
   <li><a href="#">Stand By</a></li>
   <li><a href="#">Activas</a></li>
   <li><a href="#">Finalizadas</a></li>
+  <li class="visible-sm visible-xs"><a href="#">Gr&aacute;fico</a></li>
 </ul>
 <div class="tab-content">
 <div class="tab-pane active">
@@ -232,16 +228,16 @@ include('menuTapia.php');?>
       <!-- Empieza Tarea -->
   <li href="#" class="list-group-item container-fluid">
   <div class="row">
-  <div class="col-sm-8">
-  <div class="pull-left"><div class="circle circlePendiente visible-sm"></div> 
-  <span class="circularLabel circlePendiente hidden-sm">Pendiente</span></div>
+  <div class="col-xs-8">
+  <div class="pull-left"><div class="circle circlePendiente visible-sm visible-xs"></div> 
+  <span class="circularLabel circlePendiente hidden-sm hidden-xs">Pendiente</span></div>
   <div class="pull-left monitorInfo">
    <a class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en PC de Rack</a>
  11/12/2013 20:35:40 - Matias Montiel
  </div>
   </div>
-  <div class="col-sm-4">
-  <span class="label label-warning labelTask pull-left hidden-sm">Servicio T&eacute;cnico</span>
+  <div class="col-xs-4">
+  <span class="label label-warning labelTask pull-left">Servicio T&eacute;cnico</span>
   <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
   </div>
@@ -250,16 +246,16 @@ include('menuTapia.php');?>
       <!-- Empieza Tarea -->
   <li href="#" class="list-group-item container-fluid">
  <div class="row">
-  <div class="col-sm-8">
-  <div class="pull-left"><div class="circle circleFinalizado visible-sm"></div>
-  <span class="circularLabel circleFinalizado hidden-sm">Finalizado</span></div>
+  <div class="col-xs-8">
+  <div class="pull-left"><div class="circle circleFinalizado visible-sm visible-xs"></div>
+  <span class="circularLabel circleFinalizado hidden-sm hidden-xs">Finalizado</span></div>
   <div class="pull-left monitorInfo">
    <a class="monitorInfoTitle titleDone">Perforaci&oacute;n - Suite </a>
  11/12/2013 20:35:40 - Matias Montiel
  </div>
   </div>
-  <div class="col-sm-4">
-  <span class="label label-info labelTask pull-left hidden-sm">Pedido Cotizaci&oacute;n</span>
+  <div class="col-xs-4">
+  <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
   <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
   </div>  
@@ -268,16 +264,16 @@ include('menuTapia.php');?>
       <!-- Empieza Tarea -->
   <li href="#" class="list-group-item container-fluid">
  <div class="row">
-  <div class="col-sm-8">
-  <div class="pull-left"><div class="circle circleFinalizado visible-sm"></div>
-  <span class="circularLabel circleFinalizado hidden-sm">Finalizado</span></div>
+  <div class="col-xs-8">
+  <div class="pull-left"><div class="circle circleFinalizado visible-sm visible-xs"></div>
+  <span class="circularLabel circleFinalizado hidden-sm hidden-xs">Finalizado</span></div>
   <div class="pull-left monitorInfo">
    <a class="monitorInfoTitle titleDone">Agregar Iphone al sistema  </a>
  11/12/2013 20:35:40 - Matias Montiel
  </div>
   </div>
-  <div class="col-sm-4">
-  <span class="label label-info labelTask pull-left hidden-sm">Pedido Cotizaci&oacute;n</span>
+  <div class="col-xs-4">
+  <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
   <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
   </div>  
@@ -286,16 +282,16 @@ include('menuTapia.php');?>
       <!-- Empieza Tarea -->
   <li href="#" class="list-group-item container-fluid">
  <div class="row">
-  <div class="col-sm-8">
-  <div class="pull-left"><div class="circle circleStandBy visible-sm"></div>
-  <span class="circularLabel circleStandBy hidden-sm">Stand By</span></div>
+  <div class="col-xs-8">
+  <div class="pull-left"><div class="circle circleStandBy visible-sm visible-xs"></div>
+  <span class="circularLabel circleStandBy hidden-sm hidden-xs">Stand By</span></div>
   <div class="pull-left monitorInfo">
    <a class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en otro lado </a>
  11/12/2013 20:35:40 - Matias Montiel
  </div>
   </div>
-  <div class="col-sm-4">
-  <span class="label label-primary labelTask pull-left hidden-sm">Implementaci&oacute;n</span>
+  <div class="col-xs-4">
+  <span class="label label-primary labelTask pull-left">Implementaci&oacute;n</span>
   <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
   </div>  
@@ -304,16 +300,16 @@ include('menuTapia.php');?>
       <!-- Empieza Tarea -->
   <li href="#" class="list-group-item container-fluid">
  <div class="row">
-  <div class="col-sm-8">
-  <div class="pull-left"><div class="circle circleEjecucion visible-sm"></div>
-  <span class="circularLabel circleEjecucion hidden-sm">En Ejecuci&oacute;n</span></div>
+  <div class="col-xs-8">
+  <div class="pull-left"><div class="circle circleEjecucion visible-sm visible-xs"></div>
+  <span class="circularLabel circleEjecucion hidden-sm hidden-xs">En Ejecuci&oacute;n</span></div>
   <div class="pull-left monitorInfo">
    <a class="monitorInfoTitle">Apple TV no funciona en Ipad de Juan  </a>
  11/12/2013 20:35:40 - Matias Montiel
  </div>
   </div>
-  <div class="col-sm-4">
-  <span class="label label-info labelTask pull-left hidden-sm">Pedido Cotizaci&oacute;n</span>
+  <div class="col-xs-4">
+  <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
   <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
   </div>  
@@ -324,7 +320,7 @@ include('menuTapia.php');?>
      
       </div>
             </div>
-      <div class="col-sm-3 align-center"><img src="img/pieChart.jpg" style="margin-top:40px;"/></div>
+      <div class="col-md-3 hidden-sm hidden-xs align-center"><img src="img/pieChart.jpg" style="margin-top:40px;"/></div>
     </div>
     </div><!-- /tab-pane -->
     </div><!-- /tab-content -->
@@ -333,8 +329,8 @@ include('menuTapia.php');?>
   <div class="panel panel-default">
     <div class="panel-heading container-fluid">
     <div class="row">
-    <div class="col-sm-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Proyecto 3</a></h4></div>
-    <div class="col-sm-4 text-right"> 
+    <div class="col-xs-6 text-left">  <h4 class="panel-title pull-left"><a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Proyecto 3</a></h4></div>
+    <div class="col-xs-4 text-right"> 
     <div class="clearfix progressResumenMonitorNum">
       <span class="badge circleEjecucion pull-left">90</span> 
       <span class="badge circleStandBy">0</span>
@@ -343,16 +339,13 @@ include('menuTapia.php');?>
     </div> 
     <div class="progress progressResumenMonitor">
       <div class="progress-bar progress-bar-success" style="width: 90%">
-        <span class="sr-only">35% Complete (success)</span>
       </div>
       <div class="progress-bar progress-bar-warning" style="width: 0%">
-        <span class="sr-only">20% Complete (warning)</span>
       </div>
       <div class="progress-bar progress-bar-danger" style="width: 0%">
-        <span class="sr-only">10% Complete (danger)</span>
       </div>
     </div></div>
-    <div class="col-sm-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver Proyecto</button>
+    <div class="col-xs-2 text-right">    <button class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Ver Proyecto</button>
     </div>
     </div>
     </div>
