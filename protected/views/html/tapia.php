@@ -75,13 +75,14 @@ include('menuTapia.php');?>
     <div id="collapse1" class="panel-collapse collapse in">
       <div class="panel-body container-fluid">
       <div class="row">
-      <div class="col-sm-9">
+      <div class="col-md-9 col-sm-12">
       <ul class="nav nav-tabs navTabsMonitor">
   <li class="active"><a href="#">&Uacute;ltimas</a></li>
   <li><a href="#">Pendientes</a></li>
   <li><a href="#">Stand By</a></li>
   <li><a href="#">Activas</a></li>
   <li><a href="#">Finalizadas</a></li>
+  <li class="visible-sm"><a href="#">Gr&aacute;fico</a></li>
 </ul>
 <div class="tab-content">
 <div class="tab-pane active">
@@ -98,7 +99,7 @@ include('menuTapia.php');?>
  </div>
   </div>
   <div class="col-sm-4">
-  <span class="label label-warning labelTask pull-left hidden-sm">Servicio T&eacute;cnico</span>
+  <span class="label label-warning labelTask pull-left">Servicio T&eacute;cnico</span>
   <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
   </div>
@@ -116,7 +117,7 @@ include('menuTapia.php');?>
  </div>
   </div>
   <div class="col-sm-4">
-  <span class="label label-info labelTask pull-left hidden-sm">Pedido Cotizaci&oacute;n</span>
+  <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
   <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
   </div>  
@@ -134,7 +135,7 @@ include('menuTapia.php');?>
  </div>
   </div>
   <div class="col-sm-4">
-  <span class="label label-info labelTask pull-left hidden-sm">Pedido Cotizaci&oacute;n</span>
+  <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
   <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
   </div>  
@@ -152,7 +153,7 @@ include('menuTapia.php');?>
  </div>
   </div>
   <div class="col-sm-4">
-  <span class="label label-primary labelTask pull-left hidden-sm">Implementaci&oacute;n</span>
+  <span class="label label-primary labelTask pull-left">Implementaci&oacute;n</span>
   <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
   </div>  
@@ -170,7 +171,7 @@ include('menuTapia.php');?>
  </div>
   </div>
   <div class="col-sm-4">
-  <span class="label label-info labelTask pull-left hidden-sm">Pedido Cotizaci&oacute;n</span>
+  <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
   <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
   </div>
   </div>  
@@ -181,7 +182,7 @@ include('menuTapia.php');?>
      
       </div>
             </div>
-      <div class="col-sm-3 align-center"><img src="img/pieChart.jpg" style="margin-top:40px;"/></div>
+      <div class="col-md-3 hidden-sm align-center"><img src="img/pieChart.jpg" style="margin-top:40px;"/></div>
     </div>
     </div><!-- /tab-pane -->
     </div><!-- /tab-content -->
