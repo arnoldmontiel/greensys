@@ -1136,6 +1136,8 @@ box-shadow: none !important;}
 
 #screenMonitor .tab-pane{overflow-y:auto; max-height:300px;}
 
+#screenMonitor .panel-body{padding:5px;}
+
 /* ------ END MONITOR------- */
 /*---------- /////////////END TAPIAAA///////////// -------------*/
 
