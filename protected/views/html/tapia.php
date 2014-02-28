@@ -123,7 +123,7 @@ include('menuTapia.php');?>
  <div class="circle circleStandBy visible-sm visible-xs"></div> 
   <div class="circularLabel circleStandBy pull-left hidden-sm hidden-xs">Stand By</div>
   <div class=" monitorInfo" >
-   <a class="monitorInfoTitle">Comprar nuevos parlantes  </a> <span class="iconsGroup"><img src="img/iconSet/circleIMG.png" /></span>
+   <a class="monitorInfoTitle">Comprar nuevos parlantes  </a> <span class="iconsGroup"><img src="img/iconSet/circleIMG20.png" /></span>
  <div class="monitorDates"> <span class="label label-default labelDate">UPDATED</span>  <span class="monitorDate">11/12/2013 30:12:23  - <strong>Matias Montiel</strong> </span></div>
    </div>
      <span class="label label-primary labelTask">Implementacion<br/> 20/10/2012 30:09:10</span>
