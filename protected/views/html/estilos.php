@@ -1159,6 +1159,21 @@ box-shadow: none !important;}
 
 .iconsGroup img{margin-right:-6px;margin-top:-3px;}
 
+/* Nexus 7 (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 603px) and (max-device-width : 966px) {
+}
+
+/* Nexus 7 (landscape) ----------- */
+@media only screen and (min-width : 604px)  and (max-width : 767px) and (orientation: landscape) {
+.hidden-sm.hidden-xs.visible-nexus{display: inline-block!important;}
+.col-nexus-9.col-md-9{width:75%; float:left;}
+.col-nexus-3.col-md-3{width:25%; float:left;}
+}
+
+/* Nexus 7 (portrait) ----------- */
+@media only screen and (max-width : 603px) and (orientation: portrait) {
+}
+
 
 /* ------ END MONITOR------- */
 /*---------- /////////////END TAPIAAA///////////// -------------*/

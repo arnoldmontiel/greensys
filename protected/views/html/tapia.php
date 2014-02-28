@@ -72,7 +72,7 @@ include('menuTapia.php');?>
     <div id="collapse1" class="panel-collapse collapse in">
       <div class="panel-body container-fluid">
       <div class="row">
-      <div class="col-md-9 col-sm-12">
+      <div class="col-md-9 col-sm-12 col-nexus-9">
       <ul class="nav nav-tabs navTabsMonitor">
   <li class="active"><a href="#">&Uacute;ltimas</a></li>
   <li><a href="#">Pendientes</a></li>
@@ -134,7 +134,7 @@ include('menuTapia.php');?>
      
       </div>
             </div>
-      <div class="col-md-3 hidden-sm hidden-xs align-center"><img src="img/pieChart.jpg" style="margin-top:40px;"/></div>
+      <div class="col-md-3 col-nexus-3 hidden-sm hidden-xs visible-nexus align-center"><img src="img/pieChart.jpg" style="margin-top:40px;"/></div>
     </div>
     </div><!-- /tab-pane -->
     </div><!-- /tab-content -->
