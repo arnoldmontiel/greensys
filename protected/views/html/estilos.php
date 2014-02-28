@@ -1066,17 +1066,31 @@ input.formSearch:-moz-placeholder::before  { font-family: FontAwesome; content:'
 .labelMonitorType.typeImplementacion{color:blue;}
 .labelMonitorType.typeCotizacion{color:red;}
 
-#screenMonitor .list-group-item{padding:3px 2px; margin:0px;margin-bottom:3px; border-radius:45px; }
+#screenMonitor .list-group-item{/*padding:3px 2px;*/ padding:0px; margin:0px;margin-bottom:3px; border-radius:45px; }
 
 #screenMonitor .list-group-item.odd{background-color:#f9f9f9;}
 
 
 .monitorInfo{line-height:24px;}
-.monitorInfoTitle{font-family:'GudeaBold'; font-size:17px; display:block; cursor:pointer;}
+.monitorInfoTitle{font-family:'GudeaBold'; font-size:17px; display:inline-block; cursor:pointer;}
 .monitorInfoTitle.titleDone{text-decoration:line-through;}
 .monitorInfoTitle .label-warning{color:white; font-family:'GudeaRegular';}
+.monitorDates{font-size:12px;margin-top: -3px;
+margin-bottom: 2px;}
 
-.labelTask{ margin-top:13px;}
+.labelTask{ /*margin-top:13px;*/ 
+position:absolute;
+border-bottom-right-radius:25px;
+border-top-right-radius:25px;
+padding: 3px 10px;
+top: 5px;
+right: 5px;
+line-height:17px;
+}
+.list-group .label.labelDate{margin-right:5px; font-size:12px; font-family:'GudeaRegular';}
+.list-group .monitorDate{margin-right:15px; }
+.list-group .monitorDates span:last-child{margin-right:0px; }
+.list-group .monitorDates strong{font-size:14px; }
 
 .btnDeleteMonitor{margin-top:5px; margin-right:5px; border-radius:40px;}
 
@@ -1088,10 +1102,9 @@ height: 45px;
 border-top-left-radius: 45px;
 border-bottom-left-radius: 45px;
 width: 30px;
-margin-left: 3px;
-margin-top: 1px;
-margin-right:10px;
-display:inline-block;}
+margin: 2px;
+margin-right:5px;
+float:left;}
 
 .circlePendiente{background-color: #d9534f;}
 .circleFinalizado{background-color: #CCC;}
@@ -1101,19 +1114,22 @@ display:inline-block;}
 .circularLabel{margin-right: 10px;
 border-radius: 25px;
 height: 48px;
-margin-top: 0px;
 line-height: 44px;
 border-bottom-right-radius: 0px;
 border-top-right-radius: 0px;
 display:inline-block;
 color:white;
 font-size:13px;
-letter-spacing:1px;
 text-transform:uppercase;
-width:120px;
+width:104px;
 text-align:right;
 padding-right:10px;
+margin:2px;
+margin-right:5px;
 }
+
+.circularLabelTop{height:30px;border-radius:0px; border-top-left-radius:45px;}
+.circularLabelBottom{height:30px;border-radius:0px; border-bottom-left-radius:45px;background-color:white; border-color:1px solid red; color:red;}
 
 .progressResumenMonitor{height:7px;
 -webkit-box-shadow: none;
@@ -1137,6 +1153,12 @@ box-shadow: none !important;}
 #screenMonitor .tab-pane{overflow-y:auto; max-height:300px;}
 
 #screenMonitor .panel-body{padding:5px;}
+#screenMonitor .nav>li>a{padding:10px;}
+
+.list-group .label.labelSM{font-size:10px; margin-right:5px; background-color:#ccc;}
+
+.iconsGroup img{margin-right:-6px;margin-top:-3px;}
+
 
 /* ------ END MONITOR------- */
 /*---------- /////////////END TAPIAAA///////////// -------------*/

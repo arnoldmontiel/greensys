@@ -85,93 +85,48 @@ include('menuTapia.php');?>
 <div class="tab-pane active">
       <ul class="list-group">
       <!-- Empieza Tarea -->
-  <li href="#" class="list-group-item container-fluid">
-  <div class="row">
-  <div class="col-xs-8">
-  <div class="pull-left"><div class="circle circlePendiente visible-sm visible-xs"></div> 
-  <span class="circularLabel circlePendiente hidden-sm hidden-xs">Pendiente</span></div>
-  <div class="pull-left monitorInfo">
-   <a class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en PC de Rack</a>
- 11/12/2013 20:35:40 - Matias Montiel
- </div>
-  </div>
-  <div class="col-xs-4">
-  <span class="label label-warning labelTask pull-left">Servicio T&eacute;cnico</span>
-  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
-  </div>
-  </div>
+  <li href="#" class="list-group-item">
+  <div class="circle circlePendiente visible-sm visible-xs"></div> 
+  <div class="circularLabel circlePendiente pull-left hidden-sm hidden-xs">Finalizado</div>
+  <div class=" monitorInfo" >
+   <a class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en PC de Rack  </a> <span class="iconsGroup"><img src="img/iconSet/circlePDF20.png" />  <img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /> <img src="img/iconSet/circleIMG20.png" /> <img src="img/iconSet/circleCAD20.png" /></span>
+ <div class="monitorDates"> <span class="label label-default labelDate">UPDATED</span>  <span class="monitorDate">11/12/2013 30:12:23  - <strong>Matias Montiel</strong> </span></div>
+</div>
+     <span class="label label-info labelTask">Pedido Cotizaci&oacute;n <br/> 20/10/2012 30:09:10</span>
+  </li>
+      <!-- Termina Tarea -->
+  
+      <!-- Empieza Tarea -->
+  <li href="#" class="list-group-item odd">
+ <div class="circle circleEjecucion visible-sm visible-xs"></div> 
+  <div class="circularLabel circleEjecucion pull-left hidden-sm hidden-xs">En Ejecucion</div>
+  <div class=" monitorInfo" >
+   <a class="monitorInfoTitle">Perforacion Suite</a> <span class="iconsGroup"></span>
+ <div class="monitorDates"> <span class="label label-default labelDate">UPDATED</span>  <span class="monitorDate">11/12/2013 30:12:23  - <strong>Matias Montiel</strong> </span></div>
+   </div>
+     <span class="label label-warning labelTask">Servicio T&eacute;cnico <br/> 20/10/2012 30:09:10</span>
   </li>
       <!-- Termina Tarea -->
       <!-- Empieza Tarea -->
-  <li href="#" class="list-group-item container-fluid">
- <div class="row">
-  <div class="col-xs-8">
-  <div class="pull-left"><div class="circle circleFinalizado visible-sm visible-xs"></div>
-  <span class="circularLabel circleFinalizado hidden-sm hidden-xs">Finalizado</span></div>
-  <div class="pull-left monitorInfo">
-   <a class="monitorInfoTitle titleDone">Perforaci&oacute;n - Suite </a>
- 11/12/2013 20:35:40 - Matias Montiel
- </div>
-  </div>
-  <div class="col-xs-4">
-  <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
-  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
-  </div>
-  </div>  
-  </li>
+  <li href="#" class="list-group-item">
+ <div class="circle circleEjecucion visible-sm visible-xs"></div> 
+  <div class="circularLabel circleEjecucion pull-left hidden-sm hidden-xs">En Ejecucion</div>
+  <div class=" monitorInfo" >
+   <a class="monitorInfoTitle">Agregar Iphone al sistema  </a> <span class="iconsGroup"><img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /></span>
+ <div class="monitorDates"> <span class="label label-default labelDate">UPDATED</span>  <span class="monitorDate">11/12/2013 30:12:23  - <strong>Matias Montiel</strong> </span></div>
+   </div>
+     <span class="label label-primary labelTask">Implementacion<br/> 20/10/2012 30:09:10</span>
+     </li>
       <!-- Termina Tarea -->
       <!-- Empieza Tarea -->
-  <li href="#" class="list-group-item container-fluid">
- <div class="row">
-  <div class="col-xs-8">
-  <div class="pull-left"><div class="circle circleFinalizado visible-sm visible-xs"></div>
-  <span class="circularLabel circleFinalizado hidden-sm hidden-xs">Finalizado</span></div>
-  <div class="pull-left monitorInfo">
-   <a class="monitorInfoTitle titleDone">Agregar Iphone al sistema  </a>
- 11/12/2013 20:35:40 - Matias Montiel
- </div>
-  </div>
-  <div class="col-xs-4">
-  <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
-  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
-  </div>
-  </div>  
-  </li>
-      <!-- Termina Tarea -->
-      <!-- Empieza Tarea -->
-  <li href="#" class="list-group-item container-fluid">
- <div class="row">
-  <div class="col-xs-8">
-  <div class="pull-left"><div class="circle circleStandBy visible-sm visible-xs"></div>
-  <span class="circularLabel circleStandBy hidden-sm hidden-xs">Stand By</span></div>
-  <div class="pull-left monitorInfo">
-   <a class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en otro lado </a>
- 11/12/2013 20:35:40 - Matias Montiel
- </div>
-  </div>
-  <div class="col-xs-4">
-  <span class="label label-primary labelTask pull-left">Implementaci&oacute;n</span>
-  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
-  </div>
-  </div>  
-  </li>
-      <!-- Termina Tarea -->
-      <!-- Empieza Tarea -->
-  <li href="#" class="list-group-item container-fluid">
- <div class="row">
-  <div class="col-xs-8">
-  <div class="pull-left"><div class="circle circleEjecucion visible-sm visible-xs"></div>
-  <span class="circularLabel circleEjecucion hidden-sm hidden-xs">En Ejecuci&oacute;n</span></div>
-  <div class="pull-left monitorInfo">
-   <a class="monitorInfoTitle">Apple TV no funciona en Ipad de Juan  </a>
- 11/12/2013 20:35:40 - Matias Montiel
- </div>
-  </div>
-  <div class="col-xs-4">
-  <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
-  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
-  </div>
-  </div>  
+  <li href="#" class="list-group-item odd">
+ <div class="circle circleStandBy visible-sm visible-xs"></div> 
+  <div class="circularLabel circleStandBy pull-left hidden-sm hidden-xs">Stand By</div>
+  <div class=" monitorInfo" >
+   <a class="monitorInfoTitle">Comprar nuevos parlantes  </a> <span class="iconsGroup"><img src="img/iconSet/circleIMG.png" /></span>
+ <div class="monitorDates"> <span class="label label-default labelDate">UPDATED</span>  <span class="monitorDate">11/12/2013 30:12:23  - <strong>Matias Montiel</strong> </span></div>
+   </div>
+     <span class="label label-primary labelTask">Implementacion<br/> 20/10/2012 30:09:10</span>
   </li>
       <!-- Termina Tarea -->
 </ul>
@@ -238,7 +193,7 @@ include('menuTapia.php');?>
   </div>
   <div class="col-xs-4">
   <span class="label label-warning labelTask pull-left">Servicio T&eacute;cnico</span>
-  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
+  
   </div>
   </div>
   </li>
@@ -256,7 +211,7 @@ include('menuTapia.php');?>
   </div>
   <div class="col-xs-4">
   <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
-  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
+  
   </div>
   </div>  
   </li>
@@ -274,7 +229,7 @@ include('menuTapia.php');?>
   </div>
   <div class="col-xs-4">
   <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
-  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
+  
   </div>
   </div>  
   </li>
@@ -292,7 +247,7 @@ include('menuTapia.php');?>
   </div>
   <div class="col-xs-4">
   <span class="label label-primary labelTask pull-left">Implementaci&oacute;n</span>
-  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
+  
   </div>
   </div>  
   </li>
@@ -310,7 +265,7 @@ include('menuTapia.php');?>
   </div>
   <div class="col-xs-4">
   <span class="label label-info labelTask pull-left">Pedido Cotizaci&oacute;n</span>
-  <button class="btn btn-default pull-right btnDeleteMonitor"><i class="fa fa-trash-o"></i></button>
+  
   </div>
   </div>  
   </li>
