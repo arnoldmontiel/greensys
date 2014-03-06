@@ -105,7 +105,7 @@ body{
 	line-height:inherit;
 	color:#333;
 	background-color:#ccc;	
-	padding-top:85px;
+	padding-top:75px;
 	background: #ECF0F1;
 	 }
 
@@ -1049,7 +1049,9 @@ box-shadow: 0px 0px 2px rgba(0,0,0,0.8); background-color:rgba(0,0,0,0.5); paddi
 
 /*---------- /////////////TAPIAAA///////////// -------------*/
 /* ------ MONITOR------- */
-.formSearch{width:250px; border-radius:20px; padding-left:10px;}
+#screenMonitor{padding-bottom:80px;}
+
+.formSearch{width:250px; border-radius:20px; padding-left:10px; float:right;}
 
 .formSearch::-webkit-input-placeholder::before { font-family: FontAwesome; content:'\f002'; }
 .formSearch::-moz-placeholder::before  { font-family: FontAwesome; content:'\f002'; } /* firefox 19+ */
@@ -1068,15 +1070,16 @@ input.formSearch:-moz-placeholder::before  { font-family: FontAwesome; content:'
 
 #screenMonitor .list-group-item{/*padding:3px 2px;*/ padding:0px; margin:0px;margin-bottom:3px; border-radius:45px; }
 
-#screenMonitor .list-group-item.odd{background-color:#f9f9f9;}
+#screenMonitor .list-group-item.odd{background-color:#f9f9f9; display:block;}
 
 
 .monitorInfo{line-height:24px;}
-.monitorInfoTitle{font-family:'GudeaBold'; font-size:17px; display:inline-block; cursor:pointer;}
+.monitorInfoTitle{font-family:'GudeaBold'; font-size:17px; display:inline; cursor:pointer;}
 .monitorInfoTitle.titleDone{text-decoration:line-through;}
 .monitorInfoTitle .label-warning{color:white; font-family:'GudeaRegular';}
-.monitorDates{font-size:12px;margin-top: -3px;
+.monitorDates{font-size:12px;
 margin-bottom: 2px;}
+.labelDate{display:inline-block;}
 
 .labelTask{ /*margin-top:13px;*/ 
 position:absolute;
@@ -1097,14 +1100,17 @@ line-height:17px;
 #screenMonitor .panel-group .panel-default>.panel-heading{background-color:#ddd; color:#555; padding:5px; }
 #screenMonitor .panel-group .panel-default>.panel-heading h4{line-height:30px;}
 
+#screenMonitor h4.panel-title a{display:block;}
+
 .circle{
 height: 45px;
 border-top-left-radius: 45px;
 border-bottom-left-radius: 45px;
 width: 30px;
-margin: 2px;
+margin: 3px;
 margin-right:5px;
 float:left;}
+
 
 .circlePendiente{background-color: #d9534f;}
 .circleFinalizado{background-color: #CCC;}
@@ -1159,6 +1165,8 @@ box-shadow: none !important;}
 
 .iconsGroup img{margin-right:-6px;margin-top:-3px;}
 
+
+
 /* Nexus 7 (portrait and landscape) ----------- */
 @media only screen and (min-device-width : 603px) and (max-device-width : 966px) {
 }
@@ -1174,6 +1182,121 @@ box-shadow: none !important;}
 @media only screen and (max-width : 603px) and (orientation: portrait) {
 }
 
+
+
+/* MOBILE ----------- */
+@media only screen and (max-width: 599px) { 
+
+#mobilePageName{font-size: 18px;
+margin-left: 10px;}
+
+.navbar{margin-bottom:10px;}
+
+
+.progressInternal{width:240px; margin:auto;margin-bottom:15px; margin-top:10px; border-bottom:1px dotted #eee; padding-bottom:10px;}
+.progressInternal .progress{margin:0px; padding:0px; margin-top:5px;}
+.progressInternal .progressResumenMonitorNum{padding:0px; margin:0px; text-align:center;}
+
+#screenMonitor .list-group-item{ border-radius:0px; padding-left:5px; padding-bottom:5px;}
+.monitorInfoTitle{font-size:15px;
+display:inline-block;
+  width: 370px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family:"GudeaBold";
+line-height: 18px;
+margin-bottom:5px;
+vertical-align: middle;
+}
+.monitorInfo{line-height:inherit;}
+
+
+.list-group .label.labelDate{font-size:11px; padding:2px; margin-right:2px; display:inline-block;}
+.monitorDate{
+  width: 230px;
+  display:inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align:middle;
+}
+
+.list-group .monitorDates {margin-bottom:0px;}
+.list-group .monitorDates strong{font-size:12px;}
+
+.iconsGroup{display:inline-block; margin-bottom:3px; margin-top:3px;
+right: 7px;
+position: absolute;
+}
+
+
+
+
+.line{border-left:5px solid;}
+
+.linePendiente{border-left-color: #d9534f;}
+.lineFinalizado{border-left-color: #CCC;}
+.lineStandBy{border-left-color: #FFC36E;}
+.lineEjecucion{border-left-color: green;}
+
+#screenMonitor  h4.panel-title{font-size:17px; font-family:"GudeaRegular";}
+
+.labelTaskMobile{font-size:12px;color:white; padding:3px; margin-left:-5px;}
+
+.labelTaskMobilePedido{background-color:#5bc0de; }
+.labelTaskMobileServicio{background-color:#f0ad4e; }
+.labelTaskMobileImplementacion{background-color:#428bca;}
+.labelTaskMobileDate{font-size:11px;}
+
+
+#screenMonitor .nav>li>a {padding:8px 4px; font-size:14px;}
+
+.formSearch{margin:auto; float:none !important; margin-bottom:10px;}
+
+#screenMonitor .panel-group .panel-default>.panel-heading{padding:0px 5px;}
+
+#screenMonitor .panel-group .panel-default>.panel-heading .btn-xs{margin-top:3px;}
+
+}
+
+@media only screen and (max-width: 350px) { 
+.monitorInfoTitle{width:195px;}
+
+.iconsGroup img{width:15px;}
+.labelDate.visible-xs{display:inline-block !important;}
+
+
+
+}
+
+@media only screen and (max-width: 768px) {
+
+
+.navbar-header {
+float: left;
+}
+.navbar-left {
+float: left;
+}
+.navbar-nav{margin:0px;}
+
+    .visible-xs-inline {
+        display: inline-block !important;
+    }
+    .hidden-xs-inline {
+        display: none !important;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .visible-xs-inline {
+        display: none !important;
+    }
+    .hidden-xs-inline {
+        display: inline-block !important;
+    }
+}
 
 /* ------ END MONITOR------- */
 /*---------- /////////////END TAPIAAA///////////// -------------*/

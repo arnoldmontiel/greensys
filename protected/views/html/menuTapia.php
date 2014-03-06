@@ -1,6 +1,7 @@
 
 
 <nav class="navbar navbar-default navbar-fixed-top menuTapia" role="navigation"  id="Menu">
+<div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
            <div class="navbar-header">
           <a class="navbar-brand dropdown-toggle" data-toggle="dropdown" href="#" id="MenuLogo">TAPIA
@@ -10,6 +11,15 @@
 			<li><a href="index.php">GREEN</a></li>
           </ul>
         </div>
+        
+          <div class="nav navbar-nav navbar-left visible-xs">
+				<button class="toggle-menu menu-left btn btn-default navbar-btn jPushMenuBtn" id="toggleMain">
+					<i class="fa fa-reorder fa-fw"></i>
+				</button>
+			</div>
+			<p class="navbar-text visible-xs" id="mobilePageName">
+			Monitor			
+			</p>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex5-collapse">
@@ -31,4 +41,5 @@
           </ul>
 
         </div><!-- /.navbar-collapse -->
+        </div>
       </nav>
