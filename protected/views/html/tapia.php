@@ -182,8 +182,8 @@ include('menuTapia.php');?>
     <div class="panel panel-default">
     <div class="panel-heading container-fluid">
     <div class="row">
-    <div class="col-sm-6 col-xs-10 text-left">  <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Proyecto 2</a></h4></div>
-        <div class="col-xs-4 text-right hidden-xs"> 
+    <div class="col-sm-6 col-xs-10 col-nexus-6 text-left">  <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Proyecto 2</a></h4></div>
+        <div class="col-xs-4 col-nexus-4 text-right hidden-xs"> 
     <div class="clearfix progressResumenMonitorNum">
       <span class="badge circleEjecucion pull-left">5</span> 
       <span class="badge circleStandBy">5</span>
@@ -198,9 +198,9 @@ include('menuTapia.php');?>
       <div class="progress-bar progress-bar-danger" style="width: 5%">
       </div>
     </div></div>
-    <div class="col-sm-2 text-right">    
+    <div class="col-sm-2 col-nexus-2 text-right">    
     <button class="btn btn-default btn-sm pull-right hidden-xs"><i class="fa fa-arrow-circle-right"></i> Ver Proyecto</button>
-    <button class="btn btn-default btn-xs pull-right visible-xs"><i class="fa fa-arrow-circle-right"></i></button>
+    <button class="btn btn-default btn-xs pull-right visible-xs hidden-nexus"><i class="fa fa-arrow-circle-right"></i></button>
     </div>
     </div>
     
@@ -315,8 +315,8 @@ include('menuTapia.php');?>
   <div class="panel panel-default">
     <div class="panel-heading container-fluid">
     <div class="row">
-    <div class="col-sm-6 col-xs-10 text-left">  <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Proyecto 3</a></h4></div>
-      <div class="col-xs-4 text-right hidden-xs"> 
+    <div class="col-sm-6 col-xs-10 col-nexus-6 text-left">  <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Proyecto 3</a></h4></div>
+      <div class="col-xs-4 col-nexus-4 text-right hidden-xs"> 
     <div class="clearfix progressResumenMonitorNum">
       <span class="badge circleEjecucion pull-left">90</span> 
       <span class="badge circleStandBy">0</span>
@@ -331,9 +331,9 @@ include('menuTapia.php');?>
       <div class="progress-bar progress-bar-danger" style="width: 0%">
       </div>
     </div></div>
-    <div class="col-sm-2 text-right">    
+    <div class="col-sm-2 text-right col-nexus-2">    
     <button class="btn btn-default btn-sm pull-right hidden-xs"><i class="fa fa-arrow-circle-right"></i> Ver Proyecto</button>
-    <button class="btn btn-default btn-xs pull-right visible-xs"><i class="fa fa-arrow-circle-right"></i></button>
+    <button class="btn btn-default btn-xs pull-right visible-xs hidden-nexus"><i class="fa fa-arrow-circle-right"></i></button>
     </div>
     </div>
     </div>
