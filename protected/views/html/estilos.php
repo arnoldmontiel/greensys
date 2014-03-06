@@ -1166,6 +1166,8 @@ box-shadow: none !important;}
 .iconsGroup img{margin-right:-6px;margin-top:-3px;}
 
 
+#mobilePageName{font-size: 18px;
+margin-left: 10px;}
 
 /* Nexus 7 (portrait and landscape) ----------- */
 @media only screen and (min-device-width : 603px) and (max-device-width : 966px) {
@@ -1179,7 +1181,42 @@ box-shadow: none !important;}
 }
 
 /* Nexus 7 (portrait) ----------- */
-@media only screen and (max-width : 603px) and (orientation: portrait) {
+@media only screen and (min-width: 590px) and (max-width : 600px) and (orientation: portrait) {
+
+.hidden-xs{display:block !important;}
+
+.hidden-nexus{display:none !important;}
+
+.visible-nexus{display:block !important;}
+
+
+.col-nexus-1,
+.col-nexus-2,
+.col-nexus-3,
+.col-nexus-4,
+.col-nexus-5,
+.col-nexus-6,
+.col-nexus-7,
+.col-nexus-8,
+.col-nexus-9,
+.col-nexus-10,
+.col-nexus-11 {
+  float: left;
+}
+
+
+.col-nexus-1 {width: 8.333333333333332%;}
+.col-nexus-2 {width: 16.666666666666664%;}
+.col-nexus-3 {width: 25%;}
+.col-nexus-4 {width: 33.33333333333333%;}
+.col-nexus-5 {width: 41.66666666666667%;}
+.col-nexus-6 {width: 50%;}
+.col-nexus-7 {width: 58.333333333333336%;}
+.col-nexus-8 {width: 66.66666666666666%;}
+.col-nexus-9 {width: 75%;}
+.col-nexus-10 {width: 83.33333333333334%;}
+.col-nexus-11 {width: 91.66666666666666%;}
+.col-nexus-12 {width: 100%;}
 }
 
 
@@ -1187,8 +1224,6 @@ box-shadow: none !important;}
 /* MOBILE ----------- */
 @media only screen and (max-width: 599px) { 
 
-#mobilePageName{font-size: 18px;
-margin-left: 10px;}
 
 .navbar{margin-bottom:10px;}
 

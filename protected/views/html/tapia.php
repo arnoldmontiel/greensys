@@ -38,8 +38,8 @@ $active='tinicio';
 include('menuTapia.php');?>
 <div class="container" id="screenMonitor">
 <div class="row">
-<div class="col-sm-6 col-xs-12 hidden-xs"><h1 class="pageTitle">Monitor</h1></div>
-<div class="col-sm-6 col-xs-12 text-right "><input type="text" class="form-control formSearch" placeholder=" Buscar"></div>
+<div class="col-sm-6 col-xs-12 col-nexus-6 hidden-xs"><h1 class="pageTitle">Monitor</h1></div>
+<div class="col-sm-6 col-xs-12 col-nexus-6 text-right "><input type="text" class="form-control formSearch" placeholder=" Buscar"></div>
 </div>
   <div class="row">
     <div class="col-sm-12">
@@ -48,8 +48,8 @@ include('menuTapia.php');?>
   <div class="panel panel-default">
     <div class="panel-heading container-fluid">
     <div class="row">
-    <div class="col-sm-6 col-xs-10 text-left">  <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Cohen - La Angostura</a></h4></div>
-    <div class="col-sm-4 text-right hidden-xs"> 
+    <div class="col-sm-6 col-xs-10 col-nexus-6 text-left">  <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Cohen - La Angostura</a></h4></div>
+    <div class="col-sm-4 col-nexus-4 text-right hidden-xs"> 
     <div class="clearfix progressResumenMonitorNum">
       <span class="badge circleEjecucion pull-left">80</span> 
       <span class="badge circleStandBy">1</span>
@@ -64,9 +64,9 @@ include('menuTapia.php');?>
       <div class="progress-bar progress-bar-danger" style="width: 1%">
       </div>
     </div></div>
-    <div class="col-sm-2 text-right">    
+    <div class="col-sm-2 col-nexus-2 text-right">    
     <button class="btn btn-default btn-sm pull-right hidden-xs"><i class="fa fa-arrow-circle-right"></i> Ver Proyecto</button>
-    <button class="btn btn-default btn-xs pull-right visible-xs"><i class="fa fa-arrow-circle-right"></i></button>
+    <button class="btn btn-default btn-xs pull-right hidden-nexus visible-xs"><i class="fa fa-arrow-circle-right"></i></button>
     </div>
     </div>
     
@@ -74,8 +74,8 @@ include('menuTapia.php');?>
     <div id="collapse1" class="panel-collapse collapse in">
       <div class="panel-body container-fluid">
       <div class="row">
-      <div class="col-md-9 col-sm-12 col-nexus-9">
-      <div class="progressInternal visible-xs">
+      <div class="col-md-9 col-sm-12">
+      <div class="progressInternal visible-xs hidden-nexus">
       <div class="clearfix progressResumenMonitorNum">
       <span class="badge circleEjecucion pull-left">80</span> 
       <span class="badge circleStandBy">1</span>
@@ -97,16 +97,16 @@ include('menuTapia.php');?>
   <li><a href="#">Stand By</a></li>
   <li><a href="#">Activas</a></li>
   <li><a href="#">Finalizadas</a></li>
-  <li class="visible-sm"><a href="#">Gr&aacute;fico</a></li>
+  <li class="visible-sm visible-nexus"><a href="#">Gr&aacute;fico</a></li>
 </ul>
 <div class="tab-content">
 <div class="tab-pane active">
       <ul class="list-group">
      <!-- Empieza Tarea -->
   <li class="list-group-item line linePendiente ">
-  <div class="circle circlePendiente visible-sm"></div> 
+  <div class="circle circlePendiente visible-sm visible-nexus"></div> 
   <div class="circularLabel circlePendiente pull-left hidden-sm hidden-xs">Finalizado</div>
-    <div class="labelTaskMobile labelTaskMobilePedido visible-xs">Pedido Cotizaci&oacute;n <span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
+    <div class="labelTaskMobile labelTaskMobilePedido visible-xs hidden-nexus">Pedido Cotizaci&oacute;n <span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
    <a class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en PC de Rack  </a> <span class="iconsGroup"><img src="img/iconSet/circlePDF20.png" />  <img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /> <img src="img/iconSet/circleIMG20.png" /> <img src="img/iconSet/circleCAD20.png" /></span>
   <div class="monitorDates"> 
@@ -121,9 +121,9 @@ include('menuTapia.php');?>
   
       <!-- Empieza Tarea -->
   <li class="list-group-item line lineEjecucion odd">
- <div class="circle circleEjecucion visible-sm"></div> 
+ <div class="circle circleEjecucion visible-sm visible-nexus"></div> 
   <div class="circularLabel circleEjecucion pull-left hidden-sm hidden-xs">En Ejecucion</div>
-      <div class="labelTaskMobile labelTaskMobileServicio visible-xs">Servicio T&eacute;cnico<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
+      <div class="labelTaskMobile labelTaskMobileServicio visible-xs hidden-nexus">Servicio T&eacute;cnico<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
    <a class="monitorInfoTitle">Perforacion Suite</a> <span class="iconsGroup"></span>
  <div class="monitorDates"> 
@@ -137,9 +137,9 @@ include('menuTapia.php');?>
       <!-- Termina Tarea -->
       <!-- Empieza Tarea -->
   <li class="list-group-item line lineEjecucion ">
- <div class="circle circleEjecucion visible-sm"></div> 
+ <div class="circle circleEjecucion visible-sm visible-nexus"></div> 
   <div class="circularLabel circleEjecucion pull-left hidden-sm hidden-xs">En Ejecucion</div>
-  <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
+  <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs hidden-nexus">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
    <a class="monitorInfoTitle">Agregar Iphone al sistema  </a> <span class="iconsGroup"><img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /></span>
  <div class="monitorDates"> 
@@ -153,9 +153,9 @@ include('menuTapia.php');?>
       <!-- Termina Tarea -->
       <!-- Empieza Tarea -->
   <li class="list-group-item line lineStandBy odd">
- <div class="circle circleStandBy visible-sm"></div> 
+ <div class="circle circleStandBy visible-sm visible-nexus"></div> 
   <div class="circularLabel circleStandBy pull-left hidden-sm hidden-xs">Stand By</div>
-    <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
+    <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs hidden-nexus">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
    <a class="monitorInfoTitle">Comprar nuevos parlantes  </a> <span class="iconsGroup"><img src="img/iconSet/circleIMG20.png" /></span>
  <div class="monitorDates"> 
@@ -209,22 +209,38 @@ include('menuTapia.php');?>
       <div class="panel-body container-fluid">
       <div class="row">
       <div class="col-md-9 col-sm-12">
-      <ul class="nav nav-tabs navTabsMonitor">
+      <div class="progressInternal visible-xs hidden-nexus">
+      <div class="clearfix progressResumenMonitorNum">
+      <span class="badge circleEjecucion pull-left">80</span> 
+      <span class="badge circleStandBy">1</span>
+      <span class="badge circlePendiente">1</span> 
+      <span class="badge pull-right">10</span>
+    </div> 
+    <div class="progress progressResumenMonitor">
+      <div class="progress-bar progress-bar-success" style="width: 80%">
+      </div>
+      <div class="progress-bar progress-bar-warning" style="width: 1%">
+      </div>
+      <div class="progress-bar progress-bar-danger" style="width: 1%">
+      </div>
+    </div>
+      </div>
+            <ul class="nav nav-tabs navTabsMonitor hidden-xs">
   <li class="active"><a href="#">&Uacute;ltimas</a></li>
   <li><a href="#">Pendientes</a></li>
   <li><a href="#">Stand By</a></li>
   <li><a href="#">Activas</a></li>
   <li><a href="#">Finalizadas</a></li>
-  <li class="visible-sm visible-xs"><a href="#">Gr&aacute;fico</a></li>
+  <li class="visible-sm visible-nexus"><a href="#">Gr&aacute;fico</a></li>
 </ul>
 <div class="tab-content">
 <div class="tab-pane active">
       <ul class="list-group">
-      <!-- Empieza Tarea -->
+     <!-- Empieza Tarea -->
   <li class="list-group-item line linePendiente ">
-  <div class="circle circlePendiente visible-sm"></div> 
+  <div class="circle circlePendiente visible-sm visible-nexus"></div> 
   <div class="circularLabel circlePendiente pull-left hidden-sm hidden-xs">Finalizado</div>
-    <div class="labelTaskMobile labelTaskMobilePedido visible-xs">Pedido Cotizaci&oacute;n <span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
+    <div class="labelTaskMobile labelTaskMobilePedido visible-xs hidden-nexus">Pedido Cotizaci&oacute;n <span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
    <a class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en PC de Rack  </a> <span class="iconsGroup"><img src="img/iconSet/circlePDF20.png" />  <img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /> <img src="img/iconSet/circleIMG20.png" /> <img src="img/iconSet/circleCAD20.png" /></span>
   <div class="monitorDates"> 
@@ -239,9 +255,9 @@ include('menuTapia.php');?>
   
       <!-- Empieza Tarea -->
   <li class="list-group-item line lineEjecucion odd">
- <div class="circle circleEjecucion visible-sm"></div> 
+ <div class="circle circleEjecucion visible-sm visible-nexus"></div> 
   <div class="circularLabel circleEjecucion pull-left hidden-sm hidden-xs">En Ejecucion</div>
-      <div class="labelTaskMobile labelTaskMobileServicio visible-xs">Servicio T&eacute;cnico<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
+      <div class="labelTaskMobile labelTaskMobileServicio visible-xs hidden-nexus">Servicio T&eacute;cnico<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
    <a class="monitorInfoTitle">Perforacion Suite</a> <span class="iconsGroup"></span>
  <div class="monitorDates"> 
@@ -255,9 +271,9 @@ include('menuTapia.php');?>
       <!-- Termina Tarea -->
       <!-- Empieza Tarea -->
   <li class="list-group-item line lineEjecucion ">
- <div class="circle circleEjecucion visible-sm"></div> 
+ <div class="circle circleEjecucion visible-sm visible-nexus"></div> 
   <div class="circularLabel circleEjecucion pull-left hidden-sm hidden-xs">En Ejecucion</div>
-  <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
+  <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs hidden-nexus">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
    <a class="monitorInfoTitle">Agregar Iphone al sistema  </a> <span class="iconsGroup"><img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /></span>
  <div class="monitorDates"> 
@@ -271,9 +287,9 @@ include('menuTapia.php');?>
       <!-- Termina Tarea -->
       <!-- Empieza Tarea -->
   <li class="list-group-item line lineStandBy odd">
- <div class="circle circleStandBy visible-sm"></div> 
+ <div class="circle circleStandBy visible-sm visible-nexus"></div> 
   <div class="circularLabel circleStandBy pull-left hidden-sm hidden-xs">Stand By</div>
-    <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
+    <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs hidden-nexus">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
    <a class="monitorInfoTitle">Comprar nuevos parlantes  </a> <span class="iconsGroup"><img src="img/iconSet/circleIMG20.png" /></span>
  <div class="monitorDates"> 
@@ -290,7 +306,7 @@ include('menuTapia.php');?>
      
       </div>
             </div>
-      <div class="col-md-3 hidden-sm hidden-xs align-center"><img src="img/pieChart.jpg" style="margin-top:40px;"/></div>
+      <div class="col-md-3 col-nexus-3 hidden-sm hidden-xs visible-nexus align-center"><img src="img/pieChart.jpg" style="margin-top:40px;"/></div>
     </div>
     </div><!-- /tab-pane -->
     </div><!-- /tab-content -->
@@ -322,13 +338,41 @@ include('menuTapia.php');?>
     </div>
     </div>
     <div id="collapse3" class="panel-collapse collapse">
-      <div class="panel-body">
+      <div class="panel-body container-fluid">
+      <div class="row">
+      <div class="col-md-9 col-sm-12">
+      <div class="progressInternal visible-xs hidden-nexus">
+      <div class="clearfix progressResumenMonitorNum">
+      <span class="badge circleEjecucion pull-left">80</span> 
+      <span class="badge circleStandBy">1</span>
+      <span class="badge circlePendiente">1</span> 
+      <span class="badge pull-right">10</span>
+    </div> 
+    <div class="progress progressResumenMonitor">
+      <div class="progress-bar progress-bar-success" style="width: 80%">
+      </div>
+      <div class="progress-bar progress-bar-warning" style="width: 1%">
+      </div>
+      <div class="progress-bar progress-bar-danger" style="width: 1%">
+      </div>
+    </div>
+      </div>
+            <ul class="nav nav-tabs navTabsMonitor hidden-xs">
+  <li class="active"><a href="#">&Uacute;ltimas</a></li>
+  <li><a href="#">Pendientes</a></li>
+  <li><a href="#">Stand By</a></li>
+  <li><a href="#">Activas</a></li>
+  <li><a href="#">Finalizadas</a></li>
+  <li class="visible-sm visible-nexus"><a href="#">Gr&aacute;fico</a></li>
+</ul>
+<div class="tab-content">
+<div class="tab-pane active">
       <ul class="list-group">
-   <!-- Empieza Tarea -->
+     <!-- Empieza Tarea -->
   <li class="list-group-item line linePendiente ">
-  <div class="circle circlePendiente visible-sm"></div> 
+  <div class="circle circlePendiente visible-sm visible-nexus"></div> 
   <div class="circularLabel circlePendiente pull-left hidden-sm hidden-xs">Finalizado</div>
-    <div class="labelTaskMobile labelTaskMobilePedido visible-xs">Pedido Cotizaci&oacute;n <span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
+    <div class="labelTaskMobile labelTaskMobilePedido visible-xs hidden-nexus">Pedido Cotizaci&oacute;n <span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
    <a class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en PC de Rack  </a> <span class="iconsGroup"><img src="img/iconSet/circlePDF20.png" />  <img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /> <img src="img/iconSet/circleIMG20.png" /> <img src="img/iconSet/circleCAD20.png" /></span>
   <div class="monitorDates"> 
@@ -343,9 +387,9 @@ include('menuTapia.php');?>
   
       <!-- Empieza Tarea -->
   <li class="list-group-item line lineEjecucion odd">
- <div class="circle circleEjecucion visible-sm"></div> 
+ <div class="circle circleEjecucion visible-sm visible-nexus"></div> 
   <div class="circularLabel circleEjecucion pull-left hidden-sm hidden-xs">En Ejecucion</div>
-      <div class="labelTaskMobile labelTaskMobileServicio visible-xs">Servicio T&eacute;cnico<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
+      <div class="labelTaskMobile labelTaskMobileServicio visible-xs hidden-nexus">Servicio T&eacute;cnico<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
    <a class="monitorInfoTitle">Perforacion Suite</a> <span class="iconsGroup"></span>
  <div class="monitorDates"> 
@@ -359,9 +403,9 @@ include('menuTapia.php');?>
       <!-- Termina Tarea -->
       <!-- Empieza Tarea -->
   <li class="list-group-item line lineEjecucion ">
- <div class="circle circleEjecucion visible-sm"></div> 
+ <div class="circle circleEjecucion visible-sm visible-nexus"></div> 
   <div class="circularLabel circleEjecucion pull-left hidden-sm hidden-xs">En Ejecucion</div>
-  <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
+  <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs hidden-nexus">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
    <a class="monitorInfoTitle">Agregar Iphone al sistema  </a> <span class="iconsGroup"><img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /></span>
  <div class="monitorDates"> 
@@ -375,9 +419,9 @@ include('menuTapia.php');?>
       <!-- Termina Tarea -->
       <!-- Empieza Tarea -->
   <li class="list-group-item line lineStandBy odd">
- <div class="circle circleStandBy visible-sm"></div> 
+ <div class="circle circleStandBy visible-sm visible-nexus"></div> 
   <div class="circularLabel circleStandBy pull-left hidden-sm hidden-xs">Stand By</div>
-    <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
+    <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs hidden-nexus">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
    <a class="monitorInfoTitle">Comprar nuevos parlantes  </a> <span class="iconsGroup"><img src="img/iconSet/circleIMG20.png" /></span>
  <div class="monitorDates"> 
@@ -389,8 +433,14 @@ include('menuTapia.php');?>
      <span class="label label-primary labelTask hidden-xs">Implementacion<br/> 20/10/2012 30:09:10</span>
   </li>
       <!-- Termina Tarea -->
-      </ul>
-   </div><!-- /panel-body -->
+</ul>
+      </div>
+     
+      </div>
+            </div>
+      <div class="col-md-3 col-nexus-3 hidden-sm hidden-xs visible-nexus align-center"><img src="img/pieChart.jpg" style="margin-top:40px;"/></div>
+    </div>
+    </div><!-- /tab-pane -->
    </div><!-- /panel-collapse -->
   </div><!-- /panel-default -->
  
