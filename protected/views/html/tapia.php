@@ -10,6 +10,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <?php include('estilos.php');?>
 <script src="js/jquery.js"></script>
+<!-- Modernizr -->
+<script src="js/modernizr.js"></script>
+<!-- FastClick -->
+<script src="js/fastclick.js"></script>
 
 <script>
 
@@ -103,7 +107,7 @@ include('menuTapia.php');?>
 <div class="tab-pane active">
       <ul class="list-group">
      <!-- Empieza Tarea -->
-  <li class="list-group-item line linePendiente ">
+  <li class="list-group-item line linePendiente" data-toggle="modal" data-target="#myModalDetalle">
   <div class="circle circlePendiente visible-sm visible-nexus"></div> 
   <div class="circularLabel circlePendiente pull-left hidden-sm hidden-xs">Finalizado</div>
     <div class="labelTaskMobile labelTaskMobilePedido visible-xs hidden-nexus">Pedido Cotizaci&oacute;n <span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
@@ -451,6 +455,67 @@ include('menuTapia.php');?>
   <!-- /.row --> 
 </div>
 <!-- /container --> 
+
+
+<div id="myModalDetalle" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" >  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> <i class="fa fa-times-circle fa-lg"></i></button>
+              <h4 class="modal-title">Instalaci&oacute;n de Pelicano en PC de Rack</h4>
+      </div>
+      <div class="modal-body">
+      <div class="modalMonitorEstados clearfix">
+      <div class="label label-primary visible-xs modalMonitorLabel">Pedido de Cotizaci&oacute;n &bull; 20/10/2020</div>
+      <span class="label label-primary pull-left hidden-xs">Pedido de Cotizaci&oacute;n &bull; 20/10/2020</span>
+      <span class="label label-warning pull-right hidden-xs">Stand By</span>
+      </div>
+      <div class="modalMonitorBloque">
+      <div class="row">
+      <div class="col-sm-7 col-xs-12 ">
+      <span class="label label-warning visible-xs modalMonitorLabelStatus">Stand By</span>
+      <div class="modalMonitorProyecto">Cohen - La Angostura</div>
+      <div class="modalMonitorTarea">Instalaci&oacute;n de Pelicano en PC de Rack</div>
+      </div>
+      <div class="col-sm-5 col-xs-12 text-right">
+      <div class="modalMonitorButtons">
+      <button id="btn-cancel" type="button" class="btn btn-primary btn-sm" data-dismiss="modal"><i class="fa fa-share-square-o"></i> Exportar</button>
+      <button id="btn-cancel" type="button" class="btn btn-primary btn-sm" data-dismiss="modal"><i class="fa fa-times-circle"></i> Finalizar</button>
+      </div>
+      </div>
+      </div>
+      
+      
+      
+      <ul class="list-group">
+  <li class="list-group-item">
+  <div class="modalMonitorAutor"><span class="lato">09/09/2013 12:34:57</span>  &bull; Matias Montiel</div>
+    <div class="modalMonitorComment">PM solicito la instalacion de Pelicano en PC del Rack.</div>
+  </li>
+  <li class="list-group-item">
+  <div class="modalMonitorAutor"><span class="lato">09/09/2013 12:34:57</span>  &bull; Matias Montiel</div>
+      <div class="modalMonitorComment">PV ya coordino con Carlos Mu–oz para traer en una encomienda la PC.</div>
+  <div class="modalMonitorArchivo"><img src="img/iconSet/circleW20.png" /> <a>archivoword.doc</a> (35kb) &raquo; desglose materiales</div>
+  </li>
+  
+  <li class="list-group-item">
+  <div class="modalMonitorAutor"><span class="lato">09/09/2013 12:34:57</span>  &bull; Matias Montiel</div>
+    <div class="modalMonitorArchivo"><img src="img/iconSet/circleCAD20.png" /> <a>otroarchivodistinto.cad</a> (35kb) &raquo; Listado con todo lo que hay que hacer, texto que tengo que poner para ver si esto entra bien.
+  </div>
+  </li>
+   <li class="list-group-item"><textarea class="form-control" rows="3">Escriba aqui...</textarea></li>
+</ul>
+</div>
+      </div>
+      <div class="modal-footer">
+      <button id="btn-cancel" type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+
+  </div>
+
+
+
 
 <!-- Le javascript
     ================================================== --> 

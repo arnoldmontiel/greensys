@@ -50,6 +50,7 @@ font-style: normal;
 a {
   outline: 0 none !important;
   color:#333 ;
+  cursor:pointer;
 }
 
 a:hover {
@@ -1166,8 +1167,26 @@ box-shadow: none !important;}
 .iconsGroup img{margin-right:-6px;margin-top:-3px;}
 
 
+#screenMonitor .list-group-item:hover{background-color:#ddd; cursor:pointer;}
+
+#myModalDetalle .modal-dialog{width:90%;}
+
+.modalMonitorEstados{ font-size:20px; padding-bottom:10px; }
+.modalMonitorProyecto{font-size:15px; margin-bottom:5px; }
+.modalMonitorTarea{font-size:18px; margin-bottom:10px; font-family:"GudeaBold";	 }
+.modalMonitorBloque{background-color:#eee; padding:10px;}
+
+.modalMonitorAutor{font-weight:600; font-size:14px;}
+.modalMonitorAutor .lato{ font-family:"LatoRegular"; font-size:13px;}
+.modalMonitorComment{padding-top:3px; color:#666;}
+.modalMonitorArchivo{background-color:cornsilk; border-top:1px dotted #ccc; border-bottom:1px dotted #ccc; padding:3px; margin-top:10px;}
+.modalMonitorArchivo a{text-decoration:underline;}
+
 #mobilePageName{font-size: 18px;
 margin-left: 10px;}
+
+
+
 
 /* Nexus 7 (portrait and landscape) ----------- */
 @media only screen and (min-device-width : 603px) and (max-device-width : 966px) {
@@ -1302,6 +1321,33 @@ position: absolute;
 .labelDate.visible-xs{display:inline-block !important;}
 
 
+#myModalDetalle .modal-dialog{width:95%; }
+#myModalDetalle .modal-body{padding:0px;}
+.modalMonitorBloque{padding:5px;}
+.modalMonitorButtons{text-align:center; padding-bottom:10px;}
+#myModalDetalle  h4.modal-title{
+font-size:14px;
+display: inline-block;
+width: 215px;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+height: 22px;
+line-height: 28px;
+
+}
+#myModalDetalle .modal-header {padding:7px;}
+#myModalDetalle .modal-header .close{line-height:26px;}
+#myModalDetalle .fa-lg {
+font-size: 28px;}
+
+
+.modalMonitorEstados { padding:0px;}
+.modalMonitorLabel{ border-radius:0px; padding:5px; text-align:left; font-size:12px; margin-bottom:5px;}
+.modalMonitorLabelStatus{ margin-bottom:10px; display:inline-block !important; font-size:13px;}
+.modalMonitorTarea{font-size:16px;}
+.modalMonitorAutor{font-size:11px;}
+.modalMonitorAutor .lato{font-size:10px;}
 
 }
 
