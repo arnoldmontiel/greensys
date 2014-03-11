@@ -1049,6 +1049,17 @@ box-shadow: 0px 0px 2px rgba(0,0,0,0.8); background-color:rgba(0,0,0,0.5); paddi
 /*---------- END EDIT PELICULA -------------*/
 
 /*---------- /////////////TAPIAAA///////////// -------------*/
+
+/* ------ ABM------- */
+
+.rowUsuario  { background-color:#f1f1f1; padding-top:5px; padding-bottom:5px;}
+
+.mainBotones{tex-align:right; display:inline-block;}
+.rowBotones{text-align:right; float:right; width:530px;}
+.rowBotones .btn{border-left:1px solid #ccc;}
+.rowBotones .labelBotones{line-height:35px; display:inline-block; font-family:"GudeaBold"; margin-right:10px;}
+.rowBotones.odd{background-color:#f7f7f7;}
+
 /* ------ MONITOR------- */
 #screenMonitor{padding-bottom:80px;}
 

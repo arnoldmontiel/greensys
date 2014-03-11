@@ -26,16 +26,14 @@
           <ul class="nav navbar-nav">
           <li <?php if ($active=="tinicio"){ echo 'class="active"';}?> ><a href="tapia.php"><i class="fa fa-home fa-fw"></i> Monitor</a></li>
           <li <?php if ($active=="tproyectos"){ echo 'class="active"';}?> ><a href="tproyectos.php"><i class="fa fa-star fa-fw"></i> Proyectos</a></li>
-          <li <?php if ($active=="tclientes"){ echo 'class="active"';}?> ><a href="tclientes.php"><i class="fa fa-truck fa-fw"></i> Clientes</a></li>
+          <li <?php if ($active=="tclientes"){ echo 'class="active"';}?> ><a href="tclientes.php"><i class="fa fa-glass fa-fw"></i> Clientes</a></li>
           <li <?php if ($active=="tformularios"){ echo 'class="active"';}?> ><a href="tformularios.php"><i class="fa fa-truck fa-fw"></i> Formularios</a></li>
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">M&aacute;s <i class="fa fa-caret-down fa-fw"></i></a>
                         <ul class="dropdown-menu">
-                          <li><a href="#">Permisos</a></li>
-                          <li><a href="#">Usuarios</a></li>
-                          <li><a href="#">Areas</a></li>
-                          <li><a href="#">Importadores</a></li>
-                          <li><a href="#">Requerimientos</a></li>
-                          <li><a href="#">Servicios</a></li>
+                          <li><a href="tetapas.php">Etapas</a></li>
+                          <li><a href="tusuarios.php">Usuarios</a></li>
+                          <li><a href="tperfiles.php">Perfiles</a></li>
+                          <li><a href="tdocumentos.php">Documentos</a></li>
                         </ul>
           </li>
           </ul>
