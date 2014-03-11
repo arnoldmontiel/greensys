@@ -7,7 +7,7 @@ class AuditLoginController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/tcolumn2';
-	protected function beforeAction(CAction $action)
+	protected function beforeAction($action)
 	{
 		$result = parent::beforeAction($action);
 		$this->menu=array(array('label'=>'Administrar', 'url'=>array('index')),);
