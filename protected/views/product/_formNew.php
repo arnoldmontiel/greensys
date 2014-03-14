@@ -426,7 +426,7 @@ $('#deleteIcon').click(function(){
             <td><?php echo $form->textField($model,'color', array('class'=>'form-control')); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><?php echo $form->labelEx($model,'Ícon'); ?></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'Icono'); ?></td>
             <td><INPUT TYPE=FILE NAME="upfile"></td>
 				<?php 
 				if($model->Id_multimedia)
@@ -514,6 +514,14 @@ $('#deleteIcon').click(function(){
       <div class="rowSeparator noTopMargin">PRECIOS</div>
       <table class="table table-striped table-bordered tablaIndividual form-inline" width="100%">
         <tbody>
+        <tr>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_measurement_unit_weight'); ?></td>
+            <td><?php				
+				$currencys = Currency::model()->findAll();
+				echo $form->dropDownList($model, 'Id_currency',CHtml::listData(
+	    			$currencys, 'Id', 'description'),array('class'=>'form-control')); 
+			?></td>
+          </tr>
           <tr>
             <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'msrp'); ?></td>
             <td width="80%"><?php echo $form->textField($model,'msrp', array("class"=>"form-control")); ?></td>
