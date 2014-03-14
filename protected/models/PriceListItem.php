@@ -298,7 +298,8 @@ class PriceListItem extends ModelAudit
 		
 		$dealerCost = GreenHelper::convertCurrencyTo($this->dealer_cost,$this->priceList->Id_currency,$idCurrency);
 		$airCost = GreenHelper::convertCurrencyTo($this->air_cost,$shippingParameter->Id_currency,$idCurrency);
-		$price = ($dealerCost+$airCost)*$this->profit_rate;
+		$priceOverDealerCost = $dealerCost*$shippingParameter->shippingParameterAir->percent_over_dealer_cost/100; 
+		$price = ($dealerCost+$airCost+$priceOverDealerCost)*$this->profit_rate;
 
 		return number_format(round($price,4),2);
 	}

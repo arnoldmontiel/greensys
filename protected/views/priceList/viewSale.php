@@ -10,7 +10,8 @@
 <div class="clear"></div>
           <div>Creacion: <?php echo $model->date_creation;?> - Validez: <?php echo $model->date_validity;?></div>
           <div>Procentaje sobre valor de los productos en envios mar&iacute;timos: <?php echo $model->importer->shippingParameters[0]->shippingParameterMaritime->percent_over_dealer_cost;?> %</div>
-	</div></div>
+          <div>Procentaje sobre valor de los productos en envios a&eacute;reos: <?php echo $model->importer->shippingParameters[0]->shippingParameterAir->percent_over_dealer_cost;?> %</div>
+      </div></div>
 <div class="row contenedorPresu">
     <div class="col-sm-12">
  <?php
