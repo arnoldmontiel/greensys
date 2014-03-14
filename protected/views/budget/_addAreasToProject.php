@@ -1,6 +1,10 @@
   <?php 
   $area = new Area;
-  $areas= $area->search()->data;
+  $provider =$area->search();
+  $provider->pagination =array(
+        'pageSize'=>30,
+    );
+  $areas= $provider->data;
   ?>
   <div class="modal-dialog">
     <div class="modal-content">
