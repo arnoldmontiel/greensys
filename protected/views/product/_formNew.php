@@ -515,7 +515,7 @@ $('#deleteIcon').click(function(){
       <table class="table table-striped table-bordered tablaIndividual form-inline" width="100%">
         <tbody>
         <tr>
-            <td style="text-align:right;"><?php echo $form->labelEx($model,'Id_measurement_unit_weight'); ?></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'Moneda'); ?></td>
             <td><?php				
 				$currencys = Currency::model()->findAll();
 				echo $form->dropDownList($model, 'Id_currency',CHtml::listData(
