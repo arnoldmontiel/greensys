@@ -99,6 +99,13 @@
   				</div>
   			</div>
   			<div class="row">
+	  			<div class="form-group col-sm-6">
+					<?php
+						echo CHtml::activeLabelEx($modelShippingParameterAir, 'percent_over_dealer_cost'); 
+						echo CHtml::activeTextField($modelShippingParameterAir, 'percent_over_dealer_cost', array('class'=>'form-control')); 
+					?>
+	  			</div>  			
+  			
   				<div class="form-group col-sm-6">  
 					<?php				
 						echo CHtml::activeLabelEx($modelShippingParameterAir, 'Id_measurement_unit_cost');

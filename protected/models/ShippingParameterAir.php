@@ -49,11 +49,11 @@ class ShippingParameterAir extends ModelAudit
 		// will receive user inputs.
 		return array(
 			array('Id_measurement_unit_cost, Id_measurement_unit_sizes_max', 'required'),
-			array('Id_measurement_unit_cost, Id_measurement_unit_sizes_max, days', 'numerical', 'integerOnly'=>true),
+			array('Id_measurement_unit_cost, Id_measurement_unit_sizes_max, days, percent_over_dealer_cost', 'numerical', 'integerOnly'=>true),
 			array('cost_measurement_unit, weight_max, length_max, width_max, height_max, volume_max', 'numerical'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, cost_measurement_unit, Id_measurement_unit_cost, weight_max, length_max, width_max, height_max, volume_max, Id_measurement_unit_sizes_max, days', 'safe', 'on'=>'search'),
+			array('Id, cost_measurement_unit, Id_measurement_unit_cost, percent_over_dealer_cost, weight_max, length_max, width_max, height_max, volume_max, Id_measurement_unit_sizes_max, days', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -87,6 +87,7 @@ class ShippingParameterAir extends ModelAudit
 			'volume_max' => 'Vol Max',
 			'Id_measurement_unit_sizes_max' => 'Unidad Max',
 			'days' => 'Dias',
+			'percent_over_dealer_cost'=>'% sobre valor de mercader&iacute;a'
 		);
 	}
 
