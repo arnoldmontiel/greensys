@@ -153,7 +153,7 @@ $('#Product_profit_rate').change(function(){
 });
 $('#product_discount').change(function(){
 	$(this).val(Number($(this).val()).toFixed(2));
-	$('#Product_dealer_cost').val(($('#Product_msrp').val()*$('#this').val()/100).toFixed(2));
+	$('#Product_dealer_cost').val(($('#Product_msrp').val()*$('#product_discount').val()/100).toFixed(2));
 	$('#Product_profit_rate').val(($('#Product_msrp').val()/$('#Product_dealer_cost').val()).toFixed(2));				
 }).keyup(function(){
 	validateNumber($(this));
@@ -535,7 +535,7 @@ $('#deleteIcon').click(function(){
           </tr>
           <tr>
             <td width="20%" style="text-align:right;"><?php echo CHtml::label("% Descuento",'product_discount'); ?></td>
-            <td width="80%"><?php echo CHtml::textField('product_discount',number_format($model->dealer_cost/$model->msrp*100),array("class"=>"form-control",'id'=>'product_discount')); ?></td>
+            <td width="80%"><?php echo CHtml::textField('product_discount',number_format($model->dealer_cost/$model->msrp*100,2),array("class"=>"form-control",'id'=>'product_discount')); ?></td>
           </tr>
           <tr>
             <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'dealer_cost'); ?></td>
