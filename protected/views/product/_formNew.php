@@ -130,6 +130,7 @@ $('#Product_msrp').change(function(){
 	$(this).val(Number($(this).val()).toFixed(2));
 	if($('#Product_dealer_cost').val()!=0)
 	{
+		$('#Product_dealer_cost').val(($('#Product_msrp').val()*$('#product_discount').val()/100).toFixed(2));
 		$('#Product_profit_rate').val(($('#Product_msrp').val()/$('#Product_dealer_cost').val()).toFixed(2));
 	}
 }).keyup(function(){
