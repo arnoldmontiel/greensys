@@ -151,7 +151,14 @@ $('#Product_profit_rate').change(function(){
 }).keyup(function(){
 	validateNumber($(this));
 });
-
+$('#product_discount').change(function(){
+	$(this).val(Number($(this).val()).toFixed(2));
+	$('#Product_dealer_cost').val(($('#Product_msrp').val()*$('#this').val()/100).toFixed(2));
+	$('#Product_profit_rate').val(($('#Product_msrp').val()/$('#Product_dealer_cost').val()).toFixed(2));				
+}).keyup(function(){
+	validateNumber($(this));
+});								
+				
 $('#Product_length').change(function(){
 	$(this).val(Number($(this).val()).toFixed(2));
 	fillVolumeTextBox('".ProductController::createUrl("AjaxFillVolume")."','txtVolume','product-form');
@@ -527,6 +534,10 @@ $('#deleteIcon').click(function(){
             <td width="80%"><?php echo $form->textField($model,'msrp', array("class"=>"form-control")); ?></td>
           </tr>
           <tr>
+            <td width="20%" style="text-align:right;"><?php echo CHtml::label("% Descuento",'product_discount'); ?></td>
+            <td width="80%"><?php echo CHtml::textField('product_discount',number_format($model->dealer_cost/$model->msrp*100),array("class"=>"form-control",'id'=>'product_discount')); ?></td>
+          </tr>
+          <tr>
             <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'dealer_cost'); ?></td>
             <td width="80%"><?php echo $form->textField($model,'dealer_cost', array("class"=>"form-control")); ?></td>
           </tr>
@@ -760,7 +771,7 @@ $('#deleteIcon').click(function(){
           </tr>
           <tr>
             <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'long_description'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'long_description', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'long_description', array("class"=>"form-control",'maxlength' => 1000, 'rows' => 2)); ?></td>
           </tr>
           <tr>
             <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'description_customer'); ?></td>
@@ -768,7 +779,7 @@ $('#deleteIcon').click(function(){
           </tr>
           <tr>
             <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'description_supplier'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'description_supplier', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'description_supplier', array("class"=>"form-control",'maxlength' => 1000, 'rows' => 2)); ?></td>
           </tr>
         </tbody>
       </table>
