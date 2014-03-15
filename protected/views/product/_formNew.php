@@ -536,7 +536,7 @@ $('#deleteIcon').click(function(){
           </tr>
           <tr>
             <td width="20%" style="text-align:right;"><?php echo CHtml::label("% Descuento",'product_discount'); ?></td>
-            <td width="80%"><?php echo CHtml::textField('product_discount',number_format($model->dealer_cost/$model->msrp*100,2),array("class"=>"form-control",'id'=>'product_discount')); ?></td>
+            <td width="80%"><?php echo CHtml::textField('product_discount',number_format(100-($model->dealer_cost/$model->msrp*100),2),array("class"=>"form-control",'id'=>'product_discount')); ?></td>
           </tr>
           <tr>
             <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'dealer_cost'); ?></td>
