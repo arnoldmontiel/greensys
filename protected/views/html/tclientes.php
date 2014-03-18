@@ -17,7 +17,7 @@
 <script src="js/fastclick.js"></script>
 
 </head>
-<body>
+<body class="bodyTapia">
 <?php
 $active = 'tclientes';
 include ('menuTapia.php');
@@ -234,7 +234,7 @@ include ('menuTapia.php');
   	<input style="display:block;" checked="checked" type="checkbox" value="1">
   </div>
   </div>
-      <div class="row rowUsuario">
+      <div class="row">
   <div class="form-group col-sm-6">   
   	<label for="campoNombre">Usuario</label>
   <input class="form-control" name="campoNombre" type="text">

@@ -17,7 +17,7 @@
 <script src="js/fastclick.js"></script>
 
 </head>
-<body>
+<body class="bodyTapia">
 <?php
 $active = 'tperfiles';
 include ('menuTapia.php');

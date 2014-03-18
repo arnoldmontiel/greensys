@@ -17,7 +17,7 @@
 <script src="js/fastclick.js"></script>
 
 </head>
-<body>
+<body class="bodyTapia">
 <?php
 $active = 'tusuarios';
 include ('menuTapia.php');
@@ -187,7 +187,7 @@ include ('menuTapia.php');
       </div>
       <div class="modal-body">
       
-      <div class="row rowUsuario">
+      <div class="row">
   <div class="form-group col-sm-6">   
   	<label for="campoNombre">Usuario</label>
   <input class="form-control" name="campoNombre" type="text">

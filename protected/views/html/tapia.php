@@ -19,34 +19,31 @@
 
 $(document).ready(function() {
 
+
 	
-	
-$('#accordion').on('show.bs.collapse', function (e) {
-  //  alert('Event fired on #' + e.currentTarget.id);
-  
-//$('body').stop(true,true).animate({ scrollTop: $(this).offset().top - 70}, 200);  
-
-//var posTop = $(this).offset().top - 30;
-
-//$('body').offset({ top: posTop, left: 0)});
-
-
- });
-});
+}
 
 </script>
 </head>
-<body>
+<body class="bodyTapia">
 <?php 
 $active='tinicio';
 include('menuTapia.php');?>
 <div class="container" id="screenMonitor">
 <div class="row">
 <div class="col-sm-6 col-xs-12 col-nexus-6 hidden-xs"><h1 class="pageTitle">Monitor</h1></div>
-<div class="col-sm-6 col-xs-12 col-nexus-6 text-right "><input type="text" class="form-control formSearch" placeholder=" Buscar"></div>
+<div class="col-sm-6 col-xs-12 col-nexus-6 text-right "><input type="text" class="form-control formSearch" placeholder=" Buscar Proyecto"></div>
 </div>
   <div class="row">
     <div class="col-sm-12">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tabProyectos" data-toggle="tab">por Proyecto</a></li>
+        <li><a href="#tabSueltas" data-toggle="tab">Sueltas</a></li>
+      </ul>
+    <div class="tab-content">
+    <div class="tab-pane active" id="tabProyectos">
+     <div class="searchOverTab"><input type="text" class="form-control" placeholder=" Buscar Proyecto"></div>
+    
       
     <div class="panel-group" id="accordion">
   <div class="panel panel-default">
@@ -95,24 +92,16 @@ include('menuTapia.php');?>
       </div>
     </div>
       </div>
-            <ul class="nav nav-tabs navTabsMonitor hidden-xs">
-  <li class="active"><a href="#">&Uacute;ltimas</a></li>
-  <li><a href="#">Pendientes</a></li>
-  <li><a href="#">Stand By</a></li>
-  <li><a href="#">Activas</a></li>
-  <li><a href="#">Finalizadas</a></li>
-  <li class="visible-sm visible-nexus"><a href="#">Gr&aacute;fico</a></li>
-</ul>
-<div class="tab-content">
-<div class="tab-pane active">
+      
       <ul class="list-group">
      <!-- Empieza Tarea -->
-  <li class="list-group-item line linePendiente" data-toggle="modal" data-target="#myModalDetalle">
+  <li class="list-group-item clearfix line linePendiente" >
+  <a href="ttarea.php" class="clearfix">
   <div class="circle circlePendiente visible-sm visible-nexus"></div> 
   <div class="circularLabel circlePendiente pull-left hidden-sm hidden-xs">Finalizado</div>
     <div class="labelTaskMobile labelTaskMobilePedido visible-xs hidden-nexus">Pedido Cotizaci&oacute;n <span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
-   <a class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en PC de Rack  </a> <span class="iconsGroup"><img src="img/iconSet/circlePDF20.png" />  <img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /> <img src="img/iconSet/circleIMG20.png" /> <img src="img/iconSet/circleCAD20.png" /></span>
+   <div class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en PC de Rack  </div> <span class="iconsGroup"><img src="img/iconSet/circlePDF20.png" />  <img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /> <img src="img/iconSet/circleIMG20.png" /> <img src="img/iconSet/circleCAD20.png" /></span>
   <div class="monitorDates"> 
  <span class="label label-default labelDate visible-xs-inline">UPD</span>  
  <span class="label label-default labelDate hidden-xs-inline">UPDATED</span>
@@ -120,11 +109,11 @@ include('menuTapia.php');?>
  </div>     
   </div>
      <span class="label label-info labelTask hidden-xs">Pedido Cotizaci&oacute;n <br/> 20/10/2012 30:09:10</span>
-  </li>
+  </a></li>
       <!-- Termina Tarea -->
   
       <!-- Empieza Tarea -->
-  <li class="list-group-item line lineEjecucion odd">
+  <li class="list-group-item clearfix line lineEjecucion odd">
  <div class="circle circleEjecucion visible-sm visible-nexus"></div> 
   <div class="circularLabel circleEjecucion pull-left hidden-sm hidden-xs">En Ejecucion</div>
       <div class="labelTaskMobile labelTaskMobileServicio visible-xs hidden-nexus">Servicio T&eacute;cnico<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
@@ -140,7 +129,7 @@ include('menuTapia.php');?>
   </li>
       <!-- Termina Tarea -->
       <!-- Empieza Tarea -->
-  <li class="list-group-item line lineEjecucion ">
+  <li class="list-group-item clearfix line lineEjecucion ">
  <div class="circle circleEjecucion visible-sm visible-nexus"></div> 
   <div class="circularLabel circleEjecucion pull-left hidden-sm hidden-xs">En Ejecucion</div>
   <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs hidden-nexus">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
@@ -156,7 +145,7 @@ include('menuTapia.php');?>
      </li>
       <!-- Termina Tarea -->
       <!-- Empieza Tarea -->
-  <li class="list-group-item line lineStandBy odd">
+  <li class="list-group-item clearfix line lineStandBy odd">
  <div class="circle circleStandBy visible-sm visible-nexus"></div> 
   <div class="circularLabel circleStandBy pull-left hidden-sm hidden-xs">Stand By</div>
     <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs hidden-nexus">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
@@ -173,13 +162,10 @@ include('menuTapia.php');?>
       <!-- Termina Tarea -->
 </ul>
       </div>
-     
-      </div>
-            </div>
-      <div class="col-md-3 col-nexus-3 hidden-sm hidden-xs visible-nexus align-center"><img src="img/pieChart.jpg" style="margin-top:40px;"/></div>
+      <div class="col-md-3 col-nexus-3 hidden-sm hidden-xs visible-nexus align-center"><img src="img/pieChart.jpg"/></div>
     </div>
-    </div><!-- /tab-pane -->
-    </div><!-- /tab-content -->
+    </div><!-- /panel-body -->
+    </div><!-- /panel-collapse -->
   </div><!-- /panel-default -->
   
   
@@ -229,16 +215,7 @@ include('menuTapia.php');?>
       </div>
     </div>
       </div>
-            <ul class="nav nav-tabs navTabsMonitor hidden-xs">
-  <li class="active"><a href="#">&Uacute;ltimas</a></li>
-  <li><a href="#">Pendientes</a></li>
-  <li><a href="#">Stand By</a></li>
-  <li><a href="#">Activas</a></li>
-  <li><a href="#">Finalizadas</a></li>
-  <li class="visible-sm visible-nexus"><a href="#">Gr&aacute;fico</a></li>
-</ul>
-<div class="tab-content">
-<div class="tab-pane active">
+      
       <ul class="list-group">
      <!-- Empieza Tarea -->
   <li class="list-group-item line linePendiente ">
@@ -307,13 +284,10 @@ include('menuTapia.php');?>
       <!-- Termina Tarea -->
 </ul>
       </div>
-     
-      </div>
-            </div>
-      <div class="col-md-3 col-nexus-3 hidden-sm hidden-xs visible-nexus align-center"><img src="img/pieChart.jpg" style="margin-top:40px;"/></div>
+      <div class="col-md-3 col-nexus-3 hidden-sm hidden-xs visible-nexus align-center"><img src="img/pieChart.jpg"/></div>
     </div>
-    </div><!-- /tab-pane -->
-    </div><!-- /tab-content -->
+    </div><!-- /panel-body -->
+    </div><!-- /panel-collapse -->
   </div><!-- /panel-default -->
   
   <div class="panel panel-default">
@@ -361,16 +335,7 @@ include('menuTapia.php');?>
       </div>
     </div>
       </div>
-            <ul class="nav nav-tabs navTabsMonitor hidden-xs">
-  <li class="active"><a href="#">&Uacute;ltimas</a></li>
-  <li><a href="#">Pendientes</a></li>
-  <li><a href="#">Stand By</a></li>
-  <li><a href="#">Activas</a></li>
-  <li><a href="#">Finalizadas</a></li>
-  <li class="visible-sm visible-nexus"><a href="#">Gr&aacute;fico</a></li>
-</ul>
-<div class="tab-content">
-<div class="tab-pane active">
+      
       <ul class="list-group">
      <!-- Empieza Tarea -->
   <li class="list-group-item line linePendiente ">
@@ -439,16 +404,23 @@ include('menuTapia.php');?>
       <!-- Termina Tarea -->
 </ul>
       </div>
-     
-      </div>
-            </div>
-      <div class="col-md-3 col-nexus-3 hidden-sm hidden-xs visible-nexus align-center"><img src="img/pieChart.jpg" style="margin-top:40px;"/></div>
+      <div class="col-md-3 col-nexus-3 hidden-sm hidden-xs visible-nexus align-center"><img src="img/pieChart.jpg"/></div>
     </div>
-    </div><!-- /tab-pane -->
-   </div><!-- /panel-collapse -->
+    </div><!-- /panel-body -->
+    </div><!-- /panel-collapse -->
   </div><!-- /panel-default -->
  
-</div><!-- /panel-group -->     
+</div><!-- /panel-group -->
+
+
+</div><!-- /tab-pane -->
+    
+    <div class="tab-pane" id="tabSueltas">
+     <div class="searchOverTab"><input type="text" class="form-control" placeholder=" Buscar Tarea"></div>
+    hola
+</div><!-- /tab-pane -->
+    </div> <!-- /tab-content -->
+
     </div>
     <!-- /.col-sm-12 -->
   </div>
@@ -456,63 +428,6 @@ include('menuTapia.php');?>
 </div>
 <!-- /container --> 
 
-
-<div id="myModalDetalle" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" >  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> <i class="fa fa-times-circle fa-lg"></i></button>
-              <h4 class="modal-title">Instalaci&oacute;n de Pelicano en PC de Rack</h4>
-      </div>
-      <div class="modal-body">
-      <div class="modalMonitorEstados clearfix">
-      <div class="label label-primary visible-xs modalMonitorLabel">Pedido de Cotizaci&oacute;n &bull; 20/10/2020</div>
-      <span class="label label-primary pull-left hidden-xs">Pedido de Cotizaci&oacute;n &bull; 20/10/2020</span>
-      <span class="label label-warning pull-right hidden-xs">Stand By</span>
-      </div>
-      <div class="modalMonitorBloque">
-      <div class="row">
-      <div class="col-sm-7 col-xs-12 ">
-      <span class="label label-warning visible-xs modalMonitorLabelStatus">Stand By</span>
-      <div class="modalMonitorProyecto">Cohen - La Angostura</div>
-      <div class="modalMonitorTarea">Instalaci&oacute;n de Pelicano en PC de Rack</div>
-      </div>
-      <div class="col-sm-5 col-xs-12 text-right">
-      <div class="modalMonitorButtons">
-      <button id="btn-cancel" type="button" class="btn btn-primary btn-sm" data-dismiss="modal"><i class="fa fa-share-square-o"></i> Exportar</button>
-      <button id="btn-cancel" type="button" class="btn btn-primary btn-sm" data-dismiss="modal"><i class="fa fa-times-circle"></i> Finalizar</button>
-      </div>
-      </div>
-      </div>
-      
-      
-      
-      <ul class="list-group">
-  <li class="list-group-item">
-  <div class="modalMonitorAutor"><span class="lato">09/09/2013 12:34:57</span>  &bull; Matias Montiel</div>
-    <div class="modalMonitorComment">PM solicito la instalacion de Pelicano en PC del Rack.</div>
-  </li>
-  <li class="list-group-item">
-  <div class="modalMonitorAutor"><span class="lato">09/09/2013 12:34:57</span>  &bull; Matias Montiel</div>
-      <div class="modalMonitorComment">PV ya coordino con Carlos Mu–oz para traer en una encomienda la PC.</div>
-  <div class="modalMonitorArchivo"><img src="img/iconSet/circleW20.png" /> <a>archivoword.doc</a> (35kb) &raquo; desglose materiales</div>
-  </li>
-  
-  <li class="list-group-item">
-  <div class="modalMonitorAutor"><span class="lato">09/09/2013 12:34:57</span>  &bull; Matias Montiel</div>
-    <div class="modalMonitorArchivo"><img src="img/iconSet/circleCAD20.png" /> <a>otroarchivodistinto.cad</a> (35kb) &raquo; Listado con todo lo que hay que hacer, texto que tengo que poner para ver si esto entra bien.
-  </div>
-  </li>
-   <li class="list-group-item"><textarea class="form-control" rows="3">Escriba aqui...</textarea></li>
-</ul>
-</div>
-      </div>
-      <div class="modal-footer">
-      <button id="btn-cancel" type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-
-  </div>
 
 
 

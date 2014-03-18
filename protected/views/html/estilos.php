@@ -89,7 +89,9 @@ button {
 .align-center{ text-align:center !important;}
 .align-right{ text-align:right !important;}
 
-.bold{ font-weight:600;}
+.verticalTop{vertical-align:top !important;}
+
+.bold{  font-family:"GudeaBold";}
 .list-group{ margin-left:0px; margin-bottom:0px;}
 
 .list-group .label{ font-size:13px;}
@@ -1085,12 +1087,14 @@ input.formSearch:-moz-placeholder::before  { font-family: FontAwesome; content:'
 #screenMonitor .list-group-item.odd{background-color:#f9f9f9; display:block;}
 
 
-.monitorInfo{line-height:24px;}
-.monitorInfoTitle{font-family:'GudeaBold'; font-size:17px; display:inline; cursor:pointer;}
+.monitorInfo{line-height:20px;}
+.monitorInfo div:first-child{margin-top:3px;}
+
+.monitorInfoTitle{font-family:'GudeaBold'; font-size:17px; display:inline-block; cursor:pointer;}
 .monitorInfoTitle.titleDone{text-decoration:line-through;}
 .monitorInfoTitle .label-warning{color:white; font-family:'GudeaRegular';}
 .monitorDates{font-size:12px;
-margin-bottom: 2px;}
+margin-bottom: 5px; margin-top:0px;}
 .labelDate{display:inline-block;}
 
 .labelTask{ /*margin-top:13px;*/ 
@@ -1132,18 +1136,20 @@ float:left;}
 .circularLabel{margin-right: 10px;
 border-radius: 25px;
 height: 48px;
-line-height: 44px;
+line-height: 48px;
 border-bottom-right-radius: 0px;
 border-top-right-radius: 0px;
 display:inline-block;
 color:white;
-font-size:13px;
 text-transform:uppercase;
 width:104px;
 text-align:right;
-padding-right:10px;
+padding-right:5px;
 margin:2px;
 margin-right:5px;
+font-family: "GudeaRegular";
+letter-spacing: 1px;
+font-size: 12px;
 }
 
 .circularLabelTop{height:30px;border-radius:0px; border-top-left-radius:45px;}
@@ -1168,7 +1174,6 @@ box-shadow: none !important;}
 .navTabsMonitor li a{line-height:14px;}
 .navTabsMonitor li.active a{background-color:#ddd; border-color:#ddd;}
 
-#screenMonitor .tab-pane{overflow-y:auto; max-height:300px;}
 
 #screenMonitor .panel-body{padding:5px;}
 #screenMonitor .nav>li>a{padding:10px;}
@@ -1190,13 +1195,222 @@ box-shadow: none !important;}
 .modalMonitorAutor{font-weight:600; font-size:14px;}
 .modalMonitorAutor .lato{ font-family:"LatoRegular"; font-size:13px;}
 .modalMonitorComment{padding-top:3px; color:#666;}
-.modalMonitorArchivo{background-color:cornsilk; border-top:1px dotted #ccc; border-bottom:1px dotted #ccc; padding:3px; margin-top:10px;}
 .modalMonitorArchivo a{text-decoration:underline;}
 
 #mobilePageName{font-size: 18px;
 margin-left: 10px;}
 
 
+.searchOverTab{ width:250px; position:absolute; top:0px; right:15px;}
+
+.searchOverTab ::-webkit-input-placeholder::before { font-family: FontAwesome; content:'\f002'; }
+.searchOverTab ::-moz-placeholder::before  { font-family: FontAwesome; content:'\f002'; } /* firefox 19+ */
+.searchOverTab :-ms-input-placeholder::before  { font-family: FontAwesome; content:'\f002'; } /* ie */
+input.searchOverTab:-moz-placeholder::before  { font-family: FontAwesome; content:'\f002';  }
+
+
+/*------------ TASK ------------*/
+
+.superMainTaskInfo{background-color:white; margin-right:-15px;margin-left:-15px; padding:15px; margin-top:-10px; margin-bottom:10px;}
+
+.mainTaskInfo{color:#666; padding-left:10px;}
+.mainTaskInfo .label{margin-bottom:5px; margin-top:5px; display:inline-block; font-size:15px;}
+.mainTaskDate{ font-size:13px; color:#bbb; letter-spacing:1px; margin-top:10px; margin-bottom:5px;}
+.mainTaskSpec{ font-size:15px;  margin-bottom:20px; }
+.mainTaskProyecto{font-size:17px; color:#666;}
+h1.taskProyTitle{padding-bottom:0px; color:#F3A161; font-size:22px; margin-top:5px;}
+
+
+.listNotas li:first-child{border-radius:0px;border-top:0px transparent;}
+
+.listNotas li{margin-bottom:5px; border-color:transparent; border-top:1px solid #ccc; background-color:transparent;}
+
+
+.listNotas li.itemSpec{background-color:#FFD273; margin-bottom:5px; }
+
+.listNotas li.itemSpec .taskMonitorAutor{color:white;}
+
+.taskMonitorAutor{  font-size:13px; color:#bbb; letter-spacing:1px; padding-bottom:5px;}
+.taskMonitorComment{color:#333;}
+.taskMonitorArchivo{background-color:#f9f9f9; border-top:1px dotted #ccc; border-bottom:1px dotted #ccc; padding:3px; margin-top:10px;}
+
+.taskMonitorSaved{font-size:13px; color:#bbb; letter-spacing:1px; padding-bottom:5px; color:#666;}
+
+.listTextarea{border-top:3px solid #ddd !important;}
+.listTextarea textarea{border:1px solid #eee; border-radius:0px;  margin-top:10px;margin-bottom:15px;}
+
+.expandAdjuntar{  padding:10px; margin-top:-15px;}
+
+
+
+/*-------- PROYECTO -----------*/
+
+#screenTProyecto .list-group{margin-top:20px;}
+
+#screenTProyecto .list-group-item {padding:0px; background-color:white; margin-bottom:5px; border:0px transparent;  border-radius:44px;}
+
+.archivosNombre{font-family:"GudeaBold";}
+
+
+.archivosLink{text-decoration:underline; color:#F07D24;}
+
+ul.archivosListado{padding:0px; margin:0px;}
+ul.archivosListado li{ margin-left:30px; padding-bottom:5px; padding-top:5px; border-bottom:1px dotted #ccc; }
+ul.archivosListado li:last-child{border-bottom:0px; }
+ul li.archivosLast{ margin-left:10px;list-style-type:none; background-color:#f9f9f9;}
+
+/*-------- MIS TAREAS -----------*/
+
+
+#screenTTareas .list-group-item {padding:0px; background-color:white; margin-bottom:5px; border:0px transparent;  border-radius:44px;}
+.monitorInfoProyecto{ color:#666;}
+
+.btnFiltro{margin-left:10px;}
+#screenTTareas .labelTask{line-height:17px;
+border-bottom-right-radius: 35px;
+border-top-right-radius: 35px;padding: 14px 10px;
+top: 4px;}
+
+#screenTTareas .circularLabel{
+border-radius: 35px;
+border-bottom-right-radius: 0px;
+border-top-right-radius: 0px;
+height: 64px;
+line-height: 64px;}
+
+#screenTTareas .circle {
+height: 64px;
+border-top-left-radius: 64px;
+border-bottom-left-radius: 64px;}
+
+/* ------ MOBILE MENU ------- */
+
+.bodyTapia .pushMenuItem {position:relative;}
+.bodyTapia .pushMenuActive{position:relative;}
+
+.bodyTapia a.pushMenuItem:before {
+        position:absolute;
+		font-family: FontAwesome;
+        top:0;
+        right:10px;
+        top:50%;
+        color:#ddd;
+        margin-top:-8px;
+        margin-right:3px;
+        content: '\f096';
+    }
+.bodyTapia a.pushMenuActive:before {
+        position:absolute;
+		font-family: FontAwesome;
+        top:0;
+        right:10px;
+        top:50%;
+        margin-top:-8px;
+        content: '\f046';
+        color:#666;
+        margin-right:0px;
+    }
+.bodyTapia .cbp-spmenu .pushMenuSuperGroup{height:100%; padding-bottom:50px;overflow:auto; -webkit-overflow-scrolling:touch;}
+.bodyTapia .cbp-spmenu .pushMenuGroup{border-bottom:1px solid #ddd;padding-top:10px;}
+.bodyTapia .cbp-spmenu .pushMenuGroup .pushMenuGroupTitle{
+padding-left:15px;
+padding-bottom:0px;
+font-size: 16px;
+font-weight: 700;
+color: #bbb;
+text-transform: uppercase;
+letter-spacing: 2px;}
+
+.bodyTapia .cbp-spmenu {
+	border-top: 6px solid #FFAC6C ;
+	background-color: #f8f8f8 ;
+	color: #777 ;
+	z-index:1099 ;
+}
+
+.bodyTapia .cbp-spmenu .pushMenuItem {
+	color: #777 ;
+	border-bottom: 1px solid #fff ;
+	padding-right:35px;
+}
+
+.bodyTapia .cbp-spmenu .pushMenuItem:hover {
+	color: #5e5e5e;
+	background-color: transparent;
+	text-decoration: none;
+}
+
+.bodyTapia .cbp-spmenu .cbp-title {
+	background-color: #f8f8f8;
+	font-size: 25px;
+	padding: 10px;
+	background-color: #fbfbfb;
+	white-space:nowrap;
+	padding-right:40px;
+}
+
+.bodyTapia .cbp-spmenu-left, .cbp-spmenu-push-toleft{left:-100%;}
+.bodyTapia .cbp-spmenu-right, .cbp-spmenu-push-toright{right:-100%;}
+
+.bodyTapia a.close-menu {
+	position: absolute;
+	height: 40px;
+	width: 40px;
+	line-height: 40px;
+	text-align: center;
+	top: 5px;
+	right: 5px;
+	padding: 0px;
+	display: inline-block;
+	text-decoration: none;
+	border: none;
+	vertical-align: middle;
+	font-size: 25px;
+	cursor: pointer;
+	color: #FFAC6C;
+}
+
+.bodyTapia a.close-menu:hover {
+	background-color: transparent;
+	color: rgba(38, 173, 161, 0.5);
+}
+
+.bodyTapia a.list-group-item {
+	font-size: initial;
+}
+
+.bodyTapia .cbp-spmenu{width:auto; min-width:250px;}
+.bodyTapia .cbp-spmenu-open{width:auto; min-width:250px;}
+
+#pushFiltro{font-size:14px;}
+
+.pushMenuDates{padding:10px;}
+.pushMenuDates label{display:block; text-align:left;}
+.pushMenuDates input{width:150px;}
+
+.btnLimpiar{margin-left:10px;}
+
+/* ------ END MOBILE MENU ------- */
+  /* ----- NEW BUTTONS TAPIA ------*/
+ .bodyTapia .btn-primary{
+  color: #ffffff;
+background-color: #FFAC6C;
+font-weight:600;
+border-color: #FFAC6C;
+}
+
+ .bodyTapia .btn-primary:hover, .bodyTapia .btn-primary:focus, .bodyTapia .btn-primary:active, .bodyTapia .btn-primary.active, .bodyTapia .open .dropdown-toggle.btn-primary {
+color: #ffffff;
+background-color: #FFC46C;
+border-color: #FFC46C;}
+
+ .bodyTapia .btn-primary.disabled, .bodyTapia .btn-primary[disabled], .bodyTapia fieldset[disabled] .btn-primary, .bodyTapia .btn-primary.disabled:hover, .bodyTapia .btn-primary[disabled]:hover, .bodyTapia fieldset[disabled] .btn-primary:hover, .bodyTapia .btn-primary.disabled:focus, .bodyTapia .btn-primary[disabled]:focus, .bodyTapia fieldset[disabled] .btn-primary:focus, .bodyTapia .btn-primary.disabled:active, .bodyTapia .btn-primary[disabled]:active, .bodyTapia fieldset[disabled] .btn-primary:active, .bodyTapia .btn-primary.disabled.active, .bodyTapia .btn-primary[disabled].active, .bodyTapia fieldset[disabled] .btn-primary.active {
+color:#eee;
+background-color: #96d896;
+border-color: #96d896;
+}
+
+.taskStatus{margin-top:5px;}
 
 
 /* Nexus 7 (portrait and landscape) ----------- */
@@ -1254,6 +1468,13 @@ margin-left: 10px;}
 /* MOBILE ----------- */
 @media only screen and (max-width: 599px) { 
 
+.bodyTapia .cbp-spmenu{width:100%; min-width:100%;}
+
+.pushMenuDates input{width:100%;}
+
+#screenTTareas .labelTask{padding: 14px 5px;}
+.btnFiltro{margin-left:0px;}
+#screenTTareas .formSearch{width:100%;}
 
 .navbar{margin-bottom:10px;}
 
@@ -1263,6 +1484,8 @@ margin-left: 10px;}
 .progressInternal .progressResumenMonitorNum{padding:0px; margin:0px; text-align:center;}
 
 #screenMonitor .list-group-item{ border-radius:0px; padding-left:5px; padding-bottom:5px;}
+#screenTTareas .list-group-item{ border-radius:0px; padding-left:5px; padding-bottom:5px;}
+
 .monitorInfoTitle{font-size:15px;
 display:inline-block;
   width: 370px;
@@ -1274,7 +1497,7 @@ line-height: 18px;
 margin-bottom:5px;
 vertical-align: middle;
 }
-.monitorInfo{line-height:inherit;}
+.monitorInfo{line-height:inherit; }
 
 
 .list-group .label.labelDate{font-size:11px; padding:2px; margin-right:2px; display:inline-block;}

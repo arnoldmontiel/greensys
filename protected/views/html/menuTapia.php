@@ -24,10 +24,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex5-collapse">
           <ul class="nav navbar-nav">
-          <li <?php if ($active=="tinicio"){ echo 'class="active"';}?> ><a href="tapia.php"><i class="fa fa-home fa-fw"></i> Monitor</a></li>
-          <li <?php if ($active=="tproyectos"){ echo 'class="active"';}?> ><a href="tproyectos.php"><i class="fa fa-star fa-fw"></i> Proyectos</a></li>
+          <li <?php if ($active=="tinicio"){ echo 'class="active"';}?> ><a href="tapia.php"><i class="fa fa-star fa-fw"></i> Mis Proyectos</a></li>
+          <li <?php if ($active=="ttareas"){ echo 'class="active"';}?> ><a href="ttareas.php"><i class="fa fa-tasks fa-fw"></i> Mis Tareas</a></li>
           <li <?php if ($active=="tclientes"){ echo 'class="active"';}?> ><a href="tclientes.php"><i class="fa fa-glass fa-fw"></i> Clientes</a></li>
-          <li <?php if ($active=="tformularios"){ echo 'class="active"';}?> ><a href="tformularios.php"><i class="fa fa-truck fa-fw"></i> Formularios</a></li>
+          <li <?php if ($active=="tformularios"){ echo 'class="active"';}?> ><a href="tformularios.php"><i class="fa fa-tags fa-fw"></i> Tipos de Tarea</a></li>
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">M&aacute;s <i class="fa fa-caret-down fa-fw"></i></a>
                         <ul class="dropdown-menu">
                           <li><a href="tetapas.php">Etapas</a></li>
