@@ -124,7 +124,8 @@ class SiteController extends GController
                 
                 // successful authentication
                 if ($identity->authenticate()) {
-                    Yii::app()->user->login($identity);
+                    //Yii::app()->user->login($identity);
+                    Yii::app()->user->login($this->_identity,3600*1);
 
                     AuditLogin::audit();
                     // special redirect with closing popup window

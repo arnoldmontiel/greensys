@@ -69,7 +69,7 @@ class ProductController extends GController
 				$model->unit_rack = 0;
 				$model->unit_fan = 0;				
 			}
-			
+			$saved = false;
 			$transaction = $model->dbConnection->beginTransaction();
 			try {
 				//save image
@@ -89,6 +89,7 @@ class ProductController extends GController
 				
 					//$this->createCode($model);
 					$transaction->commit();		
+					$saved = true;
 					//$this->redirect(array('updateMultimedia','id'=>$model->Id));
 					if(isset($_POST['other'])&&$_POST['other']!='1')
 						$this->redirect(array('index','id'=>$model->Id));
@@ -102,8 +103,11 @@ class ProductController extends GController
 			} catch (Exception $e) {
 				$transaction->rollback();
 			}			
-			$model->refresh();
-			GreenHelper::generateListPrices($model);				
+			if($saved)
+			{
+				$model->refresh();
+				GreenHelper::generateListPrices($model);				
+			}
 		}
 
 		if(isset($_POST['Product']))
