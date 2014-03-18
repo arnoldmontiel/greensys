@@ -25,7 +25,7 @@ $('#chkAll').change(function(){
 
 <?php
 $this->widget('ext.xupload.XUploadWidget', array(
-                    'url' => AlbumController::createUrl('album/AjaxUploadToNote',array('idAlbum'=>$modelAlbum->Id,'idCustomer'=>$modelAlbum->Id_customer,'idProject'=>$modelAlbum->Id_project, 'idNote'=>$idNote)),
+                    'url' => Yii::app()->createUrl('album/AjaxUploadToNote',array('idAlbum'=>$modelAlbum->Id,'idCustomer'=>$modelAlbum->Id_customer,'idProject'=>$modelAlbum->Id_project, 'idNote'=>$idNote)),
 					'multiple'=>true,
 					'name'=>'file',
 					'options' => array(
@@ -37,7 +37,7 @@ $this->widget('ext.xupload.XUploadWidget', array(
 							$tr.find(".file_upload_cancel button").click(function(){
 								var target = $(this);
 											
-								$.get("'.AlbumController::createUrl('album/AjaxRemoveImageFromNote').'",
+								$.get("'.Yii::app()->createUrl('album/AjaxRemoveImageFromNote').'",
  									{
 										IdMultimedia:$(target).parent().parent().attr("id"),
 										IdNote:'.$idNote.'
@@ -54,7 +54,7 @@ $this->widget('ext.xupload.XUploadWidget', array(
  							$tr.find("#photo_description").change(function(){
 								var target = $(this);
 								
-								$.get("'.AlbumController::createUrl('album/AjaxAddImageDescription').'",
+								$.get("'.Yii::app()->createUrl('album/AjaxAddImageDescription').'",
  									{
 										IdMultimedia:$(target).parent().parent().attr("id"),
 										description:$(this).val()

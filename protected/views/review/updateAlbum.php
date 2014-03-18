@@ -4,7 +4,7 @@ $('#Album_description').autoResize();
 $('#Album_title').change(function(){
 	
 		$.post(
-			'".AlbumController::createUrl('album/AjaxUpdateTitle')."',
+			'".Yii::app()->createUrl('album/AjaxUpdateTitle')."',
 			{
 			 	id: ".$model->Id.",
 				title:$(this).val()
@@ -20,7 +20,7 @@ $('#Album_title').change(function(){
 $('#Album_description').change(function(){
 	
 		$.post(
-			'".AlbumController::createUrl('album/AjaxUpdateDescription')."',
+			'".Yii::app()->createUrl('album/AjaxUpdateDescription')."',
 			{
 			 	id: ".$model->Id.",
 				description:$(this).val()
@@ -39,7 +39,7 @@ $('#images_container').find('textarea').each(
 												$(item).change(function(){
 													var target = $(this);
 													var it = $(item);
-													$.get('".AlbumController::createUrl('album/AjaxAddImageDescription')."',
+													$.get('".Yii::app()->createUrl('album/AjaxAddImageDescription')."',
 					 									{
 															IdMultimedia:$(target).attr('id'),
 															description:$(this).val()
@@ -84,7 +84,7 @@ echo CHtml::imageButton(
 										'id'=>'delete_'.$model->Id,
 		                                	'ajax'=> array(
 												'type'=>'GET',
-												'url'=>AlbumController::createUrl('album/AjaxRemoveAlbum',array('id'=>$model->Id)),
+												'url'=>Yii::app()->createUrl('album/AjaxRemoveAlbum',array('id'=>$model->Id)),
 												'beforeSend'=>'function(){
 															if(!confirm("\u00BFEst\u00e1 seguro de eliminar este album?")) 
 																return false;
@@ -181,7 +181,7 @@ echo CHtml::imageButton(
 
 <?php
 $this->widget('ext.xupload.XUploadWidget', array(
-                    'url' => AlbumController::createUrl('album/AjaxUpload',array('idAlbum'=>$model->Id,'idCustomer'=>$model->Id_customer,'idProject'=>$model->Id_project)),
+                    'url' => Yii::app()->createUrl('album/AjaxUpload',array('idAlbum'=>$model->Id,'idCustomer'=>$model->Id_customer,'idProject'=>$model->Id_project)),
 					'multiple'=>true,
 					'name'=>'file',
 					'options' => array(
@@ -193,7 +193,7 @@ $this->widget('ext.xupload.XUploadWidget', array(
 							$tr.find(".file_upload_cancel button").click(function(){
 								var target = $(this);
 											
-								$.get("'.AlbumController::createUrl('album/AjaxRemoveImage').'",
+								$.get("'.Yii::app()->createUrl('album/AjaxRemoveImage').'",
  									{
 										IdMultimedia:$(target).parent().parent().attr("id")
  								}).success(
@@ -209,7 +209,7 @@ $this->widget('ext.xupload.XUploadWidget', array(
  							$tr.find("#photo_description").change(function(){
 								var target = $(this);
 								
-								$.get("'.AlbumController::createUrl('album/AjaxAddImageDescription').'",
+								$.get("'.Yii::app()->createUrl('album/AjaxAddImageDescription').'",
  									{
 										IdMultimedia:$(target).parent().parent().attr("id"),
 										description:$(this).val()

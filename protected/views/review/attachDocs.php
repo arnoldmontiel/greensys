@@ -13,7 +13,7 @@ $('#btnPublic').click(function(){
 		if($(this).attr('name') == 'chkDoc')
  	 		data['docs[]'].push($(this).val());
 	});
-	$.post('".NoteController::createUrl('note/AjaxAttachDoc')."', 
+	$.post('".Yii::app()->createUrl('note/AjaxAttachDoc')."', 
 		{
 			id: ".$idNote.",
 			docs: data['docs[]']

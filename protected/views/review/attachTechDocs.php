@@ -14,7 +14,7 @@ $('#btnPublic').click(function(){
  	 		data['docs[]'].push($(this).val());
 	});
 	
-	$.post('".NoteController::createUrl('note/AjaxAttachTechDoc')."', 
+	$.post('".Yii::app()->createUrl('note/AjaxAttachTechDoc')."', 
 		{
 			id: ".$idNote.",
 			docs: data['docs[]']

@@ -230,7 +230,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 							'style'=>'width:25px;margin-top:6px;'
 					)
 			);
-	$url = ReviewController::createUrl('GenerateEmployeeList',array('Id_customer'=>$model->Id));
+	$url = Yii::app()->createUrl('GenerateEmployeeList',array('Id_customer'=>$model->Id));
 	echo CHtml::link($image,
 			$url,
 			array('title'=>'Exportar N&oacute;mina empleados','id'=>'link-export-employee-list',
