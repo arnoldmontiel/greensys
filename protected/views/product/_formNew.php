@@ -768,19 +768,19 @@ $('#deleteIcon').click(function(){
         <tbody>
           <tr>
             <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'short_description'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'short_description', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'short_description', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 2)); ?></td>
           </tr>
           <tr>
             <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'long_description'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'long_description', array("class"=>"form-control",'maxlength' => 1000, 'rows' => 2)); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'long_description', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 2)); ?></td>
           </tr>
           <tr>
             <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'description_customer'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'description_customer', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'description_customer', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 2)); ?></td>
           </tr>
           <tr>
             <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'description_supplier'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'description_supplier', array("class"=>"form-control",'maxlength' => 1000, 'rows' => 2)); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'description_supplier', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 2)); ?></td>
           </tr>
         </tbody>
       </table>
