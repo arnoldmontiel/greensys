@@ -247,6 +247,8 @@ $('#deleteIcon').click(function(){
 		'htmlOptions'=>array('enctype'=>'multipart/form-data','enableClientValidation'=>true),
 		)); 
 		?>
+	<?php echo $form->errorSummary($model,"Por favor verifique los siguientes errores:"); ?>
+		
   <div class="row">
     <div class="col-sm-4">
       <div class="rowSeparator noTopMargin">Informaci&oacute;n B&aacute;sica</div>
@@ -794,7 +796,6 @@ $('#deleteIcon').click(function(){
     <!-- /.row -->
     
 	<?php echo CHtml::hiddenField("other",'',array('id'=>'other'));?>
-    
   <div class="row navbar-fixed-bottom">
     <div class="col-sm-12">
       <div class="buttonsFloatBottom">
