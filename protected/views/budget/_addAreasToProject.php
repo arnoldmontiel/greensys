@@ -2,7 +2,7 @@
   $area = new Area;
   $provider =$area->search();
   $provider->pagination =array(
-        'pageSize'=>30,
+        'pageSize'=>100,
     );
   $areas= $provider->data;
   ?>
