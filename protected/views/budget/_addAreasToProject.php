@@ -30,6 +30,7 @@
         <button id="addArea" type="button" id="btn-save-field"  class="btn btn-primary btn-lg"><i class="fa fa-plus"></i> Agregar</button>
       </div>
     </div><!-- /.modal-content -->
+    </div>
 <script type="text/javascript">
 
 $('#addArea').unbind('click');
