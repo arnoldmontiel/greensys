@@ -70,7 +70,7 @@ include ('menuTapia.php');
       </ul>
     <div class="tab-content">
     <div class="tab-pane active" id="tabTareas">
-     <div class="searchOverTab"><input type="text" class="form-control" placeholder=" Buscar Tarea"></div>
+     <div class="searchOverTab"><input type="text" class="form-control formSearch" placeholder=" Buscar Tarea"></div>
       
       
       <ul class="list-group">
@@ -149,7 +149,61 @@ include ('menuTapia.php');
      <table class="table table-bordered tablaIndividual">
 					<thead>
 						<tr>
-							<th colspan="2">C&oacute;mputo y M&eacute;tricas</th>
+							<th>Archivos</th>
+							<th class="align-center">Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><span class="bold">Desglose de Materiales </span><br/>
+							<img class="verticalTop" class="verticalTop" src="img/iconSet/circlePDF20.png" />  <a class="archivosLink">Smartliving_Madero_5249927d46d03.xlsx</a> (61.67 Kb) - <span class="bold">amagatelli</span> el 30/09/2013 12:02:34
+							</td>
+							<td class="align-center">
+							<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Eliminar</button>
+             				</td>
+						</tr>
+						<tr>
+							<td><span class="bold">Desglose de Materiales </span><br/>
+							<img class="verticalTop" src="img/iconSet/circleW20.png" />  <a class="archivosLink">Smartliving_Madero_5249927d46d03.xlsx</a> (61.67 Kb) - <span class="bold">amagatelli</span> el 30/09/2013 12:02:34
+							</td>
+							<td class="align-center">
+							<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Eliminar</button>
+             				</td>
+						</tr>
+						<tr>
+							<td><span class="bold">Desglose de Materiales </span><br/>
+							<img class="verticalTop" src="img/iconSet/circlePDF20.png" />  <a class="archivosLink">Smartliving_Madero_5249927d46d03.xlsx</a> (61.67 Kb) - <span class="bold">amagatelli</span> el 30/09/2013 12:02:34
+							</td>
+							<td class="align-center">
+							<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Eliminar</button>
+             				</td>
+						</tr>
+						<tr>
+							<td><span class="bold">Desglose de Materiales </span><br/>
+							<img class="verticalTop" src="img/iconSet/circlePDF20.png" />  <a class="archivosLink">Smartliving_Madero_5249927d46d03.xlsx</a> (61.67 Kb) - <span class="bold">amagatelli</span> el 30/09/2013 12:02:34
+							</td>
+							<td class="align-center">
+							<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Eliminar</button>
+             				</td>
+						</tr>
+						<tr>
+							<td><span class="bold">Desglose de Materiales </span><br/>
+							<img class="verticalTop" src="img/iconSet/circleX20.png" />  <a class="archivosLink">Smartliving_Madero_5249927d46d03.xlsx</a> (61.67 Kb) - <span class="bold">amagatelli</span> el 30/09/2013 12:02:34
+							</td>
+							<td class="align-center">
+							<button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Eliminar</button>
+             				</td>
+						</tr>
+					</tbody>
+				</table>
+</div><!-- /tab-pane -->
+   <div class="tab-pane" id="tabTecnicos">
+     <div class="searchOverTab"><input type="text" class="form-control" placeholder=" Buscar Documento"></div>
+     <table class="table table-bordered tablaIndividual">
+					<thead>
+						<tr>
+							<th>C&oacute;mputo y M&eacute;tricas</th>
+							<th class="align-center">Acciones</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -159,16 +213,16 @@ include ('menuTapia.php');
 							<li class="archivosLast"><span class="label label-default">&Uacute;LTIMO</span> <span class="bold">Desglose de Materiales </span><br/>
 							<a class="archivosLink"><img src="img/iconSet/circleCAD20.png" />  Smartliving_Madero_5249927d46d03.xlsx</a> (61.67 Kb) - <span class="bold">amagatelli</span> el 30/09/2013 12:02:34
 							</li>
-							<li>Desglose de Materiales 02 </br>
+							<li>Desglose de Materiales 02 <br/>
 							<a class="archivosLink"><img src="img/iconSet/circleCAD20.png" />  Smartliving_Madero_5249927d46d03.xlsx</a> (61.67 Kb) - <span class="bold">amagatelli</span> el 30/09/2013 12:02:34
 							</li>
-							<li> Materiales </br>
+							<li> Materiales <br/>
 							<a class="archivosLink"><img src="img/iconSet/circleCAD20.png" />  Smartliving_Madero_5249927d46d03.xlsx</a> (61.67 Kb) - <span class="bold">amagatelli</span> el 30/09/2013 12:02:34
 							</li>
-							<li> Desglose de Materiales </br>
+							<li> Desglose de Materiales <br/>
 							<a class="archivosLink"><img src="img/iconSet/circleCAD20.png" />  Smartliving_Madero_5249927d46d03.xlsx</a> (61.67 Kb) - <span class="bold">amagatelli</span> el 30/09/2013 12:02:34
 							</li>
-							<li> Desglose de Materiales </br>
+							<li> Desglose de Materiales <br/>
 							<a class="archivosLink"><img src="img/iconSet/circleCAD20.png" />  Smartliving_Madero_5249927d46d03.xlsx</a> (61.67 Kb) - <span class="bold">amagatelli</span> el 30/09/2013 12:02:34
 							</li>
 							</ul>
@@ -177,22 +231,32 @@ include ('menuTapia.php');
 							<button type="button" class="btn btn-default btn-sm verticalTop"><i class="fa fa-pencil"></i> Ver Permisos G-Drive</button>
              				</td>
 						</tr>
+						</tbody>
+						</table>
+     <table class="table table-bordered tablaIndividual">
+					<thead>
+						<tr>
+							<th>Cine</th>
+							<th class="align-center">Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
 						<tr>
 							<td>
 							<ul class="archivosListado">
-							<li class="archivosLast"><span class="label label-default">&Uacute;LTIMO</span> Desglose de Materiales <br/>
+							<li class="archivosLast"><span class="label label-default">&Uacute;LTIMO</span> <span class="bold">Desglose de Materiales </span><br/>
 							<a class="archivosLink"><img src="img/iconSet/circleCAD20.png" />  Smartliving_Madero_5249927d46d03.xlsx</a> (61.67 Kb) - <span class="bold">amagatelli</span> el 30/09/2013 12:02:34
 							</li>
-							<li> Desglose de Materiales 02 </br>
+							<li>Desglose de Materiales 02 <br/>
 							<a class="archivosLink"><img src="img/iconSet/circleCAD20.png" />  Smartliving_Madero_5249927d46d03.xlsx</a> (61.67 Kb) - <span class="bold">amagatelli</span> el 30/09/2013 12:02:34
 							</li>
-							<li> Materiales </br>
+							<li> Materiales <br/>
 							<a class="archivosLink"><img src="img/iconSet/circleCAD20.png" />  Smartliving_Madero_5249927d46d03.xlsx</a> (61.67 Kb) - <span class="bold">amagatelli</span> el 30/09/2013 12:02:34
 							</li>
-							<li> Desglose de Materiales </br>
+							<li> Desglose de Materiales <br/>
 							<a class="archivosLink"><img src="img/iconSet/circleCAD20.png" />  Smartliving_Madero_5249927d46d03.xlsx</a> (61.67 Kb) - <span class="bold">amagatelli</span> el 30/09/2013 12:02:34
 							</li>
-							<li> Desglose de Materiales </br>
+							<li> Desglose de Materiales <br/>
 							<a class="archivosLink"><img src="img/iconSet/circleCAD20.png" />  Smartliving_Madero_5249927d46d03.xlsx</a> (61.67 Kb) - <span class="bold">amagatelli</span> el 30/09/2013 12:02:34
 							</li>
 							</ul>
@@ -201,16 +265,22 @@ include ('menuTapia.php');
 							<button type="button" class="btn btn-default btn-sm verticalTop"><i class="fa fa-pencil"></i> Ver Permisos G-Drive</button>
              				</td>
 						</tr>
-					</tbody>
+						</tbody>
 				</table>
 </div><!-- /tab-pane -->
-    <div class="tab-pane" id="tabTecnicos">
-     <div class="searchOverTab"><input type="text" class="form-control" placeholder=" Buscar Documento"></div>
-Tecnicos
-     </div>
     <div class="tab-pane" id="tabImagenes">
      <div class="searchOverTab"><input type="text" class="form-control" placeholder=" Buscar Imagen"></div>
-Imagenes
+
+     <ul>
+     <li><img src="img/tasks/01.jpg"/></li>
+     <li><img src="img/tasks/02.jpg"/></li>
+     <li><img src="img/tasks/03.jpg"/></li>
+     <li><img src="img/tasks/04.jpg"/></li>
+     <li><img src="img/tasks/05.jpg"/></li>
+     <li><img src="img/tasks/06.jpg"/></li>
+     </ul>
+     
+     
      </div>
     </div> <!-- /tab-content -->
     

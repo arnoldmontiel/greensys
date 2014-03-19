@@ -1084,7 +1084,17 @@ input.formSearch:-moz-placeholder::before  { font-family: FontAwesome; content:'
 
 #screenMonitor .list-group-item{/*padding:3px 2px;*/ padding:0px; margin:0px;margin-bottom:3px; border-radius:45px; }
 
+#screenMonitor .list-group-item a:hover{text-decoration:none;}
+
 #screenMonitor .list-group-item.odd{background-color:#f9f9f9; display:block;}
+
+
+
+#screenTTareas .list-group-item{/*padding:3px 2px;*/ padding:0px; margin:0px;margin-bottom:3px; border-radius:45px; }
+
+#screenTTareas .list-group-item a:hover{text-decoration:none;}
+
+#screenTTareas .list-group-item.odd{background-color:#f9f9f9; display:block;}
 
 
 .monitorInfo{line-height:20px;}
@@ -1184,6 +1194,7 @@ box-shadow: none !important;}
 
 
 #screenMonitor .list-group-item:hover{background-color:#ddd; cursor:pointer;}
+#screenTTareas .list-group-item:hover{background-color:#ddd; cursor:pointer;}
 
 #myModalDetalle .modal-dialog{width:90%;}
 
@@ -1211,6 +1222,8 @@ input.searchOverTab:-moz-placeholder::before  { font-family: FontAwesome; conten
 
 /*------------ TASK ------------*/
 
+h2.proyectTitle{font-size:19px; color:#555; margin-top:10px; margin-bottom:10px;}
+
 .superMainTaskInfo{background-color:white; margin-right:-15px;margin-left:-15px; padding:15px; margin-top:-10px; margin-bottom:10px;}
 
 .mainTaskInfo{color:#666; padding-left:10px;}
@@ -1219,7 +1232,17 @@ input.searchOverTab:-moz-placeholder::before  { font-family: FontAwesome; conten
 .mainTaskSpec{ font-size:15px;  margin-bottom:20px; }
 .mainTaskProyecto{font-size:17px; color:#666;}
 h1.taskProyTitle{padding-bottom:0px; color:#F3A161; font-size:22px; margin-top:5px;}
+h1.taskProyTitle{
+font-size: 2em;
+font-weight: normal;
+color: #7F8C8D;
+text-align: left;
+margin: 0px;
+line-height: auto;
+padding-bottom: 15px;
+}
 
+.listNotas{ background-color:white;}
 
 .listNotas li:first-child{border-radius:0px;border-top:0px transparent;}
 
@@ -1230,7 +1253,7 @@ h1.taskProyTitle{padding-bottom:0px; color:#F3A161; font-size:22px; margin-top:5
 
 .listNotas li.itemSpec .taskMonitorAutor{color:white;}
 
-.taskMonitorAutor{  font-size:13px; color:#bbb; letter-spacing:1px; padding-bottom:5px;}
+.taskMonitorAutor{  font-size:13px; color:#888; letter-spacing:1px; padding-bottom:5px;}
 .taskMonitorComment{color:#333;}
 .taskMonitorArchivo{background-color:#f9f9f9; border-top:1px dotted #ccc; border-bottom:1px dotted #ccc; padding:3px; margin-top:10px;}
 
@@ -1241,9 +1264,14 @@ h1.taskProyTitle{padding-bottom:0px; color:#F3A161; font-size:22px; margin-top:5
 
 .expandAdjuntar{  padding:10px; margin-top:-15px;}
 
+.taskStatus{margin-top:5px; margin-bottom: 10px; }
 
+.taskStatus .label{font-size:15px;}
+
+.taskMainSpec{margin-bottom:10px;padding-bottom:15px; font-size:1.1em;}
 
 /*-------- PROYECTO -----------*/
+
 
 #screenTProyecto .list-group{margin-top:20px;}
 
@@ -1283,6 +1311,9 @@ height: 64px;
 border-top-left-radius: 64px;
 border-bottom-left-radius: 64px;}
 
+.sideMenuBotones{ position:absolute; bottom:0px; z-index:1090; background-color:#fbfbfb; padding: 10px 0px; width:100%; text-align:center; border-top:2px solid #eee;}
+
+
 /* ------ MOBILE MENU ------- */
 
 .bodyTapia .pushMenuItem {position:relative;}
@@ -1310,7 +1341,7 @@ border-bottom-left-radius: 64px;}
         color:#666;
         margin-right:0px;
     }
-.bodyTapia .cbp-spmenu .pushMenuSuperGroup{height:100%; padding-bottom:50px;overflow:auto; -webkit-overflow-scrolling:touch;}
+.bodyTapia .cbp-spmenu .pushMenuSuperGroup{height:100%; padding-bottom:105px;overflow:auto; -webkit-overflow-scrolling:touch;}
 .bodyTapia .cbp-spmenu .pushMenuGroup{border-bottom:1px solid #ddd;padding-top:10px;}
 .bodyTapia .cbp-spmenu .pushMenuGroup .pushMenuGroupTitle{
 padding-left:15px;
@@ -1410,7 +1441,6 @@ background-color: #96d896;
 border-color: #96d896;
 }
 
-.taskStatus{margin-top:5px;}
 
 
 /* Nexus 7 (portrait and landscape) ----------- */
@@ -1484,7 +1514,6 @@ border-color: #96d896;
 .progressInternal .progressResumenMonitorNum{padding:0px; margin:0px; text-align:center;}
 
 #screenMonitor .list-group-item{ border-radius:0px; padding-left:5px; padding-bottom:5px;}
-#screenTTareas .list-group-item{ border-radius:0px; padding-left:5px; padding-bottom:5px;}
 
 .monitorInfoTitle{font-size:15px;
 display:inline-block;

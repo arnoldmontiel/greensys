@@ -23,7 +23,7 @@
 <body class="bodyTapia cbp-spmenu-push">
 
 <?php
-$active = 'tareas';
+$active = 'ttareas';
 include ('menuTapia.php');
 ?>
 <script>	
@@ -51,7 +51,8 @@ $(document).ready(function() {
 </script>
 
 	<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="pushFiltro">
-		<div class="cbp-title">Filtrar Tareas <button class="btn btn-default btn-sm btnLimpiar"><i class="fa fa-undo"></i> Limpiar</button></div>
+		<div class="cbp-title">Filtrar Tareas </div>
+		<div class="sideMenuBotones"><button class="btn btn-default btnLimpiar"><i class="fa fa-undo"></i> Limpiar</button><button class="btn btn-primary btnLimpiar"><i class="fa fa-check"></i> Aplicar</button></div>
 		<a class="toggle-menuMarketplace close-menu"><i class="fa fa-times-circle"></i></a>
 		<div class="pushMenuSuperGroup">
 		<div class="pushMenuGroup">
@@ -131,12 +132,13 @@ $(document).ready(function() {
   
       <!-- Empieza Tarea -->
   <li class="list-group-item clearfix line lineEjecucion odd">
+  <a href="ttarea.php" class="clearfix">
  <div class="circle circleEjecucion visible-sm visible-nexus"></div> 
   <div class="circularLabel circleEjecucion pull-left hidden-sm hidden-xs">En Ejecucion</div>
       <div class="labelTaskMobile labelTaskMobileServicio visible-xs hidden-nexus">Servicio T&eacute;cnico<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
   <div class="monitorInfoProyecto">Cohen - La Angostura</div>
-   <a class="monitorInfoTitle">Perforacion Suite</a> <span class="iconsGroup"></span>
+   <div class="monitorInfoTitle">Perforacion Suite</div> <span class="iconsGroup"></span>
  <div class="monitorDates"> 
  <span class="label label-default labelDate visible-xs-inline">UPD</span>  
  <span class="label label-default labelDate hidden-xs-inline">UPDATED</span>
@@ -144,16 +146,18 @@ $(document).ready(function() {
  </div>
       </div>
      <span class="label label-warning labelTask hidden-xs">Servicio T&eacute;cnico <br/> 20/10/2012 30:09:10</span>
+     </a>
   </li>
       <!-- Termina Tarea -->
       <!-- Empieza Tarea -->
   <li class="list-group-item clearfix line lineEjecucion ">
+  <a href="ttarea.php" class="clearfix">
  <div class="circle circleEjecucion visible-sm visible-nexus"></div> 
   <div class="circularLabel circleEjecucion pull-left hidden-sm hidden-xs">En Ejecucion</div>
   <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs hidden-nexus">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
   <div class="monitorInfoProyecto">Cohen - La Angostura</div>
-   <a class="monitorInfoTitle">Agregar Iphone al sistema  </a> <span class="iconsGroup"><img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /></span>
+   <div class="monitorInfoTitle">Agregar Iphone al sistema  </div> <span class="iconsGroup"><img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /></span>
  <div class="monitorDates"> 
  <span class="label label-default labelDate visible-xs-inline">UPD</span>  
  <span class="label label-default labelDate hidden-xs-inline">UPDATED</span>
@@ -161,16 +165,18 @@ $(document).ready(function() {
  </div>     
   </div>
      <span class="label label-primary labelTask hidden-xs">Implementacion<br/> 20/10/2012 30:09:10</span>
+     </a>
      </li>
       <!-- Termina Tarea -->
       <!-- Empieza Tarea -->
   <li class="list-group-item clearfix line lineStandBy odd">
+  <a href="ttarea.php" class="clearfix">
  <div class="circle circleStandBy visible-sm visible-nexus"></div> 
   <div class="circularLabel circleStandBy pull-left hidden-sm hidden-xs">Stand By</div>
     <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs hidden-nexus">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
   <div class="monitorInfoProyecto">Cohen - La Angostura</div>
-   <a class="monitorInfoTitle">Comprar nuevos parlantes  </a> <span class="iconsGroup"><img src="img/iconSet/circleIMG20.png" /></span>
+   <div class="monitorInfoTitle">Comprar nuevos parlantes  </div> <span class="iconsGroup"><img src="img/iconSet/circleIMG20.png" /></span>
  <div class="monitorDates"> 
  <span class="label label-default labelDate visible-xs-inline">UPD</span>  
  <span class="label label-default labelDate hidden-xs-inline">UPDATED</span>
@@ -178,6 +184,7 @@ $(document).ready(function() {
  </div>     
    </div>
      <span class="label label-primary labelTask hidden-xs">Implementacion<br/> 20/10/2012 30:09:10</span>
+     </a>
   </li>
       <!-- Termina Tarea -->
 </ul>

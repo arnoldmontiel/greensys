@@ -31,18 +31,18 @@ $active='tinicio';
 include('menuTapia.php');?>
 <div class="container" id="screenMonitor">
 <div class="row">
-<div class="col-sm-6 col-xs-12 col-nexus-6 hidden-xs"><h1 class="pageTitle">Monitor</h1></div>
+<div class="col-sm-6 col-xs-12 col-nexus-6 hidden-xs"><h1 class="pageTitle">Mis Proyectos</h1></div>
 <div class="col-sm-6 col-xs-12 col-nexus-6 text-right "><input type="text" class="form-control formSearch" placeholder=" Buscar Proyecto"></div>
 </div>
   <div class="row">
     <div class="col-sm-12">
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#tabProyectos" data-toggle="tab">por Proyecto</a></li>
-        <li><a href="#tabSueltas" data-toggle="tab">Sueltas</a></li>
-      </ul>
+<!--     <ul class="nav nav-tabs"> -->
+<!--         <li class="active"><a href="#tabProyectos" data-toggle="tab">por Proyecto</a></li> -->
+<!--         <li><a href="#tabSueltas" data-toggle="tab">Sueltas</a></li> -->
+<!--       </ul> -->
     <div class="tab-content">
     <div class="tab-pane active" id="tabProyectos">
-     <div class="searchOverTab"><input type="text" class="form-control" placeholder=" Buscar Proyecto"></div>
+<!--      <div class="searchOverTab"><input type="text" class="form-control" placeholder=" Buscar Proyecto"></div> -->
     
       
     <div class="panel-group" id="accordion">
@@ -66,7 +66,7 @@ include('menuTapia.php');?>
       </div>
     </div></div>
     <div class="col-sm-2 col-nexus-2 text-right">    
-    <button class="btn btn-default btn-sm pull-right hidden-xs"><i class="fa fa-arrow-circle-right"></i> Ver Proyecto</button>
+    <a href="tproyecto.php" class="btn btn-default btn-sm pull-right hidden-xs"><i class="fa fa-arrow-circle-right"></i> Ver Proyecto</a>
     <button class="btn btn-default btn-xs pull-right hidden-nexus visible-xs"><i class="fa fa-arrow-circle-right"></i></button>
     </div>
     </div>
@@ -114,11 +114,12 @@ include('menuTapia.php');?>
   
       <!-- Empieza Tarea -->
   <li class="list-group-item clearfix line lineEjecucion odd">
+  <a href="ttarea.php" class="clearfix">
  <div class="circle circleEjecucion visible-sm visible-nexus"></div> 
   <div class="circularLabel circleEjecucion pull-left hidden-sm hidden-xs">En Ejecucion</div>
       <div class="labelTaskMobile labelTaskMobileServicio visible-xs hidden-nexus">Servicio T&eacute;cnico<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
-   <a class="monitorInfoTitle">Perforacion Suite</a> <span class="iconsGroup"></span>
+   <div class="monitorInfoTitle">Perforacion Suite</div> <span class="iconsGroup"></span>
  <div class="monitorDates"> 
  <span class="label label-default labelDate visible-xs-inline">UPD</span>  
  <span class="label label-default labelDate hidden-xs-inline">UPDATED</span>
@@ -126,15 +127,17 @@ include('menuTapia.php');?>
  </div>
       </div>
      <span class="label label-warning labelTask hidden-xs">Servicio T&eacute;cnico <br/> 20/10/2012 30:09:10</span>
+     </a>
   </li>
       <!-- Termina Tarea -->
       <!-- Empieza Tarea -->
   <li class="list-group-item clearfix line lineEjecucion ">
+  <a href="ttarea.php" class="clearfix">
  <div class="circle circleEjecucion visible-sm visible-nexus"></div> 
   <div class="circularLabel circleEjecucion pull-left hidden-sm hidden-xs">En Ejecucion</div>
   <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs hidden-nexus">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
-   <a class="monitorInfoTitle">Agregar Iphone al sistema  </a> <span class="iconsGroup"><img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /></span>
+   <div class="monitorInfoTitle">Agregar Iphone al sistema  </div> <span class="iconsGroup"><img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /></span>
  <div class="monitorDates"> 
  <span class="label label-default labelDate visible-xs-inline">UPD</span>  
  <span class="label label-default labelDate hidden-xs-inline">UPDATED</span>
@@ -142,15 +145,17 @@ include('menuTapia.php');?>
  </div>     
   </div>
      <span class="label label-primary labelTask hidden-xs">Implementacion<br/> 20/10/2012 30:09:10</span>
+     </a>
      </li>
       <!-- Termina Tarea -->
       <!-- Empieza Tarea -->
   <li class="list-group-item clearfix line lineStandBy odd">
+  <a href="ttarea.php" class="clearfix">
  <div class="circle circleStandBy visible-sm visible-nexus"></div> 
   <div class="circularLabel circleStandBy pull-left hidden-sm hidden-xs">Stand By</div>
     <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs hidden-nexus">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
-   <a class="monitorInfoTitle">Comprar nuevos parlantes  </a> <span class="iconsGroup"><img src="img/iconSet/circleIMG20.png" /></span>
+   <div class="monitorInfoTitle">Comprar nuevos parlantes  </div> <span class="iconsGroup"><img src="img/iconSet/circleIMG20.png" /></span>
  <div class="monitorDates"> 
  <span class="label label-default labelDate visible-xs-inline">UPD</span>  
  <span class="label label-default labelDate hidden-xs-inline">UPDATED</span>
@@ -158,6 +163,7 @@ include('menuTapia.php');?>
  </div>     
    </div>
      <span class="label label-primary labelTask hidden-xs">Implementacion<br/> 20/10/2012 30:09:10</span>
+     </a>
   </li>
       <!-- Termina Tarea -->
 </ul>
@@ -189,7 +195,7 @@ include('menuTapia.php');?>
       </div>
     </div></div>
     <div class="col-sm-2 col-nexus-2 text-right">    
-    <button class="btn btn-default btn-sm pull-right hidden-xs"><i class="fa fa-arrow-circle-right"></i> Ver Proyecto</button>
+    <a href="tproyecto.php" class="btn btn-default btn-sm pull-right hidden-xs"><i class="fa fa-arrow-circle-right"></i> Ver Proyecto</a>
     <button class="btn btn-default btn-xs pull-right visible-xs hidden-nexus"><i class="fa fa-arrow-circle-right"></i></button>
     </div>
     </div>
@@ -219,11 +225,12 @@ include('menuTapia.php');?>
       <ul class="list-group">
      <!-- Empieza Tarea -->
   <li class="list-group-item line linePendiente ">
+  <a href="ttarea.php" class="clearfix">
   <div class="circle circlePendiente visible-sm visible-nexus"></div> 
   <div class="circularLabel circlePendiente pull-left hidden-sm hidden-xs">Finalizado</div>
     <div class="labelTaskMobile labelTaskMobilePedido visible-xs hidden-nexus">Pedido Cotizaci&oacute;n <span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
-   <a class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en PC de Rack  </a> <span class="iconsGroup"><img src="img/iconSet/circlePDF20.png" />  <img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /> <img src="img/iconSet/circleIMG20.png" /> <img src="img/iconSet/circleCAD20.png" /></span>
+   <div class="monitorInfoTitle">Instalaci&oacute;n de Pelicano en PC de Rack  </div> <span class="iconsGroup"><img src="img/iconSet/circlePDF20.png" />  <img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /> <img src="img/iconSet/circleIMG20.png" /> <img src="img/iconSet/circleCAD20.png" /></span>
   <div class="monitorDates"> 
  <span class="label label-default labelDate visible-xs-inline">UPD</span>  
  <span class="label label-default labelDate hidden-xs-inline">UPDATED</span>
@@ -231,16 +238,18 @@ include('menuTapia.php');?>
  </div>     
   </div>
      <span class="label label-info labelTask hidden-xs">Pedido Cotizaci&oacute;n <br/> 20/10/2012 30:09:10</span>
+     </a>
   </li>
       <!-- Termina Tarea -->
   
       <!-- Empieza Tarea -->
   <li class="list-group-item line lineEjecucion odd">
+  <a href="ttarea.php" class="clearfix">
  <div class="circle circleEjecucion visible-sm visible-nexus"></div> 
   <div class="circularLabel circleEjecucion pull-left hidden-sm hidden-xs">En Ejecucion</div>
       <div class="labelTaskMobile labelTaskMobileServicio visible-xs hidden-nexus">Servicio T&eacute;cnico<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
-   <a class="monitorInfoTitle">Perforacion Suite</a> <span class="iconsGroup"></span>
+   <div class="monitorInfoTitle">Perforacion Suite</div> <span class="iconsGroup"></span>
  <div class="monitorDates"> 
  <span class="label label-default labelDate visible-xs-inline">UPD</span>  
  <span class="label label-default labelDate hidden-xs-inline">UPDATED</span>
@@ -248,15 +257,17 @@ include('menuTapia.php');?>
  </div>
       </div>
      <span class="label label-warning labelTask hidden-xs">Servicio T&eacute;cnico <br/> 20/10/2012 30:09:10</span>
+     </a>
   </li>
       <!-- Termina Tarea -->
       <!-- Empieza Tarea -->
   <li class="list-group-item line lineEjecucion ">
+  <a href="ttarea.php" class="clearfix">
  <div class="circle circleEjecucion visible-sm visible-nexus"></div> 
   <div class="circularLabel circleEjecucion pull-left hidden-sm hidden-xs">En Ejecucion</div>
   <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs hidden-nexus">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
-   <a class="monitorInfoTitle">Agregar Iphone al sistema  </a> <span class="iconsGroup"><img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /></span>
+   <div class="monitorInfoTitle">Agregar Iphone al sistema  </div> <span class="iconsGroup"><img src="img/iconSet/circleW20.png" /> <img src="img/iconSet/circleX20.png" /></span>
  <div class="monitorDates"> 
  <span class="label label-default labelDate visible-xs-inline">UPD</span>  
  <span class="label label-default labelDate hidden-xs-inline">UPDATED</span>
@@ -264,15 +275,17 @@ include('menuTapia.php');?>
  </div>     
   </div>
      <span class="label label-primary labelTask hidden-xs">Implementacion<br/> 20/10/2012 30:09:10</span>
+     </a>
      </li>
       <!-- Termina Tarea -->
       <!-- Empieza Tarea -->
   <li class="list-group-item line lineStandBy odd">
+  <a href="ttarea.php" class="clearfix">
  <div class="circle circleStandBy visible-sm visible-nexus"></div> 
   <div class="circularLabel circleStandBy pull-left hidden-sm hidden-xs">Stand By</div>
     <div class="labelTaskMobile labelTaskMobileImplementacion visible-xs hidden-nexus">Implementaci&oacute;n<span class="labelTaskMobileDate pull-right">20/10/2012 30:09:10</span></div>
   <div class=" monitorInfo" >
-   <a class="monitorInfoTitle">Comprar nuevos parlantes  </a> <span class="iconsGroup"><img src="img/iconSet/circleIMG20.png" /></span>
+   <div class="monitorInfoTitle">Comprar nuevos parlantes  </div> <span class="iconsGroup"><img src="img/iconSet/circleIMG20.png" /></span>
  <div class="monitorDates"> 
  <span class="label label-default labelDate visible-xs-inline">UPD</span>  
  <span class="label label-default labelDate hidden-xs-inline">UPDATED</span>
@@ -280,6 +293,7 @@ include('menuTapia.php');?>
  </div>     
    </div>
      <span class="label label-primary labelTask hidden-xs">Implementacion<br/> 20/10/2012 30:09:10</span>
+     </a>
   </li>
       <!-- Termina Tarea -->
 </ul>
@@ -310,7 +324,7 @@ include('menuTapia.php');?>
       </div>
     </div></div>
     <div class="col-sm-2 text-right col-nexus-2">    
-    <button class="btn btn-default btn-sm pull-right hidden-xs"><i class="fa fa-arrow-circle-right"></i> Ver Proyecto</button>
+    <a href="tproyecto.php" class="btn btn-default btn-sm pull-right hidden-xs"><i class="fa fa-arrow-circle-right"></i> Ver Proyecto</a>
     <button class="btn btn-default btn-xs pull-right visible-xs hidden-nexus"><i class="fa fa-arrow-circle-right"></i></button>
     </div>
     </div>

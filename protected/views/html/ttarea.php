@@ -15,44 +15,47 @@
 <script src="js/modernizr.js"></script>
 <!-- FastClick -->
 <script src="js/fastclick.js"></script>
+<!-- jPushMenu -->
+<script src="js/jPushMenuDelfi.js"></script>
+<link href="css/jPushMenu.css" rel="stylesheet" />
 
 </head>
-<body class="bodyTapia">
+<body class="bodyTapia cbp-spmenu-push">
+
 <?php
 $active = 'ttareas';
 include ('menuTapia.php');
 ?>
 
-
 <div class="container" id="screenTTarea">
-<div class="superMainTaskInfo">
-<div class="row mainTaskInfo"><div class="col-sm-12">
-      <a class="mainTaskProyecto" href="tproyecto.php">Cohen - La Angostura</a>
-      <div class="taskStatus">
+<div class="row">
+<div class="col-sm-12 col-xs-12 col-nexus-12"><h2 class="proyectTitle hidden-xs"><a href="tproyecto.php"><i class="fa fa-arrow-circle-left"></i> Cohen - La Angostura</a></h2> </div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div class="taskStatus">
       <span class="label label-primary">Pedido de Cotizaci&oacute;n</span>
       <span class="label label-warning">Stand By</span>
       </div>
-      </div>
-      </div>
-		<div class="row mainTaskInfo">
-			<div class="col-sm-6">
-				<h1 class="pageTitle taskProyTitle">Instalaci&oacute;n de Pelicano en PC de Rack</h1>
-			</div>
-			<div class="col-sm-6 align-right">
-      <button id="btn-cancel" type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-share-square-o"></i> Exportar</button>
-      <button id="btn-cancel" type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times-circle"></i> Finalizar</button>	
-		</div>
-		</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-6 col-xs-12 col-nexus-6"><h1 class="taskProyTitle">Instalaci&oacute;n de Pelicano en PC de Rack</h1> </div>
+	<div class="col-sm-6  col-xs-12 align-right">
+      <button id="btn-cancel" type="button" class="btn btn-primary" ><i class="fa fa-share-square-o"></i> Exportar</button>
+      <button id="btn-cancel" type="button" class="btn btn-primary" ><i class="fa fa-times-circle"></i> Finalizar</button>	
+</div>
+</div>
 		
-		<div class="row mainTaskInfo">
-		<div class="col-sm-12">
-		<div class="mainTaskSpec ">
-  <div class="mainTaskDate">09/09/2013 12:34:57 &bull; Matias Montiel</div>
-		 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi rhoncus nulla eu pellentesque interdum. Curabitur a metus sagittis, suscipit risus sit amet, convallis nunc.</div>
-		</div>
-		</div>
+		  <div class="row">
+    <div class="col-sm-12">
+    <div class="taskMainSpec">
+  <div class="taskMonitorAutor">09/09/2013 12:34:57  &bull; Matias Montiel</div>
+   <div class="taskMonitorComment"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi rhoncus nulla eu pellentesque interdum. Curabitur a metus sagittis, suscipit risus sit amet, convallis nunc.</div>
+      </div>
+</div><!-- /.col-sm-12 -->
+		</div><!-- /.row -->
 		
-		</div><!-- /superMainTaskInfo -->
 		<div class="row">
 			<div class="col-sm-12">
       
@@ -99,18 +102,23 @@ include ('menuTapia.php');
 			<!-- /.col-sm-12 -->
 		</div>
 		<!-- /.row -->
+		
+			
+		
 	</div>
-
       <script>    
     $('.btnAdjuntar').on('click', function(e) {
       $('.expandAdjuntar').toggleClass("hidden"); //you can list several class names 
       e.preventDefault();
     });
 </script>
+ 
       
 	<!-- Le javascript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="js/bootstrap.min.js"></script>
+	<!--call jPushMenu, required-->
+
 </body>
 </html>
