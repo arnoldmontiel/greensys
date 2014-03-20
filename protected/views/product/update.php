@@ -5,5 +5,6 @@
 											'modelNote'=>$modelNote,
 											'ddlSubCategory'=>$ddlSubCategory,
 											'ddlRacks'=>$ddlRacks,
-											'modelProducts'=>$modelProducts
+											'modelProducts'=>$modelProducts,
+											"modelChildren"=>$modelChildren
 											)); ?>

@@ -105,7 +105,63 @@ class ProductGroup extends CActiveRecord
 		$criteria->compare('Id_product_parent',$this->Id_product_parent);
 		$criteria->compare('Id_product_child',$this->Id_product_child);
 		$criteria->compare('quantity',$this->quantity);
-
+		$criteria->with[]='productChild';
+		$criteria->addSearchCondition("productChild.code",$this->product_code);
+		$criteria->addSearchCondition("productChild.description_customer",$this->product_description_customer);
+		$criteria->addSearchCondition("productChild.description_supplier",$this->product_description_supplier);
+		$criteria->addSearchCondition("productChild.model",$this->product_model);
+		$criteria->addSearchCondition("productChild.part_number",$this->product_part_number);
+		$criteria->addSearchCondition("productChild.short_description",$this->product_short_description);
+		
+		$criteria->join =	"LEFT OUTER JOIN product p ON p.Id=t.Id_product_child
+								 LEFT OUTER JOIN brand b ON p.Id_brand=b.Id
+								 LEFT OUTER JOIN supplier s ON p.Id_supplier=s.Id";
+		$criteria->addSearchCondition("b.description",$this->product_brand_description);
+		$criteria->addSearchCondition("s.business_name",$this->product_supplier_business_name);
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+				'quantity',
+				'product_code' => array(
+						'asc' => 'productChild.code',
+						'desc' => 'productChild.code DESC',
+				),
+				'product_model' => array(
+						'asc' => 'productChild.model',
+						'desc' => 'productChild.model DESC',
+				),
+				'product_part_number' => array(
+						'asc' => 'productChild.part_number',
+						'desc' => 'productChild.part_number DESC',
+				),
+				'product_short_description' => array(
+						'asc' => 'productChild.short_description',
+						'desc' => 'productChild.short_description DESC',
+				),
+				'product_description_customer' => array(
+						'asc' => 'productChild.description_customer',
+						'desc' => 'productChild.description_customer DESC',
+				),
+				'product_description_supplier' => array(
+						'asc' => 'productChild.description_supplier',
+						'desc' => 'productChild.description_supplier DESC',
+				),
+				'product_brand_description'=> array(
+						'asc'=>'b.description',
+						'desc'=>'b.description DESC'
+				),
+				'product_supplier_business_name'=> array(
+						'asc'=>'s.business_name',
+						'desc'=>'s.business_name DESC'
+				),
+				'*',
+		);
+		
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+				'sort'=>$sort,
+		));
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

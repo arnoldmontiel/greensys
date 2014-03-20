@@ -146,6 +146,11 @@ class ProductController extends GController
 			$item['description'] = $index;
 			$ddlRacks[$index] = $item;
 		}
+		$modelChildren = new ProductGroup;
+		$modelChildren->Id_product_parent = $model->Id;
+		
+		$modelProducts = new Product('search');
+		$modelProducts->unsetAttributes();
 		
 		$this->render('create',array(
 			'model'=>$model,
@@ -153,6 +158,8 @@ class ProductController extends GController
 			'modelNote'=>$modelNote,
 			'ddlSubCategory'=>$ddlSubCategory,
 			'ddlRacks'=>$ddlRacks,
+			'modelProducts'=>$modelProducts,
+			"modelChildren"=>$modelChildren				
 		));
 	}
 	public function actionAjaxCreate()
@@ -338,6 +345,13 @@ class ProductController extends GController
 			$item['description'] = $index;
 			$ddlRacks[$index] = $item;
 		}
+		$modelChildren = new ProductGroup;
+		$modelChildren->Id_product_parent = $model->Id;
+		if(isset($_GET["ProductGroup"]))
+		{
+			$modelChildren->attributes = $_GET["ProductGroup"];
+		}
+		
 		$modelProducts = new Product('search');
 		$modelProducts->unsetAttributes();
 		if(isset($_GET["ajax"])&&$_GET["ajax"]=="product-grid-add"&&isset($_GET["Product"]))
@@ -350,7 +364,8 @@ class ProductController extends GController
 			'modelNote'=>$modelNote,
 			'ddlSubCategory'=>$ddlSubCategory,
 			'ddlRacks'=>$ddlRacks,
-			'modelProducts'=>$modelProducts
+			'modelProducts'=>$modelProducts,
+			"modelChildren"=>$modelChildren
 		));
 	}
 

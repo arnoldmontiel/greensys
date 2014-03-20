@@ -588,13 +588,13 @@ $('#deleteIcon').click(function(){
     <!-- /.col-sm-4 --> 
     
         <div class="col-sm-8">
+        <?php if($model->isNewRecord):?>
+        <div class="alert alert-warning fade in" id="warningEmpty">
+        	Para poder agregar subproductos, primero debes <strong><i class="fa fa-save"></i> Guardar</strong>.
+      	</div>
+        <?php else:?>
       <div class="rowSeparator noTopMargin rowHybrid">CREAR H&Iacute;BRIDO <button type="button" class="btn btn-primary btn-sm btnAddHybrid" onclick="addProduct()"><i class="fa fa-plus"></i> Agregar Producto</button></div>
-      <div class="alert alert-warning fade in" id="warningEmpty">
-        Para poder agregar subproductos, primero debes <strong><i class="fa fa-save"></i> Guardar</strong>.
-      </div>
       <?php		
-      $modelChildren = new ProductGroup;
-      $modelChildren->Id_product_parent = $model->Id;
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'product-grid-group',
 		'dataProvider'=>$modelChildren->search(),
@@ -648,6 +648,7 @@ $('#deleteIcon').click(function(){
 			),
 		));		
 		?>
+      <?php endif?>
       
     </div>
     <!-- /.col-sm-4 --> 
@@ -900,11 +901,36 @@ $('#deleteIcon').click(function(){
 </div>
 <div id="container-modal-addProduct" style="display: none">
 <?php 
-echo $this->renderPartial('_modalAddProduct', array( 'model'=>$model,'modelProducts'=>$modelProducts));
+if(!$model->isNewRecord)
+	echo $this->renderPartial('_modalAddProduct', array( 'model'=>$model,'modelProducts'=>$modelProducts));
 ?>
 </div>
-
+  <div class="row navbar-fixed-bottom">
+    <div class="col-sm-12">
+      <div id="statusSaving" class="statusFloatSaving" style="display:none">
+        <i class="fa fa-spinner fa-spin fa-fw"></i> Guardando
+      </div>
+      <div id="statusSaved" class="statusFloatSaved" style="display:none">
+        <i class="fa fa-check fa-fw"></i> Guardado
+        </div>
+    </div>
+    <!-- /.col-sm-12 --> 
+  </div>
 <script>
+function statusStartSaving()
+{
+	$("#statusSaved").hide();
+	$("#statusSaving").fadeIn();				        	
+}
+function statusSaved()
+{
+	$("#statusSaving").fadeOut(function(){$("#statusSaved").fadeIn();});							
+}
+function statusSavedError()
+{
+	$("#statusSaving").fadeOut();				
+}
+
 function addProduct()
 {
 	$('#myModalAddProduct').append($('#container-modal-addProduct'));
@@ -918,6 +944,7 @@ function addProduct()
 		{
 			if (confirm("¿Está seguro de eliminar este producto?")) 
 			{
+				statusStartSaving();
 				$.post("<?php echo ProductController::createUrl('AjaxDeleteChild'); ?>",
 					{
 					idProductParent:$("#Id").val(),
@@ -925,9 +952,10 @@ function addProduct()
 					}
 				).success(
 					function(data){
+						statusSaved();
 						$.fn.yiiGridView.update("product-grid-group");
 						$.fn.yiiGridView.update("product-grid-add");						
-					});
+					}).error(function(){statusSavedError();});
 				return false;
 			}
 			return false;
@@ -936,17 +964,19 @@ function addProduct()
 		function changeQuantity(id_parent, id_child, object)
 		{
 			validateNumber(object);
+			statusStartSaving();
 			$.post(
 					"<?php echo ProductController::createUrl('AjaxSaveQuantity')?>",
 					{
 						Id_product_parent: id_parent,Id_product_child: id_child,quantity:$(object).val()
 					}
 					).success(function(data)
-					{
+					{						
 						var response = jQuery.parseJSON(data);
 						$(object).val(response.quantity);
+						statusSaved();
 				}).error(function(data)
-					{
+					{statusSavedError();
 				},"json");	
 		}
 				
