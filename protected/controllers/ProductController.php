@@ -384,7 +384,60 @@ class ProductController extends GController
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
-
+	
+	public function actionAjaxDeleteChild()
+	{
+		$id = (isset($_POST['idProductParent']))?$_POST['idProductParent']:null;
+		$idChild = (isset($_POST['idProductChild']))?$_POST['idProductChild']:null;
+		
+		if(isset($id)&&isset($idChild))
+		{
+			ProductGroup::model()->deleteByPk(array('Id_product_parent'=>$id,'Id_product_child'=>$idChild));
+		}
+	
+	}
+	public function actionAjaxAddChild()
+	{
+		$id = (isset($_POST['idProductParent']))?$_POST['idProductParent']:null;
+		$idChild = (isset($_POST['idProductChild']))?$_POST['idProductChild']:null;
+	
+		if(isset($id)&&isset($idChild))
+		{
+			$productGroup = ProductGroup::model()->findByPk(array('Id_product_parent'=>$id,'Id_product_child'=>$idChild));
+			if(!isset($productGroup))
+			{
+				$productGroup = new ProductGroup;
+				$productGroup->Id_product_parent = $id;
+				$productGroup->Id_product_child = $idChild;
+				$productGroup->quantity = 1;
+				if($productGroup->save())
+				{
+					echo 1;
+				}
+				else 
+				{
+					echo 0;
+				}
+			}
+		}
+	
+	}
+	
+	public function actionAjaxSaveQuantity()
+	{
+		$id = (isset($_POST['Id_product_parent']))?$_POST['Id_product_parent']:null;
+		$idChild = (isset($_POST['Id_product_child']))?$_POST['Id_product_child']:null;
+		
+		if(isset($id)&&isset($idChild))
+		{
+			$productGroup = ProductGroup::model()->findByPk(array('Id_product_parent'=>$id,'Id_product_child'=>$idChild));
+			$productGroup->quantity =$_POST['quantity'];
+			$productGroup->save();
+			echo json_encode(array("quantity" => $productGroup->quantity));			
+						
+		}
+	
+	}	
 	public function actionAjaxDelete()
 	{
 		$id = (isset($_POST['idProduct']))?$_POST['idProduct']:null;

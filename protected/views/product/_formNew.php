@@ -239,6 +239,8 @@ $('#deleteIcon').click(function(){
 });
 ");
 ?>
+<?php echo CHtml::hiddenField("Id",$model->Id,array('id'=>'Id'));?>
+
 <div class="container" id="screenAgregarProductos">
   <h1 class="pageTitle">Agregar Producto</h1>
 		<?php $form=$this->beginWidget('CActiveForm', array(
@@ -586,55 +588,74 @@ $('#deleteIcon').click(function(){
     <!-- /.col-sm-4 --> 
     
         <div class="col-sm-8">
-      <div class="rowSeparator noTopMargin rowHybrid">CREAR H&Iacute;BRIDO <button type="button" class="btn btn-primary btn-sm btnAddHybrid disabled"><i class="fa fa-plus"></i> Agregar Subproducto</button></div>
+      <div class="rowSeparator noTopMargin rowHybrid">CREAR H&Iacute;BRIDO <button type="button" class="btn btn-primary btn-sm btnAddHybrid" onclick="addProduct()"><i class="fa fa-plus"></i> Agregar Producto</button></div>
       <div class="alert alert-warning fade in" id="warningEmpty">
         Para poder agregar subproductos, primero debes <strong><i class="fa fa-save"></i> Guardar</strong>.
       </div>
-      <table class="table table-striped table-bordered tablaIndividual hidden">
-<thead>
-<tr>
-<th>Modelo</th>
-<th>Marca</th>
-<th class="align-right">Cantidad</th>
-<th class="align-right">Dealer Cost</th>
-<th class="align-right">MSRP</th>
-<th class="align-center">Acciones</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>AD-4</td>
-<td>RTI</td>
-<td class="align-right"><input class="form-control inputSmall align-right" type="text" value="2.00"></td>
-<td class="align-right">540.00 U$D</td>
-<td class="align-right">899.00 U$D</td>
-<td class="align-center"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
-</tr>
-<tr>
-<td>AP ONE FLEX300M</td>
-<td>PEPLINK</td>
-<td class="align-right"><input class="form-control inputSmall align-right" type="text" value="1.00"></td>
-<td class="align-right">250.00 U$D</td>
-<td class="align-right">500.00 U$D</td>
-<td class="align-center"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
-</tr>
-<tr>
-<td>PBSBBR-RK2</td>
-<td>RTI</td>
-<td class="align-right"><input class="form-control inputSmall align-right" type="text" value="1.00"></td>
-<td class="align-right">28.00 U$D</td>
-<td class="align-right">50.00 U$D</td>
-<td class="align-center"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
-</tr>
-</tbody>
-</table>
+      <?php		
+      $modelChildren = new ProductGroup;
+      $modelChildren->Id_product_parent = $model->Id;
+	$this->widget('zii.widgets.grid.CGridView', array(
+		'id'=>'product-grid-group',
+		'dataProvider'=>$modelChildren->search(),
+		'selectableRows' => 0,
+		'filter'=>$modelChildren,
+		'summaryText'=>'',	
+		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
+		'columns'=>array(	
+				array(
+						'name'=>'product_model',
+						'value'=>'$data->productChild->model'
+				),
+				array(
+						'name'=>'product_part_number',
+						'value'=>'$data->productChild->part_number'
+				),
+				array(
+		 			'name'=>'product_brand_description',
+					'value'=>'$data->productChild->brand->description'
+				),
+				array(
+						'name'=>'quantity',
+						'value'=>'CHtml::textField("quantity",$data->quantity,array("class"=>"form-control inputSmall align-right","onchange"=>"changeQuantity(".$data->Id_product_parent.",".$data->Id_product_child.",this)"))',
+						'type'=>'raw',
+						'htmlOptions'=>array("class"=>"align-center"),
+						'headerHtmlOptions'=>array("class"=>"align-center"),
+				),
+
+				array(
+						'name'=>'product_dealer_cost',
+						'value'=>'$data->productChild->showPrice($data->productChild->dealer_cost)',
+					'htmlOptions'=>array("class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
+				),
+				array(
+						'name'=>'product_msrp',
+						'value'=>'$data->productChild->showPrice($data->productChild->msrp)',
+					'htmlOptions'=>array("class"=>"align-right"),
+					'headerHtmlOptions'=>array("class"=>"align-right"),
+				),
+				array(
+						'header'=>'Acciones',
+						'value'=>function($data){
+						$grid = "'product-grid-group'";
+							return '<button type="button" onclick="removeProduct('.$data->Id_product_child.');" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>';
+						},
+						'type'=>'raw',
+						'htmlOptions'=>array("style"=>"text-align:center;"),
+						'headerHtmlOptions'=>array("style"=>"text-align:center;"),
+				),
+			),
+		));		
+		?>
+      
     </div>
     <!-- /.col-sm-4 --> 
     </div>
     <!-- /.row -->
     
 	<?php echo CHtml::hiddenField("other",'',array('id'=>'other'));?>
-  <div class="row navbar-fixed-bottom">
+	<div class="row navbar-fixed-bottom">
     <div class="col-sm-12">
       <div class="buttonsFloatBottom">
         <button type="button" class="btn btn-default btn-lg" id="cancel"> Cancelar</button>
@@ -877,4 +898,58 @@ $('#deleteIcon').click(function(){
   
         <?php $this->endWidget(); ?>
 </div>
+<div id="container-modal-addProduct" style="display: none">
+<?php 
+$modelProducts = new Product('search');
+$modelProducts->unsetAttributes();
+echo $this->renderPartial('_modalAddProduct', array( 'model'=>$model,'modelProducts'=>$modelProducts));
+?>
+</div>
+
+<script>
+function addProduct()
+{
+	$('#myModalAddProduct').append($('#container-modal-addProduct'));
+	$('#container-modal-addProduct').show();		
+	$('#myModalAddProduct').modal('show');
+	
+	return false;
+}
+
+		function removeProduct(idProduct)
+		{
+			if (confirm("¿Está seguro de eliminar este producto?")) 
+			{
+				$.post("<?php echo ProductController::createUrl('AjaxDeleteChild'); ?>",
+					{
+					idProductParent:$("#Id").val(),
+					idProductChild:idProduct
+					}
+				).success(
+					function(data){
+						$.fn.yiiGridView.update("product-grid-group");
+					});
+				return false;
+			}
+			return false;
+		}
+
+		function changeQuantity(id_parent, id_child, object)
+		{
+			validateNumber(object);
+			$.post(
+					"<?php echo ProductController::createUrl('AjaxSaveQuantity')?>",
+					{
+						Id_product_parent: id_parent,Id_product_child: id_child,quantity:$(object).val()
+					}
+					).success(function(data)
+					{
+						var response = jQuery.parseJSON(data);
+						$(object).val(response.quantity);
+				}).error(function(data)
+					{
+				},"json");	
+		}
+				
+		</script>
 <!-- /container --> 

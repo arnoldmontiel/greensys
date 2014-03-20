@@ -24,6 +24,8 @@ class ProductGroup extends CActiveRecord
 	public $product_model;
 	public $product_part_number;
 	public $product_short_description;
+	public $product_dealer_cost;
+	public $product_msrp;
 	
 	/**
 	 * Returns the static model of the specified AR class.

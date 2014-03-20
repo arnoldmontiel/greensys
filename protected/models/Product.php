@@ -130,6 +130,8 @@ class Product extends ModelAudit
 	public $budget_area;
 	public $budget_area_project;
 	public $qty_per_prod;	
+	public $product_group_id_parent;
+	public $product_group_id_child;
 	
 	public function beforeSave()
 	{
@@ -223,6 +225,8 @@ class Product extends ModelAudit
 			'categories' => array(self::MANY_MANY, 'Category', 'product_category(Id_product, Id_category)'),
 			'productGroupsChild' => array(self::HAS_MANY, 'ProductGroup', 'Id_product_child'),
 			'productGroupsParent' => array(self::HAS_MANY, 'ProductGroup', 'Id_product_parent'),
+			'productGroupChilds' => array(self::MANY_MANY, 'Product', 'product_group(Id_product_parent,Id_product_child)'),
+			'productGroupParents' => array(self::MANY_MANY, 'Product', 'product_group(Id_product_parent,Id_product_child)'),
 			'productItems' => array(self::HAS_MANY, 'ProductItem', 'Id_product'),
 			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
 			'productRequirements' => array(self::MANY_MANY, 'ProductRequirement', 'product_requirement_product(Id_product, Id_product_requirement)'),
@@ -1121,5 +1125,72 @@ class Product extends ModelAudit
 				'sort'=>$sort,
 		));
 	
+	}	
+	public function searchChildren()
+	{
+	
+		$criteria=new CDbCriteria;
+	
+		//$criteria->compare('Id',$this->Id);
+		$criteria->compare('Id_brand',$this->Id_brand);
+		$criteria->compare('Id_category',$this->Id_category);
+		$criteria->compare('Id_nomenclator',$this->Id_nomenclator);
+		$criteria->compare('Id_product_type',$this->Id_product_type);
+		$criteria->compare('Id_supplier',$this->Id_supplier);
+		$criteria->compare('description_customer',$this->description_customer,true);
+		$criteria->compare('description_supplier',$this->description_supplier,true);
+		$criteria->compare('code',$this->code,true);
+		$criteria->compare('code_supplier',$this->code_supplier,true);
+		$criteria->compare('discontinued',$this->discontinued);
+		$criteria->compare('length',$this->length,true);
+		$criteria->compare('width',$this->width,true);
+		$criteria->compare('height',$this->height,true);
+		$criteria->compare('profit_rate',$this->profit_rate,true);
+		$criteria->compare('msrp',$this->msrp,true);
+		$criteria->compare('time_instalation',$this->time_instalation,true);
+		$criteria->compare('time_programation',$this->time_programation,true);
+		$criteria->compare('hide',$this->hide);
+		$criteria->compare('weight',$this->weight,true);
+		$criteria->compare('color',$this->color,true);
+		$criteria->compare('color',$this->other,true);
+		$criteria->compare('Id_sub_category',$this->Id_sub_category);
+		$criteria->compare('power',$this->power);
+		$criteria->compare('current',$this->current);
+		$criteria->compare('need_rack',$this->need_rack);
+		$criteria->compare('unit_rack',$this->unit_rack);
+		$criteria->compare('unit_fan',$this->unit_fan);
+		$criteria->compare('model',$this->model,true);
+		$criteria->compare('part_number',$this->part_number,true);
+		$criteria->compare('short_description',$this->short_description,true);
+	
+// 		$criteria->with[]='brand';
+// 		$criteria->addSearchCondition("brand.description",$this->brand_description);
+		
+// 		$criteria->with[]='supplier';
+// 		$criteria->addSearchCondition("supplier.business_name",$this->supplier_description);
+
+//		$criteria->with[]='productParentChilds';
+		//$criteria->addSearchCondition("supplier.business_name",$this->supplier_description);
+		
+		$criteria->join = 'INNER JOIN product_group pg on (t.Id = pg.Id_product_child)';
+		$criteria->compare('pg.Id_product_parent',$this->product_group_id_parent,true);
+		
+				
+		// Create a custom sort
+		$sort=new CSort;
+		$sort->attributes=array(
+				'code',
+				'model',
+				'part_number',
+				'short_description',
+				'*',
+		);
+	
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+				'sort'=>$sort,
+		));
+	
 	}
+	
 }
