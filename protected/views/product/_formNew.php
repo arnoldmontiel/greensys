@@ -900,8 +900,6 @@ $('#deleteIcon').click(function(){
 </div>
 <div id="container-modal-addProduct" style="display: none">
 <?php 
-$modelProducts = new Product('search');
-$modelProducts->unsetAttributes();
 echo $this->renderPartial('_modalAddProduct', array( 'model'=>$model,'modelProducts'=>$modelProducts));
 ?>
 </div>

@@ -287,7 +287,7 @@ class ProductController extends GController
 		$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
 		$modelNote = GNote::model()->findByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
 		if(isset($_POST['Product']))
-		{
+		{				
 			$model->attributes=$_POST['Product'];
 			
 			if(!$model->need_rack)
@@ -338,13 +338,19 @@ class ProductController extends GController
 			$item['description'] = $index;
 			$ddlRacks[$index] = $item;
 		}
-		
+		$modelProducts = new Product('search');
+		$modelProducts->unsetAttributes();
+		if(isset($_GET["ajax"])&&$_GET["ajax"]=="product-grid-add"&&isset($_GET["Product"]))
+		{
+			$modelProducts->attributes = $_GET["Product"];			
+		}
 		$this->render('update',array(
 			'model'=>$model,
 			'modelHyperlink'=>$modelHyperlink,
 			'modelNote'=>$modelNote,
 			'ddlSubCategory'=>$ddlSubCategory,
 			'ddlRacks'=>$ddlRacks,
+			'modelProducts'=>$modelProducts
 		));
 	}
 
