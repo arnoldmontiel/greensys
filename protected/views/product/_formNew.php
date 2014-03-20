@@ -586,8 +586,11 @@ $('#deleteIcon').click(function(){
     <!-- /.col-sm-4 --> 
     
         <div class="col-sm-8">
-      <div class="rowSeparator noTopMargin rowHybrid">CREAR H&Iacute;BRIDO <button type="button" class="btn btn-primary btn-sm btnAddHybrid"><i class="fa fa-plus"></i> Agregar Producto</button></div>
-      <table class="table table-striped table-bordered tablaIndividual">
+      <div class="rowSeparator noTopMargin rowHybrid">CREAR H&Iacute;BRIDO <button type="button" class="btn btn-primary btn-sm btnAddHybrid disabled"><i class="fa fa-plus"></i> Agregar Subproducto</button></div>
+      <div class="alert alert-warning fade in" id="warningEmpty">
+        Para poder agregar subproductos, primero debes <strong><i class="fa fa-save"></i> Guardar</strong>.
+      </div>
+      <table class="table table-striped table-bordered tablaIndividual hidden">
 <thead>
 <tr>
 <th>Modelo</th>
