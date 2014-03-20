@@ -88,6 +88,8 @@ button {
 .align-center{ text-align:center !important;}
 .align-right{ text-align:right !important;}
 
+.verticalTop{vertical-align:top !important;}
+
 .bold{ font-weight:600;}
 .list-group{ margin-left:0px; margin-bottom:0px;}
 
@@ -126,7 +128,148 @@ left: 0;
 margin-right:10px; margin-left:10px; z-index:1050;
 }
 
+/* ------ MOBILE MENU ------- */
 
+.pushMenuItem {position:relative;}
+.pushMenuActive{position:relative;}
+
+a.pushMenuItem:before {
+        position:absolute;
+		font-family: FontAwesome;
+        top:0;
+        right:10px;
+        top:50%;
+        color:#ddd;
+        margin-top:-8px;
+        margin-right:3px;
+        content: '\f096';
+    }
+a.pushMenuActive:before {
+        position:absolute;
+		font-family: FontAwesome;
+        top:0;
+        right:10px;
+        top:50%;
+        margin-top:-8px;
+        content: '\f046';
+        color:#666;
+        margin-right:0px;
+    }
+.cbp-spmenu .pushMenuSuperGroup{height:100%; padding-bottom:105px;overflow:auto; -webkit-overflow-scrolling:touch;}
+.cbp-spmenu .pushMenuGroup{border-bottom:1px solid #ddd;padding-top:10px;}
+.cbp-spmenu .pushMenuGroup .pushMenuGroupTitle{
+padding-left:15px;
+padding-bottom:0px;
+font-size: 16px;
+font-weight: 700;
+color: #bbb;
+text-transform: uppercase;
+letter-spacing: 2px;}
+
+.cbp-spmenu {
+	border-top: 6px solid #FFAC6C ;
+	background-color: #f8f8f8 ;
+	color: #777 ;
+	z-index:1099 ;
+}
+
+.cbp-spmenu-vertical a {
+border-bottom: 0px none;
+padding: 0px;
+}
+.cbp-spmenu-vertical .pushMenuItem {
+border-bottom: 0px none;
+padding: 1em;
+}
+
+.cbp-spmenu .pushMenuItem {
+	color: #777 ;
+	border-bottom: 1px solid #fff ;
+	padding-right:35px;
+}
+
+.cbp-spmenu .pushMenuItem:hover {
+	color: #5e5e5e;
+	background-color: transparent;
+	text-decoration: none;
+}
+
+.cbp-spmenu .cbp-title {
+	background-color: #f8f8f8;
+	font-size: 25px;
+	padding: 10px;
+	background-color: #fbfbfb;
+	white-space:nowrap;
+	padding-right:40px;
+}
+
+.cbp-spmenu-left, .cbp-spmenu-push-toleft{left:-100%;}
+.cbp-spmenu-right, .cbp-spmenu-push-toright{right:-100%;}
+.cbp-spmenu a:hover {
+background: none;
+}
+a.close-menu {
+	position: absolute;
+	height: 40px;
+	width: 40px;
+	line-height: 40px;
+	text-align: center;
+	top: 5px;
+	right: 5px;
+	padding: 0px;
+	display: inline-block;
+	text-decoration: none;
+	border: none;
+	vertical-align: middle;
+	font-size: 25px;
+	cursor: pointer;
+	color: #FFAC6C;
+}
+
+a.close-menu:hover {
+	background-color: transparent;
+	color: rgba(38, 173, 161, 0.5);
+}
+
+a.list-group-item {
+	font-size: initial;
+}
+
+.cbp-spmenu{width:auto; min-width:250px;}
+.cbp-spmenu-open{width:auto; min-width:250px;}
+
+#pushFiltro{font-size:14px;}
+
+.pushMenuDates{padding:10px;}
+.pushMenuDates label{display:block; text-align:left;}
+.pushMenuDates input{width:150px;}
+
+
+.sideMenuBotones{ position:absolute; bottom:0px; z-index:1090; background-color:#fbfbfb; padding: 10px 0px; width:100%; text-align:center; border-top:2px solid #eee;}
+
+
+.treeMenu a{display:inline-block;}
+.jstree-default .jstree-anchor {
+padding-right:10px;
+line-height: 30px;
+height: 30px;
+}
+.jstree-default .jstree-icon:empty {
+height: 30px;
+line-height: 30px;
+}
+.jstree-default .jstree-hovered {
+background: #e7f4f9 !important;
+}
+
+.jstree-default .jstree-clicked {
+background: #D5F0C5 !important;
+}
+
+
+
+
+/* ------ END MOBILE MENU ------- */
 /* ----- LOGIN ------*/
 .loginBody{background:transparent; background-color:#5cb85c; padding:0px;}
 .loginPanel{
@@ -487,13 +630,19 @@ input[type="file"] {
 width:100%;
 }
 
-.rowSeparator{ font-size:20px; margin-top:30px;  padding:5px; background-color:rgba(255,255,255,0.4);
+.rowSeparator{ font-size:20px; margin-top:30px;  padding:5px; background-color:rgba(255,255,255,0.9);
 color: #666;
 text-align: center;
 text-transform: uppercase;
 font-size: 16px;
 letter-spacing: 2px;
 font-weight: 600;
+position:relative;
+}
+.rowSeparator.rowHybrid{ 
+height: 41px;
+line-height: 33px;
+
 }
 .noTopMargin{ margin-top:0px;}
 
@@ -504,10 +653,12 @@ a.label-danger:hover{ color:white;}
 #screenAgregarProductos table td{ vertical-align:middle;}
 #screenAgregarProductos table td label{ vertical-align:middle;}
 
+#screenAgregarProductos .nav-tabs{margin-bottom:15px;}
 
 #screenAgregarProductos .table.tablaIndividual thead>tr>th, #screenAgregarProductos .table.tablaIndividual tbody>tr>th, #screenAgregarProductos .table.tablaIndividual tfoot>tr>th, #screenAgregarProductos .table.tablaIndividual thead>tr>td, #screenAgregarProductos .table.tablaIndividual tbody>tr>td, #screenAgregarProductos .table.tablaIndividual tfoot>tr>td {
 padding: 6px 8px;
 }
+.btnAddHybrid{position:absolute; right:5px;}
 
 .tablaIndividual{ margin-bottom:20px; background-color:rgba(255,255,255,1); max-height:100px; overflow:auto; font-size:14px;}
 .table.tablaIndividual { margin-bottom:30px;}
