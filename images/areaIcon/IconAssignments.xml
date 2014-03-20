@@ -1,0 +1,55 @@
+<IconAssignments>
+  <IconAssignment Area="Attic" Icon="floor" />
+  <IconAssignment Area="Basement" Icon="floor" />
+  <IconAssignment Area="bdrm" Icon="bedroom" />
+  <IconAssignment Area="Cafeteria" Icon="dining" />
+  <IconAssignment Area="Card" Icon="game" />
+  <IconAssignment Area="Commons" Icon="Living" />
+  <IconAssignment Area="Concession" Icon="Lunch" />
+  <IconAssignment Area="Dressing" Icon="Closet" />
+  <IconAssignment Area="Excercise" Icon="Gymn" />
+  <IconAssignment Area="Exterior" Icon="Outside" />
+  <IconAssignment Area="Fax" Icon="Copy" />
+  <IconAssignment Area="Foyer" Icon="Sitting" />
+  <IconAssignment Area="Front Room" Icon="den" />
+  <IconAssignment Area="Furnace" Icon="Boiler" />
+  <IconAssignment Area="Garden" Icon="Carrot" />
+  <IconAssignment Area="Grounds" Icon="Outside" />
+  <IconAssignment Area="Great" Icon="Fireplace" />
+  <IconAssignment Area="Gym" Icon="Gymn" />
+  <IconAssignment Area="Hearth" Icon="Fireplace" />
+  <IconAssignment Area="Home" Icon="house" />
+  <IconAssignment Area="Landing" Icon="Stair" />
+  <IconAssignment Area="Level" Icon="Floor" />
+  <IconAssignment Area="Maintenance" Icon="shop" />
+  <IconAssignment Area="Master Bedroom" Icon="MasterBed" />
+  <IconAssignment Area="Master Suite" Icon="MasterBed" />
+  <IconAssignment Area="Mechanical" Icon="Boiler" />
+  <IconAssignment Area="Media" Icon="music" />
+  <IconAssignment Area="Patio" Icon="Porch" />
+  <IconAssignment Area="Pet" Icon="pet " />
+  <IconAssignment Area="Pets" Icon="pet " />
+  <IconAssignment Area="Piano" Icon="music" />
+  <IconAssignment Area="Powder" Icon="toilet" />
+  <IconAssignment Area="Project" Icon="house" />
+  <IconAssignment Area="Racketball" Icon="tennis" />
+  <IconAssignment Area="Raquetball" Icon="tennis" />
+  <IconAssignment Area="Racquetball" Icon="tennis" />
+  <IconAssignment Area="Reception" Icon="lobby" />
+  <IconAssignment Area="Recreation" Icon="game" />
+  <IconAssignment Area="Residence" Icon="house" />
+  <IconAssignment Area="Rest Room" Icon="restroom" />
+  <IconAssignment Area="Storage" Icon="Cellar" />
+  <IconAssignment Area="Studio" Icon="Gallery" />
+  <IconAssignment Area="Theatre" Icon="theater" />
+  <IconAssignment Area="Training" Icon="conference" />
+  <IconAssignment Area="Upstairs" Icon="floor" />
+  <IconAssignment Area="Veranda" Icon="Deck" />
+  <IconAssignment Area="Vestibule" Icon="entry" />
+  <IconAssignment Area="Weight" Icon="gymn" />
+  <IconAssignment Area="wine" Icon="bar" />
+  <IconAssignment Area="Wing" Icon="Floor" />
+  <IconAssignment Area="Workroom" Icon="shop" />
+  <IconAssignment Area="Work Room" Icon="shop" />
+  <IconAssignment Area="Shower" Icon="bath" />
+</IconAssignments>
