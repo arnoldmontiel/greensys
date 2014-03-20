@@ -91,14 +91,6 @@ class ProductController extends GController
 					$transaction->commit();		
 					$saved = true;
 					//$this->redirect(array('updateMultimedia','id'=>$model->Id));
-					if(isset($_POST['other'])&&$_POST['other']!='1')
-						$this->redirect(array('index','id'=>$model->Id));
-					else {
-						$model=new Product;
-						
-						$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
-						$modelNote = new GNote;						
-					}
 				}	
 			} catch (Exception $e) {
 				$transaction->rollback();
@@ -106,7 +98,15 @@ class ProductController extends GController
 			if($saved)
 			{
 				$model->refresh();
-				GreenHelper::generateListPrices($model);				
+				GreenHelper::generateListPrices($model);
+				if(isset($_POST['other'])&&$_POST['other']!='1')
+					$this->redirect(array('index','id'=>$model->Id));
+				else {
+					$model=new Product;
+				
+					$modelHyperlink = Hyperlink::model()->findAllByAttributes(array('Id_product'=>$model->Id,'Id_entity_type'=>$this->getEntityType()));
+					$modelNote = new GNote;
+				}				
 			}
 		}
 
@@ -303,7 +303,6 @@ class ProductController extends GController
 			if($model->save()){
 				$model->refresh();
 				GreenHelper::generateListPrices($model);
-				
 				//update links
 				if(isset($_POST['links'])){
 					$this->saveLinks($_POST['links'], $model->Id);
