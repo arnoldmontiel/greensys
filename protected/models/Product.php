@@ -498,7 +498,6 @@ class Product extends ModelAudit
 		// should not be searched.
 
 		$criteria=new CDbCriteria;
-
 		$criteria->compare('Id',$this->Id);
 		$criteria->compare('Id_brand',$this->Id_brand);
 		$criteria->compare('Id_category',$this->Id_category);
@@ -546,6 +545,8 @@ class Product extends ModelAudit
 		$criteria->with[]='supplier';
 		$criteria->addSearchCondition("supplier.business_name",$this->supplier_description);
 		
+		if(isset($this->product_group_id_parent))
+			$criteria->select ="*, ".$this->product_group_id_parent." as product_group_id_parent";
 		
 		// Create a custom sort
 		$sort=new CSort;

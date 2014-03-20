@@ -11,6 +11,7 @@
       <div class="tab-content">
   <div class="tab-pane active" id="tabTodos">
   <?php		
+  $modelProducts->product_group_id_parent = $model->Id;
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'product-grid-add',
 		'dataProvider'=>$modelProducts->search(),
@@ -53,8 +54,16 @@
 				),
 				array(
 						'header'=>'Acciones',
-						'value'=>function($data){							
-							return '<button onclick="addProductChild('.$data->Id.')" type="button" class="btn btn-default btn-sm"><i class="fa fa-save"></i> Agregar</button>';						
+						'value'=>function($data){
+							$group = ProductGroup::model()->findByPk(array('Id_product_parent'=>$data->product_group_id_parent,'Id_product_child'=>$data->Id));		
+							if(isset($group))
+							{
+								return '<span class="label label-success pull"><i class="fa fa-check fa-fw"></i> Agregado</span>';								
+							}
+							else 
+							{				
+								return '<button onclick="addProductChild('.$data->Id.',this)" type="button" class="btn btn-default btn-sm"><i class="fa fa-save"></i> Agregar</button>';
+							}						
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:center;"),
@@ -73,7 +82,7 @@
       </div>
     </div><!-- /.modal-content -->
 <script type="text/javascript">
-function addProductChild(id)
+function addProductChild(id,object)
 {
 	$.post("<?php echo ProductController::createUrl('AjaxAddChild'); ?>",
 			{
@@ -82,7 +91,11 @@ function addProductChild(id)
 			}
 		).success(
 			function(data){
-				$.fn.yiiGridView.update("product-grid-group");
+				if(data=="1")
+					{
+						$.fn.yiiGridView.update("product-grid-group");
+						$(object).parent().html('<span class="label label-success pull-center"><i class="fa fa-check fa-fw"></i> Agregado</span>');
+					}
 			});
 
 }

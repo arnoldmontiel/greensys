@@ -928,6 +928,7 @@ function addProduct()
 				).success(
 					function(data){
 						$.fn.yiiGridView.update("product-grid-group");
+						$.fn.yiiGridView.update("product-grid-add");						
 					});
 				return false;
 			}
