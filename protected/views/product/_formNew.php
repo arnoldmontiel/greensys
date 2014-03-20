@@ -249,6 +249,19 @@ $('#deleteIcon').click(function(){
 		?>
 	<?php echo $form->errorSummary($model,"Por favor verifique los siguientes errores:"); ?>
 		
+		
+<div class="row">
+<div class="col-sm-12">
+<ul class="nav nav-tabs">
+        <li class="active"><a href="#tabMain" data-toggle="tab">Datos Principales</a></li>
+        <li><a href="#tabExtras" data-toggle="tab">Extras</a></li>
+      </ul>
+</div>
+</div>
+
+<div class="tab-content">
+      <div class="tab-pane active" id="tabMain">
+		
   <div class="row">
     <div class="col-sm-4">
       <div class="rowSeparator noTopMargin">Informaci&oacute;n B&aacute;sica</div>
@@ -460,47 +473,8 @@ $('#deleteIcon').click(function(){
     <!-- /.col-sm-4 -->
   </div>
   <!-- /.row -->
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="rowSeparator noTopMargin">INPUTS</div>
-      <table class="table table-striped table-bordered tablaIndividual" width="100%">
-        <tbody>
-          <tr>
-            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'input_terminals'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'input_terminals', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
-          </tr>
-          <tr>
-            <td style="text-align:right;"><?php echo $form->labelEx($model,'input_signals'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'input_signals', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
-          </tr>
-          <tr>
-            <td style="text-align:right;"><?php echo $form->labelEx($model,'input_labels'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'input_labels', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!-- /.col-sm-4 -->
-    <div class="col-sm-4">
-      <div class="rowSeparator noTopMargin">OUTPUTS</div>
-      <table class="table table-striped table-bordered tablaIndividual" width="100%">
-        <tbody>
-          <tr>
-            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'output_terminals'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'output_terminals', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
-          </tr>
-          <tr>
-            <td style="text-align:right;"><?php echo $form->labelEx($model,'output_signals'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'output_signals', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
-          </tr>
-          <tr>
-            <td style="text-align:right;"><?php echo $form->labelEx($model,'output_labels'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'output_signals', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!-- /.col-sm-4 -->
+  
+   <div class="row">
     <div class="col-sm-4">
       <div class="rowSeparator noTopMargin">HORAS</div>
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
@@ -517,9 +491,6 @@ $('#deleteIcon').click(function(){
       </table>  
     </div>
     <!-- /.col-sm-4 -->
-    </div>
-    <!-- /.row -->
-   <div class="row">
     <div class="col-sm-4">
       <div class="rowSeparator noTopMargin">PRECIOS</div>
       <table class="table table-striped table-bordered tablaIndividual form-inline" width="100%">
@@ -556,6 +527,126 @@ $('#deleteIcon').click(function(){
       </table>
     </div>
     <!-- /.col-sm-4 -->
+    <div class="col-sm-4">
+      <div class="rowSeparator noTopMargin">EXTRA ENV&Iacute;O</div>
+      <table class="table table-striped table-bordered tablaIndividual" width="100%">
+        <tbody>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'need_ups'); ?></td>
+            <td><div class="checkbox">
+                <label>
+                  <?php echo $form->checkBox($model,'need_ups'); ?>
+                  S&iacute; </label>
+              </div></td>
+          </tr>
+          <tr>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'deale_distributor_price'); ?></td>
+            <td><?php echo $form->textField($model,'deale_distributor_price',array("class"=>"form-control")); ?></td>
+          </tr>
+          <tr>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'commercial_name'); ?></td>
+            <td><?php echo $form->textField($model,'commercial_name',array("class"=>"form-control")); ?></td>
+          </tr>
+          <tr>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'commercial_description'); ?></td>
+            <td><?php echo $form->textField($model,'commercial_description',array("class"=>"form-control")); ?></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- /.col-sm-4 -->
+    </div>
+    <!-- /.row -->
+  
+   <div class="row">
+   
+    <div class="col-sm-4">
+      <div class="rowSeparator noTopMargin">DESCRIPCIONES</div>
+      <table class="table table-striped table-bordered tablaIndividual" width="100%">
+        <tbody>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'short_description'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'short_description', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 2)); ?></td>
+          </tr>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'long_description'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'long_description', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 4)); ?></td>
+          </tr>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'description_customer'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'description_customer', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 2)); ?></td>
+          </tr>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'description_supplier'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'description_supplier', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 4)); ?></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- /.col-sm-4 --> 
+    
+        <div class="col-sm-8">
+      <div class="rowSeparator noTopMargin rowHybrid">CREAR H&Iacute;BRIDO <button type="button" class="btn btn-primary btn-sm btnAddHybrid"><i class="fa fa-plus"></i> Agregar Producto</button></div>
+      <table class="table table-striped table-bordered tablaIndividual">
+<thead>
+<tr>
+<th>Modelo</th>
+<th>Marca</th>
+<th class="align-right">Cantidad</th>
+<th class="align-right">Dealer Cost</th>
+<th class="align-right">MSRP</th>
+<th class="align-center">Acciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AD-4</td>
+<td>RTI</td>
+<td class="align-right"><input class="form-control inputSmall align-right" type="text" value="2.00"></td>
+<td class="align-right">540.00 U$D</td>
+<td class="align-right">899.00 U$D</td>
+<td class="align-center"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
+</tr>
+<tr>
+<td>AP ONE FLEX300M</td>
+<td>PEPLINK</td>
+<td class="align-right"><input class="form-control inputSmall align-right" type="text" value="1.00"></td>
+<td class="align-right">250.00 U$D</td>
+<td class="align-right">500.00 U$D</td>
+<td class="align-center"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
+</tr>
+<tr>
+<td>PBSBBR-RK2</td>
+<td>RTI</td>
+<td class="align-right"><input class="form-control inputSmall align-right" type="text" value="1.00"></td>
+<td class="align-right">28.00 U$D</td>
+<td class="align-right">50.00 U$D</td>
+<td class="align-center"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button></td>
+</tr>
+</tbody>
+</table>
+    </div>
+    <!-- /.col-sm-4 --> 
+    </div>
+    <!-- /.row -->
+    
+	<?php echo CHtml::hiddenField("other",'',array('id'=>'other'));?>
+  <div class="row navbar-fixed-bottom">
+    <div class="col-sm-12">
+      <div class="buttonsFloatBottom">
+        <button type="button" class="btn btn-default btn-lg" id="cancel"> Cancelar</button>
+        <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
+        <button type="submit" class="btn btn-primary btn-lg" id="saveAndOther"><i class="fa fa-save"></i> Guardar y Cargar Nuevo</button>
+      </div>
+    </div>
+    <!-- /.col-sm-12 --> 
+  </div>
+  <!-- /.row --> 
+  
+  </div> <!-- /.tab-pane -->
+  
+  <div class="tab-pane" id="tabExtras">
+  <div class="row">
     <div class="col-sm-4">
       <div class="rowSeparator noTopMargin">COSTOS UNIDAD</div>
       <table class="table table-striped table-bordered tablaIndividual form-inline" width="100%">
@@ -595,10 +686,38 @@ $('#deleteIcon').click(function(){
         </tbody>
       </table>  
     </div>
+    <!-- /.col-sm-4 -->   
+    <div class="col-sm-4">
+      <div class="rowSeparator noTopMargin">DESCUENTOS</div>
+      <table class="table table-striped table-bordered tablaIndividual" width="100%">
+        <tbody>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'off'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'off',array("class"=>"form-control")); ?></td>
+          </tr>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'off_category_a'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'off_category_a',array("class"=>"form-control")); ?></td>
+          </tr>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'off_category_b'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'off_category_b',array("class"=>"form-control")); ?></td>
+          </tr>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'off_category_c'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'off_category_c',array("class"=>"form-control")); ?></td>
+          </tr>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'off_category_d'); ?></td>
+            <td width="80%"><?php echo $form->textField($model,'off_category_d',array("class"=>"form-control")); ?></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <!-- /.col-sm-4 -->
     </div>
     <!-- /.row -->
-   <div class="row">
+  <div class="row">
     <div class="col-sm-4">
       <div class="rowSeparator noTopMargin">ENV&iacute;O</div>
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
@@ -681,59 +800,42 @@ $('#deleteIcon').click(function(){
     <!-- /.col-sm-4 -->
     </div>
     <!-- /.row -->
-    
-   <div class="row">
+  <div class="row">
     <div class="col-sm-4">
-      <div class="rowSeparator noTopMargin">EXTRA ENV&Iacute;O</div>
+      <div class="rowSeparator noTopMargin">INPUTS</div>
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'need_ups'); ?></td>
-            <td><div class="checkbox">
-                <label>
-                  <?php echo $form->checkBox($model,'need_ups'); ?>
-                  S&iacute; </label>
-              </div></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'input_terminals'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'input_terminals', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><?php echo $form->labelEx($model,'deale_distributor_price'); ?></td>
-            <td><?php echo $form->textField($model,'deale_distributor_price',array("class"=>"form-control")); ?></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'input_signals'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'input_signals', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
           </tr>
           <tr>
-            <td style="text-align:right;"><?php echo $form->labelEx($model,'commercial_name'); ?></td>
-            <td><?php echo $form->textField($model,'commercial_name',array("class"=>"form-control")); ?></td>
-          </tr>
-          <tr>
-            <td style="text-align:right;"><?php echo $form->labelEx($model,'commercial_description'); ?></td>
-            <td><?php echo $form->textField($model,'commercial_description',array("class"=>"form-control")); ?></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'input_labels'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'input_labels', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
           </tr>
         </tbody>
       </table>
     </div>
     <!-- /.col-sm-4 -->
     <div class="col-sm-4">
-      <div class="rowSeparator noTopMargin">DESCUENTOS</div>
+      <div class="rowSeparator noTopMargin">OUTPUTS</div>
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <tbody>
           <tr>
-            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'off'); ?></td>
-            <td width="80%"><?php echo $form->textField($model,'off',array("class"=>"form-control")); ?></td>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'output_terminals'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'output_terminals', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
           </tr>
           <tr>
-            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'off_category_a'); ?></td>
-            <td width="80%"><?php echo $form->textField($model,'off_category_a',array("class"=>"form-control")); ?></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'output_signals'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'output_signals', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
           </tr>
           <tr>
-            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'off_category_b'); ?></td>
-            <td width="80%"><?php echo $form->textField($model,'off_category_b',array("class"=>"form-control")); ?></td>
-          </tr>
-          <tr>
-            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'off_category_c'); ?></td>
-            <td width="80%"><?php echo $form->textField($model,'off_category_c',array("class"=>"form-control")); ?></td>
-          </tr>
-          <tr>
-            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'off_category_d'); ?></td>
-            <td width="80%"><?php echo $form->textField($model,'off_category_d',array("class"=>"form-control")); ?></td>
+            <td style="text-align:right;"><?php echo $form->labelEx($model,'output_labels'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'output_signals', array("class"=>"form-control",'maxlength' => 300, 'rows' => 2)); ?></td>
           </tr>
         </tbody>
       </table>
@@ -765,49 +867,11 @@ $('#deleteIcon').click(function(){
     <!-- /.col-sm-4 -->
     </div>
     <!-- /.row -->
+  </div> <!-- /.tab-pane -->
+  </div> <!-- /.tab-content -->
   
-   <div class="row">
-   
-    <div class="col-sm-4">
-      <div class="rowSeparator noTopMargin">DESCRIPCIONES</div>
-      <table class="table table-striped table-bordered tablaIndividual" width="100%">
-        <tbody>
-          <tr>
-            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'short_description'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'short_description', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 2)); ?></td>
-          </tr>
-          <tr>
-            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'long_description'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'long_description', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 2)); ?></td>
-          </tr>
-          <tr>
-            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'description_customer'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'description_customer', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 2)); ?></td>
-          </tr>
-          <tr>
-            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'description_supplier'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'description_supplier', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 2)); ?></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!-- /.col-sm-4 --> 
-    </div>
-    <!-- /.row -->
-    
-	<?php echo CHtml::hiddenField("other",'',array('id'=>'other'));?>
-  <div class="row navbar-fixed-bottom">
-    <div class="col-sm-12">
-      <div class="buttonsFloatBottom">
-        <button type="button" class="btn btn-default btn-lg" id="cancel"> Cancelar</button>
-        <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
-        <button type="submit" class="btn btn-primary btn-lg" id="saveAndOther"><i class="fa fa-save"></i> Guardar y Cargar Nuevo</button>
-      </div>
-    </div>
-    <!-- /.col-sm-12 --> 
-  </div>
-  <!-- /.row --> 
+  
+  
         <?php $this->endWidget(); ?>
-  
 </div>
 <!-- /container --> 
