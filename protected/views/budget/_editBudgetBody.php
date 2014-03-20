@@ -1,3 +1,33 @@
+
+<script>	
+$(document).ready(function() {
+	  $('#toggleArea.toggle-menu').jPushMenu({
+			closeOnClickOutside:false,
+			menu: '#pushArea'});
+		$( "#pushArea .pushMenuSuperGroup a" ).click(function() {
+			 //$(this).addClass('pushMenuActive').siblings().removeClass('pushMenuActive');
+			  //Para marcar mas de uno:
+			  $( this ).toggleClass( "pushMenuActive" );
+			  var selector = $(this).attr("data-filter");
+
+			  //Desmarco todo el menu comun
+			  $("#filtroArea li").removeClass('active');
+			  //Marco el item correspondiente en menu comun
+			  $("#filtroArea li a[data-filter='" + selector + "']").parent('li').addClass('active');
+			  //Cerrar menu			
+			 // $('.jPushMenuBtn,body,.cbp-spmenu').removeClass('disabled active cbp-spmenu-open cbp-spmenu-push-toleft cbp-spmenu-push-toright');
+			  //$(".modal-backdrop").remove();
+			   
+			  return false;
+			  		});
+
+		$('#jstree').jstree();
+		
+		
+
+		});
+</script>
+
 <?php 
 $settings = new Settings();
 ?>
@@ -47,6 +77,7 @@ $settings = new Settings();
         Para poder agregar productos, primero debes <strong>agregar &aacute;reas</strong>.
       </div>
       <?php endif;?>
+      <button class="toggle-menu menu-left btn btn-primary btnArea jPushMenuBtn menu-active" id="toggleArea"> Cambiar Area </button>
         <?php
         $first = true;
         foreach($areaProjects as $item)	{ ?>
