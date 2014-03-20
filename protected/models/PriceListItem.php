@@ -285,7 +285,7 @@ class PriceListItem extends ModelAudit
 		$priceOverDealerCost = $dealerCost*$shippingParameter->shippingParameterMaritime->percent_over_dealer_cost/100; 
 		$price = ($dealerCost+$maritimeCost+$priceOverDealerCost)*$this->profit_rate;
 
-		return number_format(round($price,4),2);
+		return round($price,4);
 	}
 	public function getAirSalePrice()
 	{
@@ -301,6 +301,6 @@ class PriceListItem extends ModelAudit
 		$priceOverDealerCost = $dealerCost*$shippingParameter->shippingParameterAir->percent_over_dealer_cost/100; 
 		$price = ($dealerCost+$airCost+$priceOverDealerCost)*$this->profit_rate;
 
-		return number_format(round($price,4),2);
+		return round($price,4);
 	}
 }

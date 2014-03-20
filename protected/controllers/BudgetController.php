@@ -982,7 +982,7 @@ class BudgetController extends GController
 			$shippingType = $_POST['shipping_type'];
 
 			$modelBudgetItem->Id_shipping_type =$shippingType; 				
-			$modelBudgetItem->Id_price_list = $modelPriceListItem->Id_price_list; 				
+			$modelBudgetItem->Id_price_list = $modelPriceListItem->Id_price_list; 	
 			if($shippingType==1)//maritime
 			{
 				$modelBudgetItem->price =$modelPriceListItem->getMaritimeSalePrice(); 				
@@ -991,6 +991,7 @@ class BudgetController extends GController
 			{
 				$modelBudgetItem->price =$modelPriceListItem->getAirSalePrice();				
 			}
+				
 			$modelBudgetItem->save();
 		}
 	}
