@@ -1,6 +1,6 @@
 
 <script>	
-/*
+
 $(document).ready(function() {
 	  $('#toggleArea.toggle-menu').jPushMenu({
 			closeOnClickOutside:false,
@@ -23,11 +23,10 @@ $(document).ready(function() {
 			  		});
 
 		$('#jstree').jstree();
-		
-		
+				
 
 		});
-		*/
+		
 </script>
 
 <?php 
@@ -73,13 +72,14 @@ $settings = new Settings();
         </li>
        <li id="addAreaToProject" class="liButtonAdd"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ><i class="fa fa-plus"></i> Agregar Area</button></li>
       </ul>
+            <button class="toggle-menu menu-right btn btn-primary btnArea jPushMenuBtn menu-active hidden" id="toggleArea"> Cambiar Area </button>
+      
       <div class="tab-content">
       <?php if(!isset($idArea)):?>
        <div class="alert alert-warning fade in" id="warningEmpty">
         Para poder agregar productos, primero debes <strong>agregar &aacute;reas</strong>.
       </div>
       <?php endif;?>
-      <button class="toggle-menu menu-left btn btn-primary btnArea jPushMenuBtn menu-active hidden" id="toggleArea"> Cambiar Area </button>
         <?php
         $first = true;
         foreach($areaProjects as $item)	{ ?>
