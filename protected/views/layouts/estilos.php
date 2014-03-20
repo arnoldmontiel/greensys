@@ -167,7 +167,7 @@ text-transform: uppercase;
 letter-spacing: 2px;}
 
 .cbp-spmenu {
-	border-top: 6px solid #FFAC6C ;
+	border-top: 6px solid #24D900 ;
 	background-color: #f8f8f8 ;
 	color: #777 ;
 	z-index:1099 ;
@@ -223,7 +223,7 @@ a.close-menu {
 	vertical-align: middle;
 	font-size: 25px;
 	cursor: pointer;
-	color: #FFAC6C;
+	color: #5cb85c;
 }
 
 a.close-menu:hover {
@@ -236,7 +236,7 @@ a.list-group-item {
 }
 
 .cbp-spmenu{width:auto; min-width:250px;}
-.cbp-spmenu-open{width:auto; min-width:250px;}
+.cbp-spmenu-open{width:auto; min-width:340px;}
 
 #pushFiltro{font-size:14px;}
 
@@ -245,8 +245,9 @@ a.list-group-item {
 .pushMenuDates input{width:150px;}
 
 
-.sideMenuBotones{ position:absolute; bottom:0px; z-index:1090; background-color:#fbfbfb; padding: 10px 0px; width:100%; text-align:center; border-top:2px solid #eee;}
+.sideMenuBotones{ white-space:nowrap;position:absolute; bottom:0px; z-index:1090; background-color:#fbfbfb; padding: 10px 0px; width:100%; text-align:center; border-top:2px solid #eee;}
 
+.sideMenuBotones .btn{ margin-left:10px;}
 
 .treeMenu a{display:inline-block;}
 .jstree-default .jstree-anchor {
