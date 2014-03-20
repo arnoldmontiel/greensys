@@ -1,5 +1,6 @@
 
 <script>	
+/*
 $(document).ready(function() {
 	  $('#toggleArea.toggle-menu').jPushMenu({
 			closeOnClickOutside:false,
@@ -26,6 +27,7 @@ $(document).ready(function() {
 		
 
 		});
+		*/
 </script>
 
 <?php 
@@ -77,7 +79,7 @@ $settings = new Settings();
         Para poder agregar productos, primero debes <strong>agregar &aacute;reas</strong>.
       </div>
       <?php endif;?>
-      <button class="toggle-menu menu-left btn btn-primary btnArea jPushMenuBtn menu-active" id="toggleArea"> Cambiar Area </button>
+      <button class="toggle-menu menu-left btn btn-primary btnArea jPushMenuBtn menu-active hidden" id="toggleArea"> Cambiar Area </button>
         <?php
         $first = true;
         foreach($areaProjects as $item)	{ ?>
