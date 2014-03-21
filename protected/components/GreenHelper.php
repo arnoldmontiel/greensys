@@ -2191,9 +2191,9 @@ class GreenHelper
 			$gridTotalSummary = $gridTotalSummary . '<td colspan="2" class="align-right budgetMono">'.$currency . ' ' . self::showPrice($totalServices/$commissionFactor).'</td>';
 		$gridTotalSummary = $gridTotalSummary . '</tr>';
 		$gridTotalSummary = $gridTotalSummary . '<tr>';
-			$gridTotalSummary = $gridTotalSummary . '<td>Descuento</td>';
-			$gridTotalSummary = $gridTotalSummary . '<td class="budgetMono">'.$modelBudget->percent_discount.'%</td>';
-			$gridTotalSummary = $gridTotalSummary . '<td class="align-right budgetMono">'.$currency .' ' . self::showPrice($totalBudgetDiscount/$commissionFactor).'</td>';
+			$gridTotalSummary = $gridTotalSummary . '<td class="redDiscount">Descuento</td>';
+			$gridTotalSummary = $gridTotalSummary . '<td class="budgetMono redDiscount">'.$modelBudget->percent_discount.'%</td>';
+			$gridTotalSummary = $gridTotalSummary . '<td class="align-right budgetMono redDiscount">'.$currency .' ' . self::showPrice($totalBudgetDiscount/$commissionFactor).'</td>';
 		$gridTotalSummary = $gridTotalSummary . '</tr>';
 		$gridTotalSummary = $gridTotalSummary . '<tr>';
 			$gridTotalSummary = $gridTotalSummary . '<td class="bold">Total</td>';
