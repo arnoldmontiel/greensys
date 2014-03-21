@@ -1948,11 +1948,14 @@ class GreenHelper
 							$img = '<img class="imgTD" src="'.$imagePath.'"/>';					
 					}
 					
+					$short_description = $budgetItem->product->description_customer!=""?$budgetItem->product->description_customer:$budgetItem->product->short_description;
+					$long_description = $budgetItem->product->description_supplier!=""?$budgetItem->product->description_supplier:$budgetItem->product->long_description;
+					
 					if($budgetItem->product->is_accessory == 0)
 					{
 						$hasItems = true;					
 						$serviceContentBodyItem = $serviceContentBodyItem . '<tr>';
-						$serviceContentBodyItem = $serviceContentBodyItem . '<td><div class="bold">'.$budgetItem->product->description_customer.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120" class="descContainer">'.$img.'</td><td width="610">'.$budgetItem->product->long_description.'</td></tr></tbody></table>';
+						$serviceContentBodyItem = $serviceContentBodyItem . '<td><div class="bold">'.$short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120" class="descContainer">'.$img.'</td><td width="610">'.$long_description.'</td></tr></tbody></table>';
 						
 						
 						if($budgetItem->getDiscountCurrencyConverted() > 0)
@@ -1994,7 +1997,7 @@ class GreenHelper
 						$hasAccessory = true;
 						
 						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<tr>';
-						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<td><div class="bold">'.$budgetItem->product->description_customer.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120" class="descContainer">'.$img.'</td><td width="610">'.$budgetItem->product->long_description.'</td></tr></tbody></table>';
+						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<td><div class="bold">'.$short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120" class="descContainer">'.$img.'</td><td width="610">'.$long_description.'</td></tr></tbody></table>';
 							
 							
 						if($budgetItem->getDiscountCurrencyConverted() > 0)
