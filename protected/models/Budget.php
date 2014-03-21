@@ -90,7 +90,7 @@ class Budget extends ModelAudit
 				$modelBudgetItem->version_number = $this->version_number;
 				$modelBudgetItem->Id_budget = $this->Id;
 				$modelBudgetItem->Id_service = $modelService->Id;
-				$modelBudgetItem->description = 'Programaci贸n';
+				$modelBudgetItem->description = 'Programaci髇';
 				$modelBudgetItem->quantity = 0;
 				$modelBudgetItem->save();
 				
@@ -98,7 +98,7 @@ class Budget extends ModelAudit
 				$modelBudgetItem->version_number = $this->version_number;
 				$modelBudgetItem->Id_budget = $this->Id;
 				$modelBudgetItem->Id_service = $modelService->Id;
-				$modelBudgetItem->description = 'Instalaci贸n';
+				$modelBudgetItem->description = 'Instalaci髇';
 				$modelBudgetItem->quantity = 0;
 				$modelBudgetItem->save();
 			}
@@ -312,8 +312,8 @@ class Budget extends ModelAudit
 		$criteria->compare('t.version_number',$this->version_number);
 		$criteria->addCondition('(t.Id_budget_item is null)');
 		$criteria->addCondition('(t.Id_product is null)');
-		$criteria->addCondition('t.description not like "Programaci贸n"');
-		$criteria->addCondition('t.description not like "Instalaci贸n"');
+		$criteria->addCondition('t.description not like "Programacion"');
+		$criteria->addCondition('t.description not like "Instalacion"');
 		
 		if(isset($Id_service))
 			$criteria->addCondition('t.Id_service='.$Id_service);
