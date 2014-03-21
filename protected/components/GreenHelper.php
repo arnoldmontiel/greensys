@@ -2080,7 +2080,12 @@ class GreenHelper
 					$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<tr>';
 						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td width="25%">'.$budgetItemAdditional->description.'</td>';
 						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right">'.$currency . ' ' . self::showPrice($budgetItemAdditional->getTotalPriceWODiscountCurrencyConverted()/$commissionFactor).'</td>';
-						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right redDiscount">DESC. '.$budgetItemAdditional->getDiscountType().' '. self::showPrice($budgetItemAdditional->getDiscountCurrencyConverted()/$commissionFactor).'</td>';
+						if($budgetItemAdditional->getDiscountCurrencyConverted()>0)
+						{
+							$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right redDiscount">DESC. '.$budgetItemAdditional->getDiscountType().' '. self::showPrice($budgetItemAdditional->getDiscountCurrencyConverted()/$commissionFactor).'</td>';								
+						}else {
+							$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right redDiscount"> &nbsp; </td>';															
+						}
 						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right bold">'.$currency . ' ' . self::showPrice($budgetItemAdditional->getTotalPriceWOChildernCurrencyConverted()/$commissionFactor).'</td>';
 					$serviceContentBodyAdditional = $serviceContentBodyAdditional . '</tr>';
 					
@@ -2198,11 +2203,14 @@ class GreenHelper
 			$gridTotalSummary = $gridTotalSummary . '<td class="bold">Sub Total</td>';
 			$gridTotalSummary = $gridTotalSummary . '<td colspan="2" class="align-right budgetMono">'.$currency . ' ' . self::showPrice($totalServices/$commissionFactor).'</td>';
 		$gridTotalSummary = $gridTotalSummary . '</tr>';
+		if($modelBudget->percent_discount>0)
+		{
 		$gridTotalSummary = $gridTotalSummary . '<tr>';
 			$gridTotalSummary = $gridTotalSummary . '<td class="redDiscount">Descuento</td>';
 			$gridTotalSummary = $gridTotalSummary . '<td class="budgetMono redDiscount">'.$modelBudget->percent_discount.'%</td>';
 			$gridTotalSummary = $gridTotalSummary . '<td class="align-right budgetMono redDiscount">'.$currency .' ' . self::showPrice($totalBudgetDiscount/$commissionFactor).'</td>';
 		$gridTotalSummary = $gridTotalSummary . '</tr>';
+		}
 		$gridTotalSummary = $gridTotalSummary . '<tr>';
 			$gridTotalSummary = $gridTotalSummary . '<td class="finalTotal align-left">Total</td>';
 			$gridTotalSummary = $gridTotalSummary . '<td class="finalTotal align-right" colspan="2">Total '.$currency . ' ' . self::showPrice(($totalServices - $totalBudgetDiscount)/$commissionFactor).'</td>';
