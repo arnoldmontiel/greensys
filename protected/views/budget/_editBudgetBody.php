@@ -23,7 +23,6 @@ $(document).ready(function() {
 			  		});
 
 		$('#jstree').jstree();
-		$('#jstree').open_all();						
 
 		});
 		
@@ -114,8 +113,8 @@ $(document).ready(function() {
     </ul>
     
       
-    
-      <ul class="nav nav-tabs navTabsPencil">      
+    <?php if(false):?>
+      <ul class="nav nav-tabs navTabsPencil hidden">      
         <li class="pull-right">
         <button <?php echo !isset($idArea)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
           <div class="btn-group btnAlternateView">
@@ -125,7 +124,7 @@ $(document).ready(function() {
         </li>
        <li id="addAreaToProject" class="liButtonAdd hidden"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ><i class="fa fa-plus"></i> Agregar &Aacute;rea</button></li>
       </ul>
-      
+      <?php endif?>
       <div class="tab-content areas">
       <?php if(!isset($idArea)):?>
        <div class="alert alert-warning fade in" id="warningEmpty">
