@@ -253,7 +253,7 @@ class BudgetController extends GController
 				$transaction->commit();
 								
 			} catch (Exception $e) {
-				$transaction->rollback();
+				$transaction->rollback();				
 			}
 	
 		}

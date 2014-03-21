@@ -23,36 +23,52 @@ $(document).ready(function() {
 			  		});
 
 		$('#jstree').jstree();
-				
+		$('#jstree').open_all();						
 
 		});
 		
 </script>
 <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="pushArea">
 		<div class="cbp-title">Elegir Area </div>
-		<div class="sideMenuBotones"> <button class="btn btn-default"><i class="fa fa-pencil"></i> Editar </button><button class="btn btn-default"><i class="fa fa-trash-o"></i> Borrar </button><button class="btn btn-primary"><i class="fa fa-plus"></i> Agregar</button></div>
+		<div class="sideMenuBotones"> 
+		<button onclick="editAreaProject();" class="btn btn-default"><i class="fa fa-pencil"></i> Editar </button>
+		<button class="btn btn-default"><i class="fa fa-trash-o"></i> Borrar </button>
+		<button id="addAreaToProject" class="btn btn-primary"><i class="fa fa-plus"></i> Agregar</button>
+		</div>
 		<a class="toggle-menuMarketplace close-menu"><i class="fa fa-times-circle"></i></a>
 		
 				<div id="jstree" class="treeMenu">
   <ul>
-  	<li data-jstree='{"icon":"images/areaIcon/area.ico"}'>Proyecto
+  	<li data-jstree='{"icon":"images/areaIcon/area.ico"}'><?php echo $model->project->description;?>
       <ul>
   	<?php 
   	$first = true;
   	 
   foreach($areaProjects as $item)	{ ?>
-        <!-- <li class="<?php echo ($first?'active':'');?>"><a onclick="changeTab(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab"><span id="areaProjectDescription_<?php echo $item->Id?>"><?php echo ($item->description==""?$item->area->description:$item->description);?></span> </a><a onclick="editAreaProject(<?php echo $item->Id;?>);" class="tabEdit"><i class="fa fa-pencil"></i></a></li> -->
-        <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'><a onclick="changeTree(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)"><?php echo ($item->description==""?$item->area->description:$item->description);?></a></li>
-		<?php if($first)
+        <!-- <li class="<?php echo ($first?'active':'');?>">
+        	<a onclick="changeTab(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab">
+        		<span id="areaProjectDescription_<?php echo $item->Id?>"><?php echo ($item->description==""?$item->area->description:$item->description);?></span> 
+        	</a>
+        	<a onclick="editAreaProject(<?php echo $item->Id;?>);" class="tabEdit"><i class="fa fa-pencil"></i>
+        	</a>
+        </li> -->
+        <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'>
+        	<a onclick="changeTree(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)">
+        		<span id="areaProjectDescription_<?php echo $item->Id?>">
+        			<?php echo ($item->description==""?$item->area->description:$item->description);?>
+        		</span>        		        		
+        	</a>
+        </li>
+        <?php if($first)
 	        {
 	        	$idArea = $item->Id_area;
 	        	$idAreaProject = $item->Id;
 	        	$first= false;
 	        }
-		}
+		}		
 		?>
       </ul>
-<!-- <li data-jstree='{"icon":"images/areaIcon/area.ico"}'>Planta Baja
+		<!-- <li data-jstree='{"icon":"images/areaIcon/area.ico"}'>Planta Baja
       <ul>
         <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'><a>Hall Ingreso</a></li>
         <li data-jstree='{"icon":"images/areaIcon/toilet.ico"}'><a href="#">Bano Visita</a></li>
@@ -64,7 +80,9 @@ $(document).ready(function() {
 </nav>
 
 <?php 
-$settings = new Settings();
+	$settings = new Settings();
+	echo CHtml::hiddenField("idTabArea",$idArea, array('id'=>'idTabArea'));
+	echo CHtml::hiddenField("idTabAreaProject",$idAreaProject, array('id'=>'idTabAreaProject'));
 ?>
     <?php
     echo $this->renderPartial('_tabBudgetServiceConfig',array(
@@ -95,24 +113,7 @@ $settings = new Settings();
     
       
     
-      <ul class="nav nav-tabs navTabsPencil hidden">
-        <?php 
-        $first = true;
-        $idArea = null;
-        $idAreaProject = null;
-        foreach($areaProjects as $item)	{ ?>
-         <li class="<?php echo ($first?'active':'');?>"><a onclick="changeTab(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab"><span id="areaProjectDescription_<?php echo $item->Id?>"><?php echo ($item->description==""?$item->area->description:$item->description);?></span> </a><a onclick="editAreaProject(<?php echo $item->Id;?>);" class="tabEdit"><i class="fa fa-pencil"></i></a></li>
-		<?php if($first)
-	        {
-	        	$idArea = $item->Id_area;
-	        	$idAreaProject = $item->Id;
-	        	$first= false;
-	        }
-		}		
-		echo CHtml::hiddenField("idTabArea",$idArea, array('id'=>'idTabArea'));
-		echo CHtml::hiddenField("idTabAreaProject",$idAreaProject, array('id'=>'idTabAreaProject'));
-		?>
-      
+      <ul class="nav nav-tabs navTabsPencil">      
         <li class="pull-right">
         <button <?php echo !isset($idArea)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
           <div class="btn-group btnAlternateView">
@@ -123,7 +124,7 @@ $settings = new Settings();
        <li id="addAreaToProject" class="liButtonAdd hidden"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ><i class="fa fa-plus"></i> Agregar &Aacute;rea</button></li>
       </ul>
       
-      <div class="tab-content">
+      <div class="tab-content areas">
       <?php if(!isset($idArea)):?>
        <div class="alert alert-warning fade in" id="warningEmpty">
         Para poder agregar productos, primero debes <span class="bold">agregar &aacute;reas</span> desde el <span class="bold">Menu &Aacute;reas</span>.
@@ -180,8 +181,9 @@ $settings = new Settings();
   
 
 <script type="text/javascript">
-function editAreaProject(idAreaProject)
+function editAreaProject()
 {
+	idAreaProject = $("#idTabAreaProject").val();		
 	$.post(
 			'<?php echo BudgetController::createUrl('area/AjaxShowUpdateModalAreaProject')?>',
 			 {

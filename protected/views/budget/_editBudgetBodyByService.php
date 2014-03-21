@@ -195,8 +195,9 @@ function upItem(id,grid)
 			).error(function(){statusSavedError();});			
 }
 
-function editAreaProject(idAreaProject)
+function editAreaProject()
 {
+	idAreaProject = $("#idTabAreaProject").val();
 	$.post(
 			'<?php echo BudgetController::createUrl('area/AjaxShowUpdateModalAreaProject')?>',
 			 {

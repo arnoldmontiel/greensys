@@ -96,12 +96,12 @@ function changeTab(idArea,idAreaProject)
 function changeTree(idArea,idAreaProject)
 {
 	
-	$(".tab-pane").removeClass("active");
+	$(".areas .tab-pane").removeClass("active");
 	$("#itemArea_"+idAreaProject+"_"+idArea).addClass("active");
 	$('#idTabArea').val(idArea);
 	$('#idTabAreaProject').val(idAreaProject);
 
-	$.fn.yiiGridView.update('budget-item-grid_' + idAreaProject + '_' + idArea);
+	//$.fn.yiiGridView.update('budget-item-grid_' + idAreaProject + '_' + idArea);
 }
 
 function addQty(idProduct)

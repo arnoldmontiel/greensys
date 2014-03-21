@@ -144,14 +144,14 @@ class BudgetItem extends ModelAudit
 			$modelProgramingHours->Id_budget = $this->Id_budget;
 			$modelProgramingHours->version_number = $version;
 			$modelProgramingHours->Id_service = $this->Id_service;
-			$modelProgramingHours->description = 'Programación';
+			$modelProgramingHours->description = 'Programaciï¿½n';
 		
 		}
 		
 		$criteria=new CDbCriteria;
 		$criteria->compare('t.Id_budget',$this->Id_budget);
 		$criteria->compare('t.version_number',$version);
-		$criteria->compare('t.description','Instalación');
+		$criteria->compare('t.description','Instalaciï¿½n');
 		if(isset($this->Id_service))
 		{
 			if($this->Id_service != 0)
