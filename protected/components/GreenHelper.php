@@ -2097,11 +2097,16 @@ class GreenHelper
 				
 				
 				$totalServicePrice = 0;
-				$serviceContentBodyTotal = '<div class="superBudgetEnd">&bull;&bull;&bull;</div><div class="superBudgetTabla"><div class="budgetSubtitle superBudgetTotal">RESUMEN &bull; '.$serviceName.'</div>
-												<table class="table tableReadOnly tablaDatos">
-													<tbody>';
+				$serviceContentBodyTotal = '<div class="superBudgetEnd">&bull;&bull;&bull;</div><div class="superBudgetTabla noBreak">
+												<table class="table tableReadOnly tablaDatos noBreak">
+													<tbody class="noBreak">';
+				$serviceContentBodyTotal = $serviceContentBodyTotal . '<tr>';
+				$serviceContentBodyTotal = $serviceContentBodyTotal . '<td class="budgetSubtitle superBudgetTotal" colspan="2">RESUMEN  &bull; '.$serviceName.'</td>';
+				$serviceContentBodyTotal = $serviceContentBodyTotal . '</tr>';
+					
 				if($hasItems)
 				{
+					
 					$serviceContentBodyTotal = $serviceContentBodyTotal . '<tr>';
 						$serviceContentBodyTotal = $serviceContentBodyTotal . '<td>Equipos</td>';
 						$serviceContentBodyTotal = $serviceContentBodyTotal . '<td class="align-right bold">'.$currency . ' ' . self::showPrice($totalItemPrice/$commissionFactor).'</td>';
@@ -2129,10 +2134,13 @@ class GreenHelper
 					
 					$totalServicePrice = $totalServicePrice + $totalAdditionalPrice;
 				}
-							$serviceContentBodyTotal = $serviceContentBodyTotal . '</tbody>';
-						$serviceContentBodyTotal = $serviceContentBodyTotal . '</table>';
-								$serviceContentBodyTotal = $serviceContentBodyTotal . '<div class="newTotal">Total '.$currency . ' ' . self::showPrice($totalServicePrice).'</div></div>';
-					$serviceContentBodyTotal = $serviceContentBodyTotal . '<div class="budgetNota">NOTA: '.$serviceNote.'</div>';
+
+				$serviceContentBodyTotal = $serviceContentBodyTotal . '<tr>';
+				$serviceContentBodyTotal = $serviceContentBodyTotal . '<td colspan="2" class="newTotal">Total '.$currency . ' ' . self::showPrice($totalServicePrice).'</td>';
+				$serviceContentBodyTotal = $serviceContentBodyTotal . '</tr>';
+				$serviceContentBodyTotal = $serviceContentBodyTotal . '</tbody>';
+				$serviceContentBodyTotal = $serviceContentBodyTotal . '</table>';
+				$serviceContentBodyTotal = $serviceContentBodyTotal . '</div><! -- cierre div -->';
 				$serviceContentBodyTotal = $serviceContentBodyTotal . '</div><! -- cierre page break -->';
 				
 				if(!$hasItems)
@@ -2196,11 +2204,11 @@ class GreenHelper
 			$gridTotalSummary = $gridTotalSummary . '<td class="align-right budgetMono redDiscount">'.$currency .' ' . self::showPrice($totalBudgetDiscount/$commissionFactor).'</td>';
 		$gridTotalSummary = $gridTotalSummary . '</tr>';
 		$gridTotalSummary = $gridTotalSummary . '<tr>';
-			$gridTotalSummary = $gridTotalSummary . '<td class="bold">Total</td>';
-			$gridTotalSummary = $gridTotalSummary . '<td class="align-right budgetMono" colspan="2">';
-			$gridTotalSummary = $gridTotalSummary . '<div class="label-big">'.$currency . ' ' . self::showPrice(($totalServices - $totalBudgetDiscount)/$commissionFactor).'</div>';
-			$gridTotalSummary = $gridTotalSummary . '</td>';
+			$gridTotalSummary = $gridTotalSummary . '<td class="finalTotal align-left">Total</td>';
+			$gridTotalSummary = $gridTotalSummary . '<td class="finalTotal align-right" colspan="2">Total '.$currency . ' ' . self::showPrice(($totalServices - $totalBudgetDiscount)/$commissionFactor).'</td>';
 		$gridTotalSummary = $gridTotalSummary . '</tr>';
+		
+		
 		//END TOTAL SUMMARY---------------------------------------------------------------
 		
 		$caratula = '<div  style="page-break-after: always;">
@@ -2297,13 +2305,16 @@ class GreenHelper
 						</div>
 						<div class="row budgetBloque">
 							<div class="col-sm-12">
-												
-												<div class="superBudgetTabla superBudgetFinal"><div class="budgetSubtitle superBudgetTotal">TOTAL PRESUPUESTO</div>
-										<table class="table tableReadOnly tablaDatos">
-        									<tbody>
+							<div class="superBudgetTabla superBudgetTablaFinal noBreak">		
+							<table class="table tableReadOnly tablaDatos noBreak">
+												<tbody class="noBreak">
+												<tr>
+												<td class="budgetSubtitle superBudgetTotal" colspan="3">TOTAL PRESUPUESTO</td>
+												</tr>
           										'.$gridTotalSummary.'
         									</tbody>
       									</table>
+												</div>
 												</div>
 												
 												
