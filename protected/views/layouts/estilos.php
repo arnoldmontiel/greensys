@@ -271,7 +271,7 @@ background: #e7f4f9 !important;
 background: #D5F0C5 !important;
 }
 
-jstree-container-ul{margin-bottom:125px;}
+.jstree-container-ul{margin-bottom:125px;}
 
 
 /* ------ END MOBILE MENU ------- */
