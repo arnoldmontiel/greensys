@@ -100,7 +100,7 @@ function changeTree(idArea,idAreaProject)
 	$("#itemArea_"+idAreaProject+"_"+idArea).addClass("active");
 	$('#idTabArea').val(idArea);
 	$('#idTabAreaProject').val(idAreaProject);
-
+	$('.tituloAreaPresu').html($('#areaProjectDescription_'+idAreaProject).html());
 	//$.fn.yiiGridView.update('budget-item-grid_' + idAreaProject + '_' + idArea);
 }
 
