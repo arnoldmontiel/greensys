@@ -77,15 +77,31 @@ $settings = new Settings();
 	<section id="PRODUCTS"></section>        
 	<div class="row contenedorPresu">
     <div class="col-sm-12">
-      <div class="tituloFinalPresu">Equipos por &Aacute;rea</div>
     
-      <ul class="nav nav-tabs navTabsPencil">
+      <div class="tituloFinalPresu">Equipos por &Aacute;rea</div>
+    <ul class="nav nav-tabs">
+    <li><div class="tituloAreaPresu">Ba&ntilde;o > Ducha</div></li>
+     
+     <li class="buttonsAreaPresu"><button <?php echo !isset($idArea)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button></li>
+     <li class="pull-right">
+     <button class="toggle-menu menu-right btn btn-primary btnArea jPushMenuBtn menu-active" id="toggleArea"><i class="fa fa-cutlery"></i> Menu &Aacute;reas </button>
+          <div class="btn-group btnAlternateView">
+		  <button onclick="editBudget(<?php echo $model->Id?>,<?php echo $model->version_number?>)" type="button" class="btn btn-default active">&Aacute;reas</button>
+		  <button onclick="editBudgetByService(<?php echo $model->Id?>,<?php echo $model->version_number?>)" type="button" class="btn btn-default">Servicios</button>
+          </div>
+        </li>
+       <li id="addAreaToProject" class="liButtonAdd hidden"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ><i class="fa fa-plus"></i> Agregar &Aacute;rea</button></li>
+    </ul>
+    
+      
+    
+      <ul class="nav nav-tabs navTabsPencil hidden">
         <?php 
         $first = true;
         $idArea = null;
         $idAreaProject = null;
         foreach($areaProjects as $item)	{ ?>
-        <!-- <li class="<?php echo ($first?'active':'');?>"><a onclick="changeTab(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab"><span id="areaProjectDescription_<?php echo $item->Id?>"><?php echo ($item->description==""?$item->area->description:$item->description);?></span> </a><a onclick="editAreaProject(<?php echo $item->Id;?>);" class="tabEdit"><i class="fa fa-pencil"></i></a></li> -->
+         <li class="<?php echo ($first?'active':'');?>"><a onclick="changeTab(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab"><span id="areaProjectDescription_<?php echo $item->Id?>"><?php echo ($item->description==""?$item->area->description:$item->description);?></span> </a><a onclick="editAreaProject(<?php echo $item->Id;?>);" class="tabEdit"><i class="fa fa-pencil"></i></a></li>
 		<?php if($first)
 	        {
 	        	$idArea = $item->Id_area;
@@ -104,14 +120,13 @@ $settings = new Settings();
 		  <button onclick="editBudgetByService(<?php echo $model->Id?>,<?php echo $model->version_number?>)" type="button" class="btn btn-default">Servicios</button>
           </div>
         </li>
-       <li id="addAreaToProject" class="liButtonAdd"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ><i class="fa fa-plus"></i> Agregar &Aacute;rea</button></li>
+       <li id="addAreaToProject" class="liButtonAdd hidden"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ><i class="fa fa-plus"></i> Agregar &Aacute;rea</button></li>
       </ul>
-            <button class="toggle-menu menu-right btn btn-primary btnArea jPushMenuBtn menu-active" id="toggleArea"> Cambiar &Aacute;rea </button>
       
       <div class="tab-content">
       <?php if(!isset($idArea)):?>
        <div class="alert alert-warning fade in" id="warningEmpty">
-        Para poder agregar productos, primero debes <strong>agregar &aacute;reas</strong>.
+        Para poder agregar productos, primero debes <span class="bold">agregar &aacute;reas</span> desde el <span class="bold">Menu &Aacute;reas</span>.
       </div>
       <?php endif;?>
         <?php
