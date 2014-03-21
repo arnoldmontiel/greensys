@@ -67,13 +67,6 @@ $(document).ready(function() {
 		}		
 		?>
       </ul>
-		<!-- <li data-jstree='{"icon":"images/areaIcon/area.ico"}'>Planta Baja
-      <ul>
-        <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'><a>Hall Ingreso</a></li>
-        <li data-jstree='{"icon":"images/areaIcon/toilet.ico"}'><a href="#">Bano Visita</a></li>
-        <li data-jstree='{"icon":"images/areaIcon/den.ico"}'><a href="#">Sala</a></li>
-      </ul>
-    </li>-->
   </ul> 		
 </div>
 </nav>
