@@ -42,7 +42,7 @@ $(document).ready(function() {
       <ul>
   	<?php 
   	$first = true;
-  	 
+  	$areaDescription="";
   foreach($areaProjects as $item)	{ ?>
         <!-- <li class="<?php echo ($first?'active':'');?>">
         	<a onclick="changeTab(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab">
@@ -62,6 +62,7 @@ $(document).ready(function() {
 	        {
 	        	$idArea = $item->Id_area;
 	        	$idAreaProject = $item->Id;
+	        	$areaDescription = $item->description==""?$item->area->description:$item->description;
 	        	$first= false;
 	        }
 		}		
@@ -90,7 +91,7 @@ $(document).ready(function() {
     
       <div class="tituloFinalPresu">Equipos por &Aacute;rea</div>
     <ul class="nav nav-tabs">
-    <li><div class="tituloAreaPresu">Ba&ntilde;o > Ducha</div></li>
+    <li><div class="tituloAreaPresu"><?php echo $areaDescription;?></div></li>
      
      <li class="buttonsAreaPresu">
      <button <?php echo !isset($idArea)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
