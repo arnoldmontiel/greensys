@@ -976,10 +976,10 @@ width:auto; padding:50px; border-radius:0px; display:block;margin-right:20px;mar
 
 @page{
   footer: html_myFooter;
-  margin-top: 1cm;
-  margin-bottom: 1cm;
-  margin-left: 1cm;
-  margin-right: 1cm;
+  margin-top: 0.5cm;
+  margin-bottom: 0.5cm;
+  margin-left: 0.5cm;
+  margin-right: 0.5cm;
   margin-header: 5mm; 
   margin-footer: 5mm; 
 }
@@ -1024,19 +1024,43 @@ body {background-color:white;}
 
 .budgetTitle{ letter-spacing:1px;  color:#999; font-size:30px;}
 
-.budgetSubtitle{ font-weight:normal; letter-spacing:1px; padding:5px; background-color:#eee; text-transform:uppercase;font-family:'GudeaRegular'; text-align:left;}
+.budgetSubtitle{ font-weight:normal; letter-spacing:1px; padding:5px; background-color:#eee; text-transform:uppercase;font-family:'GudeaRegular'; text-align:left;
+
+
+font-size: 16px;
+padding-bottom: 5px;
+}
 
 .budgetNota{padding-bottom:20px; margin-bottom:40px; border-bottom:1px dotted #ccc;}
 
-.superBudgetTotal{background-color:#666; color:#fff; letter-spacing:1px; padding:5px; font-size:17px;}
+.superBudgetTotal{background-color:#999; color:#fff; letter-spacing:1px; padding:5px; font-size:17px;border-bottom: 2px solid white;}
+
+
+div.superBudgetTabla .tablaDatos td.lastRow{background-color:#ddd; border-top:0px none; font-size:15px;}
+
+div.superBudgetEnd{margin-top:50px; color:#ccc; font-size:20px; text-align:center;}
+div.superBudgetTabla{background-color:#eee; margin-bottom:20px; margin-top:50px; font-size:15px;border:1px solid #ddd; padding:10px;}
+div.superBudgetTabla .tablaDatos td{background-color:#eee; font-size:15px; border-top:1px solid white;}
+.superBudgetTabla .tablaDatos{margin-bottom:0px;}
+
+.newTotal{ color:white; font-size:18px; text-align:right; padding:10px; font-weight:bold; border-bottom:4px solid #eee; 
+
+color: #333;
+font-family: "GudeaBold";
+padding: 10px;
+background-color:white;
+}
+
+div.superBudgetFinal{}
+div.superBudgetTabla .tablaDatos td{}
 
 .budgetDesc{   margin-bottom:15px; padding: 0px 5px;}
 
 .tableReadOnly{width:100%; margin-bottom:0px;}
-.tableReadOnly td{border-top: 0.1px solid #ddd; font-size:13px;padding:10px 5px; }
+.tableReadOnly td{border-top: 0.1px solid #ddd; border-top: 0.1px solid #eee; font-size:13px;padding:10px 5px; }
 .tableReadOnly th{ padding:10px 5px;}
 
-.tablaDatos {margin-bottom:20px;}
+.tablaDatos {margin-bottom:40px;}
 .tablaDatos td{ padding:10px 5px; }
 .tablaDatos th{ padding:10px 5px;}
 
@@ -1071,14 +1095,13 @@ body {background-color:white;}
 
 .tableReadOnly  td.bold{font-family:'GudeaBold'; font-weight:bold;}
 
-.tableReadOnly  td.lastRow{border-top:1px solid #000; text-transform:uppercase;}
+.tableReadOnly  td.lastRow{border-top:1px solid #888; text-transform:uppercase;}
 
 
 .table .tablaLimpia2 td.bold{font-family:'GudeaBold'; font-weight:bold;}
 
 #screenReadOnlyCaratula{ text-align:center; background-color:white; padding-top:150px;}
 #screenReadOnlyCaratulaFinal{ text-align:center; background-color:white; padding-top:20px;}
-
 
 
 .logoBig{ margin:auto; }
@@ -1092,6 +1115,8 @@ body {background-color:white;}
 .caratulaResumen .table th{ padding:5px 10px;}
 
 #screenReadOnlyCaratulaFinal .caratulaResumen{margin-top:60px;}
+
+.redDiscount{color:red;}
 
 /* ------ END READ ONLY ------- */
 
