@@ -237,6 +237,29 @@ class BudgetController extends GController
 				'field_caller'=>$field_caller
 		));
 	}
+	
+	public function actionAjaxDeleteAreaProject()
+	{
+		if(Yii::app()->request->isPostRequest)
+		{
+			$id = $_POST['id'];
+			// we only allow deletion via POST request
+	
+			$items = BudgetItem::model()->findAllByAttributes(array('Id_area_project'=>$id));
+			if(empty($items))
+			{
+				$model = AreaProject::model()->findByAttributes(array("Id"=>$id));
+				$model->delete();
+				echo 1;
+			}
+			else {
+				echo 0;
+			}
+		}
+		else
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+	}
+	
 	public function actionAjaxDeleteBudgetItem()
 	{
 		if(Yii::app()->request->isPostRequest)

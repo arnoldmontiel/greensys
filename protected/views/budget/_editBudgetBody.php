@@ -31,7 +31,7 @@ $(document).ready(function() {
 		<div class="cbp-title">Elegir Area </div>
 		<div class="sideMenuBotones"> 
 		<button onclick="editAreaProject();" class="btn btn-default"><i class="fa fa-pencil"></i> Editar </button>
-		<button class="btn btn-default"><i class="fa fa-trash-o"></i> Borrar </button>
+		<button onclick="deleteAreaProject();" class="btn btn-default"><i class="fa fa-trash-o"></i> Borrar </button>
 		<button id="addAreaToProject" class="btn btn-primary"><i class="fa fa-plus"></i> Agregar</button>
 		</div>
 		<a class="toggle-menuMarketplace close-menu"><i class="fa fa-times-circle"></i></a>
@@ -176,6 +176,30 @@ $(document).ready(function() {
   
 
 <script type="text/javascript">
+function deleteAreaProject()
+{
+	idAreaProject = $("#idTabAreaProject").val();
+	if(confirm("¿Esta seguro que desea eliminar el Area?"))
+	{
+		$.post(
+				'<?php echo BudgetController::createUrl('AjaxDeleteAreaProject')?>',
+				 {
+				 	id: idAreaProject,
+				 },'json').success(
+					function(data) 
+					{
+						if(data=="1")
+						{
+							$('#areaProjectDescription_'+idAreaProject).parent().parent().remove();
+						}
+						else
+						{
+							alert("Debe estar vacia para ser eliminada")
+						}						 
+					}
+				).error(function(){});			
+		}		
+}
 function editAreaProject()
 {
 	idAreaProject = $("#idTabAreaProject").val();		
