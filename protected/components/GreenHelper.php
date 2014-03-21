@@ -1822,7 +1822,7 @@ class GreenHelper
 	
 	static public function generateBudgetPDF($modelBudget)
 	{
-		
+		$commissionFactor = 1-($modelBudget->percent_commission/100);
 		$idBudget = $modelBudget->Id;
 		$versionNumber = $modelBudget->version_number;
 		$currency = '$';
@@ -1965,11 +1965,11 @@ class GreenHelper
 								<td class="align-left" width="91">Cantidad:</td>
 								<td class="align-left" width="91">'.$budgetItem->sum_quantity.'</td>
 								<td class="align-left" width="91">Precio Unitario:</td>
-								<td class="align-left" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
+								<td class="align-left" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-left" width="91">Descuento:</td>
-								<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()).'</td>
+								<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-right" width="91">Total:</td>								
-								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()*$budgetItem->sum_quantity).'</td>
+								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice(($budgetItem->getPriceCurrencyConverted()*$budgetItem->sum_quantity)/$commissionFactor).'</td>
 								</tr></tbody></table>';
 							////<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
 						}
@@ -1980,9 +1980,9 @@ class GreenHelper
 								<td class="align-left" width="121">Cantidad:</td>
 								<td class="align-left" width="121">'.$budgetItem->sum_quantity.'</td>
 								<td class="align-left" width="121">Precio Unitario:</td>
-								<td class="align-left" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
+								<td class="align-left" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-right" width="121">Precio Final:</td>								
-								<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()*$budgetItem->sum_quantity).'</td>
+								<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice(($budgetItem->getPriceCurrencyConverted()*$budgetItem->sum_quantity)/$commissionFactor).'</td>
 								</tr></tbody></table>';
 							//<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
 						}
@@ -2007,12 +2007,12 @@ class GreenHelper
 								<td class="align-left" width="91">Cantidad:</td>
 								<td class="align-left" width="91">'.$budgetItem->sum_quantity.'</td>
 								<td class="align-left" width="91">Precio Unitario:</td>
-								<td class="align-left" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
+								<td class="align-left" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-left" width="91">Descuento:</td>
-								<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()).'</td>
+								<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-right" width="91">Total:</td>
 								
-								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()*$budgetItem->sum_quantity).'</td>
+								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice(($budgetItem->getPriceCurrencyConverted()*$budgetItem->sum_quantity)/$commissionFactor).'</td>
 								</tr></tbody></table>';
 							//<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
 						}
@@ -2023,10 +2023,10 @@ class GreenHelper
 								<td class="align-left" width="121">Cantidad:</td>
 								<td class="align-left" width="121">'.$budgetItem->sum_quantity.'</td>
 								<td class="align-left" width="121">Precio Unitario:</td>
-								<td class="align-left" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
+								<td class="align-left" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-right" width="121">Precio Final:</td>
 								
-								<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()*$budgetItem->sum_quantity).'</td>
+								<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice(($budgetItem->getPriceCurrencyConverted()*$budgetItem->sum_quantity)/$commissionFactor).'</td>
 								</tr></tbody></table>';
 							//<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
 						}
@@ -2045,7 +2045,7 @@ class GreenHelper
 												<tbody>										
 													<tr>
 														<td class="bold lastRow">TOTAL</td>
-														<td class="align-right bold lastRow">'.$currency . ' ' . self::showPrice($totalItemPrice).'</td>
+														<td class="align-right bold lastRow">'.$currency . ' ' . self::showPrice($totalItemPrice/$commissionFactor).'</td>
 													</tr>
 												</tbody>
 											</table>';
@@ -2054,7 +2054,7 @@ class GreenHelper
 												<tbody>
 													<tr>
 														<td class="bold lastRow">TOTAL</td>
-														<td class="align-right bold lastRow">'.$currency . ' ' . self::showPrice($totalAccessoryPrice).'</td>
+														<td class="align-right bold lastRow">'.$currency . ' ' . self::showPrice($totalAccessoryPrice/$commissionFactor).'</td>
 													</tr>
 												</tbody>
 											</table>';
@@ -2092,9 +2092,9 @@ class GreenHelper
 				{
 					$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<tr>';
 						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td>'.$budgetItemAdditional->description.'</td>';
-						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right">'.$currency . ' ' . self::showPrice($budgetItemAdditional->getTotalPriceWODiscountCurrencyConverted()).'</td>';
-						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right">'.$budgetItemAdditional->getDiscountType().' '. self::showPrice($budgetItemAdditional->getDiscountCurrencyConverted()).'</td>';
-						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right bold">'.$currency . ' ' . self::showPrice($budgetItemAdditional->getTotalPriceWOChildernCurrencyConverted()).'</td>';
+						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right">'.$currency . ' ' . self::showPrice($budgetItemAdditional->getTotalPriceWODiscountCurrencyConverted()/$commissionFactor).'</td>';
+						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right">'.$budgetItemAdditional->getDiscountType().' '. self::showPrice($budgetItemAdditional->getDiscountCurrencyConverted()/$commissionFactor).'</td>';
+						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right bold">'.$currency . ' ' . self::showPrice($budgetItemAdditional->getTotalPriceWOChildernCurrencyConverted()/$commissionFactor).'</td>';
 					$serviceContentBodyAdditional = $serviceContentBodyAdditional . '</tr>';
 					
 					$totalAdditionalPrice = $totalAdditionalPrice + $budgetItemAdditional->getTotalPriceWOChildernCurrencyConverted();
@@ -2102,7 +2102,7 @@ class GreenHelper
 				
 				$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<tr>';
 					$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="bold lastRow" colspan="2">TOTAL</td>';
-					$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right bold lastRow" colspan="2">'.$currency . ' ' . self::showPrice($totalAdditionalPrice).'</td>';
+					$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right bold lastRow" colspan="2">'.$currency . ' ' . self::showPrice($totalAdditionalPrice/$commissionFactor).'</td>';
 				$serviceContentBodyAdditional = $serviceContentBodyAdditional . '</tr>';
 				
 				$serviceContentBodyAdditional = $serviceContentBodyAdditional . '</tbody></table>';
@@ -2122,7 +2122,7 @@ class GreenHelper
 				{
 					$serviceContentBodyTotal = $serviceContentBodyTotal . '<tr>';
 						$serviceContentBodyTotal = $serviceContentBodyTotal . '<td>Equipos</td>';
-						$serviceContentBodyTotal = $serviceContentBodyTotal . '<td class="align-right bold">'.$currency . ' ' . self::showPrice($totalItemPrice).'</td>';
+						$serviceContentBodyTotal = $serviceContentBodyTotal . '<td class="align-right bold">'.$currency . ' ' . self::showPrice($totalItemPrice/$commissionFactor).'</td>';
 					$serviceContentBodyTotal = $serviceContentBodyTotal . '</tr>';
 
 					$totalServicePrice = $totalServicePrice + $totalItemPrice;
@@ -2132,7 +2132,7 @@ class GreenHelper
 				{
 					$serviceContentBodyTotal = $serviceContentBodyTotal . '<tr>';
 						$serviceContentBodyTotal = $serviceContentBodyTotal . '<td>Accesorios</td>';
-						$serviceContentBodyTotal = $serviceContentBodyTotal . '<td class="align-right bold">'.$currency . ' ' . self::showPrice($totalAccessoryPrice).'</td>';
+						$serviceContentBodyTotal = $serviceContentBodyTotal . '<td class="align-right bold">'.$currency . ' ' . self::showPrice($totalAccessoryPrice/$commissionFactor).'</td>';
 					$serviceContentBodyTotal = $serviceContentBodyTotal . '</tr>';
 					
 					$totalServicePrice = $totalServicePrice + $totalAccessoryPrice;
@@ -2142,14 +2142,14 @@ class GreenHelper
 				{
 					$serviceContentBodyTotal = $serviceContentBodyTotal . '<tr>';
 						$serviceContentBodyTotal = $serviceContentBodyTotal . '<td>Adicionales</td>';
-						$serviceContentBodyTotal = $serviceContentBodyTotal . '<td class="align-right bold">'.$currency . ' ' . self::showPrice($totalAdditionalPrice).'</td>';
+						$serviceContentBodyTotal = $serviceContentBodyTotal . '<td class="align-right bold">'.$currency . ' ' . self::showPrice($totalAdditionalPrice/$commissionFactor).'</td>';
 					$serviceContentBodyTotal = $serviceContentBodyTotal . '</tr>';
 					
 					$totalServicePrice = $totalServicePrice + $totalAdditionalPrice;
 				}
 								$serviceContentBodyTotal = $serviceContentBodyTotal . '<tr>';
 									$serviceContentBodyTotal = $serviceContentBodyTotal . '<td class="bold lastRow">TOTAL</td>';
-									$serviceContentBodyTotal = $serviceContentBodyTotal . '<td class="align-right bold lastRow">'.$currency . ' ' . self::showPrice($totalServicePrice).'</td>';
+									$serviceContentBodyTotal = $serviceContentBodyTotal . '<td class="align-right bold lastRow">'.$currency . ' ' . self::showPrice($totalServicePrice/$commissionFactor).'</td>';
 								$serviceContentBodyTotal = $serviceContentBodyTotal . '</tr>';
 							$serviceContentBodyTotal = $serviceContentBodyTotal . '</tbody>';
 						$serviceContentBodyTotal = $serviceContentBodyTotal . '</table>';
@@ -2183,7 +2183,7 @@ class GreenHelper
 			{
 				$serviceSummaryContentBody = '<tr>';
 				$serviceSummaryContentBody = $serviceSummaryContentBody . '<td>'.$currentService['serviceName'].'</td>';
-				$serviceSummaryContentBody = $serviceSummaryContentBody . '<td class="align-right budgetMono bold">'.$currency . ' ' . self::showPrice($currentService['total']).'</td>';
+				$serviceSummaryContentBody = $serviceSummaryContentBody . '<td class="align-right budgetMono bold">'.$currency . ' ' . self::showPrice($currentService['total']/$commissionFactor).'</td>';
 				$serviceSummaryContentBody = $serviceSummaryContentBody . '</tr>';
 				
 				
@@ -2209,17 +2209,17 @@ class GreenHelper
 		
 							$gridTotalSummary = '<tr>';
 			$gridTotalSummary = $gridTotalSummary . '<td class="bold">Sub Total</td>';
-			$gridTotalSummary = $gridTotalSummary . '<td colspan="2" class="align-right budgetMono">'.$currency . ' ' . self::showPrice($totalServices).'</td>';
+			$gridTotalSummary = $gridTotalSummary . '<td colspan="2" class="align-right budgetMono">'.$currency . ' ' . self::showPrice($totalServices/$commissionFactor).'</td>';
 		$gridTotalSummary = $gridTotalSummary . '</tr>';
 		$gridTotalSummary = $gridTotalSummary . '<tr>';
 			$gridTotalSummary = $gridTotalSummary . '<td>Descuento</td>';
 			$gridTotalSummary = $gridTotalSummary . '<td class="budgetMono">'.$modelBudget->percent_discount.'%</td>';
-			$gridTotalSummary = $gridTotalSummary . '<td class="align-right budgetMono">'.$currency .' ' . self::showPrice($totalBudgetDiscount).'</td>';
+			$gridTotalSummary = $gridTotalSummary . '<td class="align-right budgetMono">'.$currency .' ' . self::showPrice($totalBudgetDiscount/$commissionFactor).'</td>';
 		$gridTotalSummary = $gridTotalSummary . '</tr>';
 		$gridTotalSummary = $gridTotalSummary . '<tr>';
 			$gridTotalSummary = $gridTotalSummary . '<td class="bold">Total</td>';
 			$gridTotalSummary = $gridTotalSummary . '<td class="align-right budgetMono" colspan="2">';
-			$gridTotalSummary = $gridTotalSummary . '<div class="label-big">'.$currency . ' ' . self::showPrice($totalServices - $totalBudgetDiscount).'</div>';
+			$gridTotalSummary = $gridTotalSummary . '<div class="label-big">'.$currency . ' ' . self::showPrice(($totalServices - $totalBudgetDiscount)/$commissionFactor).'</div>';
 			$gridTotalSummary = $gridTotalSummary . '</td>';
 		$gridTotalSummary = $gridTotalSummary . '</tr>';
 		//END TOTAL SUMMARY---------------------------------------------------------------
@@ -2310,7 +2310,7 @@ class GreenHelper
 									<table class="table tableReadOnly">
 	        							<tbody>
 										'.$serviceSummaryContent.'
-										<tr><td class="bold lastRow">TOTAL</td><td class="align-right bold lastRow">'.$currency . ' ' . self::showPrice($totalServices).'</td></tr>
+										<tr><td class="bold lastRow">TOTAL</td><td class="align-right bold lastRow">'.$currency . ' ' . self::showPrice($totalServices/$commissionFactor).'</td></tr>
 							        	</tbody>
 							      	</table>
 								</div>
