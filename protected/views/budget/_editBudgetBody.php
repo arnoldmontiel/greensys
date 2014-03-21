@@ -230,7 +230,7 @@ function setTotals()
 					$('#totals_price_w_discount').html(response.total_price_with_discount);					
 					$('#totals_discount').html(response.total_discount);
 					$('#totals_total_price').html(response.total_price);
-					$.fn.yiiGridView.update('totals-services-grid');
+					updateGridExtras();
 				}
 			}
 		);		
@@ -321,7 +321,6 @@ function changeQuantity(id, object)
 				$("#total_price_"+id).html(response.total_price+" <div class=\"usd\"><?php echo $settings->getEscapedCurrencyShortDescription()?></div>");
 				$(object).val(response.quantity);
 				setTotals();
-				updateGridExtras();
 				//alert("success");				
 		}).error(function(data)
 			{
