@@ -48,7 +48,8 @@ class BudgetItem extends ModelAudit
 	public $children_total_price;
 	public $children_count;
 	public $children_included;
-	public $stock;	
+	public $stock;
+	public $sum_quantity;	
 	public function beforeSave()
 	{
 		$criteria = new CDbCriteria();
@@ -143,14 +144,14 @@ class BudgetItem extends ModelAudit
 			$modelProgramingHours->Id_budget = $this->Id_budget;
 			$modelProgramingHours->version_number = $version;
 			$modelProgramingHours->Id_service = $this->Id_service;
-			$modelProgramingHours->description = 'ProgramaciÃ³n';
+			$modelProgramingHours->description = 'Programación';
 		
 		}
 		
 		$criteria=new CDbCriteria;
 		$criteria->compare('t.Id_budget',$this->Id_budget);
 		$criteria->compare('t.version_number',$version);
-		$criteria->compare('t.description','InstalaciÃ³n');
+		$criteria->compare('t.description','Instalación');
 		if(isset($this->Id_service))
 		{
 			if($this->Id_service != 0)
