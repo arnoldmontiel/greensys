@@ -88,7 +88,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 							{
 								$settings = new Settings();
 								$setting = $settings->getSetting();
-									return '<span class="label label-primary labelPrecio"><div class="usd">'.$data->budget->currency->short_description.'</div> '.number_format($data->budget->getTotalPriceByServiceWithHours($data->Id_service), 2).'</span>';
+								return '<span class="label label-primary labelPrecio"><div class="usd">'.$data->budget->currency->short_description.'</div> '.number_format($data->budget->getTotalPriceByServiceWithHours($data->Id_service), 2).'</span>';
 							},
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-right"),

@@ -28,6 +28,40 @@ $(document).ready(function() {
 		});
 		
 </script>
+<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="pushArea">
+		<div class="cbp-title">Elegir Area </div>
+		<div class="sideMenuBotones"> <button class="btn btn-default"><i class="fa fa-pencil"></i> Editar </button><button class="btn btn-default"><i class="fa fa-trash-o"></i> Borrar </button><button class="btn btn-primary"><i class="fa fa-plus"></i> Agregar</button></div>
+		<a class="toggle-menuMarketplace close-menu"><i class="fa fa-times-circle"></i></a>
+		
+				<div id="jstree" class="treeMenu">
+  <ul>
+  	<li data-jstree='{"icon":"images/areaIcon/area.ico"}'>Proyecto
+      <ul>
+  	<?php 
+  	$first = true;
+  	 
+  foreach($areaProjects as $item)	{ ?>
+        <!-- <li class="<?php echo ($first?'active':'');?>"><a onclick="changeTab(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab"><span id="areaProjectDescription_<?php echo $item->Id?>"><?php echo ($item->description==""?$item->area->description:$item->description);?></span> </a><a onclick="editAreaProject(<?php echo $item->Id;?>);" class="tabEdit"><i class="fa fa-pencil"></i></a></li> -->
+        <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'><a onclick="changeTree(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)"><?php echo ($item->description==""?$item->area->description:$item->description);?></a></li>
+		<?php if($first)
+	        {
+	        	$idArea = $item->Id_area;
+	        	$idAreaProject = $item->Id;
+	        	$first= false;
+	        }
+		}
+		?>
+      </ul>
+<!-- <li data-jstree='{"icon":"images/areaIcon/area.ico"}'>Planta Baja
+      <ul>
+        <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'><a>Hall Ingreso</a></li>
+        <li data-jstree='{"icon":"images/areaIcon/toilet.ico"}'><a href="#">Bano Visita</a></li>
+        <li data-jstree='{"icon":"images/areaIcon/den.ico"}'><a href="#">Sala</a></li>
+      </ul>
+    </li>-->
+  </ul> 		
+</div>
+</nav>
 
 <?php 
 $settings = new Settings();
@@ -51,7 +85,7 @@ $settings = new Settings();
         $idArea = null;
         $idAreaProject = null;
         foreach($areaProjects as $item)	{ ?>
-        <li class="<?php echo ($first?'active':'');?>"><a onclick="changeTab(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab"><span id="areaProjectDescription_<?php echo $item->Id?>"><?php echo ($item->description==""?$item->area->description:$item->description);?></span> </a><a onclick="editAreaProject(<?php echo $item->Id;?>);" class="tabEdit"><i class="fa fa-pencil"></i></a></li>
+        <!-- <li class="<?php echo ($first?'active':'');?>"><a onclick="changeTab(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab"><span id="areaProjectDescription_<?php echo $item->Id?>"><?php echo ($item->description==""?$item->area->description:$item->description);?></span> </a><a onclick="editAreaProject(<?php echo $item->Id;?>);" class="tabEdit"><i class="fa fa-pencil"></i></a></li> -->
 		<?php if($first)
 	        {
 	        	$idArea = $item->Id_area;
@@ -66,13 +100,13 @@ $settings = new Settings();
         <li class="pull-right">
         <button <?php echo !isset($idArea)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
           <div class="btn-group btnAlternateView">
-		  <button onclick="editBudget(<?php echo $model->Id?>,<?php echo $model->version_number?>)" type="button" class="btn btn-default active">Áreas</button>
+		  <button onclick="editBudget(<?php echo $model->Id?>,<?php echo $model->version_number?>)" type="button" class="btn btn-default active">Ã�reas</button>
 		  <button onclick="editBudgetByService(<?php echo $model->Id?>,<?php echo $model->version_number?>)" type="button" class="btn btn-default">Servicios</button>
           </div>
         </li>
        <li id="addAreaToProject" class="liButtonAdd"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ><i class="fa fa-plus"></i> Agregar Area</button></li>
       </ul>
-            <button class="toggle-menu menu-right btn btn-primary btnArea jPushMenuBtn menu-active hidden" id="toggleArea"> Cambiar Area </button>
+            <button class="toggle-menu menu-right btn btn-primary btnArea jPushMenuBtn menu-active" id="toggleArea"> Cambiar Area </button>
       
       <div class="tab-content">
       <?php if(!isset($idArea)):?>
@@ -304,7 +338,7 @@ function changeDiscountType(id, object)
 }
 function deleteBudgetItem(id,idAreaProject,idArea)
 {
-	if(confirm("¿Esta seguro que desea eliminar este ítem?"))
+	if(confirm("Â¿Esta seguro que desea eliminar este Ã­tem?"))
 	{
 		statusStartSaving();
 			$.post(
