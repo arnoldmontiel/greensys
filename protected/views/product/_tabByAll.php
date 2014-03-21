@@ -49,30 +49,6 @@
 						'headerHtmlOptions'=>array("class"=>"align-center"),
 				),
 				array(
-		 			'name'=>'height',
-					'value'=>'$data->showVolume($data->height)',
-					'htmlOptions'=>array("class"=>"align-right"),
-					'headerHtmlOptions'=>array("class"=>"align-right"),
-				),
-				array(
-						'name'=>'width',
-						'value'=>'$data->showVolume($data->width)',
-					'htmlOptions'=>array("class"=>"align-right"),
-					'headerHtmlOptions'=>array("class"=>"align-right"),
-				),
-				array(
-						'name'=>'length',
-						'value'=>'$data->showVolume($data->length)',
-					'htmlOptions'=>array("class"=>"align-right"),
-					'headerHtmlOptions'=>array("class"=>"align-right"),
-				),
-				array(
-						'name'=>'weight',
-						'value'=>'$data->showWeight($data->weight)',
-					'htmlOptions'=>array("class"=>"align-right"),
-					'headerHtmlOptions'=>array("class"=>"align-right"),
-				),
-				array(
 						'name'=>'profit_rate',
 						'value'=>'$data->profit_rate',
 						'htmlOptions'=>array("style"=>"text-align:right"),
@@ -92,6 +68,11 @@
 				array(
 						'name'=>'short_description',
 						'value'=>'GreenHelper::cutString($data->short_description,40)',
+						'htmlOptions'=>array("style"=>"width:20%;"),
+				),
+				array(
+						'name'=>'description_customer',
+						'value'=>'GreenHelper::cutString($data->description_customer,40)',
 						'htmlOptions'=>array("style"=>"width:20%;"),
 				),
 				array(
