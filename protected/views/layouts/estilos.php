@@ -250,7 +250,7 @@ a.list-group-item {
 .sideMenuBotones .btn{ margin-left:10px;}
 
 .treeMenu{overflow-y: auto;
-height: 100%;}
+height: 100%; border-left: 1px solid #CCC;}
 
 .treeMenu a{display:inline-block;}
 
@@ -732,7 +732,7 @@ padding: 6px 8px;
 
 #screenCrearPresupuesto .nav-tabs>li>a{color:#666;}
 #screenCrearPresupuesto .nav-tabs>li>a:hover{background-color:rgba(255,255,255,0.5);}
-#screenCrearPresupuesto .nav-tabs>li.active>a:hover{background-color:white; color:#333 !important;}
+#screenCrearPresupuesto .nav-tabs>li.active>a:hover{background-color:white; color:#333 !important; border:1px solid white;}
 
 
 #campoTipoPrecio{ width:65px; display:inline-block;}
@@ -790,6 +790,14 @@ text-align: left;
 margin: 0px;
 line-height: auto;
 padding-bottom: 20px; position:relative;}
+
+.tituloAreaPresu{
+margin: 0px;
+margin-bottom: 15px;
+color: #666;
+font-size: 24px;}
+
+.buttonsAreaPresu .btn{margin-left:10px;}
 
 .agregarImp{ position:absolute; right:10px; top:0px;}
 
