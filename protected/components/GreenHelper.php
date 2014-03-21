@@ -1877,6 +1877,8 @@ class GreenHelper
 			$criteria->addCondition($serviceCondition);
 			$criteria->addCondition('Id_product is not null');
 			$criteria->order = 't.order_by_service';
+			$criteria->group = 'Id_product';
+			$criteria->select = '*, SUM(quantity) as sum_quantity';
 			$budgetItems = BudgetItem::model()->findAll($criteria);
 				
 			//SERVICE---------------------------------------------------------------
@@ -1958,26 +1960,28 @@ class GreenHelper
 							$serviceContentBodyItem = $serviceContentBodyItem . '<table width="100%" class="tablaLimpia2 conDesc">
 								<tbody><tr>
 								<td class="align-left" width="91">Cantidad:</td>
-								<td class="align-left" width="91">'.$budgetItem->quantity.'</td>
+								<td class="align-left" width="91">'.$budgetItem->sum_quantity.'</td>
 								<td class="align-left" width="91">Precio Unitario:</td>
 								<td class="align-left" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
 								<td class="align-left" width="91">Descuento:</td>
 								<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()).'</td>
-								<td class="align-right" width="91">Total:</td>
-								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
+								<td class="align-right" width="91">Total:</td>								
+								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()*$budgetItem->sum_quantity).'</td>
 								</tr></tbody></table>';
+							////<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
 						}
 						else 
 						{
 							$serviceContentBodyItem = $serviceContentBodyItem . '<table width="100%" class="tablaLimpia2 sinDesc">
 								<tbody><tr>
 								<td class="align-left" width="121">Cantidad:</td>
-								<td class="align-left" width="121">'.$budgetItem->quantity.'</td>
+								<td class="align-left" width="121">'.$budgetItem->sum_quantity.'</td>
 								<td class="align-left" width="121">Precio Unitario:</td>
 								<td class="align-left" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
-								<td class="align-right" width="121">Precio Final:</td>
-								<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
+								<td class="align-right" width="121">Precio Final:</td>								
+								<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()*$budgetItem->sum_quantity).'</td>
 								</tr></tbody></table>';
+							//<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
 						}
 						
 						$serviceContentBodyItem = $serviceContentBodyItem . '</td>';
@@ -1998,26 +2002,30 @@ class GreenHelper
 							$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<table width="100%" class="tablaLimpia2 conDesc">
 								<tbody><tr>
 								<td class="align-left" width="91">Cantidad:</td>
-								<td class="align-left" width="91">'.$budgetItem->quantity.'</td>
+								<td class="align-left" width="91">'.$budgetItem->sum_quantity.'</td>
 								<td class="align-left" width="91">Precio Unitario:</td>
 								<td class="align-left" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
 								<td class="align-left" width="91">Descuento:</td>
 								<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()).'</td>
 								<td class="align-right" width="91">Total:</td>
-								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
+								
+								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()*$budgetItem->sum_quantity).'</td>
 								</tr></tbody></table>';
+							//<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
 						}
 						else
 						{
 							$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<table width="100%" class="tablaLimpia2 sinDesc">
 								<tbody><tr>
 								<td class="align-left" width="121">Cantidad:</td>
-								<td class="align-left" width="121">'.$budgetItem->quantity.'</td>
+								<td class="align-left" width="121">'.$budgetItem->sum_quantity.'</td>
 								<td class="align-left" width="121">Precio Unitario:</td>
 								<td class="align-left" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()).'</td>
 								<td class="align-right" width="121">Precio Final:</td>
-								<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
+								
+								<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()*$budgetItem->sum_quantity).'</td>
 								</tr></tbody></table>';
+							//<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getTotalPriceWOChildernCurrencyConverted()).'</td>
 						}
 							
 						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '</td>';
