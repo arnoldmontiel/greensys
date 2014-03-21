@@ -90,7 +90,7 @@ class Budget extends ModelAudit
 				$modelBudgetItem->version_number = $this->version_number;
 				$modelBudgetItem->Id_budget = $this->Id;
 				$modelBudgetItem->Id_service = $modelService->Id;
-				$modelBudgetItem->description = 'Programación';
+				$modelBudgetItem->description = 'Programaciï¿½n';
 				$modelBudgetItem->quantity = 0;
 				$modelBudgetItem->save();
 				
@@ -98,7 +98,7 @@ class Budget extends ModelAudit
 				$modelBudgetItem->version_number = $this->version_number;
 				$modelBudgetItem->Id_budget = $this->Id;
 				$modelBudgetItem->Id_service = $modelService->Id;
-				$modelBudgetItem->description = 'Instalación';
+				$modelBudgetItem->description = 'Instalaciï¿½n';
 				$modelBudgetItem->quantity = 0;
 				$modelBudgetItem->save();
 			}
@@ -135,13 +135,13 @@ class Budget extends ModelAudit
 		// will receive user inputs.
 		return array(
 			array('Id, Id_project, Id_budget_state, version_number, Id_currency, Id_currency_view', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
-			array('Id_project, Id_budget_state, version_number, Id_currency, Id_currency_view, Id_currency_conversor, Id_currency_from_currency_conversor, Id_currency_to_currency_conversor', 'numerical', 'integerOnly'=>true),
+			array('Id_project, Id_budget_state, version_number, Id_currency, Id_currency_view, Id_currency_conversor, Id_currency_from_currency_conversor, Id_currency_to_currency_conversor,percent_commission', 'numerical', 'integerOnly'=>true),
 			array('percent_discount', 'length', 'max'=>10),
-			array('date_creation, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, date_close, date_cancelled, date_approved', 'safe'),
-			array('description, note', 'length', 'max'=>255),
+			array('date_creation, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, date_close, date_cancelled, date_approved,percent_commission,name_commission,last_name_commission', 'safe'),
+			array('description, note,name_commission,last_name_commission', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_project, percent_discount, date_creation, Id_budget_state, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, version_number, totPrice, note, project_description, date_close, date_cancelled, date_approved, Id_currency, Id_currency_view, Id_currency_conversor, Id_currency_from_currency_conversor, Id_currency_to_currency_conversor', 'safe', 'on'=>'search'),
+			array('Id, Id_project, percent_discount, date_creation, Id_budget_state, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, version_number, totPrice, note, project_description, date_close, date_cancelled, date_approved, Id_currency, Id_currency_view, Id_currency_conversor, Id_currency_from_currency_conversor, Id_currency_to_currency_conversor,percent_commission,name_commission,last_name_commission', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -191,7 +191,10 @@ class Budget extends ModelAudit
 			'note' => 'RazÃ³n',
 			'date_close'=>'Cerrado', 
 			'date_cancelled'=>'Cancelado', 
-			'date_approved'=>'Aprobado'
+			'date_approved'=>'Aprobado',
+			'percent_commission'=>'% Comisi&oacute;n',
+			'name_commission'=>'Nombre',
+			'last_name_commission'=>'Apellido'
 		);
 	}
 
@@ -346,6 +349,9 @@ class Budget extends ModelAudit
 		$criteria->compare('t.version_number',$this->version_number);
 		$criteria->addCondition('(t.Id_budget_item is null)');
 		$criteria->addCondition('(t.Id_product is not null)');
+// 		$criteria->with[]="product";
+// 		$criteria->addCondition('(product.is_accessory ==0 )');
+		
 		
 		if(isset($Id_service))
 			$criteria->addCondition('t.Id_service='.$Id_service);
@@ -360,6 +366,33 @@ class Budget extends ModelAudit
 		}
 		return round($totalPrice,2);
 	}
+	public function getTotalPriceAccessoryByService($Id_service)
+	{
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('t.Id_budget',$this->Id);
+		$criteria->compare('t.version_number',$this->version_number);
+		$criteria->addCondition('(t.Id_budget_item is null)');
+		$criteria->addCondition('(t.Id_product is not null)');
+// 		$criteria->with[]="product";
+// 		$criteria->addCondition('(product.is_accessory ==1 )');
+	
+	
+		if(isset($Id_service))
+			$criteria->addCondition('t.Id_service='.$Id_service);
+		else
+			$criteria->addCondition('(t.Id_service is null)');
+	
+		$modelBudgetItem = BudgetItem::model()->findAll($criteria);
+		$totalPrice = 0;
+		foreach ($modelBudgetItem as $item)
+		{
+			$totalPrice += $item->getTotalPriceNotFormated();
+		}
+		return round($totalPrice,2);
+	}
+	
 	public function getTotalPriceByServiceWithHours($Id_service)
 	{
 		return round($this->getTotalPriceByService($Id_service)+$this->getTotalPriceTimeInstalationByService($Id_service)+$this->getTotalPriceTimeProgramationByService($Id_service)+  $this->getTotalPriceAdditionalByService($Id_service) ,2);

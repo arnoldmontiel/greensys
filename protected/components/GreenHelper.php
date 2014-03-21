@@ -1990,7 +1990,7 @@ class GreenHelper
 						$serviceContentBodyItem = $serviceContentBodyItem . '</td>';
 						$serviceContentBodyItem = $serviceContentBodyItem . '</tr>';
 	
-						$totalItemPrice = $totalItemPrice + $budgetItem->getTotalPriceWOChildernCurrencyConverted();
+						//$totalItemPrice = $totalItemPrice + $budgetItem->getTotalPriceWOChildernCurrencyConverted();						
 					}
 					else 
 					{
@@ -2034,10 +2034,12 @@ class GreenHelper
 						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '</td>';
 						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '</tr>';
 						
-						$totalAccessoryPrice = $totalAccessoryPrice + $budgetItem->getTotalPriceWOChildernCurrencyConverted();
+						//$totalAccessoryPrice = $totalAccessoryPrice + $budgetItem->getTotalPriceWOChildernCurrencyConverted();
 					}
 					
 				}
+				$totalItemPrice = $modelBudget->getTotalPriceByService($budgetItemService->Id_service);
+				$totalAccessoryPrice = $modelBudget->getTotalPriceAccessoryByService($budgetItemService->Id_service);
 				$serviceContentBodyItem = $serviceContentBodyItem . '</tbody></table>
 											<table class="table tableReadOnly tablaDatos">
 												<tbody>										

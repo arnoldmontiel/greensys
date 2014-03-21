@@ -74,7 +74,28 @@
   	<?php echo CHtml::activeHiddenField($model, 'Id_currency_view');?>
   <?php endif;?>
   
+   <div class="form-group">
+  	<?php 
+    	echo CHtml::activeLabel($model, 'percent_commission');
+    	echo CHtml::activeTextField($model, 'percent_commission', array('class'=>'form-control'));
+    ?>    
+  </div>
   <div class="row">
+  <div class="form-group col-sm-6">   
+  	<?php 
+    	echo CHtml::activeLabel($model, 'name_commission');
+    	echo CHtml::activeTextField($model, 'name_commission', array('class'=>'form-control'));
+    ?>    
+  </div>
+  <div class="form-group col-sm-6">   
+  	<?php 
+    	echo CHtml::activeLabel($model, 'last_name_commission');
+    	echo CHtml::activeTextField($model, 'last_name_commission', array('class'=>'form-control'));
+    ?>    
+  </div>
+  </div>
+  
+	<div class="row">
   <div class="form-group col-sm-6">    
 	<?php 
  		echo CHtml::activeLabel($model, 'date_estimated_inicialization');

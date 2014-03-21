@@ -100,7 +100,9 @@ $(document).ready(function() {
     <ul class="nav nav-tabs">
     <li><div class="tituloAreaPresu">Ba&ntilde;o > Ducha</div></li>
      
-     <li class="buttonsAreaPresu"><button <?php echo !isset($idArea)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button></li>
+     <li class="buttonsAreaPresu">
+     <button <?php echo !isset($idArea)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
+     </li>
      <li class="pull-right">
      <button class="toggle-menu menu-right btn btn-primary btnArea jPushMenuBtn menu-active" id="toggleArea"><i class="fa fa-cutlery"></i> Menu &Aacute;reas </button>
           <div class="btn-group btnAlternateView">
