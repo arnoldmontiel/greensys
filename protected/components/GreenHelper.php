@@ -235,7 +235,7 @@ class GreenHelper
 	
 	static public function showPrice($number)
 	{
-		return number_format($number,2);
+		return number_format($number,2,",",".");
 	}
 	
 	static public function exportBudgetToExcel($idBudget, $versionNumber)
@@ -1963,7 +1963,7 @@ class GreenHelper
 							$serviceContentBodyItem = $serviceContentBodyItem . '<table width="100%" class="tablaLimpia2 conDesc">
 								<tbody><tr>
 								<td class="align-left" width="91">Cantidad:</td>
-								<td class="align-left" width="91">'.$budgetItem->sum_quantity.'</td>
+								<td class="align-left" width="91">'.number_format($budgetItem->sum_quantity,2,",",".").'</td>
 								<td class="align-left" width="91">Precio Unitario:</td>
 								<td class="align-left" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-left" width="91">Descuento:</td>
@@ -1977,7 +1977,7 @@ class GreenHelper
 							$serviceContentBodyItem = $serviceContentBodyItem . '<table width="100%" class="tablaLimpia2 sinDesc">
 								<tbody><tr>
 								<td class="align-left" width="121">Cantidad:</td>
-								<td class="align-left" width="121">'.$budgetItem->sum_quantity.'</td>
+								<td class="align-left" width="121">'.number_format($budgetItem->sum_quantity,2,",",".").'</td>
 								<td class="align-left" width="121">Precio Unitario:</td>
 								<td class="align-left" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-right" width="121">Precio Final:</td>								
@@ -2002,7 +2002,7 @@ class GreenHelper
 							$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<table width="100%" class="tablaLimpia2 conDesc">
 								<tbody><tr>
 								<td class="align-left" width="91">Cantidad:</td>
-								<td class="align-left" width="91">'.$budgetItem->sum_quantity.'</td>
+								<td class="align-left" width="91">'.number_format($budgetItem->sum_quantity,2,",",".").'</td>
 								<td class="align-left" width="91">Precio Unitario:</td>
 								<td class="align-left" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-left" width="91">Descuento:</td>
@@ -2017,7 +2017,7 @@ class GreenHelper
 							$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<table width="100%" class="tablaLimpia2 sinDesc">
 								<tbody><tr>
 								<td class="align-left" width="121">Cantidad:</td>
-								<td class="align-left" width="121">'.$budgetItem->sum_quantity.'</td>
+								<td class="align-left" width="121">'.number_format($budgetItem->sum_quantity,2,",",".").'</td>
 								<td class="align-left" width="121">Precio Unitario:</td>
 								<td class="align-left" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-right" width="121">Precio Final:</td>
