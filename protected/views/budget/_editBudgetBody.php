@@ -373,7 +373,7 @@ function changeDiscountType(id, object)
 }
 function deleteBudgetItem(id,idAreaProject,idArea)
 {
-	if(confirm("Â¿Esta seguro que desea eliminar este Ã­tem?"))
+	if(confirm("¿Esta seguro que desea eliminar este I­tem?"))
 	{
 		statusStartSaving();
 			$.post(
