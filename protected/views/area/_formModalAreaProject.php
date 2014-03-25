@@ -21,7 +21,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
-        <button id ="saveAreaProject" type="button" class="btn btn-primary btn-lg"><i class="fa fa-upload"></i> Cargar</button>
+        <button id ="saveAreaProject" type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -45,6 +45,7 @@ $('#saveAreaProject').click(function()
 							if(data!=null)
 							{	
 								$("#"+$("#field_caller").val()).html(data.description);
+								$("#titleAreaProject").html(data.description);
 								$('#modalPlaceHolder').modal('hide');					
 							}	
 					},'json'

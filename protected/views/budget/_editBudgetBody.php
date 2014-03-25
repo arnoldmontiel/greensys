@@ -137,7 +137,7 @@ $(document).ready(function() {
     
       <div class="tituloFinalPresu">Equipos por &Aacute;rea</div>
     <ul class="nav nav-tabs">
-    <li><div class="tituloAreaPresu"><?php echo $areaDescription;?></div></li>
+    <li><div id="titleAreaProject" class="tituloAreaPresu"><?php echo $areaDescription;?></div></li>
      
      <li class="buttonsAreaPresu">
      <button  id="addProduct" <?php echo ($idArea==0)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
