@@ -161,17 +161,17 @@ function addProduct(id,version)
 	var idBudget = $('#idBudget').val();
 	var version = $('#version').val();
 	
-	$.post("<?php echo BudgetController::createUrl('AjaxGetTotalQty'); ?>",
-			{
-				idBudget:idBudget,
-				version:version,
-				idArea:idArea,
-				idAreaProject:idAreaProject
-			}
-		).success(
-			function(data){
-				$('#total-qty').children().text(data);
-			});
+//	$.post("<?php echo BudgetController::createUrl('AjaxGetTotalQty'); ?>",
+// 			{
+// 				idBudget:idBudget,
+// 				version:version,
+// 				idArea:idArea,
+// 				idAreaProject:idAreaProject
+// 			}
+// 		).success(
+// 			function(data){
+// 				$('#total-qty').children().text(data);
+// 			});
 		
 	$('#myModalAddProduct').modal('show');
 	

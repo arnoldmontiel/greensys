@@ -15,7 +15,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'summaryText'=>'',
 	'afterAjaxUpdate'=>'function(id, data){
 				setTotals();	
-				$.fn.yiiGridView.update("budget-item-generic");		
+				//$.fn.yiiGridView.update("budget-item-generic");		
 		
 				$("#budget-item-grid_'.$idAreaProject.'_'.$idArea.'").find(".txtDiscount").each(
 					function(index, item)

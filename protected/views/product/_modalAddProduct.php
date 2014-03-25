@@ -101,7 +101,7 @@ function addProductChild(id,object)
 }
 	$('#myModalAddProduct').on('hidden.bs.modal', function () 
 	{
-	  	$.fn.yiiGridView.update("product-grid-group"); 
+	  	//$.fn.yiiGridView.update("product-grid-group"); 
 	});
 </script>
 </div><!-- /.modal-dialog -->

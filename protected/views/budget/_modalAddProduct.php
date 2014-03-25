@@ -6,8 +6,7 @@
       </div>
       <div class="modal-body">
        <ul class="nav nav-tabs">
-        <li class="active"><a href="#tabTodos" data-toggle="tab">Todos</a></li>
-        <li id="total-qty" class="pull-right">Total Agregados <span class="label label-success">20</span></li>
+        <li class="active"><a href="#tabTodos" data-toggle="tab">Todos</a></li>        
       </ul>
       <div class="tab-content">
   <div class="tab-pane active" id="tabTodos">
@@ -55,7 +54,6 @@
 				array(
 						'header'=>'Acciones',
 						'value'=>function($data){
-						$grid = "'budget-grid-waiting'";
 						$value = 1;
 						if($data->qty_per_prod > 0)
 							$value = $data->qty_per_prod;
@@ -96,8 +94,8 @@
 		var idAreaProject = $('#idTabAreaProject').val();
 		var idArea = $('#idTabArea').val();
 	  	$.fn.yiiGridView.update("budget-item-grid_"+idAreaProject+"_"+idArea); 
-	  	updateGridExtras(); 
-	  	setTotals();	
+// 	  	updateGridExtras(); 
+// 	  	setTotals();	
 	});
 </script>
 </div><!-- /.modal-dialog -->

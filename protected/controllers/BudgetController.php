@@ -248,9 +248,13 @@ class BudgetController extends GController
 			$items = BudgetItem::model()->findAllByAttributes(array('Id_area_project'=>$id));
 			if(empty($items))
 			{
-				$model = AreaProject::model()->findByAttributes(array("Id"=>$id));
-				$model->delete();
-				echo 1;
+				$items = AreaProject::model()->findAllByAttributes(array('Id_parent'=>$id));
+				if(empty($items))
+				{				
+					$model = AreaProject::model()->findByAttributes(array("Id"=>$id));
+					$model->delete();
+					echo 1;
+				}
 			}
 			else {
 				echo 0;
