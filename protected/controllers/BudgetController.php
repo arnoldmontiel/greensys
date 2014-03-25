@@ -924,8 +924,12 @@ class BudgetController extends GController
 		
 		$priceListItemSale = new PriceListItem();
 		$priceListItemSale->unsetAttributes();
+		$criteria = new CDbCriteria();
+		$criteria->addCondition('Id_project = '.$model->Id_project);
+		$criteria->addCondition('Id_parent is null');
+		$areaProjects = AreaProject::model()->findAll($criteria);
 		
-		$areaProjects = AreaProject::model()->findAllByAttributes(array('Id_project'=>$model->Id_project));
+		$allAreaProjects = AreaProject::model()->findAllByAttributes(array("Id_project" => $model->Id_project));
 		
 		$modelBudgetItem = new BudgetItem('search');
 		$modelBudgetItem->unsetAttributes();  // clear any default values
@@ -967,6 +971,7 @@ class BudgetController extends GController
 					'priceListItemSale'=>$priceListItemSale,
 					'areaProjects'=>$areaProjects,
 					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
+					'allAreaProjects'=>$allAreaProjects,
 					'byService'=>$byService,
 		));
 	}
@@ -1663,6 +1668,7 @@ class BudgetController extends GController
 		{
 			$this->renderPartial('_addAreasToProject',array(
 					'Id_project'=>$_POST['Id_project'],
+					'Id_area_project'=>$_POST['Id_area_project'],
 			));				
 		}
 	}

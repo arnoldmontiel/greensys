@@ -353,7 +353,7 @@ class ProjectController extends GController
 		if(isset($_POST['Id_area'])&&isset($_POST['Id_project']))
 		{
 			$projectArea=new AreaProject;
-			$projectArea->attributes = array('Id_area'=>$_POST['Id_area'],'Id_project'=>$_POST['Id_project']);
+			$projectArea->attributes = array('Id_area'=>$_POST['Id_area'],'Id_project'=>$_POST['Id_project'],'Id_parent'=>$_POST['Id_area_project']);
 			$projectArea->save();
 		}
 	}

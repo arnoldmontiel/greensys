@@ -44,19 +44,40 @@ $(document).ready(function() {
   	$first = true;
   	$areaDescription="";
   foreach($areaProjects as $item)	{ ?>
-        <!-- <li class="<?php echo ($first?'active':'');?>">
-        	<a onclick="changeTab(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)" href="#itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>" data-toggle="tab">
-        		<span id="areaProjectDescription_<?php echo $item->Id?>"><?php echo ($item->description==""?$item->area->description:$item->description);?></span> 
-        	</a>
-        	<a onclick="editAreaProject(<?php echo $item->Id;?>);" class="tabEdit"><i class="fa fa-pencil"></i>
-        	</a>
-        </li> -->
         <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'>
         	<a onclick="changeTree(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)">
         		<span id="areaProjectDescription_<?php echo $item->Id?>">
         			<?php echo ($item->description==""?$item->area->description:$item->description);?>
         		</span>        		        		
         	</a>
+        	<?php $childAreaProjects = AreaProject::model()->findAllByAttributes(array('Id_parent'=>$item->Id));?>
+        	<?php if(!empty($childAreaProjects)):?>
+        	<ul>
+        		<?php foreach ($childAreaProjects as $child){?>
+		        <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'>
+		        	<a onclick="changeTree(<?php echo $child->Id_area;?>,<?php echo $child->Id;?>)">
+		        		<span id="areaProjectDescription_<?php echo $item->Id?>">
+		        			<?php echo ($child->description==""?$child->area->description:$child->description);?>
+		        		</span>        		        		
+		        	</a>
+        	        	<?php $childAreaProjects2 = AreaProject::model()->findAllByAttributes(array('Id_parent'=>$item->Id));?>
+			        	<?php if(!empty($childAreaProjects2)):?>
+			        	<ul>
+			        	<?php foreach ($childAreaProjects2 as $child2){?>
+					        <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'>
+					        	<a onclick="changeTree(<?php echo $child2->Id_area;?>,<?php echo $child2->Id;?>)">
+					        		<span id="areaProjectDescription_<?php echo $child2->Id?>">
+					        			<?php echo ($child2->description==""?$child2->area->description:$child2->description);?>
+					        		</span>        		        		
+					        	</a>
+					        </li>
+			        		<?php }?>
+					    </ul>
+			        	<?php endif?>
+		        </li>
+        		<?php }?>
+		    </ul>
+        	<?php endif?>        	      
         </li>
         <?php if($first)
 	        {
@@ -127,7 +148,7 @@ $(document).ready(function() {
       <?php endif;?>
         <?php
         $first = true;
-        foreach($areaProjects as $item)	{ ?>
+        foreach($allAreaProjects as $item)	{ ?>
         <div class="tab-pane <?php echo $first?'active':'';?>" id="itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>">
         <?php 
 	        
@@ -414,10 +435,12 @@ function fillAndOpenDD(id)
 }
 $("#addAreaToProject").click(function()
 {	
+	idAreaProject = $("#idTabAreaProject").val();
+	
 	$.post(
 			'<?php echo BudgetController::createUrl('ajaxFillAddAreaToProject')?>',
 			 {
-			 	Id_project: <?php echo $model->Id_project?>,
+			 	Id_project: <?php echo $model->Id_project?>,Id_area_project: idAreaProject
 			 },'json').success(
 				function(data) 
 				{ 

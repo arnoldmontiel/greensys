@@ -337,6 +337,7 @@ $("#tabExtraItems").click(function()
 					'priceListItemSale'=>$priceListItemSale,
 					'areaProjects'=>$areaProjects,
 					'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
+					'allAreaProjects'=>$allAreaProjects,
 		));
 	}
 	?>

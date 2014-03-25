@@ -35,11 +35,11 @@ class AreaProject extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('Id_area, Id_project', 'required'),
-			array('Id_area, Id_project, centralized', 'numerical', 'integerOnly'=>true),
+			array('Id_area, Id_project, centralized, Id_parent', 'numerical', 'integerOnly'=>true),
 			array('description', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('Id, Id_area, Id_project, centralized, description, descripionArea', 'safe', 'on'=>'search'),
+			array('Id, Id_area, Id_project, centralized, description, descripionArea,Id_parent', 'safe', 'on'=>'search'),
 		);
 	}
 
