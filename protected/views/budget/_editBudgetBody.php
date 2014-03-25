@@ -77,6 +77,23 @@ $(document).ready(function() {
 					        			<?php echo ($child2->description==""?$child2->area->description:$child2->description);?>
 					        		</span>        		        		
 					        	</a>
+					        	
+									<?php $childAreaProjects3 = AreaProject::model()->findAllByAttributes(array('Id_parent'=>$child2->Id));?>
+						        	<?php if(!empty($childAreaProjects3)):?>
+						        	<ul>
+						        	<?php foreach ($childAreaProjects3 as $child3){?>
+								        <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'>
+								        	<a onclick="changeTree(<?php echo $child3->Id_area;?>,<?php echo $child3->Id;?>)">
+								        		<span id="areaProjectDescription_<?php echo $child3->Id?>">
+								        			<?php echo ($child3->description==""?$child3->area->description:$child3->description);?>
+								        		</span>        		        		
+								        	</a>
+								        </li>
+						        		<?php }?>
+								    </ul>
+						        	<?php endif?>
+					        	
+					        	
 					        </li>
 			        		<?php }?>
 					    </ul>
