@@ -60,7 +60,7 @@ $(document).ready(function() {
 		        			<?php echo ($child->description==""?$child->area->description:$child->description);?>
 		        		</span>        		        		
 		        	</a>
-        	        	<?php $childAreaProjects2 = AreaProject::model()->findAllByAttributes(array('Id_parent'=>$item->Id));?>
+        	        	<?php $childAreaProjects2 = AreaProject::model()->findAllByAttributes(array('Id_parent'=>$child->Id));?>
 			        	<?php if(!empty($childAreaProjects2)):?>
 			        	<ul>
 			        	<?php foreach ($childAreaProjects2 as $child2){?>

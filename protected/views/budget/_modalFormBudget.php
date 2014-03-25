@@ -196,6 +196,9 @@
 
 		$("#form-new-budget").submit(function(e)
 		{
+			$(".modal-footer button").addClass("disabled");
+			$(".modal-footer a").addClass("disabled");
+			
 			<?php if($model->isNewRecord):?>
 			    var formURL = "<?php echo BudgetController::createUrl("AjaxSaveNewBudget"); ?>";
 			    var formData = new FormData(this);

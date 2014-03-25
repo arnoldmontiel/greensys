@@ -162,7 +162,6 @@ class BudgetItem extends ModelAudit
 		else
 			$criteria->addCondition('t.Id_service is null');
 		$modelInstalationHours = BudgetItem::model()->find($criteria);
-		var_dump($modelInstalationHours);
 		if(!isset($modelInstalationHours))
 		{
 			$modelInstalationHours = new BudgetItem();
