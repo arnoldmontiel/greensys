@@ -14,7 +14,7 @@
   <?php		
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'product-grid-add',
-		'dataProvider'=>$modelProducts->searchByBudgetItem(),
+		'dataProvider'=>$modelProducts->search(),
 		'selectableRows' => 0,
 		'filter'=>$modelProducts,
 		'summaryText'=>'',	
@@ -65,18 +65,18 @@
 						'htmlOptions'=>array("style"=>"text-align:center;"),
 						'headerHtmlOptions'=>array("style"=>"text-align:center;"),
 				),
-				array(
-						'header'=>'Agregados',
-						'value'=>function($data){
-							$value = "<span class='label label-default'>0</span>";
-							if($data->qty_per_prod > 0 )
-								$value = '<span class="label label-success">'.round($data->qty_per_prod).'</span>';
-							return $value;
-						},
-						'type'=>'raw',
-						'htmlOptions'=>array("style"=>"text-align:center;"),
-						'headerHtmlOptions'=>array("style"=>"text-align:center;"),
-				),
+// 				array(
+// 						'header'=>'Agregados',
+// 						'value'=>function($data){
+// 							$value = "<span class='label label-default'>0</span>";
+// 							if($data->qty_per_prod > 0 )
+// 								$value = '<span class="label label-success">'.round($data->qty_per_prod).'</span>';
+// 							return $value;
+// 						},
+// 						'type'=>'raw',
+// 						'htmlOptions'=>array("style"=>"text-align:center;"),
+// 						'headerHtmlOptions'=>array("style"=>"text-align:center;"),
+// 				),
 			),
 		));		
 ?>
