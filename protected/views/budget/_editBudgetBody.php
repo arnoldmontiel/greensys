@@ -38,10 +38,17 @@ $(document).ready(function() {
 		
 				<div id="jstree" class="treeMenu">
   <ul>
-  	<li data-jstree='{"icon":"images/areaIcon/area.ico"}'><?php echo $model->project->description;?>
+  	<li data-jstree='{"icon":"images/areaIcon/area.ico"}' >
+  		<a onclick="changeTree(0,0)">
+        	<span id="areaProjectDescription_0">
+        		<?php echo $model->project->description;?>
+        	</span>        		        		
+        </a>  	
       <ul>
   	<?php 
   	$first = true;
+  	$idArea = 0;
+  	$idAreaProject = 0;  	 
   	$areaDescription="";
   foreach($areaProjects as $item)	{ ?>
         <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'>
@@ -79,7 +86,8 @@ $(document).ready(function() {
 		    </ul>
         	<?php endif?>        	      
         </li>
-        <?php if($first)
+        <?php 
+        if($first)
 	        {
 	        	$idArea = $item->Id_area;
 	        	$idAreaProject = $item->Id;
@@ -115,7 +123,7 @@ $(document).ready(function() {
     <li><div class="tituloAreaPresu"><?php echo $areaDescription;?></div></li>
      
      <li class="buttonsAreaPresu">
-     <button <?php echo !isset($idArea)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
+     <button  <?php echo ($idArea==0)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
      </li>
      <li class="pull-right">
      <button class="toggle-menu menu-right btn btn-primary btnArea jPushMenuBtn menu-active" id="toggleArea"><i class="fa fa-cutlery"></i> Menu &Aacute;reas </button>
@@ -131,7 +139,7 @@ $(document).ready(function() {
     <?php if(false):?>
       <ul class="nav nav-tabs navTabsPencil hidden">      
         <li class="pull-right">
-        <button <?php echo !isset($idArea)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
+        <button <?php echo ($idArea==0)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
           <div class="btn-group btnAlternateView">
 		  <button onclick="editBudget(<?php echo $model->Id?>,<?php echo $model->version_number?>)" type="button" class="btn btn-default active">&Aacute;reas</button>
 		  <button onclick="editBudgetByService(<?php echo $model->Id?>,<?php echo $model->version_number?>)" type="button" class="btn btn-default">Servicios</button>
@@ -141,7 +149,7 @@ $(document).ready(function() {
       </ul>
       <?php endif?>
       <div class="tab-content areas">
-      <?php if(!isset($idArea)):?>
+      <?php if(($idArea==0)):?>
        <div class="alert alert-warning fade in" id="warningEmpty">
         Para poder agregar productos, primero debes <span class="bold">agregar &aacute;reas</span> desde el <span class="bold">Menu &Aacute;reas</span>.
       </div>

@@ -95,13 +95,26 @@ function changeTab(idArea,idAreaProject)
 }
 function changeTree(idArea,idAreaProject)
 {
-	
-	$(".areas .tab-pane").removeClass("active");
-	$("#itemArea_"+idAreaProject+"_"+idArea).addClass("active");
-	$('#idTabArea').val(idArea);
-	$('#idTabAreaProject').val(idAreaProject);
-	$('.tituloAreaPresu').html($('#areaProjectDescription_'+idAreaProject).html());
-	//$.fn.yiiGridView.update('budget-item-grid_' + idAreaProject + '_' + idArea);
+	if(idArea != 0 &&idAreaProject!=0)
+	{
+		$(".sideMenuBotones .btn").removeClass("disabled");
+		$(".areas .tab-pane").removeClass("active");
+		$("#itemArea_"+idAreaProject+"_"+idArea).addClass("active");
+		$('#idTabArea').val(idArea);
+		$('#idTabAreaProject').val(idAreaProject);
+		$('.tituloAreaPresu').html($('#areaProjectDescription_'+idAreaProject).html());
+		//$.fn.yiiGridView.update('budget-item-grid_' + idAreaProject + '_' + idArea);
+	}
+	else
+	{
+		$(".sideMenuBotones .btn").addClass("disabled");
+		$(".areas .tab-pane").removeClass("active");
+		$('#idTabArea').val(idArea);
+		$('#idTabAreaProject').val(idAreaProject);
+		$('.tituloAreaPresu').html("");
+		$('#addProduct').addClass("hide");
+		
+	}
 }
 
 function addQty(idProduct)
