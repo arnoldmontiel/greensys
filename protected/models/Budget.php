@@ -98,7 +98,7 @@ class Budget extends ModelAudit
 				$modelBudgetItem->version_number = $this->version_number;
 				$modelBudgetItem->Id_budget = $this->Id;
 				$modelBudgetItem->Id_service = $modelService->Id;
-				$modelBudgetItem->description = 'Instalaci�n';
+				$modelBudgetItem->description = 'Instalación';
 				$modelBudgetItem->quantity = 0;
 				$modelBudgetItem->save();
 			}
