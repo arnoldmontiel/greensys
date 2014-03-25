@@ -9,6 +9,7 @@
 		'summaryText'=>'',	
 		'afterAjaxUpdate'=>'js:function(id, data){setTotals();}',				
 		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
+		'ajaxUrl'=>BudgetController::createUrl('AjaxUpdateBudgetItemGrid',array("Id_area_project"=>$areaProject->Id,"Id_area"=>$areaProject->Id_area)),
 		'columns'=>array(
 					array(
 							'name'=>'Producto',

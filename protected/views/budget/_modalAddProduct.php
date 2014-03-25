@@ -16,6 +16,7 @@
 		'dataProvider'=>$modelProducts->search(),
 		'selectableRows' => 0,
 		'filter'=>$modelProducts,
+		'ajaxUrl'=>BudgetController::createUrl('AjaxUpdateSelectProductGrid'),			
 		'summaryText'=>'',	
 		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
 		'columns'=>array(	

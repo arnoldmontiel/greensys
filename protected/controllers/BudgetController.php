@@ -913,6 +913,39 @@ class BudgetController extends GController
 			}
 		}
 	}	
+	public function actionAjaxUpdateBudgetItemGrid()
+	{
+		$areaProject = new AreaProject;
+		if(isset($_GET['Id_area_project']))
+			$areaProject->Id =$_GET['Id_area_project'];
+		if(isset($_GET['Id_area']))
+			$areaProject->Id_area =$_GET['Id_area'];
+		
+		$modelBudgetItem = new BudgetItem('search');
+		$modelBudgetItem->unsetAttributes();  // clear any default values
+		if(isset($_GET['BudgetItem']))
+			$modelBudgetItem->attributes=$_GET['BudgetItem'];
+		
+		$modelBudgetItem->Id_area = $areaProject->Id_area;
+		$modelBudgetItem->Id_area_project = $areaProject->Id;
+		
+		$this->render('_tabEditBudgetByArea',array(
+				'modelBudgetItem'=>$modelBudgetItem,
+				'areaProject'=>$areaProject,
+		));
+	}
+	public function actionAjaxUpdateSelectProductGrid()
+	{
+		$modelProducts = new Product('search');
+		$modelProducts->unsetAttributes();  // clear any default values
+		if(isset($_GET['Product']))
+			$modelProducts->attributes=$_GET['Product'];
+		
+		
+		$this->render('_modalAddProduct',array(
+					'modelProducts'=>$modelProducts,
+		));
+	}
 	public function actionAddItem($id, $version, $byService=false)
 	{
 		$model = $this->loadModel($id, $version);

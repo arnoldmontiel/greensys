@@ -179,12 +179,8 @@ $(document).ready(function() {
 	        $modelBudgetItem->Id_area = $item->Id_area;
 	        $modelBudgetItem->Id_area_project = $item->Id;
 	        echo $this->renderPartial('_tabEditBudgetByArea',array(
-						'model'=>$model,
-						'modelProduct'=>$modelProduct,
 						'modelBudgetItem'=>$modelBudgetItem,
-						'priceListItemSale'=>$priceListItemSale,
 						'areaProject'=>$item,
-						'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,
 			));
 		?>
 
