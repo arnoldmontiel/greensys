@@ -97,22 +97,25 @@ function changeTree(idArea,idAreaProject)
 {
 	if(idArea != 0 &&idAreaProject!=0)
 	{
-		$(".sideMenuBotones .btn").removeClass("disabled");
+		$("#warningEmpty").addClass("hide");
+		$(".sideMenuBotones .isdisable").removeClass("disabled");
 		$(".areas .tab-pane").removeClass("active");
 		$("#itemArea_"+idAreaProject+"_"+idArea).addClass("active");
 		$('#idTabArea').val(idArea);
 		$('#idTabAreaProject').val(idAreaProject);
 		$('.tituloAreaPresu').html($('#areaProjectDescription_'+idAreaProject).html());
+		$('#addProduct').removeAttr("disabled");
 		//$.fn.yiiGridView.update('budget-item-grid_' + idAreaProject + '_' + idArea);
 	}
 	else
 	{
-		$(".sideMenuBotones .btn").addClass("disabled");
+		$("#warningEmpty").removeClass("hide");	
+		$(".sideMenuBotones .isdisable").addClass("disabled");
 		$(".areas .tab-pane").removeClass("active");
 		$('#idTabArea').val(idArea);
 		$('#idTabAreaProject').val(idAreaProject);
 		$('.tituloAreaPresu').html("");
-		$('#addProduct').addClass("hide");
+		$('#addProduct').attr("disabled","disabled");
 		
 	}
 }

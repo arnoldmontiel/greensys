@@ -22,16 +22,16 @@ $(document).ready(function() {
 			  return false;
 			  		});
 
-		$('#jstree').jstree();
-
+		$('#jstree').jstree({plugins: ["crrm"]});
+		$('#jstree').jstree('open_all');
 		});
 		
 </script>
 <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="pushArea">
 		<div class="cbp-title">Elegir Area </div>
 		<div class="sideMenuBotones"> 
-		<button onclick="editAreaProject();" class="btn btn-default"><i class="fa fa-pencil"></i> Editar </button>
-		<button onclick="deleteAreaProject();" class="btn btn-default"><i class="fa fa-trash-o"></i> Borrar </button>
+		<button onclick="editAreaProject();" class="btn btn-default isdisable disabled"><i class="fa fa-pencil"></i> Editar </button>
+		<button onclick="deleteAreaProject();" class="btn btn-default isdisable disabled"><i class="fa fa-trash-o"></i> Borrar </button>
 		<button id="addAreaToProject" class="btn btn-primary"><i class="fa fa-plus"></i> Agregar</button>
 		</div>
 		<a class="toggle-menuMarketplace close-menu"><i class="fa fa-times-circle"></i></a>
@@ -63,7 +63,7 @@ $(document).ready(function() {
         		<?php foreach ($childAreaProjects as $child){?>
 		        <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'>
 		        	<a onclick="changeTree(<?php echo $child->Id_area;?>,<?php echo $child->Id;?>)">
-		        		<span id="areaProjectDescription_<?php echo $item->Id?>">
+		        		<span id="areaProjectDescription_<?php echo $child->Id?>">
 		        			<?php echo ($child->description==""?$child->area->description:$child->description);?>
 		        		</span>        		        		
 		        	</a>
@@ -87,7 +87,7 @@ $(document).ready(function() {
         	<?php endif?>        	      
         </li>
         <?php 
-        if($first)
+        if($first&&false)
 	        {
 	        	$idArea = $item->Id_area;
 	        	$idAreaProject = $item->Id;
@@ -123,7 +123,7 @@ $(document).ready(function() {
     <li><div class="tituloAreaPresu"><?php echo $areaDescription;?></div></li>
      
      <li class="buttonsAreaPresu">
-     <button  <?php echo ($idArea==0)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
+     <button  id="addProduct" <?php echo ($idArea==0)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
      </li>
      <li class="pull-right">
      <button class="toggle-menu menu-right btn btn-primary btnArea jPushMenuBtn menu-active" id="toggleArea"><i class="fa fa-cutlery"></i> Menu &Aacute;reas </button>
@@ -151,17 +151,14 @@ $(document).ready(function() {
       <div class="tab-content areas">
       <?php if(($idArea==0)):?>
        <div class="alert alert-warning fade in" id="warningEmpty">
-        Para poder agregar productos, primero debes <span class="bold">agregar &aacute;reas</span> desde el <span class="bold">Menu &Aacute;reas</span>.
+        Para poder agregar productos, primero debes <span class="bold">agregar/seleccionar &aacute;reas</span> desde el <span class="bold">Menu &Aacute;reas</span>.
       </div>
       <?php endif;?>
         <?php
-        $first = true;
         foreach($allAreaProjects as $item)	{ ?>
-        <div class="tab-pane <?php echo $first?'active':'';?>" id="itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>">
+        <div class="tab-pane" id="itemArea_<?php echo $item->Id.'_'.$item->Id_area;?>">
         <?php 
 	        
-        	if($first)
-        	$first = false;
 	        $modelBudgetItem->Id_area = $item->Id_area;
 	        $modelBudgetItem->Id_area_project = $item->Id;
 	        echo $this->renderPartial('_tabEditBudgetByArea',array(
@@ -219,7 +216,12 @@ function deleteAreaProject()
 					{
 						if(data=="1")
 						{
-							$('#areaProjectDescription_'+idAreaProject).parent().parent().remove();
+							//if($('#areaProjectDescription_'+idAreaProject).parent().parent().parent().hasClass("jstree-children"))
+							//	$('#areaProjectDescription_'+idAreaProject).parent().parent().parent().remove();
+							//$('#jstree').jstree('delete_node', $('#areaProjectDescription_'+idAreaProject).parent().parent());
+							$('#areaProjectDescription_'+idAreaProject).parent().parent().remove();							
+							changeTree(0,0);
+							location.reload();
 						}
 						else
 						{
