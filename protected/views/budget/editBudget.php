@@ -149,9 +149,9 @@ function addQty(idProduct)
 
 function addProduct(id,version)
 {
-	$.fn.yiiGridView.update('product-grid-add', {
-		data: $(this).serialize() + '&idArea=' + $('#idTabArea').val()+'&idAreaProject=' + $('#idTabAreaProject').val()
-	});
+// 	$.fn.yiiGridView.update('product-grid-add', {
+// 		data: $(this).serialize() + '&idArea=' + $('#idTabArea').val()+'&idAreaProject=' + $('#idTabAreaProject').val()
+// 	});
 	
 	$('#myModalAddProduct').append($('#container-modal-addProduct'));
 	$('#container-modal-addProduct').show();
