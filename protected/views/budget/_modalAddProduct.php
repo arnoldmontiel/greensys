@@ -65,7 +65,7 @@
 						$value = 1;
 						if($data->qty_per_prod > 0)
 							$value = $data->qty_per_prod;
-							return '<input onkeyup="validateNumber(this);" type="text" id="qty-field-'.$data->Id.'" class="form-control inputSmall align-right" value="'.round($value).'"><button onclick="addQty('.$data->Id.')" type="button" class="btn btn-default btn-sm"><i class="fa fa-save"></i> Aplicar</button>';						
+							return '<input onkeyup="validateNumber(this);" type="text" id="qty-field-'.$data->Id.'" class="form-control inputSmall align-right" value="'.round($value).'"><button onclick="addQty('.$data->Id.',this)" type="button" class="btn btn-default btn-sm"><i class="fa fa-save"></i> Aplicar</button>';						
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:center;"),
@@ -92,7 +92,7 @@
       
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-check"></i> Listo</button>
+        <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-check"></i> Cerrar</button>
       </div>
     </div><!-- /.modal-content -->
 <script type="text/javascript">

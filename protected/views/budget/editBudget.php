@@ -120,8 +120,9 @@ function changeTree(idArea,idAreaProject)
 	}
 }
 
-function addQty(idProduct)
+function addQty(idProduct,object)
 {
+	//$(object).addClass('disabled', {duration:500});
 	var qty = $("#qty-field-"+idProduct).val();
 	var idAreaProject = $('#idTabAreaProject').val();
 	var idArea = $('#idTabArea').val();
@@ -138,12 +139,14 @@ function addQty(idProduct)
 			}
 		).success(
 			function(data){
+				//$(object).removeClass('disabled', {duration:500});
+				
 // 				$.fn.yiiGridView.update('product-grid-add', {
 // 					data: $(this).serialize() + '&idArea=' + $('#idTabArea').val()+'&idAreaProject=' + $('#idTabAreaProject').val()
 // 				});			
 				
 // 				$('#total-qty').children().text(data); 
-			});
+			}).error(function(data){$(object).removeClass('disabled', {duration:500});});
 		return false;
 }
 

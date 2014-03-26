@@ -22,7 +22,11 @@ $(document).ready(function() {
 			  return false;
 			  		});
 
-		$('#jstree').jstree({plugins: ["crrm"]});
+		$('#jstree').jstree({"plugins" : [
+		                                  "contextmenu", "dnd", "search",
+		                                  "state", "types", "wholerow"
+		                                ]
+		                              });
 		$('#jstree').jstree('open_all');
 		});
 		
@@ -232,8 +236,13 @@ function deleteAreaProject()
 							//if($('#areaProjectDescription_'+idAreaProject).parent().parent().parent().hasClass("jstree-children"))
 							//	$('#areaProjectDescription_'+idAreaProject).parent().parent().parent().remove();
 							//$('#jstree').jstree('delete_node', $('#areaProjectDescription_'+idAreaProject).parent().parent());
-							$('#areaProjectDescription_'+idAreaProject).parent().parent().remove();							
+							//$('#areaProjectDescription_'+idAreaProject).parent().parent().remove();							
 							changeTree(0,0);
+
+// 							var ref = $('#jstree').jstree(true),
+// 							sel = ref.get_selected();
+// 							if(!sel.length) { return false; }
+// 							ref.delete_node(sel);
 							location.reload();
 						}
 						else
