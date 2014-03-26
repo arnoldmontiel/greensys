@@ -1,3 +1,12 @@
+<script>
+$(document).ready (function (){
+new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','ol','ul','indent','outdent']}).panelInstance('Product_long_description');
+new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','ol','ul','indent','outdent']}).panelInstance('Product_description_supplier');
+});
+
+
+</script>
+
 <?php 
 $settings = new Settings();
 $weightToShipping = MeasurementUnit::model()->findByAttributes(array('short_description'=>'kg'));
@@ -478,6 +487,15 @@ $('#deleteIcon').click(function(){
   
    <div class="row">
     <div class="col-sm-4">
+      <div class="rowSeparator noTopMargin">IMPORTANCIA DE PRODUCTO</div>
+      <table class="table table-striped table-bordered tablaIndividual" width="100%">
+        <tbody>
+          <tr>
+            <td width="20%" style="text-align:right;">Importancia</td>
+            <td width="80%">ACA VA EL COMBO Alta, media, baja. Default: Baja</td>
+          </tr>
+        </tbody>
+      </table>  
       <div class="rowSeparator noTopMargin">HORAS</div>
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <tbody>
@@ -490,7 +508,7 @@ $('#deleteIcon').click(function(){
             <td><?php echo $form->textField($model,'time_programation', array("class"=>"form-control")); ?></td>
           </tr>
         </tbody>
-      </table>  
+      </table> 
     </div>
     <!-- /.col-sm-4 -->
     <div class="col-sm-4">
@@ -560,34 +578,8 @@ $('#deleteIcon').click(function(){
     </div>
     <!-- /.row -->
   
-   <div class="row">
-   
-    <div class="col-sm-4">
-      <div class="rowSeparator noTopMargin">DESCRIPCIONES</div>
-      <table class="table table-striped table-bordered tablaIndividual" width="100%">
-        <tbody>
-          <tr>
-            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'short_description'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'short_description', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 2)); ?></td>
-          </tr>
-          <tr>
-            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'long_description'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'long_description', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 4)); ?></td>
-          </tr>
-          <tr>
-            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'description_customer'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'description_customer', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 2)); ?></td>
-          </tr>
-          <tr>
-            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'description_supplier'); ?></td>
-            <td width="80%"><?php echo $form->textArea($model, 'description_supplier', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 4)); ?></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!-- /.col-sm-4 --> 
-    
-        <div class="col-sm-8">
+  <div class="row">
+  <div class="col-sm-12">
         <?php if($model->isNewRecord):?>
         <div class="alert alert-warning fade in" id="warningEmpty">
         	Para poder agregar subproductos, primero debes <strong><i class="fa fa-save"></i> Guardar</strong>.
@@ -651,7 +643,35 @@ $('#deleteIcon').click(function(){
       <?php endif?>
       
     </div>
-    <!-- /.col-sm-4 --> 
+    <!-- /.col-sm-12 --> 
+  </div>
+  <!--  /.row  -->
+  
+   <div class="row">
+    <div class="col-sm-12">
+      <div class="rowSeparator noTopMargin">DESCRIPCIONES</div>
+      <table class="table table-striped table-bordered tablaIndividual" width="100%">
+        <tbody>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'short_description'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'short_description', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 2)); ?></td>
+          </tr>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'long_description'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'long_description', array("class"=>"form-control", 'maxlength' => 2000, 'rows' => 5)); ?></td>
+          </tr>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'description_customer'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'description_customer', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 2)); ?></td>
+          </tr>
+          <tr>
+            <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'description_supplier'); ?></td>
+            <td width="80%"><?php echo $form->textArea($model, 'description_supplier', array("class"=>"form-control",'maxlength' => 2000, 'rows' => 5)); ?></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- /.col-sm-12 --> 
     </div>
     <!-- /.row -->
     
