@@ -8,9 +8,9 @@ $settings = new Settings();
     <p>En esta tabla se muestran los n&uacute;meros finales con descuentos ya aplicados.</p>
 <?php
 $criteria = new CDbCriteria();
-$criteria->with[]="service";
 $criteria->addCondition('Id_budget='.$model->Id);
 $criteria->addCondition('version_number='.$model->version_number);
+$criteria->with[]="service";
 $criteria->group="Id_service";
 $criteria->order="service.description";
 
@@ -21,6 +21,12 @@ $dataProvider = new CActiveDataProvider($modelBudgetItemService, array(
 		'criteria'=>$criteria,
 		'sort'=>$sort,
 ));
+
+$dataProvider->pagination=array(
+		'route'=>'budget/AjaxUpdateBudgetTotalServiceGrid',
+		'params'=>array("Id"=>$model->Id,"version_number"=>$model->version_number)
+);
+
 
 $this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'totals-services-grid',
