@@ -99,6 +99,7 @@
  * @property string $accessory_d
  * @property string $attached
  * @property integer $is_accessory
+ * @property integer $relevance_level
  * 
  * The followings are the available model relations:
  * @property BudgetItem[] $budgetItems
@@ -185,7 +186,7 @@ class Product extends ModelAudit
 		// will receive user inputs.
 		return array(
 			array('Id_brand, Id_currency, Id_category, Id_nomenclator, Id_product_type, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, Id_category, Id_sub_category', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
-			array('Id_volts, Id_currency,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, need_rack, unit_rack, unit_fan, from_dtools, verified, Id_product, need_ups, is_accessory', 'numerical', 'integerOnly'=>true),
+			array('Id_volts, Id_currency,Id_brand, Id_category, Id_nomenclator, Id_product_type, discontinued, hide, Id_supplier,Id_measurement_unit_weight,Id_measurement_unit_linear, need_rack, unit_rack, unit_fan, from_dtools, verified, Id_product, need_ups, is_accessory, relevance_level', 'numerical', 'integerOnly'=>true),
 			array(' part_number, url, tags, 
 				accounting_item_name, summarize, sales_tax, labor_sales_tax, dispersion, bulk_wire, model, vendor, default_broker, default_send_format, commercial_name, accessory_a, accessory_b, accessory_c, accessory_d, attached', 'length', 'max'=>255),
 			array('code, code_supplier, color, other', 'length', 'max'=>45),
@@ -195,7 +196,7 @@ class Product extends ModelAudit
 			array('Id_volts, time_instalation, time_programation, Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, Id_sub_category', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_brand, Id_category, Id_nomenclator, Id_product_type, description_customer, description_supplier, short_description, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation,time_programation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color, other, Id_category, power, current, need_rack, unit_rack, from_dtools, verified, model, vendor, Id_product, default_broker, default_send_format, shipping_box_lenght, shipping_box_width, shipping_box_height, shipping_box_volume, shipping_box_weight, dimensional_weight_IATA, dimensional_weight_FEDEX, dimensional_weight_DHL, dimensional_weight_UPS, dimensional_weight_custom1, dimensional_weight_custom2, dimensional_weight_custom3, off, off_category_a, off_category_b, off_category_c, off_category_d, deale_distributor_price, need_ups, commercial_name, commercial_description, accessory_a, accessory_b, accessory_c, accessory_d, attached, budget_id, budget_version qty_per_prod, budget_area, budget_area_project, is_accessory', 'safe', 'on'=>'search'),
+			array('Id, Id_brand, Id_category, Id_nomenclator, Id_product_type, description_customer, description_supplier, short_description, code, code_supplier, discontinued, length, width, height, profit_rate, msrp, time_instalation,time_programation, hide, weight,Id_supplier, brand_description, category_description, nomenclator_description, supplier_description, dealer_cost, color, other, Id_category, power, current, need_rack, unit_rack, from_dtools, verified, model, vendor, Id_product, default_broker, default_send_format, shipping_box_lenght, shipping_box_width, shipping_box_height, shipping_box_volume, shipping_box_weight, dimensional_weight_IATA, dimensional_weight_FEDEX, dimensional_weight_DHL, dimensional_weight_UPS, dimensional_weight_custom1, dimensional_weight_custom2, dimensional_weight_custom3, off, off_category_a, off_category_b, off_category_c, off_category_d, deale_distributor_price, need_ups, commercial_name, commercial_description, accessory_a, accessory_b, accessory_c, accessory_d, attached, budget_id, budget_version qty_per_prod, budget_area, budget_area_project, is_accessory, relevance_level', 'safe', 'on'=>'search'),
 		
 			
 		);

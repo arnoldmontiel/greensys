@@ -492,7 +492,7 @@ $('#deleteIcon').click(function(){
         <tbody>
           <tr>
             <td width="20%" style="text-align:right;">Importancia</td>
-            <td width="80%">ACA VA EL COMBO Alta, media, baja. Default: Baja</td>
+            <td width="80%"><?php echo $form->dropDownList($model, 'relevance_level', array('0'=>'Baja', '1'=>'Media', '2'=>'Alta'), array("class"=>"form-control")); ?></td>
           </tr>
         </tbody>
       </table>  
