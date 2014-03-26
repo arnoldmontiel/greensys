@@ -72,6 +72,9 @@ a:hover, a:active, a:focus {
 i {
   outline: 0 none !important;
 }
+b, strong {
+font-family: 'GudeaBold';
+}
 button {
   outline: 0 none !important;
 }
@@ -170,7 +173,7 @@ letter-spacing: 2px;}
 	border-top: 6px solid #24D900 ;
 	background-color: #f8f8f8 ;
 	color: #777 ;
-	z-index:1099 ;
+	z-index:1060 ;
 }
 
 .cbp-spmenu-vertical a {
@@ -1131,6 +1134,20 @@ div.superBudgetTabla .tablaDatos td{}
 #screenReadOnlyCaratulaFinal .caratulaResumen{margin-top:60px;}
 
 .redDiscount{color:red;}
+
+/* 3 tamanos de producto */
+ .tableReadOnly tr.pdfProdBIG .tablaLimpia td img.imgTD{width:250px !important;}
+ tr.pdfProdBIG td.pdfTituloProd{font-size:16px; font-size:13px;}
+
+ .tableReadOnly tr.pdfProdMEDIUM img.imgTD{width:150px;}
+ tr.pdfProdMEDIUM td.pdfTituloProd{font-size:14px; font-size:13px;}
+
+ .tableReadOnly tr.pdfProdSMALL img.imgTD{width:100px;}
+ tr.pdfProdSMALL td.pdfTituloProd{font-size:13px;}
+ 
+ /*solo para que se vea bien la read only online*/
+ .tableReadOnly .tablaLimpia td.descContainer{width:20% !important;}
+ .tableReadOnly tbody>tr>td{vertical-align:middle;}
 
 /* ------ END READ ONLY ------- */
 

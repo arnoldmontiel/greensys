@@ -14,6 +14,8 @@
 <!-- JS Tree -->
 <link rel="stylesheet" href="css/jstree.min.css" />
 <script src="js/jstree.min.js"></script>
+<!-- NicEdit -->
+<script src="js/nicEdit.js"></script>
 <?php Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl."/js/tools.js");?>
 <?php include('estilos.php');?>
 </head>
