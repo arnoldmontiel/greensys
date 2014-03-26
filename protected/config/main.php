@@ -144,7 +144,7 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=green',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'admin',
+			'password' => 'root',
 			'charset' => 'utf8',
 		),
 		'db2'=>array(
@@ -152,7 +152,7 @@ return array(
 					'connectionString' => 'mysql:host=localhost;dbname=tapia',
 					'emulatePrepare' => true,
 					'username' => 'root',
-					'password' => 'admin',
+					'password' => 'root',
 					'charset' => 'utf8',
 		),
 
