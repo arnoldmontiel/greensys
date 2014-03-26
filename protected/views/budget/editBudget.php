@@ -138,11 +138,11 @@ function addQty(idProduct)
 			}
 		).success(
 			function(data){
-				$.fn.yiiGridView.update('product-grid-add', {
-					data: $(this).serialize() + '&idArea=' + $('#idTabArea').val()+'&idAreaProject=' + $('#idTabAreaProject').val()
-				});			
+// 				$.fn.yiiGridView.update('product-grid-add', {
+// 					data: $(this).serialize() + '&idArea=' + $('#idTabArea').val()+'&idAreaProject=' + $('#idTabAreaProject').val()
+// 				});			
 				
-				$('#total-qty').children().text(data); 
+// 				$('#total-qty').children().text(data); 
 			});
 		return false;
 }
