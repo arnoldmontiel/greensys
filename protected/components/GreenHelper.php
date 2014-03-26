@@ -1891,15 +1891,15 @@ class GreenHelper
 				if(isset($budgetItemService->service))
 				{
 					$serviceName = $budgetItemService->service->description;
-					$serviceDesc = $budgetItemService->service->long_description;
-					$serviceNote = $budgetItemService->service->note;
+					$serviceDesc = nl2br($budgetItemService->service->long_description);
+					$serviceNote = nl2br($budgetItemService->service->note);
 					
 					$projectServiceDB = ProjectService::model()->findByAttributes(array('Id_project'=>$budgetItemService->budget->Id_project,
 							'Id_service'=>$budgetItemService->Id_service));
 					if(isset($projectServiceDB))
 					{
-						$serviceDesc = $projectServiceDB->long_description;
-						$serviceNote = $projectServiceDB->note;
+						$serviceDesc = nl2br($projectServiceDB->long_description);
+						$serviceNote = nl2br($projectServiceDB->note);
 					}
 				}
 		
@@ -1926,6 +1926,89 @@ class GreenHelper
 				$totalItemPrice = 0;
 				$totalAccessoryPrice = 0;
 				
+
+				/* PARA PRUEBASSSSSSSSS -------------------- */
+				
+				$serviceContentBodyItem = $serviceContentBodyItem . '
+						<tr class="pdfProdBIG"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (BIG)</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="230" class="descContainer"><img class="imgTD" width="250" src="images/RTI_KX7_small.jpg"></td><td width="500">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non placerat nisl. Sed condimentum ornare turpis, nec fringilla ipsum iaculis id. Curabitur tempor turpis lobortis elit eleifend rhoncus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris semper convallis tellus, et convallis odio. Suspendisse ac turpis risus. Aenean et pulvinar est, eget tempus dolor. Sed vitae laoreet elit, non pellentesque augue. In facilisis elementum turpis nec condimentum. Nam bibendum scelerisque est, eleifend pretium purus aliquam in. Aliquam sit amet pulvinar est, non sagittis massa. Sed egestas suscipit sem et convallis. Aenean vitae tellus eget urna tincidunt faucibus et vitae ante. Morbi elementum vel neque vel pretium. Cras vehicula est id ultrices congue. Integer lacinia nec ipsum et pulvinar. In ultrices libero id velit mattis sodales. In venenatis massa sed lobortis mollis. Phasellus eu est eu tellus malesuada vulputate.
+						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
+						<tbody><tr>
+						<td class="align-left" width="121">Cantidad:</td>
+						<td class="align-left" width="121">2.00</td>
+						<td class="align-left" width="121">Precio Unitario:</td>
+						<td class="align-left" width="121">U$D 1,689.66</td>
+						<td class="align-right" width="121">Precio Final:</td>
+						<td class="align-right bold" width="121">U$D 3,379.31</td>
+						</tr></tbody></table></td></tr>
+						<tr class="pdfProdMEDIUM"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (MED)</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="180" class="descContainer"><img class="imgTD" width="150" src="images/RTI_KX7_small.jpg"></td><td width="550">
+						Donec eu elit sem. Phasellus sit amet varius orci. Praesent sit amet lorem tortor. Sed vel enim augue. Ut ac dapibus nunc, ac adipiscing urna. Integer blandit commodo velit, vitae lacinia urna luctus sed. Maecenas tempor scelerisque leo non euismod. Mauris quis volutpat justo. Nulla dapibus velit vitae odio ornare posuere. Ut molestie feugiat congue. Morbi vel volutpat sem, a semper diam.
+						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
+						<tbody><tr>
+						<td class="align-left" width="121">Cantidad:</td>
+						<td class="align-left" width="121">2.00</td>
+						<td class="align-left" width="121">Precio Unitario:</td>
+						<td class="align-left" width="121">U$D 1,689.66</td>
+						<td class="align-right" width="121">Precio Final:</td>
+						<td class="align-right bold" width="121">U$D 3,379.31</td>
+						</tr></tbody></table></td></tr>
+						<tr class="pdfProdSMALL"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (SMALL)</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120" class="descContainer"><img class="imgTD" width="100" src="images/RTI_KX7_small.jpg"></td><td width="610">
+						Donec eu elit sem. Phasellus sit amet varius orci. Praesent sit amet lorem tortor.
+						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
+						<tbody><tr>
+						<td class="align-left" width="121">Cantidad:</td>
+						<td class="align-left" width="121">2.00</td>
+						<td class="align-left" width="121">Precio Unitario:</td>
+						<td class="align-left" width="121">U$D 1,689.66</td>
+						<td class="align-right" width="121">Precio Final:</td>
+						<td class="align-right bold" width="121">U$D 3,379.31</td>
+						</tr></tbody></table></td></tr>
+						<tr class="pdfProdTEXT"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (TEXTO)</div><table width="100%" class="tablaLimpia"><tbody><tr><td>
+						Donec eu elit sem. Phasellus sit amet varius orci. Praesent sit amet lorem tortor.
+						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
+						<tbody><tr>
+						<td class="align-left" width="121">Cantidad:</td>
+						<td class="align-left" width="121">2.00</td>
+						<td class="align-left" width="121">Precio Unitario:</td>
+						<td class="align-left" width="121">U$D 1,689.66</td>
+						<td class="align-right" width="121">Precio Final:</td>
+						<td class="align-right bold" width="121">U$D 3,379.31</td>
+						</tr></tbody></table></td></tr>
+						<tr class="pdfProdTEXT"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (TEXTO)</div><table width="100%" class="tablaLimpia"><tbody><tr><td>
+						Donec eu elit sem. Phasellus sit amet varius orci. Praesent sit amet lorem tortor.
+						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
+						<tbody><tr>
+						<td class="align-left" width="121">Cantidad:</td>
+						<td class="align-left" width="121">2.00</td>
+						<td class="align-left" width="121">Precio Unitario:</td>
+						<td class="align-left" width="121">U$D 1,689.66</td>
+						<td class="align-right" width="121">Precio Final:</td>
+						<td class="align-right bold" width="121">U$D 3,379.31</td>
+						</tr></tbody></table></td></tr>
+						<tr class="pdfProdTEXT"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (TEXTO)</div><table width="100%" class="tablaLimpia"><tbody><tr><td>
+						Donec eu elit sem. Phasellus sit amet varius orci. Praesent sit amet lorem tortor.
+						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
+						<tbody><tr>
+						<td class="align-left" width="121">Cantidad:</td>
+						<td class="align-left" width="121">2.00</td>
+						<td class="align-left" width="121">Precio Unitario:</td>
+						<td class="align-left" width="121">U$D 1,689.66</td>
+						<td class="align-right" width="121">Precio Final:</td>
+						<td class="align-right bold" width="121">U$D 3,379.31</td>
+						</tr></tbody></table></td></tr>
+						<tr class="pdfProdTEXT"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (TEXTO)</div><table width="100%" class="tablaLimpia"><tbody><tr><td>
+						Donec eu elit sem. Phasellus sit amet varius orci. Praesent sit amet lorem tortor.
+						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
+						<tbody><tr>
+						<td class="align-left" width="121">Cantidad:</td>
+						<td class="align-left" width="121">2.00</td>
+						<td class="align-left" width="121">Precio Unitario:</td>
+						<td class="align-left" width="121">U$D 1,689.66</td>
+						<td class="align-right" width="121">Precio Final:</td>
+						<td class="align-right bold" width="121">U$D 3,379.31</td>
+						</tr></tbody></table></td></tr>';
+				/* END PARA PRUEBASSSSSSSSS -------------------- */
+				
 				foreach($budgetItems as $budgetItem)
 				{
 					
@@ -1949,7 +2032,7 @@ class GreenHelper
 					}
 					
 					$short_description = $budgetItem->product->description_customer!=""?$budgetItem->product->description_customer:$budgetItem->product->short_description;
-					$long_description = $budgetItem->product->description_supplier!=""?$budgetItem->product->description_supplier:$budgetItem->product->long_description;
+					$long_description = nl2br($budgetItem->product->description_supplier!=""?$budgetItem->product->description_supplier:$budgetItem->product->long_description);
 					
 					if($budgetItem->product->is_accessory == 0)
 					{
