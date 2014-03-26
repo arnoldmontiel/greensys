@@ -28,6 +28,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		'selectableRows' => 0,
 		'emptyText' => 'A&uacute;n sin servicios.',
 		'summaryText'=>'',	
+		'ajaxUrl'=>BudgetController::createUrl('AjaxUpdateBudgetTotalServiceGrid',array("Id"=>$model->Id,"version_number"=>$model->version_number)),		
 		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
 		'columns'=>array(
 					array(

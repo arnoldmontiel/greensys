@@ -11,9 +11,16 @@
       <div class="tab-content">
   <div class="tab-pane active" id="tabTodos">
   <?php		
+	$dataProvider = $modelProducts->search();
+	$dataProvider->pagination=array(
+	'route'=>'budget/AjaxUpdateSelectProductGrid'
+	);
+	$dataProvider->sort=array(
+		'route'=>'budget/AjaxUpdateSelectProductGrid'
+	);
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'product-grid-add',
-		'dataProvider'=>$modelProducts->search(),
+		'dataProvider'=>$dataProvider,
 		'selectableRows' => 0,
 		'filter'=>$modelProducts,
 		'ajaxUrl'=>BudgetController::createUrl('AjaxUpdateSelectProductGrid'),			

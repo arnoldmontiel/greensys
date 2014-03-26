@@ -915,6 +915,7 @@ class BudgetController extends GController
 	}	
 	public function actionAjaxUpdateBudgetItemGrid()
 	{
+		
 		$areaProject = new AreaProject;
 		if(isset($_GET['Id_area_project']))
 			$areaProject->Id =$_GET['Id_area_project'];
@@ -946,6 +947,32 @@ class BudgetController extends GController
 					'modelProducts'=>$modelProducts,
 		));
 	}
+	public function actionAjaxUpdateBudgetTotalServiceGrid()
+	{
+		$model = new Budget();
+		if(isset($_GET['Id'])&&$_GET['version_number'])
+			$model = $this->loadModel($_GET['Id'], $_GET['version_number']);
+		
+		$criteria = new CDbCriteria();
+		$criteria->with[]="service";				
+		$criteria->addCondition('Id_budget='.$model->Id);
+		$criteria->addCondition('version_number='.$model->version_number);		
+		$criteria->group="Id_service";
+		$criteria->order="service.description";
+		
+		$modelBudgetItemService = New BudgetItem();
+		$sort=new CSort;
+		
+		$dataProvider = new CActiveDataProvider($modelBudgetItemService, array(
+				'criteria'=>$criteria,
+				'sort'=>$sort,
+		));
+		
+		$this->render('_tabEditBudgetTotals',array(
+					'dataProvider'=>$dataProvider,
+					'model'=>$model,
+		));
+	}	
 	public function actionAddItem($id, $version, $byService=false)
 	{
 		$model = $this->loadModel($id, $version);

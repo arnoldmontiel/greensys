@@ -1,5 +1,14 @@
 <?php
 	$dataProvider = $modelBudgetItem->search();
+	$dataProvider->pagination=array(
+			'route'=>'budget/AjaxUpdateBudgetItemGrid',
+			'params'=>array("Id_area_project"=>$areaProject->Id,"Id_area"=>$areaProject->Id_area),
+	);
+	$dataProvider->sort=array(
+			'route'=>'budget/AjaxUpdateBudgetItemGrid',
+			'params'=>array("Id_area_project"=>$areaProject->Id,"Id_area"=>$areaProject->Id_area),
+	);
+
 	$dataProvider->pagination = false;
 		$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'budget-item-grid_'.$areaProject->Id."_".$areaProject->Id_area,
