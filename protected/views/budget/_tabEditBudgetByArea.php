@@ -2,11 +2,21 @@
 	$dataProvider = $modelBudgetItem->search();
 	$dataProvider->pagination=array(
 			'route'=>'budget/AjaxUpdateBudgetItemGrid',
-			'params'=>array("Id_area_project"=>$areaProject->Id,"Id_area"=>$areaProject->Id_area),
+			'params'=>array(
+					"Id_area_project"=>$areaProject->Id,
+					"Id_area"=>$areaProject->Id_area,
+					"Id"=>$modelBudgetItem->Id_budget,
+					"version_number"=>$modelBudgetItem->version_number,
+			),
 	);
 	$dataProvider->sort=array(
 			'route'=>'budget/AjaxUpdateBudgetItemGrid',
-			'params'=>array("Id_area_project"=>$areaProject->Id,"Id_area"=>$areaProject->Id_area),
+			'params'=>array(
+					"Id_area_project"=>$areaProject->Id,
+					"Id_area"=>$areaProject->Id_area,
+					"Id"=>$modelBudgetItem->Id_budget,
+					"version_number"=>$modelBudgetItem->version_number,						
+			),
 	);
 
 	$dataProvider->pagination = false;
@@ -18,7 +28,7 @@
 		'summaryText'=>'',	
 		'afterAjaxUpdate'=>'js:function(id, data){setTotals();}',				
 		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
-		'ajaxUrl'=>BudgetController::createUrl('AjaxUpdateBudgetItemGrid',array("Id_area_project"=>$areaProject->Id,"Id_area"=>$areaProject->Id_area)),
+		'ajaxUrl'=>BudgetController::createUrl('AjaxUpdateBudgetItemGrid',array("Id_area_project"=>$areaProject->Id,"Id_area"=>$areaProject->Id_area,"Id"=>$modelBudgetItem->Id_budget,"version_number"=>$modelBudgetItem->version_number)),
 		'columns'=>array(
 					array(
 							'name'=>'Producto',

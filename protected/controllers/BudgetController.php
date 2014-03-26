@@ -914,7 +914,9 @@ class BudgetController extends GController
 		}
 	}	
 	public function actionAjaxUpdateBudgetItemGrid()
-	{
+	{		
+		if(isset($_GET['Id'])&&$_GET['version_number'])
+			$model = $this->loadModel($_GET['Id'], $_GET['version_number']);
 		
 		$areaProject = new AreaProject;
 		if(isset($_GET['Id_area_project']))
@@ -929,6 +931,9 @@ class BudgetController extends GController
 		
 		$modelBudgetItem->Id_area = $areaProject->Id_area;
 		$modelBudgetItem->Id_area_project = $areaProject->Id;
+		
+		$modelBudgetItem->Id_budget = $model->Id;
+		$modelBudgetItem->version_number = $model->version_number;
 		
 		$this->render('_tabEditBudgetByArea',array(
 				'modelBudgetItem'=>$modelBudgetItem,
