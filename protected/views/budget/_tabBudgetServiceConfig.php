@@ -20,6 +20,7 @@ $projectService->Id_project = $model->Id_project;
 					'summaryText'=>'',
 					'selectableRows' => 0,
 					'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
+					'ajaxUrl'=>BudgetController::createUrl('AjaxUpdateProjectServiceGrid',array("Id"=>$model->Id,"version_number"=>$model->version_number)),
 					'columns'=>array(
 							array(
 									'header'=>'Servicios',
@@ -56,6 +57,7 @@ $projectService->Id_project = $model->Id_project;
 					'summaryText'=>'',
 					'selectableRows' => 0,
 					'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
+					'ajaxUrl'=>BudgetController::createUrl('AjaxUpdateProjectServiceGrid',array("Id"=>$model->Id,"version_number"=>$model->version_number)),
 					'columns'=>array(
 							array(
 									'header'=>'Servicios',

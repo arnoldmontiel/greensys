@@ -1898,7 +1898,11 @@ class GreenHelper
 							'Id_service'=>$budgetItemService->Id_service));
 					if(isset($projectServiceDB))
 					{
-						$serviceDesc = nl2br($projectServiceDB->long_description);
+						if($projectServiceDB->long_description == "")
+							$serviceDesc = nl2br($projectServiceDB->service->long_description);
+						else 
+							$serviceDesc = nl2br($projectServiceDB->long_description);
+						
 						$serviceNote = nl2br($projectServiceDB->note);
 					}
 				}

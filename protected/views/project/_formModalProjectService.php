@@ -17,7 +17,12 @@
   <?php echo $form->hiddenField($model,'Id_project'); ?>
   <?php echo $form->hiddenField($model,'Id_service'); ?>
   <?php echo $form->labelEx($model,'long_description'); ?>
-    <?php echo $form->textarea($model,'long_description',array("class"=>"form-control","rows"=>12)); ?>
+    <?php 
+    	if($model->long_description == "")
+    		echo $form->textarea($model,'long_description',array("class"=>"form-control","rows"=>12, "value"=>$model->service->long_description));
+    	else 
+    		echo $form->textarea($model,'long_description',array("class"=>"form-control","rows"=>12));
+    ?>
   </div>
       </div>
       <div class="modal-footer">

@@ -940,6 +940,16 @@ class BudgetController extends GController
 				'areaProject'=>$areaProject,
 		));
 	}
+	public function actionAjaxUpdateProjectServiceGrid()
+	{
+		if(isset($_GET['Id'])&&$_GET['version_number'])
+			$model = $this->loadModel($_GET['Id'], $_GET['version_number']);
+	
+		$this->render('_tabBudgetServiceConfig',array(
+				'model'=>$model,
+		));
+	
+	}
 	public function actionAjaxUpdateSelectProductGrid()
 	{
 		$modelProducts = new Product('search');

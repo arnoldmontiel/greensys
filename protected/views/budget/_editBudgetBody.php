@@ -129,11 +129,7 @@ $(document).ready(function() {
 ?>
     <?php
     echo $this->renderPartial('_tabBudgetServiceConfig',array(
-						'model'=>$model,
-						'modelProduct'=>$modelProduct,
-						'modelBudgetItem'=>$modelBudgetItem,
-						'priceListItemSale'=>$priceListItemSale,
-						'modelBudgetItemGeneric'=>$modelBudgetItemGeneric,));
+						'model'=>$model,));
     ?>
 	<section id="PRODUCTS"></section>        
 	<div class="row contenedorPresu">
