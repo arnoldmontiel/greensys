@@ -5,11 +5,6 @@
         <h4 class="modal-title">Agregar Productos</h4>
       </div>
       <div class="modal-body">
-       <ul class="nav nav-tabs">
-        <li class="active"><a href="#tabTodos" data-toggle="tab">Todos</a></li>        
-      </ul>
-      <div class="tab-content">
-  <div class="tab-pane active" id="tabTodos">
   <?php		
 	$dataProvider = $modelProducts->search();
 	$dataProvider->pagination=array(
@@ -84,10 +79,6 @@
 			),
 		));		
 ?>
-
-      </div>
-  </div>      
-      
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary btn-lg" data-dismiss="modal"><i class="fa fa-check"></i> Cerrar</button>
