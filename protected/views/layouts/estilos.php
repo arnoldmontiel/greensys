@@ -613,7 +613,7 @@ cursor:inherit;
 
 /*---------- EDIT CREATE FORM -------------*/
 
-.buttonsFloatBottom{ padding:5px; text-align:right; margin-top:20px; background-color:rgba(0,0,0,0.5);}
+.buttonsFloatBottom{ padding:5px; text-align:right; margin-top:20px; background-color:rgba(0,0,0,0.2);}
 .buttonsFloatBottom .btn{ margin:5px;}
 
 
@@ -957,6 +957,15 @@ font-family: "GudeaRegular";
 .table .miniTableCurrency .btn{margin-left:5px;}
 /* ------ END CURRENCY ------- */
 
+/*------------- CLAUSES ------------*/
+.clauseScroll{height:300px;overflow-y:auto;}
+
+#screenClausulas .nicEdit-main{background-color:white;}
+
+#screenClausulas .nicEdit-main:focus{outline:none;}
+
+
+/*------------- END CLAUSES ------------*/
 
 /* ------ UPLOAD IMAGENES PRODUCTO ------- */
 .xupload-form{ background-color:rgba(255,255,255,0.5);  font-size:16px;border: 3px dotted #eee; line-height:60px; height:250px; 
@@ -1153,6 +1162,8 @@ div.superBudgetTabla .tablaDatos td{}
  .tableReadOnly .tablaLimpia td.descContainer{width:20% !important;}
  .tableReadOnly tbody>tr>td{vertical-align:middle;}
 
+ .budgetEndUL{margin-top:10px; margin-bottom:20px;}
+ 
 /* ------ END READ ONLY ------- */
 
 
