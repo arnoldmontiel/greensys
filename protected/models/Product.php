@@ -227,7 +227,7 @@ class Product extends ModelAudit
 			'productGroupsChild' => array(self::HAS_MANY, 'ProductGroup', 'Id_product_child'),
 			'productGroupsParent' => array(self::HAS_MANY, 'ProductGroup', 'Id_product_parent'),
 			'productGroupChilds' => array(self::MANY_MANY, 'Product', 'product_group(Id_product_parent,Id_product_child)'),
-			'productGroupParents' => array(self::MANY_MANY, 'Product', 'product_group(Id_product_parent,Id_product_child)'),
+			'productGroupParents' => array(self::MANY_MANY, 'Product', 'product_group(Id_product_child,Id_product_parent)'),
 			'productItems' => array(self::HAS_MANY, 'ProductItem', 'Id_product'),
 			'product' => array(self::BELONGS_TO, 'Product', 'Id_product'),
 			'productRequirements' => array(self::MANY_MANY, 'ProductRequirement', 'product_requirement_product(Id_product, Id_product_requirement)'),
