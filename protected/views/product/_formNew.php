@@ -1,10 +1,8 @@
 <script>
 $(document).ready (function (){
-new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','ol','ul','indent','outdent']}).panelInstance('Product_long_description');
-new nicEditor({buttonList : ['fontSize','bold','italic','underline','strikeThrough','ol','ul','indent','outdent']}).panelInstance('Product_description_supplier');
+new nicEditor({buttonList : ['bold','italic','underline','strikeThrough','ol','ul','indent','outdent']}).panelInstance('Product_long_description');
+new nicEditor({buttonList : ['bold','italic','underline','strikeThrough','ol','ul','indent','outdent']}).panelInstance('Product_description_supplier');
 });
-
-
 </script>
 
 <?php 
@@ -679,9 +677,9 @@ $('#deleteIcon').click(function(){
 	<div class="row navbar-fixed-bottom">
     <div class="col-sm-12">
       <div class="buttonsFloatBottom">
-        <button type="button" class="btn btn-default btn-lg" id="cancel"> Cancelar</button>
-        <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
-        <button type="submit" class="btn btn-primary btn-lg" id="saveAndOther"><i class="fa fa-save"></i> Guardar y Cargar Nuevo</button>
+        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-save"></i> Guardar como H&iacute;brido</button>
+        <button type="button" class="btn btn-default" id="cancel"> Cancelar</button>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
       </div>
     </div>
     <!-- /.col-sm-12 --> 
