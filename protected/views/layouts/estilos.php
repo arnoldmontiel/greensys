@@ -757,7 +757,7 @@ margin-top: -5px;}
 
 
 .groupAgregar{width:225px;}
-.groupAgregar .checkAgregado{margin-left:10px; color:#5cb85c;}
+.groupAgregar .checkAgregado{margin-left:10px; color:#5cb85c; display:none;}
 
 .inputSmall{ width:40px; display:inline-block; }
 .inputMed{ width:55px; display:inline-block; }

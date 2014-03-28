@@ -123,6 +123,7 @@ function changeTree(idArea,idAreaProject)
 function addQty(idProduct,object)
 {
 	//$(object).addClass('disabled', {duration:500});
+	var chkAdd = $("#chk-add-"+idProduct);
 	var qty = $("#qty-field-"+idProduct).val();
 	var idAreaProject = $('#idTabAreaProject').val();
 	var idArea = $('#idTabArea').val();
@@ -139,6 +140,8 @@ function addQty(idProduct,object)
 			}
 		).success(
 			function(data){
+				chkAdd.animate({opacity: 'show'},240);
+				chkAdd.animate({opacity: 'hide'},3000);
 				//$(object).removeClass('disabled', {duration:500});
 				
 // 				$.fn.yiiGridView.update('product-grid-add', {
