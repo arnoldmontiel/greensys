@@ -1931,7 +1931,7 @@ class GreenHelper
 				$totalAccessoryPrice = 0;
 				
 
-				/* PARA PRUEBASSSSSSSSS -------------------- */
+				/* PARA PRUEBASSSSSSSSS -------------------- 
 				
 				$serviceContentBodyItem = $serviceContentBodyItem . '
 						<tr class="pdfProdBIG"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (BIG)</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="230" class="descContainer"><img class="imgTD" width="250" src="images/RTI_KX7_small.jpg"></td><td width="500">
@@ -1945,6 +1945,7 @@ class GreenHelper
 						<td class="align-right" width="121">Precio Final:</td>
 						<td class="align-right bold" width="121">U$D 3,379.31</td>
 						</tr></tbody></table></td></tr>
+						
 						<tr class="pdfProdMEDIUM"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (MED)</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="180" class="descContainer"><img class="imgTD" width="150" src="images/RTI_KX7_small.jpg"></td><td width="550">
 						Donec eu elit sem. Phasellus sit amet varius orci. Praesent sit amet lorem tortor. Sed vel enim augue. Ut ac dapibus nunc, ac adipiscing urna. Integer blandit commodo velit, vitae lacinia urna luctus sed. Maecenas tempor scelerisque leo non euismod. Mauris quis volutpat justo. Nulla dapibus velit vitae odio ornare posuere. Ut molestie feugiat congue. Morbi vel volutpat sem, a semper diam.
 						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
@@ -1956,6 +1957,7 @@ class GreenHelper
 						<td class="align-right" width="121">Precio Final:</td>
 						<td class="align-right bold" width="121">U$D 3,379.31</td>
 						</tr></tbody></table></td></tr>
+						
 						<tr class="pdfProdSMALL"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (SMALL)</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120" class="descContainer"><img class="imgTD" width="100" src="images/RTI_KX7_small.jpg"></td><td width="610">
 						Donec eu elit sem. Phasellus sit amet varius orci. Praesent sit amet lorem tortor.
 						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
@@ -1967,6 +1969,7 @@ class GreenHelper
 						<td class="align-right" width="121">Precio Final:</td>
 						<td class="align-right bold" width="121">U$D 3,379.31</td>
 						</tr></tbody></table></td></tr>
+						
 						<tr class="pdfProdTEXT"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (TEXTO)</div><table width="100%" class="tablaLimpia"><tbody><tr><td>
 						Donec eu elit sem. Phasellus sit amet varius orci. Praesent sit amet lorem tortor.
 						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
@@ -1978,6 +1981,7 @@ class GreenHelper
 						<td class="align-right" width="121">Precio Final:</td>
 						<td class="align-right bold" width="121">U$D 3,379.31</td>
 						</tr></tbody></table></td></tr>
+						
 						<tr class="pdfProdTEXT"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (TEXTO)</div><table width="100%" class="tablaLimpia"><tbody><tr><td>
 						Donec eu elit sem. Phasellus sit amet varius orci. Praesent sit amet lorem tortor.
 						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
@@ -2011,7 +2015,7 @@ class GreenHelper
 						<td class="align-right" width="121">Precio Final:</td>
 						<td class="align-right bold" width="121">U$D 3,379.31</td>
 						</tr></tbody></table></td></tr>';
-				/* END PARA PRUEBASSSSSSSSS -------------------- */
+				 END PARA PRUEBASSSSSSSSS -------------------- */
 				
 				foreach($budgetItems as $budgetItem)
 				{
@@ -2022,7 +2026,9 @@ class GreenHelper
 					$criteria->addCondition('pm.Id_product = '. $budgetItem->Id_product);
 					
 					$modelMultimediaDB = Multimedia::model()->find($criteria);
-					$img = '<i class="fa fa-picture-o"></i>';
+
+					$tdImage = '<td>';
+					$trClass = "pdfProdTEXT";
 					if(isset($modelMultimediaDB))
 					{
 						$imagePath = '';
@@ -2032,17 +2038,36 @@ class GreenHelper
 							$imagePath = "images/". $budgetItem->product->brand->description . '_' . $budgetItem->product->model.".jpg";
 							
 						if(!empty($imagePath))
-							$img = '<img class="imgTD" src="'.$imagePath.'"/>';					
+						{
+							
+							switch ($budgetItem->product->relevance_level) {
+								case 0:
+									$tdImage = '<td width="120" class="descContainer"><img class="imgTD" width="100" src="'.$imagePath.'"></td><td width="610">';
+									$trClass = "pdfProdSMALL";
+									break;
+								case 1:
+									$tdImage = '<td width="180" class="descContainer"><img class="imgTD" width="150" src="'.$imagePath.'"></td><td width="550">';
+									$trClass = "pdfProdMEDIUM";
+									break;
+								case 2:
+									$tdImage = '<td width="230" class="descContainer"><img class="imgTD" width="250" src="'.$imagePath.'"></td><td width="500">';
+									$trClass = "pdfProdBIG";
+									break;
+							}
+							
+							
+						}
+											
 					}
 					
 					$short_description = $budgetItem->product->description_customer!=""?$budgetItem->product->description_customer:$budgetItem->product->short_description;
 					$long_description = nl2br($budgetItem->product->description_supplier!=""?$budgetItem->product->description_supplier:$budgetItem->product->long_description);
-					
+										
 					if($budgetItem->product->is_accessory == 0)
 					{
 						$hasItems = true;					
-						$serviceContentBodyItem = $serviceContentBodyItem . '<tr>';
-						$serviceContentBodyItem = $serviceContentBodyItem . '<td><div class="bold">&bull; '.$short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120" class="descContainer">'.$img.'</td><td width="610">'.$long_description.'</td></tr></tbody></table>';
+						$serviceContentBodyItem = $serviceContentBodyItem . '<tr class="'.$trClass.'">';
+						$serviceContentBodyItem = $serviceContentBodyItem . '<td class="pdfTituloProd"><div class="bold">&bull; '.$short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr>'.$tdImage.$long_description.'</td></tr></tbody></table>';
 						
 						
 						if($budgetItem->getDiscountCurrencyConverted() > 0)
@@ -2080,8 +2105,8 @@ class GreenHelper
 					{
 						$hasAccessory = true;
 						
-						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<tr>';
-						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<td><div class="bold">'.$short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120" class="descContainer">'.$img.'</td><td width="610">'.$long_description.'</td></tr></tbody></table>';
+						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<tr class="'.$trClass.'">';
+						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<td class="pdfTituloProd"><div class="bold">&bull; '.$short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr>'.$tdImage.$long_description.'</td></tr></tbody></table>';
 							
 							
 						if($budgetItem->getDiscountCurrencyConverted() > 0)
