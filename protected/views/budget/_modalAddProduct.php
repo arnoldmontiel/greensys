@@ -62,10 +62,8 @@
 				array(
 						'header'=>'Acciones',
 						'value'=>function($data){
-						$value = 1;
-						if($data->qty_per_prod > 0)
-							$value = $data->qty_per_prod;
-							return '<input onkeyup="validateNumber(this);" type="text" id="qty-field-'.$data->Id.'" class="form-control inputSmall align-right" value="'.round($value).'"><button onclick="addQty('.$data->Id.',this)" type="button" class="btn btn-default btn-sm"><i class="fa fa-save"></i> Aplicar</button>';						
+							$value = 1;						
+							return '<input onkeyup="validateNumber(this);" type="text" id="qty-field-'.$data->Id.'" class="form-control inputSmall align-right" value="'.round($value).'"><button onclick="addQty('.$data->Id.',this)" type="button" class="btn btn-default btn-sm"><i class="fa fa-save"></i> Agregar</button>';						
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:center;"),

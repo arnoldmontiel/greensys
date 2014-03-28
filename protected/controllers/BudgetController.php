@@ -421,7 +421,7 @@ class BudgetController extends GController
 			{
 				if(isset($modelBudgetItemBD))
 				{
-					$modelBudgetItemBD->quantity = $qty; 
+					$modelBudgetItemBD->quantity = $modelBudgetItemBD->quantity + $qty; 
 				}
 				else
 				{
