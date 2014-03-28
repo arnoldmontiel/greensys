@@ -15,16 +15,15 @@ new nicEditor({buttonList : ['title','bold','italic','underline','strikeThrough'
 
     <textarea class="form-control" rows="20" id="clause_default_description"></textarea>
     
-    </div>    
-    <!-- /.col-sm-12 --> 
-  </div>
-  <!-- /.row --> 
+  
  <div class="buttonGroup">
         <button type="button" class="btn btn-default" id="cancel"><i class="fa fa-reply"></i> Reset</button>
         <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
  </div>
+   </div>    
     <!-- /.col-sm-12 --> 
   </div>
+  <!-- /.row --> 
   
   </div>
   <!-- /.container --> 
