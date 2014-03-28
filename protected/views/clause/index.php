@@ -19,13 +19,10 @@ new nicEditor({buttonList : ['title','bold','italic','underline','strikeThrough'
     <!-- /.col-sm-12 --> 
   </div>
   <!-- /.row --> 
-  
-  <div class="row navbar-fixed-bottom">
-    <div class="col-sm-12">
-      <div class="buttonsFloatBottom">
-        <button type="button" class="btn btn-default" id="cancel"> Cancelar</button>
-        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button> </div>
-    </div>
+ <div class="buttonGroup">
+        <button type="button" class="btn btn-default" id="cancel"> Reset</button>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+ </div>
     <!-- /.col-sm-12 --> 
   </div>
   
