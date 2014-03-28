@@ -124,6 +124,8 @@ function addQty(idProduct,object)
 {
 	//$(object).addClass('disabled', {duration:500});
 	var chkAdd = $("#chk-add-"+idProduct);
+	var btn = $("#btn-qty-field-"+idProduct);
+	var input = $("#qty-field-"+idProduct);
 	var qty = $("#qty-field-"+idProduct).val();
 	var idAreaProject = $('#idTabAreaProject').val();
 	var idArea = $('#idTabArea').val();
@@ -139,9 +141,17 @@ function addQty(idProduct,object)
 				qty: qty
 			}
 		).success(
-			function(data){
+			function(data){				
+				btn.hide();				
+				input.hide();
+				
 				chkAdd.animate({opacity: 'show'},240);
-				chkAdd.animate({opacity: 'hide'},3000);
+				chkAdd.animate({opacity: 'hide'},3000, function(){
+					btn.show();
+					input.show();
+					});
+
+				
 				//$(object).removeClass('disabled', {duration:500});
 				
 // 				$.fn.yiiGridView.update('product-grid-add', {
