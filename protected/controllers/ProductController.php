@@ -99,8 +99,14 @@ class ProductController extends GController
 			{
 				$model->refresh();
 				GreenHelper::generateListPrices($model);
-				if(isset($_POST['other'])&&$_POST['other']!='1')
+				if(isset($_POST['children'])&&$_POST['children']=='1')
+				{
+					$this->redirect(array('update&id='.$model->Id."#CHILDREN"));
+				}
+				else if(isset($_POST['other'])&&$_POST['other']!='1')
+				{
 					$this->redirect(array('index','id'=>$model->Id));
+				}
 				else {
 					$model=new Product;
 				

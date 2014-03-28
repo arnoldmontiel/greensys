@@ -89,8 +89,13 @@ class GreenHelper
 			foreach($children as $child)
 			{
 				//TODO: tomar esto de la lista de precios de cada producto, no del producto en si
-				$priceListItem->msrp += self::convertCurrencyTo($child->msrp, $child->Id_currency, $priceList->Id_currency);
-				$priceListItem->dealer_cost += self::convertCurrencyTo($child->dealer_cost, $child->Id_currency, $priceList->Id_currency);
+				$productGroup = ProductGroup::model()->findByPk(array('Id_product_parent'=>$product->Id,'Id_product_child'=>$child->Id));
+				
+				if(isset($productGroup))
+				{
+					$priceListItem->msrp += self::convertCurrencyTo($child->msrp*$productGroup->quantity, $child->Id_currency, $priceList->Id_currency);
+					$priceListItem->dealer_cost += self::convertCurrencyTo($child->dealer_cost*$productGroup->quantity, $child->Id_currency, $priceList->Id_currency);						
+				}
 			}
 			$priceListItem->profit_rate = $priceListItem->msrp/$priceListItem->dealer_cost;
 			$priceListItem->save();
@@ -142,9 +147,14 @@ class GreenHelper
 					$criteria->compare('Id_price_list',$priceList->Id);
 					$priceListItemChild = PriceListItem::model()->find($criteria);
 					if(isset($priceListItemChild))
-					{	
-						$priceListItem->msrp += self::convertCurrencyTo($priceListItemChild->msrp, $child->Id_currency, $priceList->Id_currency);
-						$priceListItem->dealer_cost += self::convertCurrencyTo($priceListItemChild->dealer_cost, $child->Id_currency, $priceList->Id_currency);
+					{
+						$productGroup = ProductGroup::model()->findByPk(array('Id_product_parent'=>$product->Id,'Id_product_child'=>$child->Id));
+						
+						if(isset($productGroup))
+						{						
+							$priceListItem->msrp += self::convertCurrencyTo($priceListItemChild->msrp*$productGroup->quantity, $child->Id_currency, $priceList->Id_currency);
+							$priceListItem->dealer_cost += self::convertCurrencyTo($priceListItemChild->dealer_cost*$productGroup->quantity, $child->Id_currency, $priceList->Id_currency);
+						}
 						
 					}
 							
@@ -186,8 +196,13 @@ class GreenHelper
 							//$air_cost = $priceListItem->dealer_cost;
 							$air_cost = 0;
 						}
-						$priceListItem->maritime_cost += $maritime_cost;
-						$priceListItem->air_cost+= $air_cost;
+						$productGroup = ProductGroup::model()->findByPk(array('Id_product_parent'=>$product->Id,'Id_product_child'=>$child->Id));
+						
+						if(isset($productGroup))
+						{						
+							$priceListItem->maritime_cost += $maritime_cost*$productGroup->quantity;
+							$priceListItem->air_cost+= $air_cost*$productGroup->quantity;
+						}
 					}
 					//$priceListItem->maritime_cost = $maritime_cost * $product->profit_rate;
 					//$priceListItem->air_cost= $air_cost * $product->profit_rate;

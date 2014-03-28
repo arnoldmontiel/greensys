@@ -102,10 +102,15 @@ $('#cancel').click(function()
 {
 	window.location = '".ProductController::createUrl("index")."';
 });		
-		$('#saveAndOther').click(function()
+$('#saveAndOther').click(function()
 {
 	$('#other').val('1');
+});
+$('#saveAndAddChildren').click(function()
+{
+	$('#children').val('1');
 });		
+					
 $('#weight').change(function(){
 	$(this).val(Number($(this).val()).toFixed(2));
 	if($('#Product_Id_measurement_unit_weight').val()!='"
@@ -493,8 +498,9 @@ $('#deleteIcon').click(function(){
             <td width="80%"><?php echo $form->dropDownList($model, 'relevance_level', array('0'=>'Baja', '1'=>'Media', '2'=>'Alta'), array("class"=>"form-control")); ?></td>
           </tr>
         </tbody>
-      </table>  
+      </table>        
       <div class="rowSeparator noTopMargin">HORAS</div>
+      <section id="CHILDREN"></section>                
       <table class="table table-striped table-bordered tablaIndividual" width="100%">
         <tbody>
           <tr>
@@ -537,7 +543,7 @@ $('#deleteIcon').click(function(){
             <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'dealer_cost'); ?></td>
             <td width="80%"><?php echo $form->textField($model,'dealer_cost', array("class"=>"form-control")); ?></td>
           </tr>
-          <tr>
+          <tr>          
             <td width="20%" style="text-align:right;"><?php echo $form->labelEx($model,'profit_rate'); ?></td>
             <td width="80%"><?php echo $form->textField($model,'profit_rate', array("class"=>"form-control")); ?></td>
           </tr>
@@ -674,10 +680,13 @@ $('#deleteIcon').click(function(){
     <!-- /.row -->
     
 	<?php echo CHtml::hiddenField("other",'',array('id'=>'other'));?>
+	<?php echo CHtml::hiddenField("children",'',array('id'=>'children'));?>
 	<div class="row navbar-fixed-bottom">
     <div class="col-sm-12">
       <div class="buttonsFloatBottom">
-        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-save"></i> Guardar como H&iacute;brido</button>
+    	<?php if($model->isNewRecord):?>
+	       <button type="submit" class="btn btn-primary pull-left" id="saveAndAddChildren"><i class="fa fa-save"></i> Guardar como H&iacute;brido</button>
+       	<?php endif?>
         <button type="button" class="btn btn-default" id="cancel"> Cancelar</button>
         <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
       </div>
