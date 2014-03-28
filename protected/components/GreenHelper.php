@@ -44,13 +44,177 @@ class GreenHelper
 		}
 		return 0;
 	}
+	static public function generateListaPricesWithChildren($product,$children)
+	{
+		$transaction = Yii::app()->db->beginTransaction();		
+		try {
+			//compras
+			$criteria = new CDbCriteria;
+			$criteria->compare('Id_supplier',$product->Id_supplier);
+			$criteria->compare('Id_price_list_type',1); //compra
+			
+			$priceList = PriceList::model()->find($criteria);
+			if(!isset($priceList))
+			{
+				
+				$priceList = new PriceList();
+				$priceList->validity = 1;
+				//$priceList->date_validity = new CDbExpression('NOW()');
+				$priceList->Id_price_list_type = 1;
+				$priceList->Id_supplier = $product->Id_supplier;
+				$priceList->description = "Generada automaticamente";
+				$priceList->Id_currency = $product->Id_currency;
+				$priceList->save();
+			
+			}
+			if($priceList->Id_currency != $product->Id_currency)
+			{
+				$priceList->Id_currency = $product->Id_currency;
+				$priceList->save();
+			}
+			$criteria = new CDbCriteria;
+			$criteria->compare('Id_product',$product->Id);
+			$criteria->compare('Id_price_list',$priceList->Id);
+			$priceListItem = PriceListItem::model()->find($criteria);
+				
+			if(!isset($priceListItem))
+			{
+				$priceListItem = new PriceListItem;
+				$priceListItem->Id_price_list = $priceList->Id;
+				$priceListItem->Id_product = $product->Id;
+			}
+				
+			$priceListItem->msrp = 0;
+			$priceListItem->dealer_cost = 0;
+			foreach($children as $child)
+			{
+				//TODO: tomar esto de la lista de precios de cada producto, no del producto en si
+				$priceListItem->msrp += self::convertCurrencyTo($child->msrp, $child->Id_currency, $priceList->Id_currency);
+				$priceListItem->dealer_cost += self::convertCurrencyTo($child->dealer_cost, $child->Id_currency, $priceList->Id_currency);
+			}
+			$priceListItem->profit_rate = $priceListItem->msrp/$priceListItem->dealer_cost;
+			$priceListItem->save();
+			
+			//Ventas
+			$importers = Importer::model()->findAll();
+			foreach ($importers as $importer)
+			{
+				$criteria = new CDbCriteria;
+				$criteria->compare('Id_importer',$importer->Id);
+				$criteria->compare('Id_price_list_type',2); //venta
+			
+				$priceList = PriceList::model()->find($criteria);
+				if(!isset($priceList))
+				{
+					$priceList = new PriceList();
+					$priceList->validity = 1;
+					$priceList->Id_price_list_type = 2;
+					//$priceList->date_validity = new CDbExpression('NOW()');
+					$priceList->Id_importer = $importer->Id;
+					$priceList->description = "Generada automaticamente";
+					$priceList->Id_currency = $product->Id_currency;
+					$priceList->save();
+				}
+				if($priceList->Id_currency != $product->Id_currency)
+				{
+					$priceList->Id_currency = $product->Id_currency;
+					$priceList->save();
+				}
+			
+				$criteria = new CDbCriteria;
+			
+				$criteria->compare('Id_product',$product->Id);
+				$criteria->compare('Id_price_list',$priceList->Id);
+				$priceListItem = PriceListItem::model()->find($criteria);
+				if(!isset($priceListItem))
+				{
+					$priceListItem = new PriceListItem;
+					$priceListItem->Id_price_list = $priceList->Id;
+					$priceListItem->Id_product = $product->Id;
+				}
+				$priceListItem->msrp = 0;
+				$priceListItem->dealer_cost = 0;
+				$priceListItem->profit_rate = 0;
+				foreach($children as $child)
+				{										
+					$criteria = new CDbCriteria;						
+					$criteria->compare('Id_product',$child->Id);
+					$criteria->compare('Id_price_list',$priceList->Id);
+					$priceListItemChild = PriceListItem::model()->find($criteria);
+					if(isset($priceListItemChild))
+					{	
+						$priceListItem->msrp += self::convertCurrencyTo($priceListItemChild->msrp, $child->Id_currency, $priceList->Id_currency);
+						$priceListItem->dealer_cost += self::convertCurrencyTo($priceListItemChild->dealer_cost, $child->Id_currency, $priceList->Id_currency);
+						
+					}
+							
+				}
+				if($priceListItem->dealer_cost!=0)
+					$priceListItem->profit_rate = $priceListItem->msrp/$priceListItem->dealer_cost;
+			
+				if(!empty($importer->shippingParameters))
+				{
+					$shippingParameter = $importer->shippingParameters[0];
+					$air = $shippingParameter->shippingParameterAir;
+					$maritime = $shippingParameter->shippingParameterMaritime;
+					
+					$priceListItem->maritime_cost = 0;
+					$priceListItem->air_cost= 0;
+						
+					foreach($children as $child)
+					{
+							
+						$volume = $child->getVolume();
+						$weight = $child->getWeightConverted();
+						if($volume != 0)
+						{
+							//$maritime_cost = $priceListItem->dealer_cost+($maritime->cost_measurement_unit*$volume);
+							$maritime_cost = $maritime->cost_measurement_unit*$volume;
+						}
+						else
+						{
+							//$maritime_cost = $priceListItem->dealer_cost;
+							$maritime_cost = 0;
+						}
+						if($product->hasWeight())
+						{
+							//$air_cost = $priceListItem->dealer_cost+($air->cost_measurement_unit*$weight);
+							$air_cost = $air->cost_measurement_unit*$weight;
+						}
+						else
+						{
+							//$air_cost = $priceListItem->dealer_cost;
+							$air_cost = 0;
+						}
+						$priceListItem->maritime_cost += $maritime_cost;
+						$priceListItem->air_cost+= $air_cost;
+					}
+					//$priceListItem->maritime_cost = $maritime_cost * $product->profit_rate;
+					//$priceListItem->air_cost= $air_cost * $product->profit_rate;
+					//$maritime_cost = $maritime_cost + ($priceListItem->dealer_cost*$maritime->percent_over_dealer_cost/100);
+				}
+				$priceListItem->save();
+			
+			}				
+			$transaction->commit();
+			return true;
+		} catch (Exception $e) {
+			$transaction->rollback();
+		}
+		return false;		
+	}
 	static public function generateListPrices($product)
 	{
 		if(get_class($product)=="Product")
 		{
-			if($product->dealer_cost == 0 ||$product->msrp==0)	return false;
+			$children = $product->productGroupChilds;
+			if(!empty($children))
+			{
+				return self::generateListaPricesWithChildren($product,$children);
+			}		
 			$transaction = Yii::app()->db->beginTransaction();
 			try {
+				if($product->dealer_cost == 0 ||$product->msrp==0)	return false;
 				//compras
 				$criteria = new CDbCriteria;
 				$criteria->compare('Id_supplier',$product->Id_supplier);
@@ -175,6 +339,16 @@ class GreenHelper
 			} catch (Exception $e) {
 				$transaction->rollback();
 			}
+			$parents = $product->productGroupParents;
+			foreach ($parents as $parent)
+			{
+				$children = $parent->productGroupChilds;
+				if(!empty($children))
+				{
+					return self::generateListaPricesWithChildren($parent,$children);
+				}				
+			}
+				
 			return true;
 		}			
 	}
