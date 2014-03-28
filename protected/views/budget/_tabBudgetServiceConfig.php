@@ -86,14 +86,13 @@ $projectService->Id_project = $model->Id_project;
     <!-- /.tab2 -->
     
 <div class="tab-pane" id="tabCondiciones">
-<table class="table table-striped table-bordered tablaIndividual">
-<thead>
-<tr>
-<th>Texto</th>
-<th class="align-right">Acciones</th>
-</tr>
-</thead>
+<table class="table table-bordered tablaIndividual">
+
 <tbody>
+<tr>
+<td><input checked="checked" type="checkbox" value="1"> Imprimir en Presupuesto</td>
+<td>&nbsp;</td>
+</tr>
 <tr>
 <td>
 <div class="clauseScroll">
