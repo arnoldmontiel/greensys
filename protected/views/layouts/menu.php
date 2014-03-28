@@ -55,6 +55,9 @@
 				          <?php if(Yii::app()->user->checkAccess('CurrencyManage')):?>			          
                 	      <li><a href="<?php echo Yii::app()->createUrl("currency/index")?>">Monedas</a></li>
 				          <?php endif?>
+				          <?php if(Yii::app()->user->checkAccess('ClauseManage')):?>			          
+                	      <li><a href="<?php echo Yii::app()->createUrl("clause/index")?>">Cl&aacute;usulas</a></li>
+				          <?php endif?>
                 	      </ul>
           </li>
           </ul>
