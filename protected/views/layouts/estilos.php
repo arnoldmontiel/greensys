@@ -958,11 +958,20 @@ font-family: "GudeaRegular";
 /* ------ END CURRENCY ------- */
 
 /*------------- CLAUSES ------------*/
-.clauseScroll{height:300px;overflow-y:auto;}
+.clauseScroll{height:300px;overflow-y:auto; padding:5px;}
 
 #screenClausulas .nicEdit-main{background-color:white;}
 
 #screenClausulas .nicEdit-main:focus{outline:none;}
+
+.buttonsPresuClause{width:200px; text-align:right; vertical-align:top;}
+
+
+#myModalChangeClause .modal-dialog{width:80%;}
+
+#myModalChangeClause .nicEdit-main:focus{outline:none; }
+
+#myModalChangeClause .from-control{width:100%; }
 
 
 /*------------- END CLAUSES ------------*/
