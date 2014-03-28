@@ -751,9 +751,13 @@ margin-top: -5px;}
 #myModalFormBudget .modal-dialog{ width:700px;}
 
 
-#myModalAddProduct .modal-dialog{ width:80%;}
+#myModalAddProduct .modal-dialog{ width:90%;}
 #myModalAddProduct .label{ font-size:15px;}
 #myModalAddProduct .table.tablaIndividual{ margin-bottom:0px;}
+
+
+.groupAgregar{width:225px;}
+.groupAgregar .checkAgregado{margin-left:10px; color:#5cb85c;}
 
 .inputSmall{ width:40px; display:inline-block; }
 .inputMed{ width:55px; display:inline-block; }
