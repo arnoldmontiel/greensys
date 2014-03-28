@@ -1044,7 +1044,9 @@ class Product extends ModelAudit
 								t.length = 0 OR
 								t.msrp = 0 OR
 				 				t.dealer_cost = 0)");
-	
+		
+		$criteria->addCondition("t.Id not in (select Id_product_parent from product_group)");
+		
 		// Create a custom sort
 		$sort=new CSort;
 		$sort->attributes=array(

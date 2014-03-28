@@ -505,6 +505,8 @@ class ProductController extends GController
 								t.length = 0 OR
 								t.msrp = 0 OR
 				 				t.dealer_cost = 0)");
+		$criteria->addCondition("t.Id not in (select Id_product_parent from product_group)");
+		
 		$pendingQty = Product::model()->count($criteria);
 		
 		$modelProducts = new Product('search');
