@@ -230,6 +230,23 @@ class BudgetController extends GController
 		}
 	}
 	
+	public function actionAjaxUpdateClause()
+	{
+		$id = (isset($_POST['id']))?$_POST['id']:null;
+		$version = (isset($_POST['version']))?$_POST['version']:null;
+		$description = (isset($_POST['description']))?$_POST['description']:'';
+		
+		if(isset($id) && isset($version))
+		{
+			$model = Budget::model()->findByPk(array('Id'=>$id, 'version_number'=>$version));
+			if(isset($model))
+			{
+				$model->clause_description = $description;
+				$model->save();
+			}
+		}
+	}
+	
 	public function actionAjaxShowCreateModalBudgetItem()
 	{
 		$model=new BudgetItem;
