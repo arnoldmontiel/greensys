@@ -214,6 +214,22 @@ class BudgetController extends GController
 			$budgetItem->delete();
 		}
 	}
+	
+	public function actionAjaxOpenUpdateClause()
+	{
+		$id = (isset($_POST['idBudget']))?$_POST['idBudget']:null;
+		$version = (isset($_POST['version']))?$_POST['version']:null;
+		
+		if(isset($id) && isset($version))
+		{
+			$model = Budget::model()->findByPk(array('Id'=>$id, 'version_number'=>$version));
+			if(isset($model))
+			{
+				echo $model->clause_description;
+			}
+		}
+	}
+	
 	public function actionAjaxShowCreateModalBudgetItem()
 	{
 		$model=new BudgetItem;
@@ -766,6 +782,27 @@ class BudgetController extends GController
 			}
 		}
 	
+	}
+	
+	public function actionAjaxupdateToDefaultClause()
+	{
+		$id = isset($_POST['id'])?$_POST['id']:null;
+		$version = isset($_POST['version'])?$_POST['version']:null;
+		
+		if(isset($id) && isset($version))
+		{
+			$model = Budget::model()->findByPk(array('Id'=>$id, 'version_number'=>$version));
+			if(isset($model))
+			{
+				$modelClause = Clause::model()->findByPk(1);
+				if(isset($modelClause))
+				{
+					$model->clause_description = $modelClause->description;
+					$model->save();
+					echo $modelClause->description;
+				}
+			}
+		}
 	}
 	
 	public function actionAjaxChangeCurrencyView()

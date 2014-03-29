@@ -26,6 +26,22 @@ function downloadPDF(id, version)
 	return false;	
 }
 
+function updateToDefaultClause(id, version)
+{
+	statusStartSaving();
+	$.post("<?php echo BudgetController::createUrl('AjaxUpdateToDefaultClause'); ?>",
+			{
+				id:id,
+				version:version
+			}
+		).success(
+			function(data){
+				statusSaved();
+				$("#budget-clause-description").html(data);
+			}).error(function(){statusSavedError();});
+		return false;
+}
+
 function changePrintChk(obj, id, version)
 {
 	var value = 0;
@@ -79,6 +95,21 @@ function closeVersion(id, version)
 		return false;
 	}
 	return false;	
+}
+
+function openUpdateClause(idBudget, version)
+{
+	$.post("<?php echo BudgetController::createUrl('AjaxOpenUpdateClause'); ?>",
+			{
+				idBudget:idBudget,
+				version:version
+			}
+		).success(
+			function(data){
+				nicEditors.findEditor( "Budget_clause_description" ).setContent( data );
+		   		$('#myModalChangeClause').modal('show');	  
+			});
+		return false;
 }
 
 function openUpdateBudget(idBudget, version)
