@@ -26,6 +26,26 @@ function downloadPDF(id, version)
 	return false;	
 }
 
+function changePrintChk(obj, id, version)
+{
+	var value = 0;
+	if($(obj).is(':checked'))
+		value = 1;
+	
+	statusStartSaving();
+	$.post("<?php echo BudgetController::createUrl('AjaxChangePrintChk'); ?>",
+			{
+				id:id,
+				version:version,
+				value:value				
+			}
+		).success(
+			function(data){
+				statusSaved();
+			}).error(function(){statusSavedError();});
+		return false;
+}
+
 function changeCurrencyView(obj, id, version)
 {
 	statusStartSaving();	

@@ -90,21 +90,22 @@ $projectService->Id_project = $model->Id_project;
 
 <tbody>
 <tr>
-<td><input checked="checked" type="checkbox" value="1"> Imprimir en Presupuesto</td>
+<td><?php echo CHtml::activeCheckBox($model, 'print_clause', array('onchange'=>'changePrintChk(this,'.$model->Id.', '.$model->version_number.');'));?> Imprimir en Presupuesto</td>
 <td>&nbsp;</td>
 </tr>
 <tr>
 <td>
 <div class="clauseScroll">
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vestibulum eleifend mauris, non vehicula leo sagittis eget. Etiam sit amet viverra lectus, a posuere massa. In nec dignissim nisi. In commodo felis vitae purus auctor eleifend. Integer non adipiscing orci. Fusce nunc felis, adipiscing quis nibh a, feugiat adipiscing massa. Duis metus nibh, dignissim ac mollis eleifend, suscipit vel justo. Praesent fermentum vel felis molestie adipiscing. Pellentesque commodo, urna sed eleifend cursus, ipsum eros fermentum mi, eu imperdiet dolor lacus vel mauris. Proin vel neque eget magna fringilla cursus.
-
-Etiam vel leo nunc. Etiam eget suscipit dolor. Mauris eu varius nunc, quis varius orci. Praesent mauris massa, egestas fringilla mauris eu, consectetur convallis purus. Morbi vehicula augue in sagittis imperdiet. Ut aliquet bibendum laoreet. Proin at felis id mauris dapibus mattis eu at arcu. Donec viverra lacus metus, eu volutpat augue vulputate pharetra. Quisque tincidunt nulla tellus, pharetra laoreet nibh lacinia vitae.
-
-Fusce faucibus sem sem, pulvinar scelerisque turpis dictum sit amet. Pellentesque suscipit euismod ligula sed vehicula. Duis in adipiscing leo. Morbi fringilla vulputate risus eget placerat. Nullam vehicula vel nisi vitae semper. Praesent ac ultricies nulla. Fusce tempus aliquet nisl, eget convallis nisi volutpat a. Ut nisi nunc, molestie in magna nec, semper condimentum eros. Etiam fringilla sed massa et pulvinar. Duis quis scelerisque diam. Maecenas malesuada aliquet odio non mollis.
-
-Cras laoreet tincidunt mauris, vitae vestibulum massa. Ut placerat a nulla eget tempor. Pellentesque eu tristique lectus, nec tempor turpis. Cras volutpat molestie tristique. Donec et porttitor orci, quis auctor diam. Aenean vitae quam nibh. Nam nec facilisis nunc, quis tincidunt justo. Donec vel varius mi, vel vestibulum augue. Nunc dignissim dictum diam et rutrum. Duis pharetra fringilla bibendum. Phasellus tempor diam justo, et tincidunt mi aliquam sit amet. Aliquam turpis magna, dictum quis laoreet vel, viverra vitae nisl. Nunc scelerisque neque eget leo consectetur, sit amet mattis nisl posuere. Maecenas sollicitudin, arcu non auctor sodales, quam tortor rutrum nulla, in lacinia massa neque hendrerit lectus. Proin facilisis hendrerit tempus. Suspendisse eu odio neque.
-
-Sed porttitor feugiat dictum. Nullam nec bibendum nunc, ac elementum tortor. Ut quis orci venenatis, volutpat sem vel, ornare nisl. Suspendisse cursus nulla ut quam euismod mollis. Aenean ultricies nec augue vel sollicitudin. Quisque ultricies at dui nec consequat. Phasellus rhoncus fringilla vehicula. Mauris eleifend faucibus lacus eu convallis. Aliquam volutpat hendrerit pretium. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam eu convallis tellus.
+<?php
+	$clause = $model->clause_description;
+	if(empty($clause))
+	{
+		$modelClause = Clause::model()->findByPk(1);
+		if(isset($modelClause))
+			$clause = $modelClause->description;
+	}
+	echo $clause;
+?>
 </div></td>
 <td valign="top">
 <div class="buttonsPresuClause">

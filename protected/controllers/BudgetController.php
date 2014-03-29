@@ -749,6 +749,24 @@ class BudgetController extends GController
 															/*parametros extras para que funcione CJuiDatePicker*/
 															false,true);
 	}
+		
+	public function actionAjaxChangePrintChk()
+	{
+		$id = isset($_POST['id'])?$_POST['id']:null;
+		$version = isset($_POST['version'])?$_POST['version']:null;
+		$value = isset($_POST['value'])?$_POST['value']:0;
+	
+		if(isset($id) && isset($version))
+		{
+			$model = Budget::model()->findByPk(array('Id'=>$id, 'version_number'=>$version));
+			if(isset($model))
+			{
+				$model->print_clause = $value;
+				$model->save();
+			}
+		}
+	
+	}
 	
 	public function actionAjaxChangeCurrencyView()
 	{

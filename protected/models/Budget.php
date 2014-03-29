@@ -61,6 +61,13 @@ class Budget extends ModelAudit
 		$this->date_cancelled = (!empty($this->date_cancelled))?Yii::app()->lc->toDatabase($this->date_cancelled,'date','small','date',null):null;
 		$this->date_approved = (!empty($this->date_approved))?Yii::app()->lc->toDatabase($this->date_approved,'date','small','date',null):null;		
 
+		if($this->isNewRecord)
+		{
+			$modelClause = Clause::model()->findByPk(1);
+			if(isset($modelClause))
+				$this->clause_description = $modelClause->description;
+		}
+		
 		return parent::beforeSave();
 	}
 	
@@ -107,7 +114,6 @@ class Budget extends ModelAudit
 				$modelBudgetItem->quantity = 0;
 				$modelBudgetItem->save();
 			}
-			
 			
 		}
 		return parent::afterSave();
