@@ -53,6 +53,11 @@
 					'htmlOptions'=>array("style"=>"width:20%;"),
 				),
 				array(
+						'name'=>'description_customer',
+						'value'=>'GreenHelper::cutString($data->description_customer,40)',
+						'htmlOptions'=>array("style"=>"width:20%;"),
+				),				
+				array(
 						'header'=>'Acciones',
 						'value'=>function($data){
 							$group = ProductGroup::model()->findByPk(array('Id_product_parent'=>$data->product_group_id_parent,'Id_product_child'=>$data->Id));		
