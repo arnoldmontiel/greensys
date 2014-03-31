@@ -2630,8 +2630,7 @@ class GreenHelper
 								
           					
 							</div><!-- CIERRE CONTAINER -->';
-		
-	$clausulas = '<div  style="page-break-before: always;"><div class="budgetTitle">Cl&aacute;usulas del Contrato</div>'.$modelBudget->clause_description .'</div>'; 
+	$clausulas = '<div  style="page-break-before: always;"><div class="budgetTitle">Cl&aacute;usulas del Contrato</div><div class="budgetClausulas">'.$modelBudget->clause_description .'</div></div>'; 
 // 					<div class="budgetDesc">Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.
 // 					</div>
 // 					<div class="budgetSubtitle">Pago</div>
@@ -2668,7 +2667,12 @@ class GreenHelper
 //       				</table>
 //				</div>
 //				';
-
+		
+	//limpio el codigo que general el editor, le saco todos los "styles" inline
+	$clausulas = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $clausulas);
+	$clausulas = preg_replace("/(<[^>]+) style='.*?'/i", "$1", $clausulas);
+		
+		
 		if($modelBudget->print_clause == 1)
 			$result = $caratula.$content.$resumen.$clausulas;
 		else 
