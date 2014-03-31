@@ -1003,7 +1003,7 @@ width:auto; padding:50px; border-radius:0px; display:block;margin-right:20px;mar
 @page{
   footer: html_myFooter;
   margin-top: 0.5cm;
-  margin-bottom: 0.5cm;
+  margin-bottom: 1cm;
   margin-left: 0.5cm;
   margin-right: 0.5cm;
   margin-header: 5mm; 
@@ -1048,14 +1048,8 @@ body {background-color:white;}
 .budgetVersion{ text-transform:uppercase;}
 .budgetDate{ text-transform:uppercase;}
 
-.budgetTitle{ letter-spacing:1px;  color:#999; font-size:30px;}
+.budgetTitle{ letter-spacing:1px;  color:#999; font-size:30px; text-align:left;}
 
-.budgetSubtitle{ font-weight:normal; letter-spacing:1px; padding:5px; background-color:#eee; text-transform:uppercase;font-family:'GudeaRegular'; text-align:left;
-
-
-font-size: 16px;
-padding-bottom: 5px;
-}
 
 .budgetNota{padding-bottom:20px; margin-bottom:40px; border-bottom:1px dotted #ccc;}
 
@@ -1095,6 +1089,58 @@ div.superBudgetFinal{}
 div.superBudgetTabla .tablaDatos td{}
 
 .budgetDesc{   margin-bottom:15px; padding: 0px 5px;}
+
+.nicEdit-scroll{height:350px !important; overflow-y:auto !important;}
+
+.nicEdit-main{ padding-bottom:25px;}
+.nicEdit-main , .nicEdit-main div, .nicEdit-main ul, .nicEdit-main ol, .nicEdit-main  p, .nicEdit-main  span{
+      font-size: 15px !important;
+      font-family:"GudeaRegular" !important;
+}
+ .nicEdit-main ul, .nicEdit-main ol{padding-left:30px;padding-top:10px !important}
+ .nicEdit-main p{padding-left:10px !important; padding-top:10px !important;}
+ .nicEdit-main span{padding-left:10px !important; padding-top:10px !important;}
+ 
+.nicEdit-main .budgetSubtitle{ font-size: 16px !important;font-weight:normal; letter-spacing:1px; 
+padding:5px; background-color:#eee; text-transform:uppercase;
+font-family:'GudeaRegular'; text-align:left;
+padding-bottom: 5px;
+margin-top:20px; margin-bottom:5px;}
+
+
+
+div.budgetClausulas{ padding-left:40px;margin-bottom:15px; padding: 0px 5px;font-size: 12px !important; padding-bottom:40px; text-align:left;}
+
+div.budgetClausulas blockquote{
+margin: 0 0 0 40px;
+border: none;
+padding: 0px;
+font-size:12px !important;}
+
+div.budgetClausulas blockquote span{
+font-size:12px !important;}
+
+
+div.budgetClausulas ul{text-indent:15px;}
+div.budgetClausulas ol{text-indent:15px;}
+
+
+div.budgetClausulas p, div.budgetClausulas  span{ padding-left:10px !important; line-height:16px !important;}
+
+div.budgetClausulas div.budgetSubtitle,  div.budgetSubtitle{  font-size: 16px !important; font-weight:normal; letter-spacing:1px; 
+padding:5px; background-color:#eee; text-transform:uppercase;
+font-family:'GudeaRegular'; text-align:left;
+padding-bottom: 5px;
+margin:0px;
+margin-top:20px; 
+margin-bottom:5px; }
+
+/*solo para View online*/
+#screenReadOnlyCaratulaFinal div.budgetClausulas *{
+      font-size: 14px !important;
+}
+
+
 
 .tableReadOnly{width:100%; margin-bottom:0px;}
 .tableReadOnly td{border-top: 0.1px solid #ddd; border-top: 0.1px solid #eee; font-size:13px;padding:10px 5px; }

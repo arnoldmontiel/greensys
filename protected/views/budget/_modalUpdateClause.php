@@ -1,11 +1,11 @@
   <script>
 $(document).ready (function (){
+//$('textarea.form-control').height('350px');
 new nicEditor({buttonList : ['title','bold','italic','underline','strikeThrough','ol','ul','indent','outdent']}).panelInstance('Budget_clause_description');
 $('.nicEdit-panelContain').parent().width('100%');
 $('.nicEdit-main').parent().width('98%');
 $('.nicEdit-main').width('98%');
-$('.nicEdit-main').height('350px');
-
+$('.nicEdit-main').parent().addClass('nicEdit-scroll');
 });
 
 function saveClause(id, version)

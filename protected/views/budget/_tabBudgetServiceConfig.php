@@ -95,7 +95,7 @@ $projectService->Id_project = $model->Id_project;
 </tr>
 <tr>
 <td width="85%">
-<div id="budget-clause-description" class="clauseScroll">
+<div id="budget-clause-description" class="budgetClausulas clauseScroll">
 <?php echo $model->clause_description; ?>
 </div></td>
 <td valign="top" class="align-right">
