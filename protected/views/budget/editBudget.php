@@ -148,6 +148,7 @@ function changeTree(idArea,idAreaProject)
 {
 	if(idArea != 0 &&idAreaProject!=0)
 	{
+		$.fn.yiiGridView.update('budget-item-grid_' + idAreaProject + '_' + idArea);
 		$("#warningEmpty").addClass("hide");
 		$(".sideMenuBotones .isdisable").removeClass("disabled");
 		$(".areas .tab-pane").removeClass("active");
@@ -156,7 +157,6 @@ function changeTree(idArea,idAreaProject)
 		$('#idTabAreaProject').val(idAreaProject);
 		$('.tituloAreaPresu').html($('#areaProjectDescription_'+idAreaProject).html());
 		$('#addProduct').removeAttr("disabled");
-		//$.fn.yiiGridView.update('budget-item-grid_' + idAreaProject + '_' + idArea);
 	}
 	else
 	{

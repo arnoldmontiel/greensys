@@ -446,6 +446,11 @@ class BudgetItem extends ModelAudit
 		
 		return $discountType;
 	}
+
+	public function getTotalPriceCurrencyConvertedByService()
+	{
+		return GreenHelper::convertCurrency($this->price, $this->budget->Id_currency, $this->budget->Id_currency_view,$this->getCurrencyConversor());
+	}
 	
 	public function getPriceCurrencyConverted()
 	{

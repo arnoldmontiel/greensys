@@ -516,14 +516,21 @@ class BudgetController extends GController
 						$modelBudgetItemBD->quantity = $qty;
 					}
 				}
+				$item = BudgetItem::model()->findByAttributes(array('Id_product'=>$idProduct,'Id_budget'=>$idBudget,'version_number'=>$version));
+				if(isset($item))
+				{
+					$modelBudgetItemBD->discount =$item->discount;
+					$modelBudgetItemBD->discount_type =$item->discount_type;
+						
+				}
 				$modelBudgetItemBD->save();
 			}
 			else 
 			{
-				if(isset($modelBudgetItemBD))
-				{
-					$modelBudgetItemBD->delete();
-				}
+// 				if(isset($modelBudgetItemBD))
+// 				{
+// 					$modelBudgetItemBD->delete();
+// 				}
 			}
 			
 			$criteria = new CDbCriteria();
@@ -1489,13 +1496,33 @@ class BudgetController extends GController
 			$budgetItem = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
 			if(isset($budgetItem))
 			{
-				$budgetItem->discount_type = $_POST['discount_type'];
-				if($budgetItem->save())
-				{
-					$budgetItem->refresh();
-					$result['total_price']=$budgetItem->totalPrice;
-					echo json_encode(array_merge($budgetItem->attributes,$result));						
+				
+				$transaction = $budgetItem->dbConnection->beginTransaction();
+				try {
+					$budgetItem->discount_type = $_POST['discount_type'];
+					if($budgetItem->save())
+					{
+						$budgetItems =
+						BudgetItem::model()->findAllByAttributes(
+								array('Id_product'=>$budgetItem->Id_product,
+										'Id_budget'=>$budgetItem->Id_budget,
+										'version_number'=>$budgetItem->version_number
+								));
+						foreach ($budgetItems as $item)
+						{
+							$item->discount_type = $_POST['discount_type'];
+							$item->save();
+						}
+						$transaction->commit();
+						$budgetItem->refresh();
+						$result['total_price']=$budgetItem->totalPrice;
+						echo json_encode(array_merge($budgetItem->attributes,$result));
+					}
+				} catch (Exception $e) {
+					$transaction->rollback();
+						
 				}
+				
 			}
 		}
 	}
@@ -1506,13 +1533,32 @@ class BudgetController extends GController
 			$budgetItem = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
 			if(isset($budgetItem))
 			{
-				$budgetItem->discount= $_POST['discount'];
-				$budgetItem->discount_type= $_POST['discountType'];
-				if($budgetItem->save())
-				{
-					$budgetItem->refresh();
-					$result['total_price']=$budgetItem->totalPrice;
-					echo json_encode(array_merge($budgetItem->attributes,$result));						
+				$transaction = $budgetItem->dbConnection->beginTransaction();
+				try {
+					$budgetItem->discount= $_POST['discount'];
+					$budgetItem->discount_type= $_POST['discountType'];
+					if($budgetItem->save())
+					{
+						$budgetItems = 
+							BudgetItem::model()->findAllByAttributes(
+									array('Id_product'=>$budgetItem->Id_product,
+											'Id_budget'=>$budgetItem->Id_budget,
+											'version_number'=>$budgetItem->version_number
+									));
+						foreach ($budgetItems as $item)
+						{
+							$item->discount = $_POST['discount'];
+							$item->discount_type = $_POST['discountType'];
+							$item->save();							
+						}
+						$transaction->commit();
+						$budgetItem->refresh();
+						$result['total_price']=$budgetItem->totalPrice;
+						echo json_encode(array_merge($budgetItem->attributes,$result));
+					}						
+				} catch (Exception $e) {
+					$transaction->rollback();
+					
 				}
 			}
 		}
