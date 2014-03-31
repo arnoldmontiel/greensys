@@ -255,7 +255,7 @@ $this->ColGap=5;
 
 // LISTS
 $this->list_align_style = 'R';	// Determines alignment of numbers in numbered lists
-$this->list_indent_first_level = 0;	// 1/0 yex/no to indent first level of list
+$this->list_indent_first_level = 1;	// 1/0 yex/no to indent first level of list
 $this->list_number_suffix = '.';	// Content to follow a numbered list marker e.g. '.' gives 1. or IV.; ')' gives 1) or a)
 
 // ACTIVE FORMS
