@@ -2261,6 +2261,15 @@ class GreenHelper
 						
 						if($budgetItem->getDiscountCurrencyConverted() > 0)
 						{
+							
+							if ($budgetItem->discount_type==0)
+							{
+								$discount = self::showPrice($budgetItem->discount);							
+							}
+							else 
+							{
+								$discount = self::showPrice($budgetItem->getDiscountCurrencyConverted()/$commissionFactor);								
+							}
 							$serviceContentBodyItem = $serviceContentBodyItem . '<table width="100%" class="tablaLimpia2 conDesc">
 								<tbody><tr>
 								<td class="align-left" width="91">Cantidad:</td>
@@ -2268,7 +2277,7 @@ class GreenHelper
 								<td class="align-left" width="91">Precio Unitario:</td>
 								<td class="align-left" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-left" width="91">Descuento:</td>
-								<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()/$commissionFactor).'</td>
+								<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. $discount .'</td>
 								<td class="align-right" width="91">Total:</td>								
 								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor).'</td>
 								</tr></tbody></table>';
@@ -2300,6 +2309,14 @@ class GreenHelper
 							
 						if($budgetItem->getDiscountCurrencyConverted() > 0)
 						{
+							if ($budgetItem->discount_type==0)
+							{
+								$discount = self::showPrice($budgetItem->discount);
+							}
+							else
+							{
+								$discount = self::showPrice($budgetItem->getDiscountCurrencyConverted()/$commissionFactor);
+							}								
 							$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<table width="100%" class="tablaLimpia2 conDesc">
 								<tbody><tr>
 								<td class="align-left" width="91">Cantidad:</td>
@@ -2307,7 +2324,7 @@ class GreenHelper
 								<td class="align-left" width="91">Precio Unitario:</td>
 								<td class="align-left" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-left" width="91">Descuento:</td>
-								<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()/$commissionFactor).'</td>
+								<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($discount).'</td>
 								<td class="align-right" width="91">Total:</td>
 								
 								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor).'</td>
