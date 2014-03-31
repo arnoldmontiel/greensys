@@ -21,7 +21,7 @@ $settings = new Settings();
 							array(
 									'name'=>'quantity',
 									'value'=>function($data){
-										if($data->description=="Programación"||$data->description=="Instalación")
+										if($data->service_type==1||$data->service_type==2)
 										{
 											return $data->quantity;
 												
@@ -78,7 +78,7 @@ $settings = new Settings();
 							array(
 									'name'=>'Acciones',
 									'value'=>function($data){									
-										if($data->description=="Programación"||$data->description=="Instalación")
+										if($data->service_type==1||$data->service_type==2)
 											return '';
 										else
 											return '<button type="button" class="btn btn-default btn-sm" onclick="removeBudgetItem('.$data->Id.');" ><i class="fa fa-trash-o"></i> Borrar</button>';

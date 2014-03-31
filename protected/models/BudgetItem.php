@@ -80,7 +80,7 @@ class BudgetItem extends ModelAudit
 	}
 	public function afterSave()
 	{
-		if($this->description == "Programación"||$this->description == "Instalación")
+		if($this->service_type == 1||$this->service_type == 2)
 		{
 			return parent::afterSave();
 		}
@@ -90,7 +90,7 @@ class BudgetItem extends ModelAudit
 	public function afterDelete()
 	{
 		parent::afterDelete();
-		if($this->description != "Programación" && $this->description != "Instalación")
+		if($this->service_type != 1 && $this->service_type != 2)
 			$this->calculateTimes();
 	}
 	
@@ -100,7 +100,7 @@ class BudgetItem extends ModelAudit
 		$modelBudget->Id =$this->Id_budget;
 		$version = $modelBudget->getCurrentVersion();
 		
-		$modelProgramingHours = BudgetItem::model()->findByAttributes(array('Id_service'=>$this->Id_service, 'Id_budget'=>$this->Id_budget,'version_number'=>$version,'description'=>'Programación'));
+		$modelProgramingHours = BudgetItem::model()->findByAttributes(array('Id_service'=>$this->Id_service, 'Id_budget'=>$this->Id_budget,'version_number'=>$version,'service_type'=>1));
 		if(isset($modelProgramingHours))
 		{
 			$qty = $modelProgramingHours->quantity - $this->quantity;
@@ -108,7 +108,7 @@ class BudgetItem extends ModelAudit
 			$modelProgramingHours->save();
 		}
 		
-		$modelInstalationHours = BudgetItem::model()->findByAttributes(array('Id_service'=>$this->Id_service, 'Id_budget'=>$this->Id_budget,'description'=>'Instalación'));
+		$modelInstalationHours = BudgetItem::model()->findByAttributes(array('Id_service'=>$this->Id_service, 'Id_budget'=>$this->Id_budget,'service_type'=>2));
 		if(isset($modelInstalationHours))
 		{
 			$qty = $modelInstalationHours->quantity - $this->quantity;
@@ -126,7 +126,7 @@ class BudgetItem extends ModelAudit
 		$criteria=new CDbCriteria;
 		$criteria->compare('t.Id_budget',$this->Id_budget);
 		$criteria->compare('t.version_number',$version);
-		$criteria->compare('t.description','Programacion');
+		$criteria->compare('t.service_type',1);
 		if(isset($this->Id_service))
 		{
 			if($this->Id_service != 0)
@@ -144,6 +144,7 @@ class BudgetItem extends ModelAudit
 			$modelProgramingHours->Id_budget = $this->Id_budget;
 			$modelProgramingHours->version_number = $version;
 			$modelProgramingHours->Id_service = $this->Id_service;
+			$modelProgramingHours->service_type = 1;
 			$modelProgramingHours->description = 'Programación';
 		
 		}
@@ -151,7 +152,7 @@ class BudgetItem extends ModelAudit
 		$criteria=new CDbCriteria;
 		$criteria->compare('t.Id_budget',$this->Id_budget);
 		$criteria->compare('t.version_number',$version);
-		$criteria->compare('t.description','Instalacion');
+		$criteria->compare('t.service_type',2);
 		if(isset($this->Id_service))
 		{
 			if($this->Id_service != 0)
@@ -167,6 +168,7 @@ class BudgetItem extends ModelAudit
 			$modelInstalationHours = new BudgetItem();
 			$modelInstalationHours->Id_budget = $this->Id_budget;
 			$modelInstalationHours->version_number = $version;
+			$modelInstalationHours->service_type = 2;
 			$modelInstalationHours->Id_service = $this->Id_service;
 			$modelInstalationHours->description = 'Instalación';
 		
@@ -242,7 +244,7 @@ class BudgetItem extends ModelAudit
 			array('description', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_product, Id_area,Id_area_project, Id_service, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type, product_code,product_model,product_part_number, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc, parent_product_code, quantity, children_count, children_included, description', 'safe', 'on'=>'search'),
+			array('Id, Id_product, Id_area,Id_area_project, Id_service, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type, product_code,product_model,product_part_number, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc, parent_product_code, quantity, children_count, children_included, description, service_type', 'safe', 'on'=>'search'),
 		);
 	}
 
