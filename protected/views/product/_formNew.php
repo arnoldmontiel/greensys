@@ -96,8 +96,6 @@ $('#createNomenclator').click(
 );
 					
 					
-$('#display-weight').hide();
-
 $('#cancel').click(function()
 {
 	window.location = '".ProductController::createUrl("index")."';
@@ -111,33 +109,6 @@ $('#saveAndAddChildren').click(function()
 	$('#children').val('1');
 });		
 					
-$('#weight').change(function(){
-	$(this).val(Number($(this).val()).toFixed(2));
-	if($('#Product_Id_measurement_unit_weight').val()!='"
-		.$weightToShipping->Id.
-		"')
-	{
-		fillWieghtTextBox('".ProductController::createUrl("AjaxFillWeight")."','Product_weight','product-form');
-	}else{
-		$('#Product_weight').val($('#weight').val());
-	}
-}).keyup(function(){
-	validateNumber($(this));
-});
-
-$('#Product_Id_measurement_unit_weight').change(function(){
-	if($('#Product_Id_measurement_unit_weight').val()!='"
-				.$weightToShipping->Id.
-				"')
-	{
- 		$('#display-weight').show();
-		fillWieghtTextBox('".ProductController::createUrl("AjaxFillWeight")."','Product_weight','product-form');
-	}else{
-		$('#Product_weight').val($('#weight').val());
- 		$('#display-weight').hide();
-	}
-});
-
 $('#Product_msrp').change(function(){
 	$(this).val(Number($(this).val()).toFixed(2));
 	if($('#Product_dealer_cost').val()!=0)
@@ -387,12 +358,8 @@ $('#deleteIcon').click(function(){
           </tr>
           <tr>
             <td style="text-align:right;"><?php echo $form->labelEx($model,'weight'); ?></td>
-            <td><?php echo CHtml::textField("weight",$model->weight,array('class'=>'form-control')); ?></td>
-          </tr>
-          <tr id="display-weight">
-            <td style="text-align:right;"><?php echo $form->labelEx($model,'weight'); ?></td>
             <td><?php echo $form->textField($model,'weight',array('class'=>'form-control')); ?></td>
-          </tr>
+            </tr>
           </tbody>
       </table>
     </div>
