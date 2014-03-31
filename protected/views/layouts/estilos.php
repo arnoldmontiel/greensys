@@ -964,7 +964,7 @@ font-family: "GudeaRegular";
 
 #screenClausulas .nicEdit-main:focus{outline:none;}
 
-.buttonsPresuClause{width:200px; text-align:right; vertical-align:top;}
+.buttonsPresuClause{min-width:200px; text-align:right; vertical-align:top;}
 
 
 #myModalChangeClause .modal-dialog{width:80%;}
@@ -973,6 +973,7 @@ font-family: "GudeaRegular";
 
 #myModalChangeClause .from-control{width:100%; }
 
+.nicEdit-main{cursor:text;}
 
 /*------------- END CLAUSES ------------*/
 
