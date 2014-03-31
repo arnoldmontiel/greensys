@@ -94,11 +94,11 @@ $projectService->Id_project = $model->Id_project;
 <td>&nbsp;</td>
 </tr>
 <tr>
-<td>
+<td width="85%">
 <div id="budget-clause-description" class="clauseScroll">
 <?php echo $model->clause_description; ?>
 </div></td>
-<td valign="top">
+<td valign="top" class="align-right">
 <div class="buttonsPresuClause">
 <button onclick="openUpdateClause(<?php echo $model->Id;?>, <?php echo $model->version_number;?>);" class="btn btn-default btn-sm" data-toggle="modal" ><i class="fa fa-pencil"></i> Editar</button>
 <button onclick="updateToDefaultClause(<?php echo $model->Id;?>, <?php echo $model->version_number;?>);" type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i> Actualizar</button></div>

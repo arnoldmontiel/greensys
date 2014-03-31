@@ -1,9 +1,10 @@
   <script>
 $(document).ready (function (){
-new nicEditor({buttonList : ['title','bold','italic','underline','strikeThrough','ol','ul','indent','outdent','h1']}).panelInstance('Budget_clause_description');
+new nicEditor({buttonList : ['title','bold','italic','underline','strikeThrough','ol','ul','indent','outdent']}).panelInstance('Budget_clause_description');
 $('.nicEdit-panelContain').parent().width('100%');
 $('.nicEdit-main').parent().width('98%');
 $('.nicEdit-main').width('98%');
+$('.nicEdit-main').height('350px');
 
 });
 
@@ -49,7 +50,7 @@ function updateClause()
 			<h4 class="modal-title">Editar Condiciones</h4>
 		</div>
 		<div class="modal-body">
-			<?php echo CHtml::activeTextArea($model, 'clause_description',array("class"=>"form-control", 'rows' => 15)); ?>
+			<?php echo CHtml::activeTextArea($model, 'clause_description',array("class"=>"form-control", 'rows' => "5")); ?>
 		</div>
 		<div class="modal-footer">
 			<button onclick="updateClause();" type="button" class="btn btn-primary btn-lg pull-left"><i class="fa fa-reply"></i> Actualizar</button>
