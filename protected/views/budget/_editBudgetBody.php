@@ -58,7 +58,7 @@ $(document).ready(function() {
         <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'>
         	<a onclick="changeTree(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)">
         		<span id="areaProjectDescription_<?php echo $item->Id?>">
-        			<?php echo ($item->description==""?$item->area->description:$item->description);?>
+        			<?php echo ($item->description==""?$item->area->description:$item->description);?>&nbsp;(<?php echo $item->getProductQty($model->Id, $model->version_number);?>)
         		</span>        		        		
         	</a>
         	<?php $childAreaProjects = AreaProject::model()->findAllByAttributes(array('Id_parent'=>$item->Id));?>
@@ -68,7 +68,7 @@ $(document).ready(function() {
 		        <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'>
 		        	<a onclick="changeTree(<?php echo $child->Id_area;?>,<?php echo $child->Id;?>)">
 		        		<span id="areaProjectDescription_<?php echo $child->Id?>">
-		        			<?php echo ($child->description==""?$child->area->description:$child->description);?>
+		        			<?php echo ($child->description==""?$child->area->description:$child->description);?>&nbsp;(<?php echo $child->getProductQty($model->Id, $model->version_number);?>)
 		        		</span>        		        		
 		        	</a>
         	        	<?php $childAreaProjects2 = AreaProject::model()->findAllByAttributes(array('Id_parent'=>$child->Id));?>
@@ -78,7 +78,7 @@ $(document).ready(function() {
 					        <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'>
 					        	<a onclick="changeTree(<?php echo $child2->Id_area;?>,<?php echo $child2->Id;?>)">
 					        		<span id="areaProjectDescription_<?php echo $child2->Id?>">
-					        			<?php echo ($child2->description==""?$child2->area->description:$child2->description);?>
+					        			<?php echo ($child2->description==""?$child2->area->description:$child2->description);?>&nbsp;(<?php echo $child2->getProductQty($model->Id, $model->version_number);?>)
 					        		</span>        		        		
 					        	</a>
 					        	
@@ -89,7 +89,7 @@ $(document).ready(function() {
 								        <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'>
 								        	<a onclick="changeTree(<?php echo $child3->Id_area;?>,<?php echo $child3->Id;?>)">
 								        		<span id="areaProjectDescription_<?php echo $child3->Id?>">
-								        			<?php echo ($child3->description==""?$child3->area->description:$child3->description);?>
+								        			<?php echo ($child3->description==""?$child3->area->description:$child3->description);?>&nbsp;(<?php echo $child3->getProductQty($model->Id, $model->version_number);?>)
 								        		</span>        		        		
 								        	</a>
 								        </li>

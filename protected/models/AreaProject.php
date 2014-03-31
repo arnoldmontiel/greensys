@@ -26,6 +26,16 @@ class AreaProject extends CActiveRecord
 		return 'area_project';
 	}
 
+	public function getProductQty($idBudget, $version)
+	{
+		$criteria = new CDbCriteria();		
+		$criteria->addCondition('t.Id_area = '.$this->Id_area);
+		$criteria->addCondition('t.version_number = '.$version);
+		$criteria->addCondition('t.Id_budget = '.$idBudget);
+
+		return BudgetItem::model()->count($criteria);
+	}
+	
 	/**
 	 * @return array validation rules for model attributes.
 	 */
