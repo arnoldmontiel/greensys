@@ -61,7 +61,7 @@ var nicTitleOptions = {
 
 var nicTitleButton = nicEditorButton.extend({
 	 mouseClick : function() {
-	      this.ne.nicCommand('insertHTML', '<div class="budgetSubtitle">T&iacute;tulo</div><br>' );
+	      this.ne.nicCommand('insertHTML', '<div class="budgetSubtitle">T&iacute;tulo</div>' );
 	    }
 });
 
