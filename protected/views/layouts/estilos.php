@@ -756,7 +756,7 @@ margin-top: -5px;}
 #myModalAddProduct .table.tablaIndividual{ margin-bottom:0px;}
 
 
-.groupAgregar{width:225px;}
+.groupAgregar{width:150px;}
 .groupAgregar .checkAgregado{margin-left:10px; color:#5cb85c; display:none;}
 
 .inputSmall{ width:40px; display:inline-block; }

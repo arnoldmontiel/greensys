@@ -52,8 +52,13 @@
 				array(
 					'name'=>'short_description',
 					'value'=>'GreenHelper::cutString($data->short_description,40)',
-					'htmlOptions'=>array("style"=>"width:20%;"),
+					'htmlOptions'=>array("style"=>"width:30%;"),
 				),
+				array(
+						'name'=>'description_customer',
+						'value'=>'GreenHelper::cutString($data->description_customer,40)',
+						'htmlOptions'=>array("style"=>"width:30%;"),
+				),				
 				array(
 						'header'=>'Acciones',
 						'value'=>function($data){
