@@ -449,7 +449,20 @@ class BudgetItem extends ModelAudit
 
 	public function getTotalPriceCurrencyConvertedByService()
 	{
-		return GreenHelper::convertCurrency($this->price, $this->budget->Id_currency, $this->budget->Id_currency_view,$this->getCurrencyConversor());
+		if(isset($this->sum_quantity))
+		{
+			if($this->discount_type ==0)
+			{
+				$discount = ($this->price*$this->sum_quantity)* $this->discount/100;
+			}
+			else
+			{
+				$discount = $this->discount;
+			}
+			$total = $this->price*$this->sum_quantity;
+			return GreenHelper::convertCurrency($total-$discount, $this->budget->Id_currency, $this->budget->Id_currency_view,$this->getCurrencyConversor());
+		}else 
+			return 0;
 	}
 	
 	public function getPriceCurrencyConverted()
