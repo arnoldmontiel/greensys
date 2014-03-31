@@ -2270,7 +2270,7 @@ class GreenHelper
 								<td class="align-left" width="91">Descuento:</td>
 								<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-right" width="91">Total:</td>								
-								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice(($budgetItem->getPriceCurrencyConverted()*$budgetItem->sum_quantity)/$commissionFactor).'</td>
+								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor).'</td>
 								</tr></tbody></table>';
 						}
 						else 
@@ -2282,7 +2282,7 @@ class GreenHelper
 								<td class="align-left" width="121">Precio Unitario:</td>
 								<td class="align-left" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-right" width="121">Precio Final:</td>								
-								<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice(($budgetItem->getPriceCurrencyConverted()*$budgetItem->sum_quantity)/$commissionFactor).'</td>
+								<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor).'</td>
 								</tr></tbody></table>';
 						}
 						
@@ -2310,7 +2310,7 @@ class GreenHelper
 								<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($budgetItem->getDiscountCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-right" width="91">Total:</td>
 								
-								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice(($budgetItem->getPriceCurrencyConverted()*$budgetItem->sum_quantity)/$commissionFactor).'</td>
+								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor).'</td>
 								</tr></tbody></table>';
 						}
 						else
@@ -2323,7 +2323,7 @@ class GreenHelper
 								<td class="align-left" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-right" width="121">Precio Final:</td>
 								
-								<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice(($budgetItem->getPriceCurrencyConverted()*$budgetItem->sum_quantity)/$commissionFactor).'</td>
+								<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor).'</td>
 								</tr></tbody></table>';
 						}
 							
@@ -2632,49 +2632,45 @@ class GreenHelper
 							</div><!-- CIERRE CONTAINER -->';
 		
 	$clausulas = '<div  style="page-break-before: always;">
-					<div class="budgetTitle">Cl&aacute;usulas del Contrato</div>'.$modelBudget->clause_description .'</div>'; 
-// 					<div class="budgetDesc">Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.
-// 					</div>
-// 					<div class="budgetSubtitle">Pago</div>
-// 					<table class="table tableReadOnly tablaDatos">
-//         				<tbody>
-//           					<tr>
-//            						<td>Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.</td>
-//          					</tr>
-//         				</tbody>
-//       				</table>
-// 					<div class="budgetSubtitle">DURACI&Oacute;N DE LA OFERTA</div>
-// 					<table class="table tableReadOnly tablaDatos">
-//         				<tbody>
-//           					<tr>
-//            						<td>Praesent urna augue, volutpat eleifend neque eu, tristique iaculis massa. Maec.</td>
-//          					</tr>
-//         				</tbody>
-//       				</table>
-// 					<div class="budgetSubtitle">TIPO DE CAMBIO</div>
-// 					<table class="table tableReadOnly tablaDatos">
-//         				<tbody>
-// 							<tr>
-//            						<td>Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.</td>
-//          					</tr>
-//         				</tbody>
-//       				</table>
-// 					<div class="budgetSubtitle">LEGALES</div>
-// 					<table class="table tableReadOnly tablaDatos">
-//         				<tbody>
-//           					<tr>
-//            						<td>Praesent urna augue, volutpat eleifend neque eu, tristique iaculis massa. Maec. Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet.</td>
-//        						</tr>
-//         				</tbody>
-//       				</table>
-//				</div>
-//				';
-
-		if($modelBudget->print_clause == 1)
-			$result = $caratula.$content.$resumen.$clausulas;
-		else 
-			$result = $caratula.$content.$resumen;
+					<div class="budgetTitle">Cl&aacute;usulas del Contrato</div>
+					<div class="budgetDesc">Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.
+					</div>
+					<div class="budgetSubtitle">Pago</div>
+					<table class="table tableReadOnly tablaDatos">
+        				<tbody>
+          					<tr>
+           						<td>Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.</td>
+         					</tr>
+        				</tbody>
+      				</table>
+					<div class="budgetSubtitle">DURACI&Oacute;N DE LA OFERTA</div>
+					<table class="table tableReadOnly tablaDatos">
+        				<tbody>
+          					<tr>
+           						<td>Praesent urna augue, volutpat eleifend neque eu, tristique iaculis massa. Maec.</td>
+         					</tr>
+        				</tbody>
+      				</table>
+					<div class="budgetSubtitle">TIPO DE CAMBIO</div>
+					<table class="table tableReadOnly tablaDatos">
+        				<tbody>
+							<tr>
+           						<td>Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.</td>
+         					</tr>
+        				</tbody>
+      				</table>
+					<div class="budgetSubtitle">LEGALES</div>
+					<table class="table tableReadOnly tablaDatos">
+        				<tbody>
+          					<tr>
+           						<td>Praesent urna augue, volutpat eleifend neque eu, tristique iaculis massa. Maec. Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet.</td>
+       						</tr>
+        				</tbody>
+      				</table>
+				</div>
+				';
 		
+		$result = $caratula.$content.$resumen.$clausulas;
 		return $result;
 	}
 }
