@@ -26,8 +26,8 @@
 		'selectableRows' => 0,
 		'emptyText' => 'A&uacute;n sin productos.',
 		'summaryText'=>'',	
-		'afterAjaxUpdate'=>'js:function(id, data){setTotals();}',				
 		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
+		'afterAjaxUpdate'=>'js:function(id, data){setTotals();}',
 		'ajaxUrl'=>BudgetController::createUrl('AjaxUpdateBudgetItemGrid',array("Id_area_project"=>$areaProject->Id,"Id_area"=>$areaProject->Id_area,"Id"=>$modelBudgetItem->Id_budget,"version_number"=>$modelBudgetItem->version_number)),
 		'columns'=>array(
 					array(

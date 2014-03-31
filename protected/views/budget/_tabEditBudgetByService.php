@@ -9,15 +9,37 @@
 	{
 		$dataProvider =$modelBudgetItem->searchGeneralService();
 	}
+			
+	$dataProvider->pagination=array(
+			'route'=>'budget/AjaxUpdateBudgetItemGridByService',
+			'params'=>array(
+					"Id"=>$modelBudgetItem->Id_budget,
+					"version_number"=>$modelBudgetItem->version_number,
+					"byService"=>true,
+					'idService'=>$idService,
+			),
+	);
+	$dataProvider->sort=array(
+			'route'=>'budget/AjaxUpdateBudgetItemGridByService',
+			'params'=>array(
+					"Id"=>$modelBudgetItem->Id_budget,
+					"version_number"=>$modelBudgetItem->version_number,
+					"byService"=>true,
+					'idService'=>$idService,
+			),
+	);
+	
+	
+	
 	$dataProvider->pagination = false;
 	$this->widget('zii.widgets.grid.CGridView', array(
 		'id'=>'budget-item-grid_'.$idService,
 		'dataProvider'=>$dataProvider,
 		'selectableRows' => 0,
 		'emptyText' => 'A&uacute;n sin productos.',
-		'summaryText'=>'',	
-		'afterAjaxUpdate'=>'js:function(id, data){setTotals();}',				
+		'summaryText'=>'',							
 		'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
+		'ajaxUrl'=>BudgetController::createUrl('AjaxUpdateBudgetItemGridByService',array("Id"=>$modelBudgetItem->Id_budget,"version_number"=>$modelBudgetItem->version_number,"byService"=>true,'idService'=>$idService)),
 		'columns'=>array(
 				array(
 						'header'=>'Orden',

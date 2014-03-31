@@ -8,14 +8,38 @@ $settings = new Settings();
 		$idService = $modelBudgetItem->Id_service;
 	}
 	
+	$dataProvider = $modelBudgetItem->searchGenericItem();
+
+	$dataProvider->pagination=array(
+			'route'=>'budget/AjaxUpdateBudgetServiceExtras',
+			'params'=>array(
+					"Id"=>$modelBudgetItem->Id_budget,
+					"version_number"=>$modelBudgetItem->version_number,
+					"byService"=>true,
+					'idService'=>$idService,
+				),
+	);
+	$dataProvider->sort=array(
+			'route'=>'budget/AjaxUpdateBudgetServiceExtras',
+			'params'=>array(
+					"Id"=>$modelBudgetItem->Id_budget,
+					"version_number"=>$modelBudgetItem->version_number,
+					"byService"=>true,
+					'idService'=>$idService,
+				),
+	);
+	
+	
+	
 	$this->widget('zii.widgets.grid.CGridView', array(
 					'id'=>'budget-item-additional-grid_'.$idService,
-					'dataProvider'=>$modelBudgetItem->searchGenericItem(),
+					'dataProvider'=>$dataProvider,
 					'summaryText'=>'',
 					'selectableRows' => 0,
 					'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
 					'afterAjaxUpdate'=>'js:function(id, data){setTotals();}',
 					'emptyText' => 'A&uacute;n sin recargos.',				
+					'ajaxUrl'=>BudgetController::createUrl('AjaxUpdateBudgetServiceExtras',array("Id"=>$modelBudgetItem->Id_budget,"version_number"=>$modelBudgetItem->version_number,"byService"=>true,'idService'=>$idService)),
 					'columns'=>array(
 							'description',
 							array(
