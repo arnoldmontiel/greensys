@@ -26,6 +26,21 @@ function saveClause(id, version)
 		return false;
 }
 
+function updateClause()
+{
+	$.post("<?php echo BudgetController::createUrl('AjaxUpdateToDefaultClause'); ?>",
+			{
+				id:<?php echo $model->Id;?>,
+				version:<?php echo $model->version_number;?>
+			}
+		).success(
+			function(data){
+				nicEditors.findEditor( "Budget_clause_description" ).setContent( data );
+				$("#budget-clause-description").html(data);	
+			}).error();
+		return false;
+}
+
 </script>
 <div class="modal-dialog">
 	<div class="modal-content">
@@ -37,7 +52,7 @@ function saveClause(id, version)
 			<?php echo CHtml::activeTextArea($model, 'clause_description',array("class"=>"form-control", 'rows' => 15)); ?>
 		</div>
 		<div class="modal-footer">
-			<button  type="button" class="btn btn-primary btn-lg pull-left"><i class="fa fa-reply"></i> Actualizar</button>
+			<button onclick="updateClause();" type="button" class="btn btn-primary btn-lg pull-left"><i class="fa fa-reply"></i> Actualizar</button>
         	<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
         	<button onclick="saveClause(<?php echo $model->Id;?>, <?php echo $model->version_number;?>);" type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
 		</div>
