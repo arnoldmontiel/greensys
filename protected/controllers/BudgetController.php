@@ -1019,6 +1019,51 @@ class BudgetController extends GController
 				'areaProject'=>$areaProject,
 		));
 	}
+	
+	public function actionAjaxUpdateBudgetServiceExtras()
+	{
+		if(isset($_GET['Id'])&&$_GET['version_number'])
+			$model = $this->loadModel($_GET['Id'], $_GET['version_number']);
+		if(isset($_GET['idService']))
+			$idService =  $_GET['idService'];
+	
+		$modelBudgetItem = new BudgetItem('search');
+		$modelBudgetItem->unsetAttributes();  // clear any default values
+		if(isset($_GET['BudgetItem']))
+			$modelBudgetItem->attributes=$_GET['BudgetItem'];
+	
+		$modelBudgetItem->Id_service = $idService;
+		$modelBudgetItem->Id_budget = $model->Id;
+		$modelBudgetItem->version_number = $model->version_number;
+	
+		$this->render('_tabEditBudgetServiceExtras',array(
+				'model'=>$model,
+				'modelBudgetItem'=>$modelBudgetItem,
+				'idService'=>$idService,
+		));
+	}
+	
+	public function actionAjaxUpdateBudgetItemGridByService()
+	{		
+		if(isset($_GET['Id'])&&$_GET['version_number'])
+			$model = $this->loadModel($_GET['Id'], $_GET['version_number']);
+		if(isset($_GET['idService']))
+			$idService =  $_GET['idService'];
+				
+		$modelBudgetItem = new BudgetItem('search');
+		$modelBudgetItem->unsetAttributes();  // clear any default values
+		if(isset($_GET['BudgetItem']))
+			$modelBudgetItem->attributes=$_GET['BudgetItem'];
+		
+		$modelBudgetItem->Id_service = $idService; 
+		$modelBudgetItem->Id_budget = $model->Id;
+		$modelBudgetItem->version_number = $model->version_number;
+		
+		$this->render('_tabEditBudgetByService',array(
+				'modelBudgetItem'=>$modelBudgetItem,
+				'idService'=>$idService,
+		));
+	}
 	public function actionAjaxUpdateProjectServiceGrid()
 	{
 		if(isset($_GET['Id'])&&$_GET['version_number'])
