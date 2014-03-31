@@ -55,7 +55,7 @@ var nicTitleOptions = {
 		    'title': {name : 'Title', type : 'nicTitleButton'}
 		  },
 		  iconFiles: {
-		    'title': 'images/save_ok.png'
+		    'title': 'images/nicEditorStar.png'
 		  }
 		};
 
