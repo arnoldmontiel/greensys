@@ -74,59 +74,17 @@
   	<?php echo CHtml::activeHiddenField($model, 'Id_currency_view');?>
   <?php endif;?>
   
-   <div class="form-group">
-  	<?php 
-    	echo CHtml::activeLabel($model, 'percent_commission');
-    	echo CHtml::activeTextField($model, 'percent_commission', array('class'=>'form-control'));
-    ?>    
-  </div>
-  <div class="row">
-  <div class="col-sm-12">
-  <table class="table table-condensed tablaIndividual">
-  <thead>
-  <tr>
-  <th colspan="2">Comisionista</th>
-  <th class="align-right">Porcentaje</th>
-  <th class="align-right">Acciones</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-  <td><input class="form-control" placeholder="Nombre"></td>
-  <td><input class="form-control" placeholder="Apellido"></td>
-  <td class="align-right"><input class="form-control align-right formHasLabel inputSmall" placeholder="0.00">%</td>
-  <td class="align-right"><button class="btn btn-primary btn-sm noMargin"><i class="fa fa-plus"></i> Agregar</button></td>
-  </tr>
-  <tr>
-  <td>Juan</td>
-  <td>Perez</td>
-  <td class="align-right"><input class="form-control align-right formHasLabel inputSmall" placeholder="Comisi&oacute;n" value="10">%</td>
-  <td class="align-right"><button class="btn btn-default btn-sm noMargin" ><i class="fa fa-trash-o"></i> Borrar</button></td>
-  </tr>
-  <tr>
-  <td>El Chupasangre</td>
-  <td>Malo</td>
-  <td class="align-right"><input class="form-control align-right formHasLabel inputSmall" placeholder="Comisi&oacute;n" value="50">%</td>
-  <td class="align-right"><button class="btn btn-default btn-sm noMargin"><i class="fa fa-trash-o"></i> Borrar</button></td>
-  </tr>
-  </tbody>
-  </table>
-  </div>
-  </div>
-  <div class="row">
-  <div class="form-group col-sm-6">   
-  	<?php 
-    	echo CHtml::activeLabel($model, 'name_commission');
-    	echo CHtml::activeTextField($model, 'name_commission', array('class'=>'form-control'));
-    ?>    
-  </div>
-  <div class="form-group col-sm-6">   
-  	<?php 
-    	echo CHtml::activeLabel($model, 'last_name_commission');
-    	echo CHtml::activeTextField($model, 'last_name_commission', array('class'=>'form-control'));
-    ?>    
-  </div>
-  </div>
+  <?php 
+  if(!$model->isNewRecord)
+  {
+  	$modelCommissionists = new Commissionist('search');
+  	$modelCommissionists->Id_budget = $model->Id;
+  	$modelCommissionists->version_number = $model->version_number;
+  	$modelCommissionists->unsetAttributes();
+  	echo $this->renderPartial('_editCommissionist', array( 'modelBudget'=>$model, 'modelCommissionists'=>$modelCommissionists));
+  }
+  ?>
+  
   
 	<div class="row">
   <div class="form-group col-sm-6">    

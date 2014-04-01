@@ -178,6 +178,59 @@ class BudgetController extends GController
 		}
 	}
 	
+	public function actionAjaxRemoveCommissionist()
+	{
+		$idBudget = (isset($_POST['idBudget']))?$_POST['idBudget']:null;
+		$version = (isset($_POST['version']))?$_POST['version']:null;
+		$idPerson = (isset($_POST['idPerson']))?$_POST['idPerson']:null;
+	
+		if(isset($idBudget) && isset($version) && isset($idPerson))
+		{
+			$modelCommissionist = Commissionist::model()->findByAttributes(array('Id_budget'=>$idBudget,
+															'version_number'=>$version,
+															'Id_person'=>$idPerson,
+																		));	
+			if(isset($modelCommissionist))
+				$modelCommissionist->delete();
+			
+		}
+	
+	}
+	
+	public function actionAjaxAddCommissionist()
+	{
+		$idBudget = (isset($_POST['idBudget']))?$_POST['idBudget']:null;
+		$version = (isset($_POST['version']))?$_POST['version']:null;
+		$name = (isset($_POST['name']))?$_POST['name']:'';
+		$last_name = (isset($_POST['last_name']))?$_POST['last_name']:'';
+		$value = (isset($_POST['value']))?$_POST['value']:0;
+
+		if(isset($idBudget) && isset($version))
+		{
+			$modelPerson = new Person();
+			
+			$transaction = $modelPerson->dbConnection->beginTransaction();
+			try {
+				$modelPerson->name = $name;
+				$modelPerson->last_name = $last_name;
+				$modelPerson->save();
+					
+				$modelCommissionist = new Commissionist();
+				$modelCommissionist->Id_budget = $idBudget;
+				$modelCommissionist->version_number = $version;
+				$modelCommissionist->Id_person = $modelPerson->Id;
+				$modelCommissionist->percent_commission = $value;
+				$modelCommissionist->save();
+				
+				$transaction->commit();
+				
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}			
+		}
+		
+	}
+	
 	public function actionAjaxSetAccessoryProduct()
 	{
 		$idProduct = (isset($_POST['idProduct']))?$_POST['idProduct']:null;
@@ -1074,6 +1127,21 @@ class BudgetController extends GController
 		));
 	
 	}
+	
+	public function actionAjaxUpdateCommissionistGrid()
+	{
+		if(isset($_GET['Id'])&&$_GET['version_number'])
+			$model = $this->loadModel($_GET['Id'], $_GET['version_number']);
+	
+		$modelCommissionists = new Commissionist('search');
+		$modelCommissionists->Id_budget = $model->Id;
+		$modelCommissionists->version_number = $model->version_number;
+		$modelCommissionists->unsetAttributes();
+		
+		$this->render('_editCommissionist',array( 'modelBudget'=>$model, 'modelCommissionists'=>$modelCommissionists));
+	
+	}	
+	
 	public function actionAjaxUpdateSelectProductGrid()
 	{
 		$modelProducts = new Product('search');
