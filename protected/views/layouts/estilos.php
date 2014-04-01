@@ -276,6 +276,7 @@ background: #D5F0C5 !important;
 
 .jstree-container-ul{margin-bottom:125px;}
 
+.jstree-default .jstree-wholerow-clicked{background:transparent !important;}
 
 /* ------ END MOBILE MENU ------- */
 /* ----- LOGIN ------*/
