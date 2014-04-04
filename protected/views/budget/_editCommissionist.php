@@ -78,23 +78,25 @@ function removeCommissionist(obj)
   		'columns'=>array(
   				array(
   						'value'=>'$data->person->name',
+						'htmlOptions'=>array("width"=>"222"),
   				),
   				array(
   						'value'=>'$data->person->last_name',
+						'htmlOptions'=>array("width"=>"222"),
   				),
   				array(
 						'value'=>function($data){
 							return '<input onkeyup="validateNumber(this);" class="form-control align-right formHasLabel inputSmall" placeholder="Comisi&oacute;n" value="'.$data->percent_commission.'">%';
 						},
 						'type'=>'raw',
-						'headerHtmlOptions'=>array("style"=>"align:right;"),
+						'htmlOptions'=>array("class"=>"align-right"),
   				),  				
   				array(  						
   						'value'=>function($data){
   							return '<button type="button" idperson="'.$data->Id_person.'" onclick="removeCommissionist(this);" class="btn btn-default btn-sm noMargin"><i class="fa fa-trash-o"></i> Borrar</button>';
   						},
   						'type'=>'raw',
-  						'headerHtmlOptions'=>array("style"=>"align:right;"),
+						'htmlOptions'=>array("class"=>"align-right"),
   		),
   		),
   ));

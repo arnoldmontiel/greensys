@@ -12,7 +12,8 @@
 	<?php echo CHtml::activeHiddenField($model, 'Id');?>
 	<?php echo CHtml::activeHiddenField($model, 'version_number');?>
 	<?php echo CHtml::activeHiddenField($model, 'Id_currency');?>
-  <div class="form-group">
+  <div class="row">
+  <div class="form-group col-sm-12">
     <?php echo CHtml::activeLabel($model, 'Id_project');?>
     	<div class="combined">
     	<?php 
@@ -24,11 +25,10 @@
     		}
     		else 
     		{
-    			echo "<input type='text' disabled='disabled' class='form-control' value='". $model->project->fullDescription."'";
+    			echo "<input type='text' disabled='disabled' class='form-control' value='". $model->project->fullDescription."'>";
     		}	
     	?>
   		</div>
-  </div>
 
   <?php if($model->isNewRecord):?>
 <div id="new-project" class="inlineForm" style="display:none">
@@ -51,11 +51,15 @@
 </div>
 <?php endif;?>
   
-  <div class="form-group">
+  		</div>
+  		</div>
+  <div class="row">
+  <div class="form-group col-sm-12">
   	<?php 
     	echo CHtml::activeLabel($model, 'description');
     	echo CHtml::activeTextArea($model, 'description', array('class'=>'form-control', 'rows'=>3));
     ?>    
+  </div>
   </div>
   
   <?php if($model->isNewRecord):?>
