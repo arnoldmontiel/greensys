@@ -86,7 +86,7 @@ function removeCommissionist(obj)
   				),
   				array(
 						'value'=>function($data){
-							return '<div class="checkGuardado"><i class="fa fa-check"></i> Guardado</div><div class="hidden"><input onkeyup="validateNumber(this);" class="form-control align-right formHasLabel inputSmall" placeholder="Comisi&oacute;n" value="'.$data->percent_commission.'">%</div>';
+							return '<div class="checkGuardado"><i class="fa fa-check"></i> Guardado</div><div><input onkeyup="validateNumber(this);" class="form-control align-right formHasLabel inputSmall" placeholder="Comisi&oacute;n" value="'.$data->percent_commission.'">%</div>';
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("class"=>"align-center","width"=>"110"),
