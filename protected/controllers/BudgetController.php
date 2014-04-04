@@ -231,6 +231,27 @@ class BudgetController extends GController
 		
 	}
 	
+	public function actionAjaxUpdateCommission()
+	{
+		$idBudget = (isset($_POST['idBudget']))?$_POST['idBudget']:null;
+		$version = (isset($_POST['version']))?$_POST['version']:null;
+		$idPerson = (isset($_POST['idPerson']))?$_POST['idPerson']:null;
+		$value = (isset($_POST['value']))?$_POST['value']:0;
+	
+		if(isset($idBudget) && isset($version) && isset($idPerson))
+		{
+			$modelCommissionist = Commissionist::model()->findByAttributes(array('Id_budget'=>$idBudget,
+															'version_number'=>$version,
+															'Id_person'=>$idPerson));
+			
+			if(isset($modelCommissionist))
+			{
+				$modelCommissionist->percent_commission = $value;
+				$modelCommissionist->save();
+			}
+		}
+	
+	}
 	public function actionAjaxSetAccessoryProduct()
 	{
 		$idProduct = (isset($_POST['idProduct']))?$_POST['idProduct']:null;
