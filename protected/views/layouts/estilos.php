@@ -933,6 +933,10 @@ font-family: "GudeaRegular";
 
 #warningEmpty{ margin:5px 0px;}
 
+#commissionist-grid.grid-view {padding: 0px; margin-bottom:30px; border-bottom:1px solid #ddd;}
+#commissionist-grid .table.tablaIndividual{margin-bottom:10px;}
+#form-new-budget .table.tablaIndividual{margin-bottom:0px;	 margin-top:10px;}
+
 /* ------ END CREAR PRESU ------- */
 
 /* ------ CREAR IMPORTADOR ------- */
