@@ -186,7 +186,7 @@ class GreenHelper
 							//$maritime_cost = $priceListItem->dealer_cost;
 							$maritime_cost = 0;
 						}
-						if($product->hasWeight())
+						if($child->hasWeight())
 						{
 							//$air_cost = $priceListItem->dealer_cost+($air->cost_measurement_unit*$weight);
 							$air_cost = $air->cost_measurement_unit*$weight;
