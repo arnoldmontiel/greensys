@@ -2009,9 +2009,25 @@ class GreenHelper
 		return $result;
 	}
 	
+	public function getCommissionFactor($modelBudget)
+	{
+ 		$commissionFactor = 1;
+ 		$modelCommissionists = Commissionist::model()->findAllByAttributes(array('Id_budget'=>$modelBudget->Id, 'version_number'=>$modelBudget->version_number));
+		
+ 		$commission = 0;
+ 		foreach($modelCommissionists as $item)
+ 		{
+ 			$commission = $commission + $item->percent_commission;
+ 		}
+		
+		$commissionFactor = 1-($commission/100);
+		
+ 		return $commissionFactor != 0?$commissionFactor:1;
+	}
+	
 	static public function generateBudgetPDF($modelBudget)
 	{
-		$commissionFactor = 1-($modelBudget->percent_commission/100);
+		$commissionFactor = self::getCommissionFactor($modelBudget);
 		$idBudget = $modelBudget->Id;
 		$versionNumber = $modelBudget->version_number;
 		$currency = '$';

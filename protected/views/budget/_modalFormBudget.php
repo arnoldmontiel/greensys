@@ -78,9 +78,10 @@
   if(!$model->isNewRecord)
   {
   	$modelCommissionists = new Commissionist('search');
+  	$modelCommissionists->unsetAttributes();
   	$modelCommissionists->Id_budget = $model->Id;
   	$modelCommissionists->version_number = $model->version_number;
-  	$modelCommissionists->unsetAttributes();
+  	
   	echo $this->renderPartial('_editCommissionist', array( 'modelBudget'=>$model, 'modelCommissionists'=>$modelCommissionists));
   }
   ?>

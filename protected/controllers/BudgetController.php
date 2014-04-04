@@ -1134,9 +1134,9 @@ class BudgetController extends GController
 			$model = $this->loadModel($_GET['Id'], $_GET['version_number']);
 	
 		$modelCommissionists = new Commissionist('search');
+		$modelCommissionists->unsetAttributes();
 		$modelCommissionists->Id_budget = $model->Id;
 		$modelCommissionists->version_number = $model->version_number;
-		$modelCommissionists->unsetAttributes();
 		
 		$this->render('_editCommissionist',array( 'modelBudget'=>$model, 'modelCommissionists'=>$modelCommissionists));
 	

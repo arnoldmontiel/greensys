@@ -14,6 +14,9 @@ function addCommissionist()
 			}
 		).success(
 			function(data){
+				$("#commissionist_name").val(''),
+				$("#commissionist_last_name").val(''),
+				$("#commissionist_value").val(''),
 				$.fn.yiiGridView.update('commissionist-grid');
 			});
 		return false;
@@ -69,6 +72,7 @@ function removeCommissionist(obj)
   		'selectableRows' => 0,
   		'summaryText'=>'',
 		'hideHeader'=>true,
+		'emptyText' => 'Ops, no hay comisionistas!',
   		'itemsCssClass' => 'table table-condensed tablaIndividual',
 		'ajaxUrl'=>BudgetController::createUrl('AjaxUpdateCommissionistGrid',array("Id"=>$modelBudget->Id,"version_number"=>$modelBudget->version_number)),
   		'columns'=>array(
