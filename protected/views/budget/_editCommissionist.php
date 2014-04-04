@@ -48,15 +48,15 @@ function removeCommissionist(obj)
   <thead>
   <tr>
   <th colspan="2">Comisionista</th>
-  <th class="align-right">Porcentaje</th>
+  <th class="align-center">Porcentaje</th>
   <th class="align-right">Acciones</th>
   </tr>
   </thead>
   <tbody>
   <tr>
-  <td><input id="commissionist_name" class="form-control" placeholder="Nombre"></td>
-  <td><input id="commissionist_last_name" class="form-control" placeholder="Apellido"></td>
-  <td class="align-right"><input onkeyup="validateNumber(this);" id="commissionist_value" class="form-control align-right formHasLabel inputSmall" placeholder="0.00">%</td>
+  <td width="210"><input id="commissionist_name" class="form-control" placeholder="Nombre"></td>
+  <td width="210"><input id="commissionist_last_name" class="form-control" placeholder="Apellido"></td>
+  <td class="align-center" width="110"><input onkeyup="validateNumber(this);" id="commissionist_value" class="form-control align-right formHasLabel inputSmall" placeholder="0.00">%</td>
   <td class="align-right"><button type="button" onclick="addCommissionist();" class="btn btn-primary btn-sm noMargin"><i class="fa fa-plus"></i> Agregar</button></td>
   </tr>
 
@@ -72,24 +72,24 @@ function removeCommissionist(obj)
   		'selectableRows' => 0,
   		'summaryText'=>'',
 		'hideHeader'=>true,
-		'emptyText' => 'Ops, no hay comisionistas!',
+		'emptyText' => 'Este presupuesto a&uacute;n no tiene comisionistas.',
   		'itemsCssClass' => 'table table-condensed tablaIndividual',
 		'ajaxUrl'=>BudgetController::createUrl('AjaxUpdateCommissionistGrid',array("Id"=>$modelBudget->Id,"version_number"=>$modelBudget->version_number)),
   		'columns'=>array(
   				array(
   						'value'=>'$data->person->name',
-						'htmlOptions'=>array("width"=>"222"),
+						'htmlOptions'=>array("width"=>"210"),
   				),
   				array(
   						'value'=>'$data->person->last_name',
-						'htmlOptions'=>array("width"=>"222"),
+						'htmlOptions'=>array("width"=>"210"),
   				),
   				array(
 						'value'=>function($data){
-							return '<input onkeyup="validateNumber(this);" class="form-control align-right formHasLabel inputSmall" placeholder="Comisi&oacute;n" value="'.$data->percent_commission.'">%';
+							return '<div class="checkGuardado"><i class="fa fa-check"></i> Guardado</div><div class="hidden"><input onkeyup="validateNumber(this);" class="form-control align-right formHasLabel inputSmall" placeholder="Comisi&oacute;n" value="'.$data->percent_commission.'">%</div>';
 						},
 						'type'=>'raw',
-						'htmlOptions'=>array("class"=>"align-right"),
+						'htmlOptions'=>array("class"=>"align-center","width"=>"110"),
   				),  				
   				array(  						
   						'value'=>function($data){
@@ -100,7 +100,6 @@ function removeCommissionist(obj)
   		),
   		),
   ));
-  
   ?>
   </div>
   </div>
