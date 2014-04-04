@@ -760,6 +760,7 @@ margin-top: -5px;}
 .groupAgregar{width:150px;}
 .groupAgregar .checkAgregado{margin-left:10px; color:#5cb85c; display:none;}
 
+
 .inputSmall{ width:40px; display:inline-block; }
 .inputMed{ width:55px; display:inline-block; }
 
@@ -936,6 +937,9 @@ font-family: "GudeaRegular";
 #commissionist-grid.grid-view {padding: 0px; margin-bottom:30px; border-bottom:1px solid #ddd;}
 #commissionist-grid .table.tablaIndividual{margin-bottom:10px;}
 #form-new-budget .table.tablaIndividual{margin-bottom:0px;	 margin-top:10px;}
+
+.checkGuardado{text-align:center; color:#5cb85c; display:none;}
+
 
 /* ------ END CREAR PRESU ------- */
 
