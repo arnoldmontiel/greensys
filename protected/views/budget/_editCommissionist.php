@@ -145,7 +145,7 @@ function checkNumber(obj)
   				array(
 						'value'=>function($data){
 							return '<div class="checkGuardado" id="chk-changed-'.$data->Id_budget.'-'.$data->version_number.'-'.$data->Id_person.'"><i class="fa fa-check"></i> Guardado</div>
-								<div id="div-commission-value-'.$data->Id_budget.'-'.$data->version_number.'-'.$data->Id_person.'"><input onchange="saveNewCommission('.$data->Id_budget.','.$data->version_number.','.$data->Id_person.', this);" onkeyup="checkNumber(this);" class="form-control align-right formHasLabel inputSmall" placeholder="Comisi&oacute;n" value="'.$data->percent_commission.'">%</div>';
+								<div id="div-commission-value-'.$data->Id_budget.'-'.$data->version_number.'-'.$data->Id_person.'"><input onchange="saveNewCommission('.$data->Id_budget.','.$data->version_number.','.$data->Id_person.', this);" onkeyup="checkNumber(this);" class="form-control align-right formHasLabel inputSmall" placeholder="0.00" value="'.$data->percent_commission.'">%</div>';
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("class"=>"align-center","width"=>"110"),
