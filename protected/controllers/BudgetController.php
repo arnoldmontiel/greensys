@@ -703,20 +703,29 @@ class BudgetController extends GController
 					$modelNewBudget->Id_currency_to_currency_conversor = null;
 						
 					
-					if($modelNewBudget->save())
+					$modelNewBudget->save();
+					
+					$budgetItems = BudgetItem::model()->findAllByAttributes(array('Id_budget'=>$modelBudget->Id, 'version_number'=>$modelBudget->version_number));
+						
+					foreach($budgetItems as $item)
 					{
-						$budgetItems = BudgetItem::model()->findAllByAttributes(array('Id_budget'=>$modelBudget->Id, 'version_number'=>$modelBudget->version_number));
-							
-						foreach($budgetItems as $item)
-						{
-							$modelBudgetItem = new BudgetItem;
-							$modelBudgetItem->attributes = $item->attributes;
-							$modelBudgetItem->version_number = $modelNewBudget->version_number;
-							$modelBudgetItem->save();
-						}
-							
-						$transaction->commit();
+						$modelBudgetItem = new BudgetItem;
+						$modelBudgetItem->attributes = $item->attributes;
+						$modelBudgetItem->version_number = $modelNewBudget->version_number;
+						$modelBudgetItem->save();
 					}
+						
+					//replico todos los comisionistas
+					$modelCommissionists = Commissionist::model()->findAllByAttributes(array('Id_budget'=>$modelBudget->Id, 'version_number'=>$modelBudget->version_number));
+					foreach($modelCommissionists as $commission)
+					{
+						$modelCommissionist = new Commissionist();
+						$modelCommissionist->attributes = $commission->attributes;
+						$modelCommissionist->version_number = $modelNewBudget->version_number;
+						$modelCommissionist->save();
+					}
+					
+					$transaction->commit();
 					
 				} catch (Exception $e) {
 					$transaction->rollback();
