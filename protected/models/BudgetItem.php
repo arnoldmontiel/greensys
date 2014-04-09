@@ -62,8 +62,10 @@ class BudgetItem extends ModelAudit
 	public function beforeSave()
 	{
 		$criteria = new CDbCriteria();
-		if($this->isNewRecord && isset($this->Id_product) && !isset($this->order_by_service))
+		if(isset($this->Id_product) && !isset($this->order_by_service))
 		{
+			$criteria->addCondition('version_number='.$this->version_number);
+			$criteria->addCondition('Id_budget='.$this->Id_budget);
 			$criteria->addCondition('Id_product is not null');
 			if(isset($this->Id_service))
 			{
