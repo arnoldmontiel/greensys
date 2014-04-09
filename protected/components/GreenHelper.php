@@ -2411,12 +2411,21 @@ class GreenHelper
 				$totalAdditionalPrice = 0;
 				foreach($budgetItemAdditionals as $budgetItemAdditional)
 				{
+					if ($budgetItemAdditional->discount_type==0)
+					{
+						$discount = self::showPrice($budgetItemAdditional->discount);
+					}
+					else
+					{
+						$discount = self::showPrice($budgetItemAdditional->getDiscountCurrencyConverted()/$commissionFactor);
+					}
+						
 					$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<tr>';
 						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td width="25%">'.$budgetItemAdditional->description.'</td>';
 						$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right">'.$currency . ' ' . self::showPrice($budgetItemAdditional->getTotalPriceWODiscountCurrencyConverted()/$commissionFactor).'</td>';
 						if($budgetItemAdditional->getDiscountCurrencyConverted()>0)
 						{
-							$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right redDiscount">DESC. '.$budgetItemAdditional->getDiscountType().' '. self::showPrice($budgetItemAdditional->getDiscountCurrencyConverted()/$commissionFactor).'</td>';								
+							$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right redDiscount">DESC. '.$budgetItemAdditional->getDiscountType().' '. $discount.'</td>';								
 						}else {
 							$serviceContentBodyAdditional = $serviceContentBodyAdditional . '<td class="align-right redDiscount"> &nbsp; </td>';															
 						}
