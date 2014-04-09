@@ -1766,6 +1766,8 @@ class BudgetController extends GController
 				if(isset($modelBudgetItem->Id_product))
 				{
 					$criteria->addCondition('Id_product is not null');
+					$criteria->addCondition('version_number='.$modelBudgetItem->version_number);
+					$criteria->addCondition('Id_budget='.$modelBudgetItem->Id_budget);						
 					if(isset($modelBudgetItem->Id_service))
 					{
 						$criteria->addCondition('Id_service ='.$modelBudgetItem->Id_service);
@@ -1808,6 +1810,8 @@ class BudgetController extends GController
 				if(isset($modelBudgetItem->Id_product))
 				{
 					$criteria->addCondition('Id_product is not null');
+					$criteria->addCondition('version_number='.$modelBudgetItem->version_number);
+					$criteria->addCondition('Id_budget='.$modelBudgetItem->Id_budget);						
 					if(isset($modelBudgetItem->Id_service))
 					{
 						$criteria->addCondition('Id_service ='.$modelBudgetItem->Id_service);
@@ -1865,6 +1869,8 @@ class BudgetController extends GController
 				$criteria = new CDbCriteria();
 				if(isset($modelBudgetItem->Id_product))
 				{
+					$criteria->addCondition('version_number='.$modelBudgetItem->version_number);
+					$criteria->addCondition('Id_budget='.$modelBudgetItem->Id_budget);						
 					$criteria->addCondition('Id_product is not null');
 					if(isset($modelBudgetItem->Id_service))
 					{
@@ -1908,6 +1914,8 @@ class BudgetController extends GController
 				$criteria = new CDbCriteria();
 				if(isset($modelBudgetItem->Id_product))
 				{
+					$criteria->addCondition('version_number='.$modelBudgetItem->version_number);
+					$criteria->addCondition('Id_budget='.$modelBudgetItem->Id_budget);
 					$criteria->addCondition('Id_product is not null');
 					if(isset($modelBudgetItem->Id_service))
 					{
