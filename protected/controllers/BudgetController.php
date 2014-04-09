@@ -1673,7 +1673,7 @@ class BudgetController extends GController
 	}
 	public function actionAjaxSaveDiscountValue()
 	{
-		if(isset($_POST['Id_budget_item'])&&isset($_POST['discount'])&&isset($_POST['discountType']))
+		if(isset($_POST['Id_budget_item'])&&isset($_POST['discount']))
 		{
 			$budgetItem = BudgetItem::model()->findByPk($_POST['Id_budget_item']);
 			if(isset($budgetItem))
@@ -1681,7 +1681,6 @@ class BudgetController extends GController
 				$transaction = $budgetItem->dbConnection->beginTransaction();
 				try {
 					$budgetItem->discount= $_POST['discount'];
-					$budgetItem->discount_type= $_POST['discountType'];
 					if($budgetItem->save())
 					{
 						$budgetItems = 
@@ -1693,7 +1692,6 @@ class BudgetController extends GController
 						foreach ($budgetItems as $item)
 						{
 							$item->discount = $_POST['discount'];
-							$item->discount_type = $_POST['discountType'];
 							$item->save();							
 						}
 						$transaction->commit();

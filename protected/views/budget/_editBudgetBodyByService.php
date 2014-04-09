@@ -307,17 +307,16 @@ function changeDiscount(id, object)
 {
 	statusStartSaving();	
 	validateNumber(object);
-	var discountType = $('#discount_type_'+id).val();
 	$.post(
 			"<?php echo BudgetController::createUrl('AjaxSaveDiscountValue')?>",
 			{
-				Id_budget_item: id,discount:$(object).val(),discountType:discountType
+				Id_budget_item: id,discount:$(object).val()
 			}
 			).success(function(data)
 			{
 				statusSaved();
 				var response = jQuery.parseJSON(data);
-				$("#total_price_"+id).html(response.total_price+" <div class=\"usd\"><?php echo $settings->getEscapedCurrencyShortDescription()?></div>");
+				$("#total_price_"+id).html("<div class=\"usd\"><?php echo $settings->getEscapedCurrencyShortDescription()?></div> "+response.total_price);
 				$(object).val(response.discount);
 				setTotals();
 		}).error(function(data)
@@ -360,7 +359,7 @@ function changeDiscountType(id, object)
 			{
 				statusSaved();
 				var response = jQuery.parseJSON(data);
-				$("#total_price_"+id).html(response.total_price+" <div class=\"usd\"><?php echo $settings->getEscapedCurrencyShortDescription()?></div>");
+				$("#total_price_"+id).html("<div class=\"usd\"><?php echo $settings->getEscapedCurrencyShortDescription()?></div> "+response.total_price);
 				setTotals();
 		}).error(function(data)
 			{
