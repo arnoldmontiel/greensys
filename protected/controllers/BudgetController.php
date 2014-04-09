@@ -1647,16 +1647,21 @@ class BudgetController extends GController
 					$budgetItem->discount_type = $_POST['discount_type'];
 					if($budgetItem->save())
 					{
-						$budgetItems =
-						BudgetItem::model()->findAllByAttributes(
-								array('Id_product'=>$budgetItem->Id_product,
-										'Id_budget'=>$budgetItem->Id_budget,
-										'version_number'=>$budgetItem->version_number
-								));
-						foreach ($budgetItems as $item)
+						//Se aplica el mismo descuento a todos los mismos productos dentro del presupuesto
+						if(isset($budgetItem->Id_product))
 						{
-							$item->discount_type = $_POST['discount_type'];
-							$item->save();
+						
+							$budgetItems =
+							BudgetItem::model()->findAllByAttributes(
+									array('Id_product'=>$budgetItem->Id_product,
+											'Id_budget'=>$budgetItem->Id_budget,
+											'version_number'=>$budgetItem->version_number
+									));
+							foreach ($budgetItems as $item)
+							{
+								$item->discount_type = $_POST['discount_type'];
+								$item->save();
+							}
 						}
 						$transaction->commit();
 						$budgetItem->refresh();
@@ -1683,16 +1688,20 @@ class BudgetController extends GController
 					$budgetItem->discount= $_POST['discount'];
 					if($budgetItem->save())
 					{
-						$budgetItems = 
+						//Se aplica el mismo descuento a todos los mismos productos dentro del presupuesto					
+						if(isset($budgetItem->Id_product))
+						{
+							$budgetItems =
 							BudgetItem::model()->findAllByAttributes(
 									array('Id_product'=>$budgetItem->Id_product,
 											'Id_budget'=>$budgetItem->Id_budget,
 											'version_number'=>$budgetItem->version_number
 									));
-						foreach ($budgetItems as $item)
-						{
-							$item->discount = $_POST['discount'];
-							$item->save();							
+							foreach ($budgetItems as $item)
+							{
+								$item->discount = $_POST['discount'];
+								$item->save();
+							}								
 						}
 						$transaction->commit();
 						$budgetItem->refresh();
