@@ -1123,6 +1123,8 @@ class BudgetController extends GController
 			$model = $this->loadModel($_GET['Id'], $_GET['version_number']);
 		if(isset($_GET['idService']))
 			$idService =  $_GET['idService'];
+		if($idService==0)
+			$idService = null;
 				
 		$modelBudgetItem = new BudgetItem('search');
 		$modelBudgetItem->unsetAttributes();  // clear any default values
