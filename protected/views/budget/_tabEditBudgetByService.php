@@ -87,7 +87,7 @@
 					),
 					array(
 							'name'=>'Área',
-							'value'=>'(isset($data->areaProject->description)?$data->areaProject->description:$data->area->description)',
+							'value'=>'(isset($data->areaProject->description)&&!empty($data->areaProject->description)?$data->areaProject->description:$data->area->description)',
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-center"),
 							'headerHtmlOptions'=>array("class"=>"align-center"),
