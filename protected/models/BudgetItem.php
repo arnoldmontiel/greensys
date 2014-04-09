@@ -16,8 +16,17 @@
  * @property integer $Id_service
  * @property integer $quantity
  * @property integer $is_included
+ * @property integer $do_not_warning
+ * @property string $discount
+ * @property integer $Id_service
+ * @property integer $discount_type
  * @property string $description
- *
+ * @property integer $Id_area_project
+ * @property string $time_programation
+ * @property string $time_instalation
+ * @property integer $order_by_service
+ * @property integer $service_type
+ * 
  * The followings are the available model relations:
  * @property Budget $versionNumber
  * @property Area $idArea
@@ -239,12 +248,13 @@ class BudgetItem extends ModelAudit
 		// will receive user inputs.
 		return array(
 			array('Id_budget, version_number', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
-			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type, Id_area, Id_area_project, Id_service, is_included', 'numerical', 'integerOnly'=>true),
-			array('price, quantity', 'length', 'max'=>10),
+			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type, Id_area, Id_area_project, Id_service, is_included, discount_type, order_by_service, service_type', 'numerical', 'integerOnly'=>true),
+			array('price, quantity, discount, time_programation, time_instalation', 'length', 'max'=>10),
 			array('description', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_product, Id_area,Id_area_project, Id_service, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type, product_code,product_model,product_part_number, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc, parent_product_code, quantity, children_count, children_included, description, service_type', 'safe', 'on'=>'search'),
+			array('Id, Id_product, Id_area,Id_area_project, Id_service, Id_budget, version_number, price, Id_budget_item, Id_price_list, Id_shipping_type, product_code,product_model,product_part_number, product_code_supplier, product_brand_desc, product_supplier_name, product_customer_desc, area_desc, parent_product_code, quantity, children_count, children_included, description, service_type, is_included
+					, do_not_warning, discount, discount_type, time_programation, time_instalation, order_by_service', 'safe', 'on'=>'search'),
 		);
 	}
 
