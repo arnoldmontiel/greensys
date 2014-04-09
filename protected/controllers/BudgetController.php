@@ -705,7 +705,10 @@ class BudgetController extends GController
 					
 					$modelNewBudget->save();
 					
-					$budgetItems = BudgetItem::model()->findAllByAttributes(array('Id_budget'=>$modelBudget->Id, 'version_number'=>$modelBudget->version_number));
+					$budgetItems = BudgetItem::model()->findAllByAttributes(
+							array('Id_budget'=>$modelBudget->Id,
+									 'version_number'=>$modelBudget->version_number,
+									'service_type'=>0));
 						
 					foreach($budgetItems as $item)
 					{
