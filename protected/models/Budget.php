@@ -61,7 +61,7 @@ class Budget extends ModelAudit
 		$this->date_cancelled = (!empty($this->date_cancelled))?Yii::app()->lc->toDatabase($this->date_cancelled,'date','small','date',null):null;
 		$this->date_approved = (!empty($this->date_approved))?Yii::app()->lc->toDatabase($this->date_approved,'date','small','date',null):null;		
 
-		if($this->isNewRecord)
+		if($this->isNewRecord && empty($this->clause_description))
 		{
 			$modelClause = Clause::model()->findByPk(1);
 			if(isset($modelClause))
