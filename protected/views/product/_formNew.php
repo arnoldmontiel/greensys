@@ -558,7 +558,7 @@ $('#deleteIcon').click(function(){
   <div class="col-sm-12">
         <?php if($model->isNewRecord):?>
         <div class="alert alert-warning fade in" id="warningEmpty">
-        	Para poder agregar subproductos, primero debes <strong><i class="fa fa-save"></i> Guardar</strong>.
+        	Para poder agregar subproductos, primero debes <strong><i class="fa fa-save"></i> Guardar como H&iacute;brido</strong>.
       	</div>
         <?php else:?>
       <div class="rowSeparator noTopMargin rowHybrid">CREAR H&Iacute;BRIDO <button type="button" class="btn btn-primary btn-sm btnAddHybrid" onclick="addProduct()"><i class="fa fa-plus"></i> Agregar Producto</button></div>
