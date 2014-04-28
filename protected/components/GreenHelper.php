@@ -2009,7 +2009,7 @@ class GreenHelper
 		return $result;
 	}
 	
-	public function getCommissionFactor($modelBudget)
+	static public function getCommissionFactor($modelBudget)
 	{
  		$commissionFactor = 1;
  		$modelCommissionists = Commissionist::model()->findAllByAttributes(array('Id_budget'=>$modelBudget->Id, 'version_number'=>$modelBudget->version_number));
