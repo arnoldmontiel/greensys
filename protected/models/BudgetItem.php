@@ -114,15 +114,15 @@ class BudgetItem extends ModelAudit
 		$modelProgramingHours = BudgetItem::model()->findByAttributes(array('Id_service'=>$this->Id_service, 'Id_budget'=>$this->Id_budget,'version_number'=>$version,'service_type'=>1));
 		if(isset($modelProgramingHours))
 		{
-			$qty = $modelProgramingHours->quantity - $this->quantity;
+			$qty = $modelProgramingHours->quantity - ($this->quantity * $this->time_programation);
 			$modelProgramingHours->quantity = ($qty > 0)?$qty:0;
 			$modelProgramingHours->save();
 		}
-		
-		$modelInstalationHours = BudgetItem::model()->findByAttributes(array('Id_service'=>$this->Id_service, 'Id_budget'=>$this->Id_budget,'service_type'=>2));
+
+		$modelInstalationHours = BudgetItem::model()->findByAttributes(array('Id_service'=>$this->Id_service, 'Id_budget'=>$this->Id_budget,'version_number'=>$version,'service_type'=>2));
 		if(isset($modelInstalationHours))
 		{
-			$qty = $modelInstalationHours->quantity - $this->quantity;
+			$qty = $modelInstalationHours->quantity - ($this->quantity * $this->time_instalation);
 			$modelInstalationHours->quantity = ($qty > 0)?$qty:0;
 			$modelInstalationHours->save();
 		}
