@@ -113,8 +113,8 @@
 					array(
 							'name'=>'Horas',
 							'value'=>
-							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."P"."</span>".CHtml::textField("time_programation",$data->time_programation,array("class"=>"form-control inputMed align-right","onchange"=>"changeTimeProgramation(".$data->Id.",this,\"totals-services-grid\" )"))."</div>".'.
-							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."I"."</span>".CHtml::textField("time_instalation",$data->time_instalation,array("class"=>"form-control inputMed align-right","onchange"=>"changeTimeInstalation(".$data->Id.",this,\"totals-services-grid\" )"  ))."</div>"',
+							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."I"."</span>".CHtml::textField("time_instalation",$data->time_instalation,array("class"=>"form-control inputMed align-right","onchange"=>"changeTimeInstalation(".$data->Id.",this,\"totals-services-grid\" )"  ))."</div>".'.
+							'CHtml::openTag("div",array("class"=>"bloqueHoras noMargin")).CHtml::openTag("span",array("class"=>"label label-default"))."P"."</span>".CHtml::textField("time_programation",$data->time_programation,array("class"=>"form-control inputMed align-right","onchange"=>"changeTimeProgramation(".$data->Id.",this,\"totals-services-grid\" )"))."</div>"',
 							'type'=>'raw',
 							'htmlOptions'=>array("class"=>"align-center"),
 							'headerHtmlOptions'=>array("class"=>"align-center"),
