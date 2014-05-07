@@ -1,5 +1,6 @@
   <?php 
   $area = new Area;
+  $area->main =1;
   $provider =$area->search();
   $provider->pagination =array(
         'pageSize'=>100,
