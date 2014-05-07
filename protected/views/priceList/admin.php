@@ -19,6 +19,11 @@
 			'name'=>'Id_importer',
 			'value'=>'isset($data->importer)?$data->importer->contact->description:""',
 		),
+		array(
+				'header'=>'Moneda',
+				'name'=>'currency',
+				'value'=>'$data->currency->short_description',
+		),
 		'description',	
 		'date_creation',
 		'date_validity', 				
@@ -57,6 +62,11 @@
 			'header'=>'Marca',
 			'name'=>'supplier_business_name',
 			'value'=>'isset($data->supplier)?$data->supplier->business_name:""',
+		),
+		array(
+				'header'=>'Moneda',
+				'name'=>'currency',
+				'value'=>'$data->currency->short_description',
 		),
 		'description',	
 		'date_creation',

@@ -47,12 +47,14 @@ class GreenHelper
 	static public function generateListaPricesWithChildren($product,$children)
 	{
 		$transaction = Yii::app()->db->beginTransaction();		
+		PriceListItem::model()->deleteAllByAttributes(array('Id_product'=>$product->Id));
 		try {
 			//compras
 			$criteria = new CDbCriteria;
 			$criteria->compare('Id_supplier',$product->Id_supplier);
 			$criteria->compare('Id_price_list_type',1); //compra
-			
+			$criteria->compare('Id_currency',$product->Id_currency);
+					
 			$priceList = PriceList::model()->find($criteria);
 			if(!isset($priceList))
 			{
@@ -67,14 +69,10 @@ class GreenHelper
 				$priceList->save();
 			
 			}
-			if($priceList->Id_currency != $product->Id_currency)
-			{
-				$priceList->Id_currency = $product->Id_currency;
-				$priceList->save();
-			}
 			$criteria = new CDbCriteria;
 			$criteria->compare('Id_product',$product->Id);
 			$criteria->compare('Id_price_list',$priceList->Id);
+				
 			$priceListItem = PriceListItem::model()->find($criteria);
 				
 			if(!isset($priceListItem))
@@ -90,7 +88,6 @@ class GreenHelper
 			{
 				//TODO: tomar esto de la lista de precios de cada producto, no del producto en si
 				$productGroup = ProductGroup::model()->findByPk(array('Id_product_parent'=>$product->Id,'Id_product_child'=>$child->Id));
-				
 				if(isset($productGroup))
 				{
 					$priceListItem->msrp += self::convertCurrencyTo($child->msrp*$productGroup->quantity, $child->Id_currency, $priceList->Id_currency);
@@ -107,6 +104,8 @@ class GreenHelper
 				$criteria = new CDbCriteria;
 				$criteria->compare('Id_importer',$importer->Id);
 				$criteria->compare('Id_price_list_type',2); //venta
+				$criteria->compare('Id_currency',$product->Id_currency);
+				
 			
 				$priceList = PriceList::model()->find($criteria);
 				if(!isset($priceList))
@@ -117,11 +116,6 @@ class GreenHelper
 					//$priceList->date_validity = new CDbExpression('NOW()');
 					$priceList->Id_importer = $importer->Id;
 					$priceList->description = "Generada automaticamente";
-					$priceList->Id_currency = $product->Id_currency;
-					$priceList->save();
-				}
-				if($priceList->Id_currency != $product->Id_currency)
-				{
 					$priceList->Id_currency = $product->Id_currency;
 					$priceList->save();
 				}
@@ -222,9 +216,15 @@ class GreenHelper
 	{
 		if(get_class($product)=="Product")
 		{
+			PriceListItem::model()->deleteAllByAttributes(array('Id_product'=>$product->Id));
+				
 			$children = $product->productGroupChilds;
 			if(!empty($children))
 			{
+				foreach ($children as $child)
+				{
+					self::generateListPrices($child);
+				}
 				return self::generateListaPricesWithChildren($product,$children);
 			}		
 			$transaction = Yii::app()->db->beginTransaction();
@@ -234,6 +234,8 @@ class GreenHelper
 				$criteria = new CDbCriteria;
 				$criteria->compare('Id_supplier',$product->Id_supplier);
 				$criteria->compare('Id_price_list_type',1); //compra
+				$criteria->compare('Id_currency',$product->Id_currency);
+				
 				
 				$priceList = PriceList::model()->find($criteria);
 				if(!isset($priceList))
@@ -247,11 +249,6 @@ class GreenHelper
 					$priceList->Id_currency = $product->Id_currency;					
 					$priceList->save();
 				
-				}
-				if($priceList->Id_currency != $product->Id_currency)
-				{
-					$priceList->Id_currency = $product->Id_currency;
-					$priceList->save();						
 				}
 				$criteria = new CDbCriteria;
 				$criteria->compare('Id_product',$product->Id);
@@ -280,7 +277,8 @@ class GreenHelper
 					$criteria = new CDbCriteria;
 					$criteria->compare('Id_importer',$importer->Id);
 					$criteria->compare('Id_price_list_type',2); //venta
-				
+					$criteria->compare('Id_currency',$product->Id_currency);
+						
 					$priceList = PriceList::model()->find($criteria);
 					if(!isset($priceList))
 					{
@@ -291,11 +289,6 @@ class GreenHelper
 						$priceList->Id_importer = $importer->Id;
 						$priceList->description = "Generada automaticamente";
 						$priceList->Id_currency = $product->Id_currency;						
-						$priceList->save();
-					}
-					if($priceList->Id_currency != $product->Id_currency)
-					{
-						$priceList->Id_currency = $product->Id_currency;
 						$priceList->save();
 					}
 						

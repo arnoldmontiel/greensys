@@ -279,7 +279,6 @@ class PriceListItem extends ModelAudit
 	public function getMaritimeSalePriceConverted($idCurrency)
 	{
 		$shippingParameter = $this->priceList->importer->shippingParameters[0];
-		
 		$dealerCost = GreenHelper::convertCurrencyTo($this->dealer_cost,$this->priceList->Id_currency,$idCurrency);
 		$maritimeCost = GreenHelper::convertCurrencyTo($this->maritime_cost,$shippingParameter->Id_currency,$idCurrency);
 		$priceOverDealerCost = $dealerCost*$shippingParameter->shippingParameterMaritime->percent_over_dealer_cost/100; 
