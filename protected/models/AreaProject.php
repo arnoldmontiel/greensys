@@ -29,7 +29,7 @@ class AreaProject extends CActiveRecord
 	public function getProductQty($idBudget, $version)
 	{
 		$criteria = new CDbCriteria();		
-		$criteria->addCondition('t.Id_area = '.$this->Id_area);
+		$criteria->addCondition('t.Id_area_project = '.$this->Id);
 		$criteria->addCondition('t.version_number = '.$version);
 		$criteria->addCondition('t.Id_budget = '.$idBudget);
 
