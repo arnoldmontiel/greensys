@@ -1074,6 +1074,7 @@ class BudgetController extends GController
 			{
 				$budgetItem->calcTimeBeforeChangeService();
 				$budgetItem->Id_service = $_POST['Id_service'];
+				$budgetItem->order_by_service = null;
 				$budgetItem->save();				
 			}
 		}
