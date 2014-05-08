@@ -274,7 +274,7 @@ class PriceListItem extends ModelAudit
 	public function getMaritimeSalePrice()
 	{
 		$settings= new Settings();
-		return $this->getMaritimeSalePriceConverted($settings->getSetting()->Id_currency);
+		return number_format($this->getMaritimeSalePriceConverted($settings->getSetting()->Id_currency),2);
 	}
 	public function getMaritimeSalePriceConverted($idCurrency)
 	{
@@ -289,7 +289,7 @@ class PriceListItem extends ModelAudit
 	public function getAirSalePrice()
 	{
 		$settings= new Settings();
-		return $this->getAirSalePriceConverted($settings->getSetting()->Id_currency);
+		return number_format($this->getAirSalePriceConverted($settings->getSetting()->Id_currency),2);
 	}
 	public function getAirSalePriceConverted($idCurrency)
 	{
