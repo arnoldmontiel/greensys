@@ -520,8 +520,11 @@ class Budget extends ModelAudit
 			}
 			
 		}
-		return round(100-($totalCost / $totalPrice * 100),2);
-		//return round($totalCost *100 / $totalPrice,2);		
+		$total = ($totalPrice*(1-($this->percent_discount/100)));
+		if($total>0)
+			return round(100-($totalCost / $total * 100),2);
+		else
+			return 0;
 	}
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.

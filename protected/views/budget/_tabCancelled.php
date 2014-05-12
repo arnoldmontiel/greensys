@@ -29,6 +29,16 @@
 					'htmlOptions'=>array("style"=>"width:20%;"),
 				),
 				array(
+						'header'=>'Rentabilidad',
+						'value'=>function($data){
+							$rent = $data->ProfitPercenTotal;
+							return '<span class="label '.($rent<50?'label-danger':'label-success').'">'.$rent.'%</span>';
+						},
+						'type'=>'raw',
+						'htmlOptions'=>array("style"=>"width:12%;", "class"=>"align-right"),
+						'headerHtmlOptions'=>array("class"=>"align-right"),
+				),				
+				array(
 						'name'=>'note',
 						'value'=>function($data){
 								$value = '<span class="label label-info">'.GreenHelper::cutString($data->note,40).'</span>';

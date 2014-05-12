@@ -28,7 +28,7 @@
 					'header'=>'Rentabilidad',
 					'value'=>function($data){
 						$rent = $data->ProfitPercenTotal;
-							return '<span class="label label-danger">'.$rent.'%</span>';						
+							return '<span class="label '.($rent<50?'label-danger':'label-success').'">'.$rent.'%</span>';						
 						},
 					'type'=>'raw',
 					'htmlOptions'=>array("style"=>"width:12%;", "class"=>"align-right"),
