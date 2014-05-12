@@ -493,6 +493,36 @@ class Budget extends ModelAudit
 		return GreenHelper::convertCurrency($totalPriceWDiscount, $this->Id_currency, $this->Id_currency_view,$this->currencyConversor);
 	}
 	
+
+	public function getProfitPercenTotal()
+	{
+		$criteria=new CDbCriteria;
+	
+		$criteria->compare('t.Id_budget',$this->Id);
+		$criteria->compare('t.version_number',$this->version_number);
+		$criteria->addCondition('(t.Id_budget_item is null)');
+	
+	
+		$modelBudgetItem = BudgetItem::model()->findAll($criteria);
+		$totalPrice = 0;
+		$totalCost= 0;
+		foreach ($modelBudgetItem as $item)
+		{
+			$price = $item->getTotalPriceNotFormated();
+			$totalPrice += $price; 
+			if($item->service_type == 0)
+			{			
+				$totalCost += $item->getTotalCostNotFormated();
+			}
+			else//programacion o instalacion
+			{
+				$totalCost += $price;				
+			}
+			
+		}
+		return round(100-($totalCost / $totalPrice * 100),2);
+		//return round($totalCost *100 / $totalPrice,2);		
+	}
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.

@@ -344,6 +344,29 @@ class BudgetItem extends ModelAudit
 	{
 		return GreenHelper::convertCurrency($this->getChildrenTotalPrice(), $this->budget->Id_currency, $this->budget->Id_currency_view,$this->getCurrencyConversor());
 	}	
+	
+	
+	public function getChildrenTotalCost()
+	{
+		if(!isset($this->Id)) return 0;		
+		$cost = 0;
+		$children = $this->budgetItems;
+		foreach($children as $child)
+		{
+			$priceListItem = PriceListItem::model()->findByAttributes(array("Id_product"=>$child->Id_product,"Id_price_list"=>$child->Id_price_list));
+			
+			if($this->Id_shipping_type==1)//maritime
+			{
+				$cost  += $priceListItem->getMaritimeCostPriceConverted($child->budget->Id_currency);			
+			}
+			else//2 - air
+			{
+				$cost  += $priceListItem->getAirCostPriceConverted($child->budget->Id_currency);
+			}				
+		}
+		return $cost;
+	}	
+	
 	public function getChildrenTotalPrice()
 	{
 		if(!isset($this->Id)) return 0;
@@ -380,6 +403,24 @@ class BudgetItem extends ModelAudit
 		}
 		return (($this->getChildrenTotalPrice() + $this->price)*$this->quantity) - $discount;
 	}
+	public function getTotalCostNotFormated()
+	{
+		$cost = 0;
+		$priceListItem = PriceListItem::model()->findByAttributes(array("Id_product"=>$this->Id_product,"Id_price_list"=>$this->Id_price_list));
+		if(!isset($priceListItem))	return 0;
+		
+		if($this->Id_shipping_type==1)//maritime
+		{
+			$cost  = $priceListItem->getMaritimeCostPriceConverted($this->budget->Id_currency);
+			
+		}
+		else//2 - air 
+		{
+			$cost  = $priceListItem->getAirCostPriceConverted($this->budget->Id_currency);					
+		}		
+		return (($this->getChildrenTotalCost() + $cost)*$this->quantity);
+	}
+	
 	public function getTotalDiscountCurrencyConverted()
 	{
 		return GreenHelper::convertCurrency($this->getTotalDiscount(), $this->budget->Id_currency, $this->budget->Id_currency_view,$this->getCurrencyConversor());
