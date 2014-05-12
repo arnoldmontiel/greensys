@@ -32,7 +32,17 @@
 						'header'=>'Rentabilidad',
 						'value'=>function($data){
 							$rent = $data->ProfitPercenTotal;
-							return '<span class="label '.($rent<50?'label-danger':'label-success').'">'.$rent.'%</span>';
+							return '<span class="label '.($rent<50?'label-primary':'label-success').'">'.$rent.'%</span>';
+						},
+						'type'=>'raw',
+						'htmlOptions'=>array("style"=>"width:12%;", "class"=>"align-right"),
+						'headerHtmlOptions'=>array("class"=>"align-right"),
+				),
+				array(
+						'header'=>'Total',
+						'value'=>
+						function($data){
+							return $data->currency->short_description." ".$data->getTotalPriceWithDiscountCurrencyConverted();
 						},
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"width:12%;", "class"=>"align-right"),
