@@ -60,6 +60,7 @@ class PriceListItem extends ModelAudit
 			array('Id_product, Id_price_list', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_product, Id_price_list', 'numerical', 'integerOnly'=>true),
 			array('msrp, dealer_cost, profit_rate, maritime_cost,air_cost', 'length', 'max'=>20),
+			array('price', 'type', 'type'=>'float'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, Id_product, Id_price_list, cost, description_customer, code, code_supplier,importer_desc, maritime_days, air_days,part_number,model,product_short_description, brand_description', 'safe'),
@@ -266,7 +267,7 @@ class PriceListItem extends ModelAudit
 				if (isset($this)&&isset($shippingParameter)&&isset($maritime)&&isset($this->product))
 				{
 					$cost = $this->dealer_cost+($maritime->cost_measurement_unit*$this->product->getVolume());
-					return number_format(round($cost,4),2);
+					return round($cost,4);
 				}
 			}						
 		}
@@ -274,7 +275,7 @@ class PriceListItem extends ModelAudit
 	public function getMaritimeSalePrice()
 	{
 		$settings= new Settings();
-		return number_format($this->getMaritimeSalePriceConverted($settings->getSetting()->Id_currency),2);
+		return $this->getMaritimeSalePriceConverted($settings->getSetting()->Id_currency);
 	}
 	public function getMaritimeSalePriceConverted($idCurrency)
 	{
@@ -282,9 +283,8 @@ class PriceListItem extends ModelAudit
 		$dealerCost = GreenHelper::convertCurrencyTo($this->dealer_cost,$this->priceList->Id_currency,$idCurrency);
 		$maritimeCost = GreenHelper::convertCurrencyTo($this->maritime_cost,$shippingParameter->Id_currency,$idCurrency);
 		$priceOverDealerCost = $dealerCost*$shippingParameter->shippingParameterMaritime->percent_over_dealer_cost/100; 
-		$price = ($dealerCost+$maritimeCost+$priceOverDealerCost)*$this->profit_rate;
-
-		return round($price,4);
+		$price = ($dealerCost+$maritimeCost+$priceOverDealerCost)*$this->profit_rate;	
+		return $price;
 	}
 	public function getMaritimeCostPriceConverted($idCurrency)
 	{
@@ -299,7 +299,7 @@ class PriceListItem extends ModelAudit
 	public function getAirSalePrice()
 	{
 		$settings= new Settings();
-		return number_format($this->getAirSalePriceConverted($settings->getSetting()->Id_currency),2);
+		return $this->getAirSalePriceConverted($settings->getSetting()->Id_currency);
 	}
 	public function getAirSalePriceConverted($idCurrency)
 	{
