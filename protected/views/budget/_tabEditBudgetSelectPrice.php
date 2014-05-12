@@ -17,8 +17,8 @@
         		</thead>
         	<tbody>
           	<tr>
-            <td><?php echo $priceListItem->msrp." ".$priceListItem->priceList->currency->short_description;?></td>
-            <td style="text-align:center;"><?php echo  $priceListItem->dealer_cost." ".$priceListItem->priceList->currency->short_description;?></td>
+            <td><?php echo number_format($priceListItem->msrp,2)." ".$priceListItem->priceList->currency->short_description;?></td>
+            <td style="text-align:center;"><?php echo  number_format($priceListItem->dealer_cost,2)." ".$priceListItem->priceList->currency->short_description;?></td>
             <td style="text-align:right;"><?php echo $priceListItem->profit_rate?></td>
             </tr>
         </tbody>
@@ -48,13 +48,13 @@
 		          <tr>
 		            <td> <i class="fa fa-anchor fa-fw"></i>Maritimo</td>
 		            <td><?php echo $maritime->days?> Días</td>
-		            <td class="align-right"><?php echo $settings->getCurrencyShortDescription()." ".$priceListItem->getMaritimeSalePrice();?></td>
+		            <td class="align-right"><?php echo $settings->getCurrencyShortDescription()." ".number_format($priceListItem->getMaritimeSalePrice(),2);?></td>
 		            <td class="align-right" width="5%">    <input type="radio" name="priceListRadios" id="<?php echo $priceListItem->Id?>" value="1" <?php echo ($isCurrentPriceList&&$model->Id_shipping_type==1)?'checked':'';?>></td>
 		            </tr>
 		          <tr>
 		            <td> <i class="fa fa-plane fa-fw"></i>Aereo</td>
 		            <td><?php echo $air->days?> Días</td>
-		            <td class="align-right"><?php echo $settings->getCurrencyShortDescription()." ".$priceListItem->getAirSalePrice();?></td>
+		            <td class="align-right"><?php echo $settings->getCurrencyShortDescription()." ".number_format($priceListItem->getAirSalePrice(),2);?></td>
 		            <td class="align-right" width="5%">    <input type="radio" name="priceListRadios" id="<?php echo $priceListItem->Id?>" value="2" <?php echo ($isCurrentPriceList&&$model->Id_shipping_type==2)?'checked':'';?>></td>
 		            </tr>
 		        </tbody>
@@ -67,7 +67,7 @@
 		        <tbody>
 		          <tr>
 		            <td> <i class="fa fa-sun-o fa-fw"></i>MSRP</td>
-		            <td class="align-right"><?php echo $settings->getCurrencyShortDescription()." ".$priceListItem->getMaritimeSalePrice();?></td>
+		            <td class="align-right"><?php echo $settings->getCurrencyShortDescription()." ".number_format($priceListItem->getMaritimeSalePrice(), 2);?></td>
 		            <td class="align-right" width="5%">    <input type="radio" name="priceListRadios" id="<?php echo $priceListItem->Id?>" value="1" <?php echo ($isCurrentPriceList)?'checked':'';?>></td>
 		            </tr>
 		        </tbody>
