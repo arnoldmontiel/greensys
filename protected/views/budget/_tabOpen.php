@@ -25,8 +25,12 @@
 					'htmlOptions'=>array("style"=>"width:20%;"),
 				),
 				array(
-					'header'=>'Ganancia',
-					'value'=>'"% ".$data->ProfitPercenTotal',
+					'header'=>'Rentabilidad',
+					'value'=>function($data){
+						$rent = $data->ProfitPercenTotal;
+							return '<span class="label label-danger">'.$rent.'%</span>';						
+						},
+					'type'=>'raw',
 					'htmlOptions'=>array("style"=>"width:12%;", "class"=>"align-right"),
 					'headerHtmlOptions'=>array("class"=>"align-right"),
 				),
