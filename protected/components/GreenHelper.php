@@ -1547,7 +1547,7 @@ class GreenHelper
 					'DESCRIPCION LARGA'=>'M','DESCRIPCION LARGA SL'=>'N',
 					'TIEMPO INSTALACION'=>'O','TIEMPO PROGRAMACION'=>'P','UNIDADES DE RACK'=>'Q','UNIDADES DE FAN'=>'R','VOLTAJE'=>'S','AMPERAJE'=>'T',
 					'POTENCIA'=>'U',
-					'COLOR'=>'V','CATEGORIA'=>'W','SUB CATEGORIA'=>'X', 'TIPO'=>'Y', 'USA UPS'=>'Z');
+					'COLOR'=>'V','CATEGORIA'=>'W','SUB CATEGORIA'=>'X', 'TIPO'=>'Y', 'USA UPS'=>'Z', 'IMPORTANCIA'=>'AA');
 			
 			//sheet 0
 			$sheet = $objPHPExcel->setActiveSheetIndex(0);
@@ -1603,6 +1603,19 @@ class GreenHelper
 					$sheet->setCellValue($arrIndexCols['USA UPS'].$row, "SI");
 				else 
 					$sheet->setCellValue($arrIndexCols['USA UPS'].$row, "NO");
+				
+				$relevance = 'BAJA';
+								
+				switch ($product->relevance_level) {
+					case 1:
+						$relevance = 'MEDIA';
+						break;
+					case 2:
+						$relevance = 'ALTA';
+						break;
+				}
+				
+				$sheet->setCellValue($arrIndexCols['IMPORTANCIA'].$row, $relevance);
 				
 				$row++;
 			}
@@ -1834,6 +1847,20 @@ class GreenHelper
 		
 		$modelProduct->need_ups = (strtoupper($row[$excelCols['USA UPS']]) == 'NO')?0:1;
 			
+		$relevance = 0;
+		switch ( strtoupper($row[$excelCols['IMPORTANCIA']])) {
+			case 'BAJA':
+				$relevance = 0;
+				break;
+			case 'MEDIA':
+				$relevance = 1;
+				break;
+			case 'ALTA':
+				$relevance = 2;
+				break;
+		}
+		$modelProduct->relevance_level = $relevance;
+		
 	}
 	
 	static public function getExcelCols($firstRow)
@@ -1841,7 +1868,7 @@ class GreenHelper
 		$arrIndexCols = array(1=>'A',2=>'B',3=>'C',4=>'D',5=>'E',6=>'F',7=>'G',
 				8=>'H',9=>'I',10=>'J',11=>'K',12=>'L',13=>'M',14=>'N',
 				15=>'O',16=>'P',17=>'Q',18=>'R',19=>'S',20=>'T',21=>'U',
-				22=>'V',23=>'W',24=>'X', 25=>'Y', 26=>'Z');
+				22=>'V',23=>'W',24=>'X', 25=>'Y', 26=>'Z', 27=>'AA');
 		
 		$excelCols = array();
 		
@@ -1979,6 +2006,11 @@ class GreenHelper
 			if(strpos($colName, 'USA UPS')!== false)
 			{
 				$excelCols['USA UPS'] = $arrIndexCols[$col_index];
+				continue;
+			}
+			if(strpos($colName, 'IMPORTANCIA')!== false)
+			{
+				$excelCols['IMPORTANCIA'] = $arrIndexCols[$col_index];
 				continue;
 			}
 		}
