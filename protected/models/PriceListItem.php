@@ -60,7 +60,6 @@ class PriceListItem extends ModelAudit
 			array('Id_product, Id_price_list', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_product, Id_price_list', 'numerical', 'integerOnly'=>true),
 			array('msrp, dealer_cost, profit_rate, maritime_cost,air_cost', 'length', 'max'=>20),
-			array('price', 'type', 'type'=>'float'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Id, Id_product, Id_price_list, cost, description_customer, code, code_supplier,importer_desc, maritime_days, air_days,part_number,model,product_short_description, brand_description', 'safe'),
