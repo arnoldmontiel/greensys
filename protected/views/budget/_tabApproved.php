@@ -37,6 +37,16 @@
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"width:12%;", "class"=>"align-right"),
 						'headerHtmlOptions'=>array("class"=>"align-right"),
+				),
+				array(
+						'header'=>'Total',
+						'value'=>
+						function($data){
+							return $data->currency->short_description." ".number_format($data->getTotalPriceWithDiscountCurrencyConverted(),2);
+						},
+						'type'=>'raw',
+						'htmlOptions'=>array("style"=>"width:12%;", "class"=>"align-right"),
+						'headerHtmlOptions'=>array("class"=>"align-right"),
 				),				
 				array(
 					'name'=>'percent_discount',
