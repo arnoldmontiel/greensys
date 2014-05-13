@@ -634,6 +634,7 @@ class BudgetController extends GController
 			$modelBudget = Budget::model()->findByPk(array('Id'=>$id, 'version_number'=>$version));
 			if(isset($modelBudget))
 			{
+				$modelBudget->percent_profitability = $modelBudget->getProfitPercenTotal(); 
 				$modelBudget->Id_budget_state = 2;
 				$modelBudget->date_close = new CDbExpression('NOW()');
 				$criteria = new CDbCriteria;
@@ -661,7 +662,6 @@ class BudgetController extends GController
 						$modelBudget->Id_currency_to_currency_conversor =$currencyConversor->Id_currency_to;
 					}					
 				}
-				$modelBudget->percent_profitability = $modelBudget->getProfitPercenTotal(); 
 				$modelBudget->save();
 			}
 		}

@@ -498,7 +498,7 @@ class Budget extends ModelAudit
 	{
 		if($this->Id_budget_state!=1&&$this->Id_budget_state!=5)//abierto y reabierto
 		{
-			if(isset($this->percent_profitability))
+			if($this->percent_profitability!=0)
 				return $this->percent_profitability;
 		}
 		$criteria=new CDbCriteria;
@@ -530,7 +530,12 @@ class Budget extends ModelAudit
 			$this->percent_profitability = round(100-($totalCost / $total * 100),2);
 		else
 			$this->percent_profitability =  0;
-
+		
+		if($this->Id_budget_state!=1&&$this->Id_budget_state!=5)//abierto y reabierto
+		{
+			$this->save();
+		}
+		
 		return $this->percent_profitability;
 	}
 	/**
