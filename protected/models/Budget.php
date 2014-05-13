@@ -150,7 +150,7 @@ class Budget extends ModelAudit
 			array('Id, Id_project, Id_budget_state, version_number, Id_currency, Id_currency_view', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('Id_project, Id_budget_state, version_number, Id_currency, Id_currency_view, Id_currency_conversor, Id_currency_from_currency_conversor, Id_currency_to_currency_conversor,percent_commission, print_clause', 'numerical', 'integerOnly'=>true),
 			array('percent_discount', 'length', 'max'=>10),
-			array('date_creation, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, date_close, date_cancelled, date_approved,percent_commission,name_commission,last_name_commission, clause_description', 'safe'),
+			array('date_creation, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, date_close, date_cancelled, date_approved,percent_commission,name_commission,last_name_commission, clause_description, percent_profitability', 'safe'),
 			array('description, note,name_commission,last_name_commission', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -496,6 +496,11 @@ class Budget extends ModelAudit
 
 	public function getProfitPercenTotal()
 	{
+		if($this->Id_budget_state!=1&&$this->Id_budget_state!=5)//abierto y reabierto
+		{
+			if(isset($this->percent_profitability))
+				return $this->percent_profitability;
+		}
 		$criteria=new CDbCriteria;
 	
 		$criteria->compare('t.Id_budget',$this->Id);
@@ -522,9 +527,11 @@ class Budget extends ModelAudit
 		}
 		$total = ($totalPrice*(1-($this->percent_discount/100)));
 		if($total>0)
-			return round(100-($totalCost / $total * 100),2);
+			$this->percent_profitability = round(100-($totalCost / $total * 100),2);
 		else
-			return 0;
+			$this->percent_profitability =  0;
+
+		return $this->percent_profitability;
 	}
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.

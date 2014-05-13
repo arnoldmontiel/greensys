@@ -661,6 +661,7 @@ class BudgetController extends GController
 						$modelBudget->Id_currency_to_currency_conversor =$currencyConversor->Id_currency_to;
 					}					
 				}
+				$modelBudget->percent_profitability = $modelBudget->getProfitPercenTotal(); 
 				$modelBudget->save();
 			}
 		}
