@@ -2317,8 +2317,8 @@ class GreenHelper
 								<td class="align-left" width="91">'.number_format($budgetItem->sum_quantity,2,",",".").'</td>
 								<td class="align-left" width="91">Precio Unitario:</td>
 								<td class="align-left" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()/$commissionFactor).'</td>
-								<td class="align-left" width="91">Descuento:</td>
-								<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. $discount .'</td>
+								<td class="align-left redDiscount" width="91">Descuento:</td>
+								<td class="align-left redDiscount" width="91">'.$budgetItem->getDiscountType().' '. $discount .'</td>
 								<td class="align-right" width="91">Total:</td>								
 								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor).'</td>
 								</tr></tbody></table>';
@@ -2364,8 +2364,8 @@ class GreenHelper
 								<td class="align-left" width="91">'.number_format($budgetItem->sum_quantity,2,",",".").'</td>
 								<td class="align-left" width="91">Precio Unitario:</td>
 								<td class="align-left" width="91">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()/$commissionFactor).'</td>
-								<td class="align-left" width="91">Descuento:</td>
-								<td class="align-left" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($discount).'</td>
+								<td class="align-left redDiscount" width="91">Descuento:</td>
+								<td class="align-left redDiscount" width="91">'.$budgetItem->getDiscountType().' '. self::showPrice($discount).'</td>
 								<td class="align-right" width="91">Total:</td>
 								
 								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor).'</td>
@@ -2735,7 +2735,7 @@ class GreenHelper
 //				</div>
 //				';
 		
-	//limpio el codigo que general el editor, le saco todos los "styles" inline
+	//limpio el codigo que genera el editor, le saco todos los "styles" inline
 	$clausulas = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $clausulas);
 	$clausulas = preg_replace("/(<[^>]+) style='.*?'/i", "$1", $clausulas);
 	$clausulas ='<div  style="page-break-before: always;">'.$clausulas.'</div>';	
