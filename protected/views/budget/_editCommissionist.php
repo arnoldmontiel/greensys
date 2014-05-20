@@ -97,6 +97,7 @@ function checkNumber(obj)
     	$(obj).val(orignalValue);
     	//alert(msg);
     }
+    checkAddEnabled();
 }
 </script>
 
@@ -112,9 +113,9 @@ function checkNumber(obj)
   </thead>
   <tbody>
   <tr>
-  <td width="210"><input onchange="checkAddEnabled();" id="commissionist_name" class="form-control" placeholder="Nombre"></td>
-  <td width="210"><input onchange="checkAddEnabled();" id="commissionist_last_name" class="form-control" placeholder="Apellido"></td>
-  <td class="align-center" width="110"><input onchange="checkAddEnabled();" onkeyup="checkNumber(this);" id="commissionist_value" class="form-control align-right formHasLabel inputSmall" placeholder="0.00">%</td>
+  <td width="210"><input onkeyup="checkAddEnabled();" id="commissionist_name" class="form-control" placeholder="Nombre"></td>
+  <td width="210"><input onkeyup="checkAddEnabled();" id="commissionist_last_name" class="form-control" placeholder="Apellido"></td>
+  <td class="align-center" width="110"><input onkeyup="checkNumber(this);" id="commissionist_value" class="form-control align-right formHasLabel inputSmall" placeholder="0.00">%</td>
   <td class="align-right"><button id="btn-add-commissionist" type="button" onclick="addCommissionist();" class="btn btn-primary btn-sm noMargin disabled"><i class="fa fa-plus"></i> Agregar</button></td>
   </tr>
 
