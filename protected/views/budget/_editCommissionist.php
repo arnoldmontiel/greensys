@@ -113,6 +113,9 @@ function checkNumber(obj)
   </thead>
   <tbody>
   <tr>
+  <td colspan="4">Para agregar un comisionista complete los campos y presione <span class="bold">Agregar</span>, no es necesario <span class="bold"><i class="fa fa-save"></i> Guardar</span>.</td>
+ </tr>
+  <tr>
   <td width="210"><input onkeyup="checkAddEnabled();" id="commissionist_name" class="form-control" placeholder="Nombre"></td>
   <td width="210"><input onkeyup="checkAddEnabled();" id="commissionist_last_name" class="form-control" placeholder="Apellido"></td>
   <td class="align-center" width="110"><input onkeyup="checkNumber(this);" id="commissionist_value" class="form-control align-right formHasLabel inputSmall" placeholder="0.00">%</td>
