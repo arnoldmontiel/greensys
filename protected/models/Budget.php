@@ -521,7 +521,14 @@ class Budget extends ModelAudit
 			}
 			else//programacion o instalacion
 			{
-				$totalCost += $price;				
+				if($item->service_type==1)//programacion
+				{
+					$totalCost += 50*$item->quantity;
+				}
+				else if($item->service_type==2)//instalacion
+				{
+					$totalCost += 15*$item->quantity;					
+				}
 			}
 			
 		}
