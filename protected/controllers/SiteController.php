@@ -20,7 +20,25 @@ class SiteController extends GController
 			),
 		);
 	}
-
+	public function actionConfirmation()
+	{
+		if(isset($_GET['mail'])&&isset($_GET['name'])&&isset($_GET['name']))
+		{			
+			$model = InvitationConfirmation::model()->findByAttributes(array('email'=>$_GET['mail']));
+			if(!isset($model))
+			{
+				$model = new InvitationConfirmation;
+				$model->name=$_GET['name'];
+				$model->email=$_GET['mail'];
+			
+			}
+			$model->event_number = 1;
+			$model->confirmed = 1;
+			$model->save();				
+		}
+		$this->redirect('http://www.gruposmartliving.com/invite/01/confirm.php');
+		
+	}
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.

@@ -521,6 +521,7 @@ class Budget extends ModelAudit
 			}
 			else//programacion o instalacion
 			{
+				//TODO: agregar esto a la tabla settings
 				if($item->service_type==1)//programacion
 				{
 					$totalCost += 50*$item->quantity;
