@@ -123,6 +123,7 @@ class InvitationConfirmationController extends Controller
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('InvitationConfirmation');
+		$dataProvider->pagination->pageSize= 250;
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
