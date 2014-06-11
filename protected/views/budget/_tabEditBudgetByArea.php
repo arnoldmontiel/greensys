@@ -34,11 +34,11 @@
 							'name'=>'Producto',
 							'value'=>function($data){
 								$short_desc = 'No hay descripci&oacuten';
-								if(!empty($data->product->short_description))
-									$short_desc = $data->product->short_description;
+								if(!empty($data->product->description_customer))
+									$short_desc = $data->product->description_customer;
 								
-								$value = CHtml::openTag("div",array("class"=>"tableProductBrand")).$short_desc."</div>"; 
-								$value .= CHtml::openTag("div",array("class"=>"tableProductName")).$data->product->model."</div>";
+								$value = CHtml::openTag("div",array("class"=>"tableProductName")).$short_desc."</div>"; 
+								$value .= CHtml::openTag("div",array("class"=>"tableProductBrand")).$data->product->model."</div>";
 								$value .= CHtml::openTag("div").$data->product->brand->description."</div>";
 								
 								return $value;
