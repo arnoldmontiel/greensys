@@ -32,9 +32,17 @@
 		'columns'=>array(
 					array(
 							'name'=>'Producto',
-							'value'=>'CHtml::openTag("div",array("class"=>"tableProductName")).$data->product->model."</div>"
-							.CHtml::openTag("div",array("class"=>"tableProductBrand")).$data->product->brand->description."</div>"
-							.CHtml::openTag("div")."PN: ".$data->product->part_number."</div>"',
+							'value'=>function($data){
+								$short_desc = 'No hay descripci&oacuten';
+								if(!empty($data->product->short_description))
+									$short_desc = $data->product->short_description;
+								
+								$value = CHtml::openTag("div",array("class"=>"tableProductBrand")).$short_desc."</div>"; 
+								$value .= CHtml::openTag("div",array("class"=>"tableProductName")).$data->product->model."</div>";
+								$value .= CHtml::openTag("div").$data->product->brand->description."</div>";
+								
+								return $value;
+							},														
 							'type'=>'raw'
 					),
 					array(
