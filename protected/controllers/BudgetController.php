@@ -1074,7 +1074,10 @@ class BudgetController extends GController
 			if(isset($budgetItem))
 			{
 				$budgetItem->calcTimeBeforeChangeService();
-				$budgetItem->Id_service = $_POST['Id_service'];
+				if(!empty($_POST['Id_service']))
+					$budgetItem->Id_service = $_POST['Id_service'];
+				else
+					$budgetItem->Id_service = null;
 				$budgetItem->order_by_service = null;
 				$budgetItem->save();				
 			}
