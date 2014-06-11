@@ -1321,11 +1321,11 @@ class BudgetController extends GController
 			$modelBudgetItem->Id_price_list = $modelPriceListItem->Id_price_list;
 			if($shippingType==1)//maritime
 			{		
-				$modelBudgetItem->price =$modelPriceListItem->getMaritimeSalePrice(); 				
+				$modelBudgetItem->price = round($modelPriceListItem->getMaritimeSalePrice(),2); 				
 			}
 			else//air
 			{
-				$modelBudgetItem->price =$modelPriceListItem->getAirSalePrice();				
+				$modelBudgetItem->price =round($modelPriceListItem->getAirSalePrice(),2);				
 			}
 			var_dump($modelBudgetItem);
 			$modelBudgetItem->save();
