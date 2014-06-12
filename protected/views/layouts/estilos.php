@@ -93,6 +93,14 @@ button {
 
 .verticalTop{vertical-align:top !important;}
 
+
+.truncate {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .bold{ font-weight:600;}
 .list-group{ margin-left:0px; margin-bottom:0px;}
 
@@ -1038,7 +1046,9 @@ body {background-color:white;}
 .tableReadOnly .conDesc td{width:12% !important; }
 .tableReadOnly .sinDesc td{width:16% !important;}
 
-.descContainer{width:inherit !important;}
+.descContainer{width:inherit !important; text-align:center !important;}
+
+.tablaLimpia td.descContainer {  text-align:center !important;}
 
 #screenReadOnly{ font-size:14px; background-color:white;padding-top:30px; padding-bottom:30px;}
 
@@ -1168,7 +1178,7 @@ margin-bottom:5px; }
 
 
 .tableReadOnly  td.budgetImgCont{ padding-right:10px;}
-.imgTD{width:100px;}
+.imgTD{width:100px; height:auto;}
 
  div.bold{font-family:'GudeaBold'; font-weight:bold;}
  
