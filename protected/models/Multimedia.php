@@ -59,7 +59,8 @@ class Multimedia extends CActiveRecord
 				}
 	
 				//generate small file version
-				$newFile = $this->resizeFile(320,320,$filePath);
+				//$newFile = $this->resizeFile(320,320,$filePath);
+				$newFile = $this->resizeFile(320,null,$filePath);
 				$content = $newFile['content'];
 				if ($content !== false) {
 					$fileName = $fileNameWoExt.'_small.jpg';
