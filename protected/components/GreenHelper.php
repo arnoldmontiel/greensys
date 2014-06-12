@@ -2272,15 +2272,15 @@ class GreenHelper
 							
 							switch ($budgetItem->product->relevance_level) {
 								case 0:
-									$tdImage = '<td width="120" class="descContainer"><img class="imgTD" width="100" src="'.$imagePath.'"></td><td width="610">';
+									$tdImage = '<td width="230" class="descContainer tdSizeSmall" align="center"><img class="imgTD" width="100" src="'.$imagePath.'"></td><td width="610">';
 									$trClass = "pdfProdSMALL";
 									break;
 								case 1:
-									$tdImage = '<td width="180" class="descContainer"><img class="imgTD" width="150" src="'.$imagePath.'"></td><td width="550">';
+									$tdImage = '<td width="230" class="descContainer tdSizeMedium" align="center"><img class="imgTD" width="150" src="'.$imagePath.'"></td><td width="550">';
 									$trClass = "pdfProdMEDIUM";
 									break;
 								case 2:
-									$tdImage = '<td width="230" class="descContainer"><img class="imgTD" width="250" src="'.$imagePath.'"></td><td width="500">';
+									$tdImage = '<td width="230" class="descContainer tdSizeBig" align="center"><img class="imgTD" width="250" src="'.$imagePath.'"></td><td width="500">';
 									$trClass = "pdfProdBIG";
 									break;
 							}
