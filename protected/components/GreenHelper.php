@@ -2117,9 +2117,11 @@ class GreenHelper
 			if(count($budgetItems)>0)
 			{
 				$serviceName = 'General';
+				$idIfGeneral = 'id="servicioGeneralOcultar"';
 				$serviceDesc = 'Items sin agrupar en servicios';
 				if(isset($budgetItemService->service))
 				{
+					$idIfGeneral = '';
 					$serviceName = $budgetItemService->service->description;
 					$serviceDesc = nl2br($budgetItemService->service->long_description);
 					$serviceNote = nl2br($budgetItemService->service->note);
@@ -2138,7 +2140,7 @@ class GreenHelper
 				}
 		
 				$serviceContentHeader = '
-						<div  style="page-break-after: always;">
+						<div '.$idIfGeneral.' style="page-break-after: always;">
 									<div class="budgetTitle">'.$serviceName.'</div>
 									<div class="budgetDesc">'.$serviceDesc.' </div>';
 				
