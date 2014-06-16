@@ -1161,7 +1161,7 @@ margin-bottom:5px; }
 
 #servicioGeneralOcultar{display:none;}
 
-#screenReadOnly #servicioGeneralOcultar{display:block !important;}
+#screenViewOnline #servicioGeneralOcultar{display:block !important;}
 
 
 
