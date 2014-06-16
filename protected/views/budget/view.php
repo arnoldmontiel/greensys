@@ -11,4 +11,7 @@ function downloadPDF(id, version)
 <div class="align-right">
 	<a onclick="downloadPDF(<?php echo $modelBudget->Id.', '.$modelBudget->version_number?>);" class="btn btn-primary" style="margin-bottom:15px;margin-right:15px;">Generar PDF</a>
 </div>
+<div id="screenViewOnline">
 <?php echo GreenHelper::generateBudgetPDF($modelBudget);?>
+
+</div>
