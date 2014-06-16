@@ -1209,9 +1209,11 @@ margin-bottom:5px; }
 
 .table .tablaLimpia2 td.bold{font-family:'GudeaBold'; font-weight:bold;}
 
-#screenReadOnlyCaratula{ text-align:center; background-color:white; padding-top:150px;}
-#screenReadOnlyCaratulaFinal{ text-align:center; background-color:white; padding-top:20px;}
+#screenReadOnlyCaratula{ text-align:center;  padding-top:150px;}
+#screenReadOnlyCaratulaFinal{ text-align:center; padding-top:20px;}
 
+#screenViewOnline #screenReadOnlyCaratula{ background-color:white;}
+#screenViewOnline #screenReadOnlyCaratulaFinal{ background-color:white;}
 
 .logoBig{ margin:auto; }
 .mainInfo{border-left: 1px solid #333; margin:auto;  text-align:left; margin-top:20px;}
