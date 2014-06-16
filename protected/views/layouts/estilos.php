@@ -1159,6 +1159,10 @@ margin-bottom:5px; }
       font-size: 14px !important;
 }
 
+#servicioGeneralOcultar{display:none;}
+
+#screenReadOnly .servicioGeneralOcultar{display:block !important;}
+
 
 
 .tableReadOnly{width:100%; margin-bottom:0px;}
