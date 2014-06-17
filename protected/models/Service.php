@@ -8,6 +8,7 @@
  * @property string $description
  * @property string $long_description
  * @property string $note
+ * @property integer $default_order
  *
  * The followings are the available model relations:
  * @property Area[] $areas
@@ -40,11 +41,12 @@ class Service extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('default_order', 'numerical', 'integerOnly'=>true),
 			array('description', 'length', 'max'=>100),
 			array('long_description, note', 'safe'),
 				// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description, long_description, note', 'safe', 'on'=>'search'),
+			array('Id, description, long_description, note, default_order', 'safe', 'on'=>'search'),
 		);
 	}
 
