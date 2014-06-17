@@ -857,7 +857,7 @@ font-family:'GudeaRegular', Arial, sans-serif;}
 
 .nav-tabs>li a.tabEdit:hover, .nav-tabs>li.active>a.tabEdit:hover{color:#5cb85c !important; cursor:pointer;}
 
-.bloqueHoras{min-width:60px; margin-top:6px;}
+.bloqueHoras{min-width:91px; margin-top:6px;}
 .bloqueHoras span{ display:inline-block; width:22px; margin-right:3px; font-size:14px;}
 .bloqueHoras .inputSmall{margin-top:2px;}
 
@@ -948,6 +948,7 @@ font-family: "GudeaRegular";
 
 .checkGuardado{text-align:center; color:#5cb85c; display:none;}
 
+.ocultarDetalleArea{padding-left:20px;padding-top:6px;}
 
 /* ------ END CREAR PRESU ------- */
 
