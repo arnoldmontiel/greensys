@@ -2147,6 +2147,8 @@ class GreenHelper
 						<div '.$idIfGeneral.' style="page-break-after: always;">
 									<div class="budgetTitle">'.$serviceName.'</div>
 									<div class="budgetDesc">'.$serviceDesc.' </div>
+									<div>&raquo; &Aacute;reas presupuestadas: Exteriores, Hall de acceso, Dormitorio 1, Dormitorio 2, Living, Cocina, Galer&iacute;a.
+											</div>
 									<div class="budgetNota">'.$serviceNote.' </div>';
 				
 		
@@ -2328,7 +2330,9 @@ class GreenHelper
 								<td class="align-left redDiscount" width="91">'.$budgetItem->getDiscountType().' '. $discount .'</td>
 								<td class="align-right" width="91">Total:</td>								
 								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor).'</td>
-								</tr></tbody></table>';
+								</tr>
+								<tr><td colspan="8">&raquo; &Aacute;reas de aplicaci&oacute;n: 2 en Exteriores, 1 en Hall de Acceso.</td></tr>
+								</tbody></table>';
 						}
 						else 
 						{
@@ -2340,7 +2344,9 @@ class GreenHelper
 								<td class="align-left" width="121">'.$currency . ' ' . self::showPrice($budgetItem->getPriceCurrencyConverted()/$commissionFactor).'</td>
 								<td class="align-right" width="121">Precio Final:</td>								
 								<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor).'</td>
-								</tr></tbody></table>';
+								</tr>
+								<tr><td colspan="8">&raquo; &Aacute;reas de aplicaci&oacute;n: 2 en Exteriores, 1 en Hall de Acceso.</td></tr>
+								</tbody></table>';
 						}
 						
 						$serviceContentBodyItem = $serviceContentBodyItem . '</td>';
