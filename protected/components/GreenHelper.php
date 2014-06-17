@@ -2144,7 +2144,8 @@ class GreenHelper
 				$serviceContentHeader = '
 						<div '.$idIfGeneral.' style="page-break-after: always;">
 									<div class="budgetTitle">'.$serviceName.'</div>
-									<div class="budgetDesc">'.$serviceDesc.' </div>';
+									<div class="budgetDesc">'.$serviceDesc.' </div>
+									<div class="budgetNota">'.$serviceNote.' </div>';
 				
 		
 			
