@@ -2079,11 +2079,12 @@ class GreenHelper
 		$arrayServiceTotal = array();
 		
 		$criteria = new CDbCriteria();
-		$criteria->join = 'LEFT JOIN service s ON (s.Id = t.Id_service)';
-		$criteria->addCondition('Id_budget = '.$idBudget);
-		$criteria->addCondition('version_number = '.$versionNumber);
-		$criteria->group = 'Id_service';
-		$criteria->order = 's.default_order ASC';
+		$criteria->join = 'INNER JOIN budget b on (b.Id = t.Id_budget)
+							LEFT JOIN project_service ps ON (ps.Id_service = t.Id_service and b.Id_project = ps.Id_project)';
+		$criteria->addCondition('t.Id_budget = '.$idBudget);
+		$criteria->addCondition('t.version_number = '.$versionNumber);
+		$criteria->group = 't.Id_service';
+		$criteria->order = 'ps.order ASC';
 		$budgetItemServices = BudgetItem::model()->findAll($criteria);
 		
 		foreach($budgetItemServices as $budgetItemService)

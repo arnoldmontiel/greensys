@@ -215,6 +215,77 @@ $(document).ready(function() {
   
 
 <script type="text/javascript">
+function downService(idService, idProject, grid)
+{
+	statusStartSaving();
+	
+	$.post(
+		'<?php echo BudgetController::createUrl('AjaxDownServiceItem')?>',
+		 {
+			idService: idService,
+		 	idProject: idProject
+		 },'json').success(
+			function(data)				 
+			{ 
+				statusSaved();
+				$.fn.yiiGridView.update(grid);											
+			}
+		).error(function(){statusSavedError();});
+}
+
+function downServiceToBottom(idService, idProject, grid)
+{
+	statusStartSaving();
+	
+	$.post(
+		'<?php echo BudgetController::createUrl('AjaxDownToBottomService')?>',
+		 {
+			idService: idService,
+		 	idProject: idProject
+		 },'json').success(
+			function(data)				 
+			{ 
+				statusSaved();
+				$.fn.yiiGridView.update(grid);											
+			}
+		).error(function(){statusSavedError();});
+}
+
+function upService(idService, idProject, grid)
+{
+	statusStartSaving();
+	
+	$.post(
+		'<?php echo BudgetController::createUrl('AjaxUpServiceItem')?>',
+		 {
+			idService: idService,
+		 	idProject: idProject
+		 },'json').success(
+			function(data)				 
+			{ 
+				statusSaved();
+				$.fn.yiiGridView.update(grid);											
+			}
+		).error(function(){statusSavedError();});
+}
+
+function upServiceToAbove(idService, idProject, grid)
+{
+	statusStartSaving();
+	
+	$.post(
+		'<?php echo BudgetController::createUrl('AjaxUpToAboveService')?>',
+		 {
+			idService: idService,
+		 	idProject: idProject
+		 },'json').success(
+			function(data)				 
+			{ 
+				statusSaved();
+				$.fn.yiiGridView.update(grid);											
+			}
+		).error(function(){statusSavedError();});
+}
 function deleteAreaProject()
 {
 	idAreaProject = $("#idTabAreaProject").val();

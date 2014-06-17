@@ -8,6 +8,7 @@
  * @property integer $Id_service
  * @property string $long_description
  * @property string $note
+ * @property integer $order
  */
 class ProjectService extends CActiveRecord
 {
@@ -28,11 +29,11 @@ class ProjectService extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('Id_project, Id_service', 'required'),
-			array('Id_project, Id_service', 'numerical', 'integerOnly'=>true),
+			array('Id_project, Id_service, order', 'numerical', 'integerOnly'=>true),
 			array('long_description, note', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('Id_project, Id_service, long_description, note', 'safe', 'on'=>'search'),
+			array('Id_project, Id_service, long_description, note, order', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -85,8 +86,12 @@ class ProjectService extends CActiveRecord
 		$criteria->compare('long_description',$this->long_description,true);
 		$criteria->compare('note',$this->note,true);
 		
+		$sort=new CSort;
+		$sort->defaultOrder = "t.order";
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>$sort,
 		));
 	}
 

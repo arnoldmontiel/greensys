@@ -24,6 +24,26 @@ $projectService->Id_project = $model->Id_project;
 					'ajaxUrl'=>BudgetController::createUrl('AjaxUpdateProjectServiceGrid',array("Id"=>$model->Id,"version_number"=>$model->version_number)),
 					'columns'=>array(
 							array(
+									'header'=>'Orden',
+									'value'=>function($data,$index){
+										$idService = isset($data->order)?$data->order:"0";
+										return '<div class="buttonsTableOrder">
+													<button type="button" class="btn btn-primary btn-xs" onclick="downService('.$data->Id_service.','.$data->Id_project.',\'project-service-grid\')">
+														<i class="fa fa-angle-down fa-lg"></i></i>
+													</button><button type="button" class="btn btn-primary btn-xs noMargin" onclick="upService('.$data->Id_service.','.$data->Id_project.',\'project-service-grid\')">
+														<i class="fa fa-angle-up fa-lg"></i></i>
+													</button><br/>
+													<button type="button" class="btn btn-default btn-xs" onclick="downServiceToBottom('.$data->Id_service.','.$data->Id_project.',\'project-service-grid\')">
+														<i class="fa fa-angle-double-down fa-lg"></i></i>
+													</button><button type="button" class="btn btn-default btn-xs noMargin" onclick="upServiceToAbove('.$data->Id_service.','.$data->Id_project.',\'project-service-grid\')">
+														<i class="fa fa-angle-double-up fa-lg"></i></i></button>
+												</div>';						
+									},
+									'type'=>'raw',
+										'htmlOptions'=>array("style"=>"width:52px;"),
+										'headerHtmlOptions'=>array("style"=>"width:52px;"),
+							),
+							array(
 									'header'=>'Servicios',
 									'value'=>'$data->service->description',
 									'type'=>'raw'

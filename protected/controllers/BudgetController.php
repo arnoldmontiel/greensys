@@ -1299,6 +1299,7 @@ class BudgetController extends GController
 				$projectService->Id_project = $modelProject->Id;
 				$projectService->long_description = $service->long_description;
 				$projectService->note = $service->note;
+				$projectService->order = $service->default_order;
 				$projectService->save();
 			}							
 		}		
@@ -1770,6 +1771,160 @@ class BudgetController extends GController
 					echo json_encode(array_merge($budgetItem->attributes,$result));						
 				}
 			}
+		}
+	}
+	public function actionAjaxDownServiceItem()
+	{
+		if(isset($_POST['idService']) && isset($_POST['idProject']))
+		{
+			$modelProjectService = ProjectService::model()->findByAttributes(array('Id_service'=>$_POST['idService'], 'Id_project'=>$_POST['idProject']));
+			if(isset($modelProjectService->order))
+			{
+				$criteria = new CDbCriteria();
+				$criteria->addCondition('Id_project='.$modelProjectService->Id_project);
+				
+				$criteria->addCondition('t.order > '.$modelProjectService->order);
+				$criteria->order="t.order ASC";
+				$projectService = ProjectService::model()->find($criteria);
+				if(isset($projectService))
+				{
+					$transaction = $modelProjectService->dbConnection->beginTransaction();
+					try {
+						$orderAux=$projectService->order;
+						$projectService->order = $modelProjectService->order;
+						$modelProjectService->order = $orderAux;
+						$modelProjectService->save();
+						$projectService->save();
+						$transaction->commit();
+					} catch (Exception $e) {
+						$transaction->rollback();
+					}
+				}
+			}
+				
+		}
+	}
+	public function actionAjaxUpServiceItem()
+	{
+		if(isset($_POST['idService']) && isset($_POST['idProject']))
+		{
+			$modelProjectService = ProjectService::model()->findByAttributes(array('Id_service'=>$_POST['idService'], 'Id_project'=>$_POST['idProject']));
+			if(isset($modelProjectService->order))
+			{
+				$criteria = new CDbCriteria();
+				$criteria->addCondition('Id_project='.$modelProjectService->Id_project);
+	
+				$criteria->addCondition('t.order < '.$modelProjectService->order);
+				$criteria->order="t.order DESC";
+				$projectService = ProjectService::model()->find($criteria);
+				if(isset($projectService))
+				{
+					$transaction = $modelProjectService->dbConnection->beginTransaction();
+					try {
+						$orderAux=$projectService->order;
+						$projectService->order = $modelProjectService->order;
+						$modelProjectService->order = $orderAux;
+						$modelProjectService->save();
+						$projectService->save();
+						$transaction->commit();
+					} catch (Exception $e) {
+						$transaction->rollback();
+					}
+				}
+			}
+	
+		}
+	}
+	public function actionAjaxDownToBottomService()
+	{
+		if(isset($_POST['idService']) && isset($_POST['idProject']))
+		{
+			$modelProjectService = ProjectService::model()->findByAttributes(array('Id_service'=>$_POST['idService'], 'Id_project'=>$_POST['idProject']));
+			if(isset($modelProjectService->order))
+			{
+				$criteria = new CDbCriteria();
+				$criteria->addCondition('Id_project='.$modelProjectService->Id_project);
+				$criteria->addCondition('t.order > '.$modelProjectService->order);
+				$criteria->order="t.order DESC";
+				$projectService = ProjectService::model()->findAll($criteria);
+				if(!empty($projectService))
+				{
+					$transaction = $modelProjectService->dbConnection->beginTransaction();
+					try {
+						$isFistTime = true;
+						$currentPos= $modelProjectService->order;
+						$prevItem = null;
+						foreach ($projectService as $item)
+						{
+							if($isFistTime)
+							{
+								$isFistTime = false;
+								$modelProjectService->order = $item->order;
+								$modelProjectService->save();
+							}
+							else
+							{
+								$prevItem->order = $item->order;
+								$prevItem->save();
+							}
+							$prevItem = $item;
+						}
+						$item->order = $currentPos;
+						$item->save();
+						$transaction->commit();
+					} catch (Exception $e) {
+						$transaction->rollback();
+						var_dump($e);
+					}
+				}
+			}
+				
+		}
+	}
+	public function actionAjaxUpToAboveService()
+	{
+		if(isset($_POST['idService']) && isset($_POST['idProject']))
+		{
+			$modelProjectService = ProjectService::model()->findByAttributes(array('Id_service'=>$_POST['idService'], 'Id_project'=>$_POST['idProject']));
+			if(isset($modelProjectService->order))
+			{
+				$criteria = new CDbCriteria();
+				$criteria->addCondition('Id_project='.$modelProjectService->Id_project);
+				$criteria->addCondition('t.order < '.$modelProjectService->order);
+				$criteria->order="t.order ASC";
+				$projectService = ProjectService::model()->findAll($criteria);
+				if(!empty($projectService))
+				{
+					$transaction = $modelProjectService->dbConnection->beginTransaction();
+					try {
+						$isFistTime = true;
+						$currentPos= $modelProjectService->order;
+						$prevItem = null;
+						foreach ($projectService as $item)
+						{
+							if($isFistTime)
+							{
+								$isFistTime = false;
+								$modelProjectService->order = $item->order;
+								$modelProjectService->save();
+							}
+							else
+							{
+								$prevItem->order = $item->order;
+								$prevItem->save();
+							}
+							$prevItem = $item;
+						}
+						$item->order = $currentPos;
+						$item->save();
+						$transaction->commit();
+					} catch (Exception $e) {
+						$transaction->rollback();
+						var_dump($e);
+					}
+				}
+			}
+	
 		}
 	}
 	public function actionAjaxDownBudgetItem()
