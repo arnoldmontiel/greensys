@@ -215,7 +215,7 @@ $(document).ready(function() {
   
 
 <script type="text/javascript">
-function downService(idService, idProject, grid)
+function downService(idBudget, versionNumber, idService, idProject, grid)
 {
 	statusStartSaving();
 	
@@ -223,7 +223,9 @@ function downService(idService, idProject, grid)
 		'<?php echo BudgetController::createUrl('AjaxDownServiceItem')?>',
 		 {
 			idService: idService,
-		 	idProject: idProject
+		 	idProject: idProject,
+		 	idBudget: idBudget, 
+		 	versionNumber: versionNumber
 		 },'json').success(
 			function(data)				 
 			{ 
@@ -233,7 +235,7 @@ function downService(idService, idProject, grid)
 		).error(function(){statusSavedError();});
 }
 
-function downServiceToBottom(idService, idProject, grid)
+function downServiceToBottom(idBudget, versionNumber, idService, idProject, grid)
 {
 	statusStartSaving();
 	
@@ -241,7 +243,9 @@ function downServiceToBottom(idService, idProject, grid)
 		'<?php echo BudgetController::createUrl('AjaxDownToBottomService')?>',
 		 {
 			idService: idService,
-		 	idProject: idProject
+		 	idProject: idProject,
+		 	idBudget: idBudget, 
+		 	versionNumber: versionNumber
 		 },'json').success(
 			function(data)				 
 			{ 
@@ -251,7 +255,7 @@ function downServiceToBottom(idService, idProject, grid)
 		).error(function(){statusSavedError();});
 }
 
-function upService(idService, idProject, grid)
+function upService(idBudget, versionNumber, idService, idProject, grid)
 {
 	statusStartSaving();
 	
@@ -259,7 +263,9 @@ function upService(idService, idProject, grid)
 		'<?php echo BudgetController::createUrl('AjaxUpServiceItem')?>',
 		 {
 			idService: idService,
-		 	idProject: idProject
+		 	idProject: idProject,
+		 	idBudget: idBudget, 
+		 	versionNumber: versionNumber
 		 },'json').success(
 			function(data)				 
 			{ 
@@ -269,7 +275,7 @@ function upService(idService, idProject, grid)
 		).error(function(){statusSavedError();});
 }
 
-function upServiceToAbove(idService, idProject, grid)
+function upServiceToAbove(idBudget, versionNumber, idService, idProject, grid)
 {
 	statusStartSaving();
 	
@@ -277,7 +283,9 @@ function upServiceToAbove(idService, idProject, grid)
 		'<?php echo BudgetController::createUrl('AjaxUpToAboveService')?>',
 		 {
 			idService: idService,
-		 	idProject: idProject
+		 	idProject: idProject,
+		 	idBudget: idBudget, 
+		 	versionNumber: versionNumber
 		 },'json').success(
 			function(data)				 
 			{ 

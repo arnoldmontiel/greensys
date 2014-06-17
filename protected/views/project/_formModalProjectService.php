@@ -16,6 +16,8 @@
   <?php echo CHtml::hiddenField('field_caller',$field_caller,array('id'=>'field_caller'))?>
   <?php echo $form->hiddenField($model,'Id_project'); ?>
   <?php echo $form->hiddenField($model,'Id_service'); ?>
+  <?php echo $form->hiddenField($model,'Id_budget'); ?>
+  <?php echo $form->hiddenField($model,'version_number'); ?>
   <?php echo $form->labelEx($model,'long_description'); ?>
     <?php 
     	if($model->long_description == "")

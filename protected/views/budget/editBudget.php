@@ -337,13 +337,15 @@ function addExtraItem(idBudget,versionNumber)
 			).error(function(){});			
 }
  
-function editProjectService(idProject,idService)
+function editProjectService(idProject,idService,idBudget,versionNumber)
 {
 	$.post(
 			'<?php echo BudgetController::createUrl('project/AjaxShowUpdateModalProjectService')?>',
 			 {
 			 	Id_project: idProject,
 			 	Id_service: idService,
+			 	Id_budget: idBudget,
+			 	version_number: versionNumber,
 			 	field_caller:'project-service-grid'
 			 },'json').success(
 				function(data) 
@@ -357,13 +359,15 @@ function editProjectService(idProject,idService)
 			).error(function(){});			
 }
 
-function editProjectServiceNote(idProject,idService)
+function editProjectServiceNote(idProject,idService,idBudget,versionNumber)
 {
 	$.post(
 			'<?php echo BudgetController::createUrl('project/AjaxShowUpdateModalProjectServiceNote')?>',
 			 {
 			 	Id_project: idProject,
 			 	Id_service: idService,
+			 	Id_budget: idBudget,
+			 	version_number: versionNumber,
 			 	field_caller:'project-service-note-grid'
 			 },'json').success(
 				function(data) 

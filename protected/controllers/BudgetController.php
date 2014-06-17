@@ -1273,7 +1273,7 @@ class BudgetController extends GController
 // 		if(isset($idArea))
 // 			$modelProducts->budget_area = $idArea;
 		
-		$this->GenerateProjectServiceRelation($model->project);
+		$this->GenerateProjectServiceRelation($model);
 		$this->render('editBudget',array(
 					'model'=>$model,
 					'modelProduct'=>$modelProduct,
@@ -1286,17 +1286,20 @@ class BudgetController extends GController
 					'byService'=>$byService,
 		));
 	}
-	public function GenerateProjectServiceRelation($modelProject)
+	public function GenerateProjectServiceRelation($modelBudget)
 	{
 		$services = Service::model()->findAll();
 		foreach ($services as $service)
 		{
-			$projectService = ProjectService::model()->findByAttributes(array('Id_project'=>$modelProject->Id,'Id_service'=>$service->Id));
+			$projectService = ProjectService::model()->findByAttributes(array('Id_project'=>$modelBudget->Id_project,'Id_service'=>$service->Id,
+																	'Id_budget'=>$modelBudget->Id, 'version_number'=>$modelBudget->version_number));
 			if(!isset($projectService))
 			{
 				$projectService = new ProjectService();
 				$projectService->Id_service = $service->Id;
-				$projectService->Id_project = $modelProject->Id;
+				$projectService->Id_project = $modelBudget->Id_project;
+				$projectService->Id_budget = $modelBudget->Id;
+				$projectService->version_number = $modelBudget->version_number;
 				$projectService->long_description = $service->long_description;
 				$projectService->note = $service->note;
 				$projectService->order = $service->default_order;
@@ -1777,11 +1780,13 @@ class BudgetController extends GController
 	{
 		if(isset($_POST['idService']) && isset($_POST['idProject']))
 		{
-			$modelProjectService = ProjectService::model()->findByAttributes(array('Id_service'=>$_POST['idService'], 'Id_project'=>$_POST['idProject']));
+			$modelProjectService = ProjectService::model()->findByAttributes(array('version_number'=>$_POST['versionNumber'], 'Id_budget'=>$_POST['idBudget'], 'Id_service'=>$_POST['idService'], 'Id_project'=>$_POST['idProject']));
 			if(isset($modelProjectService->order))
 			{
 				$criteria = new CDbCriteria();
 				$criteria->addCondition('Id_project='.$modelProjectService->Id_project);
+				$criteria->addCondition('Id_budget='.$modelProjectService->Id_budget);
+				$criteria->addCondition('version_number='.$modelProjectService->version_number);
 				
 				$criteria->addCondition('t.order > '.$modelProjectService->order);
 				$criteria->order="t.order ASC";
@@ -1808,12 +1813,14 @@ class BudgetController extends GController
 	{
 		if(isset($_POST['idService']) && isset($_POST['idProject']))
 		{
-			$modelProjectService = ProjectService::model()->findByAttributes(array('Id_service'=>$_POST['idService'], 'Id_project'=>$_POST['idProject']));
+			$modelProjectService = ProjectService::model()->findByAttributes(array('version_number'=>$_POST['versionNumber'], 'Id_budget'=>$_POST['idBudget'], 'Id_service'=>$_POST['idService'], 'Id_project'=>$_POST['idProject']));
 			if(isset($modelProjectService->order))
 			{
 				$criteria = new CDbCriteria();
 				$criteria->addCondition('Id_project='.$modelProjectService->Id_project);
-	
+				$criteria->addCondition('Id_budget='.$modelProjectService->Id_budget);
+				$criteria->addCondition('version_number='.$modelProjectService->version_number);
+				
 				$criteria->addCondition('t.order < '.$modelProjectService->order);
 				$criteria->order="t.order DESC";
 				$projectService = ProjectService::model()->find($criteria);
@@ -1839,11 +1846,14 @@ class BudgetController extends GController
 	{
 		if(isset($_POST['idService']) && isset($_POST['idProject']))
 		{
-			$modelProjectService = ProjectService::model()->findByAttributes(array('Id_service'=>$_POST['idService'], 'Id_project'=>$_POST['idProject']));
+			$modelProjectService = ProjectService::model()->findByAttributes(array('version_number'=>$_POST['versionNumber'], 'Id_budget'=>$_POST['idBudget'], 'Id_service'=>$_POST['idService'], 'Id_project'=>$_POST['idProject']));
 			if(isset($modelProjectService->order))
 			{
 				$criteria = new CDbCriteria();
 				$criteria->addCondition('Id_project='.$modelProjectService->Id_project);
+				$criteria->addCondition('Id_budget='.$modelProjectService->Id_budget);
+				$criteria->addCondition('version_number='.$modelProjectService->version_number);
+				
 				$criteria->addCondition('t.order > '.$modelProjectService->order);
 				$criteria->order="t.order DESC";
 				$projectService = ProjectService::model()->findAll($criteria);
@@ -1885,11 +1895,14 @@ class BudgetController extends GController
 	{
 		if(isset($_POST['idService']) && isset($_POST['idProject']))
 		{
-			$modelProjectService = ProjectService::model()->findByAttributes(array('Id_service'=>$_POST['idService'], 'Id_project'=>$_POST['idProject']));
+			$modelProjectService = ProjectService::model()->findByAttributes(array('version_number'=>$_POST['versionNumber'], 'Id_budget'=>$_POST['idBudget'], 'Id_service'=>$_POST['idService'], 'Id_project'=>$_POST['idProject']));
 			if(isset($modelProjectService->order))
 			{
 				$criteria = new CDbCriteria();
 				$criteria->addCondition('Id_project='.$modelProjectService->Id_project);
+				$criteria->addCondition('Id_budget='.$modelProjectService->Id_budget);
+				$criteria->addCondition('version_number='.$modelProjectService->version_number);
+				
 				$criteria->addCondition('t.order < '.$modelProjectService->order);
 				$criteria->order="t.order ASC";
 				$projectService = ProjectService::model()->findAll($criteria);

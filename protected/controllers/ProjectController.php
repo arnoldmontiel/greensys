@@ -72,8 +72,7 @@ class ProjectController extends GController
 	{
 		if(isset($_POST['ProjectService']['Id_project'])&&isset($_POST['ProjectService']['Id_service']))
 		{
-			$model=ProjectService::model()->findByPk(array("Id_project"=>$_POST['ProjectService']['Id_project'],'Id_service'=>$_POST['ProjectService']['Id_service']));
-				
+			$model=ProjectService::model()->findByAttributes(array("version_number"=>$_POST['ProjectService']['version_number'],"Id_budget"=>$_POST['ProjectService']['Id_budget'],"Id_project"=>$_POST['ProjectService']['Id_project'],'Id_service'=>$_POST['ProjectService']['Id_service']));
 			if(isset($_POST['ProjectService']))
 			{
 				$model->attributes=$_POST['ProjectService'];
@@ -97,10 +96,10 @@ class ProjectController extends GController
 	}
 	
 	public function actionAjaxShowUpdateModalProjectService()
-	{
-		if(isset($_POST['Id_project'])&&isset($_POST['Id_service']))
-		{
-			$model=ProjectService::model()->findByPk(array("Id_project"=>$_POST['Id_project'],'Id_service'=>$_POST['Id_service']));
+	{		
+		if(isset($_POST['version_number'])&&isset($_POST['Id_budget'])&&isset($_POST['Id_service'])&&isset($_POST['Id_project']) )
+		{			
+			$model = ProjectService::model()->findByAttributes(array('Id_budget'=>$_POST['Id_budget'],'version_number'=>$_POST['version_number'],'Id_service'=>$_POST['Id_service'],'Id_project'=>$_POST['Id_project']));
 			$field_caller ="";
 			if($_POST['field_caller'])
 				$field_caller=$_POST['field_caller'];
@@ -114,9 +113,9 @@ class ProjectController extends GController
 	
 	public function actionAjaxShowUpdateModalProjectServiceNote()
 	{
-		if(isset($_POST['Id_project'])&&isset($_POST['Id_service']))
+		if(isset($_POST['version_number'])&&isset($_POST['Id_budget'])&&isset($_POST['Id_service'])&&isset($_POST['Id_project']) )
 		{
-			$model=ProjectService::model()->findByPk(array("Id_project"=>$_POST['Id_project'],'Id_service'=>$_POST['Id_service']));
+			$model = ProjectService::model()->findByAttributes(array('Id_budget'=>$_POST['Id_budget'],'version_number'=>$_POST['version_number'],'Id_service'=>$_POST['Id_service'],'Id_project'=>$_POST['Id_project']));
 			$field_caller ="";
 			if($_POST['field_caller'])
 				$field_caller=$_POST['field_caller'];
@@ -400,9 +399,9 @@ class ProjectController extends GController
 	
 	public function actionAjaxGetLongDescription()
 	{
-		if(isset($_POST['Id_service'])&&isset($_POST['Id_project']) )
+		if(isset($_POST['version_number'])&&isset($_POST['Id_budget'])&&isset($_POST['Id_service'])&&isset($_POST['Id_project']) )
 		{
-			$model = ProjectService::model()->findByPk(array('Id_service'=>$_POST['Id_service'],'Id_project'=>$_POST['Id_project']));
+			$model = ProjectService::model()->findByAttributes(array('Id_budget'=>$_POST['Id_budget'],'version_number'=>$_POST['version_number'],'Id_service'=>$_POST['Id_service'],'Id_project'=>$_POST['Id_project']));
 			if(isset($model))
 			{
 				echo json_encode($model->attributes);
@@ -416,9 +415,9 @@ class ProjectController extends GController
 	}
 	public function actionAjaxSaveServiceLongDescription()
 	{
-		if(isset($_POST['Id_service'])&&isset($_POST['Id_project'])&&isset($_POST['long_description']) )
+		if(isset($_POST['version_number'])&&isset($_POST['Id_budget'])&&isset($_POST['Id_service'])&&isset($_POST['Id_project'])&&isset($_POST['long_description']) )
 		{
-			$model = ProjectService::model()->findByPk(array('Id_service'=>$_POST['Id_service'],'Id_project'=>$_POST['Id_project']));
+			$model = ProjectService::model()->findByAttributes(array('Id_budget'=>$_POST['Id_budget'],'version_number'=>$_POST['version_number'],'Id_service'=>$_POST['Id_service'],'Id_project'=>$_POST['Id_project']));
 			if(isset($model))
 			{
 				$model->long_description = $_POST['long_description'];
@@ -429,6 +428,8 @@ class ProjectController extends GController
 			{
 				$model = new ProjectService();
 				$model->Id_project = $_POST['Id_project'];
+				$model->Id_budget = $_POST['Id_budget'];
+				$model->version_number = $_POST['version_number'];
 				$model->Id_service = $_POST['Id_service'];
 				$model->long_description = $_POST['long_description'];
 				$model->save();

@@ -4,7 +4,7 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#project-service-form', "
 			if($(this).val()!=0)
 			{
 			$('#saveService').removeAttr('disabled');
-			jQuery.post('".Yii::app()->createUrl("project/ajaxGetLongDescription")."', {Id_project:$('#ProjectService_Id_project').val(),Id_service:$(this).val()},
+			jQuery.post('".Yii::app()->createUrl("project/ajaxGetLongDescription")."', {Id_budget:$('#ProjectService_Id_budget').val(),version_number:$('#ProjectService_version_number').val(),Id_project:$('#ProjectService_Id_project').val(),Id_service:$(this).val()},
 					function(data) {
 						if(data!=null)
 						{
@@ -23,7 +23,7 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#project-service-form', "
 		$('#saveService').click(function()
 		{
 			jQuery('#waiting').dialog('open');
-			jQuery.post('".Yii::app()->createUrl("project/ajaxSaveServiceLongDescription")."', {Id_project:$('#ProjectService_Id_project').val(),Id_service:$('#ddl_services').val(),long_description:$('#ProjectService_long_description').val()},
+			jQuery.post('".Yii::app()->createUrl("project/ajaxSaveServiceLongDescription")."', {Id_budget:$('#ProjectService_Id_budget').val(),version_number:$('#ProjectService_version_number').val(),Id_project:$('#ProjectService_Id_project').val(),Id_service:$('#ddl_services').val(),long_description:$('#ProjectService_long_description').val()},
 					function(data) {
 						if(data!=null)
 						{
@@ -49,6 +49,8 @@ Yii::app()->clientScript->registerScript(__CLASS__.'#project-service-form', "
 	
 	<?php echo $form->hiddenField($model, 'Id_project'); ?>
 	<?php echo $form->hiddenField($model, 'Id_service'); ?>
+	<?php echo $form->hiddenField($model, 'Id_budget'); ?>
+	<?php echo $form->hiddenField($model, 'version_number'); ?>
 	
 	<?php echo $form->errorSummary($model); ?>
 	<div class="row">			

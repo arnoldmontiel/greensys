@@ -15,6 +15,8 @@ $settings = new Settings();
   <?php 
 $projectService = new ProjectService();
 $projectService->Id_project = $model->Id_project;
+$projectService->Id_budget = $model->Id;
+$projectService->version_number = $model->version_number;
 	$this->widget('zii.widgets.grid.CGridView', array(
 					'id'=>'project-service-grid',
 					'dataProvider'=>$projectService->search(),
@@ -28,14 +30,14 @@ $projectService->Id_project = $model->Id_project;
 									'value'=>function($data,$index){
 										$idService = isset($data->order)?$data->order:"0";
 										return '<div class="buttonsTableOrder">
-													<button type="button" class="btn btn-primary btn-xs" onclick="downService('.$data->Id_service.','.$data->Id_project.',\'project-service-grid\')">
+													<button type="button" class="btn btn-primary btn-xs" onclick="downService('.$data->Id_budget.','.$data->version_number.','.$data->Id_service.','.$data->Id_project.',\'project-service-grid\')">
 														<i class="fa fa-angle-down fa-lg"></i></i>
-													</button><button type="button" class="btn btn-primary btn-xs noMargin" onclick="upService('.$data->Id_service.','.$data->Id_project.',\'project-service-grid\')">
+													</button><button type="button" class="btn btn-primary btn-xs noMargin" onclick="upService('.$data->Id_budget.','.$data->version_number.','.$data->Id_service.','.$data->Id_project.',\'project-service-grid\')">
 														<i class="fa fa-angle-up fa-lg"></i></i>
 													</button><br/>
-													<button type="button" class="btn btn-default btn-xs" onclick="downServiceToBottom('.$data->Id_service.','.$data->Id_project.',\'project-service-grid\')">
+													<button type="button" class="btn btn-default btn-xs" onclick="downServiceToBottom('.$data->Id_budget.','.$data->version_number.','.$data->Id_service.','.$data->Id_project.',\'project-service-grid\')">
 														<i class="fa fa-angle-double-down fa-lg"></i></i>
-													</button><button type="button" class="btn btn-default btn-xs noMargin" onclick="upServiceToAbove('.$data->Id_service.','.$data->Id_project.',\'project-service-grid\')">
+													</button><button type="button" class="btn btn-default btn-xs noMargin" onclick="upServiceToAbove('.$data->Id_budget.','.$data->version_number.','.$data->Id_service.','.$data->Id_project.',\'project-service-grid\')">
 														<i class="fa fa-angle-double-up fa-lg"></i></i></button>
 												</div>';						
 									},
@@ -56,7 +58,7 @@ $projectService->Id_project = $model->Id_project;
 							array(
 									'name'=>'Acciones',
 									'value'=>function($data){
-											return '<button type="button" class="btn btn-default btn-sm" onclick="editProjectService('.$data->Id_project.','.$data->Id_service.');" ><i class="fa fa-pencil"></i> Editar</button>';
+											return '<button type="button" class="btn btn-default btn-sm" onclick="editProjectService('.$data->Id_project.','.$data->Id_service.','.$data->Id_budget.','.$data->version_number.');" ><i class="fa fa-pencil"></i> Editar</button>';
 									},
 									'type'=>'raw',
 									'htmlOptions'=>array("style"=>"text-align:right;"),
@@ -72,6 +74,8 @@ $projectService->Id_project = $model->Id_project;
   <?php 
 $projectService = new ProjectService();
 $projectService->Id_project = $model->Id_project;
+$projectService->Id_budget = $model->Id;
+$projectService->version_number = $model->version_number;
 	$this->widget('zii.widgets.grid.CGridView', array(
 					'id'=>'project-service-note-grid',
 					'dataProvider'=>$projectService->search(),
@@ -93,7 +97,7 @@ $projectService->Id_project = $model->Id_project;
 							array(
 									'name'=>'Acciones',
 									'value'=>function($data){
-										return '<button type="button" class="btn btn-default btn-sm" onclick="editProjectServiceNote('.$data->Id_project.','.$data->Id_service.');" ><i class="fa fa-pencil"></i> Editar</button>';
+										return '<button type="button" class="btn btn-default btn-sm" onclick="editProjectServiceNote('.$data->Id_project.','.$data->Id_service.','.$data->Id_budget.','.$data->version_number.');" ><i class="fa fa-pencil"></i> Editar</button>';
 									},
 									'type'=>'raw',
 									'htmlOptions'=>array("style"=>"text-align:right;"),
