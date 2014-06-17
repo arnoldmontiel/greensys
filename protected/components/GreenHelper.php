@@ -2079,8 +2079,7 @@ class GreenHelper
 		$arrayServiceTotal = array();
 		
 		$criteria = new CDbCriteria();
-		$criteria->join = 'INNER JOIN budget b on (b.Id = t.Id_budget)
-							LEFT JOIN project_service ps ON (ps.Id_service = t.Id_service and b.Id_project = ps.Id_project)';
+		$criteria->join = 'LEFT JOIN project_service ps ON (ps.Id_service = t.Id_service and ps.Id_budget = t.Id_budget and t.version_number = ps.version_number)';
 		$criteria->addCondition('t.Id_budget = '.$idBudget);
 		$criteria->addCondition('t.version_number = '.$versionNumber);
 		$criteria->group = 't.Id_service';
@@ -2130,6 +2129,8 @@ class GreenHelper
 					$serviceNote = nl2br($budgetItemService->service->note);
 					
 					$projectServiceDB = ProjectService::model()->findByAttributes(array('Id_project'=>$budgetItemService->budget->Id_project,
+							'Id_budget'=>$budgetItemService->Id_budget,
+							'version_number'=>$budgetItemService->version_number,
 							'Id_service'=>$budgetItemService->Id_service));
 					if(isset($projectServiceDB))
 					{
