@@ -991,6 +991,13 @@ font-family: "GudeaRegular";
 
 #myModalChangeClause .from-control{width:100%; }
 
+#myModalChangeNoteVersion .modal-dialog{width:80%;}
+
+#myModalChangeNoteVersion .nicEdit-main:focus{outline:none; }
+
+#myModalChangeNoteVersion .from-control{width:100%; }
+
+
 .nicEdit-main{cursor:text;}
 
 /*------------- END CLAUSES ------------*/

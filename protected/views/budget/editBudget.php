@@ -81,6 +81,26 @@ function changePrintChk(obj, id, version)
 		return false;
 }
 
+function changePrintNoteChk(obj, id, version)
+{
+	var value = 0;
+	if($(obj).is(':checked'))
+		value = 1;
+	
+	statusStartSaving();
+	$.post("<?php echo BudgetController::createUrl('AjaxChangePrintNoteChk'); ?>",
+			{
+				id:id,
+				version:version,
+				value:value				
+			}
+		).success(
+			function(data){
+				statusSaved();
+			}).error(function(){statusSavedError();});
+		return false;
+}
+
 function changeCurrencyView(obj, id, version)
 {
 	statusStartSaving();	
@@ -127,6 +147,21 @@ function openUpdateClause(idBudget, version)
 			function(data){
 				nicEditors.findEditor( "Budget_clause_description" ).setContent( data );
 		   		$('#myModalChangeClause').modal('show');	  
+			});
+		return false;
+}
+
+function openUpdateNoteVersion(idBudget, version)
+{
+	$.post("<?php echo BudgetController::createUrl('AjaxOpenUpdateNoteVersion'); ?>",
+			{
+				idBudget:idBudget,
+				version:version
+			}
+		).success(
+			function(data){
+				nicEditors.findEditor( "Budget_note_version" ).setContent( data );
+		   		$('#myModalChangeNoteVersion').modal('show');	  
 			});
 		return false;
 }
