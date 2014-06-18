@@ -2182,6 +2182,9 @@ class GreenHelper
 							$trCount++;
 						}
 						$serviceAreas .='
+												<tr>
+													<td colspan="3">Total de &Aacute;reas: '.count($modeAreaProjects).'</td>
+												</tr>
 											</tbody>
 										</table>';
 					}
@@ -2397,9 +2400,6 @@ class GreenHelper
 								$trCount++;
 							}	
 							$budgetItemAreasApp .='
-												<tr>
-													<td colspan="3">Total zonas de '.$serviceName.': '.count($modelbudgetItemAreas).'</td>
-												</tr>
 											</tbody>
 										</table>';
 						}
