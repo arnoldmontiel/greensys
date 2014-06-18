@@ -2343,6 +2343,7 @@ class GreenHelper
 						$criteria->addCondition('Id_budget = '. $budgetItem->Id_budget);
 						$criteria->addCondition('version_number = '. $budgetItem->version_number);
 						$criteria->addCondition('Id_product = '. $budgetItem->Id_product);
+						$criteria->addCondition('hide = 0');
 						$modelbudgetItemAreas = BudgetItem::model()->findAll($criteria);
 						
 						$isFirst = true;
