@@ -1243,6 +1243,13 @@ margin-bottom:5px; }
  .tableReadOnly tbody>tr>td{vertical-align:middle;}
 
  .budgetEndUL{margin-top:10px; margin-bottom:20px;}
+
+  table.tablaAreas{margin-top:10px; margin-bottom:10px; background-color:#fbfbfb;}
+   table.tablaAreas  tbody>tr>td{padding:8px;}
+  table.tablaAreas  tbody>tr>td.thinTD{padding:2px; padding-left:20px;}
+ 
+ table.tablaAplicacion{margin-top:10px; margin-bottom:10px; border-top:3px dotted #fbfbfb;}
+ table.tablaAplicacion  tbody>tr>td.thinTD{padding:2px 8px; padding-left:20px;}
  
 /* ------ END READ ONLY ------- */
 

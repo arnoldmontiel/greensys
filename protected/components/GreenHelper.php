@@ -2166,6 +2166,32 @@ class GreenHelper
 					}
 					
 				}
+				$serviceAreas ='
+								<table width="100%" class="tablaLimpia tablaAreas" cellpadding="0" cellspacing="0">
+								<tbody>
+								<tr>
+								<td colspan="3">&raquo; &Aacute;reas presupuestadas:</td>
+								</tr>
+								<tr>
+								<td class="align-left thinTD" width="242">115 - Sala de Musica</td>
+								<td class="align-left thinTD" width="242">108 - Comedor de Diario</td>
+								<td class="align-left thinTD" width="242">200 - Lavadero</td>
+											</tr>
+								<tr>
+								<td class="align-left thinTD" width="242">345 - Cocina</td>
+								<td class="align-left thinTD" width="242">555 - Dormitorio</td>
+								<td class="align-left thinTD" width="242">102 - Playroom</td>
+											</tr>
+								<tr>
+								<td class="align-left thinTD" width="242">345 - Cocina</td>
+								<td class="align-left thinTD" width="242">100 - Living</td>
+								<td class="align-left thinTD" width="242">&nbsp;</td>
+											</tr>
+								<tr>
+								<td colspan="3">Total de &Aacute;reas: 20</td>
+								</tr>
+											</tbody>
+											</table>';
 				
 				$serviceContentHeader = '
 						<div '.$idIfGeneral.' style="page-break-after: always;">
@@ -2329,7 +2355,7 @@ class GreenHelper
 					{
 						$hasItems = true;					
 						$serviceContentBodyItem = $serviceContentBodyItem . '<tr class="'.$trClass.'">';
-						$serviceContentBodyItem = $serviceContentBodyItem . '<td class="pdfTituloProd"><div class="bold">&bull; '.$short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr>'.$tdImage.$long_description.'</td></tr></tbody></table>';
+						$serviceContentBodyItem = $serviceContentBodyItem . '<td><div class="bold pdfTituloProd">&bull; '.$short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr>'.$tdImage.$long_description.'</td></tr></tbody></table>';
 						
 						$budgetItemAreasApp = '';
 						$serviceCondition = '';
@@ -2354,15 +2380,42 @@ class GreenHelper
 							{
 								if($isFirst)
 								{
-									$budgetItemAreasApp = '&raquo; &Aacute;reas de aplicaci&oacute;n: '. round($modelbudgetItemArea->quantity,0) .' en ' .$modelAreaProj->description;
+									//$budgetItemAreasApp = '<div>&raquo; &Aacute;reas de aplicaci&oacute;n:</div> ('. round($modelbudgetItemArea->quantity,0) .') ' .$modelAreaProj->description;
+									$budgetItemAreasApp ='';
 									$isFirst = false;
 								}
 								else
-									$budgetItemAreasApp .= ', '. round($modelbudgetItemArea->quantity,0) .' en ' .$modelAreaProj->description;
+									//$budgetItemAreasApp .= '('. round($modelbudgetItemArea->quantity,0) .') ' .$modelAreaProj->description;
+									$budgetItemAreasApp ='';
 							}
 							
 						}
-						
+						$budgetItemAreasApp .='
+								<table width="100%" class="tablaLimpia tablaAplicacion" cellpadding="0" cellspacing="0">
+								<tbody>
+								<tr>
+								<td colspan="3">&raquo; &Aacute;reas de aplicaci&oacute;n:</td>
+								</tr>
+								<tr>
+								<td class="align-left thinTD" width="242">(1) 115 - Sala de Musica</td>
+								<td class="align-left thinTD" width="242">(2) 108 - Comedor de Diario</td>
+								<td class="align-left thinTD" width="242">(40) 200 - Lavadero</td>
+											</tr>
+								<tr>
+								<td class="align-left thinTD" width="242">(30) 345 - Cocina</td>
+								<td class="align-left thinTD" width="242">(25) 555 - Dormitorio</td>
+								<td class="align-left thinTD" width="242">(9) 102 - Playroom</td>
+											</tr>
+								<tr>
+								<td class="align-left thinTD" width="242">(32) 345 - Cocina</td>
+								<td class="align-left thinTD" width="242">(1) 100 - Living</td>
+								<td class="align-left thinTD" width="242">&nbsp;</td>
+											</tr>
+								<tr>
+								<td colspan="3">Total zonas de Audio: 20</td>
+								</tr>
+											</tbody>
+											</table>';
 						
 						if($budgetItem->getDiscountCurrencyConverted() > 0)
 						{
@@ -2386,8 +2439,9 @@ class GreenHelper
 								<td class="align-right" width="91">Total:</td>								
 								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor).'</td>
 								</tr>
-								<tr><td colspan="8">'.$budgetItemAreasApp.'</td></tr>
-								</tbody></table>';
+								</tbody></table>'
+								.$budgetItemAreasApp;
+							
 						}
 						else 
 						{
@@ -2400,8 +2454,8 @@ class GreenHelper
 								<td class="align-right" width="121">Precio Final:</td>								
 								<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor).'</td>
 								</tr>
-								<tr><td colspan="8">'.$budgetItemAreasApp.'</td></tr>
-								</tbody></table>';
+								</tbody></table>'
+								.$budgetItemAreasApp;
 						}
 						
 						$serviceContentBodyItem = $serviceContentBodyItem . '</td>';
