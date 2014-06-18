@@ -51,7 +51,12 @@
 								$value = '<label><input onchange="setAccessory('.$data->Id_product.', this);" type="checkbox"> Accesorio</label>';
 								if($data->product->is_accessory == 1)
 									$value = '<label><input onchange="setAccessory('.$data->Id_product.', this);" checked type="checkbox"> Accesorio</label>';
-								$value  .= '<label><input type="checkbox"> No detallar</label>';
+								
+								if($data->hide == 1)
+									$value  .= '<label><input onchange="setHideItem('.$data->Id.', this);" checked type="checkbox"> No detallar</label>';
+								else
+									$value  .= '<label><input onchange="setHideItem('.$data->Id.', this);" type="checkbox"> No detallar</label>';
+								
 								return $value;
 							},
 							'type'=>'raw',

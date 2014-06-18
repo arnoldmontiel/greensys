@@ -265,6 +265,19 @@ class BudgetController extends GController
 		}
 	}
 	
+	public function actionAjaxSetHideItem()
+	{
+		$idBudgetItem = (isset($_POST['idBudgetItem']))?$_POST['idBudgetItem']:null;
+		$value = (isset($_POST['value']))?$_POST['value']:0;
+	
+		if(isset($idBudgetItem))
+		{
+			$modelProduct = BudgetItem::model()->findByPk($idBudgetItem);
+			$modelProduct->hide = $value;
+			$modelProduct->save();
+		}
+	}	
+	
 	public function actionAjaxCreateItem()
 	{
 		if(isset($_POST['BudgetItem']))

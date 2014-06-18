@@ -19,6 +19,25 @@ function setAccessory(idProduct, obj)
 		return false;
 }
 
+function setHideItem(idBudgetItem, obj)
+{
+	var value = 0;
+	if($(obj).is(':checked'))
+		value = 1;
+	
+	statusStartSaving();
+	$.post("<?php echo BudgetController::createUrl('AjaxSetHideItem'); ?>",
+			{
+				idBudgetItem:idBudgetItem,
+				value:value				
+			}
+		).success(
+			function(data){
+				statusSaved();
+			}).error(function(){statusSavedError();});
+		return false;
+}
+
 function downloadPDF(id, version)
 {
 	var params = "&id="+id+"&version="+version;
