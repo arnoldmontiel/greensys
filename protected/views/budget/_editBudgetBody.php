@@ -56,7 +56,7 @@ $(document).ready(function() {
   	$areaDescription="";
   foreach($areaProjects as $item)	{ ?>
         <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'>
-        	<a onclick="changeTree(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>)">
+        	<a onclick="changeTree(<?php echo $item->Id_area;?>,<?php echo $item->Id;?>,<?php echo $item->hide;?>)">
         		<span id="areaProjectDescription_<?php echo $item->Id?>">
         			<?php echo ($item->description==""?$item->area->description:$item->description);?>&nbsp;(<?php echo $item->getProductQty($model->Id, $model->version_number);?>)
         		</span>        		        		
@@ -66,7 +66,7 @@ $(document).ready(function() {
         	<ul>
         		<?php foreach ($childAreaProjects as $child){?>
 		        <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'>
-		        	<a onclick="changeTree(<?php echo $child->Id_area;?>,<?php echo $child->Id;?>)">
+		        	<a onclick="changeTree(<?php echo $child->Id_area;?>,<?php echo $child->Id;?>,<?php echo $child->hide;?>)">
 		        		<span id="areaProjectDescription_<?php echo $child->Id?>">
 		        			<?php echo ($child->description==""?$child->area->description:$child->description);?>&nbsp;(<?php echo $child->getProductQty($model->Id, $model->version_number);?>)
 		        		</span>        		        		
@@ -76,7 +76,7 @@ $(document).ready(function() {
 			        	<ul>
 			        	<?php foreach ($childAreaProjects2 as $child2){?>
 					        <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'>
-					        	<a onclick="changeTree(<?php echo $child2->Id_area;?>,<?php echo $child2->Id;?>)">
+					        	<a onclick="changeTree(<?php echo $child2->Id_area;?>,<?php echo $child2->Id;?>,<?php echo $child2->hide;?>)">
 					        		<span id="areaProjectDescription_<?php echo $child2->Id?>">
 					        			<?php echo ($child2->description==""?$child2->area->description:$child2->description);?>&nbsp;(<?php echo $child2->getProductQty($model->Id, $model->version_number);?>)
 					        		</span>        		        		
@@ -87,7 +87,7 @@ $(document).ready(function() {
 						        	<ul>
 						        	<?php foreach ($childAreaProjects3 as $child3){?>
 								        <li data-jstree='{"icon":"images/areaIcon/entry.ico"}'>
-								        	<a onclick="changeTree(<?php echo $child3->Id_area;?>,<?php echo $child3->Id;?>)">
+								        	<a onclick="changeTree(<?php echo $child3->Id_area;?>,<?php echo $child3->Id;?>,<?php echo $child3->hide;?>)">
 								        		<span id="areaProjectDescription_<?php echo $child3->Id?>">
 								        			<?php echo ($child3->description==""?$child3->area->description:$child3->description);?>&nbsp;(<?php echo $child3->getProductQty($model->Id, $model->version_number);?>)
 								        		</span>        		        		
@@ -142,7 +142,9 @@ $(document).ready(function() {
      <li class="buttonsAreaPresu">
      <button  id="addProduct" <?php echo ($idArea==0)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
      </li>
-     <li class="ocultarDetalleArea"><label><input type="checkbox"> Ocultar &aacute;rea en aplicaci&oacute;n de productos</label></li>
+
+     <li class="ocultarDetalleArea"><label><input id="chk-hide-area" <?php echo ($idArea==0)?'disabled="disabled"':'';?> onclick="hideArea(<?php echo $model->Id .', '. $model->version_number;?>, this);" type="checkbox"> Ocultar &aacute;rea en aplicaci&oacute;n de productos</label></li>
+     
      <li class="pull-right">
      <button class="toggle-menu menu-right btn btn-primary btnArea jPushMenuBtn menu-active" id="toggleArea"><i class="fa fa-cutlery"></i> Menu &Aacute;reas </button>
           <div class="btn-group btnAlternateView">

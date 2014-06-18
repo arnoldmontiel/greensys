@@ -144,8 +144,14 @@ function changeTab(idArea,idAreaProject)
 
 	$.fn.yiiGridView.update('budget-item-grid_' + idAreaProject + '_' + idArea);
 }
-function changeTree(idArea,idAreaProject)
-{
+function changeTree(idArea,idAreaProject, hideArea)
+{	
+	if(hideArea==0)
+		$('#chk-hide-area').attr('checked',false);
+	else
+		$('#chk-hide-area').attr('checked',true);				
+	
+	
 	if(idArea != 0 &&idAreaProject!=0)
 	{
 		$.fn.yiiGridView.update('budget-item-grid_' + idAreaProject + '_' + idArea);
@@ -157,6 +163,24 @@ function changeTree(idArea,idAreaProject)
 		$('#idTabAreaProject').val(idAreaProject);
 		$('.tituloAreaPresu').html($('#areaProjectDescription_'+idAreaProject).html());
 		$('#addProduct').removeAttr("disabled");
+
+		$('#chk-hide-area').attr("disabled","disabled");
+		
+		$.post(
+	 			'<?php echo BudgetController::createUrl('budget/AjaxGetHideAreaChk')?>',
+	 			 {
+	 				idAreaProject: idAreaProject
+	 			 },'json').success(
+	 				function(data) 
+	 				{ 
+	 					if(data==0)
+	 						$('#chk-hide-area').attr('checked',false);
+	 					else
+	 						$('#chk-hide-area').attr('checked',true);
+
+	 					$('#chk-hide-area').removeAttr("disabled");						 		
+	 				}
+	 			).error(function(){});		
 	}
 	else
 	{
@@ -167,8 +191,11 @@ function changeTree(idArea,idAreaProject)
 		$('#idTabAreaProject').val(idAreaProject);
 		$('.tituloAreaPresu').html("");
 		$('#addProduct').attr("disabled","disabled");
-		
+		$('#chk-hide-area').attr("disabled","disabled");
 	}
+
+	
+	
 }
 
 function addQty(idProduct,object)
@@ -243,6 +270,26 @@ function addProduct(id,version)
 	$('#myModalAddProduct').modal('show');
 	
 	return false;
+}
+
+function hideArea(idBudget, version, obj)
+{
+	var value = 0;
+	if($(obj).is(':checked'))
+		value = 1;
+	statusStartSaving();
+	$.post("<?php echo BudgetController::createUrl('AjaxHideArea'); ?>",
+			{
+				idBudget:idBudget,
+				version:version,
+				idAreaProject: $('#idTabAreaProject').val(),
+				value:value				
+			}
+		).success(
+			function(data){
+				statusSaved();
+			}).error(function(){statusSavedError();});
+		return false;
 }
 
 function editBudget(id,version)

@@ -46,7 +46,7 @@ $('#saveAreaProject').click(function()
 							{	
 								$("#"+$("#field_caller").val()).html(data.description);
 								$("#titleAreaProject").html(data.description);
-								$('#modalPlaceHolder').modal('hide');					
+								$('#modalPlaceHolder').modal('hide');
 							}	
 					},'json'
 				);
