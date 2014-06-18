@@ -143,7 +143,7 @@ $(document).ready(function() {
      <button  id="addProduct" <?php echo ($idArea==0)?'disabled="disabled"':'';?> onclick="addProduct(<?php echo $model->Id .', '. $model->version_number;?>);" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalAgregarProductos"><i class="fa fa-plus"></i> Agregar Productos</button>
      </li>
 
-     <li class="ocultarDetalleArea"><label><input id="chk-hide-area" <?php echo ($idArea==0)?'disabled="disabled"':'';?> onclick="hideArea(<?php echo $model->Id .', '. $model->version_number;?>, this);" type="checkbox"> Ocultar &aacute;rea en aplicaci&oacute;n de productos</label></li>
+     <li class="ocultarDetalleArea"><label><input id="chk-hide-area" <?php echo ($idArea==0)?'disabled="disabled"':'';?> onclick="hideArea(<?php echo $model->Id .', '. $model->version_number;?>, this);" type="checkbox"> Ocultar &aacute;rea en Areas presupuestadas</label></li>
      
      <li class="pull-right">
      <button class="toggle-menu menu-right btn btn-primary btnArea jPushMenuBtn menu-active" id="toggleArea"><i class="fa fa-cutlery"></i> Menu &Aacute;reas </button>
