@@ -8,6 +8,7 @@ $settings = new Settings();
         <li class="active"><a id="tabServices" href="#tabDescripciones" data-toggle="tab">Descripciones Servicios</a></li>
         <li><a id="tabServicesNote" href="#tabNotas" data-toggle="tab">Notas Servicios</a></li>
         <li><a id="tabServicesCondiciones" href="#tabCondiciones" data-toggle="tab">Condiciones de Contrataci&oacute;n</a></li>
+        <li><a id="tabNoteVersions" href="#tabVersionNote" data-toggle="tab">Nota de Versi&oacute;n</a></li>
         </ul>
         <div class="tab-content">
 <div class="tab-pane active" id="tabDescripciones">
@@ -133,6 +134,30 @@ $projectService->version_number = $model->version_number;
 
 </div> 
     <!-- /.tab3 -->
+<div class="tab-pane" id="tabVersionNote">
+<table class="table table-bordered tablaIndividual">
+
+<tbody>
+<tr>
+<td><?php echo CHtml::activeCheckBox($model, 'print_note_version', array('onchange'=>'changePrintNoteChk(this,'.$model->Id.', '.$model->version_number.');'));?> Imprimir en Presupuesto</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td width="85%">
+<div id="budget-note-version" class="budgetClausulas clauseScroll">
+<?php echo $model->note_version; ?>
+</div></td>
+<td valign="top" class="align-right">
+<div class="buttonsPresuClause">
+	<button onclick="openUpdateNoteVersion(<?php echo $model->Id;?>, <?php echo $model->version_number;?>);" class="btn btn-default btn-sm" data-toggle="modal" ><i class="fa fa-pencil"></i> Editar</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+
+</div> 
+    <!-- /.tab4 -->
 </div>
     <!-- /.tab-content -->
       </div>
@@ -143,6 +168,13 @@ $projectService->version_number = $model->version_number;
   <div id="myModalChangeClause" class="modal fade in" aria-hidden="false">
   <?php
     echo $this->renderPartial('_modalUpdateClause',array(
+						'model'=>$model,));
+	?>
+
+</div>
+<div id="myModalChangeNoteVersion" class="modal fade in" aria-hidden="false">
+  <?php
+    echo $this->renderPartial('_modalUpdateNoteVersion',array(
 						'model'=>$model,));
 	?>
 

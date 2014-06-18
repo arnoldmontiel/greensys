@@ -317,6 +317,21 @@ class BudgetController extends GController
 		}
 	}
 	
+	public function actionAjaxOpenUpdateNoteVersion()
+	{
+		$id = (isset($_POST['idBudget']))?$_POST['idBudget']:null;
+		$version = (isset($_POST['version']))?$_POST['version']:null;
+	
+		if(isset($id) && isset($version))
+		{
+			$model = Budget::model()->findByPk(array('Id'=>$id, 'version_number'=>$version));
+			if(isset($model))
+			{
+				echo $model->note_version;
+			}
+		}
+	}
+	
 	public function actionAjaxHideArea()
 	{
 		$id = (isset($_POST['idBudget']))?$_POST['idBudget']:null;
@@ -360,6 +375,23 @@ class BudgetController extends GController
 			if(isset($model))
 			{
 				$model->clause_description = $description;
+				$model->save();
+			}
+		}
+	}
+	
+	public function actionAjaxUpdateNoteVersion()
+	{
+		$id = (isset($_POST['id']))?$_POST['id']:null;
+		$version = (isset($_POST['version']))?$_POST['version']:null;
+		$description = (isset($_POST['description']))?$_POST['description']:'';
+	
+		if(isset($id) && isset($version))
+		{
+			$model = Budget::model()->findByPk(array('Id'=>$id, 'version_number'=>$version));
+			if(isset($model))
+			{
+				$model->note_version = $description;
 				$model->save();
 			}
 		}
@@ -933,6 +965,24 @@ class BudgetController extends GController
 			if(isset($model))
 			{
 				$model->print_clause = $value;
+				$model->save();
+			}
+		}
+	
+	}
+	
+	public function actionAjaxChangePrintNoteChk()
+	{
+		$id = isset($_POST['id'])?$_POST['id']:null;
+		$version = isset($_POST['version'])?$_POST['version']:null;
+		$value = isset($_POST['value'])?$_POST['value']:0;
+	
+		if(isset($id) && isset($version))
+		{
+			$model = Budget::model()->findByPk(array('Id'=>$id, 'version_number'=>$version));
+			if(isset($model))
+			{
+				$model->print_note_version = $value;
 				$model->save();
 			}
 		}
