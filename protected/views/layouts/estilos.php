@@ -1254,13 +1254,13 @@ margin-bottom:5px; }
 
  .budgetEndUL{margin-top:10px; margin-bottom:20px;}
 
-  table.tablaAreas{margin-top:10px; margin-bottom:10px; background-color:#ccc;}
+  table.tablaAreas{margin-top:10px; margin-bottom:10px; background-color:#f5f5f5;}
    table.tablaAreas td{padding:8px; }
   table.tablaAreas td.thinTD{padding:2px; padding-left:20px;}
    table.tablaAreas td.tituloTablaAreas{padding-top:15px; padding-bottom:10px;}
    table.tablaAreas td.totalTablaAreas{padding-top:20px; padding-bottom:15px;}
  
- table.tablaAplicacion{margin-top:10px; margin-bottom:10px; background-color:#ccc;}
+ table.tablaAplicacion{margin-top:10px; margin-bottom:10px; background-color:#f5f5f5;}
  table.tablaAplicacion  td.tituloTablaAplicacion{background-color:transparent;}
  table.tablaAplicacion  td.thinTD{padding:2px 8px; padding-left:20px;background-color:transparent;}
  table.tablaAplicacion  td.lastTD{padding:0px;background-color:transparent;}
