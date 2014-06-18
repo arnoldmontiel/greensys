@@ -2270,7 +2270,7 @@ class GreenHelper
 					{
 						$hasItems = true;					
 						$serviceContentBodyItem = $serviceContentBodyItem . '<tr class="'.$trClass.'">';
-						$serviceContentBodyItem = $serviceContentBodyItem . '<td><div class="bold pdfTituloProd">&bull; '.$short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td colspan="2" class="prodModel">'.$budgetItem->product->model.'</td></tr><tr>'.$tdImage.$long_description.'</td>'.$tdImage.$long_description.'</td></tr></tbody></table>';
+						$serviceContentBodyItem = $serviceContentBodyItem . '<td><div class="bold pdfTituloProd">&bull; '.$short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td colspan="2" class="prodModel">'.$budgetItem->product->model.'</td></tr><tr>'.$tdImage.$long_description.'</td></tr></tbody></table>';
 						
 						$budgetItemAreasApp = '';
 						$serviceCondition = '';
@@ -2319,9 +2319,7 @@ class GreenHelper
 								$trCount++;
 							}	
 							$budgetItemAreasApp .='
-										<tr>
-											<td colspan="3" class="totalTablaAplicacion">&nbsp;</td>
-										</tr>
+									<tr><td colspan="3" class="lastTD"> &nbsp;</td></tr>
 											</tbody>
 										</table>';
 						}
