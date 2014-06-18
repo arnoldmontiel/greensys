@@ -2182,9 +2182,6 @@ class GreenHelper
 							$trCount++;
 						}
 						$serviceAreas .='
-												<tr>
-													<td colspan="3">Total de &Aacute;reas: '.count($modeAreaProjects).'</td>
-												</tr>
 											</tbody>
 										</table>';
 					}
