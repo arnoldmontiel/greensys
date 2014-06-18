@@ -1238,6 +1238,8 @@ margin-bottom:5px; }
  .tableReadOnly tr.pdfProdSMALL img.imgTD{width:100px;}
  tr.pdfProdSMALL td.pdfTituloProd{font-size:13px;}
  
+ .prodModel{padding-left:11px;}
+ 
  /*solo para que se vea bien la read only online*/
  .tableReadOnly .tablaLimpia td.descContainer{width:20% !important;}
  .tableReadOnly tbody>tr>td{vertical-align:middle;}
@@ -1250,6 +1252,7 @@ margin-bottom:5px; }
  
  table.tablaAplicacion{margin-top:10px; margin-bottom:10px; border-top:3px dotted #fbfbfb;}
  table.tablaAplicacion  tbody>tr>td.thinTD{padding:2px 8px; padding-left:20px;}
+ 
  
 /* ------ END READ ONLY ------- */
 
