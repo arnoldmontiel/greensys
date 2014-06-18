@@ -358,6 +358,10 @@ class ProjectController extends GController
 			else 		
 				$projectArea->attributes = array('Id_area'=>$_POST['Id_area'],'Id_project'=>$_POST['Id_project']);
 			
+			$modelArea = Area::model()->findByPk($_POST['Id_area']);
+			if(isset($modelArea))
+				$projectArea->description = $modelArea->description;
+			
 			$projectArea->save();
 		}
 	}
