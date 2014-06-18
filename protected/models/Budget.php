@@ -29,6 +29,8 @@
  * @property string $last_name_commission
  * @property string $clause_description
  * @property integer $print_clause
+ * @property string $note_version
+ * @property integer $print_note_version
  * 
  * The followings are the available model relations:
  * @property CurrencyConversor $currencyConversor
@@ -148,13 +150,13 @@ class Budget extends ModelAudit
 		// will receive user inputs.
 		return array(
 			array('Id, Id_project, Id_budget_state, version_number, Id_currency, Id_currency_view', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
-			array('Id_project, Id_budget_state, version_number, Id_currency, Id_currency_view, Id_currency_conversor, Id_currency_from_currency_conversor, Id_currency_to_currency_conversor,percent_commission, print_clause', 'numerical', 'integerOnly'=>true),
+			array('Id_project, Id_budget_state, version_number, Id_currency, Id_currency_view, Id_currency_conversor, Id_currency_from_currency_conversor, Id_currency_to_currency_conversor,percent_commission, print_clause, print_note_version', 'numerical', 'integerOnly'=>true),
 			array('percent_discount', 'length', 'max'=>10),
-			array('date_creation, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, date_close, date_cancelled, date_approved,percent_commission,name_commission,last_name_commission, clause_description, percent_profitability', 'safe'),
+			array('date_creation, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, date_close, date_cancelled, date_approved,percent_commission,name_commission,last_name_commission, clause_description, percent_profitability, note_version', 'safe'),
 			array('description, note,name_commission,last_name_commission', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, Id_project, percent_discount, date_creation, Id_budget_state, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, version_number, totPrice, note, project_description, date_close, date_cancelled, date_approved, Id_currency, Id_currency_view, Id_currency_conversor, Id_currency_from_currency_conversor, Id_currency_to_currency_conversor,percent_commission,name_commission,last_name_commission, clause_description, print_clause', 'safe', 'on'=>'search'),
+			array('Id, Id_project, percent_discount, date_creation, Id_budget_state, date_inicialization, date_finalization, date_estimated_inicialization, date_estimated_finalization, version_number, totPrice, note, project_description, date_close, date_cancelled, date_approved, Id_currency, Id_currency_view, Id_currency_conversor, Id_currency_from_currency_conversor, Id_currency_to_currency_conversor,percent_commission,name_commission,last_name_commission, clause_description, print_clause, note_version, print_note_version', 'safe', 'on'=>'search'),
 		);
 	}
 
