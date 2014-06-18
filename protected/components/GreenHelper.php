@@ -2347,7 +2347,6 @@ class GreenHelper
 						}
 											
 					}
-					
 					$short_description = $budgetItem->product->description_customer!=""?$budgetItem->product->description_customer:$budgetItem->product->short_description;
 					$long_description = nl2br($budgetItem->product->description_supplier!=""?$budgetItem->product->description_supplier:$budgetItem->product->long_description);
 										
@@ -2355,7 +2354,7 @@ class GreenHelper
 					{
 						$hasItems = true;					
 						$serviceContentBodyItem = $serviceContentBodyItem . '<tr class="'.$trClass.'">';
-						$serviceContentBodyItem = $serviceContentBodyItem . '<td><div class="bold pdfTituloProd">&bull; '.$short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr>'.$tdImage.$long_description.'</td></tr></tbody></table>';
+						$serviceContentBodyItem = $serviceContentBodyItem . '<td><div class="bold pdfTituloProd">&bull; '.$short_description.'</div><div class="prodModel">'.$budgetItem->product->model.'</div><table width="100%" class="tablaLimpia"><tbody><tr>'.$tdImage.$long_description.'</td></tr></tbody></table>';
 						
 						$budgetItemAreasApp = '';
 						$serviceCondition = '';
@@ -2467,7 +2466,7 @@ class GreenHelper
 						$hasAccessory = true;
 						
 						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<tr class="'.$trClass.'">';
-						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<td class="pdfTituloProd"><div class="bold">&bull; '.$short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr>'.$tdImage.$long_description.'</td></tr></tbody></table>';
+						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<td><div class="bold pdfTituloProd">&bull; '.$short_description.'</div><div class="prodModel">'.$budgetItem->product->model.'</div><table width="100%" class="tablaLimpia"><tbody><tr>'.$tdImage.$long_description.'</td></tr></tbody></table>';
 							
 							
 						if($budgetItem->getDiscountCurrencyConverted() > 0)
