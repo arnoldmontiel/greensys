@@ -2246,15 +2246,15 @@ class GreenHelper
 							
 							switch ($budgetItem->product->relevance_level) {
 								case 0:
-									$tdImage = '<td width="230" class="descContainer tdSizeSmall" align="center"><img class="imgTD" width="100" src="'.$imagePath.'"></td><td width="610">';
+									$tdImage = '<td width="230" class="descContainer tdSizeSmall" align="center"><img class="imgTD" width="100" src="'.$imagePath.'"></td><td width="500">';
 									$trClass = "pdfProdSMALL";
 									break;
 								case 1:
-									$tdImage = '<td width="230" class="descContainer tdSizeMedium" align="center"><img class="imgTD" width="150" src="'.$imagePath.'"></td><td width="550">';
+									$tdImage = '<td width="230" class="descContainer tdSizeMedium" align="center"><img class="imgTD" width="150" src="'.$imagePath.'"></td><td width="500">';
 									$trClass = "pdfProdMEDIUM";
 									break;
 								case 2:
-									$tdImage = '<td width="230" class="descContainer tdSizeBig" align="center"><img class="imgTD" width="250" src="'.$imagePath.'"></td><td width="500">';
+									$tdImage = '<td width="230" class="descContainer tdSizeBig" align="center"><img class="imgTD" width="230" src="'.$imagePath.'"></td><td width="500">';
 									$trClass = "pdfProdBIG";
 									break;
 							}
@@ -2270,7 +2270,7 @@ class GreenHelper
 					{
 						$hasItems = true;					
 						$serviceContentBodyItem = $serviceContentBodyItem . '<tr class="'.$trClass.'">';
-						$serviceContentBodyItem = $serviceContentBodyItem . '<td><div class="bold pdfTituloProd">&bull; '.$short_description.'</div><div class="prodModel">'.$budgetItem->product->model.'</div><table width="100%" class="tablaLimpia"><tbody><tr>'.$tdImage.$long_description.'</td></tr></tbody></table>';
+						$serviceContentBodyItem = $serviceContentBodyItem . '<td><div class="bold pdfTituloProd">&bull; '.$short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td colspan="2" class="prodModel">'.$budgetItem->product->model.'</td></tr><tr>'.$tdImage.$long_description.'</td>'.$tdImage.$long_description.'</td></tr></tbody></table>';
 						
 						$budgetItemAreasApp = '';
 						$serviceCondition = '';
@@ -2290,11 +2290,10 @@ class GreenHelper
 						if(count($modelbudgetItemAreas) > 0)
 						{
 							$budgetItemAreasApp ='
-									<div class="divTablaAplicacion">
 								<table width="100%" class="tablaLimpia tablaAplicacion" cellpadding="0" cellspacing="0">
 									<tbody>
 										<tr>
-											<td colspan="3">&raquo; &Aacute;reas de aplicaci&oacute;n:</td>
+											<td colspan="3" class="tituloTablaAplicacion">&raquo; &Aacute;reas de aplicaci&oacute;n:</td>
 										</tr>';
 							$trQty = ceil(count($modelbudgetItemAreas)/3);
 							$trCount = 0;
@@ -2320,8 +2319,11 @@ class GreenHelper
 								$trCount++;
 							}	
 							$budgetItemAreasApp .='
+										<tr>
+											<td colspan="3" class="totalTablaAplicacion">&nbsp;</td>
+										</tr>
 											</tbody>
-										</table></div>';
+										</table>';
 						}
 						
 						
@@ -2375,7 +2377,7 @@ class GreenHelper
 						$hasAccessory = true;
 						
 						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<tr class="'.$trClass.'">';
-						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<td><div class="bold pdfTituloProd">&bull; '.$short_description.'</div><div class="prodModel">'.$budgetItem->product->model.'</div><table width="100%" class="tablaLimpia"><tbody><tr>'.$tdImage.$long_description.'</td></tr></tbody></table>';
+						$serviceContentBodyAccessory = $serviceContentBodyAccessory . '<td><div class="bold pdfTituloProd">&bull; '.$short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr><td colspan="2" class="prodModel">'.$budgetItem->product->model.'</td></tr><tr>'.$tdImage.$long_description.'</td></tr></tbody></table>';
 							
 							
 						if($budgetItem->getDiscountCurrencyConverted() > 0)

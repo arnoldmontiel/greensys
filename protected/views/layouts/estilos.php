@@ -1237,7 +1237,7 @@ margin-bottom:5px; }
 .redDiscount{color:red;}
 
 /* 3 tamanos de producto */
- .tableReadOnly tr.pdfProdBIG .tablaLimpia td img.imgTD{width:250px !important;}
+ .tableReadOnly tr.pdfProdBIG .tablaLimpia td img.imgTD{width:230px !important;}
  tr.pdfProdBIG td.pdfTituloProd{font-size:16px; font-size:13px;}
 
  .tableReadOnly tr.pdfProdMEDIUM img.imgTD{width:150px;}
@@ -1246,7 +1246,7 @@ margin-bottom:5px; }
  .tableReadOnly tr.pdfProdSMALL img.imgTD{width:100px;}
  tr.pdfProdSMALL td.pdfTituloProd{font-size:13px;}
  
- div.prodModel{margin-left:20px;}
+ .prodModel{padding-left:20px !important; }
  
  /*solo para que se vea bien la read only online*/
  .tableReadOnly .tablaLimpia td.descContainer{width:20% !important;}
@@ -1260,9 +1260,9 @@ margin-bottom:5px; }
    table.tablaAreas td.tituloTablaAreas{padding-top:15px; padding-bottom:10px;}
    table.tablaAreas td.totalTablaAreas{padding-top:20px; padding-bottom:15px;}
  
- table.tablaAplicacion{margin-top:10px; margin-bottom:10px;}
+ table.tablaAplicacion{margin-top:10px; margin-bottom:10px;border:1px dotted #eee;}
  table.tablaAplicacion  td.thinTD{padding:2px 8px; padding-left:20px;}
- div.divTablaAplicacion{ border:1px dotted #bbb;padding-bottom:20px;}
+ table.tablaAplicacion  td.totalTablaAplicacion{font-size:0px;}
  
 /* ------ END READ ONLY ------- */
 
