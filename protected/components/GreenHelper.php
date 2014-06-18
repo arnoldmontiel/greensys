@@ -2423,6 +2423,11 @@ class GreenHelper
 				}
 				$totalItemPrice = $modelBudget->getTotalPriceByService($budgetItemService->Id_service);
 				$totalAccessoryPrice = $modelBudget->getTotalPriceAccessoryByService($budgetItemService->Id_service);
+				
+				
+				$serviceContentBodyItem = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $serviceContentBodyItem);
+				$serviceContentBodyItem = preg_replace("/(<[^>]+) style='.*?'/i", "$1", $serviceContentBodyItem);
+				
 				$serviceContentBodyItem = $serviceContentBodyItem . '</tbody></table>
 											<table class="table tableReadOnly tablaDatos">
 												<tbody>										
@@ -2764,7 +2769,7 @@ class GreenHelper
 
 	$notaDeCaratula = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $notaDeCaratula);
 	$notaDeCaratula = preg_replace("/(<[^>]+) style='.*?'/i", "$1", $notaDeCaratula);
-	$notaDeCaratula	 ='<div  style="page-break-after: always;">'.$notaDeCaratula.'</div>';
+	$notaDeCaratula	 ='<div  style="page-break-after: always;">'.$notaDeCaratula.'</div>';	
 	
 		if($modelBudget->print_note_version == 1)
 			$result = $caratula.$notaDeCaratula.$content.$resumen;
