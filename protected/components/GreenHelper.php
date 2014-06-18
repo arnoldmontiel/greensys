@@ -2171,7 +2171,7 @@ class GreenHelper
 						<div '.$idIfGeneral.' style="page-break-after: always;">
 									<div class="budgetTitle">'.$serviceName.'</div>
 									<div class="budgetDesc">'.$serviceDesc.' </div>
-									<div>'.$serviceAreas.'.</div>
+									<div>'.$serviceAreas.'</div>
 									<div class="budgetNota">'.$serviceNote.' </div>';
 				
 		
@@ -2386,7 +2386,7 @@ class GreenHelper
 								<td class="align-right" width="91">Total:</td>								
 								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor).'</td>
 								</tr>
-								<tr><td colspan="8">'.$budgetItemAreasApp.'.</td></tr>
+								<tr><td colspan="8">'.$budgetItemAreasApp.'</td></tr>
 								</tbody></table>';
 						}
 						else 
@@ -2400,7 +2400,7 @@ class GreenHelper
 								<td class="align-right" width="121">Precio Final:</td>								
 								<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor).'</td>
 								</tr>
-								<tr><td colspan="8">'.$budgetItemAreasApp.'.</td></tr>
+								<tr><td colspan="8">'.$budgetItemAreasApp.'</td></tr>
 								</tbody></table>';
 						}
 						
