@@ -2151,48 +2151,45 @@ class GreenHelper
 											and Id_service = '.$budgetItemService->Id_service.')');
 						
 					$modeAreaProjects = AreaProject::model()->findAll($criteria);
-					$isFirst = true;
-					foreach($modeAreaProjects as $projectArea)
+					
+					if(count($modeAreaProjects) > 0)
 					{
-						if(isset($projectArea->description))
+						$serviceAreas ='
+										<table width="100%" class="tablaLimpia tablaAreas" cellpadding="0" cellspacing="0">
+											<tbody>
+												<tr>
+													<td colspan="3">&raquo; &Aacute;reas presupuestadas:</td>
+												</tr>';
+						
+						$trQty = ceil(count($modeAreaProjects)/3);
+						$trCount = 0;
+						$indexAreas = 0;
+						while($trCount < $trQty)
 						{
-							if($isFirst){
-								$serviceAreas = '&raquo; &Aacute;reas presupuestadas: '.$projectArea->description;
-								$isFirst = false;
+							$serviceAreas .= '<tr>';
+							$row = 0;
+							while($row < 3)
+							{
+								if(isset($modeAreaProjects[$indexAreas]->description))
+									$serviceAreas .= '<td class="align-left thinTD" width="242">'.$modeAreaProjects[$indexAreas]->description.'</td>';
+								else
+									$serviceAreas .= '<td class="align-left thinTD" width="242">&nbsp;</td>';
+								
+								$indexAreas++;
+								$row++;
 							}
-							else 
-								$serviceAreas .= ', '.$projectArea->description;
+							$serviceAreas .= '</tr>';
+							$trCount++;
 						}
+						$serviceAreas .='
+												<tr>
+													<td colspan="3">Total de &Aacute;reas: '.count($modeAreaProjects).'</td>
+												</tr>
+											</tbody>
+										</table>';
 					}
 					
-				}
-				$serviceAreas ='
-								<table width="100%" class="tablaLimpia tablaAreas" cellpadding="0" cellspacing="0">
-								<tbody>
-								<tr>
-								<td colspan="3">&raquo; &Aacute;reas presupuestadas:</td>
-								</tr>
-								<tr>
-								<td class="align-left thinTD" width="242">115 - Sala de Musica</td>
-								<td class="align-left thinTD" width="242">108 - Comedor de Diario</td>
-								<td class="align-left thinTD" width="242">200 - Lavadero</td>
-											</tr>
-								<tr>
-								<td class="align-left thinTD" width="242">345 - Cocina</td>
-								<td class="align-left thinTD" width="242">555 - Dormitorio</td>
-								<td class="align-left thinTD" width="242">102 - Playroom</td>
-											</tr>
-								<tr>
-								<td class="align-left thinTD" width="242">345 - Cocina</td>
-								<td class="align-left thinTD" width="242">100 - Living</td>
-								<td class="align-left thinTD" width="242">&nbsp;</td>
-											</tr>
-								<tr>
-								<td colspan="3">Total de &Aacute;reas: 20</td>
-								</tr>
-											</tbody>
-											</table>';
-				
+				}			
 				$serviceContentHeader = '
 						<div '.$idIfGeneral.' style="page-break-after: always;">
 									<div class="budgetTitle">'.$serviceName.'</div>
@@ -2370,51 +2367,46 @@ class GreenHelper
 						$criteria->addCondition('Id_product = '. $budgetItem->Id_product);
 						$criteria->addCondition('hide = 0');
 						$modelbudgetItemAreas = BudgetItem::model()->findAll($criteria);
-						
-						$isFirst = true;
-						foreach($modelbudgetItemAreas as $modelbudgetItemArea)
+	
+						if(count($modelbudgetItemAreas) > 0)
 						{
-							$modelAreaProj = AreaProject::model()->findByAttributes(array('Id'=>$modelbudgetItemArea->Id_area_project));
-							if(isset($modelAreaProj) && isset($modelAreaProj->description))
-							{
-								if($isFirst)
-								{
-									//$budgetItemAreasApp = '<div>&raquo; &Aacute;reas de aplicaci&oacute;n:</div> ('. round($modelbudgetItemArea->quantity,0) .') ' .$modelAreaProj->description;
-									$budgetItemAreasApp ='';
-									$isFirst = false;
-								}
-								else
-									//$budgetItemAreasApp .= '('. round($modelbudgetItemArea->quantity,0) .') ' .$modelAreaProj->description;
-									$budgetItemAreasApp ='';
-							}
-							
-						}
-						$budgetItemAreasApp .='
+							$budgetItemAreasApp ='
 								<table width="100%" class="tablaLimpia tablaAplicacion" cellpadding="0" cellspacing="0">
-								<tbody>
-								<tr>
-								<td colspan="3">&raquo; &Aacute;reas de aplicaci&oacute;n:</td>
-								</tr>
-								<tr>
-								<td class="align-left thinTD" width="242">(1) 115 - Sala de Musica</td>
-								<td class="align-left thinTD" width="242">(2) 108 - Comedor de Diario</td>
-								<td class="align-left thinTD" width="242">(40) 200 - Lavadero</td>
-											</tr>
-								<tr>
-								<td class="align-left thinTD" width="242">(30) 345 - Cocina</td>
-								<td class="align-left thinTD" width="242">(25) 555 - Dormitorio</td>
-								<td class="align-left thinTD" width="242">(9) 102 - Playroom</td>
-											</tr>
-								<tr>
-								<td class="align-left thinTD" width="242">(32) 345 - Cocina</td>
-								<td class="align-left thinTD" width="242">(1) 100 - Living</td>
-								<td class="align-left thinTD" width="242">&nbsp;</td>
-											</tr>
-								<tr>
-								<td colspan="3">Total zonas de Audio: 20</td>
-								</tr>
+									<tbody>
+										<tr>
+											<td colspan="3">&raquo; &Aacute;reas de aplicaci&oacute;n:</td>
+										</tr>';
+							$trQty = ceil(count($modelbudgetItemAreas)/3);
+							$trCount = 0;
+							$indexAreas = 0;
+							while($trCount < $trQty)
+							{
+								$budgetItemAreasApp .= '<tr>';
+								$row = 0;
+								while($row < 3)
+								{
+									if(isset($modelbudgetItemAreas[$indexAreas]) && isset($modelbudgetItemAreas[$indexAreas]->quantity))
+									{
+										$modelAreaProj = AreaProject::model()->findByAttributes(array('Id'=>$modelbudgetItemAreas[$indexAreas]->Id_area_project));
+										$budgetItemAreasApp .= '<td class="align-left thinTD" width="242">('. round($modelbudgetItemAreas[$indexAreas]->quantity,0) .') '.$modelAreaProj->description.'</td>';
+									}
+									else
+										$budgetItemAreasApp .= '<td class="align-left thinTD" width="242">&nbsp;</td>';
+							
+									$indexAreas++;
+									$row++;
+								}
+								$budgetItemAreasApp .= '</tr>';
+								$trCount++;
+							}	
+							$budgetItemAreasApp .='
+												<tr>
+													<td colspan="3">Total zonas de '.$serviceName.': '.count($modelbudgetItemAreas).'</td>
+												</tr>
 											</tbody>
-											</table>';
+										</table>';
+						}
+						
 						
 						if($budgetItem->getDiscountCurrencyConverted() > 0)
 						{
