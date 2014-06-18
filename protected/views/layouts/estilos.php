@@ -1129,7 +1129,7 @@ div.superBudgetTabla .tablaDatos td{}
  .nicEdit-main span{padding-left:10px !important; padding-top:10px !important;}
  
 .nicEdit-main .budgetSubtitle{ font-size: 16px !important;font-weight:normal; letter-spacing:1px; 
-padding:5px; background-color:#eee; text-transform:uppercase;
+padding:5px; background-color:#ddd; text-transform:uppercase;
 font-family:'GudeaRegular'; text-align:left;
 padding-bottom: 5px;
 margin-top:20px; margin-bottom:5px;}
@@ -1155,7 +1155,7 @@ div.budgetClausulas ol{text-indent:15px;}
 div.budgetClausulas p, div.budgetClausulas  span{ padding-left:10px !important; line-height:16px !important;}
 
 div.budgetClausulas div.budgetSubtitle,  div.budgetSubtitle{  font-size: 16px !important; font-weight:normal; letter-spacing:1px; 
-padding:5px; background-color:#eee; text-transform:uppercase;
+padding:5px; background-color:#ddd; text-transform:uppercase;
 font-family:'GudeaRegular'; text-align:left;
 padding-bottom: 5px;
 margin:0px;
@@ -1254,13 +1254,13 @@ margin-bottom:5px; }
 
  .budgetEndUL{margin-top:10px; margin-bottom:20px;}
 
-  table.tablaAreas{margin-top:10px; margin-bottom:10px; background-color:#f5f5f5;}
+  table.tablaAreas{margin-top:10px; margin-bottom:10px; background-color:#eee;}
    table.tablaAreas td{padding:8px; }
   table.tablaAreas td.thinTD{padding:2px; padding-left:20px;}
    table.tablaAreas td.tituloTablaAreas{padding-top:15px; padding-bottom:10px;}
    table.tablaAreas td.totalTablaAreas{padding-top:20px; padding-bottom:15px;}
  
- table.tablaAplicacion{margin-top:10px; margin-bottom:10px; background-color:#f5f5f5;}
+ table.tablaAplicacion{margin-top:10px; margin-bottom:10px; background-color:#eee;}
  table.tablaAplicacion  td.tituloTablaAplicacion{background-color:transparent;}
  table.tablaAplicacion  td.thinTD{padding:2px 8px; padding-left:20px;background-color:transparent;}
  table.tablaAplicacion  td.lastTD{padding:0px;background-color:transparent;}
