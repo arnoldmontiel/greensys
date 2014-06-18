@@ -2157,7 +2157,7 @@ class GreenHelper
 						if(isset($projectArea->description))
 						{
 							if($isFirst){
-								$serviceAreas = $projectArea->description;
+								$serviceAreas = '&raquo; &Aacute;reas presupuestadas: '.$projectArea->description;
 								$isFirst = false;
 							}
 							else 
@@ -2171,7 +2171,7 @@ class GreenHelper
 						<div '.$idIfGeneral.' style="page-break-after: always;">
 									<div class="budgetTitle">'.$serviceName.'</div>
 									<div class="budgetDesc">'.$serviceDesc.' </div>
-									<div>&raquo; &Aacute;reas presupuestadas: '.$serviceAreas.'.</div>
+									<div>'.$serviceAreas.'.</div>
 									<div class="budgetNota">'.$serviceNote.' </div>';
 				
 		
