@@ -2116,6 +2116,7 @@ class GreenHelper
 			//SERVICE---------------------------------------------------------------
 			$serviceName = '';
 			$serviceNote = '';
+			$serviceAreas = '';
 			if(count($budgetItems)>0)
 			{
 				$serviceName = 'General';
@@ -2141,14 +2142,36 @@ class GreenHelper
 						
 						$serviceNote = nl2br($projectServiceDB->note);
 					}
+					
+					$criteria = new CDbCriteria();
+					$criteria->addCondition('hide = 0');
+					$criteria->addCondition('Id IN (SELECT distinct Id_area_project FROM green.budget_item 
+											where Id_budget = '.$budgetItemService->Id_budget.'
+											and version_number = '.$budgetItemService->version_number.'
+											and Id_service = '.$budgetItemService->Id_service.')');
+						
+					$modeAreaProjects = AreaProject::model()->findAll($criteria);
+					$isFirst = true;
+					foreach($modeAreaProjects as $projectArea)
+					{
+						if(isset($projectArea->description))
+						{
+							if($isFirst){
+								$serviceAreas = $projectArea->description;
+								$isFirst = false;
+							}
+							else 
+								$serviceAreas .= ', '.$projectArea->description;
+						}
+					}
+					
 				}
-		
+				
 				$serviceContentHeader = '
 						<div '.$idIfGeneral.' style="page-break-after: always;">
 									<div class="budgetTitle">'.$serviceName.'</div>
 									<div class="budgetDesc">'.$serviceDesc.' </div>
-									<div>&raquo; &Aacute;reas presupuestadas: Exteriores, Hall de acceso, Dormitorio 1, Dormitorio 2, Living, Cocina, Galer&iacute;a.
-											</div>
+									<div>&raquo; &Aacute;reas presupuestadas: '.$serviceAreas.'.</div>
 									<div class="budgetNota">'.$serviceNote.' </div>';
 				
 		
