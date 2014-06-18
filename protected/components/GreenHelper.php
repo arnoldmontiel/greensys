@@ -2128,6 +2128,9 @@ class GreenHelper
 					$serviceName = $budgetItemService->service->description;
 					$serviceDesc = nl2br($budgetItemService->service->long_description);
 					$serviceNote = nl2br($budgetItemService->service->note);
+					if ($serviceNote!=''){
+					$serviceNote= '<div class="budgetNota">'.$serviceNote.' </div>';
+					}
 					
 					$projectServiceDB = ProjectService::model()->findByAttributes(array('Id_project'=>$budgetItemService->budget->Id_project,
 							'Id_budget'=>$budgetItemService->Id_budget,
@@ -2141,6 +2144,9 @@ class GreenHelper
 							$serviceDesc = nl2br($projectServiceDB->long_description);
 						
 						$serviceNote = nl2br($projectServiceDB->note);
+						if ($serviceNote!=''){
+							$serviceNote= '<div class="budgetNota">'.$serviceNote.' </div>';
+						}
 					}
 					
 					$criteria = new CDbCriteria();
@@ -2158,7 +2164,7 @@ class GreenHelper
 										<table width="100%" class="tablaLimpia tablaAreas" cellpadding="0" cellspacing="0">
 											<tbody>
 												<tr>
-													<td colspan="3">&raquo; &Aacute;reas presupuestadas:</td>
+													<td colspan="3" class="tituloTablaAreas">&raquo; &Aacute;reas presupuestadas:</td>
 												</tr>';
 						
 						$trQty = ceil(count($modeAreaProjects)/3);
@@ -2183,7 +2189,7 @@ class GreenHelper
 						}
 						$serviceAreas .='
 												<tr>
-													<td colspan="3">Total de &Aacute;reas: '.count($modeAreaProjects).'</td>
+													<td colspan="3" align="center" class="totalTablaAreas">- Total de &Aacute;reas: '.count($modeAreaProjects).' -</td>
 												</tr>
 											</tbody>
 										</table>';
@@ -2194,8 +2200,7 @@ class GreenHelper
 						<div '.$idIfGeneral.' style="page-break-after: always;">
 									<div class="budgetTitle">'.$serviceName.'</div>
 									<div class="budgetDesc">'.$serviceDesc.' </div>
-									<div>'.$serviceAreas.'</div>
-									<div class="budgetNota">'.$serviceNote.' </div>';
+									<div>'.$serviceAreas.'</div>'.$serviceNote;
 				
 		
 			
@@ -2215,92 +2220,6 @@ class GreenHelper
 				$totalItemPrice = 0;
 				$totalAccessoryPrice = 0;
 				
-
-				/* PARA PRUEBASSSSSSSSS -------------------- 
-				
-				$serviceContentBodyItem = $serviceContentBodyItem . '
-						<tr class="pdfProdBIG"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (BIG)</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="230" class="descContainer"><img class="imgTD" width="250" src="images/RTI_KX7_small.jpg"></td><td width="500">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non placerat nisl. Sed condimentum ornare turpis, nec fringilla ipsum iaculis id. Curabitur tempor turpis lobortis elit eleifend rhoncus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris semper convallis tellus, et convallis odio. Suspendisse ac turpis risus. Aenean et pulvinar est, eget tempus dolor. Sed vitae laoreet elit, non pellentesque augue. In facilisis elementum turpis nec condimentum. Nam bibendum scelerisque est, eleifend pretium purus aliquam in. Aliquam sit amet pulvinar est, non sagittis massa. Sed egestas suscipit sem et convallis. Aenean vitae tellus eget urna tincidunt faucibus et vitae ante. Morbi elementum vel neque vel pretium. Cras vehicula est id ultrices congue. Integer lacinia nec ipsum et pulvinar. In ultrices libero id velit mattis sodales. In venenatis massa sed lobortis mollis. Phasellus eu est eu tellus malesuada vulputate.
-						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
-						<tbody><tr>
-						<td class="align-left" width="121">Cantidad:</td>
-						<td class="align-left" width="121">2.00</td>
-						<td class="align-left" width="121">Precio Unitario:</td>
-						<td class="align-left" width="121">U$D 1,689.66</td>
-						<td class="align-right" width="121">Precio Final:</td>
-						<td class="align-right bold" width="121">U$D 3,379.31</td>
-						</tr></tbody></table></td></tr>
-						
-						<tr class="pdfProdMEDIUM"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (MED)</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="180" class="descContainer"><img class="imgTD" width="150" src="images/RTI_KX7_small.jpg"></td><td width="550">
-						Donec eu elit sem. Phasellus sit amet varius orci. Praesent sit amet lorem tortor. Sed vel enim augue. Ut ac dapibus nunc, ac adipiscing urna. Integer blandit commodo velit, vitae lacinia urna luctus sed. Maecenas tempor scelerisque leo non euismod. Mauris quis volutpat justo. Nulla dapibus velit vitae odio ornare posuere. Ut molestie feugiat congue. Morbi vel volutpat sem, a semper diam.
-						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
-						<tbody><tr>
-						<td class="align-left" width="121">Cantidad:</td>
-						<td class="align-left" width="121">2.00</td>
-						<td class="align-left" width="121">Precio Unitario:</td>
-						<td class="align-left" width="121">U$D 1,689.66</td>
-						<td class="align-right" width="121">Precio Final:</td>
-						<td class="align-right bold" width="121">U$D 3,379.31</td>
-						</tr></tbody></table></td></tr>
-						
-						<tr class="pdfProdSMALL"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (SMALL)</div><table width="100%" class="tablaLimpia"><tbody><tr><td width="120" class="descContainer"><img class="imgTD" width="100" src="images/RTI_KX7_small.jpg"></td><td width="610">
-						Donec eu elit sem. Phasellus sit amet varius orci. Praesent sit amet lorem tortor.
-						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
-						<tbody><tr>
-						<td class="align-left" width="121">Cantidad:</td>
-						<td class="align-left" width="121">2.00</td>
-						<td class="align-left" width="121">Precio Unitario:</td>
-						<td class="align-left" width="121">U$D 1,689.66</td>
-						<td class="align-right" width="121">Precio Final:</td>
-						<td class="align-right bold" width="121">U$D 3,379.31</td>
-						</tr></tbody></table></td></tr>
-						
-						<tr class="pdfProdTEXT"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (TEXTO)</div><table width="100%" class="tablaLimpia"><tbody><tr><td>
-						Donec eu elit sem. Phasellus sit amet varius orci. Praesent sit amet lorem tortor.
-						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
-						<tbody><tr>
-						<td class="align-left" width="121">Cantidad:</td>
-						<td class="align-left" width="121">2.00</td>
-						<td class="align-left" width="121">Precio Unitario:</td>
-						<td class="align-left" width="121">U$D 1,689.66</td>
-						<td class="align-right" width="121">Precio Final:</td>
-						<td class="align-right bold" width="121">U$D 3,379.31</td>
-						</tr></tbody></table></td></tr>
-						
-						<tr class="pdfProdTEXT"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (TEXTO)</div><table width="100%" class="tablaLimpia"><tbody><tr><td>
-						Donec eu elit sem. Phasellus sit amet varius orci. Praesent sit amet lorem tortor.
-						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
-						<tbody><tr>
-						<td class="align-left" width="121">Cantidad:</td>
-						<td class="align-left" width="121">2.00</td>
-						<td class="align-left" width="121">Precio Unitario:</td>
-						<td class="align-left" width="121">U$D 1,689.66</td>
-						<td class="align-right" width="121">Precio Final:</td>
-						<td class="align-right bold" width="121">U$D 3,379.31</td>
-						</tr></tbody></table></td></tr>
-						<tr class="pdfProdTEXT"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (TEXTO)</div><table width="100%" class="tablaLimpia"><tbody><tr><td>
-						Donec eu elit sem. Phasellus sit amet varius orci. Praesent sit amet lorem tortor.
-						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
-						<tbody><tr>
-						<td class="align-left" width="121">Cantidad:</td>
-						<td class="align-left" width="121">2.00</td>
-						<td class="align-left" width="121">Precio Unitario:</td>
-						<td class="align-left" width="121">U$D 1,689.66</td>
-						<td class="align-right" width="121">Precio Final:</td>
-						<td class="align-right bold" width="121">U$D 3,379.31</td>
-						</tr></tbody></table></td></tr>
-						<tr class="pdfProdTEXT"><td class="pdfTituloProd"><div class="bold">&bull; Controlador de Pared Universal de 7 (TEXTO)</div><table width="100%" class="tablaLimpia"><tbody><tr><td>
-						Donec eu elit sem. Phasellus sit amet varius orci. Praesent sit amet lorem tortor.
-						</td></tr></tbody></table><table width="100%" class="tablaLimpia2 sinDesc">
-						<tbody><tr>
-						<td class="align-left" width="121">Cantidad:</td>
-						<td class="align-left" width="121">2.00</td>
-						<td class="align-left" width="121">Precio Unitario:</td>
-						<td class="align-left" width="121">U$D 1,689.66</td>
-						<td class="align-right" width="121">Precio Final:</td>
-						<td class="align-right bold" width="121">U$D 3,379.31</td>
-						</tr></tbody></table></td></tr>';
-				 END PARA PRUEBASSSSSSSSS -------------------- */
 				
 				foreach($budgetItems as $budgetItem)
 				{
@@ -2724,7 +2643,31 @@ class GreenHelper
 							</div>
 						</div>
 					</div>';
-		
+		$notaDeCaratula = '<div  style="page-break-after: always;">
+				<div class="container" id="screenReadOnlyCaratulaFinal">
+						<div class="row budgetCabecera budgetBloque">
+							<div class="col-sm-12">
+								<table width="100%">
+									<tbody>
+										<tr>
+											<td width="50%">		
+												<div class="budgetPropuesta">Propuesta</div>
+												<div class="budgetName">'.$modelBudget->description.'</div>
+												<div class="budgetClient">'.$modelBudget->project->fullDescription.'</div>
+												<div class="budgetVersion">Versi&oacute;n '.$modelBudget->version_number.'</div>
+												<div class="budgetDate">'.date("d/m/Y").'</div>
+											</td>
+											<td width="50%" align="right">
+												<img src="images/logoBIG.jpg" width="200" height="56"/>
+											</td>
+										</tr>
+									</tbody>
+								</table>	
+								<div class="budgetTitle">Modificacion vlablalala</div>
+								<div class="budgetDesc">TEXTOOOOO VA A ACAAAAAAA</div>	
+							</div>
+					</div>
+						</div>';
 		$content = '
 				<htmlpageheader name="myHeaderHide" style="display:none">
 <div style="text-align: right;  font-size: 12px;">'.$modelBudget->description.' &bull; '.$modelBudget->version_number.'</div>
@@ -2808,52 +2751,16 @@ class GreenHelper
           					
 							</div><!-- CIERRE CONTAINER -->';
 	$clausulas = '<div class="budgetTitle">Cl&aacute;usulas del Contrato</div><div class="budgetClausulas">'.$modelBudget->clause_description .'</div>'; 
-// 					<div class="budgetDesc">Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.
-// 					</div>
-// 					<div class="budgetSubtitle">Pago</div>
-// 					<table class="table tableReadOnly tablaDatos">
-//         				<tbody>
-//           					<tr>
-//            						<td>Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.</td>
-//          					</tr>
-//         				</tbody>
-//       				</table>
-// 					<div class="budgetSubtitle">DURACI&Oacute;N DE LA OFERTA</div>
-// 					<table class="table tableReadOnly tablaDatos">
-//         				<tbody>
-//           					<tr>
-//            						<td>Praesent urna augue, volutpat eleifend neque eu, tristique iaculis massa. Maec.</td>
-//          					</tr>
-//         				</tbody>
-//       				</table>
-// 					<div class="budgetSubtitle">TIPO DE CAMBIO</div>
-// 					<table class="table tableReadOnly tablaDatos">
-//         				<tbody>
-// 							<tr>
-//            						<td>Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet. Duis ultricies sagittis massa.</td>
-//          					</tr>
-//         				</tbody>
-//       				</table>
-// 					<div class="budgetSubtitle">LEGALES</div>
-// 					<table class="table tableReadOnly tablaDatos">
-//         				<tbody>
-//           					<tr>
-//            						<td>Praesent urna augue, volutpat eleifend neque eu, tristique iaculis massa. Maec. Maecenas gravida sem et nibh pretium, vel tempor leo imperdiet.</td>
-//        						</tr>
-//         				</tbody>
-//       				</table>
-//				</div>
-//				';
-		
+
 	//limpio el codigo que genera el editor, le saco todos los "styles" inline
 	$clausulas = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $clausulas);
 	$clausulas = preg_replace("/(<[^>]+) style='.*?'/i", "$1", $clausulas);
 	$clausulas ='<div  style="page-break-before: always;">'.$clausulas.'</div>';	
 		
 		if($modelBudget->print_clause == 1)
-			$result = $caratula.$content.$resumen.$clausulas;
+			$result = $caratula.$notaDeCaratula.$content.$resumen.$clausulas;
 		else 
-			$result = $caratula.$content.$resumen;
+			$result = $caratula.$notaDeCaratula.$content.$resumen;
 		
 		return $result;
 	}

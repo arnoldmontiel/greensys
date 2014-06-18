@@ -1245,7 +1245,7 @@ margin-bottom:5px; }
  .tableReadOnly tr.pdfProdSMALL img.imgTD{width:100px;}
  tr.pdfProdSMALL td.pdfTituloProd{font-size:13px;}
  
- .prodModel{padding-left:11px;}
+ div.prodModel{margin-left:20px;}
  
  /*solo para que se vea bien la read only online*/
  .tableReadOnly .tablaLimpia td.descContainer{width:20% !important;}
@@ -1254,11 +1254,13 @@ margin-bottom:5px; }
  .budgetEndUL{margin-top:10px; margin-bottom:20px;}
 
   table.tablaAreas{margin-top:10px; margin-bottom:10px; background-color:#fbfbfb;}
-   table.tablaAreas  tbody>tr>td{padding:8px;}
-  table.tablaAreas  tbody>tr>td.thinTD{padding:2px; padding-left:20px;}
+   table.tablaAreas td{padding:8px; }
+  table.tablaAreas td.thinTD{padding:2px; padding-left:20px;}
+   table.tablaAreas td.tituloTablaAreas{padding-top:15px; padding-bottom:10px;}
+   table.tablaAreas td.totalTablaAreas{padding-top:20px; padding-bottom:15px;}
  
- table.tablaAplicacion{margin-top:10px; margin-bottom:10px; border-top:3px dotted #fbfbfb;}
- table.tablaAplicacion  tbody>tr>td.thinTD{padding:2px 8px; padding-left:20px;}
+ table.tablaAplicacion{margin-top:10px; margin-bottom:10px;padding-bottom:20px; border:3px dotted #bbb;}
+ table.tablaAplicacion  td.thinTD{padding:2px 8px; padding-left:20px;}
  
  
 /* ------ END READ ONLY ------- */
