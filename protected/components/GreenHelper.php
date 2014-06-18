@@ -1,6 +1,6 @@
 <?php
 class GreenHelper
-{
+{ 
 	static public function convertCurrencyTo($valueToConvert, $convertFrom, $convertTo)
 	{
 		if($convertFrom==$convertTo) return round($valueToConvert,2);
@@ -2331,6 +2331,37 @@ class GreenHelper
 						$serviceContentBodyItem = $serviceContentBodyItem . '<tr class="'.$trClass.'">';
 						$serviceContentBodyItem = $serviceContentBodyItem . '<td class="pdfTituloProd"><div class="bold">&bull; '.$short_description.'</div><table width="100%" class="tablaLimpia"><tbody><tr>'.$tdImage.$long_description.'</td></tr></tbody></table>';
 						
+						$budgetItemAreasApp = '';
+						$serviceCondition = '';
+						if(isset($budgetItem->Id_service))
+							$serviceCondition = 'Id_service = '. $budgetItem->Id_service;
+						else
+							$serviceCondition = 'Id_service is null';
+						
+						$criteria = new CDbCriteria();
+						$criteria->addCondition($serviceCondition);
+						$criteria->addCondition('Id_budget = '. $budgetItem->Id_budget);
+						$criteria->addCondition('version_number = '. $budgetItem->version_number);
+						$criteria->addCondition('Id_product = '. $budgetItem->Id_product);
+						$modelbudgetItemAreas = BudgetItem::model()->findAll($criteria);
+						
+						$isFirst = true;
+						foreach($modelbudgetItemAreas as $modelbudgetItemArea)
+						{
+							$modelAreaProj = AreaProject::model()->findByAttributes(array('Id'=>$modelbudgetItemArea->Id_area_project));
+							if(isset($modelAreaProj) && isset($modelAreaProj->description))
+							{
+								if($isFirst)
+								{
+									$budgetItemAreasApp = '&raquo; &Aacute;reas de aplicaci&oacute;n: '. round($modelbudgetItemArea->quantity,0) .' en ' .$modelAreaProj->description;
+									$isFirst = false;
+								}
+								else
+									$budgetItemAreasApp .= ', '. round($modelbudgetItemArea->quantity,0) .' en ' .$modelAreaProj->description;
+							}
+							
+						}
+						
 						
 						if($budgetItem->getDiscountCurrencyConverted() > 0)
 						{
@@ -2354,7 +2385,7 @@ class GreenHelper
 								<td class="align-right" width="91">Total:</td>								
 								<td class="align-right bold" width="91">'.$currency . ' ' . self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor).'</td>
 								</tr>
-								<tr><td colspan="8">&raquo; &Aacute;reas de aplicaci&oacute;n: 2 en Exteriores, 1 en Hall de Acceso.</td></tr>
+								<tr><td colspan="8">'.$budgetItemAreasApp.'.</td></tr>
 								</tbody></table>';
 						}
 						else 
@@ -2368,7 +2399,7 @@ class GreenHelper
 								<td class="align-right" width="121">Precio Final:</td>								
 								<td class="align-right bold" width="121">'.$currency . ' ' . self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor).'</td>
 								</tr>
-								<tr><td colspan="8">&raquo; &Aacute;reas de aplicaci&oacute;n: 2 en Exteriores, 1 en Hall de Acceso.</td></tr>
+								<tr><td colspan="8">'.$budgetItemAreasApp.'.</td></tr>
 								</tbody></table>';
 						}
 						
