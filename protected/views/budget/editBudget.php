@@ -18,7 +18,7 @@ function setAccessory(idProduct, obj)
 			}).error(function(){statusSavedError();});
 		return false;
 }
-
+ 
 function setHideItem(idBudgetItem, obj)
 {
 	var value = 0;
