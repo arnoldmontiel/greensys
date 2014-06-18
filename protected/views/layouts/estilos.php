@@ -1219,6 +1219,7 @@ margin-bottom:5px; }
 
 #screenReadOnlyCaratula{ text-align:center; background-color:white; padding-top:150px;}
 #screenReadOnlyCaratulaFinal{ text-align:center; background-color:white; padding-top:20px;}
+#screenReadOnlyCaratulaNota{ text-align:left; background-color:white; padding-top:20px;}
 
 
 .logoBig{ margin:auto; }
@@ -1259,9 +1260,9 @@ margin-bottom:5px; }
    table.tablaAreas td.tituloTablaAreas{padding-top:15px; padding-bottom:10px;}
    table.tablaAreas td.totalTablaAreas{padding-top:20px; padding-bottom:15px;}
  
- table.tablaAplicacion{margin-top:10px; margin-bottom:10px;padding-bottom:20px; border:3px dotted #bbb;}
+ table.tablaAplicacion{margin-top:10px; margin-bottom:10px;}
  table.tablaAplicacion  td.thinTD{padding:2px 8px; padding-left:20px;}
- 
+ div.divTablaAplicacion{ border:1px dotted #bbb;padding-bottom:20px;}
  
 /* ------ END READ ONLY ------- */
 

@@ -2290,6 +2290,7 @@ class GreenHelper
 						if(count($modelbudgetItemAreas) > 0)
 						{
 							$budgetItemAreasApp ='
+									<div class="divTablaAplicacion">
 								<table width="100%" class="tablaLimpia tablaAplicacion" cellpadding="0" cellspacing="0">
 									<tbody>
 										<tr>
@@ -2320,7 +2321,7 @@ class GreenHelper
 							}	
 							$budgetItemAreasApp .='
 											</tbody>
-										</table>';
+										</table></div>';
 						}
 						
 						
@@ -2643,8 +2644,7 @@ class GreenHelper
 							</div>
 						</div>
 					</div>';
-		$notaDeCaratula = '<div  style="page-break-after: always;">
-				<div class="container" id="screenReadOnlyCaratulaFinal">
+		$notaDeCaratula = '<div class="container" id="screenReadOnlyCaratulaNota">
 						<div class="row budgetCabecera budgetBloque">
 							<div class="col-sm-12">
 								<table width="100%">
@@ -2662,12 +2662,16 @@ class GreenHelper
 											</td>
 										</tr>
 									</tbody>
-								</table>	
-								<div class="budgetTitle">Modificacion vlablalala</div>
+								</table>
+							</div>
+						</div>
+						<div class="row budgetBloque">
+							<div class="col-sm-12">
+								<div class="budgetTitle">Modificaciones sobre la version anterior</div>
 								<div class="budgetDesc">TEXTOOOOO VA A ACAAAAAAA</div>	
 							</div>
-					</div>
-						</div>';
+						</div>
+			</div>';
 		$content = '
 				<htmlpageheader name="myHeaderHide" style="display:none">
 <div style="text-align: right;  font-size: 12px;">'.$modelBudget->description.' &bull; '.$modelBudget->version_number.'</div>
@@ -2756,6 +2760,9 @@ class GreenHelper
 	$clausulas = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $clausulas);
 	$clausulas = preg_replace("/(<[^>]+) style='.*?'/i", "$1", $clausulas);
 	$clausulas ='<div  style="page-break-before: always;">'.$clausulas.'</div>';	
+	$notaDeCaratula = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $notaDeCaratula);
+	$notaDeCaratula = preg_replace("/(<[^>]+) style='.*?'/i", "$1", $notaDeCaratula);
+	$notaDeCaratula	 ='<div  style="page-break-after: always;">'.$notaDeCaratula.'</div>';
 		
 		if($modelBudget->print_clause == 1)
 			$result = $caratula.$notaDeCaratula.$content.$resumen.$clausulas;
