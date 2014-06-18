@@ -2644,6 +2644,7 @@ class GreenHelper
 							</div>
 						</div>
 					</div>';
+		
 		$notaDeCaratula = '<div class="container" id="screenReadOnlyCaratulaNota">
 						<div class="row budgetCabecera budgetBloque">
 							<div class="col-sm-12">
@@ -2668,10 +2669,10 @@ class GreenHelper
 						<div class="row budgetBloque">
 							<div class="col-sm-12">
 								<div class="budgetTitle">Modificaciones sobre la version anterior</div>
-								<div class="budgetDesc">TEXTOOOOO VA A ACAAAAAAA</div>	
+								<div class="budgetDesc">'.$modelBudget->note_version.'</div>	
 							</div>
-						</div>
-			</div>';
+					</div>
+						</div>';
 		$content = '
 				<htmlpageheader name="myHeaderHide" style="display:none">
 <div style="text-align: right;  font-size: 12px;">'.$modelBudget->description.' &bull; '.$modelBudget->version_number.'</div>
@@ -2760,14 +2761,18 @@ class GreenHelper
 	$clausulas = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $clausulas);
 	$clausulas = preg_replace("/(<[^>]+) style='.*?'/i", "$1", $clausulas);
 	$clausulas ='<div  style="page-break-before: always;">'.$clausulas.'</div>';	
+
 	$notaDeCaratula = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $notaDeCaratula);
 	$notaDeCaratula = preg_replace("/(<[^>]+) style='.*?'/i", "$1", $notaDeCaratula);
 	$notaDeCaratula	 ='<div  style="page-break-after: always;">'.$notaDeCaratula.'</div>';
-		
-		if($modelBudget->print_clause == 1)
-			$result = $caratula.$notaDeCaratula.$content.$resumen.$clausulas;
-		else 
+	
+		if($modelBudget->print_note_version == 1)
 			$result = $caratula.$notaDeCaratula.$content.$resumen;
+		else 
+			$result = $caratula.$content.$resumen;
+	
+		if($modelBudget->print_clause == 1)
+			$result = $result.$clausulas;		
 		
 		return $result;
 	}
