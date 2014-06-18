@@ -2438,6 +2438,9 @@ class GreenHelper
 												</tbody>
 											</table>';
 				
+				$serviceContentBodyAccessory = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $serviceContentBodyAccessory);
+				$serviceContentBodyAccessory = preg_replace("/(<[^>]+) style='.*?'/i", "$1", $serviceContentBodyAccessory);
+				
 				$serviceContentBodyAccessory = $serviceContentBodyAccessory . '</tbody></table>
 									<table class="table tableReadOnly tablaDatos">
 												<tbody>
