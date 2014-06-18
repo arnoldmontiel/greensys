@@ -304,6 +304,37 @@ class BudgetController extends GController
 		}
 	}
 	
+	public function actionAjaxHideArea()
+	{
+		$id = (isset($_POST['idBudget']))?$_POST['idBudget']:null;
+		$version = (isset($_POST['version']))?$_POST['version']:null;
+		$idAreaProject = (isset($_POST['idAreaProject']))?$_POST['idAreaProject']:null;
+		$value = (isset($_POST['value']))?$_POST['value']:0;
+	
+		if(isset($idAreaProject))
+		{
+			$modelAreaProject = AreaProject::model()->findByAttributes(array('Id'=>$idAreaProject));
+			if(isset($modelAreaProject))
+			{
+				$modelAreaProject->hide = $value;
+				$modelAreaProject->save();
+			}
+		}
+	}	
+
+	public function actionAjaxGetHideAreaChk()
+	{
+		$value = 0;
+		$idAreaProject = (isset($_POST['idAreaProject']))?$_POST['idAreaProject']:null;
+		if(isset($idAreaProject))
+		{
+			$modelAreaProject = AreaProject::model()->findByAttributes(array('Id'=>$idAreaProject));
+			if(isset($modelAreaProject))
+				$value = $modelAreaProject->hide;
+		}
+		echo $value;
+	}
+	
 	public function actionAjaxUpdateClause()
 	{
 		$id = (isset($_POST['id']))?$_POST['id']:null;
