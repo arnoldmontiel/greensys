@@ -61,7 +61,7 @@ return array(
 //srbac.views.authitem.unauthorized, must be an existing alias
 			'alwaysAllowed'=>array( //default: array()
 			'SiteLogin','SiteLogout',
-			'SiteError','SiteLoginOld'),
+			'SiteError','SiteLoginOld','SiteConfirmation','InvitationConfirmationIndex'),
 			'prefixAlwaysAllowed'=>array( //default: array()
 			'Ajax'),
 			'userActions'=>array('Show','View','List'), //default: array()
@@ -144,7 +144,7 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=green',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'root',
+			'password' => 'admin',
 			'charset' => 'utf8',
 		),
 		'db2'=>array(
@@ -152,7 +152,7 @@ return array(
 					'connectionString' => 'mysql:host=localhost;dbname=tapia',
 					'emulatePrepare' => true,
 					'username' => 'root',
-					'password' => 'root',
+					'password' => 'admin',
 					'charset' => 'utf8',
 		),
 
