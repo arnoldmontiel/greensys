@@ -621,6 +621,7 @@ class BudgetController extends GController
 						$criteria->addCondition('pl.Id_price_list_type = 2'); //lista de venta
 						$criteria->addCondition('t.Id_product = '. $idProduct);
 						$criteria->addCondition('sp.description <> "FOB"');
+						$criteria->order = 'sp.Id_importer DESC'; //Esto es para que traiga por default el id 7 (BWR) a pedido de Fede Melo
 						
 						$modelPriceListItem = PriceListItem::model()->find($criteria);
 						
