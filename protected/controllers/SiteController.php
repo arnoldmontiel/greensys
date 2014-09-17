@@ -45,20 +45,24 @@ class SiteController extends GController
 	 */
 	public function actionIndex()
 	{
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
-		//$this->render('index');
-		$customer = User::getCustomer();
-		if(isset($customer))
-		{
-			Yii::app()->controller->redirect(array('review/index','Id_customer'=>$customer->Id));
+
+		$this->render('index');
+// 		// renders the view file 'protected/views/site/index.php'
+// 		// using the default layout 'protected/views/layouts/main.php'
+// 		//$this->render('index');
+// 		$customer = User::getCustomer();
+// 		if(isset($customer))
+// 		{
+// 			Yii::app()->controller->redirect(array('review/index','Id_customer'=>$customer->Id));
 		
-		}
-		else
-		{
-			Yii::app()->controller->redirect(array('review/index'));
-		}
-		$this->render('index');		
+// 		}
+// 		else
+// 		{
+// 			Yii::app()->controller->redirect(array('review/index'));
+// 		}
+// 		$this->render('index');		
+		
+		
 	}
 	/**
 	 * This is the default 'index' action that is invoked
@@ -147,7 +151,7 @@ class SiteController extends GController
 
                     AuditLogin::audit();
                     // special redirect with closing popup window
-                    $authIdentity->redirect();
+                   $authIdentity->redirect();
                 }
                 else {
                     // close popup window and redirect to cancelUrl
