@@ -27,7 +27,7 @@
     </div>
     
 	<div class="loginFooter">
-		Copyright &copy; <?php echo date('Y'); ?> by Grupo Smartliving.<br/>
+		Copyright &copy; <?php echo date('Y'); ?> by Doma.<br/>
 		All Rights Reserved
 	</div><!-- footer -->
     </div>
