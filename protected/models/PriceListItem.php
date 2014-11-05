@@ -282,8 +282,10 @@ class PriceListItem extends ModelAudit
 		$dealerCost = GreenHelper::convertCurrencyTo($this->dealer_cost,$this->priceList->Id_currency,$idCurrency);
 		$maritimeCost = GreenHelper::convertCurrencyTo($this->maritime_cost,$shippingParameter->Id_currency,$idCurrency);
 		$priceOverDealerCost = $dealerCost*$shippingParameter->shippingParameterMaritime->percent_over_dealer_cost/100; 
-		$price = ($dealerCost+$maritimeCost+$priceOverDealerCost)*$this->profit_rate;	
-		return $price;
+		//$price = ($dealerCost+$maritimeCost+$priceOverDealerCost)*$this->profit_rate;
+		//se deja afuera del calculo de ganancia al costo de envio.	
+		$price = ($dealerCost+$priceOverDealerCost)*$this->profit_rate;
+		return round($price+$maritimeCost,4);
 	}
 	public function getMaritimeCostPriceConverted($idCurrency)
 	{
@@ -307,9 +309,10 @@ class PriceListItem extends ModelAudit
 		$dealerCost = GreenHelper::convertCurrencyTo($this->dealer_cost,$this->priceList->Id_currency,$idCurrency);
 		$airCost = GreenHelper::convertCurrencyTo($this->air_cost,$shippingParameter->Id_currency,$idCurrency);
 		$priceOverDealerCost = $dealerCost*$shippingParameter->shippingParameterAir->percent_over_dealer_cost/100; 
-		$price = ($dealerCost+$airCost+$priceOverDealerCost)*$this->profit_rate;
-
-		return round($price,4);
+		//$price = ($dealerCost+$airCost+$priceOverDealerCost)*$this->profit_rate;
+		//se deja afuera del calculo de ganancia al costo de envio.
+		$price = ($dealerCost+$priceOverDealerCost)*$this->profit_rate;
+		return round($price+$airCost,4);
 	}
 	public function getAirCostPriceConverted($idCurrency)
 	{

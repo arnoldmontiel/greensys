@@ -556,8 +556,10 @@ class PriceListController extends GController
 								'msrp'=>$priceListItemPurchase->msrp,
 								'dealer_cost'=>$priceListItemPurchase->dealer_cost,
 								'profit_rate'=>$priceListItemPurchase->profit_rate,
-								'maritime_cost'=>$maritime_cost * $priceListItemPurchase->profit_rate,
-								'air_cost'=>$air_cost * $priceListItemPurchase->profit_rate,
+								//'maritime_cost'=>$maritime_cost * $priceListItemPurchase->profit_rate,
+								'maritime_cost'=>$maritime_cost,
+								//'air_cost'=>$air_cost * $priceListItemPurchase->profit_rate,
+								'air_cost'=>$air_cost,
 						);
 						
 						$priceListItem->save();
@@ -695,7 +697,8 @@ class PriceListController extends GController
 									'msrp'=>$priceListItemPurchase->msrp,
 									'dealer_cost'=>$priceListItemPurchase->dealer_cost,
 									'profit_rate'=>$priceListItemPurchase->profit_rate,
-									'maritime_cost'=>$maritime_cost * $priceListItemPurchase->profit_rate,
+									//'maritime_cost'=>$maritime_cost * $priceListItemPurchase->profit_rate,
+									'maritime_cost'=>$maritime_cost,
 									'air_cost'=>$air_cost * $priceListItemPurchase->profit_rate,
 							);
 							$priceListItem->save();
