@@ -2627,7 +2627,7 @@ class GreenHelper
 		
 		$caratula = '<div  style="page-break-after: always;">
 						<div class="container" id="screenReadOnlyCaratula">
-							<div class="logoBig"><img src="images/logoBIG.jpg" width="244" height="67"/></div>
+							<div class="logoBig"><img src="images/logoBIGMainieri.jpg" width="251" height="88"/></div>
 							<table class="mainInfo">
 								<tr>
 									<td class="bigBold">'.$modelBudget->description.'</td>
@@ -2667,7 +2667,7 @@ class GreenHelper
 												<div class="budgetDate">'.date("d/m/Y").'</div>
 											</td>
 											<td width="50%" align="right">
-												<img src="images/logoBIG.jpg" width="200" height="56"/>
+												<img src="images/logoTopRightMainieri.jpg" width="205" height="70"/>
 											</td>
 										</tr>
 									</tbody>
@@ -2702,7 +2702,7 @@ class GreenHelper
 												<div class="budgetDate">'.date("d/m/Y").'</div>
 											</td>
 											<td width="50%" align="right">
-												<img src="images/logoBIG.jpg" width="200" height="56"/>
+												<img src="images/logoTopRightMainieri.jpg" width="205" height="70"/>
 											</td>
 										</tr>
 									</tbody>
@@ -2719,7 +2719,7 @@ class GreenHelper
 		$resumen = '<div class="container" id="screenReadOnlyCaratulaFinal">
 						<div class="row budgetBloque">
 							<div class="col-sm-12">
-								<div class="logoBig"><img src="images/logoBIG.jpg" width="244" height="67"/></div>
+								<div class="logoBig"><img src="images/logoBIGMainieri.jpg" width="251" height="88"/></div>
 								<table class="mainInfo">
 									<tr>
 										<td class="bigBold">'.$modelBudget->description.'</td>
