@@ -63,6 +63,7 @@ class ProductController extends GController
 		if(isset($_POST['Product']))
 		{
 			$model->attributes=$_POST['Product'];
+			$model->model=trim($model->model);
 			
 			if(!$model->need_rack)
 			{
@@ -178,6 +179,7 @@ class ProductController extends GController
 		if(isset($_POST['Product']))
 		{
 			$model->attributes=$_POST['Product'];
+			$model->model=trim($model->model);
 				
 			if(!$model->need_rack)
 			{
@@ -302,7 +304,8 @@ class ProductController extends GController
 		if(isset($_POST['Product']))
 		{				
 			$model->attributes=$_POST['Product'];
-			
+			$model->model=trim($model->model);
+				
 			if(!$model->need_rack)
 			{
 				$model->unit_rack = 0;
