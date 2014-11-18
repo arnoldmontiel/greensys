@@ -5,6 +5,8 @@ new nicEditor({buttonList : ['title','bold','italic','underline','strikeThrough'
 $('.nicEdit-panelContain').parent().width('100%');
 $('.nicEdit-main').parent().width('98%');
 $('.nicEdit-main').width('98%');
+$('.nicEdit-main').height('70%')
+$('.nicEdit-main').parent().height('70%')
 $('.nicEdit-main').parent().addClass('nicEdit-scroll');
 });
 
