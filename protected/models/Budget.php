@@ -354,6 +354,11 @@ class Budget extends ModelAudit
 		}
 		return round($totalTime,2);
 	}
+	public function getTotalPriceCurrencyConvertedByService($Id_service)
+	{	
+		return 	GreenHelper::convertCurrency($this->getTotalPriceByService($Id_service),$this->Id_currency, $this->Id_currency_view,$this->currencyConversor);
+	}
+	
 	public function getTotalPriceByService($Id_service)
 	{
 	
@@ -379,6 +384,10 @@ class Budget extends ModelAudit
 			$totalPrice += $item->getTotalPriceNotFormated();
 		}
 		return round($totalPrice,2);
+	}
+	public function getTotalPriceAccessoryCurrencyConvertedByService($Id_service)
+	{
+		return 	GreenHelper::convertCurrency($this->getTotalPriceAccessoryByService($Id_service),$this->Id_currency, $this->Id_currency_view,$this->currencyConversor);		
 	}
 	public function getTotalPriceAccessoryByService($Id_service)
 	{
