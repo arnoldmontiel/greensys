@@ -381,7 +381,8 @@ class Budget extends ModelAudit
 		$totalPrice = 0;
 		foreach ($modelBudgetItem as $item)
 		{
-			$totalPrice += $item->getTotalPriceNotFormated();
+			if($item->product->is_accessory==0)
+				$totalPrice += $item->getTotalPriceNotFormated();
 		}
 		return round($totalPrice,2);
 	}
@@ -411,7 +412,8 @@ class Budget extends ModelAudit
 		$totalPrice = 0;
 		foreach ($modelBudgetItem as $item)
 		{
-			$totalPrice += $item->getTotalPriceNotFormated();
+			if($item->product->is_accessory==1)
+				$totalPrice += $item->getTotalPriceNotFormated();
 		}
 		return round($totalPrice,2);
 	}
