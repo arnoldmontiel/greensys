@@ -2421,8 +2421,8 @@ class GreenHelper
 					}
 					
 				}
-				$totalItemPrice = $modelBudget->getTotalPriceByService($budgetItemService->Id_service);
-				$totalAccessoryPrice = $modelBudget->getTotalPriceAccessoryByService($budgetItemService->Id_service);
+				$totalItemPrice = $modelBudget->getTotalPriceCurrencyConvertedByService($budgetItemService->Id_service);
+				$totalAccessoryPrice = $modelBudget->getTotalPriceAccessoryCurrencyConvertedByService($budgetItemService->Id_service);
 				
 				
 				$serviceContentBodyItem = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $serviceContentBodyItem);
