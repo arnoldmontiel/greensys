@@ -2019,8 +2019,6 @@ class GreenHelper
 	}
 	
 	static public function cutString($str, $limit=100){
-		//esta funcion esta teniendo problemas con las palabras con acentos. por ahora hacemos que no haga nada
-		return $str;
 		$str = trim($str);
 		$str = strip_tags($str);
 		$tamano = strlen($str);

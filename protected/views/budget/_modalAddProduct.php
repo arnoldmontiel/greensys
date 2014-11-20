@@ -51,12 +51,14 @@
 				),
 				array(
 					'name'=>'short_description',
-					'value'=>'GreenHelper::cutString($data->short_description,40)',
+					//'value'=>'GreenHelper::cutString($data->short_description,40)',
+						'value'=>'$data->short_description',
 					'htmlOptions'=>array("style"=>"width:30%;"),
 				),
 				array(
 						'name'=>'description_customer',
-						'value'=>'GreenHelper::cutString($data->description_customer,40)',
+						//'value'=>'GreenHelper::cutString($data->description_customer,40)',
+						'value'=>'$data->description_customer',
 						'htmlOptions'=>array("style"=>"width:30%;"),
 				),				
 				array(
