@@ -41,7 +41,7 @@
 					'header'=>'Total',
 					'value'=>
 						function($data){
-							return $data->currency->short_description." ".number_format($data->getTotalPriceWithDiscountCurrencyConverted());
+							return $data->currency->short_description." ".number_format($data->getTotalPriceWithDiscount());
 						},
 					'type'=>'raw',
 						'htmlOptions'=>array( "style"=>"width:10%;", "class"=>"align-right"),
