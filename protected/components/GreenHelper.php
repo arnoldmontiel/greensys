@@ -2265,7 +2265,13 @@ class GreenHelper
 					}
 					$short_description = $budgetItem->product->description_customer!=""?$budgetItem->product->description_customer:$budgetItem->product->short_description;
 					$long_description = nl2br($budgetItem->product->description_supplier!=""?$budgetItem->product->description_supplier:$budgetItem->product->long_description);
-										
+
+					if(strpos($long_description, '</li>')>= 0)
+					{
+						if(strpos($long_description, '</ul>') === false)
+							$long_description = '<ul>'.$long_description.'</ul>';
+					}
+
 					if($budgetItem->product->is_accessory == 0)
 					{
 						$hasItems = true;					
