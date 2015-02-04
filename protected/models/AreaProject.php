@@ -10,6 +10,8 @@
  * @property integer $centralized
  * @property string $description
  * @property integer $hide
+ * @property integer $Id_budget
+ * @property integer $version_number
  * The followings are the available model relations:
  * @property Area $idArea
  * @property Project $idProject
@@ -45,11 +47,11 @@ class AreaProject extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('Id_area, Id_project', 'required'),
-			array('Id_area, Id_project, centralized, Id_parent, hide', 'numerical', 'integerOnly'=>true),
+			array('Id_area, Id_project, Id_budget, version_number, centralized, Id_parent, hide', 'numerical', 'integerOnly'=>true),
 			array('description', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('Id, Id_area, Id_project, centralized, description, descripionArea,Id_parent, hide', 'safe', 'on'=>'search'),
+			array('Id, Id_area, Id_project, centralized, description, descripionArea,Id_parent, hide, Id_budget, version_number', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -77,6 +79,10 @@ class AreaProject extends CActiveRecord
 			'Id_project' => 'Project',
 			'centralized' => 'Centralizado',
 			'description' => 'Descripción',
+			'Id_parent' => 'Id Parent',
+			'hide' => 'Hide',
+			'Id_budget' => 'Id Budget',
+			'version_number' => 'Version Number',
 		);
 	}
 
@@ -103,7 +109,9 @@ class AreaProject extends CActiveRecord
 		$criteria->compare('Id_project',$this->Id_project);
 		$criteria->compare('centralized',$this->centralized);
 		$criteria->compare('description',$this->description,true);
-
+		$criteria->compare('Id_budget',$this->Id_budget);
+		$criteria->compare('version_number',$this->version_number);
+		
 		$criteria->with[]='area';
 		$criteria->addSearchCondition("area.description",$this->descripionArea);		
 		
