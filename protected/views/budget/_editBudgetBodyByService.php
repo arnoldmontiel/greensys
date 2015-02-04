@@ -433,7 +433,7 @@ $("#addAreaToProject").click(function()
 	$.post(
 			'<?php echo BudgetController::createUrl('ajaxFillAddAreaToProject')?>',
 			 {
-			 	Id_project: <?php echo $model->Id_project?>,
+			 	Id_project: <?php echo $model->Id_project?>
 			 },'json').success(
 				function(data) 
 				{ 

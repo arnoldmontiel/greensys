@@ -48,7 +48,14 @@ $('#addArea').unbind('click');
 $('#addArea').click(function()
 		{
 		$('#addArea').attr('disabled','disabled');
-		jQuery.post('<?php echo Yii::app()->createUrl("project/ajaxAddProjectAreaFromBudget"); ?>',{ Id_area:$('#areaSelector').val(),Id_project:$('#Id_project').val(),Id_area_project:$('#Id_area_project').val()},
+		jQuery.post('<?php echo Yii::app()->createUrl("project/ajaxAddProjectAreaFromBudget"); ?>',
+				{ 
+					Id_area:$('#areaSelector').val(),
+					Id_project:$('#Id_project').val(),
+					Id_area_project:$('#Id_area_project').val(),
+					Id_budget:$('#idBudget').val(),
+					version_number:$('#version').val()					
+				},
 			function(data) {
 			location.reload();
 			},'json'

@@ -305,7 +305,7 @@ function deleteAreaProject()
 		$.post(
 				'<?php echo BudgetController::createUrl('AjaxDeleteAreaProject')?>',
 				 {
-				 	id: idAreaProject,
+				 	id: idAreaProject
 				 },'json').success(
 					function(data) 
 					{
