@@ -796,6 +796,23 @@ class BudgetController extends GController
 						$modelBudgetItem->save();
 					}
 						
+					//genero la nueva relacion area_project
+					$areaProjects = AreaProject::model()->findAllByAttributes(array(
+										'Id_project'=>$modelBudget->Id_project,
+										'Id_budget'=>$modelBudget->Id,
+										'version_number'=>$modelBudget->version_number
+					));
+					foreach($areaProjects as $areaProj)
+					{
+						$newAreaProject = new AreaProject();
+						$newAreaProject->setAttributes($areaProj->attributes);
+						$newAreaProject->version_number = $modelNewBudget->version_number;
+						$newAreaProject->save();
+					
+						BudgetItem::model()->updateAll(array( 'Id_area_project' => $newAreaProject->Id ),
+						'Id_budget = '.$modelNewBudget->Id.' AND version_number = '.$modelNewBudget->version_number.' AND Id_area_project = '.$areaProj->Id );
+					}
+					
 					//replico todos los comisionistas
 					$modelCommissionists = Commissionist::model()->findAllByAttributes(array('Id_budget'=>$modelBudget->Id, 'version_number'=>$modelBudget->version_number));
 					foreach($modelCommissionists as $commission)
@@ -1332,6 +1349,8 @@ class BudgetController extends GController
 		$priceListItemSale->unsetAttributes();
 		$criteria = new CDbCriteria();
 		$criteria->addCondition('Id_project = '.$model->Id_project);
+		$criteria->addCondition('version_number ='.$version);
+		$criteria->addCondition('Id_budget ='.$id);
 		$criteria->addCondition('Id_parent is null');
 		$areaProjects = AreaProject::model()->findAll($criteria);
 		

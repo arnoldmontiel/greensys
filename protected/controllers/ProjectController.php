@@ -362,6 +362,9 @@ class ProjectController extends GController
 			if(isset($modelArea))
 				$projectArea->description = $modelArea->description;
 			
+			$projectArea->Id_budget = $_POST['Id_budget'];
+			$projectArea->version_number = $_POST['version_number'];
+			
 			$projectArea->save();
 		}
 	}
