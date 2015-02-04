@@ -533,27 +533,28 @@ class AreaController extends GController
 		}
 	}
 	
-	public function actionAjaxUpdateAreas()
-	{
-		$allBudgets = Budget::model()->findAll();
-		foreach($allBudgets as $budget)
-		{
-			$criteria = new CDbCriteria();
-			$criteria->addCondition('Id_project = '.$budget->Id_project);
-			$criteria->addCondition('version_number is null');
-			$criteria->addCondition('Id_budget is null');
-			$areaProjects = AreaProject::model()->findAll($criteria);
-			foreach($areaProjects as $areaProj)
-			{
-				$newAreaProject = new AreaProject();
-				$newAreaProject->setAttributes($areaProj->attributes);
-				$newAreaProject->Id_budget = $budget->Id;
-				$newAreaProject->version_number = $budget->version_number;
-				$newAreaProject->save();
+	//fue solo para inicializar la tabla area_project con los id de budget y version number
+// 	public function actionAjaxUpdateAreas()
+// 	{
+// 		$allBudgets = Budget::model()->findAll();
+// 		foreach($allBudgets as $budget)
+// 		{
+// 			$criteria = new CDbCriteria();
+// 			$criteria->addCondition('Id_project = '.$budget->Id_project);
+// 			$criteria->addCondition('version_number is null');
+// 			$criteria->addCondition('Id_budget is null');
+// 			$areaProjects = AreaProject::model()->findAll($criteria);
+// 			foreach($areaProjects as $areaProj)
+// 			{
+// 				$newAreaProject = new AreaProject();
+// 				$newAreaProject->setAttributes($areaProj->attributes);
+// 				$newAreaProject->Id_budget = $budget->Id;
+// 				$newAreaProject->version_number = $budget->version_number;
+// 				$newAreaProject->save();
 				
-				BudgetItem::model()->updateAll(array( 'Id_area_project' => $newAreaProject->Id ), 
-						'Id_budget = '.$budget->Id.' AND version_number = '.$budget->version_number.' AND Id_area_project = '.$areaProj->Id );
-			}
-		}
-	}
+// 				BudgetItem::model()->updateAll(array( 'Id_area_project' => $newAreaProject->Id ), 
+// 						'Id_budget = '.$budget->Id.' AND version_number = '.$budget->version_number.' AND Id_area_project = '.$areaProj->Id );
+// 			}
+// 		}
+// 	}
 }
