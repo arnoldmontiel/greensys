@@ -2025,12 +2025,13 @@ class GreenHelper
 		$result = '';
 		if($tamano <= $limit){
 			return $str;
-		}else{
-			$str = mb_substr($str, 0, $limit,'UTF-8');
-			$words = explode(' ', $str);
-			$result = implode(' ', $words);
-			$result .= '...';
 		}
+		
+		$str = mb_substr($str, 0, $limit,'UTF-8');
+// 		$words = explode(' ', $str);
+// 		$result = implode(' ', $words);
+		$result .= '...';
+		
 		return $result;
 	}
 	
