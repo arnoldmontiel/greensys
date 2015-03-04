@@ -2026,7 +2026,7 @@ class GreenHelper
 		if($tamano <= $limit){
 			return $str;
 		}else{
-			$str = substr($str, 0, $limit);
+			$str = mb_substr($str, 0, $limit,'UTF-8');
 			$words = explode(' ', $str);
 			$result = implode(' ', $words);
 			$result .= '...';
