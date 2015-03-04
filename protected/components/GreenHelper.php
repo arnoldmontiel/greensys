@@ -2030,7 +2030,7 @@ class GreenHelper
 		$str = mb_substr($str, 0, $limit,'UTF-8');
 // 		$words = explode(' ', $str);
 // 		$result = implode(' ', $words);
-		$result .= '...';
+		$result .= $str.'...';
 		
 		return $result;
 	}
