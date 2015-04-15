@@ -29,18 +29,26 @@ class GreenHelper
 	}
 	static public function convertCurrency($valueToConvert, $convertFrom, $convertTo, $currencyConversor)
 	{
-		if(!isset($currencyConversor))	return self::convertCurrencyTo($valueToConvert, $convertFrom, $convertTo);
+		if(!isset($currencyConversor))  return self::convertCurrencyTo($valueToConvert, $convertFrom, $convertTo);
 
 		if($convertFrom==$convertTo) return round($valueToConvert,2);
 		if($currencyConversor->Id_currency_from == $convertFrom && $currencyConversor->Id_currency_to == $convertTo)
 		{
-			return round($valueToConvert*$currencyConversor->factor,2);				
+			return round($valueToConvert*$currencyConversor->factor,2);			
 		}
 		else if($currencyConversor->Id_currency_from == $convertTo && $currencyConversor->Id_currency_to == $convertFrom)
 		{
-			$currencyConversor= CurrencyConversor::model()->findByAttributes(array('Id_currency_from'=>$convertTo,'Id_currency_to'=>$convertFrom));
+			$criteria = new CDbCriteria();
+			$criteria->addCondition('Id_currency_from='.$convertTo);
+			$criteria->addCondition('Id_currency_to='.$convertFrom);
+			$criteria->order = 'Id DESC';
+			 
+			$currencyConversor= CurrencyConversor::model()->find($criteria);
+	
 			if(isset($currencyConversor))
-				return round($valueToConvert/$currencyConversor->factor,2);				
+			{
+				return round($valueToConvert/$currencyConversor->factor,2);
+			}
 		}
 		return 0;
 	}
