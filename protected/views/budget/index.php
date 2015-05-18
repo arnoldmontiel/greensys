@@ -50,6 +50,13 @@ function downloadPDF(id, version)
 	window.open("<?php echo BudgetController::createUrl('DownloadPDF'); ?>" + params, "_blank");
 	return false;	
 }
+function downloadXLSX(id, version)
+{
+	var params = "&id="+id+"&version="+version;
+	window.open("<?php echo BudgetController::createUrl('DownloadXLSX'); ?>" + params, "_blank");
+	return false;	
+}
+
 
 function viewBudget(id, version)
 {
