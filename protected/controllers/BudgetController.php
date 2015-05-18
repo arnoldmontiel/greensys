@@ -49,7 +49,8 @@ class BudgetController extends GController
 		
 		if(isset($id) && isset($version))
 		{
-			$modelBudget = $this->loadModel($id, $version);
+			$modelBudget = $this->loadModel($id, $version);						
+			$filename = GreenHelper::getExportedFileName($modelBudget,'pdf');
 			if(isset($modelBudget))
 			{
 				include('js/mpdf/mpdf.php');
@@ -61,7 +62,8 @@ class BudgetController extends GController
 				$mpdf->WriteHTML($stylesheet,1);
 				$mpdf->WriteHTML($stylesheet2,1);
 				$mpdf->WriteHTML(GreenHelper::generateBudgetPDF($modelBudget),2);
-				$mpdf->Output();
+				
+				$mpdf->Output($filename,'I');
 			}
 		}
 	}

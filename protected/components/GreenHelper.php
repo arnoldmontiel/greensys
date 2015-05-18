@@ -2799,4 +2799,25 @@ class GreenHelper
 		
 		return $result;
 	}
+	static public function getExportedFileName($modelBudget,$extension)
+	{
+		/*
+		 * armado del nombre de archivo
+		 * XY - "Descripcion" - "Rev. Z" - "Estado"
+		 * X: Primera letra del nombre del cliente
+		 * Y: Primera letra del apellido del cliente
+		 * Descricpcion: la descripcion exacta del proyecto
+		 * Rev.: Abreviacion de "revision"
+		 * Z: Nº de revision
+		 * Estado: indicara "Preliminar" cuando el proyecto esta abierto y "Aprobado" cuando el proyecto esta cerrado.
+		 *
+		 */
+		$customer = $modelBudget->project->customer;
+		$x = substr ( $customer->person->name , 0 ,1 );
+		$y = substr ( $customer->person->last_name , 0 ,1 );
+		$descripcion = $modelBudget->description;
+		$z = $modelBudget->version_number;
+		$estado = $modelBudget->Id_budget_state == 3?"Aprobado":"Preliminar";			
+		return $x.$y." - ".$descripcion." - Rev. ".$z." - ".$estado.".".$extension;				
+	}
 }
