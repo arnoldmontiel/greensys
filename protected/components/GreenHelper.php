@@ -976,7 +976,7 @@ class GreenHelper
 				$sheet->setCellValue($indexCols['budget'].$row, $modelBudget->project->fullDescription);
 				$sheet->setCellValue($indexCols['budget_description'].$row, $modelBudget->description);
 				$sheet->setCellValue($indexCols['version'].$row, $versionNumber);
-				$sheet->setCellValue($indexCols['date'].$row, 1);
+				$sheet->setCellValue($indexCols['date'].$row, $modelBudget->date_approved);
 				$sheet->setCellValue($indexCols['service_name'].$row, $serviceName);
 				$sheet->setCellValue($indexCols['supplier'].$row, $budgetItem->product->supplier->business_name);
 				$sheet->setCellValue($indexCols['brand'].$row, $budgetItem->product->brand->description);
@@ -1016,7 +1016,11 @@ class GreenHelper
 								
 				$sheet->setCellValue($indexCols['weight'].$row, $budgetItem->product->weight);
 				$sheet->setCellValue($indexCols['weight_unit'].$row, $budgetItem->product->measurementUnitWeight->short_description);
-				$sheet->setCellValue($indexCols['currency'].$row, $budgetItem->Id_product);
+				
+				if(isset($modelBudget->Id_currency_conversor))
+					$sheet->setCellValue($indexCols['currency'].$row, $modelBudget->currencyConversor->factor);
+				else
+					$sheet->setCellValue($indexCols['currency'].$row, '-');
 				
 				$row++;
 			}
