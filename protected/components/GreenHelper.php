@@ -813,6 +813,242 @@ class GreenHelper
 		Yii::app()->end();
 	}
 	
+	//generateBudgetPDF
+	static public function generateBudgetXLSX($modelBudget)
+	{		
+		$idBudget = $modelBudget->Id;
+		$versionNumber = $modelBudget->version_number;
+	
+		$currency = '$';
+		
+		if(isset($modelBudget->currencyView))
+			$currency = $modelBudget->currencyView->short_description;
+		
+		$commissionFactor = self::getCommissionFactor($modelBudget);
+		
+		Yii::import('ext.phpexcel.XPHPExcel');
+		$objPHPExcel= XPHPExcel::createPHPExcel();
+		$objPHPExcel->getProperties()->setCreator("Grupo Smartliving")
+		->setLastModifiedBy("Maarten Balliauw")
+		->setTitle("Office 2007 XLSX Test Document")
+		->setSubject("Office 2007 XLSX Test Document")
+		->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+		->setKeywords("office 2007 openxml php")
+		->setCategory("Test result file");
+	
+		//sheet 0
+		$sheet = $objPHPExcel->setActiveSheetIndex(0);
+		$row = 1;
+		
+		//INDEX COLUMNS
+		$indexCols = array(
+					'budget'=>'A',
+					'budget_description'=>'B',
+					'version'=>'C',
+					'date'=>'D',
+					'service_name'=>'E',
+					'supplier'=>'F',
+					'brand'=>'G',
+					'model'=>'H',
+					'part_number'=>'I',
+					'quantity'=>'J',
+					'unit_price'=>'K',
+					'importer'=>'L',
+					'shipping_type'=>'M',
+					'shipping_cost'=>'N',
+					'sell_price'=>'O',
+					'short_description_sl'=>'P',
+					'long_description_sl'=>'Q',
+					'dimension'=>array('title'=>'R','length'=>'R','width'=>'S','height'=>'T','unit'=>'U'),
+					'weight'=>'V',
+					'weight_unit'=>'w',
+					'currency'=>'X',
+					);
+		
+		$nextRow = $row +1;
+		//Set headers
+		$sheet->setCellValue($indexCols['budget'].$row, 'Presupuesto');
+		$sheet->mergeCells($indexCols['budget'].$row.':'.$indexCols['budget'].$nextRow);
+		$sheet->setCellValue($indexCols['budget_description'].$row, 'Descripcion');
+		$sheet->mergeCells($indexCols['budget_description'].$row.':'.$indexCols['budget_description'].$nextRow);
+		$sheet->setCellValue($indexCols['version'].$row, 'Version');
+		$sheet->mergeCells($indexCols['version'].$row.':'.$indexCols['version'].$nextRow);
+		$sheet->setCellValue($indexCols['date'].$row, 'Fecha');
+		$sheet->mergeCells($indexCols['date'].$row.':'.$indexCols['date'].$nextRow);
+		$sheet->setCellValue($indexCols['service_name'].$row, 'Servicio');
+		$sheet->mergeCells($indexCols['service_name'].$row.':'.$indexCols['service_name'].$nextRow);
+		$sheet->setCellValue($indexCols['supplier'].$row, 'Proveedor');
+		$sheet->mergeCells($indexCols['supplier'].$row.':'.$indexCols['supplier'].$nextRow);
+		$sheet->setCellValue($indexCols['brand'].$row, 'Marca');
+		$sheet->mergeCells($indexCols['brand'].$row.':'.$indexCols['brand'].$nextRow);
+		$sheet->setCellValue($indexCols['model'].$row, 'Modelo');
+		$sheet->mergeCells($indexCols['model'].$row.':'.$indexCols['model'].$nextRow);
+		$sheet->setCellValue($indexCols['part_number'].$row, 'Part #');
+		$sheet->mergeCells($indexCols['part_number'].$row.':'.$indexCols['part_number'].$nextRow);
+		$sheet->setCellValue($indexCols['quantity'].$row, 'Cantidad');
+		$sheet->mergeCells($indexCols['quantity'].$row.':'.$indexCols['quantity'].$nextRow);
+				
+		
+		$sheet->setCellValue($indexCols['unit_price'].$row, 'Precio dealer (unitario)');
+		$sheet->mergeCells($indexCols['unit_price'].$row.':'.$indexCols['unit_price'].$nextRow);
+		$sheet->setCellValue($indexCols['importer'].$row, 'Importador');
+		$sheet->mergeCells($indexCols['importer'].$row.':'.$indexCols['importer'].$nextRow);
+		$sheet->setCellValue($indexCols['shipping_type'].$row, 'Tipo de envio');
+		$sheet->mergeCells($indexCols['shipping_type'].$row.':'.$indexCols['shipping_type'].$nextRow);
+		$sheet->setCellValue($indexCols['shipping_cost'].$row, 'Costo de envio estimado');
+		$sheet->mergeCells($indexCols['shipping_cost'].$row.':'.$indexCols['shipping_cost'].$nextRow);
+		$sheet->setCellValue($indexCols['sell_price'].$row, 'Precio vendido'); //(valor en la moneda que fue vendido)
+		$sheet->mergeCells($indexCols['sell_price'].$row.':'.$indexCols['sell_price'].$nextRow);
+		
+		$sheet->setCellValue($indexCols['short_description_sl'].$row, 'Titulo Español');
+		$sheet->mergeCells($indexCols['short_description_sl'].$row.':'.$indexCols['short_description_sl'].$nextRow);
+		$sheet->setCellValue($indexCols['long_description_sl'].$row, 'Descripción Español');
+		$sheet->mergeCells($indexCols['long_description_sl'].$row.':'.$indexCols['long_description_sl'].$nextRow);
+		
+		$sheet->setCellValue($indexCols['dimension']['title'].$row, 'Dimensiones');
+		$sheet->mergeCells($indexCols['dimension']['length'].$row.':'.$indexCols['dimension']['unit'].$row);
+		$sheet->setCellValue($indexCols['dimension']['length'].$nextRow, 'Largo');
+		$sheet->setCellValue($indexCols['dimension']['width'].$nextRow, 'Ancho');
+		$sheet->setCellValue($indexCols['dimension']['height'].$nextRow, 'Alto');
+		$sheet->setCellValue($indexCols['dimension']['unit'].$nextRow, 'Unidad');
+		
+		$sheet->setCellValue($indexCols['weight'].$row, 'Peso');
+		$sheet->mergeCells($indexCols['weight'].$row.':'.$indexCols['weight'].$nextRow);
+		$sheet->setCellValue($indexCols['weight_unit'].$row, 'Unidad Peso');
+		$sheet->mergeCells($indexCols['weight_unit'].$row.':'.$indexCols['weight_unit'].$nextRow);
+		
+		$sheet->setCellValue($indexCols['currency'].$row, 'Cambio de moneda');
+		$sheet->mergeCells($indexCols['currency'].$row.':'.$indexCols['currency'].$nextRow);
+		
+		$sheet->getStyle($indexCols['budget'].$row.':'.$indexCols['currency'].$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER) ;
+		$sheet->getStyle($indexCols['budget'].$nextRow.':'.$indexCols['currency'].$nextRow)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER) ;
+		$row = $nextRow + 1;
+		//---------
+		
+		$criteria = new CDbCriteria();
+		$criteria->join = 'LEFT JOIN project_service ps ON (ps.Id_service = t.Id_service and ps.Id_budget = t.Id_budget and t.version_number = ps.version_number)';
+		$criteria->addCondition('t.Id_budget = '.$idBudget);
+		$criteria->addCondition('t.version_number = '.$versionNumber);
+		$criteria->group = 't.Id_service';
+		$criteria->order = 'ps.order ASC';
+		$budgetItemServices = BudgetItem::model()->findAll($criteria);
+		
+		foreach($budgetItemServices as $budgetItemService)
+		{
+			
+			$criteria = new CDbCriteria();
+			$criteria->addCondition('Id_budget = '.$idBudget);
+			$criteria->addCondition('version_number = '.$versionNumber);
+		
+			$serviceCondition = '';
+			if(isset($budgetItemService->Id_service))
+			{
+				$serviceCondition = 'Id_service = '.$budgetItemService->Id_service. ' OR
+															(Id_budget_item in (select Id from budget_item bi
+															where Id_budget = '.$idBudget .'
+															and version_number = '.$versionNumber .'
+															and Id_product is not null
+															and Id_service = '.$budgetItemService->Id_service.' )
+														AND is_included = 1)';
+			}
+			else
+				$serviceCondition = '(Id_service is null and Id_budget_item is null)';
+		
+			$criteria->addCondition($serviceCondition);
+			$criteria->addCondition('Id_product is not null');
+			$criteria->order = 't.order_by_service';
+			$criteria->group = 'Id_product';
+			$criteria->select = '*, SUM(quantity) as sum_quantity';
+			$budgetItems = BudgetItem::model()->findAll($criteria);
+
+			$serviceName = '';
+			if(count($budgetItems)>0)
+			{
+				$serviceName = 'General';
+				if(isset($budgetItemService->service))
+				{
+					$serviceName = $budgetItemService->service->description;
+				}
+			}
+			
+			foreach($budgetItems as $budgetItem)
+			{
+				$sheet->setCellValue($indexCols['budget'].$row, $modelBudget->project->fullDescription);
+				$sheet->setCellValue($indexCols['budget_description'].$row, $modelBudget->description);
+				$sheet->setCellValue($indexCols['version'].$row, $versionNumber);
+				$sheet->setCellValue($indexCols['date'].$row, 1);
+				$sheet->setCellValue($indexCols['service_name'].$row, $serviceName);
+				$sheet->setCellValue($indexCols['supplier'].$row, $budgetItem->product->supplier->business_name);
+				$sheet->setCellValue($indexCols['brand'].$row, $budgetItem->product->brand->description);
+				$sheet->setCellValue($indexCols['model'].$row, $budgetItem->product->model);
+				$sheet->setCellValue($indexCols['part_number'].$row, $budgetItem->product->part_number);
+				$sheet->setCellValue($indexCols['quantity'].$row, $budgetItem->sum_quantity);
+				
+				
+				$sheet->setCellValue($indexCols['importer'].$row, $budgetItem->priceList->importer->contact->description);
+				$sheet->setCellValue($indexCols['shipping_type'].$row, $budgetItem->shippingType->description);
+				
+				$priceListCurrency = $budgetItem->priceList->currency->short_description;
+				
+				$modelPriceListItem = PriceListItem::model()->findByAttributes(array('Id_product'=>$budgetItem->Id_product,
+															'Id_price_list'=>$budgetItem->Id_price_list));
+				if(isset($modelPriceListItem))
+				{
+					if($budgetItem->Id_shipping_type == 1)
+						$sheet->setCellValue($indexCols['shipping_cost'].$row, $priceListCurrency.' '.$modelPriceListItem->maritime_cost);
+					else 
+						$sheet->setCellValue($indexCols['shipping_cost'].$row, $priceListCurrency.' '.$modelPriceListItem->air_cost);
+
+					$sheet->setCellValue($indexCols['unit_price'].$row, $priceListCurrency.' '.$modelPriceListItem->dealer_cost);
+				}
+				
+				$sheet->setCellValue($indexCols['sell_price'].$row, $currency.' '.self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor)); //(valor en la moneda que fue vendido)
+				
+				$short_description = $budgetItem->product->description_customer!=""?$budgetItem->product->description_customer:$budgetItem->product->short_description;
+				$long_description = nl2br($budgetItem->product->description_supplier!=""?$budgetItem->product->description_supplier:$budgetItem->product->long_description);
+				
+				$sheet->setCellValue($indexCols['short_description_sl'].$row, $short_description);
+				$sheet->setCellValue($indexCols['long_description_sl'].$row, $long_description);
+				$sheet->setCellValue($indexCols['dimension']['length'].$row, $budgetItem->product->length);
+				$sheet->setCellValue($indexCols['dimension']['width'].$row, $budgetItem->product->width);
+				$sheet->setCellValue($indexCols['dimension']['height'].$row, $budgetItem->product->height);
+				$sheet->setCellValue($indexCols['dimension']['unit'].$row, $budgetItem->product->measurementUnitLinear->short_description);
+								
+				$sheet->setCellValue($indexCols['weight'].$row, $budgetItem->product->weight);
+				$sheet->setCellValue($indexCols['weight_unit'].$row, $budgetItem->product->measurementUnitWeight->short_description);
+				$sheet->setCellValue($indexCols['currency'].$row, $budgetItem->Id_product);
+				
+				$row++;
+			}
+		}
+		
+		$filename = self::getExportedFileName($modelBudget,'xls');
+		
+		// Rename worksheet
+		$objPHPExcel->getActiveSheet()->setTitle('Simple');
+	
+		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+		$objPHPExcel->setActiveSheetIndex(0);
+	
+		// Redirect output to a client web browser (Excel5)
+		header('Content-Type: application/vnd.ms-excel');
+		//header('Content-Disposition: attachment;filename="'.$fileName.'.xls"');
+		header('Content-Disposition: attachment;filename="'.$filename.'"');
+		header('Cache-Control: max-age=0');
+		// If you're serving to IE 9, then the following may be needed
+		header('Cache-Control: max-age=1');
+	
+		// If you're serving to IE over SSL, then the following may be needed
+		header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+		header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+		header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+		header ('Pragma: public'); // HTTP/1.0
+	
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+		$objWriter->save('php://output');
+		Yii::app()->end();
+	}
+	
 	static public function importMeasuresFromExcel($modelUpload, $modelMeasureImportLog)
 	{		
 		$Id_linear = $modelMeasureImportLog->Id_measurement_unit_linear;
