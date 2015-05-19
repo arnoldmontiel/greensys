@@ -68,6 +68,19 @@ class BudgetController extends GController
 		}
 	}
 	
+	public function actionDownloadXLSX($id, $version)
+	{
+	
+		if(isset($id) && isset($version))
+		{
+			$modelBudget = $this->loadModel($id, $version);
+			if(isset($modelBudget))
+			{
+				GreenHelper::generateBudgetXLSX($modelBudget);
+			}
+		}
+	}
+	
 	public function actionReadOnly()
 	{
 		$this->render('readOnly');
