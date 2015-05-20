@@ -853,16 +853,17 @@ class GreenHelper
 					'part_number'=>'I',
 					'quantity'=>'J',
 					'unit_price'=>'K',
-					'importer'=>'L',
-					'shipping_type'=>'M',
-					'shipping_cost'=>'N',
-					'sell_price'=>'O',
-					'short_description_sl'=>'P',
-					'long_description_sl'=>'Q',
-					'dimension'=>array('title'=>'R','length'=>'R','width'=>'S','height'=>'T','unit'=>'U'),
-					'weight'=>'V',
-					'weight_unit'=>'w',
-					'currency'=>'X',
+					'unit_price_currency'=>'L',
+					'importer'=>'M',
+					'shipping_type'=>'N',
+					'shipping_cost'=>'O',
+					'sell_price'=>'P',
+					'short_description_sl'=>'Q',
+					'long_description_sl'=>'R',
+					'dimension'=>array('title'=>'S','length'=>'S','width'=>'T','height'=>'U','unit'=>'V'),
+					'weight'=>'W',
+					'weight_unit'=>'X',
+					'currency'=>'Y',
 					);
 		
 		$nextRow = $row +1;
@@ -890,7 +891,9 @@ class GreenHelper
 				
 		
 		$sheet->setCellValue($indexCols['unit_price'].$row, 'Precio dealer (unitario)');
-		$sheet->mergeCells($indexCols['unit_price'].$row.':'.$indexCols['unit_price'].$nextRow);
+		$sheet->mergeCells($indexCols['unit_price'].$row.':'.$indexCols['unit_price'].$nextRow);		
+		$sheet->setCellValue($indexCols['unit_price_currency'].$row, 'Tipo de Cambio');
+		$sheet->mergeCells($indexCols['unit_price_currency'].$row.':'.$indexCols['unit_price_currency'].$nextRow);
 		$sheet->setCellValue($indexCols['importer'].$row, 'Importador');
 		$sheet->mergeCells($indexCols['importer'].$row.':'.$indexCols['importer'].$nextRow);
 		$sheet->setCellValue($indexCols['shipping_type'].$row, 'Tipo de envio');
@@ -1002,6 +1005,20 @@ class GreenHelper
 					$sheet->setCellValue($indexCols['unit_price'].$row, $priceListCurrency.' '.$modelPriceListItem->dealer_cost);
 				}
 				
+				$currencyValue = '-';
+				if(isset($budgetItem->priceList->Id_currency))
+				{
+					$modelCurrencyConversor = CurrencyConversor::model()->findByAttributes(array(
+							'Id_currency_from'=>$budgetItem->priceList->Id_currency,
+							'Id_currency_to'=>$modelBudget->Id_currency));
+						
+					if(isset($modelCurrencyConversor))
+						$currencyValue = $modelCurrencyConversor->factor;
+				}
+					
+				$sheet->setCellValue($indexCols['unit_price_currency'].$row, $currencyValue);
+				
+				
 				$sheet->setCellValue($indexCols['sell_price'].$row, $currency.' '.self::showPrice(($budgetItem->getTotalPriceCurrencyConvertedByService())/$commissionFactor)); //(valor en la moneda que fue vendido)
 				
 				$short_description = $budgetItem->product->description_customer!=""?$budgetItem->product->description_customer:$budgetItem->product->short_description;
@@ -1017,18 +1034,10 @@ class GreenHelper
 				$sheet->setCellValue($indexCols['weight'].$row, $budgetItem->product->weight);
 				$sheet->setCellValue($indexCols['weight_unit'].$row, $budgetItem->product->measurementUnitWeight->short_description);
 				
-				$currencyValue = '-';
-				if(isset($budgetItem->priceList->Id_currency))
-				{
-					$modelCurrencyConversor = CurrencyConversor::model()->findByAttributes(array(
-																'Id_currency_from'=>$budgetItem->priceList->Id_currency,
-																'Id_currency_to'=>$modelBudget->Id_currency));
-					
-					if(isset($modelCurrencyConversor))
-						$currencyValue = $modelCurrencyConversor->factor;
-				}
-					
-				$sheet->setCellValue($indexCols['currency'].$row, $currencyValue);
+				if(isset($modelBudget->Id_currency_conversor))
+					$sheet->setCellValue($indexCols['currency'].$row, $modelBudget->currencyConversor->factor);
+				else
+					$sheet->setCellValue($indexCols['currency'].$row, '-');
 				
 				$row++;
 			}
