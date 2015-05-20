@@ -1017,10 +1017,18 @@ class GreenHelper
 				$sheet->setCellValue($indexCols['weight'].$row, $budgetItem->product->weight);
 				$sheet->setCellValue($indexCols['weight_unit'].$row, $budgetItem->product->measurementUnitWeight->short_description);
 				
-				if(isset($modelBudget->Id_currency_conversor))
-					$sheet->setCellValue($indexCols['currency'].$row, $modelBudget->currencyConversor->factor);
-				else
-					$sheet->setCellValue($indexCols['currency'].$row, '-');
+				$currencyValue = '-';
+				if(isset($budgetItem->priceList->Id_currency))
+				{
+					$modelCurrencyConversor = CurrencyConversor::model()->findByAttributes(array(
+																'Id_currency_from'=>$budgetItem->priceList->Id_currency,
+																'Id_currency_to'=>$modelBudget->Id_currency));
+					
+					if(isset($modelCurrencyConversor))
+						$currencyValue = $modelCurrencyConversor->factor;
+				}
+					
+				$sheet->setCellValue($indexCols['currency'].$row, $currencyValue);
 				
 				$row++;
 			}
