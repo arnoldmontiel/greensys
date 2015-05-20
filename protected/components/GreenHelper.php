@@ -864,6 +864,23 @@ class GreenHelper
 					'weight'=>'W',
 					'weight_unit'=>'X',
 					'currency'=>'Y',
+					
+					'basic_information'=>array('title'=>'Z',
+										'category'=>'Z',
+										'sub_category'=>'AA',
+										'product_type'=>'AB'),
+					
+					'extra'=>array('title'=>'AC',
+							'hide'=>'AC',
+							'discontinued'=>'AD',
+							'volts'=>'AE',
+							'need_rack'=>'AF',
+							'unit_rack'=>'AG',
+							'color'=>'AH'),
+				
+					'hours'=>array('title'=>'AI',
+							'instalation'=>'AI',
+							'programation'=>'AJ'),
 					);
 		
 		$nextRow = $row +1;
@@ -923,8 +940,28 @@ class GreenHelper
 		$sheet->setCellValue($indexCols['currency'].$row, 'Cambio de moneda');
 		$sheet->mergeCells($indexCols['currency'].$row.':'.$indexCols['currency'].$nextRow);
 		
-		$sheet->getStyle($indexCols['budget'].$row.':'.$indexCols['currency'].$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER) ;
-		$sheet->getStyle($indexCols['budget'].$nextRow.':'.$indexCols['currency'].$nextRow)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER) ;
+		$sheet->setCellValue($indexCols['basic_information']['title'].$row, 'Informacion basica');
+		$sheet->mergeCells($indexCols['basic_information']['category'].$row.':'.$indexCols['basic_information']['product_type'].$row);
+		$sheet->setCellValue($indexCols['basic_information']['category'].$nextRow, 'Categoria');
+		$sheet->setCellValue($indexCols['basic_information']['sub_category'].$nextRow, 'Subcategoria');
+		$sheet->setCellValue($indexCols['basic_information']['product_type'].$nextRow, 'Tipo');			
+					
+		$sheet->setCellValue($indexCols['extra']['title'].$row, 'Extra');
+		$sheet->mergeCells($indexCols['extra']['hide'].$row.':'.$indexCols['extra']['color'].$row);
+		$sheet->setCellValue($indexCols['extra']['hide'].$nextRow, 'Oculto');
+		$sheet->setCellValue($indexCols['extra']['discontinued'].$nextRow, 'Descontinuado');
+		$sheet->setCellValue($indexCols['extra']['volts'].$nextRow, 'Voltaje');
+		$sheet->setCellValue($indexCols['extra']['need_rack'].$nextRow, 'Necesita Rack');
+		$sheet->setCellValue($indexCols['extra']['unit_rack'].$nextRow, 'Unidades Rack');
+		$sheet->setCellValue($indexCols['extra']['color'].$nextRow, 'Color');
+		
+		$sheet->setCellValue($indexCols['hours']['title'].$row, 'Horas');
+		$sheet->mergeCells($indexCols['hours']['instalation'].$row.':'.$indexCols['hours']['programation'].$row);
+		$sheet->setCellValue($indexCols['hours']['instalation'].$nextRow, 'Instalacion');
+		$sheet->setCellValue($indexCols['hours']['programation'].$nextRow, 'Programacion');
+			
+		$sheet->getStyle($indexCols['budget'].$row.':'.$indexCols['hours']['programation'].$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER) ;
+		$sheet->getStyle($indexCols['budget'].$nextRow.':'.$indexCols['hours']['programation'].$nextRow)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER) ;
 		$row = $nextRow + 1;
 		//---------
 		
@@ -1038,6 +1075,23 @@ class GreenHelper
 					$sheet->setCellValue($indexCols['currency'].$row, $modelBudget->currencyConversor->factor);
 				else
 					$sheet->setCellValue($indexCols['currency'].$row, '-');
+				
+				//BASIC INFO				
+				$sheet->setCellValue($indexCols['basic_information']['category'].$row, $budgetItem->product->category->description);
+				$sheet->setCellValue($indexCols['basic_information']['sub_category'].$row, $budgetItem->product->subCategory->description);
+				$sheet->setCellValue($indexCols['basic_information']['product_type'].$row, $budgetItem->product->productType->description);
+				
+				//EXTRA
+				$sheet->setCellValue($indexCols['extra']['hide'].$row, ($budgetItem->product->hide == 0)?'No':'Si');
+				$sheet->setCellValue($indexCols['extra']['discontinued'].$row, ($budgetItem->product->discontinued == 0)?'No':'Si');
+				$sheet->setCellValue($indexCols['extra']['volts'].$row, (isset($budgetItem->product->Id_volts))?$budgetItem->product->volts->volts:'-');
+				$sheet->setCellValue($indexCols['extra']['need_rack'].$row, ($budgetItem->product->need_rack == 0)?'No':'Si');
+				$sheet->setCellValue($indexCols['extra']['unit_rack'].$row, $budgetItem->product->unit_rack);
+				$sheet->setCellValue($indexCols['extra']['color'].$row, $budgetItem->product->color);
+				
+				//HOURS
+				$sheet->setCellValue($indexCols['hours']['instalation'].$row, $budgetItem->product->time_instalation);
+				$sheet->setCellValue($indexCols['hours']['programation'].$row, $budgetItem->product->time_programation);
 				
 				$row++;
 			}
