@@ -250,8 +250,8 @@ class Product extends ModelAudit
 			'Id_category' => 'Categoría',
 			'Id_nomenclator' => 'Nomenclator',
 			'Id_product_type' => 'Tipo',
-			'description_customer' => 'Corta SL',
-			'description_supplier' => 'Larga SL',
+			'description_customer' => 'Título Español',//antes Corta SL
+			'description_supplier' => 'Descripción Español',//Larga SL
 			'code' => 'Code',
 			'code_supplier' => 'Code Supplier',
 			'discontinued' => 'Descontinuado',
@@ -286,8 +286,8 @@ class Product extends ModelAudit
 			'category_description'=>'Categoría',
 			'date_creation' => 'Date Creation',
 			'from_dtools' => 'From Dtools',
-			'long_description' => 'Larga',
-			'short_description' => 'Corta',
+			'long_description' => 'Descripción Ingles',// antes Larga
+			'short_description' => 'Título Ingles',//antes Corta
 			'part_number' => 'Part Number',
 			'url' => 'Url',
 			'tags' => 'Tags',
