@@ -2379,6 +2379,20 @@ class BudgetController extends GController
 					$item->Id_currency_to_currency_conversor = $modelCurrencyConversor->Id_currency_to;
 					$item->save();
 				}
+				else 
+				{
+					$modelCurrencyConversor = CurrencyConversor::model()->findByAttributes(array(
+							'Id_currency_from'=>$item->budget->Id_currency,
+							'Id_currency_to'=>$item->priceList->Id_currency),array('order'=>'Id DESC'));
+					
+					if(isset($modelCurrencyConversor))
+					{
+						$item->Id_currency_conversor = $modelCurrencyConversor->Id;
+						$item->Id_currency_from_currency_conversor = $modelCurrencyConversor->Id_currency_to;
+						$item->Id_currency_to_currency_conversor = $modelCurrencyConversor->Id_currency_from;
+						$item->save();
+					}
+				}
 			}
 		}
 		echo "Listo!";
