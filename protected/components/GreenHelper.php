@@ -1048,14 +1048,25 @@ class GreenHelper
 				}
 				
 				$currencyValue = '-';
-				if(isset($budgetItem->priceList->Id_currency))
+				if(isset($budgetItem->Id_currency_conversor))
 				{
-					$modelCurrencyConversor = CurrencyConversor::model()->findByAttributes(array(
-							'Id_currency_from'=>$budgetItem->priceList->Id_currency,
-							'Id_currency_to'=>$modelBudget->Id_currency));
-						
+					$modelCurrencyConversor = CurrencyConversor::model()->findByAttributes(
+															array('Id'=>$budgetItem->Id_currency_conversor,
+																	'Id_currency_from'=>$budgetItem->Id_currency_from_currency_conversor,
+																	'Id_currency_to'=>$budgetItem->Id_currency_to_currency_conversor));
 					if(isset($modelCurrencyConversor))
 						$currencyValue = $modelCurrencyConversor->factor;
+					else
+					{
+						$modelCurrencyConversor = CurrencyConversor::model()->findByAttributes(
+								array('Id'=>$budgetItem->Id_currency_conversor,
+										'Id_currency_from'=>$budgetItem->Id_currency_to_currency_conversor,
+										'Id_currency_to'=>$budgetItem->Id_currency_from_currency_conversor));
+						
+						if(isset($modelCurrencyConversor))
+							if($modelCurrencyConversor->factor > 0)
+								$currencyValue = 1 / $modelCurrencyConversor->factor;
+					}
 				}
 					
 				$sheet->setCellValue($indexCols['unit_price_currency'].$row, $currencyValue);
