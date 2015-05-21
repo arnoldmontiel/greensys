@@ -2359,5 +2359,5 @@ class BudgetController extends GController
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
-	}
+	} 
 }
