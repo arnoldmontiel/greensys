@@ -624,7 +624,7 @@ class BudgetController extends GController
 				else
 				{
 					$modelBudgetItemBD = new BudgetItem();
-					
+					$modelBudget = Budget::model()->findByPk(array('Id'=>$idBudget,'version_number'=>$version));
 					$modelProduct = Product::model()->findByPk($idProduct);
 					
 					if(isset($modelProduct))
@@ -671,7 +671,32 @@ class BudgetController extends GController
 								$modelBudgetItemBD->price = $modelPriceListItem->getMaritimeSalePrice();
 							}
 						}
-						
+						if(isset($modelPriceListItem))
+						{
+							$modelBudgetItemBD->Id_currency_from_currency_conversor = $modelPriceListItem->priceList->Id_currency;
+							$modelBudgetItemBD->Id_currency_to_currency_conversor = $modelBudget->Id_currency;
+							
+							$criteria = new CDbCriteria();
+							$criteria->addCondition('Id_currency_from='.$modelBudgetItemBD->Id_currency_from_currency_conversor);
+							$criteria->addCondition('Id_currency_to='.$modelBudgetItemBD->Id_currency_to_currency_conversor);
+							$criteria->order = 'Id DESC';
+								
+							$currencyConversor= CurrencyConversor::model()->find($criteria);
+							if(isset($currencyConversor))
+							{
+								$modelBudgetItemBD->Id_currency_conversor = $currencyConversor->Id;
+							}
+							else
+							{
+								$criteria = new CDbCriteria();
+								$criteria->addCondition('Id_currency_from='.$modelBudgetItemBD->Id_currency_to_currency_conversor);
+								$criteria->addCondition('Id_currency_to='.$modelBudgetItemBD->Id_currency_from_currency_conversor);
+								$criteria->order = 'Id DESC';
+								$currencyConversor= CurrencyConversor::model()->find($criteria);
+								if(isset($currencyConversor))
+									$modelBudgetItemBD->Id_currency_conversor = $currencyConversor->Id;
+							}
+						}
 						$modelBudgetItemBD->time_programation = $modelProduct->time_programation;
 						$modelBudgetItemBD->time_instalation = $modelProduct->time_instalation;
 						$modelBudgetItemBD->Id_area = $idArea;
@@ -1463,7 +1488,30 @@ class BudgetController extends GController
 			{
 				$modelBudgetItem->price =round($modelPriceListItem->getAirSalePrice(),2);				
 			}
-			var_dump($modelBudgetItem);
+			
+			$modelBudgetItem->Id_currency_from_currency_conversor = $modelPriceListItem->priceList->Id_currency;
+			$modelBudgetItem->Id_currency_to_currency_conversor = $modelBudgetItem->budget->Id_currency;
+				
+			$criteria = new CDbCriteria();
+			$criteria->addCondition('Id_currency_from='.$modelBudgetItem->Id_currency_from_currency_conversor);
+			$criteria->addCondition('Id_currency_to='.$modelBudgetItem->Id_currency_to_currency_conversor);
+			$criteria->order = 'Id DESC';
+			
+			$currencyConversor= CurrencyConversor::model()->find($criteria);
+			if(isset($currencyConversor))
+			{
+				$modelBudgetItem->Id_currency_conversor = $currencyConversor->Id;
+			}
+			else
+			{
+				$criteria = new CDbCriteria();
+				$criteria->addCondition('Id_currency_from='.$modelBudgetItem->Id_currency_to_currency_conversor);
+				$criteria->addCondition('Id_currency_to='.$modelBudgetItem->Id_currency_from_currency_conversor);
+				$criteria->order = 'Id DESC';
+				$currencyConversor= CurrencyConversor::model()->find($criteria);
+				if(isset($currencyConversor))
+					$modelBudgetItem->Id_currency_conversor = $currencyConversor->Id;
+			}
 			$modelBudgetItem->save();
 		}
 	}
@@ -2359,5 +2407,43 @@ class BudgetController extends GController
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+
+	public function actionAjaxSaveCurrencyConversor()
+	{
+		$modelBudgetItems = BudgetItem::model()->findAllByAttributes(array('Id_currency_conversor'=>null));
+		foreach($modelBudgetItems as $item)
+		{
+			if(isset($item->priceList->Id_currency))
+			{
+				$modelCurrencyConversor = CurrencyConversor::model()->findByAttributes(array(
+						'Id_currency_from'=>$item->priceList->Id_currency,
+						'Id_currency_to'=>$item->budget->Id_currency),array('order'=>'Id DESC'));
+					
+				if(isset($modelCurrencyConversor))
+				{
+					$item->Id_currency_conversor = $modelCurrencyConversor->Id;
+					$item->Id_currency_from_currency_conversor = $modelCurrencyConversor->Id_currency_from;
+					$item->Id_currency_to_currency_conversor = $modelCurrencyConversor->Id_currency_to;
+					$item->save();
+				}
+				else 
+				{
+					$modelCurrencyConversor = CurrencyConversor::model()->findByAttributes(array(
+							'Id_currency_from'=>$item->budget->Id_currency,
+							'Id_currency_to'=>$item->priceList->Id_currency),array('order'=>'Id DESC'));
+					
+					if(isset($modelCurrencyConversor))
+					{
+						$item->Id_currency_conversor = $modelCurrencyConversor->Id;
+						$item->Id_currency_from_currency_conversor = $modelCurrencyConversor->Id_currency_to;
+						$item->Id_currency_to_currency_conversor = $modelCurrencyConversor->Id_currency_from;
+						$item->save();
+					}
+				}
+			}
+		}
+		echo "Listo!";
+		exit;
 	}
 }
