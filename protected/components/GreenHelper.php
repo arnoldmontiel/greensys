@@ -860,7 +860,10 @@ class GreenHelper
 					'sell_price'=>'P',
 					'short_description_sl'=>'Q',
 					'long_description_sl'=>'R',
-					'dimension'=>array('title'=>'S','length'=>'S','width'=>'T','height'=>'U','unit'=>'V'),
+					'length'=>'S',
+					'width'=>'T',
+					'height'=>'U',
+					'unit'=>'V',
 					'weight'=>'W',
 					'weight_unit'=>'X',
 					'currency'=>'Y',
@@ -925,19 +928,21 @@ class GreenHelper
 		$sheet->setCellValue($indexCols['long_description_sl'].$row, 'Descripción Español');
 		$sheet->mergeCells($indexCols['long_description_sl'].$row.':'.$indexCols['long_description_sl'].$nextRow);
 		
-		$sheet->setCellValue($indexCols['dimension']['title'].$row, 'Dimensiones');
-		$sheet->mergeCells($indexCols['dimension']['length'].$row.':'.$indexCols['dimension']['unit'].$row);
-		$sheet->setCellValue($indexCols['dimension']['length'].$nextRow, 'Largo');
-		$sheet->setCellValue($indexCols['dimension']['width'].$nextRow, 'Ancho');
-		$sheet->setCellValue($indexCols['dimension']['height'].$nextRow, 'Alto');
-		$sheet->setCellValue($indexCols['dimension']['unit'].$nextRow, 'Unidad');
+		$sheet->setCellValue($indexCols['length'].$row, 'Largo');
+		$sheet->mergeCells($indexCols['length'].$row.':'.$indexCols['length'].$nextRow);
+		$sheet->setCellValue($indexCols['width'].$row, 'Ancho');
+		$sheet->mergeCells($indexCols['width'].$row.':'.$indexCols['width'].$nextRow);
+		$sheet->setCellValue($indexCols['height'].$row, 'Alto');
+		$sheet->mergeCells($indexCols['height'].$row.':'.$indexCols['height'].$nextRow);
+		$sheet->setCellValue($indexCols['unit'].$row, 'Unidad');
+		$sheet->mergeCells($indexCols['unit'].$row.':'.$indexCols['unit'].$nextRow);
 		
 		$sheet->setCellValue($indexCols['weight'].$row, 'Peso');
 		$sheet->mergeCells($indexCols['weight'].$row.':'.$indexCols['weight'].$nextRow);
 		$sheet->setCellValue($indexCols['weight_unit'].$row, 'Unidad Peso');
 		$sheet->mergeCells($indexCols['weight_unit'].$row.':'.$indexCols['weight_unit'].$nextRow);
 		
-		$sheet->setCellValue($indexCols['currency'].$row, 'Cambio de moneda');
+		$sheet->setCellValue($indexCols['currency'].$row, 'Cambio de moneda de entrega');
 		$sheet->mergeCells($indexCols['currency'].$row.':'.$indexCols['currency'].$nextRow);
 		
 		$sheet->setCellValue($indexCols['basic_information']['title'].$row, 'Informacion basica');
@@ -1063,10 +1068,10 @@ class GreenHelper
 				
 				$sheet->setCellValue($indexCols['short_description_sl'].$row, $short_description);
 				$sheet->setCellValue($indexCols['long_description_sl'].$row, $long_description);
-				$sheet->setCellValue($indexCols['dimension']['length'].$row, $budgetItem->product->length);
-				$sheet->setCellValue($indexCols['dimension']['width'].$row, $budgetItem->product->width);
-				$sheet->setCellValue($indexCols['dimension']['height'].$row, $budgetItem->product->height);
-				$sheet->setCellValue($indexCols['dimension']['unit'].$row, $budgetItem->product->measurementUnitLinear->short_description);
+				$sheet->setCellValue($indexCols['length'].$row, $budgetItem->product->length);
+				$sheet->setCellValue($indexCols['width'].$row, $budgetItem->product->width);
+				$sheet->setCellValue($indexCols['height'].$row, $budgetItem->product->height);
+				$sheet->setCellValue($indexCols['unit'].$row, $budgetItem->product->measurementUnitLinear->short_description);
 								
 				$sheet->setCellValue($indexCols['weight'].$row, $budgetItem->product->weight);
 				$sheet->setCellValue($indexCols['weight_unit'].$row, $budgetItem->product->measurementUnitWeight->short_description);
