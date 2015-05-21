@@ -251,7 +251,7 @@ class BudgetItem extends ModelAudit
 		// will receive user inputs.
 		return array(
 			array('Id_budget, version_number', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
-			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type, Id_area, Id_area_project, Id_service, is_included, discount_type, order_by_service, service_type, hide', 'numerical', 'integerOnly'=>true),
+			array('Id_product, Id_budget, version_number, Id_budget_item, Id_price_list, Id_shipping_type, Id_area, Id_area_project, Id_service, is_included, discount_type, order_by_service, service_type, hide,Id_currency_conversor, Id_currency_from_currency_conversor, Id_currency_to_currency_conversor', 'numerical', 'integerOnly'=>true),
 			array('price, quantity, discount, time_programation, time_instalation', 'length', 'max'=>10),
 			array('description', 'length', 'max'=>255),
 			// The following rule is used by search().
