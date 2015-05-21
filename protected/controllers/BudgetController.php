@@ -2359,5 +2359,29 @@ class BudgetController extends GController
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
-	} 
+	}
+
+	public function actionAjaxSaveCurrencyConversor()
+	{
+		$modelBudgetItems = BudgetItem::model()->findAllByAttributes(array('Id_currency_conversor'=>null));
+		foreach($modelBudgetItems as $item)
+		{
+			if(isset($item->priceList->Id_currency))
+			{
+				$modelCurrencyConversor = CurrencyConversor::model()->findByAttributes(array(
+						'Id_currency_from'=>$item->priceList->Id_currency,
+						'Id_currency_to'=>$item->budget->Id_currency),array('order'=>'Id DESC'));
+					
+				if(isset($modelCurrencyConversor))
+				{
+					$item->Id_currency_conversor = $modelCurrencyConversor->Id;
+					$item->Id_currency_from_currency_conversor = $modelCurrencyConversor->Id_currency_from;
+					$item->Id_currency_to_currency_conversor = $modelCurrencyConversor->Id_currency_to;
+					$item->save();
+				}
+			}
+		}
+		echo "Listo!";
+		exit;
+	}
 }
