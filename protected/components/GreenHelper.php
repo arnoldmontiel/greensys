@@ -1048,12 +1048,9 @@ class GreenHelper
 				}
 				
 				$currencyValue = '-';
-				if(isset($budgetItem->priceList->Id_currency))
+				if(isset($budgetItem->Id_currency_conversor))
 				{
-					$modelCurrencyConversor = CurrencyConversor::model()->findByAttributes(array(
-							'Id_currency_from'=>$budgetItem->priceList->Id_currency,
-							'Id_currency_to'=>$modelBudget->Id_currency));
-						
+					$modelCurrencyConversor = CurrencyConversor::model()->findByAttributes(array('Id'=>$budgetItem->Id_currency_conversor));
 					if(isset($modelCurrencyConversor))
 						$currencyValue = $modelCurrencyConversor->factor;
 				}
