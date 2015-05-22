@@ -1039,10 +1039,11 @@ class GreenHelper
 															'Id_price_list'=>$budgetItem->Id_price_list));
 				if(isset($modelPriceListItem))
 				{
+					$chippingUnit = $budgetItem->priceList->importer->shippingParameters[0]->currency->short_description;
 					if($budgetItem->Id_shipping_type == 1)
-						$sheet->setCellValue($indexCols['shipping_cost'].$row, $priceListCurrency.' '.$modelPriceListItem->maritime_cost);
+						$sheet->setCellValue($indexCols['shipping_cost'].$row, $chippingUnit.' '.$modelPriceListItem->maritime_cost);
 					else 
-						$sheet->setCellValue($indexCols['shipping_cost'].$row, $priceListCurrency.' '.$modelPriceListItem->air_cost);
+						$sheet->setCellValue($indexCols['shipping_cost'].$row, $chippingUnit.' '.$modelPriceListItem->air_cost);
 
 					$sheet->setCellValue($indexCols['unit_price'].$row, $priceListCurrency.' '.$modelPriceListItem->dealer_cost);
 				}
