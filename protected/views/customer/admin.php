@@ -30,7 +30,7 @@
 						array(
 								'name'=>'name',
 								'value'=>'$data->person->name',
-								'htmlOptions'=>array("style"=>"width:15%;"),
+								'htmlOptions'=>array("style"=>"width:10%;"),
 						),
 						array(
 								'header'=>'Telefono',
@@ -95,13 +95,19 @@
 								'htmlOptions'=>array("style"=>"width:20%;"),
 						),
 						array(
-						'header'=>'Acciones',
-						'value'=>'"<div class=\"buttonsTable\"><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"viewCustomer(".$data->Id.");\" ><i class=\"fa fa-eye\"></i> Ver</button><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"updateCustomer(".$data->Id.");\" ><i class=\"fa fa-pencil\"></i> Editar</button></div>"',
-						'type'=>'raw',
-						'htmlOptions'=>array("style"=>"text-align:right;"),
-						'headerHtmlOptions'=>array("style"=>"text-align:right;"),
-				),
-						
+								'header'=>'Acciones',
+								'value'=>function($data){
+									$grid = "'budget-grid-open'";
+									return '<div class="buttonsTable">
+												<button onclick="viewCustomer('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-eye"></i> Ver</button>
+												<button onclick="updateCustomer('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
+												<button onclick="removeCustomer('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>
+											</div>';
+								},
+								'type'=>'raw',
+								'htmlOptions'=>array("style"=>"width:20%;text-align:right;"),
+								'headerHtmlOptions'=>array("style"=>"text-align:right;"),
+						),
 			),
 		)); 
 		?>
@@ -115,7 +121,7 @@
 <script type="text/javascript">
 function openNewCustomer()
 {
-	$.post("<?php echo BudgetController::createUrl('AjaxOpenNewCustomer'); ?>"
+	$.post("<?php echo CustomerController::createUrl('AjaxOpenNewCustomer'); ?>"
 	).success(
 		function(data){
 			$('#myModalFormCustomer').html(data);
@@ -123,28 +129,12 @@ function openNewCustomer()
 		});
 }
 
-$('#createCustomer').click(
-		function(){
-			$.post(
-			'<?php echo CustomerController::createUrl('customer/AjaxShowCreateModal')?>',{field_caller:'custoemr-grid'}).success(
-					function(data)
-					{
-					if(data!=null)
-					{	
-						$('#modalPlaceHolder').html(data);
-						$('#modalPlaceHolder').modal('show');
-					}
-				}
-			);
-		return false;
-		}
-		);
-function deleteCustomer(id)
+function removeCustomer(id)
 {
 	if(confirm("¿Seguro desea eliminar el cliente?"))
 	{
 		$.post(
-				'<?php echo CustomerController::createUrl('customer/AjaxDelete')?>',{id:id}).success(
+				'<?php echo CustomerController::createUrl('AjaxDelete')?>',{id:id}).success(
 						function(data)
 						{
 							$.fn.yiiGridView.update('customer-grid');
