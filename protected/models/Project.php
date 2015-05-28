@@ -20,18 +20,7 @@
 class Project extends ModelAudit
 {
 	public $contact_description;
-	public function afterSave()
-	{
-		parent::afterSave();
-		$project = TProject::model()->findByPk($this->Id);
-		if(!isset($project))
-		{
-			$project = new TProject();
-		}
-		$project->Id = $this->Id;
-		$project->Id_customer = $this->Id_customer;
-		$project->save();
-	}
+	
 	public function afterDelete()
 	{
 		parent::afterDelete();		

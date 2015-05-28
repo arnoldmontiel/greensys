@@ -143,14 +143,13 @@
 						<button type="button" onclick="addMail();" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> Agregar Correo</button>
 					</div>
 				</div>
+				<div class="row">
+			  		<?php echo $this->renderPartial('_formAddress',array('modelCustomer'=>$modelCustomer)); ?>
+				</div>
 				<div class="form-group">
   					<label for="campoTelefono">Notas</label>
     				<?php echo CHtml::activeTextArea($modelContact,'comment',array("class"=>"form-control","rows"=>'8')); ?>
   				</div>
-				<div class="form-group">
-					<label for="campoDireccion">Direcci&oacute;n</label>
-					<input class="form-control" name="campoDireccion" type="text" >
-				</div>
 			</form>			
  
  			<div id="summary-error">	 			
@@ -307,4 +306,5 @@ $("#form-new-customer").submit(function(e)
 	});
 	e.preventDefault(); //Prevent Default action.
 });
+
 </script>
