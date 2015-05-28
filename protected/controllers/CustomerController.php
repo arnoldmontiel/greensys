@@ -291,4 +291,138 @@ class CustomerController extends GController
 			Yii::app()->end();
 		}
 	}
+	
+	public function actionAjaxOpenNewCustomer()
+	{
+		$modelCustomer=new Customer();
+		$modelContact=new Contact();
+		$modelPerson=new Person();
+	
+		echo $this->renderPartial('_modalFormCustomer', 
+					array('modelCustomer'=>new Customer(),
+					'modelContact'=>new Contact(),
+					'modelPerson'=>new Person()),
+					/*parametros extras para que funcione CJuiDatePicker*/
+					false,true);
+	}
+	
+	public function actionAjaxSaveNewCustomer()
+	{	
+		if(isset($_POST['Person'])&&isset($_POST['Contact']))
+		{
+			$modelCustomer=new Customer();
+			$modelContact=new Contact();
+			$modelPerson=new Person();
+			
+			$valid = true;
+			$contactErrors = array();
+			$personErrors = array();
+			$modelContact->attributes=$_POST['Contact'];
+			$modelPerson->attributes=$_POST['Person'];			
+			$transaction = $modelCustomer->dbConnection->beginTransaction();
+			try {				
+		
+				if(!$modelPerson->validate() || !$modelPerson->save())
+					$valid = false;
+		
+				if(!$modelContact->validate() || !$modelContact->save())
+					$valid = false;
+				
+				$modelCustomer->Id_contact = $modelContact->Id;
+				$modelCustomer->Id_person = $modelPerson->Id;
+		
+				if(!$modelCustomer->validate() || !$modelCustomer->save())
+					$valid = false;				
+								
+				if($valid)
+				{
+					$transaction->commit();
+				}
+				else 
+				{
+					$contactErrors = $modelContact->getErrors();
+					$personErrors = $modelPerson->getErrors();
+					$transaction->rollback();
+				}
+				
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
+		}
+	
+		$response = array('hasError'=>($valid)?0:1,
+				'personError'=>$personErrors,
+				'contactError'=>$contactErrors,);
+	
+		echo json_encode($response);
+	}
+		
+	public function actionAjaxSaveUpdatedCustomer()
+	{
+		if(isset($_POST['Person'])&&isset($_POST['Contact'])&&isset($_POST['Customer']))
+		{
+			$modelCustomer=Customer::model()->findByPk($_POST['Customer']['Id']);
+			$modelContact = Contact::model()->findByPk($modelCustomer->Id_contact);
+			$modelPerson = Person::model()->findByPk($modelCustomer->Id_person);
+							
+			$valid = true;
+			$contactErrors = array();
+			$personErrors = array();
+			$customerErrors = array();
+			$modelContact->attributes=$_POST['Contact'];
+			$modelPerson->attributes=$_POST['Person'];
+			$transaction = $modelCustomer->dbConnection->beginTransaction();
+			try {
+	
+				if(!$modelPerson->validate() || !$modelPerson->save())
+					$valid = false;
+	
+				if(!$modelContact->validate() || !$modelContact->save())
+					$valid = false;
+	
+				if($valid)
+				{
+					$transaction->commit();
+				}
+				else
+				{
+					$contactErrors = $modelContact->getErrors();
+					$personErrors = $modelPerson->getErrors();
+					$customerErrors = $modelCustomer->getErrors();
+					$transaction->rollback();
+				}
+	
+			} catch (Exception $e) {
+				$transaction->rollback();
+			}
+		}
+	
+		$response = array('hasError'=>($valid)?0:1,
+				'personError'=>$personErrors,
+				'contactError'=>$contactErrors,
+				'customerError'=>$customerErrors,);
+	
+		echo json_encode($response);
+	}
+	
+	public function actionAjaxShowUpdateModal()
+	{
+		if(isset($_POST['id']))
+		{
+			$modelCustomer = $this->loadModel($_POST['id']);
+			if(isset($modelCustomer))
+			{
+						
+				$modelContact = Contact::model()->findByPk($modelCustomer->Id_contact);
+				$modelPerson = Person::model()->findByPk($modelCustomer->Id_person);
+				
+				echo $this->renderPartial('_modalFormCustomer',
+						array('modelCustomer'=>$modelCustomer,
+								'modelContact'=>$modelContact,
+								'modelPerson'=>$modelPerson),
+						/*parametros extras para que funcione CJuiDatePicker*/
+						false,true);
+			}
+		}
+	}	
 }
