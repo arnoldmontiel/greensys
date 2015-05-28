@@ -104,7 +104,7 @@ class Contact extends ModelAudit
 			'tel1_description' => 'Tel 1 Descripci&oacute;n',
 			'tel2_description' => 'Tel 2 Descripci&oacute;n',
 			'tel3_description' => 'Tel 3 Descripci&oacute;n',
-			'comment' => 'Comentarios',
+			'comment' => 'Notas',
 		);
 	}
 
