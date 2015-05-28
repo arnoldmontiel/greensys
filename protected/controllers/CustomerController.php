@@ -36,9 +36,11 @@ class CustomerController extends GController
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView()
+	public function actionView($id)
 	{
-		$this->render('view');
+		$model=$this->loadModel($id);
+		
+		$this->render('view',array('model'=>$model));
 	}
 
 	/**
