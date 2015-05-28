@@ -141,6 +141,8 @@ class Customer extends ModelAudit
 			'last_name' => 'Apellido',
 			'telephone_1' => 'Tel&eacute;fono 1',
 			'email' => 'Correo',
+			'email_2' => 'Correo 2',
+			'email_3' => 'Correo 3',
 		);
 	}
 
