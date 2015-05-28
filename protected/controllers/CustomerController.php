@@ -327,6 +327,11 @@ class CustomerController extends GController
 				if(!$modelPerson->validate() || !$modelPerson->save())
 					$valid = false;
 		
+				if(empty($modelContact->telephone_2))
+					$modelContact->tel2_description = '';
+				if(empty($modelContact->telephone_3))
+					$modelContact->tel3_description = '';
+				
 				if(!$modelContact->validate() || !$modelContact->save())
 					$valid = false;
 				
@@ -336,6 +341,15 @@ class CustomerController extends GController
 				if(!$modelCustomer->validate() || !$modelCustomer->save())
 					$valid = false;				
 								
+				foreach($_POST['address'] as $address)
+				{
+					$modelProject = new Project();
+					$modelProject->Id_customer = $modelCustomer->Id;
+					$modelProject->address = $address['value'];
+					$modelProject->description = $address['nickname'];
+					$modelProject->save();					
+				}
+				
 				if($valid)
 				{
 					$transaction->commit();
@@ -358,7 +372,7 @@ class CustomerController extends GController
 	
 		echo json_encode($response);
 	}
-		
+	
 	public function actionAjaxSaveUpdatedCustomer()
 	{
 		if(isset($_POST['Person'])&&isset($_POST['Contact'])&&isset($_POST['Customer']))
@@ -382,6 +396,23 @@ class CustomerController extends GController
 				if(!$modelContact->validate() || !$modelContact->save())
 					$valid = false;
 	
+				foreach($_POST['address'] as $address)
+				{
+					if(isset($address['Id']))
+					{
+						$modelProject = Project::model()->findByPk($address['Id']);
+						if(!isset($modelProject))
+							$modelProject = new Project();
+					}
+					else					
+						$modelProject = new Project();
+					
+					$modelProject->Id_customer = $modelCustomer->Id;
+					$modelProject->address = $address['value'];
+					$modelProject->description = $address['nickname'];
+					$modelProject->save();
+				}
+				
 				if($valid)
 				{
 					$transaction->commit();
@@ -405,6 +436,19 @@ class CustomerController extends GController
 				'customerError'=>$customerErrors,);
 	
 		echo json_encode($response);
+	}
+	
+	public function actionAjaxCanRemoveAddress()
+	{
+		$canRemove = 1;
+		if(isset($_POST['idProject']))
+		{
+			$qty = Budget::model()->countByAttributes(array('Id_project'=>$_POST['idProject']));
+			if($qty > 0)
+				$canRemove = 0;
+		}
+		
+		echo $canRemove;
 	}
 	
 	public function actionAjaxShowUpdateModal()
