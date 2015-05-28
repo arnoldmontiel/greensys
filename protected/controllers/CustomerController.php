@@ -340,14 +340,17 @@ class CustomerController extends GController
 		
 				if(!$modelCustomer->validate() || !$modelCustomer->save())
 					$valid = false;				
-								
-				foreach($_POST['address'] as $address)
+
+				if(isset($_POST['address']))
 				{
-					$modelProject = new Project();
-					$modelProject->Id_customer = $modelCustomer->Id;
-					$modelProject->address = $address['value'];
-					$modelProject->description = $address['nickname'];
-					$modelProject->save();					
+					foreach($_POST['address'] as $address)
+					{
+						$modelProject = new Project();
+						$modelProject->Id_customer = $modelCustomer->Id;
+						$modelProject->address = $address['value'];
+						$modelProject->description = $address['nickname'];
+						$modelProject->save();					
+					}
 				}
 				
 				if($valid)
@@ -396,21 +399,32 @@ class CustomerController extends GController
 				if(!$modelContact->validate() || !$modelContact->save())
 					$valid = false;
 	
-				foreach($_POST['address'] as $address)
+				if(isset($_POST['address']))
 				{
-					if(isset($address['Id']))
+					foreach($_POST['address'] as $address)
 					{
-						$modelProject = Project::model()->findByPk($address['Id']);
-						if(!isset($modelProject))
+						if(isset($address['Id']))
+						{
+							$modelProject = Project::model()->findByPk($address['Id']);
+							if(!isset($modelProject))
+								$modelProject = new Project();
+						}
+						else					
 							$modelProject = new Project();
+						
+						$modelProject->Id_customer = $modelCustomer->Id;
+						$modelProject->address = $address['value'];
+						$modelProject->description = $address['nickname'];
+						$modelProject->save();
 					}
-					else					
-						$modelProject = new Project();
-					
-					$modelProject->Id_customer = $modelCustomer->Id;
-					$modelProject->address = $address['value'];
-					$modelProject->description = $address['nickname'];
-					$modelProject->save();
+				}
+				
+				if(isset($_POST['remove_address']))
+				{
+					foreach($_POST['remove_address'] as $address)
+					{
+						Project::model()->deleteByPk($address['Id']);
+					}
 				}
 				
 				if($valid)

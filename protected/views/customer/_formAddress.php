@@ -100,6 +100,10 @@ function removeAddress(obj, id)
 				}
 				else
 				{
+					
+					var hiddenRemoveId = '<input type="hidden" name="remove_address['+id+'][Id]" value="'+id+'">';
+					$("#body-address > tbody").append(hiddenRemoveId);
+					
 					$(obj).parent().parent().remove();
 					var index = 1;
 					$("#body-address > tbody > tr").each(function(){
