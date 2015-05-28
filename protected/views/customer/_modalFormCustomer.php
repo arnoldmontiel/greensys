@@ -9,21 +9,21 @@
 				<?php echo CHtml::activeHiddenField($modelCustomer, 'Id');?>
 				<div class="form-group row">
 					<div class="col-sm-6">
-						<label for="campoNombre">Nombre</label>
+						<?php echo CHtml::activeLabel($modelPerson, 'name'); ?>
 						<?php echo CHtml::activeTextField($modelPerson, 'name', array('class'=>'form-control')); ?>
 					</div>
 					<div class="col-sm-6">
-						<label for="campoNombre">Apellido</label>
+						<?php echo CHtml::activeLabel($modelPerson, 'last_name'); ?>
 						<?php echo CHtml::activeTextField($modelPerson, 'last_name', array('class'=>'form-control')); ?>
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="campoNombre">Designacion</label>
+					<?php echo CHtml::activeLabel($modelContact, 'description'); ?>
 					<?php echo CHtml::activeTextField($modelContact, 'description', array('class'=>'form-control')); ?>
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-4">
-						<label for="campoTipoTelefono">Tel&eacute;fono</label>
+						<?php echo CHtml::activeLabel($modelContact, 'tel1_description'); ?>
 						<?php 
 						$ddlTel = array('Movil'=>'Movil',
 											'Trabajo'=>'Trabajo',
@@ -45,7 +45,7 @@
 				</div>
 				<div id="tel2" class="form-group row hidden">
 					<div class="col-sm-4">
-						<label for="campoTipoTelefono">Tel&eacute;fono 2</label>
+						<?php echo CHtml::activeLabel($modelContact, 'tel2_description'); ?>
 						<?php 
 						$ddlTel = array('Movil'=>'Movil',
 											'Trabajo'=>'Trabajo',
@@ -71,7 +71,7 @@
 				</div>
 				<div id="tel3" class="form-group row hidden">
 					<div class="col-sm-4">
-						<label for="campoTipoTelefono">Tel&eacute;fono 3</label>
+						<?php echo CHtml::activeLabel($modelContact, 'tel3_description'); ?>
 						<?php 
 						$ddlTel = array('Movil'=>'Movil',
 											'Trabajo'=>'Trabajo',
@@ -102,21 +102,21 @@
 				</div>
 				<div class="form-group row">
 					<div class="col-sm-6">
-						<label for="campoTelefono">E-mail</label>
+						<?php echo CHtml::activeLabel($modelContact, 'email'); ?>
 						<?php echo CHtml::activeTextField($modelContact, 'email', array('class'=>'form-control')); ?>
 					</div>
 					<div class="col-sm-4">
-						<label for="campoTelefono">Descripci&oacute;n</label>
+						<?php echo CHtml::activeLabel($modelContact, 'email_description'); ?>
 						<?php echo CHtml::activeTextField($modelContact, 'email_description', array('class'=>'form-control')); ?>
 					</div>
 				</div>
 				<div id="mail2" class="form-group row hidden">
 					<div class="col-sm-6">
-						<label for="campoTelefono">E-mail 2</label>
+						<?php echo CHtml::activeLabel($modelContact, 'email_2'); ?>
 						<?php echo CHtml::activeTextField($modelContact, 'email_2', array('class'=>'form-control')); ?>
 					</div>
 					<div class="col-sm-4">
-						<label for="campoTelefono">Descripci&oacute;n</label>
+						<?php echo CHtml::activeLabel($modelContact, 'email_2_description'); ?>
 						<?php echo CHtml::activeTextField($modelContact, 'email_2_description', array('class'=>'form-control')); ?>
 					</div>
 					<div id="btn-remove-mail-2" class="col-sm-2">
@@ -126,11 +126,11 @@
 				</div>
 				<div id="mail3" class="form-group row hidden">
 					<div class="col-sm-6">
-						<label for="campoTelefono">E-mail 3</label>
+						<?php echo CHtml::activeLabel($modelContact, 'email_3'); ?>
 						<?php echo CHtml::activeTextField($modelContact, 'email_3', array('class'=>'form-control')); ?>
 					</div>
 					<div class="col-sm-4">
-						<label for="campoTelefono">Descripci&oacute;n</label>
+						<?php echo CHtml::activeLabel($modelContact, 'email_3_description'); ?>
 						<?php echo CHtml::activeTextField($modelContact, 'email_3_description', array('class'=>'form-control')); ?>
 					</div>
 					<div id="btn-remove-mail-3" class="col-sm-2">
@@ -145,6 +145,10 @@
 				</div>
 				<div class="row">
 			  		<?php echo $this->renderPartial('_formAddress',array('modelCustomer'=>$modelCustomer)); ?>
+				</div>
+				<div class="form-group">
+					<?php echo CHtml::activeLabel($modelContact, 'refered'); ?>
+					<?php echo CHtml::activeTextField($modelContact, 'refered', array('class'=>'form-control')); ?>
 				</div>
 				<div class="form-group">
   					<label for="campoTelefono">Notas</label>

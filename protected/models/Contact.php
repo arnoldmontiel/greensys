@@ -20,6 +20,7 @@
  * @property string $email_2_description
  * @property string $email_3
  * @property string $email_3_description
+ * @property string $refered
  *
  * The followings are the available model relations:
  * @property Brand[] $brands
@@ -55,7 +56,7 @@ class Contact extends ModelAudit
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('description, address', 'length', 'max'=>100),
+			array('description, address, refered', 'length', 'max'=>100),
 			//array('telephone_1, description, email', 'required','message'=>'{attribute} '.Yii::app()->lc->t('cannot be blank.')),
 			array('tel1_description, tel2_description, tel3_description, email_description, email_2_description, email_3_description', 'length', 'max'=>255),
 			array('email', 'unique', 'message'=>'El correo {value} ya ha sido utilizado'),				
@@ -66,7 +67,7 @@ class Contact extends ModelAudit
 			array('email_3', 'email', 'allowEmpty'=>true, 'message'=>'El correo 3 ingresado no es una dirección valida'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Id, description, telephone_1, telephone_2, telephone_3, email, address, tel1_description, tel2_description, tel3_description, comment,email_description,email_2,email_2_description,email_3,email_3_description', 'safe', 'on'=>'search'),
+			array('Id, description, telephone_1, telephone_2, telephone_3, email, address, tel1_description, tel2_description, tel3_description, comment,email_description,email_2,email_2_description,email_3,email_3_description, refered', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -105,6 +106,7 @@ class Contact extends ModelAudit
 			'tel2_description' => 'Tel 2 Descripci&oacute;n',
 			'tel3_description' => 'Tel 3 Descripci&oacute;n',
 			'comment' => 'Notas',
+			'refered' => 'Referido',
 		);
 	}
 
