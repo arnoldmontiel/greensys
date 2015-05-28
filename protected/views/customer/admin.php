@@ -96,7 +96,7 @@
 						),
 						array(
 						'header'=>'Acciones',
-						'value'=>'"<div class=\"buttonsTable\"><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"updateCustomer(".$data->Id.");\" ><i class=\"fa fa-pencil\"></i> Editar</button></div>"',
+						'value'=>'"<div class=\"buttonsTable\"><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"viewCustomer(".$data->Id.");\" ><i class=\"fa fa-eye\"></i> Ver</button><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"updateCustomer(".$data->Id.");\" ><i class=\"fa fa-pencil\"></i> Editar</button></div>"',
 						'type'=>'raw',
 						'htmlOptions'=>array("style"=>"text-align:right;"),
 						'headerHtmlOptions'=>array("style"=>"text-align:right;"),
@@ -166,6 +166,10 @@ function updateCustomer(id)
 				}
 			);
 
+}
+function viewCustomer(id)
+{
+	window.location = '<?php echo CustomerController::createUrl('customer/view')?>'+'&id='+id; 
 }
 
 </script>
