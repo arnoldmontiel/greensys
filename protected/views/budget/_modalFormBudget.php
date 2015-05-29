@@ -14,14 +14,41 @@
 	<?php echo CHtml::activeHiddenField($model, 'Id_currency');?>
   <div class="row">
   <div class="form-group col-sm-12">
+    <?php
+    	$modelProject = new Project();
+		echo CHtml::activeLabel($modelProject, 'Id_customer');
+     ?>
+    	<div class="combined">
+    	<?php 
+    		if($model->isNewRecord) 
+    		{
+    			echo CHtml::activeDropDownList($modelProject, 'Id_customer',
+    			    				CHtml::listData($ddlCustomer, 'Id', 'Description'),array('class'=>'form-control','prompt'=>'Seleccione un clientes'));	
+    		}
+    		else 
+    		{
+    			echo "<input type='text' disabled='disabled' class='form-control' value='". $model->project->customer->Description."'>";
+    		}	
+    	?>
+  		</div>
+  		</div>
+  		</div>
+  <div class="row">
+  <div class="form-group col-sm-12">
     <?php echo CHtml::activeLabel($model, 'Id_project');?>
     	<div class="combined">
     	<?php 
     		if($model->isNewRecord) 
     		{
+    			?>
+    			<div id="ddlProjects">
+    			<?php 
     			echo CHtml::activeDropDownList($model, 'Id_project',
-    					CHtml::listData($ddlProjects, 'Id', 'LongDescription'),array('class'=>'form-control'));
-				echo "<button onclick='openNewProject();' id='btn-new-project' type='button' class='btn btn-default pull-right'><i class='fa fa-plus'></i> Nuevo</button>";
+    					CHtml::listData($ddlProjects, 'Id', 'LongDescription'),array('class'=>'form-control','prompt'=>'Seleccione una direcci&oacute;n'));
+				//echo "<button onclick='openNewProject();' id='btn-new-project' type='button' class='btn btn-default pull-right'><i class='fa fa-plus'></i> Nuevo</button>";
+				?>
+				</div>
+				<?php 
     		}
     		else 
     		{
@@ -29,7 +56,9 @@
     		}	
     	?>
   		</div>
-
+  		</div>
+  		</div>
+  		
   <?php if($model->isNewRecord):?>
 <div id="new-project" class="inlineForm" style="display:none">
 <label>Nuevo Proyecto</label>
@@ -51,8 +80,6 @@
 </div>
 <?php endif;?>
   
-  		</div>
-  		</div>
   <div class="row">
   <div class="form-group col-sm-12">
   	<?php 
@@ -182,9 +209,11 @@
       
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancelar</button>
-        <button onclick="save();" type="button" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar</button>
         <?php if($model->isNewRecord):?>
-        <a onclick="saveAndContinue();" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Guardar y Agregar Prods.</a>
+        <button id="save" onclick="save();" type="button" class="btn btn-primary btn-lg" disabled="true"><i class="fa fa-save"></i> Guardar</button>
+        <a id="saveAndAdd" onclick="saveAndContinue();" class="btn btn-primary btn-lg" disabled="false"><i class="fa fa-save"></i> Guardar y Agregar Prods.</a>
+        <?php else:?>
+        <button id="save" onclick="save();" type="button" class="btn btn-primary btn-lg" ><i class="fa fa-save"></i> Guardar</button>
         <?php endif;?>
       </div>
     </div><!-- /.modal-content -->
@@ -268,5 +297,32 @@
 		$('#save-and-continue').val(true);
 		$('#form-new-budget').submit();
 	}
+	$("#Project_Id_customer").change(function(){
+		$.post("<?php echo BudgetController::createUrl("ajaxGetProjects")?>",{id_customer:$("#Project_Id_customer").val()}
+		).success(function(data){
+			$("#ddlProjects").html(data);
+			$("#Budget_Id_project").change(function(){
+				if($("#Budget_Id_project").val()!=""){
+					$("#saveAndAdd").removeAttr("disabled");
+					$("#save").removeAttr("disabled");
+				}
+				else
+				{
+					$("#saveAndAdd").attr("disabled","true");
+					$("#save").attr("disabled","true");
+				}
+			});
+					
+			});
+		});
+
+	$("#Budget_Id_project").change(function(){
+		debugger;
+		if($("#Budget_Id_project").val()!=""){
+			$("#saveAndAdd").removeAttr("disabled");
+			$("#save").removeAttr("disabled");
+		}
+	});
+	
 </script>
   </div><!-- /.modal-dialog -->

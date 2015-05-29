@@ -978,7 +978,36 @@ class BudgetController extends GController
 		echo $this->renderPartial('_modalFormBudget', array('model'=>$model,'ddlCurrency'=>$ddlCurrency),
 		/*parametros extras para que funcione CJuiDatePicker*/false,true);
 	}
-	
+	public function actionAjaxGetProjects()
+	{
+		$id_customer = isset($_POST['id_customer'])?$_POST['id_customer']:null;
+		
+		if(isset($id_customer)&&$id_customer!="")
+		{
+			$criteria=new CDbCriteria;
+			$criteria->select ="t.*, contact.description designacion";
+			$criteria->join =" INNER JOIN customer c on (t.Id_customer = c.Id)
+					INNER JOIN contact contact on (c.Id_contact = contact.Id)";
+			$criteria->addCondition("t.description != 'Contacto Inicial'");
+			$criteria->addCondition("t.Id_customer = ".$id_customer);
+			$criteria->order="designacion, t.description";
+			
+			$ddlProjects = Project::model()->findAll($criteria);
+			$model = new Budget();
+			echo CHtml::activeDropDownList($model, 'Id_project',
+					CHtml::listData($ddlProjects, 'Id', 'LongDescription'),array('class'=>'form-control','prompt'=>'Seleccione una direcci&oacute;n'));
+				
+		}
+		else
+		{
+			$ddlProjects = array();
+			$model = new Budget();
+			echo CHtml::activeDropDownList($model, 'Id_project',
+					CHtml::listData($ddlProjects, 'Id', 'LongDescription'),array('class'=>'form-control','prompt'=>'Seleccione una direcci&oacute;n'));				
+		}
+		
+		
+	}
 	public function actionAjaxOpenNewBudget()
 	{
 		$criteria=new CDbCriteria;
@@ -988,7 +1017,7 @@ class BudgetController extends GController
 		$criteria->addCondition("t.description != 'Contacto Inicial'");
 		$criteria->order="designacion, t.description";
 		
-		$ddlProjects = Project::model()->findAll($criteria);
+		$ddlProjects = array();
 		
 		$criteria=new CDbCriteria;
 		
