@@ -137,7 +137,12 @@ function removeCustomer(id)
 				'<?php echo CustomerController::createUrl('AjaxDelete')?>',{id:id}).success(
 						function(data)
 						{
-							$.fn.yiiGridView.update('customer-grid');
+							if(data == 0)
+							{
+								alert("El cliente no pudo ser borrado ya que posee relaciones con presupuestos");
+							}
+							else
+								$.fn.yiiGridView.update('customer-grid');
 						}
 				);
 		}

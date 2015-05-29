@@ -31,10 +31,6 @@ class Customer extends ModelAudit
 		parent::afterDelete();
 		Person::model()->deleteByPk($this->Id_person);
 		Contact::model()->deleteByPk($this->Id_contact);
-		$tcustomer = TCustomer::model()->findByPk($this->Id);
-		$user = User::model()->findByPk($tcustomer->username);
-		$tcustomer->delete();
-		if(isset($user))	$user->delete();
 	}
 	
 	/**
@@ -161,7 +157,7 @@ class Customer extends ModelAudit
 		//$criteria->order="contact.description";		
 		// Create a custom sort
 		$sort=new CSort;
-		$sort->defaultOrder ="last_name";
+		$sort->defaultOrder ="last_name, name, description";
 		$sort->attributes=array(				
 				'description' => array(
 						'asc' => 'contact.description',

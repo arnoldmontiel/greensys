@@ -452,6 +452,42 @@ class CustomerController extends GController
 		echo json_encode($response);
 	}
 	
+	public function actionAjaxDelete()
+	{
+		$canDelete = true;
+		if(isset($_POST['id']))
+		{
+			$modelProjects = Project::model()->findAllByAttributes(array('Id_customer'=>$_POST['id']));
+			foreach($modelProjects as $project)
+			{
+				$qty = Budget::model()->countByAttributes(array('Id_project'=>$project->Id));
+				if($qty > 0)
+				{
+					$canDelete = false;
+					break;
+				}
+			}
+			
+			if($canDelete)
+			{
+				$modelCustomer = Customer::model()->findByPk($_POST['id']);
+				$transaction = $modelCustomer->dbConnection->beginTransaction();
+				try {
+					Project::model()->deleteAllByAttributes(array('Id_customer'=>$modelCustomer->Id));
+					Person::model()->deleteByPk($modelCustomer->Id_person);
+					Contact::model()->deleteByPk($modelCustomer->Id_contact);
+					$modelCustomer->delete();
+					$transaction->commit();
+				} catch (Exception $e) {
+					$canDelete = false;
+					$transaction->rollback();
+				}
+			}
+		}
+	
+		echo ($canDelete)?1:0;
+	}
+	
 	public function actionAjaxCanRemoveAddress()
 	{
 		$canRemove = 1;
