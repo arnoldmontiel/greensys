@@ -157,7 +157,7 @@ class Customer extends ModelAudit
 		//$criteria->order="contact.description";		
 		// Create a custom sort
 		$sort=new CSort;
-		$sort->defaultOrder ="last_name, name, description";
+		$sort->defaultOrder ="description, last_name, name";
 		$sort->attributes=array(				
 				'description' => array(
 						'asc' => 'contact.description',
