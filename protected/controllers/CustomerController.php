@@ -320,7 +320,9 @@ class CustomerController extends GController
 			$contactErrors = array();
 			$personErrors = array();
 			$modelContact->attributes=$_POST['Contact'];
-			$modelPerson->attributes=$_POST['Person'];			
+			$modelPerson->attributes=$_POST['Person'];	
+			$modelContact->description = $modelPerson->name ." " .$modelPerson->last_name;
+				
 			$transaction = $modelCustomer->dbConnection->beginTransaction();
 			try {				
 		
@@ -390,6 +392,9 @@ class CustomerController extends GController
 			$customerErrors = array();
 			$modelContact->attributes=$_POST['Contact'];
 			$modelPerson->attributes=$_POST['Person'];
+			
+			$modelContact->description = $modelPerson->name ." " .$modelPerson->last_name;
+			 
 			$transaction = $modelCustomer->dbConnection->beginTransaction();
 			try {
 	
