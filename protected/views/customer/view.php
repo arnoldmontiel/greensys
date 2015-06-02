@@ -76,18 +76,31 @@
   <div class="col-sm-6">
   	<h1 class="pageTitle">Direcciones</h1>
   </div>
-  </div>  
+  </div>
+    	<table class="table table-striped table-bordered">
+  		<tbody>
       <?php
      foreach($model->projects as $project)
      {?>
-       <div class="row">
-  		<div class="col-sm-6">
-     <?php
-     	echo $project->description.": ".$project->address;
+       		<tr class="odd">
+       		<th>
+       		     <?php
+     	echo $project->description;
      	?>
-     	  </div>
-	  </div>
+       		
+       		</th>
+       		<td>
+       		       		     <?php
+     	echo $project->address;
+     	?>
+       		
+       		</td>
+     
+			</tr>
      	<?php 
      }
+      
     ?>
-</div>
+		</tbody>
+	</table>
+    </div>
