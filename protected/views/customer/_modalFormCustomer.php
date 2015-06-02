@@ -17,13 +17,9 @@
 						<?php echo CHtml::activeTextField($modelPerson, 'last_name', array('class'=>'form-control')); ?>
 					</div>
 				</div>
-				<div class="form-group">
-					<?php echo CHtml::activeLabel($modelContact, 'description'); ?>
-					<?php echo CHtml::activeTextField($modelContact, 'description', array('class'=>'form-control')); ?>
-				</div>
 				<div class="form-group row">
 					<div class="col-sm-4">
-						<?php echo CHtml::activeLabel($modelContact, 'tel1_description'); ?>
+						<?php echo CHtml::activeLabel($modelContact, 'telephone_1'); ?>
 						<?php 
 						$ddlTel = array('Movil'=>'Movil',
 											'Trabajo'=>'Trabajo',
@@ -32,8 +28,8 @@
 											'Fax Trabajo'=>'Fax Trabajo',
 											'Fax Casa'=>'Fax Casa',
 											'Google Voice'=>'Google Voice',
-											'Busca'=>'Busca',
-											'Personalizado'=>'Personalizado',);
+											'Pager'=>'Pager',
+											);
 						echo CHtml::activeDropDownList($modelContact, 'tel1_description',
 	    					$ddlTel,array('class'=>'form-control'));
 						?>
@@ -45,104 +41,91 @@
 				</div>
 				<div id="tel2" class="form-group row hidden">
 					<div class="col-sm-4">
-						<?php echo CHtml::activeLabel($modelContact, 'tel2_description'); ?>
 						<?php 
-						$ddlTel = array('Movil'=>'Movil',
-											'Trabajo'=>'Trabajo',
-											'Personal'=>'Personal',
-											'Principal'=>'Principal',
-											'Fax Trabajo'=>'Fax Trabajo',
-											'Fax Casa'=>'Fax Casa',
-											'Google Voice'=>'Google Voice',
-											'Busca'=>'Busca',
-											'Personalizado'=>'Personalizado',);
 						echo CHtml::activeDropDownList($modelContact, 'tel2_description',
 	    					$ddlTel,array('class'=>'form-control'));
 						?>
 					</div>
 					<div class="col-sm-6">
-						<label for="campoTelefono">&nbsp;</label>
 						<?php echo CHtml::activeTextField($modelContact, 'telephone_2', array('class'=>'form-control')); ?>
 					</div>
 					<div id="btn-remove-tel-2" class="col-sm-2">
-						<label for="campoTelefono">&nbsp;</label>
-						<button class="btn btn-default btn-sm noMargin form-control" onclick="removeTel(2);" type="button"><i class="fa fa-trash-o"></i> Borrar</button>
+						<button class="btn btn-default btn-sm noMargin form-control" onclick="removeTel(2);" type="button"><i class="fa fa-trash-o"></i> </button>
 					</div>
 				</div>
 				<div id="tel3" class="form-group row hidden">
 					<div class="col-sm-4">
-						<?php echo CHtml::activeLabel($modelContact, 'tel3_description'); ?>
 						<?php 
-						$ddlTel = array('Movil'=>'Movil',
-											'Trabajo'=>'Trabajo',
-											'Personal'=>'Personal',
-											'Principal'=>'Principal',
-											'Fax Trabajo'=>'Fax Trabajo',
-											'Fax Casa'=>'Fax Casa',
-											'Google Voice'=>'Google Voice',
-											'Busca'=>'Busca',
-											'Personalizado'=>'Personalizado',);
 						echo CHtml::activeDropDownList($modelContact, 'tel3_description',
 	    					$ddlTel,array('class'=>'form-control'));
 						?>
 					</div>
 					<div class="col-sm-6">
-						<label for="campoTelefono">&nbsp;</label>
 						<?php echo CHtml::activeTextField($modelContact, 'telephone_3', array('class'=>'form-control')); ?>					
 					</div>
 					<div id="btn-remove-tel-3" class="col-sm-2">
-						<label for="campoTelefono">&nbsp;</label>
-						<button class="btn btn-default btn-sm noMargin form-control" onclick="removeTel(3);" type="button"><i class="fa fa-trash-o"></i> Borrar</button>
+						<button class="btn btn-default btn-sm noMargin form-control" onclick="removeTel(3);" type="button"><i class="fa fa-trash-o"></i> </button>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12 align-right">
-						<button type="button" onclick="addTelephone();" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> Agregar Tel&eacute;fono</button>
+						<button type="button" onclick="addTelephone();" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> </button>
 					</div>
 				</div>
 				<div class="form-group row">
-					<div class="col-sm-6">
+					<div class="col-sm-4">
 						<?php echo CHtml::activeLabel($modelContact, 'email'); ?>
+						<?php 
+						$ddlEmail = array('Casa'=>'Casa',
+											'Trabajo'=>'Trabajo',);
+						echo CHtml::activeDropDownList($modelContact, 'email_description',
+	    					$ddlEmail,array('class'=>'form-control'));
+						?>
+					</div>
+				<div class="col-sm-6">
+						<label for="campoTelefono">&nbsp;</label>				
 						<?php echo CHtml::activeTextField($modelContact, 'email', array('class'=>'form-control')); ?>
 					</div>
-					<div class="col-sm-4">
-						<?php echo CHtml::activeLabel($modelContact, 'email_description'); ?>
-						<?php echo CHtml::activeTextField($modelContact, 'email_description', array('class'=>'form-control')); ?>
-					</div>
 				</div>
+				
 				<div id="mail2" class="form-group row hidden">
-					<div class="col-sm-6">
-						<?php echo CHtml::activeLabel($modelContact, 'email_2'); ?>
+					<div class="col-sm-4">
+						<?php 
+							echo CHtml::activeDropDownList($modelContact, 'email_2_description',
+	    						$ddlEmail,array('class'=>'form-control'));
+						?>
+					</div>
+				<div class="col-sm-6">
 						<?php echo CHtml::activeTextField($modelContact, 'email_2', array('class'=>'form-control')); ?>
 					</div>
-					<div class="col-sm-4">
-						<?php echo CHtml::activeLabel($modelContact, 'email_2_description'); ?>
-						<?php echo CHtml::activeTextField($modelContact, 'email_2_description', array('class'=>'form-control')); ?>
-					</div>
 					<div id="btn-remove-mail-2" class="col-sm-2">
-						<label for="campoTelefono">&nbsp;</label>
-						<button class="btn btn-default btn-sm noMargin form-control" onclick="removeMail(2);" type="button"><i class="fa fa-trash-o"></i> Borrar</button>
+						<button class="btn btn-default btn-sm noMargin form-control" onclick="removeMail(2);" type="button"><i class="fa fa-trash-o"></i> </button>
 					</div>
 				</div>
+				
 				<div id="mail3" class="form-group row hidden">
+					<div class="col-sm-4">
+						<?php 
+							echo CHtml::activeDropDownList($modelContact, 'email_3_description',
+	    						$ddlEmail,array('class'=>'form-control'));
+						?>
+					
+					</div>
 					<div class="col-sm-6">
-						<?php echo CHtml::activeLabel($modelContact, 'email_3'); ?>
 						<?php echo CHtml::activeTextField($modelContact, 'email_3', array('class'=>'form-control')); ?>
 					</div>
-					<div class="col-sm-4">
-						<?php echo CHtml::activeLabel($modelContact, 'email_3_description'); ?>
-						<?php echo CHtml::activeTextField($modelContact, 'email_3_description', array('class'=>'form-control')); ?>
-					</div>
 					<div id="btn-remove-mail-3" class="col-sm-2">
-						<label for="campoTelefono">&nbsp;</label>
-						<button class="btn btn-default btn-sm noMargin form-control" onclick="removeMail(3);" type="button"><i class="fa fa-trash-o"></i> Borrar</button>
+						<button class="btn btn-default btn-sm noMargin form-control" onclick="removeMail(3);" type="button"><i class="fa fa-trash-o"></i> </button>
 					</div>
 				</div>
+				
+				
 				<div class="row">
 					<div class="col-sm-12 align-right">
-						<button type="button" onclick="addMail();" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> Agregar Correo</button>
+						<button type="button" onclick="addMail();" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> </button>
 					</div>
 				</div>
+				
 				<div class="row">
 			  		<?php echo $this->renderPartial('_formAddress',array('modelCustomer'=>$modelCustomer)); ?>
 				</div>

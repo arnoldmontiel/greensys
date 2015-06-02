@@ -1,18 +1,11 @@
 <div class="col-sm-12 form-group">
 	<label>  Agregar direcciones:</label>
   	<table class="table table-condensed tablaIndividual noMargin">
-  		<thead>
-			<tr>
-  				<th>Direcci&oacute;n</th>
-  				<th>Alias</th>
-  				<th class="align-right">Accion</th>
-			</tr>
-		</thead>
 		<tbody>
   			<tr>
-  				<td><input id="address-value" class="form-control" placeholder="Direcci&oacute;n"></td>
   				<td><input id="address-nickname" class="form-control" placeholder="Alias"></td>
-  				<td class="align-right"><button onclick="addAddress();" type="button" class="btn btn-primary btn-sm noMargin"><i class="fa fa-plus"></i> Agregar</button></td>
+  				<td><input id="address-value" class="form-control" placeholder="Direcci&oacute;n"></td>
+  				<td class="align-right"><button onclick="addAddress();" type="button" class="btn btn-primary btn-sm noMargin"><i class="fa fa-plus"></i> </button></td>
 			</tr>
 		</tbody>
 	</table>
@@ -28,16 +21,16 @@
 			foreach($modelProjects as $modelProj)
 			{
 				$hiddenId = '<input type="hidden" name="address['.$addressIndex.'][Id]" value="'.$modelProj->Id.'">';
-				$addressField = '<input name="address['.$addressIndex.'][value]" class="form-control" placeholder="Direcci&oacute;n" value="'.$modelProj->address.'">';
 				$nicknameField = '<input name="address['.$addressIndex.'][nickname]" class="form-control" placeholder="Alias" value="'.$modelProj->description.'">';
+				$addressField = '<input name="address['.$addressIndex.'][value]" class="form-control" placeholder="Direcci&oacute;n" value="'.$modelProj->address.'">';
 				
 				echo '<tr>';
 					echo $hiddenId;
 					echo '<td>'.$addressIndex.'</td>';
-					echo '<td>'.$addressField.'</td>';
 					echo '<td>'.$nicknameField.'</td>';
+					echo '<td>'.$addressField.'</td>';
 					echo '<td class="align-right">';
-						echo '<button onclick="removeAddress(this,'.$modelProj->Id.' );" type="button" class="btn btn-default btn-sm noMargin"><i class="fa fa-trash-o"></i> Borrar</button>';
+						echo '<button onclick="removeAddress(this,'.$modelProj->Id.' );" type="button" class="btn btn-default btn-sm noMargin"><i class="fa fa-trash-o"></i> </button>';
 					echo '</td>';
 				echo '</tr>';
 				$addressIndex++;
@@ -63,10 +56,10 @@ function addAddress()
 		
 		var newTr = '<tr>' +
 						'<td>'+ addressNum +'</td>' +
-						'<td>'+ addressField + '</td>' +
 						'<td>'+ nicknameField + '</td>' +
+						'<td>'+ addressField + '</td>' +
 						'<td class="align-right">' +
-							'<button onclick="removeAddress(this, 0);" type="button" class="btn btn-default btn-sm noMargin"><i class="fa fa-trash-o"></i> Borrar</button>' +
+							'<button onclick="removeAddress(this, 0);" type="button" class="btn btn-default btn-sm noMargin"><i class="fa fa-trash-o"></i> </button>' +
 						'</td>' +
 					'</tr>';
 		

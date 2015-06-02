@@ -97,10 +97,10 @@ class Customer extends ModelAudit
 			'description' => 'Designaci&oacute;n',
 			'name' => 'Nombre',
 			'last_name' => 'Apellido',
-			'telephone_1' => 'Tel&eacute;fono 1',
+			'telephone_1' => 'Tel&eacute;fono',
 			'email' => 'Correo',
-			'email_2' => 'Correo 2',
-			'email_3' => 'Correo 3',
+			'email_2' => 'Correo',
+			'email_3' => 'Correo',
 		);
 	}
 

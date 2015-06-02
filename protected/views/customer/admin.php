@@ -19,8 +19,9 @@
 			'itemsCssClass' => 'table table-striped table-bordered tablaIndividual',
 				'columns'=>array(
 						array(
-								'name'=>'description',
-								'value'=>'$data->contact->description',
+								'name'=>'name',
+								'value'=>'$data->person->name',
+								'htmlOptions'=>array("style"=>"width:10%;"),
 						),
 						array(
 								'name'=>'last_name',
@@ -28,10 +29,28 @@
 								'htmlOptions'=>array("style"=>"width:15%;"),
 						),
 						array(
-								'name'=>'name',
-								'value'=>'$data->person->name',
-								'htmlOptions'=>array("style"=>"width:10%;"),
+								'header'=>'Direcciones',
+								'value'=>function($data){
+									$alias ="";
+									$first = true;
+									foreach($data->projects as $project)
+									{
+										if($first)
+										{
+											$first = false;
+											
+										}else
+										{
+											$alias.="<br/>";
+										}
+										$alias .= '&bull; '.$project->description;										
+									}
+									return $alias;
+								},
+								'type'=>'html',
+								'htmlOptions'=>array("style"=>"width:15%;"),
 						),
+						
 						array(
 								'header'=>'Telefono',
 								'value'=>function($data){
