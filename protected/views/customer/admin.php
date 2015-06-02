@@ -104,7 +104,7 @@
 									if(!empty($data->contact->email_3))
 									{
 										if(!empty($data->contact->email_3_description))
-											$alias = ' ('.$data->contact->email_._description.')';
+											$alias = ' ('.$data->contact->email_3_description.')';
 						
 										$email .= '<br/>&bull; '.$data->contact->email_3.$alias;
 									}
