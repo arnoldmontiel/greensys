@@ -18,6 +18,13 @@
 					</div>
 				</div>
 				<div class="form-group row">
+					<div class="col-sm-12">
+						<?php echo CHtml::activeLabel($modelContact, 'description'); ?>
+						<?php echo CHtml::activeTextField($modelContact, 'description', array('class'=>'form-control')); ?>
+					</div>
+				</div>
+				
+				<div class="form-group row">
 					<div class="col-sm-4">
 						<?php echo CHtml::activeLabel($modelContact, 'telephone_1'); ?>
 						<?php 

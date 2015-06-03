@@ -29,6 +29,12 @@
 								'htmlOptions'=>array("style"=>"width:15%;"),
 						),
 						array(
+								'name'=>'description',
+								'value'=>'$data->contact->description',
+								'htmlOptions'=>array("style"=>"width:10%;"),
+						),
+						
+						array(
 								'header'=>'Direcciones',
 								'value'=>function($data){
 									$alias ="";
