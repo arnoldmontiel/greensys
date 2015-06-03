@@ -124,9 +124,9 @@
 								'value'=>function($data){
 									$grid = "'budget-grid-open'";
 									return '<div class="buttonsTable">
-												<button onclick="viewCustomer('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-eye"></i> Ver</button>
-												<button onclick="updateCustomer('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> Editar</button>
-												<button onclick="removeCustomer('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> Borrar</button>
+												<button onclick="viewCustomer('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-eye"></i> </button>
+												<button onclick="updateCustomer('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-pencil"></i> </button>
+												<button onclick="removeCustomer('.$data->Id.');" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i> </button>
 											</div>';
 								},
 								'type'=>'raw',
