@@ -38,6 +38,11 @@
 						<label for="campoTelefono">&nbsp;</label>
 						<?php echo CHtml::activeTextField($modelContact, 'telephone_1', array('class'=>'form-control')); ?>
 					</div>
+					<div class="col-sm-2">
+					<label for="campoTelefono">&nbsp;</label></br>
+						<button type="button" onclick="addTelephone();" class="btn btn-primary btn-sm noMargin"><i class="fa fa-plus"></i> </button>
+					</div>
+					
 				</div>
 				<div id="tel2" class="form-group row hidden">
 					<div class="col-sm-4">
@@ -50,7 +55,7 @@
 						<?php echo CHtml::activeTextField($modelContact, 'telephone_2', array('class'=>'form-control')); ?>
 					</div>
 					<div id="btn-remove-tel-2" class="col-sm-2">
-						<button class="btn btn-default btn-sm noMargin form-control" onclick="removeTel(2);" type="button"><i class="fa fa-trash-o"></i> </button>
+						<button class="btn btn-default btn-sm noMargin" onclick="removeTel(2);" type="button"><i class="fa fa-trash-o"></i> </button>
 					</div>
 				</div>
 				<div id="tel3" class="form-group row hidden">
@@ -64,12 +69,7 @@
 						<?php echo CHtml::activeTextField($modelContact, 'telephone_3', array('class'=>'form-control')); ?>					
 					</div>
 					<div id="btn-remove-tel-3" class="col-sm-2">
-						<button class="btn btn-default btn-sm noMargin form-control" onclick="removeTel(3);" type="button"><i class="fa fa-trash-o"></i> </button>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-12 align-right">
-						<button type="button" onclick="addTelephone();" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> </button>
+						<button class="btn btn-default btn-sm noMargin" onclick="removeTel(3);" type="button"><i class="fa fa-trash-o"></i> </button>
 					</div>
 				</div>
 				<div class="form-group row">
@@ -85,7 +85,12 @@
 				<div class="col-sm-6">
 						<label for="campoTelefono">&nbsp;</label>				
 						<?php echo CHtml::activeTextField($modelContact, 'email', array('class'=>'form-control')); ?>
+				</div>
+					<div class="col-sm-2">
+						<label for="campoTelefono">&nbsp;</label></br>
+					<button type="button" onclick="addMail();" class="btn btn-primary btn-sm noMargin"><i class="fa fa-plus"></i> </button>
 					</div>
+				
 				</div>
 				
 				<div id="mail2" class="form-group row hidden">
@@ -99,7 +104,7 @@
 						<?php echo CHtml::activeTextField($modelContact, 'email_2', array('class'=>'form-control')); ?>
 					</div>
 					<div id="btn-remove-mail-2" class="col-sm-2">
-						<button class="btn btn-default btn-sm noMargin form-control" onclick="removeMail(2);" type="button"><i class="fa fa-trash-o"></i> </button>
+						<button class="btn btn-default btn-sm noMargin" onclick="removeMail(2);" type="button"><i class="fa fa-trash-o"></i> </button>
 					</div>
 				</div>
 				
@@ -115,14 +120,7 @@
 						<?php echo CHtml::activeTextField($modelContact, 'email_3', array('class'=>'form-control')); ?>
 					</div>
 					<div id="btn-remove-mail-3" class="col-sm-2">
-						<button class="btn btn-default btn-sm noMargin form-control" onclick="removeMail(3);" type="button"><i class="fa fa-trash-o"></i> </button>
-					</div>
-				</div>
-				
-				
-				<div class="row">
-					<div class="col-sm-12 align-right">
-						<button type="button" onclick="addMail();" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> </button>
+						<button class="btn btn-default btn-sm noMargin" onclick="removeMail(3);" type="button"><i class="fa fa-trash-o"></i> </button>
 					</div>
 				</div>
 				
