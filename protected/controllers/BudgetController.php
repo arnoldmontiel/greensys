@@ -848,10 +848,40 @@ class BudgetController extends GController
 						$newAreaProject->setAttributes($areaProj->attributes);
 						$newAreaProject->version_number = $modelNewBudget->version_number;
 						$newAreaProject->save();
-					
+												
 						BudgetItem::model()->updateAll(array( 'Id_area_project' => $newAreaProject->Id ),
 						'Id_budget = '.$modelNewBudget->Id.' AND version_number = '.$modelNewBudget->version_number.' AND Id_area_project = '.$areaProj->Id );
 					}
+					
+					//arreglo nuevas areas con hijos
+					$criteria=new CDbCriteria;
+					
+					$criteria->addCondition('Id_parent is not null');
+					$criteria->addCondition("t.Id_project = ".$modelBudget->Id_project);
+					$criteria->addCondition("t.Id_budget = ".$modelBudget->Id);
+					$criteria->addCondition("t.version_number = ".$modelNewBudget->version_number);
+						
+					$areaProjects = AreaProject::model()->findAll($criteria);
+					foreach($areaProjects as $areaProj)
+					{
+						$modelOldParent = AreaProject::model()->findByAttributes(array('Id'=>$areaProj->Id_parent));
+						if(isset($modelOldParent))
+						{
+							$newParent = AreaProject::model()->findByAttributes(array(
+									'Id_project'=>$modelBudget->Id_project,
+									'Id_budget'=>$modelBudget->Id,
+									'version_number'=>$modelNewBudget->version_number,
+									'Id_area'=>$modelOldParent->Id_area
+							));
+							if(isset($newParent))
+							{
+								$areaProj->Id_parent = $newParent->Id;
+								$areaProj->save();
+							}
+							
+						}
+					}
+					
 					
 					//replico todos los comisionistas
 					$modelCommissionists = Commissionist::model()->findAllByAttributes(array('Id_budget'=>$modelBudget->Id, 'version_number'=>$modelBudget->version_number));
