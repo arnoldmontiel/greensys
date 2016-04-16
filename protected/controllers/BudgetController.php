@@ -163,7 +163,7 @@ class BudgetController extends GController
 		if(isset($_POST['Budget']))
 		{
 			//Genero el Id
-			$model->Id = Budget::model()->count() + 1;
+			//$model->Id = Budget::model()->count() + 1;
 			
 			//Solo para la creacion la version 1
 			$model->version_number = 1;
@@ -1136,7 +1136,7 @@ class BudgetController extends GController
 			}
 				
 			//Genero el Id
-			$modelBudget->Id = Budget::model()->count() + 1;
+			//$modelBudget->Id = Budget::model()->count() + 1;
 			//Solo para la creacion la version 1
 			$modelBudget->version_number = 1;
 			$modelBudget->Id_budget_state = 1;
